@@ -1,0 +1,503 @@
+{% comment %}
+  ============================================================
+  SECTION : Collection Landing Page — Liquid pur, sans API
+  Compatible Shopify Online Store 2.0
+  ============================================================
+{% endcomment %}
+
+{% assign col = collections[section.settings.collection] %}
+
+<section id="cl-{{ section.id }}" class="cl-wrap">
+
+  {% if section.settings.show_header %}
+    <div class="cl-header">
+      {% if section.settings.title != blank %}
+        <h2 class="cl-title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <p class="cl-subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if col == empty or col.products_count == 0 %}
+    <p class="cl-empty">{{ section.settings.empty_message }}</p>
+  {% else %}
+    <div class="cl-grid">
+      {% for product in col.products %}
+        {% assign first_variant = product.first_available_variant | default: product.variants.first %}
+        {% assign img = product.featured_image %}
+        {% assign img2 = product.images[1] %}
+        {% assign available = product.available %}
+
+        {% unless section.settings.show_sold_out == false and available == false %}
+          <a class="cl-card{% unless available %} is-soldout{% endunless %}" href="{{ product.url }}">
+
+            <div class="cl-img-wrap">
+              {% if img %}
+                <img
+                  class="cl-img-main"
+                  src="{{ img | image_url: width: 600 }}"
+                  alt="{{ img.alt | escape }}"
+                  loading="lazy"
+                  width="600"
+                />
+                {% if img2 %}
+                  <img
+                    class="cl-img-hover"
+                    src="{{ img2 | image_url: width: 600 }}"
+                    alt="{{ img2.alt | escape }}"
+                    loading="lazy"
+                    aria-hidden="true"
+                  />
+                {% endif %}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'cl-placeholder' }}
+              {% endif %}
+
+              {% if first_variant.compare_at_price > first_variant.price %}
+                {% assign discount = first_variant.compare_at_price | minus: first_variant.price | times: 100 | divided_by: first_variant.compare_at_price %}
+                <span class="cl-badge">-{{ discount }}%</span>
+              {% endif %}
+
+              {% unless available %}
+                <div class="cl-overlay">Rupture de stock</div>
+              {% endunless %}
+            </div>
+
+            <div class="cl-body">
+              {% if product.vendor != blank %}
+                <p class="cl-vendor">{{ product.vendor }}</p>
+              {% endif %}
+
+              <h3 class="cl-product-title">{{ product.title }}</h3>
+
+              <div class="cl-price">
+                {% if first_variant.compare_at_price > first_variant.price %}
+                  <span class="cl-price-was">{{ first_variant.compare_at_price | money }}</span>
+                {% endif %}
+                <span class="cl-price-now{% if first_variant.compare_at_price > first_variant.price %} is-sale{% endif %}">{{ first_variant.price | money }}</span>
+              </div>
+
+              <div class="cl-footer">
+                {% if section.settings.btn_mode == 'atc' and available %}
+                  <button
+                    class="cl-btn js-atc"
+                    data-variant="{{ first_variant.id }}"
+onclick="event.preventDefault();"                  >
+                    {{ section.settings.btn_label_atc }}
+                  </button>
+                {% elsif available %}
+                  <span class="cl-btn">{{ section.settings.btn_label_link }}</span>
+                {% else %}
+                  <span class="cl-btn cl-btn--disabled">Épuisé</span>
+                {% endif %}
+              </div>
+            </div>
+
+          </a>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+</section>
+
+<style>
+  #cl-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    padding: {{ section.settings.section_padding }}px 20px;
+    color: #111;
+    box-sizing: border-box;
+  }
+
+  #cl-{{ section.id }} *, #cl-{{ section.id }} *::before, #cl-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  /* Header */
+  #cl-{{ section.id }} .cl-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  #cl-{{ section.id }} .cl-title {
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  #cl-{{ section.id }} .cl-subtitle {
+    font-size: 1rem;
+    opacity: 0.6;
+    margin: 0 auto;
+    max-width: 560px;
+  }
+
+  /* Grille */
+  #cl-{{ section.id }} .cl-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns | default: 4 }}, 1fr);
+    gap: {{ section.settings.gap | default: 16 }}px;
+    max-width: {{ section.settings.max_width | default: 1400 }}px;
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    #cl-{{ section.id }} .cl-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 540px) {
+    #cl-{{ section.id }} .cl-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  }
+
+  /* Carte — style identique au thème */
+  #cl-{{ section.id }} .cl-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  #cl-{{ section.id }} .cl-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    transform: translateY(-2px);
+  }
+  #cl-{{ section.id }} .cl-card.is-soldout { opacity: .6; }
+
+  /* Image */
+  #cl-{{ section.id }} .cl-img-wrap {
+    position: relative;
+    aspect-ratio: {{ section.settings.img_ratio | default: '1/1' }};
+    overflow: hidden;
+    background: #f5f6fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #cl-{{ section.id }} .cl-img-main,
+  #cl-{{ section.id }} .cl-img-hover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 16px;
+    transition: opacity .35s ease;
+  }
+  #cl-{{ section.id }} .cl-img-hover { opacity: 0; }
+  #cl-{{ section.id }} .cl-card:hover .cl-img-hover { opacity: 1; }
+  #cl-{{ section.id }} .cl-card:hover .cl-img-main { opacity: 0; }
+  #cl-{{ section.id }} .cl-placeholder { width: 100%; height: 100%; display: block; opacity: .3; }
+
+  /* Badge promo */
+  #cl-{{ section.id }} .cl-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e63946;
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 100px;
+    z-index: 1;
+  }
+
+  /* Overlay rupture */
+  #cl-{{ section.id }} .cl-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #666;
+  }
+
+  /* Corps */
+  #cl-{{ section.id }} .cl-body {
+    padding: 14px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 4px;
+  }
+  #cl-{{ section.id }} .cl-vendor {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #999;
+    margin: 0;
+    font-weight: 500;
+  }
+  #cl-{{ section.id }} .cl-product-title {
+    font-size: .9rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 2px 0 4px;
+    color: #111;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Prix */
+  #cl-{{ section.id }} .cl-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 2px;
+  }
+  #cl-{{ section.id }} .cl-price-now {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #111;
+  }
+  #cl-{{ section.id }} .cl-price-now.is-sale { color: #e63946; }
+  #cl-{{ section.id }} .cl-price-was {
+    font-size: .85rem;
+    text-decoration: line-through;
+    color: #aaa;
+  }
+
+  /* Bouton */
+  #cl-{{ section.id }} .cl-footer { margin-top: auto; padding-top: 12px; }
+  #cl-{{ section.id }} .cl-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 14px;
+    background: {{ section.settings.btn_bg_color | default: '#111' }};
+    color: {{ section.settings.btn_txt_color | default: '#fff' }};
+    border: none;
+    border-radius: 8px;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: opacity .2s ease;
+    font-family: inherit;
+  }
+  #cl-{{ section.id }} .cl-btn:hover { opacity: .85; }
+  #cl-{{ section.id }} .cl-btn--disabled { background: #ddd; color: #999; cursor: not-allowed; }
+  #cl-{{ section.id }} .cl-btn.is-loading { pointer-events: none; opacity: .6; }
+
+  #cl-{{ section.id }} .cl-empty { text-align: center; padding: 60px 20px; opacity: .5; }
+</style>
+
+{% if section.settings.btn_mode == 'atc' %}
+<script>
+(function(){
+  var wrap = document.getElementById('cl-{{ section.id }}');
+  if (!wrap) return;
+
+  function showToast(msg, ok) {
+    var t = document.getElementById('cl-toast-{{ section.id }}');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'cl-toast-{{ section.id }}';
+      t.style.cssText = 'position:fixed;bottom:24px;right:24px;padding:13px 20px;border-radius:10px;font-size:.9rem;font-weight:600;color:#fff;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s ease;pointer-events:none;max-width:300px';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.background = ok ? '#16a34a' : '#dc2626';
+    requestAnimationFrame(function(){ t.style.opacity='1'; t.style.transform='translateY(0)'; });
+    clearTimeout(t._t);
+    t._t = setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(10px)'; }, 3000);
+  }
+
+  var label = {{ section.settings.btn_label_atc | json }};
+
+  wrap.addEventListener('click', function(e) {
+    var btn = e.target.closest('.js-atc');
+    if (!btn) return;
+    e.preventDefault();
+    btn.classList.add('is-loading');
+    btn.textContent = '…';
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: btn.dataset.variant, quantity: 1 })
+    })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+    .then(function(){
+      showToast('✓ Ajouté au panier !', true);
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
+    })
+    .catch(function(){ showToast('Erreur, réessaie.', false); })
+    .finally(function(){
+      btn.classList.remove('is-loading');
+      btn.textContent = label;
+    });
+  });
+})();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection Landing",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection à afficher"
+    },
+    {
+      "type": "header",
+      "content": "En-tête"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Afficher l'en-tête",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Notre collection"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Découvrez tous nos produits"
+    },
+    {
+      "type": "header",
+      "content": "Produits"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sold_out",
+      "label": "Afficher les produits épuisés",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Bouton"
+    },
+    {
+      "type": "select",
+      "id": "btn_mode",
+      "label": "Action du bouton",
+      "options": [
+        { "value": "atc", "label": "Ajouter au panier" },
+        { "value": "link", "label": "Voir le produit" }
+      ],
+      "default": "link"
+    },
+    {
+      "type": "text",
+      "id": "btn_label_atc",
+      "label": "Texte bouton (panier)",
+      "default": "Ajouter au panier"
+    },
+    {
+      "type": "text",
+      "id": "btn_label_link",
+      "label": "Texte bouton (lien)",
+      "default": "Voir le produit"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Fond bouton",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "btn_txt_color",
+      "label": "Texte bouton",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Mise en page"
+    },
+    {
+      "type": "select",
+      "id": "img_ratio",
+      "label": "Format de l'image",
+      "options": [
+        { "value": "1/1", "label": "Carré" },
+        { "value": "4/3", "label": "Paysage" },
+        { "value": "3/4", "label": "Portrait" }
+      ],
+      "default": "1/1"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Colonnes (desktop)",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Espacement entre cartes",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Largeur maximale",
+      "min": 800,
+      "max": 1800,
+      "step": 50,
+      "default": 1400,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Padding vertical",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fond de la section",
+      "default": "#f5f6fa"
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Message si collection vide",
+      "default": "Aucun produit disponible."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Landing",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}
