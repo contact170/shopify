@@ -277,3 +277,159 @@
 .ds-hide-mobile { display: block; }
 .ds-show-mobile { display: none; }
 @media (max-width:768px) { .ds-hide-mobile { display:none; } .ds-show-mobile { display:block; } }
+
+/* ==========================================================================
+   HEADER — Pill design style Ni'mah / Daewoo Security España
+   ========================================================================== */
+
+/* Conteneur Shopify du header — on lui donne le contexte floating */
+#shopify-section-header {
+  position: sticky !important;
+  top: 0;
+  z-index: 200;
+  padding: .75rem clamp(1rem, 3vw, 2.5rem);
+  background: transparent;
+  pointer-events: none;
+}
+#shopify-section-header > * { pointer-events: auto; }
+
+/* L'élément header lui-même → pill */
+.header {
+  border-radius: 9999px !important;
+  background: rgba(13,13,13,.92) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255,255,255,.09) !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,.35), 0 0 0 0 transparent !important;
+  max-width: 1160px !important;
+  margin: 0 auto !important;
+  padding-top: .55rem !important;
+  padding-bottom: .55rem !important;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+  transition: box-shadow .3s ease, background .3s ease !important;
+}
+.header:hover {
+  box-shadow: 0 12px 50px rgba(0,0,0,.45) !important;
+}
+
+/* Override couleurs internes du thème */
+.header,
+.header--left-center,
+.header--center {
+  --color-background: 13,13,13 !important;
+  --color-foreground: 255,255,255 !important;
+  --color-transparent: 255,255,255 !important;
+}
+
+/* Logo en blanc */
+.header__logo img,
+.header .header__logo { filter: brightness(10) !important; }
+.header .header__logo svg path,
+.header .header__logo svg rect { fill: #fff !important; }
+
+/* Liens de navigation */
+.header__nav-item a,
+.header__nav-item > a,
+.header__menu a,
+.header .header__nav-item {
+  color: rgba(255,255,255,.82) !important;
+  font-family: var(--ds-font) !important;
+  font-size: .875rem !important;
+  font-weight: 500 !important;
+  transition: color .18s !important;
+}
+.header__nav-item a:hover,
+.header__menu a:hover {
+  color: #fff !important;
+}
+
+/* Icônes header (search, cart, hamburger) */
+.header__icons svg path,
+.header__icons svg rect,
+.header__icons svg circle,
+.header__icons .icon path,
+.header__icons .icon rect { stroke: #fff !important; }
+.header__icons .header__icon { color: #fff !important; }
+.header .header__icon--cart span { background: var(--ds-accent) !important; }
+
+/* Bouton CTA dans le header — style pour un lien désigné comme bouton.
+   Ajoute la classe "header-cta" au lien dans le menu Shopify Admin
+   (ou on cible le dernier li du menu) */
+.header__nav-item:last-child a,
+.header__menu .header__nav-item:last-child > a {
+  background: var(--ds-accent) !important;
+  color: #fff !important;
+  border-radius: 9999px !important;
+  padding: .45rem 1.1rem !important;
+  font-weight: 700 !important;
+  font-size: .82rem !important;
+  transition: background .18s, transform .12s !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .4rem !important;
+  margin-left: .25rem !important;
+  white-space: nowrap !important;
+}
+.header__nav-item:last-child a:hover,
+.header__menu .header__nav-item:last-child > a:hover {
+  background: #C1121F !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 1023px) {
+  #shopify-section-header {
+    padding: .5rem .75rem;
+  }
+
+  /* Header pill mobile réduit */
+  .header {
+    border-radius: 9999px !important;
+    padding: .4rem .75rem !important;
+  }
+
+  /* Hamburger — bouton circulaire style Ni'mah */
+  .header__hamburger,
+  .header__icon--menu,
+  [data-mobile-menu-toggle] {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    background: rgba(255,255,255,.1) !important;
+    border: 1px solid rgba(255,255,255,.15) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background .18s !important;
+  }
+  .header__hamburger:hover,
+  .header__icon--menu:hover {
+    background: rgba(255,255,255,.18) !important;
+  }
+  .header__hamburger svg path,
+  .header__icon--menu svg path {
+    stroke: #fff !important;
+  }
+
+  /* Masquer les icônes non essentielles sur mobile pour épurer */
+  .header__icon--search { display: none !important; }
+}
+
+/* ---- Drawer mobile — fond sombre ---- */
+#menu-drawer,
+.header-drawer,
+.drawer-menu {
+  background: #0D0D0D !important;
+  color: #fff !important;
+}
+.header-drawer__menu a,
+.drawer-menu a {
+  color: rgba(255,255,255,.85) !important;
+  font-family: var(--ds-font) !important;
+}
+.header-drawer__menu a:hover,
+.drawer-menu a:hover { color: #fff !important; }
+
+/* Fond page (évite le chevauchement du header sticky floating) */
+body { padding-top: 0 !important; }
