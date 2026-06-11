@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daewoo Security — Alarme maison sans abonnement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --navy:   #0C1E4A;
+  --navy2:  #162B63;
+  --blue:   #0771E3;
+  --blue2:  #0559B8;
+  --sky:    #E8F0FE;
+  --bg:     #F4F6FB;
+  --white:  #FFFFFF;
+  --red:    #E8304A;
+  --text:   #1A2540;
+  --muted:  #5E6E92;
+  --border: #D6DDEF;
+  --green:  #22C55E;
+  --gold:   #F59E0B;
+  --r:      12px;
+  --r-lg:   20px;
+  --shadow: 0 4px 24px rgba(12,30,74,.08);
+  --shadow-lg: 0 12px 48px rgba(12,30,74,.14);
+}
+
+/* ─── RESET ──────────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:default}
+img,svg{display:block}
+button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+
+/* ─── SCROLLBAR ──────────────────────────────────────────── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:10px}
+
+/* ─── NAVBAR ─────────────────────────────────────────────── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;height:70px;
+  background:rgba(244,246,251,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(214,221,239,.6);
+  transition:box-shadow .3s;
+}
+.nav.scrolled{box-shadow:var(--shadow)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-mark{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--navy);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.nav-logo-text{font-weight:800;font-size:.95rem;letter-spacing:.5px;color:var(--navy);line-height:1.1}
+.nav-logo-text span{display:block;font-weight:400;font-size:.7rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{font-size:.85rem;font-weight:500;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--navy)}
+.nav-cta{
+  padding:10px 24px;
+  background:var(--blue);color:#fff;
+  font-size:.85rem;font-weight:600;
+  border-radius:8px;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 4px 14px rgba(7,113,227,.35);
+}
+.nav-cta:hover{background:var(--blue2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(7,113,227,.45)}
+.nav-badge{
+  display:flex;align-items:center;gap:6px;
+  font-size:.72rem;font-weight:600;color:var(--green);
+  background:rgba(34,197,94,.1);
+  padding:4px 10px;border-radius:20px;
+  border:1px solid rgba(34,197,94,.25);
+}
+.nav-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse-dot 2s ease infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+
+/* ─── HERO ───────────────────────────────────────────────── */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:100px 60px 60px;
+  gap:40px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-200px;right:-200px;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(7,113,227,.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:20px;
+}
+.hero-eyebrow::before{content:'';width:20px;height:2px;background:var(--blue);border-radius:2px}
+.hero h1{
+  font-size:clamp(2.4rem,4vw,3.4rem);font-weight:800;
+  line-height:1.1;letter-spacing:-1.5px;
+  color:var(--navy);margin-bottom:22px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--blue),#3B9EFF);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:1rem;line-height:1.7;color:var(--muted);
+  max-width:480px;margin-bottom:36px;
+}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.pill{
+  display:flex;align-items:center;gap:7px;
+  font-size:.78rem;font-weight:600;
+  padding:7px 14px;border-radius:30px;
+  background:var(--white);border:1.5px solid var(--border);
+  color:var(--text);
+  box-shadow:0 2px 8px rgba(12,30,74,.06);
+}
+.pill svg{flex-shrink:0}
+.hero-cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 32px;
+  background:var(--navy);color:#fff;
+  font-size:.92rem;font-weight:700;letter-spacing:.2px;
+  border-radius:10px;
+  box-shadow:0 6px 24px rgba(12,30,74,.25);
+  transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.btn-primary::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(12,30,74,.3)}
+.btn-primary:hover::after{opacity:1}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;
+  background:transparent;color:var(--navy);
+  font-size:.88rem;font-weight:600;
+  border:2px solid var(--border);border-radius:10px;
+  transition:all .2s;
+}
+.btn-secondary:hover{border-color:var(--navy);background:var(--white)}
+.hero-trust{
+  margin-top:40px;padding-top:28px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--muted);font-weight:500}
+.trust-item strong{color:var(--text)}
+
+/* ─── HOUSE SVG WRAPPER ──────────────────────────────────── */
+.hero-visual{
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.house-stage{
+  width:100%;max-width:520px;
+  position:relative;
+  filter:drop-shadow(0 30px 60px rgba(12,30,74,.15));
+}
+.house-bg-ring{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:440px;height:440px;border-radius:50%;
+  background:radial-gradient(circle,rgba(7,113,227,.06) 0%,transparent 70%);
+  animation:ring-breathe 4s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes ring-breathe{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7}
+  50%{transform:translate(-50%,-50%) scale(1.08);opacity:1}
+}
+
+/* ─── HOUSE SVG ZONES (toggled by JS) ───────────────────── */
+.zone{transition:opacity .5s ease,filter .5s ease}
+.zone-inactive{opacity:.15}
+.zone-active{opacity:1}
+.zone-pulse circle{animation:zone-pulse 2s ease-in-out infinite}
+@keyframes zone-pulse{
+  0%,100%{r:8;opacity:.8}
+  50%{r:14;opacity:.3}
+}
+.signal-arc{
+  stroke-dasharray:60 200;
+  stroke-dashoffset:0;
+  animation:arc-dash 2.5s linear infinite;
+  opacity:0;transition:opacity .5s;
+}
+.signal-arc.active{opacity:1}
+@keyframes arc-dash{to{stroke-dashoffset:-260}}
+
+/* ─── CONFIGURATOR SECTION ───────────────────────────────── */
+#configurateur{
+  padding:100px 60px;
+  background:var(--white);
+  position:relative;overflow:hidden;
+}
+#configurateur::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--navy),var(--blue),#3B9EFF);
+}
+.config-header{text-align:center;margin-bottom:60px}
+.section-eyebrow{
+  display:inline-block;
+  font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:14px;
+}
+.config-header h2{
+  font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;
+  letter-spacing:-1px;color:var(--navy);margin-bottom:14px;
+}
+.config-header p{font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto}
+
+/* Quiz container */
+.quiz-wrap{
+  max-width:820px;margin:0 auto;
+  position:relative;
+}
+.quiz-progress-row{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:36px;
+}
+.quiz-step-label{
+  font-size:.75rem;font-weight:700;
+  color:var(--muted);letter-spacing:1px;
+  white-space:nowrap;min-width:80px;
+}
+.quiz-progress-bar{
+  flex:1;height:6px;background:var(--sky);
+  border-radius:10px;overflow:hidden;
+}
+.quiz-progress-fill{
+  height:100%;border-radius:10px;
+  background:linear-gradient(90deg,var(--blue),#3B9EFF);
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 10px rgba(7,113,227,.4);
+}
+.quiz-step-dots{display:flex;gap:8px}
+.step-dot{
+  width:28px;height:28px;border-radius:50%;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.68rem;font-weight:700;color:var(--muted);
+  transition:all .3s;background:var(--white);
+  flex-shrink:0;
+}
+.step-dot.done{background:var(--blue);border-color:var(--blue);color:#fff}
+.step-dot.current{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 0 0 4px rgba(12,30,74,.15)}
+
+/* Quiz card */
+.quiz-card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  position:relative;
+}
+.quiz-card-stripe{
+  height:5px;
+  background:linear-gradient(90deg,var(--navy),var(--blue));
+}
+.quiz-card-body{padding:48px 52px}
+.quiz-q-label{
+  font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:10px;
+}
+.quiz-question{
+  font-size:1.5rem;font-weight:800;
+  color:var(--navy);letter-spacing:-.5px;
+  margin-bottom:8px;line-height:1.25;
+}
+.quiz-hint{font-size:.85rem;color:var(--muted);margin-bottom:36px;line-height:1.6}
+
+/* Answer grid */
+.answer-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:14px;margin-bottom:40px;
+}
+.answer-grid.cols-1{grid-template-columns:1fr}
+.answer-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.answer-btn{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:18px 20px;
+  background:var(--bg);
+  border:2px solid var(--border);
+  border-radius:12px;
+  text-align:left;
+  transition:all .2s;
+  cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.answer-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(7,113,227,.06),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.answer-btn:hover{border-color:var(--blue);background:var(--white);transform:translateY(-1px);box-shadow:0 6px 20px rgba(7,113,227,.1)}
+.answer-btn:hover::before{opacity:1}
+.answer-btn.selected{
+  border-color:var(--blue);
+  background:linear-gradient(135deg,rgba(7,113,227,.06),rgba(7,113,227,.02));
+  box-shadow:0 0 0 4px rgba(7,113,227,.12);
+}
+.answer-btn.selected .answer-check{
+  background:var(--blue);border-color:var(--blue);
+}
+.answer-btn.selected .answer-check svg{opacity:1}
+.answer-icon-wrap{
+  width:42px;height:42px;border-radius:10px;
+  background:var(--white);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1.3rem;
+  transition:all .2s;
+}
+.answer-btn.selected .answer-icon-wrap{background:rgba(7,113,227,.1);border-color:rgba(7,113,227,.3)}
+.answer-text{flex:1}
+.answer-title{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:3px}
+.answer-sub{font-size:.75rem;color:var(--muted);line-height:1.4}
+.answer-check{
+  width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--border);
+  background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+  transition:all .2s;
+}
+.answer-check svg{opacity:0;transition:opacity .2s}
+
+/* Quiz nav */
+.quiz-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+}
+.quiz-back{
+  display:flex;align-items:center;gap:6px;
+  font-size:.82rem;font-weight:600;color:var(--muted);
+  background:none;border:none;padding:8px 0;
+  transition:color .2s;
+}
+.quiz-back:hover{color:var(--navy)}
+.quiz-back:disabled{opacity:.3;cursor:not-allowed}
+.quiz-next{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 28px;
+  background:var(--navy);color:#fff;
+  font-size:.88rem;font-weight:700;
+  border-radius:10px;
+  box-shadow:0 4px 16px rgba(12,30,74,.2);
+  transition:all .2s;
+}
+.quiz-next:hover{background:var(--navy2);transform:translateY(-1px)}
+.quiz-next:disabled{opacity:.35;cursor:not-allowed;transform:none}
+
+/* Step transitions */
+.quiz-step{display:none;animation:step-in .35s cubic-bezier(.4,0,.2,1) both}
+.quiz-step.active{display:block}
+.quiz-step.out{animation:step-out .3s cubic-bezier(.4,0,.2,1) both}
+@keyframes step-in{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes step-out{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-40px)}}
+
+/* ─── RESULT ──────────────────────────────────────────────── */
+#result{display:none}
+#result.visible{display:block;animation:step-in .4s ease both}
+.result-card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.result-header{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  padding:48px 52px 40px;
+  position:relative;overflow:hidden;
+}
+.result-header::after{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:240px;height:240px;border-radius:50%;
+  background:rgba(255,255,255,.04);
+}
+.result-eyebrow{
+  font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:12px;
+}
+.result-name{
+  font-size:2.2rem;font-weight:900;letter-spacing:-1px;
+  color:#fff;margin-bottom:8px;
+}
+.result-tagline{font-size:.95rem;color:rgba(255,255,255,.65);max-width:460px;line-height:1.6}
+.result-price-wrap{
+  display:flex;align-items:flex-end;gap:12px;
+  margin-top:28px;
+}
+.result-price{
+  font-size:3rem;font-weight:900;letter-spacing:-2px;color:#fff;line-height:1;
+}
+.result-price-note{
+  font-size:.8rem;color:rgba(255,255,255,.5);padding-bottom:6px;line-height:1.4;
+}
+.result-body{padding:48px 52px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.result-section-title{
+  font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:20px;
+}
+.product-list{display:flex;flex-direction:column;gap:12px}
+.product-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;
+  background:var(--bg);border-radius:10px;
+  border:1px solid var(--border);
+  animation:slide-up .4s ease both;
+}
+@keyframes slide-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.product-icon{
+  width:38px;height:38px;border-radius:8px;
+  background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+  border:1px solid var(--border);
+}
+.product-info{flex:1}
+.product-name{font-size:.85rem;font-weight:700;color:var(--text)}
+.product-ref{font-size:.72rem;color:var(--muted)}
+.product-qty{
+  font-size:.8rem;font-weight:700;
+  color:var(--blue);background:var(--sky);
+  padding:3px 8px;border-radius:6px;
+}
+.result-why{
+  background:linear-gradient(135deg,rgba(7,113,227,.05),rgba(7,113,227,.02));
+  border:1px solid rgba(7,113,227,.15);
+  border-radius:12px;padding:24px;
+  margin-top:0;
+}
+.why-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.why-item:last-child{margin-bottom:0}
+.why-check{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--blue);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+.why-text{font-size:.83rem;color:var(--text);line-height:1.5}
+.why-text strong{color:var(--navy)}
+.result-actions{
+  display:flex;gap:14px;flex-wrap:wrap;
+  margin-top:36px;padding-top:28px;
+  border-top:1px solid var(--border);
+}
+.result-restart{
+  display:flex;align-items:center;gap:6px;
+  font-size:.82rem;font-weight:600;color:var(--muted);
+  background:none;border:none;padding:8px 0;
+  transition:color .2s;
+}
+.result-restart:hover{color:var(--navy)}
+
+/* ─── WHY SECTION ────────────────────────────────────────── */
+#pourquoi{
+  padding:100px 60px;
+  background:var(--navy);
+  position:relative;overflow:hidden;
+}
+#pourquoi::before{
+  content:'';position:absolute;
+  top:-200px;left:-200px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(7,113,227,.15) 0%,transparent 60%);
+  pointer-events:none;
+}
+.pourquoi-header{text-align:center;margin-bottom:64px}
+.pourquoi-header .section-eyebrow{color:rgba(255,255,255,.5)}
+.pourquoi-header h2{
+  font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;
+  letter-spacing:-1px;color:#fff;margin-bottom:12px;
+}
+.pourquoi-header p{font-size:1rem;color:rgba(255,255,255,.55);max-width:500px;margin:0 auto}
+.pourquoi-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;max-width:1100px;margin:0 auto;
+}
+.pourquoi-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-lg);
+  padding:40px 36px;
+  transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.pourquoi-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),#3B9EFF);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.pourquoi-card:hover{background:rgba(255,255,255,.08);transform:translateY(-4px)}
+.pourquoi-card:hover::before{transform:scaleX(1)}
+.pourquoi-icon{
+  width:52px;height:52px;border-radius:12px;
+  background:rgba(7,113,227,.2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+  font-size:1.4rem;
+}
+.pourquoi-card h3{
+  font-size:1.1rem;font-weight:700;color:#fff;
+  margin-bottom:12px;letter-spacing:-.3px;
+}
+.pourquoi-card p{font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.7}
+.pourquoi-stat{
+  margin-top:24px;
+  font-size:2rem;font-weight:900;
+  color:var(--blue);letter-spacing:-1px;
+}
+.pourquoi-stat span{font-size:.75rem;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:0;margin-left:4px}
+
+/* ─── GAMMES SECTION ─────────────────────────────────────── */
+#gammes{
+  padding:100px 60px;
+  background:var(--bg);
+}
+.gammes-header{text-align:center;margin-bottom:64px}
+.gammes-header h2{
+  font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;
+  letter-spacing:-1px;color:var(--navy);margin-bottom:12px;
+}
+.gammes-header p{font-size:1rem;color:var(--muted);max-width:500px;margin:0 auto}
+.gammes-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;max-width:1100px;margin:0 auto;
+}
+.gamme-card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  transition:all .3s;
+  cursor:pointer;
+}
+.gamme-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--blue)}
+.gamme-card-top{
+  padding:36px;
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  position:relative;overflow:hidden;
+}
+.gamme-card-top::after{
+  content:'';position:absolute;bottom:-40px;right:-40px;
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(255,255,255,.05);
+}
+.gamme-badge{
+  display:inline-block;
+  font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:16px;
+}
+.gamme-name{font-size:1.6rem;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:6px}
+.gamme-tagline{font-size:.8rem;color:rgba(255,255,255,.5)}
+.gamme-from{margin-top:20px}
+.gamme-from-label{font-size:.7rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px}
+.gamme-from-price{font-size:2rem;font-weight:900;color:#fff}
+.gamme-body{padding:28px 36px}
+.gamme-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.gamme-feat{display:flex;align-items:center;gap:10px;font-size:.83rem;color:var(--text)}
+.gamme-feat-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.gamme-cta{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:12px;
+  border:2px solid var(--border);border-radius:8px;
+  font-size:.85rem;font-weight:700;color:var(--navy);
+  background:none;
+  transition:all .2s;
+}
+.gamme-cta:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+footer{
+  background:var(--navy);
+  padding:60px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.footer-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:48px;flex-wrap:wrap;
+  margin-bottom:48px;
+}
+.footer-brand p{font-size:.85rem;color:rgba(255,255,255,.4);margin-top:12px;max-width:260px;line-height:1.7}
+.footer-col h4{font-size:.8rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:18px}
+.footer-col ul{display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:.85rem;color:rgba(255,255,255,.55);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{
+  padding-top:28px;border-top:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-bottom p{font-size:.75rem;color:rgba(255,255,255,.25)}
+.footer-bottom-links{display:flex;gap:24px}
+.footer-bottom-links a{font-size:.75rem;color:rgba(255,255,255,.3);transition:color .2s}
+.footer-bottom-links a:hover{color:rgba(255,255,255,.6)}
+
+/* ─── REVEAL ANIMATIONS ──────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* ─── FLOATING TOOLTIP ───────────────────────────────────── */
+.house-tooltip{
+  position:absolute;
+  background:var(--navy);color:#fff;
+  font-size:.72rem;font-weight:600;
+  padding:6px 12px;border-radius:6px;
+  pointer-events:none;white-space:nowrap;
+  opacity:0;transition:opacity .3s;
+  z-index:10;
+}
+.house-tooltip.visible{opacity:1}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:900px){
+  .nav{padding:0 24px}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:90px 24px 60px;text-align:center}
+  .hero-pills{justify-content:center}
+  .hero-cta-row{justify-content:center}
+  .hero-trust{justify-content:center}
+  .hero-visual{margin-top:40px}
+  .house-stage{max-width:340px}
+  #configurateur{padding:60px 24px}
+  .quiz-card-body{padding:28px 24px}
+  .answer-grid{grid-template-columns:1fr}
+  .result-grid{grid-template-columns:1fr}
+  .result-header,.result-body{padding:28px 24px}
+  #pourquoi,#gammes{padding:60px 24px}
+  .pourquoi-grid,.gammes-grid{grid-template-columns:1fr}
+  footer{padding:40px 24px}
+  .footer-inner{flex-direction:column}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ────────────────────────────────────────────── -->
+<nav class="nav" id="navbar">
+  <div class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 2L17 5.5V10.5C17 14.2 13.9 17.5 10 18.5C6.1 17.5 3 14.2 3 10.5V5.5L10 2Z" fill="white" opacity=".9"/>
+        <path d="M7 10L9 12L13 8" stroke="#0C1E4A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="nav-logo-text">
+      Daewoo Security
+      <span>Protection sans abonnement</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#configurateur">Configurateur</a></li>
+    <li><a href="#gammes">Gammes</a></li>
+    <li><a href="#pourquoi">Pourquoi Daewoo</a></li>
+    <li><a href="#" onclick="return false">Support</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="nav-badge"><span class="nav-badge-dot"></span>Sans abonnement</div>
+    <a href="#configurateur" class="nav-cta">Configurer mon alarme</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Alarme maison connectée</div>
+    <h1>Votre maison protégée,<br><em>à votre façon.</em></h1>
+    <p class="hero-sub">
+      Configurez votre système d'alarme en 2 minutes. Aucun abonnement, aucun frais cachés — juste une protection sur-mesure, à vie.
+    </p>
+    <div class="hero-pills">
+      <div class="pill">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#22C55E" stroke-width="1.5"/><path d="M4.5 7L6.5 9L9.5 5" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        0€/mois d'abonnement
+      </div>
+      <div class="pill">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#22C55E" stroke-width="1.5"/><path d="M4.5 7L6.5 9L9.5 5" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Installation en 30 min
+      </div>
+      <div class="pill">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#22C55E" stroke-width="1.5"/><path d="M4.5 7L6.5 9L9.5 5" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        100% modulable
+      </div>
+      <div class="pill">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#22C55E" stroke-width="1.5"/><path d="M4.5 7L6.5 9L9.5 5" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Garantie 2 ans
+      </div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#configurateur" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L14 5V9C14 12.3 11.3 15 8 16C4.7 15 2 12.3 2 9V5L8 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        Trouver mon pack
+      </a>
+      <a href="#gammes" class="btn-secondary">
+        Voir les gammes
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M8 4L11 7L8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L14 4V8C14 11.3 11.3 14.6 8 16C4.7 14.6 2 11.3 2 8V4L8 1Z" fill="#0771E3" opacity=".15" stroke="#0771E3" stroke-width="1.2"/></svg>
+        <strong>+50 000</strong> foyers protégés
+      </div>
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5L9.8 5.6L14.3 6.1L11.1 9.1L11.9 13.5L8 11.3L4.1 13.5L4.9 9.1L1.7 6.1L6.2 5.6L8 1.5Z" fill="#F59E0B" stroke="#F59E0B" stroke-width=".5"/></svg>
+        Note <strong>4.8/5</strong>
+      </div>
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="9" rx="2" stroke="#6B7A9E" stroke-width="1.2"/><path d="M5 4V3C5 1.9 6.3 1 8 1C9.7 1 11 1.9 11 3V4" stroke="#6B7A9E" stroke-width="1.2"/></svg>
+        Paiement <strong>sécurisé</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- REACTIVE HOUSE SVG -->
+  <div class="hero-visual">
+    <div class="house-bg-ring"></div>
+    <div class="house-stage" id="houseStage">
+      <svg id="houseSvg" viewBox="0 0 500 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1C3266"/>
+            <stop offset="100%" stop-color="#0C1E4A"/>
+          </linearGradient>
+          <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#EEF1F9"/>
+            <stop offset="100%" stop-color="#DDE2F0"/>
+          </linearGradient>
+          <linearGradient id="shadowGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(12,30,74,.1)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </linearGradient>
+          <filter id="glow-blue"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="glow-red"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <!-- Ground shadow -->
+        <ellipse cx="250" cy="460" rx="190" ry="18" fill="rgba(12,30,74,.1)"/>
+
+        <!-- HOUSE BODY -->
+        <rect x="80" y="220" width="340" height="220" rx="3" fill="url(#wallGrad)" stroke="#C8D0E8" stroke-width="1.5"/>
+        <!-- Wall shadow panel right side -->
+        <rect x="340" y="220" width="80" height="220" fill="url(#shadowGrad)" rx="3"/>
+
+        <!-- ROOF -->
+        <path d="M55 225 L250 90 L445 225 Z" fill="url(#roofGrad)"/>
+        <!-- Roof ridge highlight -->
+        <path d="M250 92 L250 95" stroke="rgba(255,255,255,.3)" stroke-width="2"/>
+        <!-- Roof edge trim -->
+        <path d="M55 225 L250 90 L445 225" stroke="#0A1840" stroke-width="3" fill="none"/>
+
+        <!-- CHIMNEY -->
+        <rect x="330" y="115" width="32" height="60" fill="#1C3266" stroke="#0A1840" stroke-width="1"/>
+        <rect x="326" y="112" width="40" height="8" rx="2" fill="#162B63"/>
+
+        <!-- FRONT DOOR zone -->
+        <g id="zone-door" class="zone zone-inactive">
+          <rect x="198" y="340" width="64" height="98" rx="4" fill="#B8C5E0" stroke="#8FA3CC" stroke-width="1.5"/>
+          <rect x="198" y="340" width="64" height="98" rx="4" fill="rgba(7,113,227,.08)"/>
+          <!-- door panels -->
+          <rect x="204" y="347" width="52" height="44" rx="2" fill="rgba(255,255,255,.4)" stroke="#8FA3CC" stroke-width="1"/>
+          <rect x="204" y="396" width="52" height="37" rx="2" fill="rgba(255,255,255,.4)" stroke="#8FA3CC" stroke-width="1"/>
+          <!-- door knob -->
+          <circle cx="253" cy="392" r="4" fill="#C9A84C"/>
+          <!-- Sensor dot on door frame -->
+          <circle cx="196" cy="360" r="5" fill="#0771E3" filter="url(#glow-blue)">
+            <animate attributeName="opacity" values="1;.3;1" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Door arch top -->
+          <path d="M198 344 Q230 330 262 344" stroke="#8FA3CC" stroke-width="1.5" fill="none"/>
+        </g>
+
+        <!-- Default door (no active class) -->
+        <g id="zone-door-base">
+          <rect x="198" y="340" width="64" height="98" rx="4" fill="#C8D4E8" stroke="#A0B0CC" stroke-width="1.5"/>
+          <rect x="204" y="347" width="52" height="44" rx="2" fill="rgba(255,255,255,.3)" stroke="#A0B0CC" stroke-width="1"/>
+          <rect x="204" y="396" width="52" height="37" rx="2" fill="rgba(255,255,255,.3)" stroke="#A0B0CC" stroke-width="1"/>
+          <circle cx="253" cy="392" r="3.5" fill="#8FA3C0"/>
+        </g>
+
+        <!-- GROUND FLOOR WINDOWS zone -->
+        <g id="zone-windows-gf" class="zone zone-inactive">
+          <!-- Left GF window -->
+          <rect x="100" y="280" width="72" height="60" rx="3" fill="rgba(59,158,255,.15)" stroke="#0771E3" stroke-width="1.5"/>
+          <line x1="136" y1="282" x2="136" y2="338" stroke="#0771E3" stroke-width="1" opacity=".5"/>
+          <line x1="102" y1="311" x2="170" y2="311" stroke="#0771E3" stroke-width="1" opacity=".5"/>
+          <circle cx="100" cy="280" r="5" fill="#0771E3" filter="url(#glow-blue)">
+            <animate attributeName="opacity" values="1;.3;1" dur="1.8s" repeatCount="indefinite" begin=".3s"/>
+          </circle>
+          <!-- Right GF window -->
+          <rect x="328" y="280" width="72" height="60" rx="3" fill="rgba(59,158,255,.15)" stroke="#0771E3" stroke-width="1.5"/>
+          <line x1="364" y1="282" x2="364" y2="338" stroke="#0771E3" stroke-width="1" opacity=".5"/>
+          <line x1="330" y1="311" x2="398" y2="311" stroke="#0771E3" stroke-width="1" opacity=".5"/>
+          <circle cx="400" cy="280" r="5" fill="#0771E3" filter="url(#glow-blue)">
+            <animate attributeName="opacity" values=".3;1;.3" dur="1.8s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+        <!-- GF windows base -->
+        <g id="zone-windows-gf-base">
+          <rect x="100" y="280" width="72" height="60" rx="3" fill="rgba(200,212,232,.4)" stroke="#A0B0CC" stroke-width="1.5"/>
+          <line x1="136" y1="282" x2="136" y2="338" stroke="#A0B0CC" stroke-width="1"/>
+          <line x1="102" y1="311" x2="170" y2="311" stroke="#A0B0CC" stroke-width="1"/>
+          <rect x="328" y="280" width="72" height="60" rx="3" fill="rgba(200,212,232,.4)" stroke="#A0B0CC" stroke-width="1.5"/>
+          <line x1="364" y1="282" x2="364" y2="338" stroke="#A0B0CC" stroke-width="1"/>
+          <line x1="330" y1="311" x2="398" y2="311" stroke="#A0B0CC" stroke-width="1"/>
+        </g>
+
+        <!-- FIRST FLOOR WINDOWS zone -->
+        <g id="zone-windows-ff" class="zone zone-inactive">
+          <rect x="115" y="148" width="58" height="52" rx="3" fill="rgba(59,158,255,.12)" stroke="#0771E3" stroke-width="1.5"/>
+          <line x1="144" y1="150" x2="144" y2="198" stroke="#0771E3" stroke-width="1" opacity=".5"/>
+          <circle cx="115" cy="148" r="5" fill="#0771E3" filter="url(#glow-blue)">
+            <animate attributeName="opacity" values="1;.3;1" dur="2.2s" repeatCount="indefinite" begin=".6s"/>
+          </circle>
+          <rect x="327" y="148" width="58" height="52" rx="3" fill="rgba(59,158,255,.12)" stroke="#0771E3" stroke-width="1.5"/>
+          <line x1="356" y1="150" x2="356" y2="198" stroke="#0771E3" stroke-width="1" opacity=".5"/>
+          <circle cx="385" cy="148" r="5" fill="#0771E3" filter="url(#glow-blue)">
+            <animate attributeName="opacity" values=".3;1;.3" dur="2.2s" repeatCount="indefinite" begin=".9s"/>
+          </circle>
+        </g>
+        <!-- FF windows base -->
+        <g id="zone-windows-ff-base">
+          <rect x="115" y="148" width="58" height="52" rx="3" fill="rgba(200,212,232,.3)" stroke="#A0B0CC" stroke-width="1.5"/>
+          <line x1="144" y1="150" x2="144" y2="198" stroke="#A0B0CC" stroke-width="1"/>
+          <rect x="327" y="148" width="58" height="52" rx="3" fill="rgba(200,212,232,.3)" stroke="#A0B0CC" stroke-width="1.5"/>
+          <line x1="356" y1="150" x2="356" y2="198" stroke="#A0B0CC" stroke-width="1"/>
+        </g>
+
+        <!-- MOTION DETECTOR ARCS zone -->
+        <g id="zone-motion" class="zone zone-inactive">
+          <!-- Motion detector device -->
+          <rect x="222" y="232" width="56" height="28" rx="6" fill="#0C1E4A" stroke="#0771E3" stroke-width="1.5"/>
+          <circle cx="250" cy="246" r="5" fill="#0771E3">
+            <animate attributeName="opacity" values="1;.4;1" dur="1.5s" repeatCount="indefinite"/>
+          </circle>
+          <text x="250" y="270" font-family="Poppins" font-size="9" fill="#0771E3" text-anchor="middle" font-weight="600">MOTION</text>
+          <!-- Arcs -->
+          <path class="signal-arc active" d="M250 260 Q320 330 390 350" stroke="#0771E3" stroke-width="1.5" fill="none" stroke-dasharray="6 6" opacity=".6"/>
+          <path class="signal-arc active" d="M250 260 Q180 330 110 350" stroke="#0771E3" stroke-width="1.5" fill="none" stroke-dasharray="6 6" opacity=".6" style="animation-delay:.8s"/>
+          <path d="M200 262 Q250 320 300 262" stroke="rgba(7,113,227,.2)" stroke-width="12" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- CAMERA zone -->
+        <g id="zone-camera" class="zone zone-inactive">
+          <!-- Camera top-left corner -->
+          <g transform="translate(84,224)">
+            <rect width="28" height="20" rx="4" fill="#0C1E4A" stroke="#0771E3" stroke-width="1.5"/>
+            <circle cx="14" cy="10" r="5" fill="#0771E3" opacity=".8"/>
+            <circle cx="14" cy="10" r="2.5" fill="#1A3A6E"/>
+            <rect x="28" y="5" width="12" height="10" rx="2" fill="#0C1E4A" stroke="#0771E3" stroke-width="1"/>
+            <!-- FOV triangle -->
+            <path d="M14 30 L-20 70 L48 70 Z" fill="rgba(7,113,227,.06)" stroke="rgba(7,113,227,.2)" stroke-width="1" stroke-dasharray="3 3"/>
+          </g>
+          <!-- Camera top-right corner -->
+          <g transform="translate(390,224) scale(-1,1)">
+            <rect width="28" height="20" rx="4" fill="#0C1E4A" stroke="#0771E3" stroke-width="1.5"/>
+            <circle cx="14" cy="10" r="5" fill="#0771E3" opacity=".8"/>
+            <circle cx="14" cy="10" r="2.5" fill="#1A3A6E"/>
+            <rect x="28" y="5" width="12" height="10" rx="2" fill="#0C1E4A" stroke="#0771E3" stroke-width="1"/>
+            <path d="M14 30 L-20 70 L48 70 Z" fill="rgba(7,113,227,.06)" stroke="rgba(7,113,227,.2)" stroke-width="1" stroke-dasharray="3 3"/>
+          </g>
+          <text x="250" y="215" font-family="Poppins" font-size="9" fill="#0771E3" text-anchor="middle" font-weight="600">CAMÉRAS ACTIVES</text>
+        </g>
+
+        <!-- SMOKE DETECTOR zone -->
+        <g id="zone-smoke" class="zone zone-inactive">
+          <circle cx="250" cy="228" r="12" fill="#E8304A" opacity=".15" stroke="#E8304A" stroke-width="1.5">
+            <animate attributeName="r" values="12;18;12" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values=".15;.05;.15" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="250" cy="228" r="8" fill="#E8304A" opacity=".8"/>
+          <text x="250" y="215" font-family="Poppins" font-size="9" fill="#E8304A" text-anchor="middle" font-weight="700">FUMÉE</text>
+        </g>
+
+        <!-- SIREN zone -->
+        <g id="zone-siren" class="zone zone-inactive">
+          <g transform="translate(348, 130)">
+            <rect width="24" height="30" rx="4" fill="#0C1E4A" stroke="#F59E0B" stroke-width="1.5"/>
+            <circle cx="12" cy="14" r="6" fill="#F59E0B" opacity=".9">
+              <animate attributeName="opacity" values=".9;.3;.9" dur="1s" repeatCount="indefinite"/>
+            </circle>
+            <text x="12" y="42" font-family="Poppins" font-size="8" fill="#F59E0B" text-anchor="middle" font-weight="700">SIRÈNE</text>
+          </g>
+        </g>
+
+        <!-- CENTRAL box (always visible) -->
+        <g id="zone-central">
+          <rect x="210" y="350" width="80" height="38" rx="6" fill="#0C1E4A" stroke="#0771E3" stroke-width="1.5" opacity=".9"/>
+          <circle cx="228" cy="369" r="4" fill="#22C55E">
+            <animate attributeName="opacity" values="1;.4;1" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <text x="250" y="373" font-family="Poppins" font-size="8" fill="white" text-anchor="middle" font-weight="700">CENTRALE</text>
+        </g>
+
+        <!-- Hover label zone (positioned via JS) -->
+        <g id="house-label" opacity="0">
+          <rect x="160" y="460" width="180" height="28" rx="6" fill="#0C1E4A"/>
+          <text id="house-label-text" x="250" y="479" font-family="Poppins" font-size="11" fill="white" text-anchor="middle" font-weight="600">Porte principale sécurisée</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONFIGURATEUR ─────────────────────────────────────── -->
+<section id="configurateur">
+  <div class="config-header reveal">
+    <div class="section-eyebrow">Configurateur personnalisé</div>
+    <h2>Quel pack d'alarme vous correspond ?</h2>
+    <p>Répondez à 6 questions. Notre algorithme compose votre kit idéal parmi +40 accessoires compatibles.</p>
+  </div>
+
+  <div class="quiz-wrap reveal reveal-delay-1">
+    <!-- Progress -->
+    <div class="quiz-progress-row">
+      <div class="quiz-step-label" id="stepLabel">Étape 1/6</div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="progressFill" style="width:16.6%"></div></div>
+      <div class="quiz-step-dots" id="stepDots"></div>
+    </div>
+
+    <!-- Quiz card -->
+    <div class="quiz-card">
+      <div class="quiz-card-stripe"></div>
+      <div class="quiz-card-body">
+
+        <!-- STEP 1 -->
+        <div class="quiz-step active" id="step-1">
+          <div class="quiz-q-label">Question 1 sur 6</div>
+          <div class="quiz-question">Quel type de logement souhaitez-vous protéger ?</div>
+          <div class="quiz-hint">Votre architecture détermine les zones de vulnérabilité à couvrir en priorité.</div>
+          <div class="answer-grid">
+            <button class="answer-btn" data-step="1" data-value="0" data-zones="">
+              <div class="answer-icon-wrap">🏢</div>
+              <div class="answer-text">
+                <div class="answer-title">Appartement</div>
+                <div class="answer-sub">Une porte principale, quelques fenêtres</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="1" data-value="1" data-zones="">
+              <div class="answer-icon-wrap">🏠</div>
+              <div class="answer-text">
+                <div class="answer-title">Maison plain-pied</div>
+                <div class="answer-sub">Toutes les ouvertures au même niveau</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="1" data-value="2" data-zones="">
+              <div class="answer-icon-wrap">🏡</div>
+              <div class="answer-text">
+                <div class="answer-title">Maison avec étage</div>
+                <div class="answer-sub">RDC + étage à protéger</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="1" data-value="3" data-zones="">
+              <div class="answer-icon-wrap">🏰</div>
+              <div class="answer-text">
+                <div class="answer-title">Villa / Grande propriété</div>
+                <div class="answer-sub">Dépendances, terrain, annexes</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="quiz-back" disabled>← Retour</button>
+            <button class="quiz-next" id="next-1" disabled>Suivant →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="quiz-step" id="step-2">
+          <div class="quiz-q-label">Question 2 sur 6</div>
+          <div class="quiz-question">Combien d'ouvertures (portes + fenêtres) à protéger ?</div>
+          <div class="quiz-hint">Chaque contacteur magnétique couvre une ouverture. Mieux vaut prévoir juste.</div>
+          <div class="answer-grid">
+            <button class="answer-btn" data-step="2" data-value="0">
+              <div class="answer-icon-wrap">🚪</div>
+              <div class="answer-text">
+                <div class="answer-title">1 à 3 ouvertures</div>
+                <div class="answer-sub">Studio, appartement 1-2 pièces</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="2" data-value="1">
+              <div class="answer-icon-wrap">🏠</div>
+              <div class="answer-text">
+                <div class="answer-title">4 à 6 ouvertures</div>
+                <div class="answer-sub">Appartement 3+ pièces, maison standard</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="2" data-value="2">
+              <div class="answer-icon-wrap">🏡</div>
+              <div class="answer-text">
+                <div class="answer-title">7 à 10 ouvertures</div>
+                <div class="answer-sub">Grande maison, plusieurs accès</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="2" data-value="3">
+              <div class="answer-icon-wrap">🏰</div>
+              <div class="answer-text">
+                <div class="answer-title">11 ouvertures et plus</div>
+                <div class="answer-sub">Villa, propriété avec dépendances</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="quiz-back" data-goto="1">← Retour</button>
+            <button class="quiz-next" id="next-2" disabled>Suivant →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="quiz-step" id="step-3">
+          <div class="quiz-q-label">Question 3 sur 6</div>
+          <div class="quiz-question">Quel niveau de détection souhaitez-vous ?</div>
+          <div class="quiz-hint">Au-delà des contacteurs de portes, la détection volumétrique couvre les espaces intérieurs.</div>
+          <div class="answer-grid">
+            <button class="answer-btn" data-step="3" data-value="0" data-zones="door">
+              <div class="answer-icon-wrap">🚪</div>
+              <div class="answer-text">
+                <div class="answer-title">Entrées seulement</div>
+                <div class="answer-sub">Contacteurs sur les portes et accès principaux</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="3" data-value="1" data-zones="door,windows-gf">
+              <div class="answer-icon-wrap">🪟</div>
+              <div class="answer-text">
+                <div class="answer-title">Portes + fenêtres RDC</div>
+                <div class="answer-sub">Protection optimale du rez-de-chaussée</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="3" data-value="2" data-zones="door,windows-gf,windows-ff">
+              <div class="answer-icon-wrap">🏠</div>
+              <div class="answer-text">
+                <div class="answer-title">Toutes les ouvertures</div>
+                <div class="answer-sub">RDC + étage + fenêtres de toit</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="3" data-value="3" data-zones="door,windows-gf,windows-ff,motion">
+              <div class="answer-icon-wrap">📡</div>
+              <div class="answer-text">
+                <div class="answer-title">Ouvertures + détection volumétrique</div>
+                <div class="answer-sub">Détecteurs de mouvement dans chaque pièce</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="quiz-back" data-goto="2">← Retour</button>
+            <button class="quiz-next" id="next-3" disabled>Suivant →</button>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="quiz-step" id="step-4">
+          <div class="quiz-q-label">Question 4 sur 6</div>
+          <div class="quiz-question">Souhaitez-vous intégrer des caméras de surveillance ?</div>
+          <div class="quiz-hint">Les caméras IP Daewoo s'intègrent nativement à la centrale, avec alertes et visionnage en direct.</div>
+          <div class="answer-grid">
+            <button class="answer-btn" data-step="4" data-value="0" data-zones="">
+              <div class="answer-icon-wrap">🚫</div>
+              <div class="answer-text">
+                <div class="answer-title">Non, pas de caméras</div>
+                <div class="answer-sub">Alarme seule, sans vidéosurveillance</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="4" data-value="1" data-zones="camera">
+              <div class="answer-icon-wrap">📷</div>
+              <div class="answer-text">
+                <div class="answer-title">Caméra intérieure</div>
+                <div class="answer-sub">Surveillance des pièces à vivre</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="4" data-value="2" data-zones="camera">
+              <div class="answer-icon-wrap">🎥</div>
+              <div class="answer-text">
+                <div class="answer-title">Caméra extérieure</div>
+                <div class="answer-sub">Entrée, jardin, garage</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="4" data-value="3" data-zones="camera">
+              <div class="answer-icon-wrap">📹</div>
+              <div class="answer-text">
+                <div class="answer-title">Intérieur + extérieur</div>
+                <div class="answer-sub">Couverture 360° complète du domicile</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="quiz-back" data-goto="3">← Retour</button>
+            <button class="quiz-next" id="next-4" disabled>Suivant →</button>
+          </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="quiz-step" id="step-5">
+          <div class="quiz-q-label">Question 5 sur 6</div>
+          <div class="quiz-question">Souhaitez-vous une protection contre les risques domestiques ?</div>
+          <div class="quiz-hint">Incendie, fuite de gaz, inondation — les détecteurs Daewoo s'intègrent à votre alarme.</div>
+          <div class="answer-grid">
+            <button class="answer-btn" data-step="5" data-value="0" data-zones="">
+              <div class="answer-icon-wrap">🚫</div>
+              <div class="answer-text">
+                <div class="answer-title">Non, intrusion seulement</div>
+                <div class="answer-sub">Je me concentre sur la sécurité anti-intrusion</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="5" data-value="1" data-zones="smoke">
+              <div class="answer-icon-wrap">🔥</div>
+              <div class="answer-text">
+                <div class="answer-title">Détection fumée</div>
+                <div class="answer-sub">Alertes incendie immédiates (WSD301)</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="5" data-value="2" data-zones="smoke">
+              <div class="answer-icon-wrap">⚠️</div>
+              <div class="answer-text">
+                <div class="answer-title">Fumée + fuite de gaz</div>
+                <div class="answer-sub">Protection incendie et CO/gaz (WSD301 + capteur gaz)</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="5" data-value="3" data-zones="smoke">
+              <div class="answer-icon-wrap">🛡️</div>
+              <div class="answer-text">
+                <div class="answer-title">Protection complète</div>
+                <div class="answer-sub">Fumée + gaz + inondation (WSD301 + WWF301)</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="quiz-back" data-goto="4">← Retour</button>
+            <button class="quiz-next" id="next-5" disabled>Suivant →</button>
+          </div>
+        </div>
+
+        <!-- STEP 6 -->
+        <div class="quiz-step" id="step-6">
+          <div class="quiz-q-label">Question 6 sur 6</div>
+          <div class="quiz-question">Comment voulez-vous piloter votre alarme ?</div>
+          <div class="quiz-hint">Le mode de contrôle détermine la gamme de centrale : Vigilia, Touch ou Élite.</div>
+          <div class="answer-grid">
+            <button class="answer-btn" data-step="6" data-value="0" data-zones="siren">
+              <div class="answer-icon-wrap">🔑</div>
+              <div class="answer-text">
+                <div class="answer-title">Télécommande</div>
+                <div class="answer-sub">Simple et rapide, sans écran (Gamme Vigilia)</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="6" data-value="1" data-zones="siren">
+              <div class="answer-icon-wrap">⌨️</div>
+              <div class="answer-text">
+                <div class="answer-title">Clavier à code</div>
+                <div class="answer-sub">Saisie de code, robuste (Gamme Vigilia Pro)</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="6" data-value="2" data-zones="siren">
+              <div class="answer-icon-wrap">📱</div>
+              <div class="answer-text">
+                <div class="answer-title">Application smartphone</div>
+                <div class="answer-sub">Contrôle à distance, notifs push (Gamme Touch/Élite)</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+            <button class="answer-btn" data-step="6" data-value="3" data-zones="siren">
+              <div class="answer-icon-wrap">🖥️</div>
+              <div class="answer-text">
+                <div class="answer-title">Écran tactile + App</div>
+                <div class="answer-sub">Clavier 7" + contrôle distant total (Gamme Élite)</div>
+              </div>
+              <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="quiz-back" data-goto="5">← Retour</button>
+            <button class="quiz-next" id="next-6" disabled>Voir mon pack →</button>
+          </div>
+        </div>
+
+      </div><!-- /quiz-card-body -->
+    </div><!-- /quiz-card -->
+
+    <!-- RESULT -->
+    <div id="result">
+      <div class="result-card">
+        <div class="result-header">
+          <div class="result-eyebrow">Votre pack personnalisé</div>
+          <div class="result-name" id="result-name">Pack Vigilia Essentiel</div>
+          <div class="result-tagline" id="result-tagline">Idéal pour votre profil : protection efficace et installation rapide.</div>
+          <div class="result-price-wrap">
+            <div class="result-price" id="result-price">299 €</div>
+            <div class="result-price-note">paiement unique<br>0 € d'abonnement</div>
+          </div>
+        </div>
+        <div class="result-body">
+          <div class="result-grid">
+            <div>
+              <div class="result-section-title">Composants inclus dans votre pack</div>
+              <div class="product-list" id="result-products"></div>
+            </div>
+            <div>
+              <div class="result-section-title">Pourquoi ce pack vous correspond</div>
+              <div class="result-why" id="result-why"></div>
+            </div>
+          </div>
+          <div class="result-actions">
+            <a href="#" class="btn-primary" onclick="return false" style="flex:1;justify-content:center">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2H4L5.6 10H12L13.5 5H5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="13" r="1" fill="white"/><circle cx="11.5" cy="13" r="1" fill="white"/></svg>
+              Commander ce pack
+            </a>
+            <a href="#" class="btn-secondary" onclick="return false">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Personnaliser les accessoires
+            </a>
+            <button class="result-restart" onclick="restartQuiz()">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7C2 4.2 4.2 2 7 2C9 2 10.7 3.1 11.6 4.7M12 7C12 9.8 9.8 12 7 12C5 12 3.3 10.9 2.4 9.3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M11 2V5H8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Recommencer le quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /quiz-wrap -->
+</section>
+
+<!-- ─── POURQUOI ───────────────────────────────────────────── -->
+<section id="pourquoi">
+  <div class="pourquoi-header reveal">
+    <div class="section-eyebrow">Nos engagements</div>
+    <h2>La sécurité sans compromis,<br>ni abonnement.</h2>
+    <p>Daewoo Security conçoit des systèmes pensés pour durer, sans vous lier à des frais mensuels.</p>
+  </div>
+  <div class="pourquoi-grid">
+    <div class="pourquoi-card reveal reveal-delay-1">
+      <div class="pourquoi-icon">🔒</div>
+      <h3>Zéro abonnement, à vie</h3>
+      <p>Payez une seule fois. Votre alarme fonctionne pour toujours, sans carte de crédit enregistrée, sans renouvellement annuel.</p>
+      <div class="pourquoi-stat">0 €<span>/mois</span></div>
+    </div>
+    <div class="pourquoi-card reveal reveal-delay-2">
+      <div class="pourquoi-icon">⚡</div>
+      <h3>Installation en 30 minutes</h3>
+      <p>Conception sans fil, fixation sans perçage. Chaque composant s'appaire automatiquement à la centrale. Aucun technicien requis.</p>
+      <div class="pourquoi-stat">30 min<span>d'installation</span></div>
+    </div>
+    <div class="pourquoi-card reveal reveal-delay-3">
+      <div class="pourquoi-icon">🔧</div>
+      <h3>100% modulable</h3>
+      <p>Ajoutez des détecteurs, caméras ou sirènes à tout moment. Votre système évolue avec vos besoins, sans remplacer la centrale.</p>
+      <div class="pourquoi-stat">+40<span>accessoires compatibles</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GAMMES ─────────────────────────────────────────────── -->
+<section id="gammes">
+  <div class="gammes-header reveal">
+    <div class="section-eyebrow">Les gammes</div>
+    <h2>Trois niveaux de protection,<br>un seul paiement.</h2>
+    <p>De l'appartement à la villa, chaque gamme est conçue pour un profil précis.</p>
+  </div>
+  <div class="gammes-grid">
+    <div class="gamme-card reveal reveal-delay-1">
+      <div class="gamme-card-top">
+        <div class="gamme-badge">Gamme Entrée de Gamme</div>
+        <div class="gamme-name">Vigilia</div>
+        <div class="gamme-tagline">Clavier, télécommande et application</div>
+        <div class="gamme-from">
+          <div class="gamme-from-label">À partir de</div>
+          <div class="gamme-from-price">249 €</div>
+        </div>
+      </div>
+      <div class="gamme-body">
+        <div class="gamme-features">
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>Centrale sans fil intégrée</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>Télécommande + clavier à code</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>Compatible app mobile</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>Sirène 110 dB incluse</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>Jusqu'à 32 accessoires</div>
+        </div>
+        <button class="gamme-cta">Voir la gamme Vigilia →</button>
+      </div>
+    </div>
+    <div class="gamme-card reveal reveal-delay-2">
+      <div class="gamme-card-top" style="background:linear-gradient(135deg,#0559B8,#0771E3)">
+        <div class="gamme-badge">Gamme Intermédiaire</div>
+        <div class="gamme-name">Touch</div>
+        <div class="gamme-tagline">Écran tactile 4.3" ou 7" + App</div>
+        <div class="gamme-from">
+          <div class="gamme-from-label">À partir de</div>
+          <div class="gamme-from-price">449 €</div>
+        </div>
+      </div>
+      <div class="gamme-body">
+        <div class="gamme-features">
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>Écran tactile couleur intégré</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>Notifications push en temps réel</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>Visionnage caméras sur écran</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>WiFi + Ethernet + batterie backup</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot"></div>Jusqu'à 64 accessoires</div>
+        </div>
+        <button class="gamme-cta" style="border-color:var(--blue);color:var(--blue)" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='var(--blue)'">Voir la gamme Touch →</button>
+      </div>
+    </div>
+    <div class="gamme-card reveal reveal-delay-3">
+      <div class="gamme-card-top" style="background:linear-gradient(135deg,#1A0A40,#2D1B69)">
+        <div class="gamme-badge">Gamme Premium</div>
+        <div class="gamme-name">Élite</div>
+        <div class="gamme-tagline">100% smartphone · Zigbee · WiFi + 4G</div>
+        <div class="gamme-from">
+          <div class="gamme-from-label">À partir de</div>
+          <div class="gamme-from-price">699 €</div>
+        </div>
+      </div>
+      <div class="gamme-body">
+        <div class="gamme-features">
+          <div class="gamme-feat"><div class="gamme-feat-dot" style="background:#7C3AED"></div>Centrale PA501Z Zigbee 4G</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot" style="background:#7C3AED"></div>Double réseau WiFi + 4G backup</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot" style="background:#7C3AED"></div>Compatibilité domotique avancée</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot" style="background:#7C3AED"></div>Autoprotection anti-sabotage</div>
+          <div class="gamme-feat"><div class="gamme-feat-dot" style="background:#7C3AED"></div>Accessoires illimités</div>
+        </div>
+        <button class="gamme-cta" style="border-color:#7C3AED;color:#7C3AED" onmouseover="this.style.background='#7C3AED';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='#7C3AED'">Voir la gamme Élite →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-mark"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L17 5.5V10.5C17 14.2 13.9 17.5 10 18.5C6.1 17.5 3 14.2 3 10.5V5.5L10 2Z" fill="white" opacity=".9"/><path d="M7 10L9 12L13 8" stroke="#0C1E4A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="nav-logo-text" style="color:white"><span style="color:rgba(255,255,255,.4)">Protection sans abonnement</span>Daewoo Security</div>
+        </div>
+        <p>Systèmes d'alarme sans fil, sans abonnement, conçus pour la maison française. Installés en 30 minutes, protégés pour la vie.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produits</h4>
+        <ul>
+          <li><a href="#gammes">Gamme Vigilia</a></li>
+          <li><a href="#gammes">Gamme Touch</a></li>
+          <li><a href="#gammes">Gamme Élite</a></li>
+          <li><a href="#" onclick="return false">Accessoires</a></li>
+          <li><a href="#" onclick="return false">Caméras IP</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#configurateur">Configurateur</a></li>
+          <li><a href="#" onclick="return false">Guides d'installation</a></li>
+          <li><a href="#" onclick="return false">FAQ</a></li>
+          <li><a href="#" onclick="return false">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Entreprise</h4>
+        <ul>
+          <li><a href="#" onclick="return false">À propos</a></li>
+          <li><a href="#" onclick="return false">Presse</a></li>
+          <li><a href="#" onclick="return false">Revendeurs</a></li>
+          <li><a href="#" onclick="return false">Certifications</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Daewoo Security. Tous droits réservés.</p>
+      <div class="footer-bottom-links">
+        <a href="#" onclick="return false">Mentions légales</a>
+        <a href="#" onclick="return false">CGV</a>
+        <a href="#" onclick="return false">Politique de confidentialité</a>
+        <a href="#" onclick="return false">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════ */
+const state = {
+  current: 1,
+  answers: {},   // step -> {value, zones}
+  activeZones: new Set()
+};
+
+/* ══════════════════════════════════════════════
+   STEP DOTS INIT
+══════════════════════════════════════════════ */
+function initDots() {
+  const container = document.getElementById('stepDots');
+  container.innerHTML = '';
+  for (let i = 1; i <= 6; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i === 1 ? ' current' : '');
+    d.textContent = i;
+    d.id = 'dot-' + i;
+    container.appendChild(d);
+  }
+}
+initDots();
+
+/* ══════════════════════════════════════════════
+   ANSWER SELECTION
+══════════════════════════════════════════════ */
+document.querySelectorAll('.answer-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const step = parseInt(btn.dataset.step);
+    // deselect siblings
+    document.querySelectorAll(`[data-step="${step}"]`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+
+    const value = parseInt(btn.dataset.value);
+    const zones = btn.dataset.zones ? btn.dataset.zones.split(',').filter(z => z !== '') : [];
+    state.answers[step] = { value, zones };
+
+    // enable next
+    const nextBtn = document.getElementById('next-' + step);
+    if (nextBtn) nextBtn.disabled = false;
+
+    // update house
+    updateHouseZones();
+  });
+});
+
+/* ══════════════════════════════════════════════
+   HOUSE ZONE UPDATE
+══════════════════════════════════════════════ */
+function updateHouseZones() {
+  // collect all active zones from all answers so far
+  const active = new Set();
+  Object.values(state.answers).forEach(a => {
+    a.zones.forEach(z => active.add(z));
+  });
+  state.activeZones = active;
+
+  const zoneMap = {
+    'door': 'zone-door',
+    'windows-gf': 'zone-windows-gf',
+    'windows-ff': 'zone-windows-ff',
+    'motion': 'zone-motion',
+    'camera': 'zone-camera',
+    'smoke': 'zone-smoke',
+    'siren': 'zone-siren'
+  };
+  const baseMap = {
+    'door': 'zone-door-base',
+    'windows-gf': 'zone-windows-gf-base',
+    'windows-ff': 'zone-windows-ff-base'
+  };
+
+  Object.entries(zoneMap).forEach(([key, id]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (active.has(key)) {
+      el.classList.remove('zone-inactive');
+      el.classList.add('zone-active');
+    } else {
+      el.classList.add('zone-inactive');
+      el.classList.remove('zone-active');
+    }
+  });
+
+  // hide base layers when zone is active
+  Object.entries(baseMap).forEach(([key, id]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.opacity = active.has(key) ? '0' : '1';
+  });
+}
+
+/* ══════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════ */
+document.querySelectorAll('.quiz-next').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const step = parseInt(btn.id.replace('next-', ''));
+    if (step < 6) goToStep(step + 1);
+    else showResult();
+  });
+});
+
+document.querySelectorAll('.quiz-back').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const goto = parseInt(btn.dataset.goto);
+    if (goto) goToStep(goto);
+  });
+});
+
+function goToStep(n) {
+  const current = document.getElementById('step-' + state.current);
+  current.classList.add('out');
+  setTimeout(() => {
+    current.classList.remove('active','out');
+    current.style.display = 'none';
+    state.current = n;
+    const next = document.getElementById('step-' + n);
+    next.style.display = '';
+    next.classList.add('active');
+    updateProgress(n);
+  }, 280);
+}
+
+function updateProgress(n) {
+  document.getElementById('stepLabel').textContent = `Étape ${n}/6`;
+  document.getElementById('progressFill').style.width = ((n / 6) * 100) + '%';
+  for (let i = 1; i <= 6; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (!dot) continue;
+    dot.className = 'step-dot' + (i < n ? ' done' : i === n ? ' current' : '');
+    if (i < n) dot.innerHTML = `<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    else dot.textContent = i;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   RESULT CALCULATION
+══════════════════════════════════════════════ */
+const PACKS = {
+  essentiel: {
+    name: 'Pack Vigilia Essentiel',
+    tagline: 'Protection efficace pour appartement ou petite maison. Installation 20 minutes, contrôle par télécommande et smartphone.',
+    price: '299 €',
+    products: [
+      { icon: '📡', name: 'Centrale Vigilia', ref: 'WDA303', qty: '×1' },
+      { icon: '🚪', name: 'Contacteur magnétique', ref: 'WDS502Z', qty: '×2' },
+      { icon: '📡', name: 'Détecteur de mouvement', ref: 'WPS305', qty: '×1' },
+      { icon: '🔊', name: 'Sirène intérieure 85 dB', ref: 'WOS305', qty: '×1' },
+      { icon: '🔑', name: 'Télécommande', ref: 'WRC301', qty: '×2' },
+    ],
+    reasons: [
+      { strong: 'Logement compact', text: ' : la centrale Vigilia couvre jusqu\'à 32 zones sans fil.' },
+      { strong: 'Peu d\'ouvertures', text: ' : 2 contacteurs suffisent pour une protection optimale.' },
+      { strong: '0 € d\'abonnement', text: ' : tout fonctionne en local, sans télésurveillance obligatoire.' },
+    ]
+  },
+  maison: {
+    name: 'Pack Vigilia Maison',
+    tagline: 'Conçu pour les maisons individuelles : couverture complète des ouvertures RDC et étage, avec détection volumétrique.',
+    price: '499 €',
+    products: [
+      { icon: '📡', name: 'Centrale Vigilia Pro', ref: 'WDA305', qty: '×1' },
+      { icon: '🚪', name: 'Contacteur magnétique', ref: 'WDS502Z', qty: '×4' },
+      { icon: '📡', name: 'Détecteur de mouvement', ref: 'WPS501', qty: '×2' },
+      { icon: '🔊', name: 'Sirène extérieure 110 dB', ref: 'WOS305EXT', qty: '×1' },
+      { icon: '🔑', name: 'Télécommande', ref: 'WRC301', qty: '×2' },
+      { icon: '📷', name: 'Caméra IP intérieure', ref: 'IP506P', qty: '×1' },
+    ],
+    reasons: [
+      { strong: 'Maison individuelle', text: ' : 4 contacteurs et 2 détecteurs couvrent les zones critiques.' },
+      { strong: 'Caméra intégrée', text: ' : visionnage en direct depuis votre smartphone.' },
+      { strong: 'Sirène extérieure', text: ' : dissuasion maximale visible depuis la rue.' },
+    ]
+  },
+  premium: {
+    name: 'Pack Touch Premium',
+    tagline: 'Pour les grandes maisons : écran tactile 7", couverture complète toutes ouvertures, caméras intérieur et extérieur.',
+    price: '799 €',
+    products: [
+      { icon: '🖥️', name: 'Centrale Touch 7"', ref: 'WDA507', qty: '×1' },
+      { icon: '🚪', name: 'Contacteur magnétique', ref: 'WDS502Z', qty: '×6' },
+      { icon: '📡', name: 'Détecteur de mouvement', ref: 'WPS501', qty: '×3' },
+      { icon: '🔊', name: 'Sirène extérieure 110 dB', ref: 'WOS305EXT', qty: '×1' },
+      { icon: '📷', name: 'Caméra IP intérieure', ref: 'IP506P', qty: '×1' },
+      { icon: '🎥', name: 'Caméra IP extérieure', ref: 'W503', qty: '×2' },
+      { icon: '🔥', name: 'Détecteur de fumée', ref: 'WSD301', qty: '×2' },
+    ],
+    reasons: [
+      { strong: 'Grande maison', text: ' : 6 contacteurs + 3 détecteurs pour une protection sans angles morts.' },
+      { strong: 'Écran Touch 7"', text: ' : pilotage intuitif et visionnage caméras sur l\'écran de la centrale.' },
+      { strong: 'Détection incendie', text: ' : les 2 détecteurs fumée protègent cuisine et couloir.' },
+    ]
+  },
+  elite: {
+    name: 'Pack Élite Sur-Mesure',
+    tagline: 'La protection ultime pour villa ou grande propriété : technologie Zigbee, 4G backup, domotique intégrée.',
+    price: '1 199 €',
+    products: [
+      { icon: '🛡️', name: 'Centrale Élite PA501Z', ref: 'PA501Z', qty: '×1' },
+      { icon: '🚪', name: 'Contacteur Zigbee', ref: 'WDV301Z', qty: '×8' },
+      { icon: '📡', name: 'Détecteur Zigbee', ref: 'WPS501Z', qty: '×4' },
+      { icon: '🔊', name: 'Sirène extérieure 120 dB', ref: 'WOS305EXT', qty: '×2' },
+      { icon: '🎥', name: 'Caméra 360° solaire', ref: 'W512MW', qty: '×2' },
+      { icon: '📷', name: 'Caméra IP intérieure', ref: 'IP506P', qty: '×2' },
+      { icon: '🔥', name: 'Détecteur fumée + gaz', ref: 'WSD301 + gaz', qty: '×3' },
+      { icon: '💧', name: 'Détecteur fuite eau', ref: 'WWF301', qty: '×2' },
+    ],
+    reasons: [
+      { strong: 'Grande propriété', text: ' : réseau Zigbee longue portée, aucune zone morte.' },
+      { strong: '4G backup', text: ' : alarme fonctionnelle même en cas de coupure internet.' },
+      { strong: 'Protection totale', text: ' : intrusion, incendie, gaz et inondation couverts.' },
+    ]
+  }
+};
+
+function calcPack() {
+  let score = 0;
+  Object.values(state.answers).forEach(a => { score += a.value; });
+  if (score <= 3) return 'essentiel';
+  if (score <= 7) return 'maison';
+  if (score <= 12) return 'premium';
+  return 'elite';
+}
+
+function showResult() {
+  // update progress to 100%
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('stepLabel').textContent = 'Résultat';
+  for (let i = 1; i <= 6; i++) {
+    const dot = document.getElementById('dot-' + i);
+    dot.className = 'step-dot done';
+    dot.innerHTML = `<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  }
+
+  // hide current step
+  const cur = document.getElementById('step-' + state.current);
+  cur.classList.add('out');
+  setTimeout(() => {
+    cur.classList.remove('active','out');
+
+    const pack = PACKS[calcPack()];
+
+    document.getElementById('result-name').textContent = pack.name;
+    document.getElementById('result-tagline').textContent = pack.tagline;
+    document.getElementById('result-price').textContent = pack.price;
+
+    // products
+    const prodList = document.getElementById('result-products');
+    prodList.innerHTML = '';
+    pack.products.forEach((p, i) => {
+      const el = document.createElement('div');
+      el.className = 'product-item';
+      el.style.animationDelay = (i * 80) + 'ms';
+      el.innerHTML = `
+        <div class="product-icon">${p.icon}</div>
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-ref">Réf. ${p.ref}</div>
+        </div>
+        <div class="product-qty">${p.qty}</div>
+      `;
+      prodList.appendChild(el);
+    });
+
+    // reasons
+    const why = document.getElementById('result-why');
+    why.innerHTML = '';
+    pack.reasons.forEach(r => {
+      const el = document.createElement('div');
+      el.className = 'why-item';
+      el.innerHTML = `
+        <div class="why-check">
+          <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="why-text"><strong>${r.strong}</strong>${r.text}</div>
+      `;
+      why.appendChild(el);
+    });
+
+    const result = document.getElementById('result');
+    result.style.display = 'block';
+    result.classList.add('visible');
+
+    // light up all zones
+    ['door','windows-gf','windows-ff','motion','camera','smoke','siren'].forEach(z => {
+      state.answers[99] = { value: 0, zones: [z] };
+    });
+    updateHouseZones();
+  }, 280);
+}
+
+/* ══════════════════════════════════════════════
+   RESTART
+══════════════════════════════════════════════ */
+function restartQuiz() {
+  // reset state
+  state.current = 1;
+  state.answers = {};
+  state.activeZones = new Set();
+
+  // hide result
+  const result = document.getElementById('result');
+  result.classList.remove('visible');
+  result.style.display = 'none';
+
+  // reset all steps
+  document.querySelectorAll('.quiz-step').forEach(s => {
+    s.classList.remove('active','out');
+    s.style.display = '';
+  });
+  document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.quiz-next').forEach(b => b.disabled = true);
+
+  // show step 1
+  document.getElementById('step-1').classList.add('active');
+  updateProgress(1);
+
+  // reset house
+  updateHouseZones();
+
+  // scroll to quiz
+  document.getElementById('configurateur').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════════
+   NAV SCROLL
+══════════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+/* ══════════════════════════════════════════════
+   REVEAL ON SCROLL
+══════════════════════════════════════════════ */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ══════════════════════════════════════════════
+   HOUSE FLOAT ANIMATION (subtle on scroll)
+══════════════════════════════════════════════ */
+let houseY = 0, targetY = 0;
+window.addEventListener('scroll', () => {
+  targetY = window.scrollY * 0.05;
+});
+function floatHouse() {
+  houseY += (targetY - houseY) * 0.08;
+  const stage = document.getElementById('houseStage');
+  if (stage) stage.style.transform = `translateY(${-houseY}px)`;
+  requestAnimationFrame(floatHouse);
+}
+floatHouse();
+</script>
+</body>
+</html>
