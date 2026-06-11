@@ -1,0 +1,127 @@
+{% stylesheet %}
+.ds-floating-cta {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .35s ease, transform .35s ease;
+  pointer-events: none;
+}
+.ds-floating-cta.ds-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.ds-floating-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .85rem 1.5rem;
+  background: {{ section.settings.btn_color | default: '#E63946' }};
+  color: {{ section.settings.text_color | default: '#FFFFFF' }};
+  border-radius: 9999px;
+  font-family: var(--ds-font);
+  font-size: .9rem;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 8px 30px rgba(230,57,70,.45);
+  transition: background .18s, transform .15s, box-shadow .18s;
+  white-space: nowrap;
+}
+.ds-floating-cta__btn:hover {
+  background: #C1121F;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(193,18,31,.5);
+}
+.ds-floating-cta__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: {{ section.settings.btn_color | default: '#E63946' }};
+  animation: ds-float-pulse 2s ease-out infinite;
+  z-index: -1;
+}
+@keyframes ds-float-pulse {
+  0%   { transform: scale(1); opacity: .5; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* Mobile — bar full width */
+@media (max-width: 640px) {
+  .ds-floating-cta {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-radius: 0;
+    padding: .75rem 1rem;
+    background: {{ section.settings.btn_color | default: '#E63946' }};
+    display: flex;
+    justify-content: center;
+  }
+  .ds-floating-cta__btn {
+    width: 100%;
+    justify-content: center;
+    border-radius: 0;
+    padding: 1rem;
+    box-shadow: none;
+    background: transparent;
+  }
+  .ds-floating-cta__btn:hover { background: transparent; transform: none; }
+  .ds-floating-cta__pulse { display: none; }
+}
+{% endstylesheet %}
+
+<div class="ds-floating-cta" id="dsFloatingCta-{{ section.id }}" role="complementary">
+  <div class="ds-floating-cta__pulse"></div>
+  <a href="{{ section.settings.cta_url | default: '/pages/configurador' }}" class="ds-floating-cta__btn">
+    {%- if section.settings.icon_show -%}
+      <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5L10 6h4.5L11 8.75l1.5 4.75L8 10.5l-4.5 3 1.5-4.75L1.5 6H6L8 1.5Z" fill="currentColor"/></svg>
+    {%- endif -%}
+    {{ section.settings.cta_text | default: 'Configurar mi alarma' }}
+    <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </a>
+</div>
+
+<script>
+(function(){
+  var el = document.getElementById('dsFloatingCta-{{ section.id }}');
+  if (!el) return;
+  var threshold = {{ section.settings.scroll_threshold | default: 400 }};
+  var shown = false;
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    if (y > threshold && !shown) { el.classList.add('ds-visible'); shown = true; }
+    else if (y <= threshold && shown) { el.classList.remove('ds-visible'); shown = false; }
+  }, { passive: true });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "DS CTA Flotante",
+  "tag": "div",
+  "class": "ds-floating-cta-section",
+  "settings": [
+    { "type": "text",    "id": "cta_text",         "label": "Texto botón",          "default": "Configurar mi alarma" },
+    { "type": "url",     "id": "cta_url",           "label": "Enlace",               "info": "Deja vacío para usar /pages/configurador" },
+    { "type": "color",   "id": "btn_color",         "label": "Color botón",          "default": "#E63946" },
+    { "type": "color",   "id": "text_color",        "label": "Color texto",          "default": "#FFFFFF" },
+    { "type": "checkbox","id": "icon_show",         "label": "Mostrar icono estrella","default": true },
+    { "type": "number",  "id": "scroll_threshold",  "label": "Mostrar después de (px scroll)", "default": 400 }
+  ],
+  "presets": [
+    {
+      "name": "DS CTA Flotante",
+      "settings": {
+        "cta_text": "Configurar mi alarma",
+        "btn_color": "#E63946",
+        "text_color": "#FFFFFF",
+        "icon_show": true,
+        "scroll_threshold": 400
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,587 @@
+{% stylesheet %}
+/* ============================================================
+   DS Hero v2 — Immersif, motion, configurateur au centre
+   ============================================================ */
+.ds-hero-v2 {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: #0D0D0D;
+  overflow: hidden;
+}
+
+/* Gradient animé */
+.ds-hero-v2__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 70% at 15% 60%, rgba(230,57,70,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 20%, rgba(230,57,70,.09) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(230,57,70,.06) 0%, transparent 50%);
+  animation: ds-hero-breathe 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes ds-hero-breathe {
+  0%   { opacity: .8; transform: scale(1); }
+  100% { opacity: 1;  transform: scale(1.04); }
+}
+
+/* Grid */
+.ds-hero-v2__grid {
+  display: grid;
+  grid-template-columns: 55% 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(6rem, 12vw, 9rem);
+}
+
+/* Contenu gauche */
+.ds-hero-v2__content { display: flex; flex-direction: column; gap: 1.75rem; }
+
+.ds-hero-v2__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: rgba(230,57,70,.15);
+  border: 1px solid rgba(230,57,70,.35);
+  color: #FF6B78;
+  border-radius: 9999px;
+  padding: .4rem 1rem .4rem .6rem;
+  font-family: var(--ds-font);
+  font-size: .78rem;
+  font-weight: 700;
+  width: fit-content;
+  animation: ds-badge-pulse 3s ease-in-out infinite;
+}
+.ds-hero-v2__badge-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #E63946;
+  animation: ds-dot-blink 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes ds-badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(230,57,70,0); }
+  50%       { box-shadow: 0 0 0 8px rgba(230,57,70,.08); }
+}
+@keyframes ds-dot-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .3; }
+}
+
+.ds-hero-v2__title {
+  font-family: var(--ds-font);
+  font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.04em;
+  color: #FFFFFF;
+}
+.ds-hero-v2__title em {
+  font-style: normal;
+  background: linear-gradient(135deg, #E63946 0%, #FF8C94 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ds-hero-v2__sub {
+  font-family: var(--ds-font);
+  font-size: clamp(.95rem, 1.5vw, 1.1rem);
+  line-height: 1.65;
+  color: rgba(255,255,255,.65);
+  max-width: 480px;
+}
+
+.ds-hero-v2__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .85rem;
+  align-items: center;
+}
+.ds-hero-v2__btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: 1rem 2rem;
+  background: #E63946;
+  color: #fff;
+  border-radius: 9999px;
+  font-family: var(--ds-font);
+  font-size: 1rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background .2s, transform .15s;
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(230,57,70,.5);
+  animation: ds-cta-glow 2.5s ease-in-out infinite;
+}
+@keyframes ds-cta-glow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(230,57,70,.4); }
+  50%       { box-shadow: 0 4px 40px rgba(230,57,70,.7), 0 0 0 8px rgba(230,57,70,.1); }
+}
+.ds-hero-v2__btn-primary:hover { background: #C1121F; transform: translateY(-2px); animation: none; box-shadow: 0 8px 30px rgba(193,18,31,.5); }
+.ds-hero-v2__btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .9rem 1.5rem;
+  border: 1.5px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.8);
+  border-radius: 9999px;
+  font-family: var(--ds-font);
+  font-size: .9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.ds-hero-v2__btn-ghost:hover { border-color: rgba(255,255,255,.5); color: #fff; background: rgba(255,255,255,.05); }
+
+/* Stats inline */
+.ds-hero-v2__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-top: .5rem;
+}
+.ds-hero-v2__stat {
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+}
+.ds-hero-v2__stat-value {
+  font-family: var(--ds-font);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -.03em;
+}
+.ds-hero-v2__stat-value span { color: #E63946; }
+.ds-hero-v2__stat-label {
+  font-family: var(--ds-font);
+  font-size: .72rem;
+  color: rgba(255,255,255,.45);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  font-weight: 600;
+}
+
+/* Visual droite — mockup quiz */
+.ds-hero-v2__visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ds-hero-v2__phone {
+  width: 100%;
+  max-width: 360px;
+  background: #1A1A1C;
+  border-radius: 28px;
+  padding: 2rem 1.75rem;
+  box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.07);
+  position: relative;
+  animation: ds-phone-float 5s ease-in-out infinite;
+}
+@keyframes ds-phone-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%       { transform: translateY(-12px) rotate(1deg); }
+}
+.ds-hero-v2__phone-notch {
+  width: 80px; height: 5px;
+  background: rgba(255,255,255,.12);
+  border-radius: 9999px;
+  margin: 0 auto 1.5rem;
+}
+.ds-hero-v2__phone-progress {
+  display: flex;
+  gap: .3rem;
+  margin-bottom: 1.5rem;
+}
+.ds-hero-v2__phone-dot {
+  height: 4px;
+  border-radius: 9999px;
+  flex: 1;
+  background: rgba(255,255,255,.12);
+  transition: background .4s;
+}
+.ds-hero-v2__phone-dot.active { background: #E63946; }
+.ds-hero-v2__phone-step {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+}
+.ds-hero-v2__phone-step.visible { display: flex; animation: ds-step-in .35s ease; }
+@keyframes ds-step-in {
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.ds-hero-v2__phone-q {
+  font-family: var(--ds-font);
+  font-size: .85rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.35;
+}
+.ds-hero-v2__phone-opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+}
+.ds-hero-v2__phone-opt {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px;
+  padding: .6rem .75rem;
+  font-family: var(--ds-font);
+  font-size: .72rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.7);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  cursor: default;
+  transition: border-color .3s, background .3s, color .3s;
+}
+.ds-hero-v2__phone-opt.selected {
+  border-color: #E63946;
+  background: rgba(230,57,70,.12);
+  color: #fff;
+}
+.ds-hero-v2__phone-step-label {
+  font-family: var(--ds-font);
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #E63946;
+  margin-bottom: -.25rem;
+}
+.ds-hero-v2__phone-next {
+  background: #E63946;
+  border: none;
+  border-radius: 9999px;
+  padding: .65rem 1.25rem;
+  font-family: var(--ds-font);
+  font-size: .78rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  cursor: default;
+  margin-top: .25rem;
+}
+
+/* Floating badges */
+.ds-hero-v2__fb {
+  position: absolute;
+  background: #fff;
+  border-radius: 14px;
+  padding: .65rem 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+  font-family: var(--ds-font);
+  font-size: .78rem;
+  font-weight: 700;
+  color: #0D0D0D;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+}
+.ds-hero-v2__fb--tl { top: -1.25rem; left: -2rem; animation: ds-float 4s ease-in-out infinite; }
+.ds-hero-v2__fb--br { bottom: -1rem; right: -1.5rem; animation: ds-float-slow 5s ease-in-out infinite; }
+
+/* Scroll indicator */
+.ds-hero-v2__scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  z-index: 3;
+  animation: ds-fade-in 1s ease 1.5s both;
+}
+@keyframes ds-fade-in { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+.ds-hero-v2__scroll-mouse {
+  width: 22px; height: 36px;
+  border: 2px solid rgba(255,255,255,.25);
+  border-radius: 11px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5px;
+}
+.ds-hero-v2__scroll-wheel {
+  width: 3px; height: 8px;
+  background: rgba(255,255,255,.5);
+  border-radius: 9999px;
+  animation: ds-scroll-wheel 2s ease-in-out infinite;
+}
+@keyframes ds-scroll-wheel {
+  0%   { transform: translateY(0); opacity: 1; }
+  80%  { transform: translateY(8px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+.ds-hero-v2__scroll-text {
+  font-family: var(--ds-font);
+  font-size: .6rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+}
+
+@media (max-width: 960px) {
+  .ds-hero-v2__grid { grid-template-columns: 1fr; gap: 3rem; padding-block: 5rem 4rem; }
+  .ds-hero-v2__visual { display: none; }
+}
+@media (max-width: 500px) {
+  .ds-hero-v2__stats { gap: 1rem; }
+  .ds-hero-v2__ctas { flex-direction: column; align-items: flex-start; }
+  .ds-hero-v2__btn-primary, .ds-hero-v2__btn-ghost { width: 100%; justify-content: center; }
+}
+{% endstylesheet %}
+
+<section class="ds-hero-v2" id="ds-hero-{{ section.id }}">
+  <div class="ds-hero-v2__bg"></div>
+
+  {%- if section.settings.bg_image != blank -%}
+    <div style="position:absolute;inset:0;background-image:url('{{ section.settings.bg_image | image_url: width: 1600 }}');background-size:cover;background-position:center;opacity:.15;pointer-events:none;"></div>
+  {%- endif -%}
+
+  <div class="ds-container ds-hero-v2__grid">
+
+    <!-- Contenu -->
+    <div class="ds-hero-v2__content">
+
+      {%- if section.settings.badge != blank -%}
+        <div data-ds-reveal>
+          <span class="ds-hero-v2__badge">
+            <span class="ds-hero-v2__badge-dot"></span>
+            {{ section.settings.badge }}
+          </span>
+        </div>
+      {%- endif -%}
+
+      <h1 class="ds-hero-v2__title" data-ds-reveal data-ds-delay="100">
+        {{ section.settings.heading }}
+      </h1>
+
+      {%- if section.settings.subheading != blank -%}
+        <p class="ds-hero-v2__sub" data-ds-reveal data-ds-delay="200">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      <div class="ds-hero-v2__ctas" data-ds-reveal data-ds-delay="300">
+        {%- if section.settings.cta_primary_text != blank -%}
+          <a href="{{ section.settings.cta_primary_url | default: '/pages/configurador' }}" class="ds-hero-v2__btn-primary">
+            {{ section.settings.cta_primary_text }}
+            <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_text != blank -%}
+          <a href="{{ section.settings.cta_secondary_url }}" class="ds-hero-v2__btn-ghost">
+            {{ section.settings.cta_secondary_text }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="ds-hero-v2__stats" data-ds-reveal data-ds-delay="400">
+        {%- if section.settings.stat1_value != blank -%}
+          <div class="ds-hero-v2__stat">
+            <span class="ds-hero-v2__stat-value">{{ section.settings.stat1_value }}</span>
+            <span class="ds-hero-v2__stat-label">{{ section.settings.stat1_label }}</span>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.stat2_value != blank -%}
+          <div style="width:1px;background:rgba(255,255,255,.12);align-self:stretch;"></div>
+          <div class="ds-hero-v2__stat">
+            <span class="ds-hero-v2__stat-value">{{ section.settings.stat2_value }}</span>
+            <span class="ds-hero-v2__stat-label">{{ section.settings.stat2_label }}</span>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.stat3_value != blank -%}
+          <div style="width:1px;background:rgba(255,255,255,.12);align-self:stretch;"></div>
+          <div class="ds-hero-v2__stat">
+            <span class="ds-hero-v2__stat-value">{{ section.settings.stat3_value }}</span>
+            <span class="ds-hero-v2__stat-label">{{ section.settings.stat3_label }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+    <!-- Visual mockup -->
+    <div class="ds-hero-v2__visual">
+      {%- if section.settings.hero_image != blank -%}
+        <img src="{{ section.settings.hero_image | image_url: width: 600 }}" alt="" style="width:100%;max-width:400px;border-radius:24px;box-shadow:0 40px 100px rgba(0,0,0,.5);animation:ds-phone-float 5s ease-in-out infinite;" loading="eager">
+      {%- else -%}
+        <!-- Mockup quiz animé -->
+        <div style="position:relative;">
+          <div class="ds-hero-v2__phone" id="dsHeroPhone-{{ section.id }}">
+            <div class="ds-hero-v2__phone-notch"></div>
+            <div class="ds-hero-v2__phone-progress" id="dsHeroProg-{{ section.id }}">
+              <div class="ds-hero-v2__phone-dot active"></div>
+              <div class="ds-hero-v2__phone-dot"></div>
+              <div class="ds-hero-v2__phone-dot"></div>
+              <div class="ds-hero-v2__phone-dot"></div>
+              <div class="ds-hero-v2__phone-dot"></div>
+            </div>
+
+            <div class="ds-hero-v2__phone-step visible" data-pstep="0">
+              <span class="ds-hero-v2__phone-step-label">Paso 1 de 5</span>
+              <p class="ds-hero-v2__phone-q">¿Qué tipo de vivienda quieres proteger?</p>
+              <div class="ds-hero-v2__phone-opts">
+                <div class="ds-hero-v2__phone-opt selected">🏠 Casa</div>
+                <div class="ds-hero-v2__phone-opt">🏢 Piso</div>
+                <div class="ds-hero-v2__phone-opt">🏡 2ª residencia</div>
+                <div class="ds-hero-v2__phone-opt">🏪 Local</div>
+              </div>
+              <div class="ds-hero-v2__phone-next">Siguiente <svg width="12" height="12" fill="none" viewBox="0 0 12 12"><path d="M3 6h6M7 4l2 2-2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            </div>
+
+            <div class="ds-hero-v2__phone-step" data-pstep="1">
+              <span class="ds-hero-v2__phone-step-label">Paso 2 de 5</span>
+              <p class="ds-hero-v2__phone-q">¿Cuántas habitaciones tiene?</p>
+              <div class="ds-hero-v2__phone-opts">
+                <div class="ds-hero-v2__phone-opt">🔑 Pequeño</div>
+                <div class="ds-hero-v2__phone-opt selected">🏘 Mediano</div>
+                <div class="ds-hero-v2__phone-opt">🏛 Grande</div>
+              </div>
+              <div class="ds-hero-v2__phone-next">Siguiente <svg width="12" height="12" fill="none" viewBox="0 0 12 12"><path d="M3 6h6M7 4l2 2-2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            </div>
+
+            <div class="ds-hero-v2__phone-step" data-pstep="2">
+              <span class="ds-hero-v2__phone-step-label">Paso 3 de 5</span>
+              <p class="ds-hero-v2__phone-q">¿Tienes WiFi en casa?</p>
+              <div class="ds-hero-v2__phone-opts">
+                <div class="ds-hero-v2__phone-opt selected">📶 Sí, WiFi</div>
+                <div class="ds-hero-v2__phone-opt">📡 No, 4G</div>
+              </div>
+              <div class="ds-hero-v2__phone-next">Siguiente <svg width="12" height="12" fill="none" viewBox="0 0 12 12"><path d="M3 6h6M7 4l2 2-2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            </div>
+
+            <div class="ds-hero-v2__phone-step" data-pstep="3">
+              <span class="ds-hero-v2__phone-step-label">Paso 4 de 5</span>
+              <p class="ds-hero-v2__phone-q">¿Cuántos accesos quieres proteger?</p>
+              <div class="ds-hero-v2__phone-opts">
+                <div class="ds-hero-v2__phone-opt">🚪 1-3</div>
+                <div class="ds-hero-v2__phone-opt selected">🔐 4-6</div>
+                <div class="ds-hero-v2__phone-opt">🏰 +7</div>
+              </div>
+              <div class="ds-hero-v2__phone-next">Siguiente <svg width="12" height="12" fill="none" viewBox="0 0 12 12"><path d="M3 6h6M7 4l2 2-2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            </div>
+
+            <div class="ds-hero-v2__phone-step" data-pstep="4">
+              <span class="ds-hero-v2__phone-step-label">Paso 5 de 5</span>
+              <p class="ds-hero-v2__phone-q">¿Quieres añadir cámaras?</p>
+              <div class="ds-hero-v2__phone-opts">
+                <div class="ds-hero-v2__phone-opt selected">📷 Sí</div>
+                <div class="ds-hero-v2__phone-opt">🔔 Solo alarma</div>
+              </div>
+              <div class="ds-hero-v2__phone-next" style="background:#34C759;">✓ Ver mi pack ideal</div>
+            </div>
+          </div>
+
+          <div class="ds-hero-v2__fb ds-hero-v2__fb--tl">
+            <svg width="14" height="14" fill="#34C759" viewBox="0 0 14 14"><path d="M2 7l3.5 3.5L12 4" stroke="#34C759" stroke-width="2" stroke-linecap="round"/></svg>
+            {{ section.settings.badge_float_1 | default: 'Sin instalador' }}
+          </div>
+          <div class="ds-hero-v2__fb ds-hero-v2__fb--br">
+            <svg width="14" height="14" fill="#F59E0B" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6L13 5.1l-3 2.9.7 4.1L7 10.5l-3.7 1.6.7-4.1-3-2.9 4.2-.5L7 1Z"/></svg>
+            {{ section.settings.badge_float_2 | default: '4.8/5 — 1.200 reseñas' }}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+
+  {%- if section.settings.show_scroll -%}
+    <div class="ds-hero-v2__scroll" aria-hidden="true">
+      <div class="ds-hero-v2__scroll-mouse"><div class="ds-hero-v2__scroll-wheel"></div></div>
+      <span class="ds-hero-v2__scroll-text">Descubrir</span>
+    </div>
+  {%- endif -%}
+</section>
+
+<script>
+(function(){
+  var phone = document.getElementById('dsHeroPhone-{{ section.id }}');
+  if (!phone) return;
+  var steps = phone.querySelectorAll('.ds-hero-v2__phone-step');
+  var dots  = document.getElementById('dsHeroProg-{{ section.id }}').querySelectorAll('.ds-hero-v2__phone-dot');
+  var current = 0;
+  var total = steps.length;
+  function show(i) {
+    steps.forEach(function(s){ s.classList.remove('visible'); });
+    dots.forEach(function(d){ d.classList.remove('active'); });
+    steps[i].classList.add('visible');
+    for (var j = 0; j <= i; j++) dots[j].classList.add('active');
+    current = i;
+  }
+  setInterval(function(){
+    show((current + 1) % total);
+  }, 2200);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "DS Hero v2",
+  "tag": "section",
+  "class": "ds-hero-section",
+  "settings": [
+    { "type": "header",      "content": "Contenido" },
+    { "type": "text",        "id": "badge",            "label": "Badge animado",        "default": "Alarma sin cuotas mensuales" },
+    { "type": "richtext",    "id": "heading",          "label": "Título (usa <em> para color rojo)", "default": "<p>Tu alarma perfecta,<br>configurada en <em>5 minutos</em>.</p>" },
+    { "type": "textarea",    "id": "subheading",       "label": "Subtítulo",            "default": "Responde unas preguntas y recibe tu sistema personalizado. Sin cuotas, sin contratos. Instálalo tú mismo en menos de una hora." },
+    { "type": "header",      "content": "CTAs" },
+    { "type": "text",        "id": "cta_primary_text", "label": "Botón principal",      "default": "Configurar mi alarma gratis" },
+    { "type": "url",         "id": "cta_primary_url",  "label": "Enlace principal" },
+    { "type": "text",        "id": "cta_secondary_text","label": "Botón secundario",   "default": "Ver todos los packs" },
+    { "type": "url",         "id": "cta_secondary_url","label": "Enlace secundario" },
+    { "type": "header",      "content": "Estadísticas" },
+    { "type": "text",        "id": "stat1_value",      "label": "Stat 1 valor",         "default": "15.000+" },
+    { "type": "text",        "id": "stat1_label",      "label": "Stat 1 etiqueta",      "default": "Hogares protegidos" },
+    { "type": "text",        "id": "stat2_value",      "label": "Stat 2 valor",         "default": "4.8 ★" },
+    { "type": "text",        "id": "stat2_label",      "label": "Stat 2 etiqueta",      "default": "Valoración media" },
+    { "type": "text",        "id": "stat3_value",      "label": "Stat 3 valor",         "default": "0 €/mes" },
+    { "type": "text",        "id": "stat3_label",      "label": "Stat 3 etiqueta",      "default": "Cuotas mensuales" },
+    { "type": "header",      "content": "Visual" },
+    { "type": "image_picker","id": "hero_image",       "label": "Imagen (sustituye el mockup)" },
+    { "type": "image_picker","id": "bg_image",         "label": "Imagen de fondo (opcional)" },
+    { "type": "text",        "id": "badge_float_1",    "label": "Badge flotante 1",     "default": "Sin instalador" },
+    { "type": "text",        "id": "badge_float_2",    "label": "Badge flotante 2",     "default": "4.8/5 — 1.200 reseñas" },
+    { "type": "checkbox",    "id": "show_scroll",      "label": "Mostrar scroll",       "default": true }
+  ],
+  "presets": [
+    {
+      "name": "DS Hero v2",
+      "settings": {
+        "badge":             "Alarma sin cuotas mensuales",
+        "heading":           "<p>Tu alarma perfecta,<br>configurada en <em>5 minutos</em>.</p>",
+        "subheading":        "Responde unas preguntas y recibe tu sistema personalizado. Sin cuotas, sin contratos. Instálalo tú mismo en menos de una hora.",
+        "cta_primary_text":  "Configurar mi alarma gratis",
+        "cta_primary_url":   "/pages/configurador",
+        "cta_secondary_text":"Ver todos los packs",
+        "stat1_value":       "15.000+",
+        "stat1_label":       "Hogares protegidos",
+        "stat2_value":       "4.8 ★",
+        "stat2_label":       "Valoración media",
+        "stat3_value":       "0 €/mes",
+        "stat3_label":       "Cuotas mensuales",
+        "badge_float_1":     "Sin instalador",
+        "badge_float_2":     "4.8/5 — 1.200 reseñas",
+        "show_scroll":       true
+      }
+    }
+  ]
+}
+{% endschema %}

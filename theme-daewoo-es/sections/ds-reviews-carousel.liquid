@@ -1,0 +1,251 @@
+{% stylesheet %}
+.ds-reviews-carousel {
+  background: {{ section.settings.bg_color | default: '#0D0D0D' }};
+  padding-block: clamp(3.5rem,7vw,5.5rem);
+  overflow: hidden;
+}
+.ds-reviews-carousel__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-inline: 1.5rem;
+}
+.ds-reviews-carousel__eyebrow {
+  font-family: var(--ds-font);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #E63946;
+  display: block;
+  margin-bottom: .6rem;
+}
+.ds-reviews-carousel__title {
+  font-family: var(--ds-font);
+  font-size: clamp(1.5rem,3vw,2rem);
+  font-weight: 900;
+  color: #FFFFFF;
+  letter-spacing: -.03em;
+}
+.ds-reviews-carousel__rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  margin-top: .75rem;
+  font-family: var(--ds-font);
+  font-size: .85rem;
+  color: rgba(255,255,255,.5);
+}
+.ds-reviews-carousel__stars { display: flex; gap: 2px; }
+.ds-reviews-carousel__stars svg { width: 14px; height: 14px; fill: #F59E0B; }
+
+/* Row */
+.ds-reviews-carousel__row {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  margin-bottom: 1.25rem;
+}
+.ds-reviews-carousel__row--fwd {
+  animation: ds-carousel-fwd {{ section.settings.speed | default: 35 }}s linear infinite;
+}
+.ds-reviews-carousel__row--rev {
+  animation: ds-carousel-rev {{ section.settings.speed | default: 35 }}s linear infinite;
+}
+.ds-reviews-carousel__row:hover { animation-play-state: paused; }
+@keyframes ds-carousel-fwd {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes ds-carousel-rev {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* Card */
+.ds-reviews-carousel__card {
+  background: #1A1A1C;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 18px;
+  padding: 1.5rem 1.75rem;
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+  transition: border-color .2s;
+}
+.ds-reviews-carousel__card:hover { border-color: rgba(230,57,70,.35); }
+.ds-reviews-carousel__card-stars { display: flex; gap: 3px; }
+.ds-reviews-carousel__card-stars svg { width: 13px; height: 13px; fill: #F59E0B; }
+.ds-reviews-carousel__card-text {
+  font-family: var(--ds-font);
+  font-size: .875rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,.8);
+  flex: 1;
+}
+.ds-reviews-carousel__card-author {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.ds-reviews-carousel__card-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E63946, #FF8C94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ds-font);
+  font-size: .85rem;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+.ds-reviews-carousel__card-name {
+  font-family: var(--ds-font);
+  font-size: .82rem;
+  font-weight: 700;
+  color: #fff;
+}
+.ds-reviews-carousel__card-location {
+  font-family: var(--ds-font);
+  font-size: .72rem;
+  color: rgba(255,255,255,.4);
+}
+.ds-reviews-carousel__card-tag {
+  display: inline-block;
+  background: rgba(230,57,70,.12);
+  color: #FF6B78;
+  border-radius: 9999px;
+  padding: .2rem .65rem;
+  font-family: var(--ds-font);
+  font-size: .7rem;
+  font-weight: 700;
+  width: fit-content;
+}
+{% endstylesheet %}
+
+{%- assign reviews = section.blocks | where: 'type', 'review' -%}
+{%- assign row1 = '' -%}
+{%- assign row2 = '' -%}
+
+{%- if reviews.size > 0 -%}
+<section class="ds-reviews-carousel" id="ds-reviews-{{ section.id }}">
+
+  <div class="ds-reviews-carousel__header" data-ds-reveal>
+    <span class="ds-reviews-carousel__eyebrow">{{ section.settings.eyebrow | default: 'Opiniones verificadas' }}</span>
+    <h2 class="ds-reviews-carousel__title">{{ section.settings.title | default: 'Lo que dicen nuestros clientes' }}</h2>
+    <div class="ds-reviews-carousel__rating">
+      <div class="ds-reviews-carousel__stars">
+        {% for i in (1..5) %}<svg viewBox="0 0 13 13" aria-hidden="true"><path d="M6.5 1l1.65 3.35L12 4.9 9.25 7.6l.65 3.9-3.4-1.8-3.4 1.8.65-3.9L1 4.9l3.85-.55L6.5 1Z"/></svg>{% endfor %}
+      </div>
+      <span>{{ section.settings.rating_text | default: '4.8/5 basado en 1.200+ reseñas' }}</span>
+    </div>
+  </div>
+
+  {%- comment -%}Render 2 rows — odd blocks row 1, even blocks row 2{%- endcomment -%}
+  {%- assign row1_blocks = '' -%}
+  {%- assign row2_blocks = '' -%}
+
+  {%- comment -%}Row 1 — forward{%- endcomment -%}
+  <div class="ds-reviews-carousel__row ds-reviews-carousel__row--fwd">
+    {%- for i in (1..2) -%}
+      {%- for block in reviews -%}
+        {%- assign idx = forloop.index0 | modulo: 2 -%}
+        {%- if idx == 0 -%}
+          <div class="ds-reviews-carousel__card" {{ block.shopify_attributes }}>
+            <div class="ds-reviews-carousel__card-stars">
+              {%- for s in (1..5) -%}<svg viewBox="0 0 13 13" aria-hidden="true"><path d="M6.5 1l1.65 3.35L12 4.9 9.25 7.6l.65 3.9-3.4-1.8-3.4 1.8.65-3.9L1 4.9l3.85-.55L6.5 1Z"/></svg>{%- endfor -%}
+            </div>
+            <p class="ds-reviews-carousel__card-text">"{{ block.settings.text }}"</p>
+            {%- if block.settings.product != blank -%}
+              <span class="ds-reviews-carousel__card-tag">{{ block.settings.product }}</span>
+            {%- endif -%}
+            <div class="ds-reviews-carousel__card-author">
+              <div class="ds-reviews-carousel__card-avatar">{{ block.settings.author | slice: 0 }}</div>
+              <div>
+                <div class="ds-reviews-carousel__card-name">{{ block.settings.author }}</div>
+                <div class="ds-reviews-carousel__card-location">{{ block.settings.location }}</div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%}Row 2 — reverse{%- endcomment -%}
+  <div class="ds-reviews-carousel__row ds-reviews-carousel__row--rev">
+    {%- for i in (1..2) -%}
+      {%- for block in reviews -%}
+        {%- assign idx = forloop.index0 | modulo: 2 -%}
+        {%- if idx == 1 -%}
+          <div class="ds-reviews-carousel__card">
+            <div class="ds-reviews-carousel__card-stars">
+              {%- for s in (1..5) -%}<svg viewBox="0 0 13 13" aria-hidden="true"><path d="M6.5 1l1.65 3.35L12 4.9 9.25 7.6l.65 3.9-3.4-1.8-3.4 1.8.65-3.9L1 4.9l3.85-.55L6.5 1Z"/></svg>{%- endfor -%}
+            </div>
+            <p class="ds-reviews-carousel__card-text">"{{ block.settings.text }}"</p>
+            {%- if block.settings.product != blank -%}
+              <span class="ds-reviews-carousel__card-tag">{{ block.settings.product }}</span>
+            {%- endif -%}
+            <div class="ds-reviews-carousel__card-author">
+              <div class="ds-reviews-carousel__card-avatar">{{ block.settings.author | slice: 0 }}</div>
+              <div>
+                <div class="ds-reviews-carousel__card-name">{{ block.settings.author }}</div>
+                <div class="ds-reviews-carousel__card-location">{{ block.settings.location }}</div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "DS Carousel Reseñas",
+  "tag": "section",
+  "class": "ds-section",
+  "settings": [
+    { "type": "color",  "id": "bg_color",     "label": "Fondo",          "default": "#0D0D0D" },
+    { "type": "text",   "id": "eyebrow",      "label": "Eyebrow",        "default": "Opiniones verificadas" },
+    { "type": "text",   "id": "title",        "label": "Título",         "default": "Lo que dicen nuestros clientes" },
+    { "type": "text",   "id": "rating_text",  "label": "Texto rating",   "default": "4.8/5 basado en 1.200+ reseñas" },
+    { "type": "number", "id": "speed",        "label": "Velocidad (seg)","default": 35 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Reseña",
+      "settings": [
+        { "type": "textarea","id": "text",     "label": "Reseña",   "default": "Instalé la alarma en menos de una hora sin ningún conocimiento técnico. La app funciona genial y me da total tranquilidad." },
+        { "type": "text",    "id": "author",   "label": "Nombre",   "default": "María G." },
+        { "type": "text",    "id": "location", "label": "Ciudad",   "default": "Madrid" },
+        { "type": "text",    "id": "product",  "label": "Producto", "default": "Pack Casa Basic" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DS Carousel Reseñas",
+      "settings": { "bg_color": "#0D0D0D", "eyebrow": "Opiniones verificadas", "title": "Lo que dicen nuestros clientes", "rating_text": "4.8/5 basado en 1.200+ reseñas", "speed": 35 },
+      "blocks": [
+        { "type": "review", "settings": { "text": "Instalé la alarma yo sola en una tarde. Las instrucciones son clarísimas y la app es una maravilla. Adiós a las cuotas mensuales.", "author": "María G.", "location": "Madrid", "product": "Pack Casa Basic" } },
+        { "type": "review", "settings": { "text": "Llevaba años pagando 40€/mes. Con Daewoo pagué una vez y ya está. Misma calidad, cero mensualidades. No volvería a lo anterior.", "author": "Carlos M.", "location": "Barcelona", "product": "Pack Casa Plus" } },
+        { "type": "review", "settings": { "text": "Tengo segunda residencia en el campo, sin internet fijo. El modelo 4G funciona perfectamente y me alerta al instante si hay movimiento.", "author": "Ana R.", "location": "Valencia", "product": "Pack 2ª Residencia" } },
+        { "type": "review", "settings": { "text": "El configurador tardó 3 minutos. Me propuso exactamente lo que necesitaba para mi piso, ni más ni menos. Muy impresionado.", "author": "Javier L.", "location": "Sevilla", "product": "Pack Piso" } },
+        { "type": "review", "settings": { "text": "Soporte técnico excelente. Me ayudaron a instalar todo por videollamada en 40 minutos. El sistema funciona perfecto desde entonces.", "author": "Laura P.", "location": "Bilbao", "product": "Pack Casa Plus" } },
+        { "type": "review", "settings": { "text": "Mi vecino tuvo un robo. Yo instalé Daewoo la semana siguiente. Sencillo, rápido y sin cuotas. Es lo que buscaba.", "author": "Roberto S.", "location": "Zaragoza", "product": "Pack Casa Basic" } },
+        { "type": "review", "settings": { "text": "Las alertas en el móvil son inmediatas. Una vez sonó la alarma por error y en 10 segundos ya sabía que era yo quien la había activado.", "author": "Elena M.", "location": "Málaga", "product": "Pack Casa Plus" } },
+        { "type": "review", "settings": { "text": "Lo compré para mi tienda. Dos cámaras y cuatro sensores. Todo instalado sin técnico. El precio es imbatible comparado con la competencia.", "author": "Tomás V.", "location": "Alicante", "product": "Pack Local" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
