@@ -1,0 +1,102 @@
+{% stylesheet %}
+.ds-benefits__grid { margin-top: 3rem; }
+.ds-benefits__card-title { font-family: var(--ds-font); font-size: 1.1rem; font-weight: 700; color: #fff; margin: 1rem 0 .5rem; }
+.ds-benefits__card-desc { font-family: var(--ds-font); font-size: .9rem; line-height: 1.65; color: var(--ds-muted); }
+{% endstylesheet %}
+
+<section class="ds-section ds-bg-dark" id="ds-benefits-{{ section.id }}">
+  <div class="ds-container ds-section-inner">
+
+    <div class="ds-section-header ds-section-header--center" data-ds-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="ds-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="ds-title ds-title-md ds-text-white">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ds-subtitle" style="margin-top:1rem;">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ds-grid-3 ds-benefits__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'benefit' -%}
+          <article class="ds-card ds-card-dark" data-ds-reveal data-ds-delay="{{ forloop.index | times: 100 }}" {{ block.shopify_attributes }}>
+            <div class="ds-icon-wrap ds-icon-wrap--dark ds-icon-wrap--lg">
+              {%- case block.settings.icon -%}
+                {%- when 'shield' -%}
+                  <svg width="28" height="28" fill="none" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 2.5L4.5 6.5v8c0 4.9 3.9 9.5 9.5 10.6 5.6-1.1 9.5-5.7 9.5-10.6v-8L14 2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.5 14l3 3 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- when 'phone' -%}
+                  <svg width="28" height="28" fill="none" viewBox="0 0 28 28" aria-hidden="true"><rect x="8" y="3" width="12" height="22" rx="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="14" cy="22" r="1.2" fill="currentColor"/></svg>
+                {%- when 'clock' -%}
+                  <svg width="28" height="28" fill="none" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M14 8v6l4 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                {%- when 'tool' -%}
+                  <svg width="28" height="28" fill="none" viewBox="0 0 28 28" aria-hidden="true"><path d="M18 4a5 5 0 01-5 8.5l-8 8a2 2 0 002.8 2.8l8-8A5 5 0 0124 10l-3 3-2-1-1-2 3-3a5 5 0 01-3-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                {%- when 'home' -%}
+                  <svg width="28" height="28" fill="none" viewBox="0 0 28 28" aria-hidden="true"><path d="M4 14L14 4l10 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 11v12h5v-6h4v6h5V11" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                {%- when 'euro' -%}
+                  <svg width="28" height="28" fill="none" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M17 9.5a5 5 0 100 9M7 12h8M7 16h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                {%- else -%}
+                  <svg width="28" height="28" fill="none" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 14l3 3 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {%- endcase -%}
+            </div>
+            <h3 class="ds-benefits__card-title">{{ block.settings.title }}</h3>
+            <p class="ds-benefits__card-desc">{{ block.settings.description }}</p>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DS Beneficios",
+  "tag": "section",
+  "class": "ds-section",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",  "label": "Eyebrow",   "default": "Por qué elegirnos" },
+    { "type": "text",     "id": "title",    "label": "Título",    "default": "Todo lo que necesitas para estar tranquilo" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Tecnología de vanguardia, diseño intuitivo y cero gastos recurrentes." }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+            { "value": "shield", "label": "Escudo" },
+            { "value": "phone",  "label": "Teléfono" },
+            { "value": "clock",  "label": "Reloj" },
+            { "value": "tool",   "label": "Herramienta" },
+            { "value": "home",   "label": "Casa" },
+            { "value": "euro",   "label": "Euro" },
+            { "value": "check",  "label": "Check" }
+          ],
+          "default": "shield"
+        },
+        { "type": "text",     "id": "title",       "label": "Título",       "default": "Protección 24/7" },
+        { "type": "textarea", "id": "description", "label": "Descripción",  "default": "Tu sistema vigila continuamente con detección de movimiento, apertura de puertas y sirena de alta potencia." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DS Beneficios",
+      "settings": {
+        "eyebrow":  "Por qué Daewoo Security",
+        "title":    "Todo lo que necesitas, sin lo que no quieres",
+        "subtitle": "Alarma profesional, instalación sencilla, cero cuotas. Así es como la seguridad debería funcionar."
+      },
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "shield",  "title": "Protección 24/7",           "description": "Detección de movimiento, apertura de puertas y ventanas. Sirena de 110 dB que disuade a cualquier intruso." } },
+        { "type": "benefit", "settings": { "icon": "euro",    "title": "Sin cuotas mensuales",      "description": "Pago único, propiedad para siempre. Sin sorpresas en tu factura cada mes. Sin contratos de permanencia." } },
+        { "type": "benefit", "settings": { "icon": "phone",   "title": "Control desde el móvil",   "description": "App gratuita para iOS y Android. Arma, desarma y recibe alertas instantáneas desde cualquier lugar del mundo." } },
+        { "type": "benefit", "settings": { "icon": "tool",    "title": "Instalación en 1 hora",    "description": "Sin obras ni cables. Sistema inalámbrico de instalación sencilla. Nuestra guía paso a paso lo hace accesible para todos." } },
+        { "type": "benefit", "settings": { "icon": "home",    "title": "Adaptada a tu hogar",      "description": "Configura tu pack exactamente según las necesidades de tu vivienda. Desde pisos hasta chalets y locales comerciales." } },
+        { "type": "benefit", "settings": { "icon": "clock",   "title": "Respuesta inmediata",      "description": "Notificaciones push, SMS y llamada de alarma en segundos. Tiempo de respuesta inferior a 30 segundos ante cualquier incidencia." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

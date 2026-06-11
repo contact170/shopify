@@ -1,0 +1,391 @@
+{% stylesheet %}
+.ds-product { padding-block: 3rem 5rem; }
+.ds-product__hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  margin-bottom: 5rem;
+}
+/* Gallery */
+.ds-gallery-main {
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--ds-gray-50);
+  aspect-ratio: 4/3;
+  position: relative;
+}
+.ds-gallery-main img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: opacity .3s;
+}
+.ds-gallery-thumbs { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.ds-gallery-thumb {
+  width: 72px; height: 72px;
+  border-radius: 10px; overflow: hidden;
+  border: 2px solid transparent; cursor: pointer;
+  transition: border-color .2s;
+}
+.ds-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ds-gallery-thumb.active, .ds-gallery-thumb:hover { border-color: var(--ds-accent); }
+.ds-gallery-trust {
+  display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;
+  padding-top: 1rem; border-top: 1px solid var(--ds-gray-100);
+}
+.ds-gallery-trust span {
+  display: flex; align-items: center; gap: 5px;
+  font-size: .75rem; color: var(--ds-gray-400); font-weight: 500;
+  font-family: var(--ds-font);
+}
+/* Info side */
+.ds-product__breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--ds-font); font-size: .75rem; color: var(--ds-gray-400);
+  margin-bottom: 1rem;
+}
+.ds-product__breadcrumb a { color: var(--ds-gray-400); text-decoration: none; }
+.ds-product__breadcrumb a:hover { color: var(--ds-accent); }
+.ds-product__badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+.ds-product__title {
+  font-family: var(--ds-font); font-size: clamp(1.5rem,3vw,2.25rem);
+  font-weight: 800; letter-spacing: -.03em; line-height: 1.15;
+  color: var(--ds-black); margin: 0 0 .75rem;
+}
+.ds-product__rating {
+  display: flex; align-items: center; gap: .5rem;
+  font-family: var(--ds-font); font-size: .8rem; color: var(--ds-gray-400);
+  margin-bottom: 1rem;
+}
+.ds-product__short-desc {
+  font-family: var(--ds-font); font-size: 1rem;
+  line-height: 1.7; color: var(--ds-gray-500); margin: 0 0 1.5rem;
+}
+/* Price block */
+.ds-product__price-block {
+  background: var(--ds-gray-50); border-radius: var(--ds-r-lg);
+  padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+}
+.ds-product__price { display: flex; align-items: baseline; gap: .75rem; margin-bottom: .3rem; }
+.ds-product__price-current {
+  font-family: var(--ds-font); font-size: clamp(1.75rem,3vw,2.5rem);
+  font-weight: 900; letter-spacing: -.04em; color: var(--ds-black);
+}
+.ds-product__price-original {
+  font-family: var(--ds-font); font-size: 1.1rem;
+  font-weight: 500; color: var(--ds-gray-300); text-decoration: line-through;
+}
+.ds-product__price-note {
+  font-family: var(--ds-font); font-size: .75rem; color: var(--ds-gray-400); margin: 0;
+}
+/* CTA block */
+.ds-product__cta-block { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: .5rem; }
+.ds-product__cta-main { flex: 1; min-width: 200px; justify-content: center; }
+.ds-product__cta-note {
+  font-family: var(--ds-font); font-size: .75rem;
+  color: var(--ds-gray-400); margin: 0 0 1.25rem;
+}
+/* Guarantee strip */
+.ds-product__guarantees {
+  display: flex; gap: 1.25rem; flex-wrap: wrap;
+  padding-top: 1rem; border-top: 1px solid var(--ds-gray-100);
+}
+.ds-product__guarantee {
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--ds-font); font-size: .75rem; color: var(--ds-gray-500); font-weight: 500;
+}
+.ds-product__guarantee svg { color: var(--ds-accent); flex-shrink: 0; }
+/* Tabs */
+.ds-product__tabs { border-top: 1px solid var(--ds-gray-100); padding-top: 3.5rem; }
+.ds-product__tab-nav {
+  display: flex; border-bottom: 1px solid var(--ds-gray-100);
+  margin-bottom: 2.5rem; overflow-x: auto; scrollbar-width: none;
+}
+.ds-product__tab-nav::-webkit-scrollbar { display: none; }
+.ds-product__tab-btn {
+  background: none; border: none; padding: .9rem 1.75rem;
+  font-family: var(--ds-font); font-size: 1rem; font-weight: 500;
+  color: var(--ds-gray-400); cursor: pointer; white-space: nowrap;
+  position: relative; transition: color .15s;
+}
+.ds-product__tab-btn::after {
+  content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+  height: 2px; background: var(--ds-accent); transform: scaleX(0);
+  transition: transform .3s var(--ds-ease);
+}
+.ds-product__tab-btn.active, .ds-product__tab-btn:hover { color: var(--ds-black); }
+.ds-product__tab-btn.active::after { transform: scaleX(1); }
+.ds-product__tab-panel[hidden] { display: none; }
+.ds-product__description {
+  font-family: var(--ds-font); font-size: 1.05rem;
+  line-height: 1.8; color: var(--ds-gray-700); max-width: 740px;
+}
+.ds-product__description h2,.ds-product__description h3 {
+  font-family: var(--ds-font); font-weight: 700; color: var(--ds-black);
+  letter-spacing: -.02em; margin: 2rem 0 .75rem;
+}
+.ds-product__kit-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.ds-product__kit-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  background: var(--ds-gray-50); border-radius: var(--ds-r-md); padding: 1.25rem;
+}
+.ds-product__kit-title {
+  font-family: var(--ds-font); font-size: .9rem; font-weight: 700;
+  color: var(--ds-black); margin: 0 0 4px;
+}
+.ds-product__kit-desc {
+  font-family: var(--ds-font); font-size: .75rem; color: var(--ds-gray-400); margin: 0; line-height: 1.5;
+}
+.ds-product__faq { max-width: 740px; }
+@media (max-width:1023px) {
+  .ds-product__hero { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ds-product__kit-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width:599px) {
+  .ds-product__kit-grid { grid-template-columns: 1fr; }
+  .ds-product__cta-block { flex-direction: column; }
+  .ds-product__cta-main { width: 100%; }
+}
+{% endstylesheet %}
+
+{{ 'daewoo-es.css' | asset_url | stylesheet_tag }}
+
+<div class="ds-product" itemscope itemtype="https://schema.org/Product">
+  <div class="ds-container">
+
+    <!-- HERO -->
+    <div class="ds-product__hero">
+
+      <!-- Galería -->
+      <div class="ds-product__gallery" data-ds-reveal>
+        <div class="ds-gallery-main">
+          {%- if product.featured_image -%}
+            <img src="{{ product.featured_image | image_url: width: 1000 }}"
+                 alt="{{ product.featured_image.alt | default: product.title }}"
+                 id="ds-main-img" width="1000" height="750" loading="eager" itemprop="image">
+          {%- else -%}
+            <div style="display:flex;align-items:center;justify-content:center;height:100%;background:var(--ds-gray-50);" aria-hidden="true">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="ds-gallery-thumbs">
+            {%- for img in product.images limit: 6 -%}
+              <button class="ds-gallery-thumb {% if forloop.first %}active{% endif %}"
+                      aria-label="Imagen {{ forloop.index }}"
+                      onclick="dsThumb(this,'{{ img | image_url: width: 1000 }}')">
+                <img src="{{ img | image_url: width: 150 }}" alt="{{ img.alt }}" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="ds-gallery-trust">
+          <span><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Pago seguro SSL</span>
+          <span><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Envío 24-48h</span>
+          <span><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg> 30 días devolución</span>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="ds-product__info" data-ds-reveal data-ds-delay="150">
+
+        <nav class="ds-product__breadcrumb" aria-label="Navegación">
+          <a href="{{ routes.root_url }}">Inicio</a>
+          <span aria-hidden="true">›</span>
+          {%- if collection -%}<a href="{{ collection.url }}">{{ collection.title }}</a><span aria-hidden="true">›</span>{%- endif -%}
+          <span>{{ product.title }}</span>
+        </nav>
+
+        <div class="ds-product__badges">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'badge' -%}
+              <span class="ds-badge ds-badge-{{ block.settings.style }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <h1 class="ds-product__title" itemprop="name">{{ product.title }}</h1>
+
+        {%- if section.settings.show_rating -%}
+          <div class="ds-product__rating" aria-label="{{ section.settings.rating_value }} de 5 estrellas">
+            <div class="ds-stars">{% for i in (1..5) %}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1l1.8 3.7L14 5.4l-3 2.9.7 4.2L8 10.5l-3.7 2 .7-4.2-3-2.9 4.2-.7L8 1Z" fill="currentColor"/></svg>{% endfor %}</div>
+            <span>{{ section.settings.rating_value }} · {{ section.settings.rating_count }} reseñas verificadas</span>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.short_description != blank -%}
+          <p class="ds-product__short-desc">{{ section.settings.short_description }}</p>
+        {%- endif -%}
+
+        <div class="ds-product__price-block" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+          <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
+          <meta itemprop="price" content="{{ product.price | divided_by: 100.0 }}">
+          <meta itemprop="availability" content="{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}">
+          <div class="ds-product__price">
+            {%- if product.compare_at_price > product.price -%}
+              <span class="ds-product__price-original">{{ product.compare_at_price | money }}</span>
+              <span class="ds-product__price-current">{{ product.price | money }}</span>
+              <span class="ds-badge ds-badge-accent">-{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
+            {%- else -%}
+              <span class="ds-product__price-current">{{ product.price | money }}</span>
+            {%- endif -%}
+          </div>
+          <p class="ds-product__price-note">{{ section.settings.price_note }}</p>
+        </div>
+
+        {%- assign benefits = section.blocks | where: 'type', 'benefit' -%}
+        {%- if benefits.size > 0 -%}
+          <ul class="ds-checklist" style="margin-bottom:1.5rem;">
+            {%- for block in benefits -%}<li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>{%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="ds-product__cta-block">
+          {%- if section.settings.cta_configurator_url != blank -%}
+            <a href="{{ section.settings.cta_configurator_url }}" class="ds-btn ds-btn-primary ds-btn-lg ds-product__cta-main" target="_blank" rel="noopener">
+              {{ section.settings.cta_configurator_label }}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </a>
+          {%- else -%}
+            {%- form 'product', product -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg ds-product__cta-main" {% unless product.available %}disabled{% endunless %}>
+                {% if product.available %}Añadir al carrito{% else %}Agotado{% endif %}
+              </button>
+            {%- endform -%}
+          {%- endif -%}
+          {%- if section.settings.cta_secondary_label != blank -%}
+            <a href="{{ section.settings.cta_secondary_url }}" class="ds-btn ds-btn-dark">{{ section.settings.cta_secondary_label }}</a>
+          {%- endif -%}
+        </div>
+        <p class="ds-product__cta-note">{{ section.settings.cta_note }}</p>
+
+        <div class="ds-product__guarantees">
+          <div class="ds-product__guarantee"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Garantía 2 años</div>
+          <div class="ds-product__guarantee"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Envío 24-48h</div>
+          <div class="ds-product__guarantee"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>30 días devolución</div>
+          <div class="ds-product__guarantee"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Pago seguro</div>
+        </div>
+
+      </div>
+    </div><!-- /hero -->
+
+    <!-- TABS -->
+    <div class="ds-product__tabs">
+      <nav class="ds-product__tab-nav" role="tablist">
+        <button class="ds-product__tab-btn active" role="tab" aria-selected="true" aria-controls="tab-desc">Descripción</button>
+        <button class="ds-product__tab-btn" role="tab" aria-selected="false" aria-controls="tab-kit">¿Qué incluye?</button>
+        <button class="ds-product__tab-btn" role="tab" aria-selected="false" aria-controls="tab-faq">Preguntas</button>
+      </nav>
+
+      <div class="ds-product__tab-panel" id="tab-desc" role="tabpanel">
+        <div class="ds-product__description" itemprop="description">{{ product.description }}</div>
+      </div>
+
+      <div class="ds-product__tab-panel" id="tab-kit" role="tabpanel" hidden>
+        {%- assign kit_items = section.blocks | where: 'type', 'kit_item' -%}
+        {%- if kit_items.size > 0 -%}
+          <div class="ds-product__kit-grid">
+            {%- for block in kit_items -%}
+              <div class="ds-product__kit-item" {{ block.shopify_attributes }}>
+                <div class="ds-icon-wrap" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div>
+                  <h4 class="ds-product__kit-title">{{ block.settings.quantity }}× {{ block.settings.name }}</h4>
+                  {%- if block.settings.description != blank -%}<p class="ds-product__kit-desc">{{ block.settings.description }}</p>{%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="ds-product__tab-panel ds-product__faq ds-accordion-group" id="tab-faq" role="tabpanel" hidden>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            {%- assign fid = 'pf-' | append: forloop.index -%}
+            <div class="ds-accordion-item" {{ block.shopify_attributes }}>
+              <button class="ds-accordion-trigger" aria-expanded="false" aria-controls="{{ fid }}">
+                {{ block.settings.question }}
+                <span class="ds-accordion-icon" aria-hidden="true"><svg width="10" height="10" fill="none" viewBox="0 0 10 10"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="ds-accordion-body" id="{{ fid }}">
+                <div class="ds-accordion-body-inner">{{ block.settings.answer }}</div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function dsThumb(btn, src) {
+  document.getElementById('ds-main-img').src = src;
+  document.querySelectorAll('.ds-gallery-thumb').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.ds-product__tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var tabs = btn.closest('.ds-product__tabs');
+      tabs.querySelectorAll('.ds-product__tab-btn').forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      tabs.querySelectorAll('.ds-product__tab-panel').forEach(function(p){ p.hidden = true; });
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      if (panel) panel.hidden = false;
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "DS Página Producto",
+  "settings": [
+    { "type": "checkbox", "id": "show_rating",            "label": "Mostrar valoración",    "default": true },
+    { "type": "text",     "id": "rating_value",           "label": "Nota media",             "default": "4.9" },
+    { "type": "text",     "id": "rating_count",           "label": "Número de reseñas",      "default": "238" },
+    { "type": "textarea", "id": "short_description",      "label": "Descripción corta",      "default": "Sistema de alarma sin cuotas, configurado para tu hogar. Instalación DIY en menos de 2 horas." },
+    { "type": "text",     "id": "price_note",             "label": "Nota precio",            "default": "Pago único · Sin cuotas mensuales · IVA incluido" },
+    { "type": "text",     "id": "cta_configurator_label", "label": "CTA configurador texto", "default": "Configurar mi alarma personalizada" },
+    { "type": "url",      "id": "cta_configurator_url",   "label": "URL configurador" },
+    { "type": "text",     "id": "cta_secondary_label",    "label": "CTA secundario texto",   "default": "Ver más información" },
+    { "type": "url",      "id": "cta_secondary_url",      "label": "URL CTA secundario" },
+    { "type": "text",     "id": "cta_note",               "label": "Nota bajo CTAs",         "default": "Configuración gratuita · Sin compromiso · Resultado inmediato" }
+  ],
+  "blocks": [
+    { "type": "badge",    "name": "Badge",    "settings": [ { "type": "text", "id": "label", "label": "Texto", "default": "Sin cuotas" }, { "type": "select", "id": "style", "label": "Estilo", "options": [{"value":"accent","label":"Rojo"},{"value":"green","label":"Verde"},{"value":"dark","label":"Oscuro"}], "default": "accent" } ] },
+    { "type": "benefit",  "name": "Ventaja",  "settings": [ { "type": "text", "id": "text", "label": "Texto", "default": "Sin cuotas mensuales ni contratos" } ] },
+    { "type": "kit_item", "name": "Componente kit", "settings": [ { "type": "text", "id": "quantity", "label": "Cantidad", "default": "1" }, { "type": "text", "id": "name", "label": "Nombre", "default": "Central de alarma WiFi+4G" }, { "type": "text", "id": "description", "label": "Descripción", "default": "Unidad principal con batería de respaldo 24h" } ] },
+    { "type": "faq_item", "name": "Pregunta producto", "settings": [ { "type": "text", "id": "question", "label": "Pregunta", "default": "¿Necesito técnico para instalarlo?" }, { "type": "richtext", "id": "answer", "label": "Respuesta", "default": "<p>No. La instalación está diseñada para hacerla tú mismo en menos de 2 horas.</p>" } ] }
+  ],
+  "presets": [
+    {
+      "name": "DS Página Producto",
+      "blocks": [
+        { "type": "badge",    "settings": { "label": "Sin cuotas",       "style": "accent" } },
+        { "type": "badge",    "settings": { "label": "Instalación DIY",  "style": "green"  } },
+        { "type": "benefit",  "settings": { "text": "Sin cuotas mensuales ni contratos de permanencia" } },
+        { "type": "benefit",  "settings": { "text": "Instalación tú mismo en menos de 2 horas" } },
+        { "type": "benefit",  "settings": { "text": "Control total desde la app móvil (iOS y Android)" } },
+        { "type": "benefit",  "settings": { "text": "Funciona sin conexión a internet" } },
+        { "type": "benefit",  "settings": { "text": "2 años de garantía incluida" } },
+        { "type": "kit_item", "settings": { "quantity": "1", "name": "Central WiFi+4G",          "description": "Batería de respaldo 24h incluida" } },
+        { "type": "kit_item", "settings": { "quantity": "3", "name": "Detectores PIR",            "description": "Cobertura 90° · 12m de alcance" } },
+        { "type": "kit_item", "settings": { "quantity": "2", "name": "Sensores puerta/ventana",   "description": "Adhesivo, sin taladros" } },
+        { "type": "kit_item", "settings": { "quantity": "1", "name": "Sirena interior 120dB",     "description": "Batería de respaldo incluida" } },
+        { "type": "kit_item", "settings": { "quantity": "1", "name": "Mando a distancia",         "description": "Activación rápida" } },
+        { "type": "kit_item", "settings": { "quantity": "1", "name": "App gratuita iOS/Android",  "description": "Control remoto total" } },
+        { "type": "faq_item", "settings": { "question": "¿Necesito un técnico para instalarlo?",  "answer": "<p>No. La instalación está diseñada para hacerla tú mismo en menos de 2 horas, sin herramientas especiales.</p>" } },
+        { "type": "faq_item", "settings": { "question": "¿Hay cuotas mensuales ocultas?",         "answer": "<p>No. El precio que ves es el único pago que realizas. La alarma es completamente tuya desde el primer día.</p>" } },
+        { "type": "faq_item", "settings": { "question": "¿Cuántos sensores puedo conectar?",      "answer": "<p>Hasta 50 dispositivos: detectores, sensores, cámaras y mandos. Ampliable en cualquier momento.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

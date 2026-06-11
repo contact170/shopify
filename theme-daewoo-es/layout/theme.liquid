@@ -49,6 +49,8 @@
     {%- render 'js-variables' -%}
     {% render "scripts" %}
     {% include "pagefly-app-header" %}
+    {{ 'daewoo-es.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'daewoo-es.js' | asset_url }}" defer="defer"></script>
   </head>
 
   <body class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}{% if request.path == '/challenge' %} template-challange{% endif %}" data-rounded-button="{{ settings.rounded_button }}" data-rounded-input="{{ settings.rounded_input }}" data-rounded-block="{{ settings.rounded_block }}" data-rounded-card="{{ settings.rounded_card }}" data-button-hover="{{ settings.buttons_hover }}"{% if settings.enable_page_transition %} data-page-transition{% endif %}{% if settings.enable_lazy_image %} data-lazy-image{% endif %} data-title-animation data-page-rendering>

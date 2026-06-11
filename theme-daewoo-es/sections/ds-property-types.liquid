@@ -1,0 +1,165 @@
+{% stylesheet %}
+.ds-props__grid { margin-top: 3rem; }
+.ds-props__card {
+  background: var(--ds-white);
+  border: 1px solid var(--ds-border-light);
+  border-radius: var(--ds-radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  cursor: pointer;
+  transition: transform .25s var(--ds-ease), box-shadow .25s var(--ds-ease), border-color .25s;
+}
+.ds-props__card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--ds-shadow-lg);
+  border-color: var(--ds-accent);
+}
+.ds-props__emoji { font-size: 2.5rem; line-height: 1; }
+.ds-props__card-title {
+  font-family: var(--ds-font); font-size: 1.1rem; font-weight: 700; color: var(--ds-black);
+}
+.ds-props__card-desc {
+  font-family: var(--ds-font); font-size: .875rem; line-height: 1.65; color: var(--ds-muted);
+  flex: 1;
+}
+.ds-props__tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.ds-props__cta-link {
+  font-family: var(--ds-font); font-size: .875rem; font-weight: 600; color: var(--ds-accent);
+  text-decoration: none; display: inline-flex; align-items: center; gap: .3rem;
+  transition: gap .2s;
+}
+.ds-props__cta-link:hover { gap: .6rem; }
+{% endstylesheet %}
+
+<section class="ds-section ds-bg-white" id="ds-props-{{ section.id }}">
+  <div class="ds-container ds-section-inner">
+
+    <div class="ds-section-header ds-section-header--center" data-ds-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="ds-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="ds-title ds-title-md ds-text-black">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ds-subtitle" style="margin-top:1rem;">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ds-grid-4 ds-props__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'property' -%}
+          <article class="ds-props__card" data-ds-reveal data-ds-delay="{{ forloop.index | times: 100 }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 400 }}"
+                alt="{{ block.settings.title }}"
+                style="width:100%;height:160px;object-fit:cover;border-radius:10px;"
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="ds-props__emoji">{{ block.settings.emoji | default: '🏠' }}</div>
+            {%- endif -%}
+            <div class="ds-props__card-title">{{ block.settings.title }}</div>
+            <p class="ds-props__card-desc">{{ block.settings.description }}</p>
+            {%- if block.settings.tags != blank -%}
+              <div class="ds-props__tags">
+                {%- assign tag_list = block.settings.tags | split: ',' -%}
+                {%- for tag in tag_list -%}
+                  <span class="ds-tag">{{ tag | strip }}</span>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.cta_text != blank -%}
+              <a href="{{ block.settings.cta_url }}" class="ds-props__cta-link">
+                {{ block.settings.cta_text }}
+                <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              </a>
+            {%- endif -%}
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DS Tipos de vivienda",
+  "tag": "section",
+  "class": "ds-section",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",  "label": "Eyebrow",   "default": "Tu tipo de hogar" },
+    { "type": "text",     "id": "title",    "label": "Título",    "default": "Una alarma para cada tipo de vivienda" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Cada hogar es diferente. Por eso tenemos packs específicos para casas, pisos, segunda residencia y locales comerciales." }
+  ],
+  "blocks": [
+    {
+      "type": "property",
+      "name": "Tipo de vivienda",
+      "settings": [
+        { "type": "text",        "id": "emoji",       "label": "Emoji",        "default": "🏠" },
+        { "type": "image_picker","id": "image",       "label": "Imagen (reemplaza emoji)" },
+        { "type": "text",        "id": "title",       "label": "Título",       "default": "Casa unifamiliar" },
+        { "type": "textarea",    "id": "description", "label": "Descripción",  "default": "Protección perimetral completa con múltiples zonas, sensores exteriores y sirena exterior." },
+        { "type": "text",        "id": "tags",        "label": "Tags (separados por coma)", "default": "Múltiples zonas, Sirena exterior, Cámaras" },
+        { "type": "text",        "id": "cta_text",    "label": "CTA texto",    "default": "Ver pack" },
+        { "type": "url",         "id": "cta_url",     "label": "CTA enlace" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DS Tipos de vivienda",
+      "settings": {
+        "eyebrow":  "Adaptada a tu hogar",
+        "title":    "Una alarma para cada tipo de vivienda",
+        "subtitle": "Cada hogar es diferente. Por eso tenemos packs específicos para casas, pisos, segunda residencia y locales comerciales."
+      },
+      "blocks": [
+        {
+          "type": "property",
+          "settings": {
+            "emoji": "🏡",
+            "title": "Casa unifamiliar",
+            "description": "Protección perimetral completa. Ideal para chalets y casas adosadas con jardín y múltiples accesos.",
+            "tags": "Hasta 8 zonas, Sirena exterior, Cámaras HD, Control por app",
+            "cta_text": "Ver pack casa"
+          }
+        },
+        {
+          "type": "property",
+          "settings": {
+            "emoji": "🏢",
+            "title": "Piso o apartamento",
+            "description": "Sistema compacto y eficiente. Protege puertas, ventanas y zonas interiores sin necesidad de obras.",
+            "tags": "Sensor puerta, Detector movimiento, App gratuita",
+            "cta_text": "Ver pack piso"
+          }
+        },
+        {
+          "type": "property",
+          "settings": {
+            "emoji": "🌿",
+            "title": "Segunda residencia",
+            "description": "Vigilancia 4G independiente de WiFi. Te avisamos al instante si alguien entra cuando no estás.",
+            "tags": "4G independiente, Alertas remotas, Batería de respaldo",
+            "cta_text": "Ver pack segunda residencia"
+          }
+        },
+        {
+          "type": "property",
+          "settings": {
+            "emoji": "🏪",
+            "title": "Local comercial",
+            "description": "Protección profesional para tiendas, oficinas y naves. Horarios personalizados y múltiples usuarios.",
+            "tags": "Multi-usuario, Horarios, Cámaras IP, Sirena",
+            "cta_text": "Ver pack local"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

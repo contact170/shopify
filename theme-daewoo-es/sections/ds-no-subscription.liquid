@@ -1,0 +1,185 @@
+{% stylesheet %}
+.ds-nosub__content { max-width: 700px; margin: 0 auto 3rem; text-align: center; }
+.ds-nosub__compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.ds-nosub__vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ds-font);
+  font-size: .8rem;
+  font-weight: 800;
+  color: var(--ds-muted);
+  letter-spacing: .1em;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.ds-nosub__card {
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.ds-nosub__card--bad {
+  background: rgba(230,57,70,.06);
+  border: 1px solid rgba(230,57,70,.2);
+}
+.ds-nosub__card--good {
+  background: var(--ds-black);
+  border: 2px solid var(--ds-accent);
+  position: relative;
+  box-shadow: var(--ds-glow-red);
+}
+.ds-nosub__card-title {
+  font-family: var(--ds-font);
+  font-size: 1rem;
+  font-weight: 700;
+}
+.ds-nosub__card--bad  .ds-nosub__card-title { color: var(--ds-accent); }
+.ds-nosub__card--good .ds-nosub__card-title { color: #fff; }
+.ds-nosub__price {
+  font-family: var(--ds-font);
+  font-size: .85rem;
+  font-weight: 500;
+  padding: .6rem 1rem;
+  border-radius: 8px;
+}
+.ds-nosub__card--bad  .ds-nosub__price { background: rgba(230,57,70,.08); color: var(--ds-accent); }
+.ds-nosub__card--good .ds-nosub__price { background: rgba(255,255,255,.06); color: rgba(255,255,255,.8); }
+.ds-nosub__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .75rem; }
+.ds-nosub__list li {
+  font-family: var(--ds-font); font-size: .875rem; line-height: 1.5;
+  display: flex; align-items: flex-start; gap: .6rem;
+}
+.ds-nosub__card--bad  .ds-nosub__list li { color: var(--ds-muted); }
+.ds-nosub__card--good .ds-nosub__list li { color: rgba(255,255,255,.8); }
+.ds-nosub__list-icon { flex-shrink: 0; margin-top: 2px; }
+.ds-nosub__recommended {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@media (max-width: 700px) {
+  .ds-nosub__compare { grid-template-columns: 1fr; gap: 1rem; }
+  .ds-nosub__vs { writing-mode: horizontal-tb; padding: .5rem 0; }
+}
+{% endstylesheet %}
+
+<section class="ds-section ds-bg-surface" id="ds-nosub-{{ section.id }}">
+  <div class="ds-container ds-section-inner">
+
+    <div class="ds-nosub__content" data-ds-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="ds-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="ds-title ds-title-md ds-text-black">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ds-subtitle" style="margin-top:1rem;">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ds-nosub__compare">
+
+      <!-- Card mauvaise: avec cuotas -->
+      <div class="ds-nosub__card ds-nosub__card--bad" data-ds-reveal>
+        <div class="ds-nosub__card-title">{{ section.settings.bad_title }}</div>
+        {%- if section.settings.bad_price != blank -%}
+          <div class="ds-nosub__price">{{ section.settings.bad_price }}</div>
+        {%- endif -%}
+        {%- assign bad_items = section.settings.bad_list | newline_to_br | split: '<br />' -%}
+        <ul class="ds-nosub__list ds-checklist-neg">
+          {%- for item in bad_items -%}
+            {%- if item != blank -%}
+              <li>
+                <span class="ds-nosub__list-icon">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="rgba(230,57,70,0.1)"/><path d="M6 6l6 6M12 6l-6 6" stroke="#E63946" stroke-width="1.6" stroke-linecap="round"/></svg>
+                </span>
+                {{ item | strip }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="ds-nosub__vs">VS</div>
+
+      <!-- Card bonne: Daewoo -->
+      <div class="ds-nosub__card ds-nosub__card--good" data-ds-reveal data-ds-delay="200">
+        <span class="ds-nosub__recommended">
+          <span class="ds-badge ds-badge-green">{{ section.settings.recommended_label | default: 'Recomendado' }}</span>
+        </span>
+        <div class="ds-nosub__card-title">{{ section.settings.good_title }}</div>
+        {%- if section.settings.good_price != blank -%}
+          <div class="ds-nosub__price">{{ section.settings.good_price }}</div>
+        {%- endif -%}
+        {%- assign good_items = section.settings.good_list | newline_to_br | split: '<br />' -%}
+        <ul class="ds-nosub__list">
+          {%- for item in good_items -%}
+            {%- if item != blank -%}
+              <li>
+                <span class="ds-nosub__list-icon">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="rgba(52,199,89,0.12)"/><path d="M5.5 9l2.5 2.5 5-5" stroke="#34C759" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                {{ item | strip }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- if section.settings.cta_text != blank -%}
+          <a href="{{ section.settings.cta_url }}" class="ds-btn ds-btn-primary" style="margin-top:.5rem;">
+            {{ section.settings.cta_text }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DS Sin cuotas",
+  "tag": "section",
+  "class": "ds-section",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",           "label": "Eyebrow",             "default": "Comparativa" },
+    { "type": "text",     "id": "title",             "label": "Título",              "default": "Sin cuotas. Sin contratos. Sin sorpresas." },
+    { "type": "textarea", "id": "subtitle",          "label": "Subtítulo",           "default": "Otras alarmas te cobran mes a mes para siempre. Con Daewoo Security pagas una sola vez y es tuya para siempre." },
+    { "type": "text",     "id": "bad_title",         "label": "Card negativa — título",   "default": "Alarmas con cuota mensual" },
+    { "type": "text",     "id": "bad_price",         "label": "Card negativa — precio",   "default": "+ 30–50 €/mes durante años" },
+    { "type": "textarea", "id": "bad_list",          "label": "Card negativa — lista (una por línea)", "default": "Cuota mensual obligatoria para siempre\nContrato de permanencia de 2-3 años\nPenalización por cancelación anticipada\nSoporte limitado fuera del contrato\nEquipo que no te pertenece en propiedad" },
+    { "type": "text",     "id": "good_title",        "label": "Card positiva — título",   "default": "Daewoo Security España" },
+    { "type": "text",     "id": "good_price",        "label": "Card positiva — precio",   "default": "Pago único desde 199 € · IVA incluido" },
+    { "type": "textarea", "id": "good_list",         "label": "Card positiva — lista (una por línea)", "default": "Un solo pago, tuyo para siempre\nSin contratos ni permanencia\nSoporte gratuito de por vida\nGarantía 3 años incluida\nInstalación guiada gratuita" },
+    { "type": "text",     "id": "recommended_label", "label": "Texto badge recomendado",  "default": "Recomendado" },
+    { "type": "text",     "id": "cta_text",          "label": "CTA texto",                "default": "Configurar mi alarma" },
+    { "type": "url",      "id": "cta_url",           "label": "CTA enlace" }
+  ],
+  "presets": [
+    {
+      "name": "DS Sin cuotas",
+      "settings": {
+        "eyebrow":           "Sin cuotas mensuales",
+        "title":             "¿Por qué seguir pagando mes a mes?",
+        "subtitle":          "La mayoría de alarmas te encadenan a una cuota mensual. Daewoo Security es tuya desde el primer día, sin contratos ni sorpresas.",
+        "bad_title":         "Alarmas con cuota mensual",
+        "bad_price":         "+ 30–50 €/mes durante años",
+        "bad_list":          "Cuota mensual obligatoria para siempre\nContrato de permanencia de 2-3 años\nPenalización por cancelación anticipada\nEl equipo no es tuyo en propiedad\nSoporte solo si pagas la cuota",
+        "good_title":        "Daewoo Security España",
+        "good_price":        "Pago único desde 199 € · IVA incluido",
+        "good_list":         "Un solo pago, tuya para siempre\nSin contratos ni permanencia\nSoporte técnico gratuito de por vida\nGarantía 3 años incluida\nInstalación guiada paso a paso",
+        "recommended_label": "Recomendado",
+        "cta_text":          "Configurar mi alarma"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,182 @@
+{% stylesheet %}
+.ds-faq__layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5rem;
+  align-items: start;
+}
+.ds-faq__sidebar { position: sticky; top: 6rem; }
+.ds-faq__sidebar-title { font-family: var(--ds-font); font-size: clamp(1.5rem,2.5vw,2rem); font-weight: 800; color: var(--ds-black); letter-spacing: -.02em; margin-bottom: 1rem; }
+.ds-faq__sidebar-sub { font-family: var(--ds-font); font-size: .9rem; line-height: 1.65; color: var(--ds-muted); margin-bottom: 1.5rem; }
+.ds-faq__contact { display: flex; flex-direction: column; gap: .5rem; }
+.ds-faq__contact-label { font-family: var(--ds-font); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ds-muted); }
+.ds-faq__contact-link { font-family: var(--ds-font); font-size: .9rem; font-weight: 600; color: var(--ds-black); text-decoration: none; display: inline-flex; align-items: center; gap: .4rem; }
+.ds-faq__contact-link:hover { color: var(--ds-accent); }
+@media (max-width: 900px) {
+  .ds-faq__layout { grid-template-columns: 1fr; gap: 2rem; }
+  .ds-faq__sidebar { position: static; }
+}
+{% endstylesheet %}
+
+<section class="ds-section ds-bg-white" id="ds-faq-{{ section.id }}" itemscope itemtype="https://schema.org/FAQPage">
+  <div class="ds-container ds-section-inner">
+
+    <div class="ds-faq__layout">
+
+      <!-- Sidebar izquierda -->
+      <aside class="ds-faq__sidebar" data-ds-reveal>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="ds-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="ds-faq__sidebar-title">{{ section.settings.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ds-faq__sidebar-sub">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+        <div class="ds-faq__contact">
+          {%- if section.settings.contact_label != blank -%}
+            <span class="ds-faq__contact-label">{{ section.settings.contact_label }}</span>
+          {%- endif -%}
+          {%- if section.settings.contact_phone != blank -%}
+            <a href="tel:{{ section.settings.contact_phone | remove: ' ' }}" class="ds-faq__contact-link">
+              <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true"><path d="M15 11.5v2a1.33 1.33 0 01-1.45 1.33 13.2 13.2 0 01-5.75-2.05 13 13 0 01-4-4 13.2 13.2 0 01-2.05-5.78A1.33 1.33 0 012.89 1.5h2a1.33 1.33 0 011.33 1.15c.085.64.24 1.27.46 1.87a1.33 1.33 0 01-.3 1.41l-.85.85a10.67 10.67 0 004 4l.85-.85a1.33 1.33 0 011.41-.3c.6.22 1.23.375 1.87.46A1.33 1.33 0 0115 11.5Z" stroke="currentColor" stroke-width="1.4"/></svg>
+              {{ section.settings.contact_phone }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.contact_email != blank -%}
+            <a href="mailto:{{ section.settings.contact_email }}" class="ds-faq__contact-link">
+              <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1 4.5l7 5 7-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              {{ section.settings.contact_email }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.cta_text != blank -%}
+            <a href="{{ section.settings.cta_url }}" class="ds-btn ds-btn-outline-dark ds-btn-sm" style="margin-top:.75rem;width:fit-content;">
+              {{ section.settings.cta_text }}
+            </a>
+          {%- endif -%}
+        </div>
+      </aside>
+
+      <!-- Accordion droite -->
+      <div class="ds-accordion" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            <div
+              class="ds-accordion-item"
+              role="listitem"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+              data-ds-reveal
+              data-ds-delay="{{ forloop.index | times: 50 }}"
+              {{ block.shopify_attributes }}
+            >
+              <button
+                class="ds-accordion-trigger"
+                aria-expanded="false"
+                itemprop="name"
+              >
+                {{ block.settings.question }}
+                <span class="ds-accordion-icon" aria-hidden="true">
+                  <svg width="10" height="10" fill="none" viewBox="0 0 10 10"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="ds-accordion-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                <div class="ds-accordion-body-inner" itemprop="text">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DS FAQ",
+  "tag": "section",
+  "class": "ds-section",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",        "label": "Eyebrow",        "default": "FAQ" },
+    { "type": "text",     "id": "title",          "label": "Título",         "default": "Preguntas frecuentes" },
+    { "type": "textarea", "id": "subtitle",       "label": "Subtítulo",      "default": "¿Tienes dudas? Aquí resolvemos las más habituales. Si necesitas más ayuda, contáctanos." },
+    { "type": "text",     "id": "contact_label",  "label": "Etiqueta contacto", "default": "¿No encuentras tu respuesta?" },
+    { "type": "text",     "id": "contact_phone",  "label": "Teléfono",       "default": "900 000 000" },
+    { "type": "text",     "id": "contact_email",  "label": "Email",          "default": "soporte@daewoo-security.es" },
+    { "type": "text",     "id": "cta_text",       "label": "CTA texto",      "default": "Contactar soporte" },
+    { "type": "url",      "id": "cta_url",        "label": "CTA enlace" }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text",     "id": "question", "label": "Pregunta", "default": "¿Necesito pagar cuota mensual?" },
+        { "type": "richtext", "id": "answer",   "label": "Respuesta","default": "<p>No. Con Daewoo Security pagas una sola vez y el sistema es tuyo para siempre. Sin contratos, sin permanencia, sin cuotas.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DS FAQ",
+      "settings": {
+        "eyebrow":       "Preguntas frecuentes",
+        "title":         "Todo lo que necesitas saber",
+        "subtitle":      "Hemos recopilado las dudas más habituales de nuestros clientes. Si no encuentras tu respuesta, contacta con nuestro equipo.",
+        "contact_label": "¿Tienes más dudas?",
+        "contact_phone": "900 000 000",
+        "contact_email": "soporte@daewoo-security.es",
+        "cta_text":      "Hablar con un experto"
+      },
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Necesito pagar cuota mensual para que funcione la alarma?",
+            "answer":   "<p>No. Con Daewoo Security pagas una sola vez y el sistema es completamente tuyo para siempre. No hay contratos, no hay cuotas mensuales, no hay permanencia. La alarma funciona de forma totalmente autónoma.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Es difícil instalar la alarma yo mismo?",
+            "answer":   "<p>No, es muy sencillo. Nuestro sistema es 100% inalámbrico, sin obras ni cables. La instalación típica tarda menos de una hora. Incluimos una guía paso a paso y ofrecemos asistencia por videollamada gratuita si tienes cualquier duda.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Funciona la alarma si se va la luz o el WiFi?",
+            "answer":   "<p>Sí. La central tiene batería de respaldo que mantiene el sistema activo hasta 12 horas sin corriente. Además, los modelos con módulo 4G mantienen la conexión aunque falle el WiFi.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Puedo controlar la alarma desde el móvil?",
+            "answer":   "<p>Sí. Nuestra app gratuita para iOS y Android te permite armar y desarmar la alarma, recibir notificaciones de alerta en tiempo real, ver el historial de eventos y gestionar los usuarios, desde cualquier lugar del mundo.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuánto tarda en llegar el pedido?",
+            "answer":   "<p>Enviamos con transportista urgente. El plazo habitual es de 24 a 48 horas laborables para toda España peninsular. El envío es gratuito a partir de 99 €. Recibirás un email con el número de seguimiento.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Qué pasa si el sistema falla? ¿Tengo garantía?",
+            "answer":   "<p>Sí. Todos nuestros sistemas incluyen garantía oficial de 3 años contra defectos de fabricación. Además, si en los primeros 30 días no estás satisfecho, te devolvemos el dinero íntegro sin preguntas.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

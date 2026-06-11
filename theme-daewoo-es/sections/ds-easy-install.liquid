@@ -1,0 +1,176 @@
+{% stylesheet %}
+.ds-install { background: var(--ds-black); }
+.ds-install__steps { display: flex; flex-direction: column; gap: 5rem; margin-top: 3rem; }
+.ds-install__step { }
+.ds-install__num {
+  font-family: var(--ds-font);
+  font-size: clamp(4rem,8vw,6rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,.1);
+  margin-bottom: .5rem;
+  user-select: none;
+}
+.ds-install__step-title {
+  font-family: var(--ds-font);
+  font-size: clamp(1.5rem,3vw,2rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.02em;
+  margin-bottom: 1rem;
+}
+.ds-install__step-desc {
+  font-family: var(--ds-font);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ds-muted);
+  max-width: 460px;
+}
+.ds-install__image-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--ds-border);
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ds-install__image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.ds-install__image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  color: var(--ds-muted);
+  font-family: var(--ds-font);
+  font-size: .85rem;
+}
+.ds-install__cta { margin-top: 4rem; text-align: center; }
+{% endstylesheet %}
+
+<section class="ds-section ds-install" id="ds-install-{{ section.id }}">
+  <div class="ds-container ds-section-inner">
+
+    <div class="ds-section-header ds-section-header--center" data-ds-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="ds-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="ds-title ds-title-md ds-text-white">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ds-subtitle" style="margin-top:1rem;">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ds-install__steps">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'install_step' -%}
+          <div class="ds-zigzag-item ds-install__step" data-ds-reveal {{ block.shopify_attributes }}>
+            <div class="ds-zigzag-text">
+              <div class="ds-install__num">0{{ forloop.index }}</div>
+              {%- if block.settings.badge != blank -%}
+                <span class="ds-badge ds-badge-accent" style="margin-bottom:1rem;display:inline-flex;">{{ block.settings.badge }}</span>
+              {%- endif -%}
+              <h3 class="ds-install__step-title">{{ block.settings.title }}</h3>
+              <p class="ds-install__step-desc">{{ block.settings.description }}</p>
+            </div>
+            <div class="ds-install__image-wrap">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 700 }}"
+                  alt="{{ block.settings.title }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="ds-install__image-placeholder">
+                  <svg width="48" height="48" fill="none" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="6" width="36" height="36" rx="4" stroke="#2C2C2E" stroke-width="2"/><circle cx="18" cy="18" r="4" stroke="#2C2C2E" stroke-width="2"/><path d="M6 30l10-8 8 6 6-5 12 10" stroke="#2C2C2E" stroke-width="2" stroke-linejoin="round"/></svg>
+                  <span>Imagen {{ forloop.index }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="ds-install__cta" data-ds-reveal>
+        <a href="{{ section.settings.cta_url }}" class="ds-btn ds-btn-primary ds-btn-lg">
+          {{ section.settings.cta_text }}
+        </a>
+        {%- if section.settings.cta_note != blank -%}
+          <p style="margin-top:.75rem;font-family:var(--ds-font);font-size:.8rem;color:var(--ds-muted);">{{ section.settings.cta_note }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DS Instalación fácil",
+  "tag": "section",
+  "class": "ds-section",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",  "label": "Eyebrow",    "default": "Instalación sencilla" },
+    { "type": "text",     "id": "title",    "label": "Título",     "default": "Instálala tú mismo. Sin obras. Sin técnico." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo",  "default": "Nuestro sistema inalámbrico está diseñado para que cualquier persona pueda instalarlo en menos de una hora." },
+    { "type": "text",     "id": "cta_text", "label": "CTA texto",  "default": "Empezar ahora" },
+    { "type": "url",      "id": "cta_url",  "label": "CTA enlace" },
+    { "type": "text",     "id": "cta_note", "label": "Nota CTA",   "default": "Incluye guía de instalación en español y soporte por videollamada." }
+  ],
+  "blocks": [
+    {
+      "type": "install_step",
+      "name": "Paso de instalación",
+      "settings": [
+        { "type": "text",        "id": "badge",       "label": "Badge (opcional)",   "default": "" },
+        { "type": "text",        "id": "title",       "label": "Título del paso",    "default": "Coloca la central" },
+        { "type": "textarea",    "id": "description", "label": "Descripción",        "default": "Sitúa la central en un lugar discreto con toma de corriente. Conéctala a tu red WiFi en menos de 2 minutos con la app." },
+        { "type": "image_picker","id": "image",       "label": "Imagen" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DS Instalación fácil",
+      "settings": {
+        "eyebrow":  "Instalación en 3 pasos",
+        "title":    "Instálala tú mismo. Sin obras. Sin técnico.",
+        "subtitle": "Nuestro sistema inalámbrico está diseñado para que cualquier persona pueda instalarlo sin conocimientos técnicos en menos de una hora.",
+        "cta_text": "Ver cómo se instala",
+        "cta_note": "Incluye guía en español y soporte gratuito por videollamada."
+      },
+      "blocks": [
+        {
+          "type": "install_step",
+          "settings": {
+            "badge": "5 minutos",
+            "title": "Conecta la central",
+            "description": "Sitúa la central en un lugar discreto con toma de corriente. Conéctala a tu WiFi en 2 minutos con la app gratuita. Compatible con iOS y Android."
+          }
+        },
+        {
+          "type": "install_step",
+          "settings": {
+            "badge": "Sin taladro",
+            "title": "Coloca los sensores",
+            "description": "Pega los detectores de movimiento y los sensores de puertas y ventanas con la cinta de doble cara incluida. Sin taladros, sin cables, sin obras."
+          }
+        },
+        {
+          "type": "install_step",
+          "settings": {
+            "badge": "¡Listo!",
+            "title": "Activa y protege",
+            "description": "Configura tus zonas, define horarios y activa las notificaciones. Tu hogar queda protegido 24/7. Puedes armar y desarmar desde cualquier lugar."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

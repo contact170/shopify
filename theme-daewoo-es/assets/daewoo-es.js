@@ -1,15 +1,18 @@
-/* =========================================
-   DAEWOO SECURITY ESPAÑA — JS vanilla
-   ========================================= */
-
+/* ==========================================================================
+   Daewoo Security España — JS vanilla
+   ========================================================================== */
 (function () {
   'use strict';
 
-  /* --- Scroll Reveal --- */
+  /* ---- 1. Scroll Reveal ---- */
   function initScrollReveal() {
-    const targets = document.querySelectorAll('[data-ds-reveal]');
-    if (!targets.length) return;
-    const observer = new IntersectionObserver(function (entries) {
+    var els = document.querySelectorAll('[data-ds-reveal]');
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('ds-visible'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('ds-visible');
@@ -17,75 +20,83 @@
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    targets.forEach(function (el) { observer.observe(el); });
+    els.forEach(function (el) { observer.observe(el); });
   }
 
-  /* --- Accordion FAQ --- */
+  /* ---- 2. Accordion ---- */
   function initAccordion() {
-    document.querySelectorAll('.ds-accordion-trigger').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        const body = btn.nextElementSibling;
-        // Close all siblings
-        const parent = btn.closest('.ds-accordion-list') || btn.closest('.ds-faq__list') || btn.parentNode.parentNode;
-        parent.querySelectorAll('.ds-accordion-trigger').forEach(function (other) {
-          if (other !== btn) {
-            other.setAttribute('aria-expanded', 'false');
-            const otherBody = other.nextElementSibling;
-            if (otherBody) otherBody.style.maxHeight = '0';
-          }
-        });
-        if (!expanded) {
-          btn.setAttribute('aria-expanded', 'true');
-          if (body) body.style.maxHeight = body.scrollHeight + 'px';
-        } else {
-          btn.setAttribute('aria-expanded', 'false');
-          if (body) body.style.maxHeight = '0';
+    var triggers = document.querySelectorAll('.ds-accordion-trigger');
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        var item = trigger.closest('.ds-accordion-item');
+        var body = item.querySelector('.ds-accordion-body');
+        var isOpen = item.classList.contains('ds-open');
+
+        // Close all in same container
+        var container = item.closest('.ds-accordion-dark, .ds-accordion');
+        if (container) {
+          container.querySelectorAll('.ds-accordion-item.ds-open').forEach(function (openItem) {
+            openItem.classList.remove('ds-open');
+            openItem.querySelector('.ds-accordion-body').classList.remove('ds-open');
+            openItem.querySelector('.ds-accordion-trigger').setAttribute('aria-expanded', 'false');
+          });
+        }
+
+        if (!isOpen) {
+          item.classList.add('ds-open');
+          body.classList.add('ds-open');
+          trigger.setAttribute('aria-expanded', 'true');
         }
       });
     });
   }
 
-  /* --- Gallery Thumbnails --- */
+  /* ---- 3. Gallery Thumbnails ---- */
   function initGallery() {
-    document.querySelectorAll('.ds-gallery').forEach(function (gallery) {
-      const main = gallery.querySelector('.ds-gallery__main img');
-      const thumbs = gallery.querySelectorAll('.ds-gallery__thumb');
+    var galleries = document.querySelectorAll('[data-ds-gallery]');
+    galleries.forEach(function (gallery) {
+      var mainImg = gallery.querySelector('[data-ds-gallery-main]');
+      var thumbs  = gallery.querySelectorAll('[data-ds-gallery-thumb]');
+      if (!mainImg || !thumbs.length) return;
       thumbs.forEach(function (thumb) {
         thumb.addEventListener('click', function () {
-          const newSrc = thumb.getAttribute('data-full') || thumb.src;
-          if (main) { main.src = newSrc; }
-          thumbs.forEach(function (t) { t.classList.remove('ds-gallery__thumb--active'); });
-          thumb.classList.add('ds-gallery__thumb--active');
+          thumbs.forEach(function (t) { t.classList.remove('ds-active'); });
+          thumb.classList.add('ds-active');
+          var src = thumb.getAttribute('data-src') || thumb.querySelector('img').src;
+          mainImg.src = src;
         });
       });
     });
   }
 
-  /* --- Counter Animation --- */
+  /* ---- 4. Counter Animation ---- */
   function animateCounter(el) {
-    const target = parseFloat(el.getAttribute('data-ds-counter'));
-    const duration = parseInt(el.getAttribute('data-ds-counter-duration') || '1800', 10);
-    const suffix = el.getAttribute('data-ds-counter-suffix') || '';
-    const prefix = el.getAttribute('data-ds-counter-prefix') || '';
-    const isFloat = String(target).includes('.');
-    const decimals = isFloat ? String(target).split('.')[1].length : 0;
-    const start = performance.now();
-    function update(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = target * eased;
-      el.textContent = prefix + (isFloat ? current.toFixed(decimals) : Math.floor(current)) + suffix;
-      if (progress < 1) requestAnimationFrame(update);
+    var target  = parseFloat(el.getAttribute('data-ds-counter'));
+    var suffix  = el.getAttribute('data-ds-counter-suffix') || '';
+    var prefix  = el.getAttribute('data-ds-counter-prefix') || '';
+    var duration = 1800;
+    var start    = null;
+    var isFloat  = target % 1 !== 0;
+
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      var progress = Math.min((timestamp - start) / duration, 1);
+      var eased    = 1 - Math.pow(1 - progress, 3);
+      var current  = target * eased;
+      el.textContent = prefix + (isFloat ? current.toFixed(1) : Math.floor(current).toLocaleString('es-ES')) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
     }
-    requestAnimationFrame(update);
+    requestAnimationFrame(step);
   }
 
   function initCounters() {
-    const counters = document.querySelectorAll('[data-ds-counter]');
-    if (!counters.length) return;
-    const observer = new IntersectionObserver(function (entries) {
+    var els = document.querySelectorAll('[data-ds-counter]');
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { animateCounter(el); });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           animateCounter(entry.target);
@@ -93,30 +104,36 @@
         }
       });
     }, { threshold: 0.5 });
-    counters.forEach(function (el) { observer.observe(el); });
+    els.forEach(function (el) { observer.observe(el); });
   }
 
-  /* --- Product Tabs --- */
+  /* ---- 5. Product Tabs ---- */
   function initProductTabs() {
-    document.querySelectorAll('.ds-product__tabs').forEach(function (tabsEl) {
-      const btns = tabsEl.querySelectorAll('.ds-product__tab-btn');
-      const panels = tabsEl.querySelectorAll('.ds-product__tab-panel');
-      btns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const target = btn.getAttribute('data-tab');
-          btns.forEach(function (b) { b.classList.remove('ds-product__tab-btn--active'); b.setAttribute('aria-selected', 'false'); });
-          panels.forEach(function (p) { p.hidden = true; });
-          btn.classList.add('ds-product__tab-btn--active');
-          btn.setAttribute('aria-selected', 'true');
-          const panel = tabsEl.querySelector('[data-tab-panel="' + target + '"]');
-          if (panel) panel.hidden = false;
+    var tabBtns = document.querySelectorAll('.ds-product__tab-btn');
+    tabBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var panel = btn.getAttribute('data-tab');
+        var container = btn.closest('[data-ds-tabs]');
+        if (!container) return;
+
+        container.querySelectorAll('.ds-product__tab-btn').forEach(function (b) {
+          b.classList.remove('ds-active');
+          b.setAttribute('aria-selected', 'false');
         });
+        container.querySelectorAll('[data-tab-panel]').forEach(function (p) {
+          p.hidden = true;
+        });
+
+        btn.classList.add('ds-active');
+        btn.setAttribute('aria-selected', 'true');
+        var target = container.querySelector('[data-tab-panel="' + panel + '"]');
+        if (target) target.hidden = false;
       });
     });
   }
 
-  /* --- Init --- */
-  function init() {
+  /* ---- 6. Init all ---- */
+  function initAll() {
     initScrollReveal();
     initAccordion();
     initGallery();
@@ -124,19 +141,16 @@
     initProductTabs();
   }
 
+  /* ---- 7. Run ---- */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', initAll);
   } else {
-    init();
+    initAll();
   }
 
-  /* --- Re-init on Shopify section load (design mode) --- */
+  /* ---- 8. Re-init on Shopify section load (theme editor) ---- */
   document.addEventListener('shopify:section:load', function () {
-    initScrollReveal();
-    initAccordion();
-    initGallery();
-    initCounters();
-    initProductTabs();
+    initAll();
   });
 
 })();

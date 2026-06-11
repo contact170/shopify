@@ -1,0 +1,203 @@
+{% stylesheet %}
+.ds-how__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--ds-steps-count, 3), 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.ds-how__connector {
+  display: none;
+}
+@media (min-width: 769px) {
+  .ds-how__steps::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: calc(100% / (var(--ds-steps-count, 3) * 2));
+    right: calc(100% / (var(--ds-steps-count, 3) * 2));
+    height: 2px;
+    background: linear-gradient(90deg, var(--ds-accent) 0%, rgba(230,57,70,.2) 100%);
+    z-index: 0;
+  }
+}
+.ds-how__step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+.ds-how__icon-outer {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--ds-surface);
+  border: 2px solid var(--ds-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.ds-how__step-number {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background: var(--ds-accent);
+  color: #fff;
+  border-radius: 50%;
+  font-family: var(--ds-font);
+  font-size: .7rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ds-how__step-title {
+  font-family: var(--ds-font);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ds-black);
+}
+.ds-how__step-desc {
+  font-family: var(--ds-font);
+  font-size: .9rem;
+  line-height: 1.65;
+  color: var(--ds-muted);
+  max-width: 260px;
+}
+.ds-how__cta { margin-top: 3rem; text-align: center; }
+@media (max-width: 768px) {
+  .ds-how__steps { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+{% endstylesheet %}
+
+<section class="ds-section ds-bg-white" id="ds-how-{{ section.id }}" style="--ds-steps-count: {{ section.blocks | size }};">
+  <div class="ds-container ds-section-inner">
+
+    <div class="ds-section-header ds-section-header--center" data-ds-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="ds-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="ds-title ds-title-md ds-text-black">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ds-subtitle" style="margin-top:1rem;">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ds-how__steps">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'step' -%}
+          <div class="ds-how__step" data-ds-reveal data-ds-delay="{{ forloop.index | times: 100 }}" {{ block.shopify_attributes }}>
+            <div class="ds-how__icon-outer">
+              <span class="ds-how__step-number">{{ forloop.index }}</span>
+              {%- case block.settings.icon -%}
+                {%- when 'config' -%}
+                  <svg width="32" height="32" fill="none" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="4" stroke="#E63946" stroke-width="2"/><path d="M16 4v3M16 25v3M4 16h3M25 16h3M7.05 7.05l2.12 2.12M22.83 22.83l2.12 2.12M7.05 24.95l2.12-2.12M22.83 9.17l2.12-2.12" stroke="#E63946" stroke-width="2" stroke-linecap="round"/></svg>
+                {%- when 'box' -%}
+                  <svg width="32" height="32" fill="none" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 10l11-6 11 6v12l-11 6-11-6V10Z" stroke="#E63946" stroke-width="2" stroke-linejoin="round"/><path d="M5 10l11 6 11-6M16 16v12" stroke="#E63946" stroke-width="2" stroke-linecap="round"/></svg>
+                {%- when 'install' -%}
+                  <svg width="32" height="32" fill="none" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="4" width="24" height="24" rx="3" stroke="#E63946" stroke-width="2"/><path d="M16 10v12M10 16h12" stroke="#E63946" stroke-width="2" stroke-linecap="round"/></svg>
+                {%- when 'shield' -%}
+                  <svg width="32" height="32" fill="none" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3L6 7v9c0 5.25 4.25 10.15 10 11.35C21.75 26.15 26 21.25 26 16V7L16 3Z" stroke="#E63946" stroke-width="2" stroke-linejoin="round"/><path d="M11 16l3 3 7-7" stroke="#E63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- when 'phone' -%}
+                  <svg width="32" height="32" fill="none" viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3" stroke="#E63946" stroke-width="2"/><circle cx="16" cy="26" r="1.5" fill="#E63946"/></svg>
+                {%- else -%}
+                  <svg width="32" height="32" fill="none" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" stroke="#E63946" stroke-width="2"/><path d="M11 16l3 3 7-7" stroke="#E63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {%- endcase -%}
+            </div>
+            <div>
+              <div class="ds-how__step-title">{{ block.settings.title }}</div>
+              <p class="ds-how__step-desc">{{ block.settings.description }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="ds-how__cta" data-ds-reveal>
+        <a href="{{ section.settings.cta_url }}" class="ds-btn ds-btn-primary ds-btn-lg">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DS Cómo funciona",
+  "tag": "section",
+  "class": "ds-section",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",  "label": "Eyebrow",   "default": "Proceso simple" },
+    { "type": "text",     "id": "title",    "label": "Título",    "default": "Cómo funciona Daewoo Security" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "De la configuración a la protección total en tres pasos. Sin técnicos, sin complicaciones." },
+    { "type": "text",     "id": "cta_text", "label": "CTA texto", "default": "Empezar ahora" },
+    { "type": "url",      "id": "cta_url",  "label": "CTA enlace" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+            { "value": "config",   "label": "Configuración" },
+            { "value": "box",      "label": "Caja/Envío" },
+            { "value": "install",  "label": "Instalación" },
+            { "value": "shield",   "label": "Escudo" },
+            { "value": "phone",    "label": "Teléfono" },
+            { "value": "check",    "label": "Check" }
+          ],
+          "default": "config"
+        },
+        { "type": "text",     "id": "title",       "label": "Título del paso",    "default": "Configura tu sistema" },
+        { "type": "textarea", "id": "description", "label": "Descripción del paso","default": "Elige los componentes que necesitas en nuestro configurador online. Te guiamos según el tamaño de tu hogar." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DS Cómo funciona",
+      "settings": {
+        "eyebrow":  "Proceso simple",
+        "title":    "Configura, recibe e instala",
+        "subtitle": "De la configuración a la protección total en tres pasos. Sin técnicos, sin complicaciones, sin cuotas.",
+        "cta_text": "Empezar a configurar"
+      },
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "config",
+            "title": "1. Configura en línea",
+            "description": "Usa nuestro configurador para elegir los sensores, cámaras y central que mejor se adapten a tu hogar en pocos minutos."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "box",
+            "title": "2. Recibe en 24 h",
+            "description": "Tu kit llega embalado con todo lo necesario. Instrucciones claras incluidas. Envío gratuito a toda España peninsular."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "install",
+            "title": "3. Instala tú mismo",
+            "description": "La instalación es sencilla y sin obras. Nuestra app te guía paso a paso. En menos de una hora tu hogar ya estará protegido."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
