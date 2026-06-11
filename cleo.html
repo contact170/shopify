@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cleo — makes money better.</title>
+<style>
+  /* ─── RESET & BASE ─────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #f4ede4;
+    --cream2:  #ede5da;
+    --cream3:  #e8ddd2;
+    --peach:   #f0c9a8;
+    --orange:  #e8724a;
+    --brown:   #281510;
+    --text:    #1a1614;
+    --muted:   #7a6d64;
+    --white:   #ffffff;
+    --radius:  1.4rem;
+    --font:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ─── TYPOGRAPHY ───────────────────────────────────────────────── */
+  .display-xl {
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  .display-lg {
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  .display-md {
+    font-size: clamp(1.5rem, 2.5vw, 2.4rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .body-lg  { font-size: 1.05rem; line-height: 1.65; color: var(--muted); }
+  .body-sm  { font-size: 0.875rem; line-height: 1.6; color: var(--muted); }
+  .label    { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+  /* ─── BUTTONS ──────────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 0.4em;
+    padding: 0.6em 1.4em;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-family: var(--font);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid rgba(26,22,20,0.25);
+    color: var(--text);
+  }
+  .btn-outline:hover { background: rgba(26,22,20,0.05); border-color: var(--text); }
+  .btn-solid {
+    background: var(--text);
+    border: 1.5px solid var(--text);
+    color: var(--white);
+  }
+  .btn-solid:hover { background: #3a2e28; border-color: #3a2e28; }
+  .btn-cream {
+    background: var(--cream);
+    border: 1.5px solid rgba(26,22,20,0.2);
+    color: var(--text);
+  }
+  .btn-cream:hover { background: var(--cream2); }
+  .btn-lg { padding: 0.8em 2em; font-size: 1rem; }
+
+  /* ─── NAVIGATION ───────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(244,237,228,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(26,22,20,0.08);
+  }
+  .nav-logo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.5);
+    padding: 0.3em 0.9em;
+    border-radius: 999px;
+    transition: color 0.4s, border-color 0.4s;
+    text-decoration: none;
+  }
+  nav.scrolled .nav-logo { color: var(--text); border-color: rgba(26,22,20,0.25); }
+  .nav-links {
+    display: flex; gap: 0.3rem; list-style: none;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 999px;
+    padding: 0.35rem 0.5rem;
+    transition: background 0.4s, border-color 0.4s;
+  }
+  nav.scrolled .nav-links {
+    background: rgba(26,22,20,0.06);
+    border-color: rgba(26,22,20,0.12);
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    font-size: 0.875rem;
+    padding: 0.4em 1em;
+    border-radius: 999px;
+    transition: all 0.2s;
+  }
+  nav.scrolled .nav-links a { color: var(--text); }
+  .nav-links a:hover { background: rgba(255,255,255,0.2); }
+  nav.scrolled .nav-links a:hover { background: rgba(26,22,20,0.08); }
+  .nav-cta { color: var(--white) !important; border: 1.5px solid rgba(255,255,255,0.5); padding: 0.4em 1.1em !important; border-radius: 999px !important; transition: all 0.2s !important; }
+  nav.scrolled .nav-cta { color: var(--text) !important; border-color: rgba(26,22,20,0.25) !important; }
+  .nav-cta:hover { background: rgba(255,255,255,0.15) !important; }
+
+  /* ─── HERO ─────────────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 30%, #3a4a5c 0%, #1a2535 40%, #0d1520 100%);
+  }
+  /* Atmospheric cloud/sky effect */
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 20%, rgba(100,120,140,0.4) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 30% 60%, rgba(60,80,100,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 70% 80%, rgba(40,60,80,0.25) 0%, transparent 60%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 0 2rem;
+  }
+  .hero-content .display-xl { color: var(--white); margin-bottom: 1.5rem; }
+  .hero-content .body-lg { color: rgba(255,255,255,0.65); max-width: 36ch; margin: 0 auto 2rem; }
+  .hero-scroll-hint {
+    position: absolute; bottom: 6rem; left: 50%; transform: translateX(-50%);
+    z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    animation: fadeInUp 1.2s 1.5s both;
+  }
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%,100%{transform:scaleY(1);opacity:1} 50%{transform:scaleY(0.3);opacity:0.3} }
+
+  /* Ticker */
+  .ticker-wrap {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+    background: rgba(26,22,20,0.9);
+    padding: 0.8rem 0;
+    overflow: hidden;
+  }
+  .ticker {
+    display: flex; gap: 6rem;
+    animation: tickerMove 20s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+  .ticker span { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+  .ticker-dot { color: var(--orange); font-size: 0.6rem; }
+  @keyframes tickerMove { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ─── LAYOUT UTILS ─────────────────────────────────────────────── */
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 6rem 0; }
+  .section-sm { padding: 3rem 0; }
+
+  /* ─── REVEAL ANIMATION ─────────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.75s cubic-bezier(0.25,0.46,0.45,0.94),
+                transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ─── SECTION: KNOW YOU ────────────────────────────────────────── */
+  .know-section { padding: 5rem 0 0; }
+  .know-headline {
+    text-align: center; padding: 4rem 2rem 3rem;
+  }
+  .know-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    padding: 0 0.5rem 0.5rem;
+  }
+  .know-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+  }
+  .know-card-tall { grid-row: span 1; aspect-ratio: 4/5; }
+  .know-phone-card {
+    grid-column: span 2;
+    aspect-ratio: 16/7;
+    background: linear-gradient(135deg, #c8d8c0 0%, #a8bfa0 40%, #7a9e72 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .phone-mockup {
+    width: 200px;
+    background: var(--white);
+    border-radius: 2.5rem;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.08);
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    animation: floatPhone 4s ease-in-out infinite;
+  }
+  @keyframes floatPhone { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .phone-notch {
+    width: 80px; height: 24px;
+    background: #0a0a0a;
+    border-radius: 0 0 14px 14px;
+    margin: 0 auto;
+  }
+  .phone-screen {
+    padding: 0.75rem;
+    min-height: 280px;
+    background: linear-gradient(160deg, #f0e8dc 0%, #e8ddd0 100%);
+  }
+  .phone-screen-header { font-size: 0.55rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .phone-chat { display: flex; flex-direction: column; gap: 0.4rem; }
+  .chat-bubble {
+    padding: 0.5rem 0.7rem;
+    border-radius: 1rem;
+    font-size: 0.55rem;
+    line-height: 1.4;
+    max-width: 85%;
+  }
+  .chat-bubble.out {
+    background: #1a1614;
+    color: var(--white);
+    align-self: flex-end;
+    border-bottom-right-radius: 0.2rem;
+  }
+  .chat-bubble.in {
+    background: var(--white);
+    color: var(--text);
+    align-self: flex-start;
+    border-bottom-left-radius: 0.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .know-card-bg { background: #c8b8a0; }
+  .know-card-bg2 { background: #8ca880; }
+  .know-card-photo { position: relative; }
+  /* Simulated photos with gradients */
+  .photo-couple {
+    background: linear-gradient(160deg, #7aa878 0%, #4a7048 40%, #2d5028 100%);
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-couple::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 40% 60%, rgba(120,160,100,0.4) 0%, transparent 70%);
+  }
+  .photo-nature {
+    background: linear-gradient(160deg, #8baa70 0%, #5a8248 40%, #2d5028 100%);
+    aspect-ratio: 4/3;
+    position: relative;
+    overflow: hidden;
+  }
+  .know-card-text {
+    background: var(--cream); padding: 2rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .chat-card {
+    background: #f0ebe4;
+    padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .chat-msg {
+    padding: 0.7rem 1rem;
+    border-radius: 1.2rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    max-width: 80%;
+  }
+  .chat-msg.out {
+    background: #1a1614; color: var(--white);
+    align-self: flex-end; border-bottom-right-radius: 0.3rem;
+  }
+  .chat-msg.in {
+    background: var(--white); color: var(--text);
+    align-self: flex-start; border-bottom-left-radius: 0.3rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .chat-meta { font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; }
+
+  /* ─── SECTION: AUTOPILOT ───────────────────────────────────────── */
+  .autopilot-section {
+    position: relative;
+    height: 60vh; min-height: 480px;
+    overflow: hidden;
+    margin: 0.5rem;
+    border-radius: var(--radius);
+  }
+  .autopilot-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, #4a80c0 0%, #2a5a9a 40%, #1a3a70 100%);
+  }
+  .autopilot-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 70% 40%, rgba(100,150,200,0.3) 0%, transparent 70%),
+                radial-gradient(ellipse at 20% 80%, rgba(30,60,100,0.4) 0%, transparent 60%);
+  }
+  .autopilot-content {
+    position: relative; z-index: 2;
+    padding: 4rem;
+    height: 100%;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .autopilot-content .label { color: rgba(255,255,255,0.6); margin-bottom: 1rem; }
+  .autopilot-content .display-lg { color: var(--white); max-width: 14ch; margin-bottom: 2rem; }
+
+  /* ─── SECTION: SMART MIND ──────────────────────────────────────── */
+  .smart-section {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.5rem; padding: 0.5rem;
+  }
+  .smart-card {
+    border-radius: var(--radius); overflow: hidden;
+    aspect-ratio: 4/3;
+    position: relative;
+  }
+  .smart-bg-gold {
+    background: linear-gradient(160deg, #b8a478 0%, #8a7850 40%, #5a5030 100%);
+  }
+  .smart-bg-forest {
+    background: linear-gradient(160deg, #6a9860 0%, #4a7a40 40%, #2a5020 100%);
+    aspect-ratio: 5/4;
+  }
+  .smart-text-card {
+    background: var(--cream);
+    padding: 3rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .smart-text-card .display-md { margin-bottom: 1rem; }
+  .smart-text-card .body-lg { margin-bottom: 1.5rem; }
+
+  /* ─── SECTION: SAVINGS ─────────────────────────────────────────── */
+  .savings-section {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.5rem; padding: 0.5rem;
+  }
+  .savings-text-card {
+    background: var(--cream2);
+    padding: 3rem;
+    border-radius: var(--radius);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .savings-text-card .label { margin-bottom: 1rem; }
+  .savings-text-card .display-md { margin-bottom: 1rem; }
+  .savings-photo-card {
+    border-radius: var(--radius); overflow: hidden;
+  }
+
+  /* ─── SECTION: TESTIMONIALS ────────────────────────────────────── */
+  .testimonials-section { padding: 5rem 0; text-align: center; }
+  .stars { font-size: 1.2rem; margin-bottom: 0.5rem; color: #e8724a; letter-spacing: 0.1em; }
+  .testimonials-headline { margin-bottom: 3rem; }
+  .testimonials-track-wrap { overflow: hidden; position: relative; }
+  .testimonials-track-wrap::before,
+  .testimonials-track-wrap::after {
+    content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; width: 80px;
+    pointer-events: none;
+  }
+  .testimonials-track-wrap::before { left: 0; background: linear-gradient(to right, var(--cream), transparent); }
+  .testimonials-track-wrap::after  { right: 0; background: linear-gradient(to left, var(--cream), transparent); }
+  .testimonials-track {
+    display: flex; gap: 1rem;
+    animation: scrollTestimonials 30s linear infinite;
+    width: max-content; padding: 1rem 0;
+  }
+  .testimonials-track:hover { animation-play-state: paused; }
+  @keyframes scrollTestimonials { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .tcard {
+    width: 300px; flex-shrink: 0;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+  }
+  .tcard:hover { transform: translateY(-4px); }
+  .tcard-author { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .tcard-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--peach); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .tcard-name { font-size: 0.875rem; font-weight: 600; }
+  .tcard-meta { font-size: 0.75rem; color: var(--muted); }
+  .tcard-text { font-size: 0.875rem; line-height: 1.6; color: var(--text); }
+  .tcard-stars { font-size: 0.8rem; color: #e8724a; margin-bottom: 0.5rem; }
+
+  /* ─── SECTION: FLEECE VEST ─────────────────────────────────────── */
+  .fleece-section {
+    position: relative; height: 55vh; min-height: 400px;
+    overflow: hidden; margin: 0.5rem; border-radius: var(--radius);
+  }
+  .fleece-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, #b0c0d0 0%, #8090a8 30%, #4a5868 60%, #2a3848 100%);
+  }
+  /* Architectural steps effect */
+  .fleece-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      175deg,
+      transparent 0px,
+      transparent 40px,
+      rgba(255,255,255,0.03) 40px,
+      rgba(255,255,255,0.03) 41px
+    );
+  }
+  .fleece-content {
+    position: relative; z-index: 2;
+    height: 100%; padding: 4rem;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .fleece-content .display-lg { color: var(--white); max-width: 18ch; }
+
+  /* ─── SECTION: MEDIA CARDS ─────────────────────────────────────── */
+  .media-section { padding: 4rem 0; position: relative; overflow: hidden; }
+  .media-blob {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(232,114,74,0.25) 0%, rgba(232,114,74,0) 70%);
+    pointer-events: none;
+    animation: blobPulse 4s ease-in-out infinite;
+  }
+  @keyframes blobPulse { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.15)} }
+  .media-label { text-align: center; margin-bottom: 2rem; }
+  .media-grid {
+    display: flex; gap: 1rem; align-items: center; justify-content: center;
+    padding: 0 2rem;
+  }
+  .media-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .media-card:hover { transform: scale(1.02) translateY(-4px); }
+  .media-card.main { width: 360px; aspect-ratio: 3/4; flex-shrink: 0; }
+  .media-card.side { width: 260px; aspect-ratio: 4/5; flex-shrink: 0; }
+  .media-card-bg-1 { background: linear-gradient(160deg, #e8c090 0%, #c89860 40%, #8a6030 100%); }
+  .media-card-bg-2 { background: linear-gradient(160deg, #2a1a10 0%, #1a0a08 100%); }
+  .media-card-bg-3 { background: linear-gradient(160deg, #c0a870 0%, #907848 40%, #604830 100%); }
+  .media-card-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+  }
+  .media-card-overlay p { font-size: 0.8rem; color: var(--white); line-height: 1.4; }
+  .media-card-tag {
+    display: inline-block;
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    background: rgba(255,255,255,0.2); color: var(--white);
+    padding: 0.25em 0.7em; border-radius: 999px;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .media-figure {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; opacity: 0.3;
+  }
+
+  /* ─── SECTION: VIDEO CARDS ─────────────────────────────────────── */
+  .video-section { padding: 3rem 0; }
+  .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 2rem; }
+  .video-card {
+    border-radius: var(--radius); overflow: hidden; position: relative;
+    aspect-ratio: 16/9;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .video-card:hover { transform: scale(1.01); }
+  .video-card-bg-1 { background: linear-gradient(160deg, #e8c8a0 0%, #c0a070 40%, #8a7050 100%); }
+  .video-card-bg-2 { background: linear-gradient(160deg, #a0b8c8 0%, #708090 40%, #405060 100%); }
+  .play-btn {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .video-card:hover .play-btn { transform: translate(-50%,-50%) scale(1.1); background: var(--white); }
+  .video-card-label {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+  }
+  .video-card-label p { font-size: 0.9rem; font-weight: 500; color: var(--white); }
+
+  /* ─── SECTION: NEWS ────────────────────────────────────────────── */
+  .news-section { padding: 4rem 0; }
+  .news-header { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; margin-bottom: 2rem; }
+  .news-scroll { overflow-x: auto; padding: 0 2rem 1rem; scrollbar-width: none; scroll-snap-type: x mandatory; }
+  .news-scroll::-webkit-scrollbar { display: none; }
+  .news-track { display: flex; gap: 1rem; width: max-content; }
+  .news-card {
+    width: 380px; flex-shrink: 0;
+    background: var(--cream2);
+    border-radius: var(--radius);
+    padding: 2rem;
+    scroll-snap-align: start;
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+  .news-card:hover { transform: translateY(-4px); }
+  .news-date {
+    display: inline-block;
+    background: var(--white);
+    border: 1px solid rgba(26,22,20,0.12);
+    border-radius: 999px;
+    padding: 0.3em 0.9em;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+  }
+  .news-card-title { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.35; color: var(--text); margin-bottom: 0.75rem; }
+  .news-card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+  .news-arrow { font-size: 0.8rem; color: var(--muted); margin-top: 1.5rem; }
+
+  /* ─── SECTION: FAQ ─────────────────────────────────────────────── */
+  .faq-section { padding: 5rem 0; }
+  .faq-card {
+    background: var(--white);
+    border-radius: calc(var(--radius) * 1.5);
+    padding: 2.5rem;
+    max-width: 640px; margin: 0 auto;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+  }
+  .faq-item {
+    border-bottom: 1px solid rgba(26,22,20,0.08);
+    overflow: hidden;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 0;
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font); font-size: 0.95rem; font-weight: 500;
+    color: var(--text); text-align: left;
+    gap: 1rem;
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--orange); }
+  .faq-icon {
+    width: 24px; height: 24px; flex-shrink: 0;
+    background: rgba(26,22,20,0.08); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; transition: transform 0.3s, background 0.3s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--text); color: var(--white); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    font-size: 0.9rem; color: var(--muted); line-height: 1.7;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.2rem; }
+
+  /* ─── SECTION: CTA / DOWNLOAD ──────────────────────────────────── */
+  .cta-section {
+    margin: 0.5rem;
+    border-radius: var(--radius);
+    background: linear-gradient(160deg, #f0e4d8 0%, #e8d4c0 50%, #f0e0cc 100%);
+    padding: 6rem 2rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-blob-1 {
+    position: absolute; top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(232,114,74,0.2) 0%, transparent 70%);
+    pointer-events: none;
+    animation: blobPulse 5s ease-in-out infinite;
+  }
+  .cta-blob-2 {
+    position: absolute; bottom: -80px; left: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(232,180,120,0.25) 0%, transparent 70%);
+    pointer-events: none;
+    animation: blobPulse 6s ease-in-out infinite reverse;
+  }
+  .cta-content { position: relative; z-index: 2; }
+  .cta-section .display-lg { margin-bottom: 2.5rem; max-width: 20ch; margin-left: auto; margin-right: auto; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+  .qr-card {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 0.75rem;
+    background: var(--white);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.05);
+    transform: perspective(800px) rotateX(4deg) rotateY(-4deg);
+    transition: transform 0.4s;
+  }
+  .qr-card:hover { transform: perspective(800px) rotateX(0) rotateY(0); }
+  .qr-code {
+    width: 120px; height: 120px;
+    background: var(--text);
+    border-radius: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(10,1fr);
+    grid-template-rows: repeat(10,1fr);
+    gap: 1px; padding: 8px;
+    overflow: hidden;
+  }
+  .qr-pixel { border-radius: 1px; }
+  .qr-b { background: var(--white); }
+  .qr-w { background: var(--text); }
+  .qr-code-label { font-size: 0.75rem; color: var(--muted); }
+
+  /* ─── FOOTER ───────────────────────────────────────────────────── */
+  footer {
+    background: var(--brown);
+    color: rgba(255,255,255,0.75);
+    padding: 3rem 2.5rem 2rem;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .footer-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 3rem; flex-wrap: wrap; gap: 2rem;
+  }
+  .footer-brand .footer-logo {
+    font-size: 1.1rem; font-weight: 600; color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    padding: 0.3em 0.9em; border-radius: 999px;
+    display: inline-block; margin-bottom: 1rem;
+  }
+  .footer-brand p { font-size: 1rem; color: rgba(255,255,255,0.8); font-weight: 400; max-width: 22ch; line-height: 1.4; }
+  .footer-cols { display: flex; gap: 4rem; flex-wrap: wrap; }
+  .footer-col h4 { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.5rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+  .social-links { display: flex; gap: 1rem; }
+  .social-links a {
+    color: rgba(255,255,255,0.5); text-decoration: none; font-size: 1.1rem;
+    transition: color 0.2s; display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.8rem;
+  }
+  .social-links a:hover { color: var(--white); border-color: rgba(255,255,255,0.4); }
+
+  /* ─── LEGAL DISCLAIMER ─────────────────────────────────────────── */
+  .legal-section {
+    background: var(--cream2); padding: 2rem;
+    font-size: 0.72rem; color: var(--muted); line-height: 1.7;
+    max-width: 900px; margin: 0 auto; text-align: center;
+  }
+  .legal-section p + p { margin-top: 0.5rem; }
+
+  /* ─── PARALLAX LAYER ───────────────────────────────────────────── */
+  .parallax-container { position: relative; overflow: hidden; }
+
+  /* ─── MOBILE RESPONSIVE ────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .know-grid { grid-template-columns: 1fr; }
+    .smart-section { grid-template-columns: 1fr; }
+    .savings-section { grid-template-columns: 1fr; }
+    .media-grid { flex-direction: column; align-items: center; }
+    .media-card.side { width: 100%; max-width: 360px; }
+    .video-grid { grid-template-columns: 1fr; }
+    .footer-top { flex-direction: column; }
+    .footer-cols { gap: 2rem; }
+    .autopilot-content { padding: 2rem; }
+    .fleece-content { padding: 2rem; }
+    .cta-btns { flex-direction: column; align-items: center; }
+  }
+
+  /* ─── CURSOR GLOW ──────────────────────────────────────────────── */
+  .cursor-glow {
+    position: fixed; top: 0; left: 0;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,114,74,0.08) 0%, transparent 70%);
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s linear;
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ═══ NAVIGATION ════════════════════════════════════════════════ -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">cleo</a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#learn">Learn</a></li>
+    <li><a href="#download" class="nav-cta">Get the app</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ══════════════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content reveal">
+    <p class="label" style="color:rgba(255,255,255,0.5);margin-bottom:1.5rem">AI-powered money management</p>
+    <h1 class="display-xl">Cleo makes money<br>better.</h1>
+    <p class="body-lg" style="color:rgba(255,255,255,0.6);max-width:34ch;margin:1.2rem auto 2rem">
+      She analyses your spending, calls out bad habits,<br>and makes you better at money.
+    </p>
+    <a href="#download" class="btn btn-cream btn-lg">Try it out</a>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker">
+      <span>Talk therapy for your wallet</span><span class="ticker-dot">●</span>
+      <span>Talk therapy for your wallet</span><span class="ticker-dot">●</span>
+      <span>Talk therapy for your wallet</span><span class="ticker-dot">●</span>
+      <span>Talk therapy for your wallet</span><span class="ticker-dot">●</span>
+      <span>Talk therapy for your wallet</span><span class="ticker-dot">●</span>
+      <span>Talk therapy for your wallet</span><span class="ticker-dot">●</span>
+      <span>Talk therapy for your wallet</span><span class="ticker-dot">●</span>
+      <span>Talk therapy for your wallet</span><span class="ticker-dot">●</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ KNOW YOU ══════════════════════════════════════════════════ -->
+<section class="know-section" id="products">
+  <div class="know-headline reveal">
+    <h2 class="display-lg">Cleo gets to know you<br>(and your money).</h2>
+  </div>
+  <div class="know-grid">
+    <!-- Phone mockup card -->
+    <div class="know-card know-phone-card reveal">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <p class="phone-screen-header">Good morning ☀️</p>
+          <div class="phone-chat">
+            <div class="chat-bubble in">Hey! You've spent $247 on food this week. Want me to break it down? 🍕</div>
+            <div class="chat-bubble out">yes please</div>
+            <div class="chat-bubble in">Uber Eats: $89 · Groceries: $94 · Coffee: $64. Your coffee habit is giving 💀</div>
+            <div class="chat-bubble out">ok rude but fair</div>
+            <div class="chat-bubble in">I'm setting you a $40 coffee budget. Deal? ☕</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Couple photo -->
+    <div class="know-card know-card-tall reveal reveal-delay-1" style="background:linear-gradient(160deg,#7aa870 0%,#4a7048 50%,#2a5020 100%);position:relative;overflow:hidden;">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(to top,rgba(0,0,0,0.5),transparent)">
+        <p class="label" style="color:rgba(255,255,255,0.7);margin-bottom:0.4rem">Get your money off your mind</p>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);line-height:1.5">Cleo monitors your finances so you don't have to obsess over every penny.</p>
+      </div>
+      <!-- Decorative human silhouette -->
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:5rem;opacity:0.15">🌿</div>
+    </div>
+    <!-- Chat card -->
+    <div class="know-card chat-card reveal reveal-delay-2">
+      <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.5rem;letter-spacing:0.05em">Cleo AI · Just now</div>
+      <div class="chat-msg out">I'm learning so much about you. Like the $89 weekly Cleo Skims spend. Is that intentional? 👀</div>
+      <div class="chat-msg in">No?? Tell me more</div>
+      <p class="chat-meta">More personalised than most people.<br>Cleo learns what you spend on, prioritises your goals, and gets smarter with every transaction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AUTOPILOT ═════════════════════════════════════════════════ -->
+<div class="autopilot-section reveal" id="about">
+  <div class="autopilot-bg"></div>
+  <!-- Decorative phone floating -->
+  <div style="position:absolute;right:10%;top:50%;transform:translateY(-50%);z-index:2;">
+    <div style="width:160px;background:rgba(255,255,255,0.15);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);border-radius:2rem;padding:1rem;box-shadow:0 20px 60px rgba(0,0,0,0.2)">
+      <div style="background:rgba(255,255,255,0.2);border-radius:1rem;padding:0.8rem;margin-bottom:0.5rem">
+        <div style="font-size:0.6rem;color:rgba(255,255,255,0.8);font-weight:600">Autopilot 🤖</div>
+        <div style="font-size:0.55rem;color:rgba(255,255,255,0.6);margin-top:0.3rem">Saving $50/week</div>
+        <div style="margin-top:0.5rem;background:rgba(255,255,255,0.15);border-radius:999px;height:4px;overflow:hidden">
+          <div style="width:67%;height:100%;background:rgba(255,255,255,0.8);border-radius:999px"></div>
+        </div>
+        <div style="font-size:0.5rem;color:rgba(255,255,255,0.5);margin-top:0.3rem">$670 / $1,000 goal</div>
+      </div>
+      <div style="font-size:0.55rem;color:rgba(255,255,255,0.5);text-align:center">Running automatically ✓</div>
+    </div>
+  </div>
+  <div class="autopilot-content">
+    <p class="label">Autopilot for savings</p>
+    <h2 class="display-lg">Automate your money<br>goals with Autopilot.</h2>
+    <a href="#" class="btn btn-cream">Learn more</a>
+  </div>
+</div>
+
+<!-- ═══ SMART MIND ════════════════════════════════════════════════ -->
+<div class="smart-section" style="margin-top:0.5rem">
+  <!-- Gold card -->
+  <div class="smart-card smart-bg-gold reveal" style="display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.6;position:relative;">
+    <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,180,120,0.8) 0%,rgba(120,90,40,0.9) 100%)"></div>
+    <span style="position:relative;z-index:1;opacity:0.4">◆</span>
+  </div>
+  <!-- Text card -->
+  <div class="smart-text-card reveal reveal-delay-1">
+    <div>
+      <p class="label" style="margin-bottom:1rem">Smart features</p>
+      <h3 class="display-md">Smart mind,<br>smart mouth.</h3>
+      <p class="body-lg" style="margin-top:1rem">Cleo's intelligent enough to analyse complex financial situations, and entertaining enough to actually keep you engaged.</p>
+    </div>
+    <a href="#" class="btn btn-outline" style="width:fit-content;margin-top:2rem">See how →</a>
+  </div>
+  <!-- Text card 2 -->
+  <div class="smart-text-card reveal reveal-delay-2" style="background:var(--cream2)">
+    <div>
+      <p class="label" style="margin-bottom:1rem">Save</p>
+      <h3 class="display-md">Say yes to<br>saving more.</h3>
+      <p class="body-lg" style="margin-top:1rem">Set a savings goal, choose a target, and let Cleo automatically move money for you — without you ever having to think about it.</p>
+    </div>
+    <a href="#" class="btn btn-outline" style="width:fit-content;margin-top:2rem">Learn more →</a>
+  </div>
+  <!-- Nature photo -->
+  <div class="smart-card smart-bg-forest reveal reveal-delay-3" style="display:flex;align-items:flex-end;padding:1.5rem;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(100,150,90,0.6) 0%,rgba(40,80,30,0.8) 100%)"></div>
+    <div style="position:relative;z-index:1">
+      <p style="font-size:0.75rem;color:rgba(255,255,255,0.7);line-height:1.5">Cleo automatically tracks where your money goes — every transaction, categorised and explained.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TESTIMONIALS ══════════════════════════════════════════════ -->
+<section class="testimonials-section" id="reviews">
+  <div class="reveal">
+    <div class="stars">★★★★★</div>
+    <h2 class="display-md testimonials-headline">Loved by millions.</h2>
+  </div>
+  <div class="testimonials-track-wrap reveal reveal-delay-1">
+    <div class="testimonials-track" id="testimonialsTrack">
+      <!-- Set 1 -->
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">👩</div><div><div class="tcard-name">Sarah M.</div><div class="tcard-meta">App Store · ★★★★★</div></div></div>
+        <div class="tcard-text">"I absolutely love this app! Cleo is definitely on my level when it comes to budgeting. She speaks my language too — I genuinely feel like I personally know her &amp; adore!!"</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">🧑</div><div><div class="tcard-name">Marcus T.</div><div class="tcard-meta">Google Play · ★★★★★</div></div></div>
+        <div class="tcard-text">"Best spending app I've used. It's like having a brutally honest friend who happens to be a financial genius. The roast mode is genuinely hilarious."</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">👱‍♀️</div><div><div class="tcard-name">Jessica R.</div><div class="tcard-meta">App Store · ★★★★★</div></div></div>
+        <div class="tcard-text">"The best life option to balance a budget. I had so much life stress about money and Cleo helped break it down in a way that actually made sense. 10/10."</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">🧔</div><div><div class="tcard-name">David K.</div><div class="tcard-meta">Google Play · ★★★★★</div></div></div>
+        <div class="tcard-text">"Finally an app that treats me like an adult but also calls me out when I'm being dumb with money. Saved $3,200 in 6 months just by following Cleo's suggestions."</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">👩‍💼</div><div><div class="tcard-name">Priya N.</div><div class="tcard-meta">App Store · ★★★★★</div></div></div>
+        <div class="tcard-text">"Switched from 3 different budgeting apps to this one. Cleo actually makes it fun to think about money. The AI conversations are so natural and helpful."</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">🧑‍🎤</div><div><div class="tcard-name">Tyler W.</div><div class="tcard-meta">Google Play · ★★★★★</div></div></div>
+        <div class="tcard-text">"I didn't realize I was spending $400/month on subscriptions I forgot about. Cleo found them all in like 10 seconds. Already cancelled 8 of them."</div>
+      </div>
+      <!-- Set 2 (duplicate for infinite scroll) -->
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">👩</div><div><div class="tcard-name">Sarah M.</div><div class="tcard-meta">App Store · ★★★★★</div></div></div>
+        <div class="tcard-text">"I absolutely love this app! Cleo is definitely on my level when it comes to budgeting. She speaks my language too — I genuinely feel like I personally know her &amp; adore!!"</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">🧑</div><div><div class="tcard-name">Marcus T.</div><div class="tcard-meta">Google Play · ★★★★★</div></div></div>
+        <div class="tcard-text">"Best spending app I've used. It's like having a brutally honest friend who happens to be a financial genius. The roast mode is genuinely hilarious."</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">👱‍♀️</div><div><div class="tcard-name">Jessica R.</div><div class="tcard-meta">App Store · ★★★★★</div></div></div>
+        <div class="tcard-text">"The best life option to balance a budget. I had so much life stress about money and Cleo helped break it down in a way that actually made sense. 10/10."</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">🧔</div><div><div class="tcard-name">David K.</div><div class="tcard-meta">Google Play · ★★★★★</div></div></div>
+        <div class="tcard-text">"Finally an app that treats me like an adult but also calls me out when I'm being dumb with money. Saved $3,200 in 6 months just by following Cleo's suggestions."</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">👩‍💼</div><div><div class="tcard-name">Priya N.</div><div class="tcard-meta">App Store · ★★★★★</div></div></div>
+        <div class="tcard-text">"Switched from 3 different budgeting apps to this one. Cleo actually makes it fun to think about money. The AI conversations are so natural and helpful."</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-author"><div class="tcard-avatar">🧑‍🎤</div><div><div class="tcard-name">Tyler W.</div><div class="tcard-meta">Google Play · ★★★★★</div></div></div>
+        <div class="tcard-text">"I didn't realize I was spending $400/month on subscriptions I forgot about. Cleo found them all in like 10 seconds. Already cancelled 8 of them."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FLEECE VEST ════════════════════════════════════════════════ -->
+<div class="fleece-section reveal">
+  <div class="fleece-bg"></div>
+  <div class="fleece-content">
+    <h2 class="display-lg">Finally, a financial<br>assistant without<br>a fleece vest.</h2>
+  </div>
+</div>
+
+<!-- ═══ MEDIA CARDS ════════════════════════════════════════════════ -->
+<section class="media-section">
+  <div class="media-blob"></div>
+  <div class="media-label reveal">
+    <p class="label">As seen on</p>
+  </div>
+  <div class="media-grid reveal reveal-delay-1">
+    <div class="media-card side media-card-bg-3" style="align-self:flex-end">
+      <div class="media-figure">🌅</div>
+      <div class="media-card-overlay">
+        <div class="media-card-tag">Forbes</div>
+        <p>Cleo is changing how Gen Z thinks about money management.</p>
+      </div>
+    </div>
+    <div class="media-card main media-card-bg-2">
+      <div class="media-figure" style="font-size:2rem;opacity:0.5;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">💬</div>
+      <div style="position:absolute;inset:0.75rem;background:rgba(255,255,255,0.07);border-radius:calc(var(--radius) - 0.75rem);border:1px solid rgba(255,255,255,0.1);padding:1rem">
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);margin-bottom:0.75rem">Jul 7, '24 — Cleo Digest</div>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.85);line-height:1.5">"AI That Finally Gets It: How Cleo Uses Behavioural Science to Change Your Money Habits For Good"</p>
+      </div>
+      <div class="media-card-overlay">
+        <div class="media-card-tag">TechCrunch</div>
+        <p>The AI that's making financial literacy accessible to everyone.</p>
+      </div>
+    </div>
+    <div class="media-card side media-card-bg-1" style="align-self:flex-start">
+      <div class="media-figure">🏛️</div>
+      <div class="media-card-overlay">
+        <div class="media-card-tag">Bloomberg</div>
+        <p>"The best budgeting app we've ever tested."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VIDEO CARDS ════════════════════════════════════════════════ -->
+<section class="video-section" id="learn">
+  <div class="container">
+    <p class="label reveal" style="margin-bottom:1.5rem">Cleo in action</p>
+    <div class="video-grid">
+      <div class="video-card video-card-bg-1 reveal">
+        <div class="play-btn">▶</div>
+        <div class="video-card-label"><p>How Cleo Works</p></div>
+      </div>
+      <div class="video-card video-card-bg-2 reveal reveal-delay-1">
+        <div class="play-btn">▶</div>
+        <div class="video-card-label"><p>Building Cleo's Memory</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NEWS ══════════════════════════════════════════════════════ -->
+<section class="news-section">
+  <div class="news-header reveal">
+    <h3 class="display-md">In the news.</h3>
+    <a href="#" class="btn btn-outline">View all →</a>
+  </div>
+  <div class="news-scroll">
+    <div class="news-track">
+      <div class="news-card">
+        <div class="news-date">January 13, 2026</div>
+        <h4 class="news-card-title">AI Steps In as Young Savers Struggle to Get Ahead...</h4>
+        <p class="news-card-desc">Financial guidance has long had an accessibility gap — Cleo is helping to close it.</p>
+        <p class="news-arrow">Read more →</p>
+      </div>
+      <div class="news-card">
+        <div class="news-date">December 11, 2025</div>
+        <h4 class="news-card-title">Why Gen Z is Ditching Traditional Banking for AI Assistants</h4>
+        <p class="news-card-desc">The shift to conversational finance is accelerating faster than anyone predicted.</p>
+        <p class="news-arrow">Read more →</p>
+      </div>
+      <div class="news-card">
+        <div class="news-date">November 4, 2025</div>
+        <h4 class="news-card-title">Cleo Raises $140M to Expand AI Money Coaching Globally</h4>
+        <p class="news-card-desc">The London-born fintech is now targeting 100 million users by 2027.</p>
+        <p class="news-arrow">Read more →</p>
+      </div>
+      <div class="news-card">
+        <div class="news-date">October 22, 2025</div>
+        <h4 class="news-card-title">The Financial Guidance Gap — And How Technology Is Filling It</h4>
+        <p class="news-card-desc">Access to quality financial advice has historically been a privilege. That's changing.</p>
+        <p class="news-arrow">Read more →</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ════════════════════════════════════════════════════════ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <h2 class="display-md reveal" style="text-align:center;margin-bottom:2.5rem">Common questions.</h2>
+    <div class="faq-card reveal reveal-delay-1">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What banks does Cleo support?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          To keep your bank info safe, your accounts are linked through Plaid, an API provider. You can check if Plaid supports your bank by visiting their site — select Launch Demo, then Connect, and search for your bank name. If you don't see your bank there, it can't be connected just yet.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do you store any of my bank details?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          No — Cleo never stores your bank credentials. We use Plaid as a secure intermediary, which means your username and password never touch our servers. We only ever see read-only transaction data.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I contact customer support?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          You can reach us directly through the app — just tap the help icon. You can also email us at team@meetcleo.com. Our support team typically responds within a few hours on weekdays.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Who is eligible for a Cleo Card?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          The Cleo Card is issued by WebBank, Member FDIC. To be eligible, you need to be a US resident aged 18 or over. A $30 minimum deposit is required. Credit outcomes may vary based on individual behaviour and credit profile.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is Cleo free to use?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          Cleo's core features are completely free — spend tracking, savings goals, and AI chat. Cleo+ is a premium subscription ($5.99/month) that unlocks advanced budgeting tools, cashback rewards, and credit building features.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DOWNLOAD CTA ═══════════════════════════════════════════════ -->
+<section class="cta-section" id="download">
+  <div class="cta-blob-1"></div>
+  <div class="cta-blob-2"></div>
+  <div class="cta-content reveal">
+    <h2 class="display-lg">Get your money<br>right. Today.</h2>
+    <div class="cta-btns">
+      <a href="#" class="btn btn-solid btn-lg">⬇ App Store</a>
+      <a href="#" class="btn btn-outline btn-lg">⬇ Google Play</a>
+    </div>
+    <div style="display:flex;justify-content:center">
+      <div class="qr-card">
+        <!-- Simple QR pattern -->
+        <div style="width:100px;height:100px;background:#1a1614;border-radius:0.75rem;display:flex;align-items:center;justify-content:center">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(7,1fr);gap:1px;width:80px;height:80px">
+            <!-- QR corner blocks -->
+            <div style="grid-column:1/4;grid-row:1/4;background:white;border-radius:2px"></div>
+            <div style="grid-column:2/3;grid-row:2/3;background:#1a1614;border-radius:1px"></div>
+            <div style="grid-column:5/8;grid-row:1/4;background:white;border-radius:2px"></div>
+            <div style="grid-column:6/7;grid-row:2/3;background:#1a1614;border-radius:1px"></div>
+            <div style="grid-column:1/4;grid-row:5/8;background:white;border-radius:2px"></div>
+            <div style="grid-column:2/3;grid-row:6/7;background:#1a1614;border-radius:1px"></div>
+            <div style="grid-column:5;grid-row:4;background:white;border-radius:1px"></div>
+            <div style="grid-column:6;grid-row:5;background:white;border-radius:1px"></div>
+            <div style="grid-column:7;grid-row:6;background:white;border-radius:1px"></div>
+            <div style="grid-column:5;grid-row:7;background:white;border-radius:1px"></div>
+            <div style="grid-column:4;grid-row:4;background:white;border-radius:1px"></div>
+            <div style="grid-column:4;grid-row:6;background:white;border-radius:1px"></div>
+          </div>
+        </div>
+        <p style="font-size:0.75rem;color:var(--muted)">Scan to download</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LEGAL ══════════════════════════════════════════════════════ -->
+<div class="legal-section">
+  <p>*Cleo is a financial technology company and is not an FDIC-insured bank. Direct Deposit banking services provided by Thread Bank, Member FDIC.</p>
+  <p>*Cleo Card issued by WebBank, Member FDIC. Subject to approval. $0 minimum deposit required.</p>
+  <p>*Credit outcomes vary based on individual behaviour and credit profile.</p>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">cleo</div>
+      <p>Cleo makes money better.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Work at Cleo</h4>
+        <ul>
+          <li><a href="#">Company</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Information</h4>
+        <ul>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Policies</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Address</h4>
+        <ul>
+          <li><a href="#" style="color:rgba(255,255,255,0.4);cursor:default">Cleo AI</a></li>
+          <li><a href="#" style="color:rgba(255,255,255,0.4);cursor:default">300 Delaware Ave, Suite 210</a></li>
+          <li><a href="#" style="color:rgba(255,255,255,0.4);cursor:default">Wilmington DE 19801</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:team@meetcleo.com">team@meetcleo.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© Cleo AI Ltd 2026. All Rights Reserved.</p>
+    <div class="social-links">
+      <a href="#" title="TikTok">TK</a>
+      <a href="#" title="Twitter/X">𝕏</a>
+      <a href="#" title="Facebook">f</a>
+      <a href="#" title="LinkedIn">in</a>
+      <a href="#" title="Instagram">◎</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ SCRIPTS ════════════════════════════════════════════════════ -->
+<script>
+  /* ── Nav scroll effect ────────────────────────────────── */
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ── Reveal on scroll ─────────────────────────────────── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ── FAQ accordion ────────────────────────────────────── */
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* ── Cursor glow ──────────────────────────────────────── */
+  const glow = document.getElementById('cursorGlow');
+  let mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+  (function animGlow() {
+    cx += (mx - cx) * 0.08;
+    cy += (my - cy) * 0.08;
+    glow.style.transform = `translate(${cx - 150}px, ${cy - 150}px)`;
+    requestAnimationFrame(animGlow);
+  })();
+
+  /* ── Parallax on hero bg ──────────────────────────────── */
+  const heroBg = document.querySelector('.hero-bg');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (heroBg) heroBg.style.transform = `translateY(${y * 0.3}px)`;
+  }, { passive: true });
+
+  /* ── Smooth hover tilt on cards ───────────────────────── */
+  document.querySelectorAll('.tcard, .news-card, .media-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width  - 0.5;
+      const y = (e.clientY - rect.top)  / rect.height - 0.5;
+      card.style.transform = `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateZ(6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  /* ── Stagger reveal delays for children ──────────────── */
+  document.querySelectorAll('.know-grid, .smart-section, .media-grid').forEach(parent => {
+    [...parent.children].forEach((child, i) => {
+      child.style.transitionDelay = `${i * 0.1}s`;
+    });
+  });
+</script>
+</body>
+</html>
