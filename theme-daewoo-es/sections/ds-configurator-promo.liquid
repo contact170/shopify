@@ -72,7 +72,7 @@
 }
 {% endstylesheet %}
 
-<section class="ds-section ds-bg-white" id="ds-config-{{ section.id }}">
+<section class="ds-section" id="ds-config-{{ section.id }}" style="background:{{ section.settings.section_bg | default: '#FFFFFF' }};">
   <div class="ds-container ds-section-inner">
     <div class="ds-config__layout">
 
@@ -126,18 +126,23 @@
         {%- if section.settings.eyebrow != blank -%}
           <span class="ds-eyebrow" data-ds-reveal>{{ section.settings.eyebrow }}</span>
         {%- endif -%}
-        <h2 class="ds-title ds-title-md ds-text-black" data-ds-reveal data-ds-delay="100">{{ section.settings.title }}</h2>
+        <h2 class="ds-title ds-title-md" data-ds-reveal data-ds-delay="100" style="color:{{ section.settings.title_color | default: '#0D0D0D' }};">{{ section.settings.title }}</h2>
         {%- if section.settings.subtitle != blank -%}
-          <p class="ds-subtitle" data-ds-reveal data-ds-delay="200">{{ section.settings.subtitle }}</p>
+          <p class="ds-subtitle" data-ds-reveal data-ds-delay="200" style="color:{{ section.settings.subtitle_color | default: '#6E6E73' }};">{{ section.settings.subtitle }}</p>
         {%- endif -%}
 
-        {%- assign checklist_items = section.settings.checklist | newline_to_br | split: '<br />' -%}
-        {%- if checklist_items.size > 0 and section.settings.checklist != blank -%}
+        {%- assign checklist_blocks = section.blocks | where: 'type', 'checklist_item' -%}
+        {%- if checklist_blocks.size > 0 -%}
+          <ul class="ds-checklist" data-ds-reveal data-ds-delay="300">
+            {%- for block in checklist_blocks -%}
+              <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- elsif section.settings.checklist != blank -%}
+          {%- assign checklist_items = section.settings.checklist | newline_to_br | split: '<br />' -%}
           <ul class="ds-checklist" data-ds-reveal data-ds-delay="300">
             {%- for item in checklist_items -%}
-              {%- if item != blank -%}
-                <li>{{ item | strip }}</li>
-              {%- endif -%}
+              {%- if item != blank -%}<li>{{ item | strip }}</li>{%- endif -%}
             {%- endfor -%}
           </ul>
         {%- endif -%}
@@ -177,7 +182,21 @@
     { "type": "text",        "id": "cta_note",      "label": "Nota bajo el CTA", "default": "Gratis y sin compromiso. Presupuesto en 5 minutos." },
     { "type": "image_picker","id": "visual_image",  "label": "Imagen (reemplaza mockup)" },
     { "type": "text",        "id": "float_badge_1", "label": "Badge flotante 1", "default": "5 min de configuración" },
-    { "type": "text",        "id": "float_badge_2", "label": "Badge flotante 2", "default": "Sin instalador" }
+    { "type": "text",        "id": "float_badge_2", "label": "Badge flotante 2", "default": "Sin instalador" },
+    { "type": "header",      "id": "h_colors",      "content": "Colores" },
+    { "type": "color",       "id": "section_bg",    "label": "Fondo sección",    "default": "#FFFFFF" },
+    { "type": "color",       "id": "title_color",   "label": "Color título",     "default": "#0D0D0D" },
+    { "type": "color",       "id": "subtitle_color","label": "Color subtítulo",  "default": "#6E6E73" },
+    { "type": "color",       "id": "check_color",   "label": "Color check",      "default": "#E63946" }
+  ],
+  "blocks": [
+    {
+      "type": "checklist_item",
+      "name": "Punto ventaja",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Adaptado al tamaño y tipo de tu vivienda" }
+      ]
+    }
   ],
   "presets": [
     {
@@ -191,7 +210,14 @@
         "cta_note":   "Gratis y sin compromiso. Presupuesto en 5 minutos.",
         "float_badge_1": "5 min de configuración",
         "float_badge_2": "Sin instalador"
-      }
+      },
+      "blocks": [
+        { "type": "checklist_item", "settings": { "text": "Adaptado al tamaño y tipo de tu vivienda" } },
+        { "type": "checklist_item", "settings": { "text": "Sin conocimientos técnicos necesarios" } },
+        { "type": "checklist_item", "settings": { "text": "Precios transparentes desde el primer paso" } },
+        { "type": "checklist_item", "settings": { "text": "Compatible con app gratuita iOS/Android" } },
+        { "type": "checklist_item", "settings": { "text": "Garantía de satisfacción 30 días" } }
+      ]
     }
   ]
 }

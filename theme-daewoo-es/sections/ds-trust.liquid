@@ -26,7 +26,7 @@
 @media (max-width:500px) { .ds-trust__stats { grid-template-columns: repeat(2,1fr); gap:1.5rem; padding:1.75rem; } }
 {% endstylesheet %}
 
-<section class="ds-section ds-bg-surface" id="ds-trust-{{ section.id }}">
+<section class="ds-section" id="ds-trust-{{ section.id }}" style="background:{{ section.settings.section_bg | default: '#F5F5F7' }};">
   <div class="ds-container ds-section-inner">
 
     <div class="ds-section-header ds-section-header--center" data-ds-reveal>
@@ -37,15 +37,15 @@
     </div>
 
     <!-- Stats bar -->
-    <div class="ds-trust__stats" data-ds-reveal>
+    <div class="ds-trust__stats" data-ds-reveal style="background:{{ section.settings.stats_bg | default: '#0D0D0D' }};">
       {%- for block in section.blocks -%}
         {%- if block.type == 'stat' -%}
           <div class="ds-trust__stat" {{ block.shopify_attributes }}>
-            <div style="display:flex;align-items:baseline;justify-content:center;gap:.1rem;">
-              <span class="ds-counter-value ds-trust__stat-value" data-ds-counter="{{ block.settings.value }}" data-ds-counter-suffix="{{ block.settings.suffix }}">0</span>
-              <span class="ds-trust__stat-suffix">{{ block.settings.suffix }}</span>
+            <div style="display:flex;align-items:baseline;justify-content:center;gap:.05rem;">
+              <span class="ds-counter-value ds-trust__stat-value" data-ds-counter="{{ block.settings.value }}" data-ds-counter-suffix="{{ block.settings.suffix }}" style="color:{{ section.settings.stats_text | default: '#FFFFFF' }};font-family:var(--ds-font);font-size:clamp(2rem,4vw,3rem);font-weight:900;">0</span>
+              <span class="ds-counter-suffix" style="color:{{ section.settings.stats_suffix_color | default: '#E63946' }};font-family:var(--ds-font);font-size:clamp(2rem,4vw,3rem);font-weight:900;">{{ block.settings.suffix }}</span>
             </div>
-            <div class="ds-trust__stat-label">{{ block.settings.label }}</div>
+            <div class="ds-trust__stat-label" style="color:{{ section.settings.stats_label_color | default: '#8E8E93' }};">{{ block.settings.label }}</div>
           </div>
         {%- endif -%}
       {%- endfor -%}
@@ -117,10 +117,16 @@
   "tag": "section",
   "class": "ds-section",
   "settings": [
-    { "type": "text", "id": "eyebrow",          "label": "Eyebrow",             "default": "Confianza" },
-    { "type": "text", "id": "title",            "label": "Título",              "default": "Miles de hogares ya protegidos" },
-    { "type": "text", "id": "reviews_title",    "label": "Título avis clientes","default": "Lo que dicen nuestros clientes" },
-    { "type": "text", "id": "guarantees_title", "label": "Título garantías",    "default": "Nuestras garantías" }
+    { "type": "text",  "id": "eyebrow",           "label": "Eyebrow",              "default": "Confianza" },
+    { "type": "text",  "id": "title",             "label": "Título",               "default": "Miles de hogares ya protegidos" },
+    { "type": "text",  "id": "reviews_title",     "label": "Título reseñas",       "default": "Lo que dicen nuestros clientes" },
+    { "type": "text",  "id": "guarantees_title",  "label": "Título garantías",     "default": "Nuestras garantías" },
+    { "type": "header","id": "h_colors",          "content": "Colores" },
+    { "type": "color", "id": "stats_bg",          "label": "Fondo estadísticas",   "default": "#0D0D0D" },
+    { "type": "color", "id": "stats_text",        "label": "Color número",         "default": "#FFFFFF" },
+    { "type": "color", "id": "stats_suffix_color","label": "Color sufijo/acento",  "default": "#E63946" },
+    { "type": "color", "id": "stats_label_color", "label": "Color etiqueta stat",  "default": "#8E8E93" },
+    { "type": "color", "id": "section_bg",        "label": "Fondo sección",        "default": "#F5F5F7" }
   ],
   "blocks": [
     {

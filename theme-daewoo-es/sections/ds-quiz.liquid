@@ -1,0 +1,999 @@
+{% stylesheet %}
+/* ===================================================================
+   DS Quiz Configurador — Design épuré, différent du reste du thème
+   =================================================================== */
+.ds-quiz-page {
+  min-height: 100vh;
+  background: {{ section.settings.page_bg | default: '#F0F0F2' }};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1rem 5rem;
+  font-family: var(--ds-font);
+}
+
+/* Header quiz */
+.ds-quiz__header {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+.ds-quiz__logo {
+  font-family: var(--ds-font);
+  font-weight: 800;
+  font-size: 1rem;
+  color: {{ section.settings.accent_color | default: '#E63946' }};
+  letter-spacing: -.02em;
+  text-decoration: none;
+}
+.ds-quiz__back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-family: var(--ds-font);
+  font-size: .85rem;
+  font-weight: 500;
+  color: #6E6E73;
+  padding: .4rem .6rem;
+  border-radius: 8px;
+  transition: background .18s, color .18s;
+}
+.ds-quiz__back-btn:hover { background: rgba(0,0,0,.06); color: #1D1D1F; }
+.ds-quiz__back-btn[hidden] { display: none; }
+
+/* Progress bar */
+.ds-quiz__progress-wrap {
+  width: 100%;
+  max-width: 680px;
+  margin-bottom: 2.5rem;
+}
+.ds-quiz__progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: .75rem;
+  font-weight: 600;
+  color: #8E8E93;
+  margin-bottom: .5rem;
+}
+.ds-quiz__progress-track {
+  height: 5px;
+  background: rgba(0,0,0,.1);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.ds-quiz__progress-fill {
+  height: 100%;
+  background: {{ section.settings.accent_color | default: '#E63946' }};
+  border-radius: 9999px;
+  transition: width .4s cubic-bezier(.4,0,.2,1);
+}
+
+/* Wrapper des étapes */
+.ds-quiz__steps-wrap {
+  width: 100%;
+  max-width: 680px;
+  position: relative;
+}
+
+/* Étape */
+.ds-quiz__step {
+  display: none;
+  flex-direction: column;
+  gap: 1.75rem;
+  animation: ds-quiz-in .3s cubic-bezier(.4,0,.2,1);
+}
+.ds-quiz__step.ds-active { display: flex; }
+
+@keyframes ds-quiz-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ds-quiz__step-meta {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.ds-quiz__step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: {{ section.settings.accent_color | default: '#E63946' }};
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.ds-quiz__step-subtitle {
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: {{ section.settings.accent_color | default: '#E63946' }};
+}
+.ds-quiz__question {
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+  font-weight: 800;
+  color: {{ section.settings.question_color | default: '#0D0D0D' }};
+  line-height: 1.2;
+  letter-spacing: -.03em;
+}
+.ds-quiz__hint {
+  font-size: .85rem;
+  color: #8E8E93;
+  margin-top: -.5rem;
+}
+
+/* Grille de cartes réponses */
+.ds-quiz__cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.ds-quiz__cards--4 { grid-template-columns: repeat(2, 1fr); }
+.ds-quiz__cards--3 { grid-template-columns: repeat(3, 1fr); }
+.ds-quiz__cards--2 { grid-template-columns: repeat(2, 1fr); }
+
+.ds-quiz__card {
+  background: {{ section.settings.card_bg | default: '#FFFFFF' }};
+  border: 2px solid transparent;
+  border-radius: 18px;
+  padding: 1.5rem 1.25rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .6rem;
+  transition: border-color .2s, box-shadow .2s, transform .15s;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+.ds-quiz__card:hover {
+  border-color: {{ section.settings.accent_color | default: '#E63946' }};
+  box-shadow: 0 4px 20px rgba(230,57,70,.15);
+  transform: translateY(-2px);
+}
+.ds-quiz__card.ds-selected {
+  border-color: {{ section.settings.accent_color | default: '#E63946' }};
+  background: {{ section.settings.card_selected_bg | default: '#FFF5F6' }};
+  box-shadow: 0 0 0 4px rgba(230,57,70,.12);
+}
+.ds-quiz__card-check {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: {{ section.settings.accent_color | default: '#E63946' }};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity .2s, transform .2s;
+}
+.ds-quiz__card.ds-selected .ds-quiz__card-check {
+  opacity: 1;
+  transform: scale(1);
+}
+.ds-quiz__card-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+.ds-quiz__card-label {
+  font-size: .95rem;
+  font-weight: 700;
+  color: {{ section.settings.question_color | default: '#0D0D0D' }};
+  line-height: 1.25;
+}
+.ds-quiz__card-desc {
+  font-size: .78rem;
+  color: #8E8E93;
+  line-height: 1.4;
+}
+
+/* Bouton Siguiente */
+.ds-quiz__next-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+.ds-quiz__next-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .9rem 2rem;
+  background: {{ section.settings.accent_color | default: '#E63946' }};
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  font-family: var(--ds-font);
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .18s, box-shadow .18s, transform .15s;
+  box-shadow: 0 6px 20px rgba(230,57,70,.3);
+}
+.ds-quiz__next-btn:hover { background: #C1121F; box-shadow: 0 8px 28px rgba(193,18,31,.35); transform: translateY(-1px); }
+.ds-quiz__next-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+/* ===== Résultat ===== */
+.ds-quiz__result {
+  display: none;
+  flex-direction: column;
+  gap: 2rem;
+  animation: ds-quiz-in .4s cubic-bezier(.4,0,.2,1);
+}
+.ds-quiz__result.ds-active { display: flex; }
+
+.ds-quiz__result-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: rgba(52,199,89,.12);
+  color: #1A8E3A;
+  border-radius: 9999px;
+  padding: .4rem 1rem;
+  font-size: .8rem;
+  font-weight: 700;
+  width: fit-content;
+}
+.ds-quiz__result-title {
+  font-size: clamp(1.5rem,4vw,2.2rem);
+  font-weight: 900;
+  color: {{ section.settings.question_color | default: '#0D0D0D' }};
+  letter-spacing: -.04em;
+  line-height: 1.15;
+}
+.ds-quiz__result-subtitle {
+  font-size: .95rem;
+  color: #6E6E73;
+  line-height: 1.6;
+  max-width: 520px;
+}
+.ds-quiz__result-card {
+  background: {{ section.settings.card_bg | default: '#FFFFFF' }};
+  border-radius: 22px;
+  padding: 2rem;
+  box-shadow: 0 8px 40px rgba(0,0,0,.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+.ds-quiz__result-img {
+  width: 100%;
+  border-radius: 14px;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  background: #F0F0F2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+}
+.ds-quiz__result-info { display: flex; flex-direction: column; gap: 1rem; }
+.ds-quiz__result-pack-name {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: {{ section.settings.question_color | default: '#0D0D0D' }};
+  letter-spacing: -.02em;
+}
+.ds-quiz__result-pack-desc {
+  font-size: .88rem;
+  color: #6E6E73;
+  line-height: 1.6;
+}
+.ds-quiz__result-includes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.ds-quiz__result-includes li {
+  font-size: .82rem;
+  color: #3A3A3C;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.ds-quiz__result-includes li::before {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 16px;
+  background: {{ section.settings.accent_color | default: '#E63946' }};
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 5l2.5 2.5L8 3' stroke='white' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.ds-quiz__result-price {
+  display: flex;
+  align-items: baseline;
+  gap: .4rem;
+}
+.ds-quiz__result-price-current {
+  font-size: 2rem;
+  font-weight: 900;
+  color: {{ section.settings.question_color | default: '#0D0D0D' }};
+}
+.ds-quiz__result-price-old {
+  font-size: 1rem;
+  color: #8E8E93;
+  text-decoration: line-through;
+}
+.ds-quiz__result-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: 1rem 1.75rem;
+  background: {{ section.settings.accent_color | default: '#E63946' }};
+  color: #fff;
+  border-radius: 9999px;
+  font-family: var(--ds-font);
+  font-size: .95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .18s, transform .15s;
+  box-shadow: 0 6px 20px rgba(230,57,70,.3);
+  width: fit-content;
+}
+.ds-quiz__result-cta:hover { background: #C1121F; transform: translateY(-1px); }
+.ds-quiz__result-restart {
+  background: none;
+  border: 1.5px solid rgba(0,0,0,.15);
+  border-radius: 9999px;
+  padding: .6rem 1.25rem;
+  font-family: var(--ds-font);
+  font-size: .82rem;
+  font-weight: 600;
+  color: #6E6E73;
+  cursor: pointer;
+  transition: border-color .18s, color .18s;
+  width: fit-content;
+}
+.ds-quiz__result-restart:hover { border-color: #0D0D0D; color: #0D0D0D; }
+.ds-quiz__result-actions { display: flex; flex-direction: column; gap: .75rem; }
+.ds-quiz__result-note {
+  font-size: .78rem;
+  color: #8E8E93;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+/* Trust row résultat */
+.ds-quiz__result-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(0,0,0,.03);
+  border-radius: 14px;
+}
+.ds-quiz__result-trust-item {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .8rem;
+  font-weight: 600;
+  color: #3A3A3C;
+}
+
+@media (max-width: 600px) {
+  .ds-quiz__cards--4,
+  .ds-quiz__cards--3 { grid-template-columns: 1fr 1fr; }
+  .ds-quiz__cards--2 { grid-template-columns: 1fr; }
+  .ds-quiz__result-card { grid-template-columns: 1fr; }
+  .ds-quiz__result-img { max-width: 200px; margin: 0 auto; }
+}
+{% endstylesheet %}
+
+<div class="ds-quiz-page" id="ds-quiz-{{ section.id }}">
+
+  <!-- Header -->
+  <div class="ds-quiz__header">
+    <a href="{{ routes.root_url }}" class="ds-quiz__logo">{{ section.settings.brand_name | default: 'Daewoo Security' }}</a>
+    <button class="ds-quiz__back-btn" id="dsq-back-{{ section.id }}" hidden>
+      <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      {{ section.settings.back_label | default: 'Atrás' }}
+    </button>
+  </div>
+
+  <!-- Progress -->
+  <div class="ds-quiz__progress-wrap">
+    <div class="ds-quiz__progress-labels">
+      <span id="dsq-step-label-{{ section.id }}">{{ section.settings.step_label | default: 'Paso' }} 1 {{ section.settings.of_label | default: 'de' }} 5</span>
+      <span id="dsq-pct-{{ section.id }}">20%</span>
+    </div>
+    <div class="ds-quiz__progress-track">
+      <div class="ds-quiz__progress-fill" id="dsq-fill-{{ section.id }}" style="width:20%;"></div>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <div class="ds-quiz__steps-wrap">
+
+    <!-- Étape 1 : Type de logement -->
+    <div class="ds-quiz__step ds-active" data-step="1">
+      <div>
+        <div class="ds-quiz__step-meta">
+          <span class="ds-quiz__step-num">1</span>
+          <span class="ds-quiz__step-subtitle">{{ section.settings.s1_eyebrow | default: 'Tu hogar' }}</span>
+        </div>
+        <h2 class="ds-quiz__question">{{ section.settings.s1_question | default: '¿Qué tipo de vivienda quieres proteger?' }}</h2>
+      </div>
+      <div class="ds-quiz__cards ds-quiz__cards--4">
+        <button class="ds-quiz__card" data-value="casa">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🏠</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s1_a1 | default: 'Casa unifamiliar' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s1_a1_desc | default: 'Chalet, adosado o casa con jardín' }}</span>
+        </button>
+        <button class="ds-quiz__card" data-value="piso">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🏢</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s1_a2 | default: 'Piso o apartamento' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s1_a2_desc | default: 'En bloque de viviendas' }}</span>
+        </button>
+        <button class="ds-quiz__card" data-value="segunda">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🏡</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s1_a3 | default: 'Segunda residencia' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s1_a3_desc | default: 'Casa de campo o vacacional' }}</span>
+        </button>
+        <button class="ds-quiz__card" data-value="local">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🏪</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s1_a4 | default: 'Local o negocio' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s1_a4_desc | default: 'Oficina, tienda o nave' }}</span>
+        </button>
+      </div>
+      <div class="ds-quiz__next-wrap">
+        <button class="ds-quiz__next-btn" data-next="2" disabled>
+          {{ section.settings.next_label | default: 'Siguiente' }}
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Étape 2 : Taille -->
+    <div class="ds-quiz__step" data-step="2">
+      <div>
+        <div class="ds-quiz__step-meta">
+          <span class="ds-quiz__step-num">2</span>
+          <span class="ds-quiz__step-subtitle">{{ section.settings.s2_eyebrow | default: 'Tamaño' }}</span>
+        </div>
+        <h2 class="ds-quiz__question">{{ section.settings.s2_question | default: '¿Cuántas habitaciones tiene?' }}</h2>
+        <p class="ds-quiz__hint">{{ section.settings.s2_hint | default: 'Esto nos ayuda a calcular el número de sensores necesarios' }}</p>
+      </div>
+      <div class="ds-quiz__cards ds-quiz__cards--3">
+        <button class="ds-quiz__card" data-value="pequeño">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🔑</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s2_a1 | default: 'Pequeño' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s2_a1_desc | default: '1 a 2 habitaciones' }}</span>
+        </button>
+        <button class="ds-quiz__card" data-value="mediano">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🏘️</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s2_a2 | default: 'Mediano' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s2_a2_desc | default: '3 a 4 habitaciones' }}</span>
+        </button>
+        <button class="ds-quiz__card" data-value="grande">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🏛️</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s2_a3 | default: 'Grande' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s2_a3_desc | default: '5 o más habitaciones' }}</span>
+        </button>
+      </div>
+      <div class="ds-quiz__next-wrap">
+        <button class="ds-quiz__next-btn" data-next="3" disabled>
+          {{ section.settings.next_label | default: 'Siguiente' }}
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Étape 3 : WiFi -->
+    <div class="ds-quiz__step" data-step="3">
+      <div>
+        <div class="ds-quiz__step-meta">
+          <span class="ds-quiz__step-num">3</span>
+          <span class="ds-quiz__step-subtitle">{{ section.settings.s3_eyebrow | default: 'Conectividad' }}</span>
+        </div>
+        <h2 class="ds-quiz__question">{{ section.settings.s3_question | default: '¿Dispones de WiFi en la vivienda?' }}</h2>
+        <p class="ds-quiz__hint">{{ section.settings.s3_hint | default: 'Las segunda residencias suelen necesitar 4G' }}</p>
+      </div>
+      <div class="ds-quiz__cards ds-quiz__cards--2">
+        <button class="ds-quiz__card" data-value="wifi">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">📶</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s3_a1 | default: 'Sí, tengo WiFi' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s3_a1_desc | default: 'Conexión WiFi estable disponible' }}</span>
+        </button>
+        <button class="ds-quiz__card" data-value="4g">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">📡</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s3_a2 | default: 'No, necesito 4G' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s3_a2_desc | default: 'Sin internet fijo, necesito SIM 4G' }}</span>
+        </button>
+      </div>
+      <div class="ds-quiz__next-wrap">
+        <button class="ds-quiz__next-btn" data-next="4" disabled>
+          {{ section.settings.next_label | default: 'Siguiente' }}
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Étape 4 : Accès -->
+    <div class="ds-quiz__step" data-step="4">
+      <div>
+        <div class="ds-quiz__step-meta">
+          <span class="ds-quiz__step-num">4</span>
+          <span class="ds-quiz__step-subtitle">{{ section.settings.s4_eyebrow | default: 'Accesos' }}</span>
+        </div>
+        <h2 class="ds-quiz__question">{{ section.settings.s4_question | default: '¿Cuántos accesos principales quieres proteger?' }}</h2>
+        <p class="ds-quiz__hint">{{ section.settings.s4_hint | default: 'Cuenta puertas + ventanas fácilmente accesibles desde exterior' }}</p>
+      </div>
+      <div class="ds-quiz__cards ds-quiz__cards--3">
+        <button class="ds-quiz__card" data-value="pocos">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🚪</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s4_a1 | default: 'Pocos' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s4_a1_desc | default: '1 a 3 puntos de entrada' }}</span>
+        </button>
+        <button class="ds-quiz__card" data-value="varios">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🔐</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s4_a2 | default: 'Varios' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s4_a2_desc | default: '4 a 6 puntos de entrada' }}</span>
+        </button>
+        <button class="ds-quiz__card" data-value="muchos">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🏰</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s4_a3 | default: 'Muchos' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s4_a3_desc | default: '7 o más puntos de entrada' }}</span>
+        </button>
+      </div>
+      <div class="ds-quiz__next-wrap">
+        <button class="ds-quiz__next-btn" data-next="5" disabled>
+          {{ section.settings.next_label | default: 'Siguiente' }}
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Étape 5 : Caméras -->
+    <div class="ds-quiz__step" data-step="5">
+      <div>
+        <div class="ds-quiz__step-meta">
+          <span class="ds-quiz__step-num">5</span>
+          <span class="ds-quiz__step-subtitle">{{ section.settings.s5_eyebrow | default: 'Extras' }}</span>
+        </div>
+        <h2 class="ds-quiz__question">{{ section.settings.s5_question | default: '¿Quieres añadir cámaras de vigilancia?' }}</h2>
+        <p class="ds-quiz__hint">{{ section.settings.s5_hint | default: 'Las cámaras graban en HD y envían alertas con imagen en tiempo real' }}</p>
+      </div>
+      <div class="ds-quiz__cards ds-quiz__cards--2">
+        <button class="ds-quiz__card" data-value="camaras">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">📷</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s5_a1 | default: 'Sí, quiero cámaras' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s5_a1_desc | default: 'Videoverificación en tiempo real' }}</span>
+        </button>
+        <button class="ds-quiz__card" data-value="sin_camaras">
+          <div class="ds-quiz__card-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="ds-quiz__card-icon">🔔</span>
+          <span class="ds-quiz__card-label">{{ section.settings.s5_a2 | default: 'Solo alarma' }}</span>
+          <span class="ds-quiz__card-desc">{{ section.settings.s5_a2_desc | default: 'Sirena + notificaciones son suficientes' }}</span>
+        </button>
+      </div>
+      <div class="ds-quiz__next-wrap">
+        <button class="ds-quiz__next-btn" data-next="result" disabled>
+          {{ section.settings.result_btn_label | default: 'Ver mi recomendación' }}
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Résultat -->
+    <div class="ds-quiz__result" id="dsq-result-{{ section.id }}">
+      <span class="ds-quiz__result-badge">
+        <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7l3.5 3.5L12 4" stroke="#1A8E3A" stroke-width="2" stroke-linecap="round"/></svg>
+        {{ section.settings.result_ready_label | default: 'Configuración lista' }}
+      </span>
+      <h2 class="ds-quiz__result-title" id="dsq-result-title-{{ section.id }}">{{ section.settings.result_title | default: 'Tu pack ideal' }}</h2>
+      <p class="ds-quiz__result-subtitle" id="dsq-result-subtitle-{{ section.id }}">{{ section.settings.result_subtitle | default: 'Basado en tus respuestas, hemos seleccionado el pack que mejor se adapta a tus necesidades.' }}</p>
+
+      <div class="ds-quiz__result-card">
+        <div class="ds-quiz__result-img" id="dsq-result-img-{{ section.id }}">
+          {%- if section.settings.result_default_image != blank -%}
+            <img src="{{ section.settings.result_default_image | image_url: width: 400 }}" alt="Pack alarma" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">
+          {%- else -%}
+            🛡️
+          {%- endif -%}
+        </div>
+        <div class="ds-quiz__result-info">
+          <div class="ds-quiz__result-pack-name" id="dsq-pack-name-{{ section.id }}">Pack Alarma</div>
+          <p class="ds-quiz__result-pack-desc" id="dsq-pack-desc-{{ section.id }}">Protección completa adaptada a tu hogar.</p>
+          <ul class="ds-quiz__result-includes" id="dsq-pack-includes-{{ section.id }}"></ul>
+          <div class="ds-quiz__result-price">
+            <span class="ds-quiz__result-price-current" id="dsq-price-{{ section.id }}">–</span>
+          </div>
+          <div class="ds-quiz__result-actions">
+            <a href="#" class="ds-quiz__result-cta" id="dsq-cta-{{ section.id }}">
+              {{ section.settings.result_cta_label | default: 'Ver el pack y comprar' }}
+              <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </a>
+            <button class="ds-quiz__result-restart" id="dsq-restart-{{ section.id }}">
+              {{ section.settings.restart_label | default: '↩ Volver a empezar' }}
+            </button>
+            <p class="ds-quiz__result-note">
+              <svg width="12" height="12" fill="#34C759" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8L10.5 4.3l-2.25 2.2.53 3.15L6 7.9l-2.78 1.65.53-3.15L1.5 4.3l3.1-.5L6 1Z"/></svg>
+              {{ section.settings.result_note | default: 'Envío gratis · Garantía 3 años · Devolución 30 días' }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-quiz__result-trust">
+        <div class="ds-quiz__result-trust-item">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M7 1L3 3.5v4C3 10.25 5 12.75 7 13.5c2-.75 4-3.25 4-6v-4L7 1Z" stroke="#E63946" stroke-width="1.4"/></svg>
+          {{ section.settings.trust_1 | default: 'Sin cuotas mensuales' }}
+        </div>
+        <div class="ds-quiz__result-trust-item">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" stroke="#E63946" stroke-width="1.4"/><path d="M4.5 7l2 2 3.5-3.5" stroke="#E63946" stroke-width="1.4" stroke-linecap="round"/></svg>
+          {{ section.settings.trust_2 | default: 'Garantía 3 años' }}
+        </div>
+        <div class="ds-quiz__result-trust-item">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M1 2h9l2 2.5v6H1V2Z" stroke="#E63946" stroke-width="1.4" stroke-linejoin="round"/><circle cx="4" cy="11.5" r="1.5" stroke="#E63946" stroke-width="1.2"/><circle cx="9" cy="11.5" r="1.5" stroke="#E63946" stroke-width="1.2"/></svg>
+          {{ section.settings.trust_3 | default: 'Envío gratis 24h' }}
+        </div>
+        <div class="ds-quiz__result-trust-item">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 2h10v8H2zM5 10v2M9 10v2M4 12h6" stroke="#E63946" stroke-width="1.4" stroke-linecap="round"/></svg>
+          {{ section.settings.trust_4 | default: 'Instalación guiada gratis' }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  var sid = '{{ section.id }}';
+  var quiz = document.getElementById('ds-quiz-' + sid);
+  if (!quiz) return;
+
+  var answers = {};
+  var currentStep = 1;
+  var totalSteps = 5;
+
+  // Packs configurables depuis le schema
+  var packs = {
+    basic: {
+      name: '{{ section.settings.pack1_name | default: "Pack Casa Basic" | escape }}',
+      desc: '{{ section.settings.pack1_desc | default: "Protección esencial WiFi. Ideal para pisos y casas medianas con conexión a internet." | escape }}',
+      price: '{{ section.settings.pack1_price | default: "299 €" | escape }}',
+      url: '{{ section.settings.pack1_url }}',
+      includes: [
+        '{{ section.settings.pack1_i1 | default: "1 Central WiFi con sirena integrada" | escape }}',
+        '{{ section.settings.pack1_i2 | default: "2 Detectores de movimiento" | escape }}',
+        '{{ section.settings.pack1_i3 | default: "2 Sensores de puerta/ventana" | escape }}',
+        '{{ section.settings.pack1_i4 | default: "App iOS/Android gratuita" | escape }}'
+      ]
+    },
+    plus: {
+      name: '{{ section.settings.pack2_name | default: "Pack Casa Plus" | escape }}',
+      desc: '{{ section.settings.pack2_desc | default: "Protección completa con cámaras HD. Para casas grandes o quien quiere videovigilancia." | escape }}',
+      price: '{{ section.settings.pack2_price | default: "449 €" | escape }}',
+      url: '{{ section.settings.pack2_url }}',
+      includes: [
+        '{{ section.settings.pack2_i1 | default: "1 Central WiFi con sirena integrada" | escape }}',
+        '{{ section.settings.pack2_i2 | default: "3 Detectores de movimiento" | escape }}',
+        '{{ section.settings.pack2_i3 | default: "4 Sensores de puerta/ventana" | escape }}',
+        '{{ section.settings.pack2_i4 | default: "2 Cámaras HD exterior" | escape }}'
+      ]
+    },
+    segunda: {
+      name: '{{ section.settings.pack3_name | default: "Pack Segunda Residencia" | escape }}',
+      desc: '{{ section.settings.pack3_desc | default: "Conexión 4G independiente del WiFi. Perfecta para casas de campo o de vacaciones." | escape }}',
+      price: '{{ section.settings.pack3_price | default: "379 €" | escape }}',
+      url: '{{ section.settings.pack3_url }}',
+      includes: [
+        '{{ section.settings.pack3_i1 | default: "1 Central 4G/WiFi doble conexión" | escape }}',
+        '{{ section.settings.pack3_i2 | default: "3 Detectores de movimiento" | escape }}',
+        '{{ section.settings.pack3_i3 | default: "4 Sensores de puerta/ventana" | escape }}',
+        '{{ section.settings.pack3_i4 | default: "Batería de respaldo 12h" | escape }}'
+      ]
+    },
+    local: {
+      name: '{{ section.settings.pack4_name | default: "Pack Local Comercial" | escape }}',
+      desc: '{{ section.settings.pack4_desc | default: "Diseñado para proteger negocios, tiendas y oficinas con cámaras y accesos múltiples." | escape }}',
+      price: '{{ section.settings.pack4_price | default: "549 €" | escape }}',
+      url: '{{ section.settings.pack4_url }}',
+      includes: [
+        '{{ section.settings.pack4_i1 | default: "1 Central 4G/WiFi profesional" | escape }}',
+        '{{ section.settings.pack4_i2 | default: "4 Detectores de movimiento" | escape }}',
+        '{{ section.settings.pack4_i3 | default: "6 Sensores de puerta/ventana" | escape }}',
+        '{{ section.settings.pack4_i4 | default: "2 Cámaras HD gran angular" | escape }}'
+      ]
+    }
+  };
+
+  function getRecommendedPack() {
+    var tipo = answers[1];
+    var wifi = answers[3];
+    var camara = answers[5];
+    var tamano = answers[2];
+
+    if (tipo === 'local') return packs.local;
+    if (tipo === 'segunda' || wifi === '4g') return packs.segunda;
+    if (camara === 'camaras' || tamano === 'grande') return packs.plus;
+    return packs.basic;
+  }
+
+  function updateProgress(step) {
+    var pct = Math.round((step / totalSteps) * 100);
+    var fill = document.getElementById('dsq-fill-' + sid);
+    var label = document.getElementById('dsq-step-label-' + sid);
+    var pctEl = document.getElementById('dsq-pct-' + sid);
+    var stepLabel = '{{ section.settings.step_label | default: "Paso" | escape }}';
+    var ofLabel = '{{ section.settings.of_label | default: "de" | escape }}';
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = stepLabel + ' ' + step + ' ' + ofLabel + ' ' + totalSteps;
+    if (pctEl) pctEl.textContent = pct + '%';
+  }
+
+  function showStep(step) {
+    quiz.querySelectorAll('.ds-quiz__step').forEach(function(s) { s.classList.remove('ds-active'); });
+    var target = quiz.querySelector('[data-step="' + step + '"]');
+    if (target) { target.classList.add('ds-active'); }
+    currentStep = step;
+    updateProgress(step);
+    var backBtn = document.getElementById('dsq-back-' + sid);
+    if (backBtn) backBtn.hidden = step <= 1;
+  }
+
+  function showResult() {
+    quiz.querySelectorAll('.ds-quiz__step').forEach(function(s) { s.classList.remove('ds-active'); });
+    var result = document.getElementById('dsq-result-' + sid);
+    if (!result) return;
+    result.classList.add('ds-active');
+
+    var fill = document.getElementById('dsq-fill-' + sid);
+    if (fill) fill.style.width = '100%';
+    var pctEl = document.getElementById('dsq-pct-' + sid);
+    if (pctEl) pctEl.textContent = '100%';
+    var label = document.getElementById('dsq-step-label-' + sid);
+    var stepLabel = '{{ section.settings.step_label | default: "Paso" | escape }}';
+    var ofLabel = '{{ section.settings.of_label | default: "de" | escape }}';
+    if (label) label.textContent = stepLabel + ' ' + totalSteps + ' ' + ofLabel + ' ' + totalSteps;
+
+    var pack = getRecommendedPack();
+
+    var titleEl = document.getElementById('dsq-result-title-' + sid);
+    if (titleEl) titleEl.textContent = pack.name;
+    var descEl = document.getElementById('dsq-result-subtitle-' + sid);
+    if (descEl) descEl.textContent = pack.desc;
+    var nameEl = document.getElementById('dsq-pack-name-' + sid);
+    if (nameEl) nameEl.textContent = pack.name;
+    var packDescEl = document.getElementById('dsq-pack-desc-' + sid);
+    if (packDescEl) packDescEl.textContent = pack.desc;
+    var priceEl = document.getElementById('dsq-price-' + sid);
+    if (priceEl) priceEl.textContent = pack.price;
+    var ctaEl = document.getElementById('dsq-cta-' + sid);
+    if (ctaEl && pack.url) ctaEl.href = pack.url;
+    var includesEl = document.getElementById('dsq-pack-includes-' + sid);
+    if (includesEl) {
+      includesEl.innerHTML = pack.includes.map(function(item) {
+        return '<li>' + item + '</li>';
+      }).join('');
+    }
+
+    var backBtn = document.getElementById('dsq-back-' + sid);
+    if (backBtn) backBtn.hidden = false;
+  }
+
+  // Cards selection
+  quiz.addEventListener('click', function(e) {
+    var card = e.target.closest('.ds-quiz__card');
+    if (card) {
+      var step = card.closest('.ds-quiz__step');
+      if (!step) return;
+      var stepNum = parseInt(step.getAttribute('data-step'));
+      step.querySelectorAll('.ds-quiz__card').forEach(function(c) { c.classList.remove('ds-selected'); });
+      card.classList.add('ds-selected');
+      answers[stepNum] = card.getAttribute('data-value');
+      var nextBtn = step.querySelector('.ds-quiz__next-btn');
+      if (nextBtn) nextBtn.disabled = false;
+    }
+
+    // Next button
+    var nextBtn = e.target.closest('.ds-quiz__next-btn');
+    if (nextBtn && !nextBtn.disabled) {
+      var target = nextBtn.getAttribute('data-next');
+      if (target === 'result') showResult();
+      else showStep(parseInt(target));
+    }
+  });
+
+  // Back button
+  var backBtn = document.getElementById('dsq-back-' + sid);
+  if (backBtn) {
+    backBtn.addEventListener('click', function() {
+      var result = document.getElementById('dsq-result-' + sid);
+      if (result && result.classList.contains('ds-active')) {
+        result.classList.remove('ds-active');
+        showStep(5);
+      } else if (currentStep > 1) {
+        showStep(currentStep - 1);
+      }
+    });
+  }
+
+  // Restart
+  var restartBtn = document.getElementById('dsq-restart-' + sid);
+  if (restartBtn) {
+    restartBtn.addEventListener('click', function() {
+      answers = {};
+      var result = document.getElementById('dsq-result-' + sid);
+      if (result) result.classList.remove('ds-active');
+      quiz.querySelectorAll('.ds-quiz__card').forEach(function(c) { c.classList.remove('ds-selected'); });
+      quiz.querySelectorAll('.ds-quiz__next-btn').forEach(function(b) { b.disabled = true; });
+      showStep(1);
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "DS Quiz Configurador",
+  "tag": "section",
+  "class": "ds-quiz-section",
+  "settings": [
+    { "type": "header",       "id": "h_general",      "content": "General" },
+    { "type": "text",         "id": "brand_name",     "label": "Nombre marca",       "default": "Daewoo Security" },
+    { "type": "text",         "id": "back_label",     "label": "Texto botón Atrás",  "default": "Atrás" },
+    { "type": "text",         "id": "next_label",     "label": "Texto botón Siguiente", "default": "Siguiente" },
+    { "type": "text",         "id": "result_btn_label","label": "Botón último paso",  "default": "Ver mi recomendación" },
+    { "type": "text",         "id": "step_label",     "label": "Etiqueta 'Paso'",    "default": "Paso" },
+    { "type": "text",         "id": "of_label",       "label": "Etiqueta 'de'",      "default": "de" },
+    { "type": "header",       "id": "h_colors",       "content": "Colores" },
+    { "type": "color",        "id": "page_bg",        "label": "Fondo página",       "default": "#F0F0F2" },
+    { "type": "color",        "id": "accent_color",   "label": "Color acento",       "default": "#E63946" },
+    { "type": "color",        "id": "question_color", "label": "Color texto preguntas","default": "#0D0D0D" },
+    { "type": "color",        "id": "card_bg",        "label": "Fondo tarjetas",     "default": "#FFFFFF" },
+    { "type": "color",        "id": "card_selected_bg","label": "Fondo tarjeta seleccionada","default": "#FFF5F6" },
+    { "type": "header",       "id": "h_s1",           "content": "Paso 1 – Tipo vivienda" },
+    { "type": "text",         "id": "s1_eyebrow",     "label": "Eyebrow",            "default": "Tu hogar" },
+    { "type": "text",         "id": "s1_question",    "label": "Pregunta",           "default": "¿Qué tipo de vivienda quieres proteger?" },
+    { "type": "text",         "id": "s1_a1",          "label": "Opción 1",           "default": "Casa unifamiliar" },
+    { "type": "text",         "id": "s1_a1_desc",     "label": "Descripción 1",      "default": "Chalet, adosado o casa con jardín" },
+    { "type": "text",         "id": "s1_a2",          "label": "Opción 2",           "default": "Piso o apartamento" },
+    { "type": "text",         "id": "s1_a2_desc",     "label": "Descripción 2",      "default": "En bloque de viviendas" },
+    { "type": "text",         "id": "s1_a3",          "label": "Opción 3",           "default": "Segunda residencia" },
+    { "type": "text",         "id": "s1_a3_desc",     "label": "Descripción 3",      "default": "Casa de campo o vacacional" },
+    { "type": "text",         "id": "s1_a4",          "label": "Opción 4",           "default": "Local o negocio" },
+    { "type": "text",         "id": "s1_a4_desc",     "label": "Descripción 4",      "default": "Oficina, tienda o nave" },
+    { "type": "header",       "id": "h_s2",           "content": "Paso 2 – Tamaño" },
+    { "type": "text",         "id": "s2_eyebrow",     "label": "Eyebrow",            "default": "Tamaño" },
+    { "type": "text",         "id": "s2_question",    "label": "Pregunta",           "default": "¿Cuántas habitaciones tiene?" },
+    { "type": "text",         "id": "s2_hint",        "label": "Texto ayuda",        "default": "Esto nos ayuda a calcular el número de sensores necesarios" },
+    { "type": "text",         "id": "s2_a1",          "label": "Opción 1",           "default": "Pequeño" },
+    { "type": "text",         "id": "s2_a1_desc",     "label": "Descripción 1",      "default": "1 a 2 habitaciones" },
+    { "type": "text",         "id": "s2_a2",          "label": "Opción 2",           "default": "Mediano" },
+    { "type": "text",         "id": "s2_a2_desc",     "label": "Descripción 2",      "default": "3 a 4 habitaciones" },
+    { "type": "text",         "id": "s2_a3",          "label": "Opción 3",           "default": "Grande" },
+    { "type": "text",         "id": "s2_a3_desc",     "label": "Descripción 3",      "default": "5 o más habitaciones" },
+    { "type": "header",       "id": "h_s3",           "content": "Paso 3 – Conectividad" },
+    { "type": "text",         "id": "s3_eyebrow",     "label": "Eyebrow",            "default": "Conectividad" },
+    { "type": "text",         "id": "s3_question",    "label": "Pregunta",           "default": "¿Dispones de WiFi en la vivienda?" },
+    { "type": "text",         "id": "s3_hint",        "label": "Texto ayuda",        "default": "Las segunda residencias suelen necesitar 4G" },
+    { "type": "text",         "id": "s3_a1",          "label": "Opción 1",           "default": "Sí, tengo WiFi" },
+    { "type": "text",         "id": "s3_a1_desc",     "label": "Descripción 1",      "default": "Conexión WiFi estable disponible" },
+    { "type": "text",         "id": "s3_a2",          "label": "Opción 2",           "default": "No, necesito 4G" },
+    { "type": "text",         "id": "s3_a2_desc",     "label": "Descripción 2",      "default": "Sin internet fijo, necesito SIM 4G" },
+    { "type": "header",       "id": "h_s4",           "content": "Paso 4 – Accesos" },
+    { "type": "text",         "id": "s4_eyebrow",     "label": "Eyebrow",            "default": "Accesos" },
+    { "type": "text",         "id": "s4_question",    "label": "Pregunta",           "default": "¿Cuántos accesos principales quieres proteger?" },
+    { "type": "text",         "id": "s4_hint",        "label": "Texto ayuda",        "default": "Cuenta puertas + ventanas fácilmente accesibles desde exterior" },
+    { "type": "text",         "id": "s4_a1",          "label": "Opción 1",           "default": "Pocos" },
+    { "type": "text",         "id": "s4_a1_desc",     "label": "Descripción 1",      "default": "1 a 3 puntos de entrada" },
+    { "type": "text",         "id": "s4_a2",          "label": "Opción 2",           "default": "Varios" },
+    { "type": "text",         "id": "s4_a2_desc",     "label": "Descripción 2",      "default": "4 a 6 puntos de entrada" },
+    { "type": "text",         "id": "s4_a3",          "label": "Opción 3",           "default": "Muchos" },
+    { "type": "text",         "id": "s4_a3_desc",     "label": "Descripción 3",      "default": "7 o más puntos de entrada" },
+    { "type": "header",       "id": "h_s5",           "content": "Paso 5 – Cámaras" },
+    { "type": "text",         "id": "s5_eyebrow",     "label": "Eyebrow",            "default": "Extras" },
+    { "type": "text",         "id": "s5_question",    "label": "Pregunta",           "default": "¿Quieres añadir cámaras de vigilancia?" },
+    { "type": "text",         "id": "s5_hint",        "label": "Texto ayuda",        "default": "Las cámaras graban en HD y envían alertas con imagen en tiempo real" },
+    { "type": "text",         "id": "s5_a1",          "label": "Opción 1",           "default": "Sí, quiero cámaras" },
+    { "type": "text",         "id": "s5_a1_desc",     "label": "Descripción 1",      "default": "Videoverificación en tiempo real" },
+    { "type": "text",         "id": "s5_a2",          "label": "Opción 2",           "default": "Solo alarma" },
+    { "type": "text",         "id": "s5_a2_desc",     "label": "Descripción 2",      "default": "Sirena + notificaciones son suficientes" },
+    { "type": "header",       "id": "h_result",       "content": "Resultado" },
+    { "type": "text",         "id": "result_ready_label","label": "Badge resultado",  "default": "Configuración lista" },
+    { "type": "text",         "id": "result_title",   "label": "Título resultado",   "default": "Tu pack ideal" },
+    { "type": "text",         "id": "result_subtitle","label": "Subtítulo resultado", "default": "Basado en tus respuestas, hemos seleccionado el pack que mejor se adapta a tus necesidades." },
+    { "type": "text",         "id": "result_cta_label","label": "CTA resultado",     "default": "Ver el pack y comprar" },
+    { "type": "text",         "id": "restart_label",  "label": "Botón reiniciar",    "default": "↩ Volver a empezar" },
+    { "type": "text",         "id": "result_note",    "label": "Nota resultado",     "default": "Envío gratis · Garantía 3 años · Devolución 30 días" },
+    { "type": "image_picker", "id": "result_default_image", "label": "Imagen resultado por defecto" },
+    { "type": "header",       "id": "h_trust",        "content": "Trust resultado" },
+    { "type": "text",         "id": "trust_1",        "label": "Trust 1",            "default": "Sin cuotas mensuales" },
+    { "type": "text",         "id": "trust_2",        "label": "Trust 2",            "default": "Garantía 3 años" },
+    { "type": "text",         "id": "trust_3",        "label": "Trust 3",            "default": "Envío gratis 24h" },
+    { "type": "text",         "id": "trust_4",        "label": "Trust 4",            "default": "Instalación guiada gratis" },
+    { "type": "header",       "id": "h_pack1",        "content": "Pack 1 – Casa Basic" },
+    { "type": "text",         "id": "pack1_name",     "label": "Nombre",             "default": "Pack Casa Basic" },
+    { "type": "textarea",     "id": "pack1_desc",     "label": "Descripción",        "default": "Protección esencial WiFi. Ideal para pisos y casas medianas con conexión a internet." },
+    { "type": "text",         "id": "pack1_price",    "label": "Precio",             "default": "299 €" },
+    { "type": "url",          "id": "pack1_url",      "label": "Enlace producto" },
+    { "type": "text",         "id": "pack1_i1",       "label": "Incluye 1",          "default": "1 Central WiFi con sirena integrada" },
+    { "type": "text",         "id": "pack1_i2",       "label": "Incluye 2",          "default": "2 Detectores de movimiento" },
+    { "type": "text",         "id": "pack1_i3",       "label": "Incluye 3",          "default": "2 Sensores de puerta/ventana" },
+    { "type": "text",         "id": "pack1_i4",       "label": "Incluye 4",          "default": "App iOS/Android gratuita" },
+    { "type": "header",       "id": "h_pack2",        "content": "Pack 2 – Casa Plus" },
+    { "type": "text",         "id": "pack2_name",     "label": "Nombre",             "default": "Pack Casa Plus" },
+    { "type": "textarea",     "id": "pack2_desc",     "label": "Descripción",        "default": "Protección completa con cámaras HD. Para casas grandes o quien quiere videovigilancia." },
+    { "type": "text",         "id": "pack2_price",    "label": "Precio",             "default": "449 €" },
+    { "type": "url",          "id": "pack2_url",      "label": "Enlace producto" },
+    { "type": "text",         "id": "pack2_i1",       "label": "Incluye 1",          "default": "1 Central WiFi con sirena integrada" },
+    { "type": "text",         "id": "pack2_i2",       "label": "Incluye 2",          "default": "3 Detectores de movimiento" },
+    { "type": "text",         "id": "pack2_i3",       "label": "Incluye 3",          "default": "4 Sensores de puerta/ventana" },
+    { "type": "text",         "id": "pack2_i4",       "label": "Incluye 4",          "default": "2 Cámaras HD exterior" },
+    { "type": "header",       "id": "h_pack3",        "content": "Pack 3 – Segunda Residencia" },
+    { "type": "text",         "id": "pack3_name",     "label": "Nombre",             "default": "Pack Segunda Residencia" },
+    { "type": "textarea",     "id": "pack3_desc",     "label": "Descripción",        "default": "Conexión 4G independiente del WiFi. Perfecta para casas de campo o de vacaciones." },
+    { "type": "text",         "id": "pack3_price",    "label": "Precio",             "default": "379 €" },
+    { "type": "url",          "id": "pack3_url",      "label": "Enlace producto" },
+    { "type": "text",         "id": "pack3_i1",       "label": "Incluye 1",          "default": "1 Central 4G/WiFi doble conexión" },
+    { "type": "text",         "id": "pack3_i2",       "label": "Incluye 2",          "default": "3 Detectores de movimiento" },
+    { "type": "text",         "id": "pack3_i3",       "label": "Incluye 3",          "default": "4 Sensores de puerta/ventana" },
+    { "type": "text",         "id": "pack3_i4",       "label": "Incluye 4",          "default": "Batería de respaldo 12h" },
+    { "type": "header",       "id": "h_pack4",        "content": "Pack 4 – Local Comercial" },
+    { "type": "text",         "id": "pack4_name",     "label": "Nombre",             "default": "Pack Local Comercial" },
+    { "type": "textarea",     "id": "pack4_desc",     "label": "Descripción",        "default": "Diseñado para proteger negocios, tiendas y oficinas con cámaras y accesos múltiples." },
+    { "type": "text",         "id": "pack4_price",    "label": "Precio",             "default": "549 €" },
+    { "type": "url",          "id": "pack4_url",      "label": "Enlace producto" },
+    { "type": "text",         "id": "pack4_i1",       "label": "Incluye 1",          "default": "1 Central 4G/WiFi profesional" },
+    { "type": "text",         "id": "pack4_i2",       "label": "Incluye 2",          "default": "4 Detectores de movimiento" },
+    { "type": "text",         "id": "pack4_i3",       "label": "Incluye 3",          "default": "6 Sensores de puerta/ventana" },
+    { "type": "text",         "id": "pack4_i4",       "label": "Incluye 4",          "default": "2 Cámaras HD gran angular" }
+  ],
+  "presets": [
+    {
+      "name": "DS Quiz Configurador",
+      "settings": {
+        "brand_name":       "Daewoo Security",
+        "page_bg":          "#F0F0F2",
+        "accent_color":     "#E63946",
+        "question_color":   "#0D0D0D",
+        "card_bg":          "#FFFFFF",
+        "card_selected_bg": "#FFF5F6",
+        "pack1_url":        "/products/pack-casa-basic",
+        "pack2_url":        "/products/pack-casa-plus",
+        "pack3_url":        "/products/pack-segunda-residencia",
+        "pack4_url":        "/products/pack-local-comercial"
+      }
+    }
+  ]
+}
+{% endschema %}

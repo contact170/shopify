@@ -71,19 +71,27 @@
 
   /* ---- 4. Counter Animation ---- */
   function animateCounter(el) {
-    var target  = parseFloat(el.getAttribute('data-ds-counter'));
-    var suffix  = el.getAttribute('data-ds-counter-suffix') || '';
-    var prefix  = el.getAttribute('data-ds-counter-prefix') || '';
+    var target   = parseFloat(el.getAttribute('data-ds-counter'));
+    var suffix   = el.getAttribute('data-ds-counter-suffix') || '';
+    var prefix   = el.getAttribute('data-ds-counter-prefix') || '';
     var duration = 1800;
     var start    = null;
     var isFloat  = target % 1 !== 0;
+
+    // If a sibling .ds-counter-suffix exists, let it handle the suffix display
+    var suffixEl = el.parentElement && el.parentElement.querySelector('.ds-counter-suffix');
 
     function step(timestamp) {
       if (!start) start = timestamp;
       var progress = Math.min((timestamp - start) / duration, 1);
       var eased    = 1 - Math.pow(1 - progress, 3);
       var current  = target * eased;
-      el.textContent = prefix + (isFloat ? current.toFixed(1) : Math.floor(current).toLocaleString('es-ES')) + suffix;
+      var num = prefix + (isFloat ? current.toFixed(1) : Math.floor(current).toLocaleString('es-ES'));
+      if (suffixEl) {
+        el.textContent = num;
+      } else {
+        el.textContent = num + suffix;
+      }
       if (progress < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
