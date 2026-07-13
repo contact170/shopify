@@ -1,0 +1,566 @@
+{%- doc -%}
+  Bespoke, conversion-focused product page for the Daewoo W512MW solar
+  security camera. Apple-style layout (white background, large type,
+  generous whitespace) with several independent "Add to cart" buttons that
+  all submit the same hidden product form via the `form="…"` attribute —
+  the same technique the theme itself uses for its sticky add-to-cart bar.
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign form_id = 'W512Form-' | append: section.id
+
+  assign gallery = product.images
+  assign hero_image = gallery[1] | default: product.featured_image
+  assign feat_image_1 = gallery[2] | default: hero_image
+  assign feat_image_2 = gallery[3] | default: hero_image
+  assign feat_image_3 = gallery[4] | default: hero_image
+  assign feat_image_4 = gallery[5] | default: hero_image
+
+  assign has_compare = false
+  if variant.compare_at_price > variant.price
+    assign has_compare = true
+  endif
+-%}
+
+<div id="shopify-section-{{ section.id }}" class="w512">
+  <style>
+    #shopify-section-{{ section.id }} .w512{
+      --w512-navy:#0c1e4a;
+      --w512-navy-dark:#081430;
+      --w512-ink:#1d1d1f;
+      --w512-gray:#6e6e73;
+      --w512-bg-alt:#f5f5f7;
+      --w512-line:#d2d2d7;
+      --w512-success:#037e05;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      color:var(--w512-ink);
+      background:#fff;
+      overflow-x:hidden;
+    }
+    .w512 *{box-sizing:border-box;}
+    .w512 .w512-wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+    .w512 img{max-width:100%;display:block;}
+
+    /* ---- sticky bar ---- */
+    .w512-sticky{
+      position:fixed;left:0;right:0;bottom:0;z-index:60;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:12px 20px;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border-top:1px solid var(--w512-line);
+      transform:translateY(110%);transition:transform .35s ease;
+    }
+    .w512-sticky.is-shown{transform:translateY(0);}
+    .w512-sticky__info{display:flex;align-items:center;gap:12px;min-width:0;}
+    .w512-sticky__thumb{width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--w512-bg-alt);}
+    .w512-sticky__thumb img{width:100%;height:100%;object-fit:cover;}
+    .w512-sticky__text{min-width:0;}
+    .w512-sticky__name{font-size:13px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:38vw;}
+    .w512-sticky__price{font-size:13px;color:var(--w512-gray);}
+
+    /* ---- generic section rhythm ---- */
+    .w512-section{padding:72px 0;}
+    .w512-section--alt{background:var(--w512-bg-alt);}
+    .w512-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+      color:var(--w512-navy);margin-bottom:18px;
+    }
+    .w512-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--w512-success);}
+    .w512 h1,.w512 h2,.w512 h3{font-weight:600;letter-spacing:-.02em;line-height:1.08;margin:0;}
+    .w512 p{margin:0;}
+
+    /* ---- hero ---- */
+    .w512-hero{padding:96px 0 56px;text-align:center;}
+    .w512-hero h1{font-size:clamp(34px,6vw,64px);max-width:900px;margin:0 auto;}
+    .w512-hero__sub{
+      font-size:clamp(17px,2.2vw,22px);color:var(--w512-gray);
+      max-width:640px;margin:22px auto 0;line-height:1.5;font-weight:400;
+    }
+    .w512-hero__cta{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:14px;}
+    .w512-hero__price{font-size:15px;color:var(--w512-gray);}
+    .w512-hero__price strong{color:var(--w512-ink);font-size:17px;}
+    .w512-hero__compare{text-decoration:line-through;color:var(--w512-gray);margin-right:6px;}
+    .w512-hero__trust{
+      margin-top:30px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;
+      font-size:13px;color:var(--w512-gray);
+    }
+    .w512-hero__trust span{display:inline-flex;align-items:center;gap:6px;}
+    .w512-hero__media{margin-top:56px;}
+    .w512-hero__media img{
+      width:100%;max-width:820px;margin:0 auto;border-radius:28px;
+      background:var(--w512-bg-alt);
+    }
+
+    /* ---- buttons ---- */
+    .w512-btn{
+      position:relative;overflow:hidden;isolation:isolate;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      border:none;border-radius:999px;cursor:pointer;
+      font-family:inherit;font-size:16px;font-weight:600;
+      padding:15px 30px;min-width:230px;
+      transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease;
+    }
+    .w512-btn:active{transform:scale(.98);}
+    .w512-btn[disabled]{opacity:.5;cursor:not-allowed;}
+    .w512-btn--primary{background:var(--w512-navy);color:#fff;box-shadow:0 8px 20px -8px rgba(12,30,74,.55);}
+    .w512-btn--primary .btn-fill{background:var(--w512-navy-dark);}
+    .w512-btn--secondary{background:var(--w512-ink);color:#fff;}
+    .w512-btn--secondary .btn-fill{background:#000;}
+    .w512-btn .btn-fill{position:absolute;inset:0;z-index:-1;transform:translateY(100%);}
+    .w512-btn__text{position:relative;display:inline-flex;align-items:center;gap:10px;}
+    .w512-btn--ghost{background:transparent;color:var(--w512-navy);border:1.5px solid var(--w512-navy);padding:13px 28px;box-shadow:none;}
+    .w512-btn--sm{min-width:0;padding:11px 22px;font-size:14px;}
+
+    /* ---- trust strip ---- */
+    .w512-strip{
+      display:flex;flex-wrap:wrap;justify-content:center;gap:14px;
+      padding:28px 0;border-top:1px solid var(--w512-line);border-bottom:1px solid var(--w512-line);
+    }
+    .w512-strip__item{
+      display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;
+      padding:10px 18px;border-radius:999px;background:var(--w512-bg-alt);
+    }
+    .w512-strip__item svg{color:var(--w512-navy);flex-shrink:0;}
+
+    /* ---- features ---- */
+    .w512-feature{
+      display:grid;grid-template-columns:1fr;gap:40px;align-items:center;
+      padding:64px 0;
+    }
+    .w512-feature__media img{border-radius:24px;background:var(--w512-bg-alt);}
+    .w512-feature__num{font-size:13px;font-weight:700;color:var(--w512-navy);letter-spacing:.08em;margin-bottom:14px;display:block;}
+    .w512-feature h2{font-size:clamp(26px,3.4vw,38px);}
+    .w512-feature__text{margin-top:18px;color:var(--w512-gray);font-size:17px;line-height:1.6;max-width:480px;}
+    .w512-feature ul{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px;max-width:480px;}
+    .w512-feature ul li{display:flex;gap:10px;font-size:15px;line-height:1.5;color:var(--w512-ink);}
+    .w512-feature ul li svg{flex-shrink:0;margin-top:3px;color:var(--w512-success);}
+    .w512-feature .w512-btn{margin-top:26px;}
+    @media (min-width:900px){
+      .w512-feature{grid-template-columns:1fr 1fr;gap:72px;}
+      .w512-feature--reverse .w512-feature__media{order:2;}
+      .w512-feature--reverse .w512-feature__body{order:1;}
+    }
+
+    /* ---- mid CTA band ---- */
+    .w512-band{
+      background:var(--w512-navy);color:#fff;border-radius:28px;
+      padding:56px 32px;text-align:center;margin:24px 0;
+    }
+    .w512-band h2{color:#fff;font-size:clamp(24px,3vw,34px);max-width:620px;margin:0 auto;}
+    .w512-band p{color:rgba(255,255,255,.72);margin-top:14px;font-size:16px;max-width:520px;margin-left:auto;margin-right:auto;}
+    .w512-band .w512-btn{margin-top:26px;background:#fff;color:var(--w512-navy);}
+    .w512-band .w512-btn .btn-fill{background:#e9e9ee;}
+
+    /* ---- specs ---- */
+    .w512-specs__head{text-align:center;max-width:640px;margin:0 auto 48px;}
+    .w512-specs__head h2{font-size:clamp(26px,3.4vw,38px);}
+    .w512-specs__head p{margin-top:14px;color:var(--w512-gray);font-size:17px;}
+    .w512-specs__grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--w512-line);border:1px solid var(--w512-line);border-radius:20px;overflow:hidden;}
+    .w512-specs__item{background:#fff;padding:24px 28px;}
+    .w512-specs__item dt{font-size:13px;font-weight:700;color:var(--w512-navy);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+    .w512-specs__item dd{margin:0;font-size:15px;color:var(--w512-ink);line-height:1.5;}
+    @media (min-width:700px){.w512-specs__grid{grid-template-columns:1fr 1fr;}}
+    @media (min-width:1000px){.w512-specs__grid{grid-template-columns:1fr 1fr 1fr;}}
+
+    /* ---- guarantee band ---- */
+    .w512-guarantee{display:grid;grid-template-columns:1fr;gap:28px;text-align:center;}
+    @media (min-width:700px){.w512-guarantee{grid-template-columns:repeat(4,1fr);}}
+    .w512-guarantee__item{padding:0 12px;}
+    .w512-guarantee__item svg{color:var(--w512-navy);margin:0 auto 14px;display:block;}
+    .w512-guarantee__item h3{font-size:16px;font-weight:600;}
+    .w512-guarantee__item p{margin-top:8px;font-size:14px;color:var(--w512-gray);line-height:1.5;}
+
+    /* ---- faq ---- */
+    .w512-faq{max-width:760px;margin:0 auto;}
+    .w512-faq h2{text-align:center;font-size:clamp(26px,3.4vw,38px);margin-bottom:40px;}
+    .w512-faq details{border-bottom:1px solid var(--w512-line);padding:20px 0;}
+    .w512-faq summary{
+      cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;
+      font-size:17px;font-weight:500;
+    }
+    .w512-faq summary::-webkit-details-marker{display:none;}
+    .w512-faq summary .w512-faq__icon{flex-shrink:0;transition:transform .25s ease;color:var(--w512-navy);}
+    .w512-faq details[open] summary .w512-faq__icon{transform:rotate(45deg);}
+    .w512-faq__a{margin-top:14px;color:var(--w512-gray);font-size:15px;line-height:1.6;max-width:660px;}
+
+    /* ---- final cta ---- */
+    .w512-final{text-align:center;}
+    .w512-final h2{font-size:clamp(28px,4vw,44px);max-width:700px;margin:0 auto;}
+    .w512-final p{margin-top:16px;color:var(--w512-gray);font-size:17px;}
+    .w512-final__ctas{margin-top:32px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+    .w512-final__legal{margin-top:22px;font-size:13px;color:var(--w512-gray);}
+
+    /* ---- reveal-on-scroll ---- */
+    .w512-reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+    .w512-reveal.is-visible{opacity:1;transform:none;}
+    @media (prefers-reduced-motion:reduce){
+      .w512-reveal{opacity:1;transform:none;transition:none;}
+      .w512-sticky{transition:none;}
+    }
+  </style>
+
+  {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
+  {%- form 'product', product, id: form_id, data-type: 'add-to-cart-form', is: 'product-form', class: 'w512-visually-hidden' -%}
+    <input type="hidden" name="id" value="{{ variant.id }}" disabled>
+    <div class="product-form__error-message alert alert--error" role="alert" hidden style="position:fixed;left:16px;right:16px;bottom:84px;z-index:70;background:#fff;border:1px solid #e11d48;color:#e11d48;padding:12px 16px;border-radius:12px;font-size:14px;"></div>
+  {%- endform -%}
+  <style>.w512-visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
+
+  {%- comment -%} Sticky add-to-cart bar {%- endcomment -%}
+  <div class="w512-sticky" id="W512Sticky-{{ section.id }}">
+    <div class="w512-sticky__info">
+      <div class="w512-sticky__thumb">
+        {%- if hero_image -%}
+          {{ hero_image | image_url: width: 80 | image_tag: loading: 'lazy', widths: '80,160' }}
+        {%- endif -%}
+      </div>
+      <div class="w512-sticky__text">
+        <div class="w512-sticky__name">{{ product.title }}</div>
+        <div class="w512-sticky__price">{{ variant.price | money }}</div>
+      </div>
+    </div>
+    {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary' -%}
+  </div>
+
+  {%- comment -%} Hero {%- endcomment -%}
+  <section class="w512-hero">
+    <div class="w512-wrap">
+      <span class="w512-eyebrow">Daewoo Security · W512MW</span>
+      <h1>Elle surveille votre extérieur.<br>Le soleil s'occupe du reste.</h1>
+      <p class="w512-hero__sub">
+        Caméra extérieure rotative, alimentée à 100&nbsp;% par un panneau solaire, avec vision
+        nocturne couleur et détection humaine intelligente. Sans câble électrique. Sans abonnement.
+      </p>
+      <div class="w512-hero__cta">
+        <div id="W512HeroCta-{{ section.id }}">
+          {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+        </div>
+        <div class="w512-hero__price">
+          {%- if has_compare -%}
+            <span class="w512-hero__compare">{{ variant.compare_at_price | money }}</span>
+          {%- endif -%}
+          <strong>{{ variant.price | money }}</strong> · paiement sécurisé
+        </div>
+      </div>
+      <div class="w512-hero__trust">
+        <span>☀️ Autonomie solaire</span>
+        <span>🚫 Sans abonnement</span>
+        <span>🌙 Vision nocturne couleur</span>
+        <span>🔔 Sirène 75&nbsp;dB</span>
+      </div>
+      {%- if hero_image -%}
+        <div class="w512-hero__media w512-reveal">
+          {{ hero_image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '600,900,1200,1600', alt: product.title }}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- comment -%} Trust strip {%- endcomment -%}
+  <div class="w512-wrap">
+    <div class="w512-strip w512-reveal">
+      <div class="w512-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Installation simple et autonome
+      </div>
+      <div class="w512-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Sans abonnement, à vie
+      </div>
+      <div class="w512-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Compatible toutes alarmes Daewoo
+      </div>
+      <div class="w512-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Garantie 2 ans
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Feature 1 — Solar autonomy {%- endcomment -%}
+  <section class="w512-section">
+    <div class="w512-wrap">
+      <div class="w512-feature w512-reveal">
+        <div class="w512-feature__media">
+          {{ feat_image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Panneau solaire de la caméra W512MW' }}
+        </div>
+        <div class="w512-feature__body">
+          <span class="w512-feature__num">AUTONOMIE</span>
+          <h2>Le soleil fait le travail. Vous, vous profitez.</h2>
+          <p class="w512-feature__text">
+            Un panneau solaire 3&nbsp;W et une batterie rechargeable intégrée alimentent la caméra
+            en continu. Le câble de 2&nbsp;m fourni permet de placer le panneau au meilleur
+            endroit ensoleillé, même si la caméra est côté ombre.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Recharge quasi automatique, oubliez la prise</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Idéale pour les zones sans électricité</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Feature 2 — Smart detection {%- endcomment -%}
+  <section class="w512-section w512-section--alt">
+    <div class="w512-wrap">
+      <div class="w512-feature w512-feature--reverse w512-reveal">
+        <div class="w512-feature__media">
+          {{ feat_image_2 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Détection intelligente de la caméra W512MW' }}
+        </div>
+        <div class="w512-feature__body">
+          <span class="w512-feature__num">DÉTECTION INTELLIGENTE</span>
+          <h2>Elle sait qui surveiller.</h2>
+          <p class="w512-feature__text">
+            Grâce au filtrage humain, la W512MW distingue une vraie présence des mouvements sans
+            importance — un chat, des feuilles, un changement de lumière. Résultat&nbsp;: des
+            notifications qui comptent vraiment.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Notification immédiate avec photo</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Moins de fausses alertes, plus de sérénité</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Feature 3 — Night vision + siren {%- endcomment -%}
+  <section class="w512-section">
+    <div class="w512-wrap">
+      <div class="w512-feature w512-reveal">
+        <div class="w512-feature__media">
+          {{ feat_image_3 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Vision nocturne couleur de la caméra W512MW' }}
+        </div>
+        <div class="w512-feature__body">
+          <span class="w512-feature__num">VISION & DISSUASION</span>
+          <h2>La nuit ne lui échappe pas.</h2>
+          <p class="w512-feature__text">
+            Ses LED intégrées offrent une vision nocturne en couleur, nette et détaillée, même
+            dans l'obscurité totale. En cas d'intrusion, la sirène 75&nbsp;dB intégrée se déclenche
+            pour dissuader immédiatement.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Images couleur nettes, même de nuit</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Sirène dissuasive activable à distance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Mid-page CTA band {%- endcomment -%}
+  <div class="w512-wrap">
+    <div class="w512-band w512-reveal">
+      <h2>Protégez votre extérieur dès aujourd'hui</h2>
+      <p>Livraison rapide, garantie 2 ans, et un système qui s'installe seul en quelques minutes.</p>
+      {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+    </div>
+  </div>
+
+  {%- comment -%} Feature 4 — Install + ecosystem {%- endcomment -%}
+  <section class="w512-section w512-section--alt">
+    <div class="w512-wrap">
+      <div class="w512-feature w512-feature--reverse w512-reveal">
+        <div class="w512-feature__media">
+          {{ feat_image_4 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Installation de la caméra W512MW' }}
+        </div>
+        <div class="w512-feature__body">
+          <span class="w512-feature__num">INSTALLATION & ÉCOSYSTÈME</span>
+          <h2>Un système, pas juste une caméra.</h2>
+          <p class="w512-feature__text">
+            Fixation murale simple, aucun câble électrique à tirer&nbsp;: la caméra s'installe en
+            quelques minutes. Elle est entièrement compatible avec toutes les alarmes Daewoo
+            Security pour une vérification vidéo immédiate en cas d'alerte.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Enregistrement microSD (non incluse) ou cloud en option</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Pilotage à distance via l'app Daewoo Home Connect</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Specs {%- endcomment -%}
+  <section class="w512-section">
+    <div class="w512-wrap">
+      <div class="w512-specs__head w512-reveal">
+        <h2>En résumé</h2>
+        <p>Tout ce qu'il faut savoir sur la W512MW.</p>
+      </div>
+      <dl class="w512-specs__grid w512-reveal">
+        <div class="w512-specs__item">
+          <dt>Alimentation</dt>
+          <dd>Panneau solaire 3&nbsp;W + batterie rechargeable intégrée</dd>
+        </div>
+        <div class="w512-specs__item">
+          <dt>Câble panneau solaire</dt>
+          <dd>2&nbsp;m, pour un positionnement au meilleur ensoleillement</dd>
+        </div>
+        <div class="w512-specs__item">
+          <dt>Vision nocturne</dt>
+          <dd>Couleur, grâce aux LED intégrées</dd>
+        </div>
+        <div class="w512-specs__item">
+          <dt>Sirène</dt>
+          <dd>75&nbsp;dB intégrée, activable en cas d'intrusion</dd>
+        </div>
+        <div class="w512-specs__item">
+          <dt>Détection</dt>
+          <dd>Détection humaine intelligente avec filtrage anti-faux positifs</dd>
+        </div>
+        <div class="w512-specs__item">
+          <dt>Stockage</dt>
+          <dd>Carte microSD (non incluse) ou stockage cloud en option</dd>
+        </div>
+        <div class="w512-specs__item">
+          <dt>Installation</dt>
+          <dd>Murale, sans câblage électrique</dd>
+        </div>
+        <div class="w512-specs__item">
+          <dt>Compatibilité</dt>
+          <dd>Toutes les alarmes Daewoo Security</dd>
+        </div>
+        <div class="w512-specs__item">
+          <dt>Référence</dt>
+          <dd>{{ variant.sku | default: 'W512MW' }}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  {%- comment -%} Guarantee band {%- endcomment -%}
+  <section class="w512-section w512-section--alt">
+    <div class="w512-wrap">
+      <div class="w512-guarantee w512-reveal">
+        <div class="w512-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"></path></svg>
+          <h3>Garantie 2 ans</h3>
+          <p>Sur l'ensemble des produits Daewoo Security.</p>
+        </div>
+        <div class="w512-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="15" height="11" rx="2"></rect><path d="M18 10h2.2a1 1 0 0 1 .9.6L23 14v4h-5"></path><circle cx="7.5" cy="18.5" r="1.5"></circle><circle cx="17.5" cy="18.5" r="1.5"></circle></svg>
+          <h3>Expédié sous 2 jours</h3>
+          <p>Livraison rapide depuis la France.</p>
+        </div>
+        <div class="w512-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+          <h3>Retour sous 14 jours</h3>
+          <p>Changez d'avis facilement, sans justification.</p>
+        </div>
+        <div class="w512-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+          <h3>Sans abonnement</h3>
+          <p>Votre caméra vous appartient, à vie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} FAQ {%- endcomment -%}
+  <section class="w512-section">
+    <div class="w512-wrap">
+      <div class="w512-faq w512-reveal">
+        <h2>Questions fréquentes</h2>
+
+        <details>
+          <summary>Ai-je besoin d'un abonnement&nbsp;?<span class="w512-faq__icon">＋</span></summary>
+          <p class="w512-faq__a">Non. La caméra fonctionne sans abonnement obligatoire&nbsp;: vous pilotez et consultez vos images via l'application mobile. Un stockage cloud reste disponible en option si vous le souhaitez.</p>
+        </details>
+
+        <details>
+          <summary>Comment est-elle alimentée&nbsp;?<span class="w512-faq__icon">＋</span></summary>
+          <p class="w512-faq__a">Par un panneau solaire 3&nbsp;W intégré associé à une batterie rechargeable. Le câble de 2&nbsp;m fourni permet de placer le panneau à l'endroit le plus ensoleillé, même si la caméra est installée à l'ombre.</p>
+        </details>
+
+        <details>
+          <summary>Est-elle compatible avec mon alarme Daewoo&nbsp;?<span class="w512-faq__icon">＋</span></summary>
+          <p class="w512-faq__a">Oui, la W512MW est compatible avec l'ensemble des alarmes Daewoo Security et s'intègre à votre système pour une vérification vidéo immédiate en cas d'alerte.</p>
+        </details>
+
+        <details>
+          <summary>Comment se passe l'installation&nbsp;?<span class="w512-faq__icon">＋</span></summary>
+          <p class="w512-faq__a">Une fixation murale simple, sans câble électrique à tirer. Comptez quelques minutes pour poser la caméra et positionner le panneau solaire.</p>
+        </details>
+
+        <details>
+          <summary>Où sont enregistrées les vidéos&nbsp;?<span class="w512-faq__icon">＋</span></summary>
+          <p class="w512-faq__a">Sur une carte microSD (non incluse) insérée dans la caméra, ou via un stockage cloud proposé en option pour un accès à distance.</p>
+        </details>
+
+        <details>
+          <summary>Est-ce que je vais recevoir trop de fausses alertes&nbsp;?<span class="w512-faq__icon">＋</span></summary>
+          <p class="w512-faq__a">Non&nbsp;: la détection humaine intelligente filtre les mouvements non pertinents (animaux, feuillage, variations de lumière) pour ne vous notifier que lorsque cela compte réellement.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Final CTA {%- endcomment -%}
+  <section class="w512-section w512-final">
+    <div class="w512-wrap">
+      <div class="w512-reveal">
+        <h2>{{ product.title }}</h2>
+        <p>
+          {%- if has_compare -%}
+            <span class="w512-hero__compare">{{ variant.compare_at_price | money }}</span>
+          {%- endif -%}
+          {{ variant.price | money }} · Sans abonnement · Garantie 2 ans
+        </p>
+        <div class="w512-final__ctas">
+          {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+        </div>
+        <p class="w512-final__legal">Livraison sous 2 jours ouvrés · Retour gratuit sous 14 jours · Service client basé en France</p>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">
+    {{ product | structured_data }}
+  </script>
+
+  <script>
+    (function () {
+      var root = document.getElementById('shopify-section-{{ section.id }}');
+      if (!root) return;
+
+      /* Reveal-on-scroll */
+      var revealEls = root.querySelectorAll('.w512-reveal');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+
+      /* Sticky add-to-cart bar: show once the hero CTA has scrolled out of view */
+      var heroCta = root.querySelector('#W512HeroCta-{{ section.id }}');
+      var stickyBar = root.querySelector('#W512Sticky-{{ section.id }}');
+      if (heroCta && stickyBar && 'IntersectionObserver' in window) {
+        var stickyIo = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            stickyBar.classList.toggle('is-shown', !entry.isIntersecting);
+          });
+        }, { threshold: 0, rootMargin: '-64px 0px 0px 0px' });
+        stickyIo.observe(heroCta);
+      }
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "W512MW – Page produit",
+  "settings": []
+}
+{% endschema %}
