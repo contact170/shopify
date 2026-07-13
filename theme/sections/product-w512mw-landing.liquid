@@ -86,6 +86,8 @@
     .w512-hero__price{font-size:15px;color:var(--w512-gray);}
     .w512-hero__price strong{color:var(--w512-ink);font-size:17px;}
     .w512-hero__compare{text-decoration:line-through;color:var(--w512-gray);margin-right:6px;}
+    .w512-hero__rating{margin-top:6px;}
+    .w512-hero__rating .product__rating{justify-content:center;}
     .w512-hero__trust{
       margin-top:30px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;
       font-size:13px;color:var(--w512-gray);
@@ -310,6 +312,9 @@
             <span class="w512-hero__compare">{{ variant.compare_at_price | money }}</span>
           {%- endif -%}
           <strong>{{ variant.price | money }}</strong> · paiement sécurisé
+        </div>
+        <div class="w512-hero__rating">
+          {%- render 'product-rating', product: product -%}
         </div>
       </div>
       <div class="w512-hero__trust">
