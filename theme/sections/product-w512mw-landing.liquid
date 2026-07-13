@@ -22,7 +22,6 @@
     assign has_compare = true
   endif
 
-  assign pack_form_id = 'W512PackForm-' | append: section.id
   assign price_x2 = variant.price | times: 2
   assign price_pack = variant.price | times: 1.5 | round
 -%}
@@ -30,7 +29,7 @@
 {%- capture pack_label_single -%}Ajouter au panier · {{ variant.price | money }}{%- endcapture -%}
 {%- capture pack_label_duo -%}Ajouter le Pack de 2 · {{ price_pack | money }}{%- endcapture -%}
 
-<div id="shopify-section-{{ section.id }}" class="w512">
+<div id="shopify-section-{{ section.id }}" class="w512" data-label-1="{{ pack_label_single | escape }}" data-label-2="{{ pack_label_duo | escape }}">
   <style>
     #shopify-section-{{ section.id }} .w512{
       --w512-navy:#0c1e4a;
@@ -63,7 +62,6 @@
     .w512-sticky__thumb img{width:100%;height:100%;object-fit:cover;}
     .w512-sticky__text{min-width:0;}
     .w512-sticky__name{font-size:13px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:38vw;}
-    .w512-sticky__price{font-size:13px;color:var(--w512-gray);}
 
     /* ---- generic section rhythm ---- */
     .w512-section{padding:72px 0;}
@@ -80,9 +78,9 @@
     /* ---- hero ---- */
     .w512-hero{padding:96px 0 56px;text-align:center;}
     .w512-hero h1{font-size:clamp(34px,6vw,64px);max-width:900px;margin:0 auto;}
-    .w512-hero__sub{
+    .w512 .w512-hero__sub{
       font-size:clamp(17px,2.2vw,22px);color:var(--w512-gray);
-      max-width:640px;margin:22px auto 0;line-height:1.5;font-weight:400;
+      max-width:640px;margin:22px auto 0;line-height:1.5;font-weight:400;text-align:center;
     }
     .w512-hero__cta{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:14px;}
     .w512-hero__price{font-size:15px;color:var(--w512-gray);}
@@ -118,6 +116,27 @@
     .w512-btn__text{position:relative;display:inline-flex;align-items:center;gap:10px;}
     .w512-btn--ghost{background:transparent;color:var(--w512-navy);border:1.5px solid var(--w512-navy);padding:13px 28px;box-shadow:none;}
     .w512-btn--sm{min-width:0;padding:11px 22px;font-size:14px;}
+
+    /* ---- pack toggle (1 caméra / Pack Duo) ---- */
+    .w512-toggle{display:inline-flex;background:var(--w512-bg-alt);border-radius:999px;padding:4px;gap:4px;}
+    .w512-toggle__btn{
+      border:none;background:transparent;padding:9px 16px;border-radius:999px;
+      font-family:inherit;font-size:13px;font-weight:600;color:var(--w512-gray);cursor:pointer;
+      display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+      transition:background .15s ease,color .15s ease;
+    }
+    .w512-toggle__btn.is-selected{background:var(--w512-navy);color:#fff;}
+    .w512-toggle__badge{font-size:11px;font-weight:700;background:#e11d48;color:#fff;padding:2px 7px;border-radius:999px;}
+    .w512-toggle__btn.is-selected .w512-toggle__badge{background:rgba(255,255,255,.25);}
+    .w512-toggle--compact{padding:3px;}
+    .w512-toggle--compact .w512-toggle__btn{padding:6px 10px;font-size:12px;}
+    .w512-hero__toggle{margin-bottom:4px;}
+    .w512-band__toggle,.w512-final__toggle{display:flex;justify-content:center;margin-bottom:22px;}
+    .w512-band .w512-toggle{background:rgba(255,255,255,.15);}
+    .w512-band .w512-toggle__btn{color:rgba(255,255,255,.75);}
+    .w512-band .w512-toggle__btn.is-selected{background:#fff;color:var(--w512-navy);}
+    .w512-sticky__toggle{display:none;}
+    @media (min-width:560px){.w512-sticky__toggle{display:block;}}
 
     /* ---- trust strip ---- */
     .w512-strip{
@@ -222,7 +241,9 @@
     .w512-pack__was{font-size:14px;color:var(--w512-gray);text-decoration:line-through;}
     .w512-pack__cta{margin-top:28px;text-align:center;}
     .w512-pack__cta .w512-btn{margin:0 auto;}
-    .w512-pack__note{margin-top:14px;font-size:13px;color:var(--w512-gray);text-align:center;}
+    .w512 .w512-pack__note{margin-top:22px;font-size:13px;color:var(--w512-gray);text-align:center;}
+    .w512-pack{padding-bottom:24px;}
+    .w512-feature--tight-top{padding-top:24px;}
 
     /* ---- reveal-on-scroll ---- */
     .w512-reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
@@ -236,6 +257,7 @@
   {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
   {%- form 'product', product, id: form_id, data-type: 'add-to-cart-form', is: 'product-form', class: 'w512-visually-hidden' -%}
     <input type="hidden" name="id" value="{{ variant.id }}" disabled>
+    <input type="hidden" name="quantity" value="1" id="W512Qty-{{ section.id }}">
     <div class="product-form__error-message alert alert--error" role="alert" hidden style="position:fixed;left:16px;right:16px;bottom:84px;z-index:70;background:#fff;border:1px solid #e11d48;color:#e11d48;padding:12px 16px;border-radius:12px;font-size:14px;"></div>
   {%- endform -%}
   <style>.w512-visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
@@ -250,10 +272,12 @@
       </div>
       <div class="w512-sticky__text">
         <div class="w512-sticky__name">{{ product.title }}</div>
-        <div class="w512-sticky__price">{{ variant.price | money }}</div>
       </div>
     </div>
-    {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary' -%}
+    <div class="w512-sticky__toggle">
+      {%- render 'w512-pack-toggle', compact: true -%}
+    </div>
+    {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
   </div>
 
   {%- comment -%} Hero {%- endcomment -%}
@@ -266,6 +290,9 @@
         nocturne couleur et détection humaine intelligente. Sans câble électrique. Sans abonnement.
       </p>
       <div class="w512-hero__cta">
+        <div class="w512-hero__toggle">
+          {%- render 'w512-pack-toggle' -%}
+        </div>
         <div id="W512HeroCta-{{ section.id }}">
           {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
@@ -320,13 +347,7 @@
         <p>Couvrez deux angles de votre extérieur — la 2ᵉ caméra est à -50%.</p>
       </div>
 
-      {%- form 'product', product, id: pack_form_id, data-type: 'add-to-cart-form', is: 'product-form', class: 'w512-visually-hidden' -%}
-        <input type="hidden" name="id" value="{{ variant.id }}" disabled>
-        <input type="hidden" name="quantity" value="1" id="W512PackQty-{{ section.id }}">
-        <div class="product-form__error-message alert alert--error" role="alert" hidden></div>
-      {%- endform -%}
-
-      <div class="w512-pack__grid w512-reveal" id="W512PackGrid-{{ section.id }}" data-label-1="{{ pack_label_single | escape }}" data-label-2="{{ pack_label_duo | escape }}">
+      <div class="w512-pack__grid w512-reveal">
         <button type="button" class="w512-pack__card is-selected" data-pack-option data-qty="1" aria-pressed="true">
           <span class="w512-pack__radio" aria-hidden="true"></span>
           <span class="w512-pack__name">1 caméra</span>
@@ -347,28 +368,14 @@
       </div>
 
       <div class="w512-pack__cta w512-reveal">
-        <button
-          type="submit"
-          name="add"
-          form="{{ pack_form_id }}"
-          class="w512-btn w512-btn--primary"
-          is="hover-button"
-          id="W512PackSubmit-{{ section.id }}"
-          {%- unless variant.available %} disabled{% endunless -%}
-        >
-          <span class="btn-fill" data-fill aria-hidden="true"></span>
-          <span class="btn-text w512-btn__text">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 8H6"></path></svg>
-            <span id="W512PackCtaLabel-{{ section.id }}">{{ pack_label_single }}</span>
-          </span>
-        </button>
+        {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         <p class="w512-pack__note">La remise de -50% sur la 2ᵉ caméra est appliquée automatiquement au panier.</p>
       </div>
     </div>
   </section>
 
   {%- comment -%} Feature 1 — Solar autonomy {%- endcomment -%}
-  <section class="w512-section">
+  <section class="w512-section w512-feature--tight-top">
     <div class="w512-wrap">
       <div class="w512-feature w512-reveal">
         <div class="w512-feature__media">
@@ -444,6 +451,9 @@
     <div class="w512-band w512-reveal">
       <h2>Protégez votre extérieur dès aujourd'hui</h2>
       <p>Livraison rapide, garantie 2 ans, et un système qui s'installe seul en quelques minutes.</p>
+      <div class="w512-band__toggle">
+        {%- render 'w512-pack-toggle' -%}
+      </div>
       {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
     </div>
   </div>
@@ -598,6 +608,9 @@
           {%- endif -%}
           {{ variant.price | money }} · Sans abonnement · Garantie 2 ans
         </p>
+        <div class="w512-final__toggle">
+          {%- render 'w512-pack-toggle' -%}
+        </div>
         <div class="w512-final__ctas">
           {%- render 'w512-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
@@ -631,26 +644,29 @@
         revealEls.forEach(function (el) { el.classList.add('is-visible'); });
       }
 
-      /* Pack Duo selector: 1 caméra vs. Pack de 2 (-50% sur la 2e) */
-      var packGrid = root.querySelector('#W512PackGrid-{{ section.id }}');
-      if (packGrid) {
-        var packQtyInput = root.querySelector('#W512PackQty-{{ section.id }}');
-        var packLabel = root.querySelector('#W512PackCtaLabel-{{ section.id }}');
-        var packCards = packGrid.querySelectorAll('[data-pack-option]');
-        packCards.forEach(function (card) {
-          card.addEventListener('click', function () {
-            packCards.forEach(function (c) {
-              c.classList.remove('is-selected');
-              c.setAttribute('aria-pressed', 'false');
-            });
-            card.classList.add('is-selected');
-            card.setAttribute('aria-pressed', 'true');
-            var qty = card.getAttribute('data-qty');
-            if (packQtyInput) packQtyInput.value = qty;
-            if (packLabel) packLabel.textContent = qty === '2' ? packGrid.dataset.label2 : packGrid.dataset.label1;
-          });
+      /* Pack Duo selector: every card/toggle on the page (data-pack-option)
+         shares one quantity field and updates every "Ajouter au panier"
+         button label (.w512-atc-label) in sync, wherever it appears. */
+      var packOptions = root.querySelectorAll('[data-pack-option]');
+      var packQtyInput = root.querySelector('#W512Qty-{{ section.id }}');
+      var atcLabels = root.querySelectorAll('.w512-atc-label');
+      var packLabels = { '1': root.dataset.label1, '2': root.dataset.label2 };
+
+      function selectPackQty(qty) {
+        packOptions.forEach(function (el) {
+          var isMatch = el.getAttribute('data-qty') === qty;
+          el.classList.toggle('is-selected', isMatch);
+          el.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
         });
+        if (packQtyInput) packQtyInput.value = qty;
+        atcLabels.forEach(function (label) { label.textContent = packLabels[qty]; });
       }
+
+      packOptions.forEach(function (el) {
+        el.addEventListener('click', function () {
+          selectPackQty(el.getAttribute('data-qty'));
+        });
+      });
 
       /* Sticky add-to-cart bar: show once the hero CTA has scrolled out of view */
       var heroCta = root.querySelector('#W512HeroCta-{{ section.id }}');

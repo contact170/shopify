@@ -1,0 +1,17 @@
+{%- doc -%}
+  Compact "1 caméra" / "Pack Duo -50%" toggle. Every instance on the page
+  shares the same data-pack-option / data-qty contract as the cards in the
+  Pack Duo section, so a single page-wide script keeps every toggle, every
+  card and every "Ajouter au panier" button label in sync.
+
+  @param {boolean} compact - use the smaller size (sticky bar)
+{%- enddoc -%}
+
+<div class="w512-toggle{% if compact %} w512-toggle--compact{% endif %}" role="group" aria-label="Choix de l'offre">
+  <button type="button" class="w512-toggle__btn is-selected" data-pack-option data-qty="1" aria-pressed="true">
+    1 caméra
+  </button>
+  <button type="button" class="w512-toggle__btn" data-pack-option data-qty="2" aria-pressed="false">
+    Pack Duo <span class="w512-toggle__badge">-50%</span>
+  </button>
+</div>
