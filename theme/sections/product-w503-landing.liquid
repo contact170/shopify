@@ -35,10 +35,15 @@
 
 {%- capture pack_label_single -%}Ajouter au panier · {{ variant.price | money }}{%- endcapture -%}
 {%- capture pack_label_duo -%}Ajouter le Pack de 2 · {{ price_pack | money }}{%- endcapture -%}
+{%- capture pack_price_single -%}{{ variant.price | money }}{%- endcapture -%}
+{%- capture pack_price_duo -%}{{ price_pack | money }}{%- endcapture -%}
 
 <div id="shopify-section-{{ section.id }}" class="w503">
   <script type="application/json" id="W503Labels-{{ section.id }}">
-    { "1": {{ pack_label_single | strip_html | json }}, "2": {{ pack_label_duo | strip_html | json }} }
+    {
+      "1": { "label": {{ pack_label_single | strip_html | json }}, "price": {{ pack_price_single | strip_html | json }} },
+      "2": { "label": {{ pack_label_duo | strip_html | json }}, "price": {{ pack_price_duo | strip_html | json }} }
+    }
   </script>
   <style>
     #shopify-section-{{ section.id }} .w503{
@@ -315,7 +320,7 @@
           {%- if has_compare -%}
             <span class="w503-hero__compare">{{ variant.compare_at_price | money }}</span>
           {%- endif -%}
-          <strong>{{ variant.price | money }}</strong> · paiement sécurisé
+          <strong class="w503-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
         </div>
         <div class="w503-hero__rating">
           {%- render 'product-rating', product: product -%}
@@ -675,7 +680,7 @@
           {%- if has_compare -%}
             <span class="w503-hero__compare">{{ variant.compare_at_price | money }}</span>
           {%- endif -%}
-          {{ variant.price | money }} · Sans abonnement · Garantie 2 ans
+          <span class="w503-price-amount">{{ variant.price | money }}</span> · Sans abonnement · Garantie 2 ans
         </p>
         {%- unless includes_solar -%}
           <div class="w503-final__toggle">
@@ -717,14 +722,16 @@
 
       /* Pack Duo selector: every card/toggle on the page (data-pack-option)
          shares one quantity field and updates every "Ajouter au panier"
-         button label (.w503-atc-label) in sync, wherever it appears. */
+         button label (.w503-atc-label) and price display (.w503-price-amount)
+         in sync, wherever they appear. */
       var packOptions = root.querySelectorAll('[data-pack-option]');
       var packQtyInput = root.querySelector('#W503Qty-{{ section.id }}');
       var atcLabels = root.querySelectorAll('.w503-atc-label');
+      var priceAmounts = root.querySelectorAll('.w503-price-amount');
       var labelsScript = root.querySelector('#W503Labels-{{ section.id }}');
-      var packLabels = { '1': '', '2': '' };
+      var packData = { '1': { label: '', price: '' }, '2': { label: '', price: '' } };
       if (labelsScript) {
-        try { packLabels = JSON.parse(labelsScript.textContent); } catch (e) { /* keep defaults */ }
+        try { packData = JSON.parse(labelsScript.textContent); } catch (e) { /* keep defaults */ }
       }
 
       function selectPackQty(qty) {
@@ -734,7 +741,8 @@
           el.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
         });
         if (packQtyInput) packQtyInput.value = qty;
-        atcLabels.forEach(function (label) { label.textContent = packLabels[qty]; });
+        atcLabels.forEach(function (label) { label.textContent = packData[qty].label; });
+        priceAmounts.forEach(function (el) { el.textContent = packData[qty].price; });
       }
 
       packOptions.forEach(function (el) {
