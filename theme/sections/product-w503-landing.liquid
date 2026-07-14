@@ -36,7 +36,10 @@
 {%- capture pack_label_single -%}Ajouter au panier · {{ variant.price | money }}{%- endcapture -%}
 {%- capture pack_label_duo -%}Ajouter le Pack de 2 · {{ price_pack | money }}{%- endcapture -%}
 
-<div id="shopify-section-{{ section.id }}" class="w503" data-label-1="{{ pack_label_single | escape }}" data-label-2="{{ pack_label_duo | escape }}">
+<div id="shopify-section-{{ section.id }}" class="w503">
+  <script type="application/json" id="W503Labels-{{ section.id }}">
+    { "1": {{ pack_label_single | strip_html | json }}, "2": {{ pack_label_duo | strip_html | json }} }
+  </script>
   <style>
     #shopify-section-{{ section.id }} .w503{
       --w503-navy:#0c1e4a;
@@ -718,7 +721,11 @@
       var packOptions = root.querySelectorAll('[data-pack-option]');
       var packQtyInput = root.querySelector('#W503Qty-{{ section.id }}');
       var atcLabels = root.querySelectorAll('.w503-atc-label');
-      var packLabels = { '1': root.dataset.label1, '2': root.dataset.label2 };
+      var labelsScript = root.querySelector('#W503Labels-{{ section.id }}');
+      var packLabels = { '1': '', '2': '' };
+      if (labelsScript) {
+        try { packLabels = JSON.parse(labelsScript.textContent); } catch (e) { /* keep defaults */ }
+      }
 
       function selectPackQty(qty) {
         packOptions.forEach(function (el) {
