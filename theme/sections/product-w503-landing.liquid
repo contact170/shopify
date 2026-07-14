@@ -201,6 +201,15 @@
       .w503-feature--reverse .w503-feature__body{order:1;}
     }
 
+    /* ---- video demo ---- */
+    .w503-video{text-align:center;}
+    .w503-video h2{font-size:clamp(26px,3.4vw,38px);}
+    .w503-video__sub{margin-top:14px;color:var(--w503-gray);font-size:17px;}
+    .w503-video__player{
+      margin:32px auto 0;max-width:640px;width:100%;border-radius:20px;
+      background:#000;display:block;
+    }
+
     /* ---- alarm compatibility highlight band ---- */
     .w503-alarm{
       background:var(--w503-navy);border-radius:28px;padding:56px 40px;color:#fff;
@@ -504,6 +513,26 @@
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Sirène 75&nbsp;dB intégrée</li>
           </ul>
         </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Video demo — filmed from the Daewoo Home Connect app {%- endcomment -%}
+  <section class="w503-section w503-section--alt">
+    <div class="w503-wrap">
+      <div class="w503-video w503-reveal">
+        <h2>Voyez la qualité d'image par vous-même</h2>
+        <p class="w503-video__sub">Extrait filmé en direct depuis l'application Daewoo Home Connect.</p>
+        <video
+          class="w503-video__player"
+          controls
+          muted
+          playsinline
+          preload="metadata"
+          poster="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/preview_images/287e12f1a4714d509d7ab88733c01a87.thumbnail.0000000000.jpg?v=1784054001"
+        >
+          <source src="https://cdn.shopify.com/videos/c/vp/287e12f1a4714d509d7ab88733c01a87/287e12f1a4714d509d7ab88733c01a87.HD-720p-1.6Mbps-88943124.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
   </section>
