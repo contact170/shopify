@@ -1,7 +1,7 @@
 {
   "sections": {
-    "main": {
-      "type": "product-ip506p-landing",
+    "hero": {
+      "type": "product-ip506p-hero",
       "settings": {}
     },
     "reels": {
@@ -45,12 +45,16 @@
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 56,
-        "padding_bottom": 56,
+        "padding_top": 40,
+        "padding_bottom": 0,
         "divider": false,
         "full_width": false,
         "rounded": false
       }
+    },
+    "body": {
+      "type": "product-ip506p-body",
+      "settings": {}
     },
     "reviews": {
       "type": "apps",
@@ -80,5 +84,5 @@
       }
     }
   },
-  "order": ["main", "reels", "reviews"]
+  "order": ["hero", "reels", "body", "reviews"]
 }
