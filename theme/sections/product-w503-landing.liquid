@@ -28,9 +28,15 @@
   if variant.compare_at_price > variant.price
     assign has_compare = true
   endif
+
+  assign price_x2 = variant.price | times: 2
+  assign price_pack = variant.price | times: 1.5 | round
 -%}
 
-<div id="shopify-section-{{ section.id }}" class="w503">
+{%- capture pack_label_single -%}Ajouter au panier · {{ variant.price | money }}{%- endcapture -%}
+{%- capture pack_label_duo -%}Ajouter le Pack de 2 · {{ price_pack | money }}{%- endcapture -%}
+
+<div id="shopify-section-{{ section.id }}" class="w503" data-label-1="{{ pack_label_single | escape }}" data-label-2="{{ pack_label_duo | escape }}">
   <style>
     #shopify-section-{{ section.id }} .w503{
       --w503-navy:#0c1e4a;
@@ -110,6 +116,53 @@
     .w503-btn--primary{background:var(--w503-navy);color:#fff;box-shadow:0 8px 20px -8px rgba(12,30,74,.55);}
     .w503-btn--primary .btn-fill{background:var(--w503-navy-dark);}
     .w503-btn .btn-fill{position:absolute;inset:0;z-index:-1;transform:translateY(100%);}
+
+    /* ---- pack toggle (1 caméra / Pack Duo) ---- */
+    .w503-toggle{display:inline-flex;background:var(--w503-bg-alt);border-radius:999px;padding:4px;gap:4px;}
+    .w503-toggle__btn{
+      border:none;background:transparent;padding:9px 16px;border-radius:999px;
+      font-family:inherit;font-size:13px;font-weight:600;color:var(--w503-gray);cursor:pointer;
+      display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+      transition:background .15s ease,color .15s ease;
+    }
+    .w503-toggle__btn.is-selected{background:var(--w503-navy);color:#fff;}
+    .w503-toggle__badge{font-size:11px;font-weight:700;background:#e11d48;color:#fff;padding:2px 7px;border-radius:999px;}
+    .w503-toggle--compact{padding:3px;}
+    .w503-toggle--compact .w503-toggle__btn{padding:6px 10px;font-size:12px;}
+    .w503-hero__toggle{margin-bottom:4px;}
+    .w503-band__toggle,.w503-final__toggle{display:flex;justify-content:center;margin-top:30px;margin-bottom:26px;}
+    .w503-band .w503-toggle{background:rgba(255,255,255,.15);}
+    .w503-band .w503-toggle__btn{color:rgba(255,255,255,.75);}
+    .w503-band .w503-toggle__btn.is-selected{background:#fff;color:var(--w503-navy);}
+    .w503-sticky__toggle{display:none;}
+    @media (min-width:560px){.w503-sticky__toggle{display:block;}}
+
+    /* ---- pack duo ---- */
+    .w503-pack__head{text-align:center;max-width:620px;margin:0 auto 40px;}
+    .w503-pack__head h2{font-size:clamp(26px,3.4vw,38px);}
+    .w503-pack__head p{margin-top:14px;color:var(--w503-gray);font-size:17px;}
+    .w503-pack__grid{display:grid;grid-template-columns:1fr;gap:18px;max-width:760px;margin:0 auto;}
+    @media (min-width:640px){.w503-pack__grid{grid-template-columns:1fr 1fr;}}
+    .w503-pack__card{
+      position:relative;display:block;width:100%;text-align:left;cursor:pointer;
+      border:2px solid var(--w503-line);border-radius:20px;padding:26px 24px;background:#fff;
+      font-family:inherit;transition:border-color .2s ease,box-shadow .2s ease;
+    }
+    .w503-pack__card:hover{border-color:#b9bcc7;}
+    .w503-pack__card.is-selected{border-color:var(--w503-navy);box-shadow:0 0 0 3px rgba(12,30,74,.08);}
+    .w503-pack__radio{position:absolute;top:22px;right:22px;width:20px;height:20px;border-radius:50%;border:2px solid var(--w503-line);}
+    .w503-pack__card.is-selected .w503-pack__radio{border-color:var(--w503-navy);}
+    .w503-pack__card.is-selected .w503-pack__radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--w503-navy);}
+    .w503-pack__badge{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:#e11d48;padding:4px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+    .w503-pack__name{display:block;font-size:17px;font-weight:600;margin-bottom:6px;padding-right:32px;}
+    .w503-pack__desc{display:block;font-size:14px;color:var(--w503-gray);margin-bottom:14px;}
+    .w503-pack__price{display:flex;align-items:baseline;gap:8px;}
+    .w503-pack__price strong{font-size:22px;}
+    .w503-pack__was{font-size:14px;color:var(--w503-gray);text-decoration:line-through;}
+    .w503-pack__cta{margin-top:28px;text-align:center;}
+    .w503-pack__cta .w503-btn{margin:0 auto;}
+    .w503 .w503-pack__note{margin-top:22px;font-size:13px;color:var(--w503-gray);text-align:center;}
+    .w503-pack{padding-bottom:24px;}
 
     /* ---- trust strip ---- */
     .w503-strip{
@@ -207,6 +260,7 @@
   {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
   {%- form 'product', product, id: form_id, data-type: 'add-to-cart-form', is: 'product-form', class: 'w503-visually-hidden' -%}
     <input type="hidden" name="id" value="{{ variant.id }}" disabled>
+    <input type="hidden" name="quantity" value="1" id="W503Qty-{{ section.id }}">
     <button type="submit" name="add" tabindex="-1" aria-hidden="true"></button>
     <div class="product-form__error-message alert alert--error" role="alert" hidden style="position:fixed;left:16px;right:16px;bottom:84px;z-index:70;background:#fff;border:1px solid #e11d48;color:#e11d48;padding:12px 16px;border-radius:12px;font-size:14px;"></div>
   {%- endform -%}
@@ -222,6 +276,11 @@
       </div>
       <div class="w503-sticky__name">{{ product.title }}</div>
     </div>
+    {%- unless includes_solar -%}
+      <div class="w503-sticky__toggle">
+        {%- render 'w503-pack-toggle', compact: true -%}
+      </div>
+    {%- endunless -%}
     {%- render 'w503-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
   </div>
 
@@ -240,6 +299,11 @@
         {%- endif -%}
       </p>
       <div class="w503-hero__cta">
+        {%- unless includes_solar -%}
+          <div class="w503-hero__toggle">
+            {%- render 'w503-pack-toggle' -%}
+          </div>
+        {%- endunless -%}
         <div id="W503HeroCta-{{ section.id }}">
           {%- render 'w503-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
@@ -288,6 +352,43 @@
       </div>
     </div>
   </div>
+
+  {%- unless includes_solar -%}
+    {%- comment -%} Pack Duo highlight — 2nd camera at -50% {%- endcomment -%}
+    <section class="w503-section w503-pack">
+      <div class="w503-wrap">
+        <div class="w503-pack__head w503-reveal">
+          <h2>Économisez avec le Pack Duo</h2>
+          <p>Couvrez deux angles de votre extérieur — la 2ᵉ caméra est à -50%.</p>
+        </div>
+
+        <div class="w503-pack__grid w503-reveal">
+          <button type="button" class="w503-pack__card is-selected" data-pack-option data-qty="1" aria-pressed="true">
+            <span class="w503-pack__radio" aria-hidden="true"></span>
+            <span class="w503-pack__name">1 caméra</span>
+            <span class="w503-pack__desc">Pour surveiller un seul accès.</span>
+            <span class="w503-pack__price"><strong>{{ variant.price | money }}</strong></span>
+          </button>
+
+          <button type="button" class="w503-pack__card" data-pack-option data-qty="2" aria-pressed="false">
+            <span class="w503-pack__radio" aria-hidden="true"></span>
+            <span class="w503-pack__badge">-50% sur la 2ᵉ</span>
+            <span class="w503-pack__name">Pack de 2 caméras</span>
+            <span class="w503-pack__desc">Idéal pour deux accès&nbsp;: devant et derrière la maison.</span>
+            <span class="w503-pack__price">
+              <strong>{{ price_pack | money }}</strong>
+              <span class="w503-pack__was">{{ price_x2 | money }}</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="w503-pack__cta w503-reveal">
+          {%- render 'w503-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+          <p class="w503-pack__note">La remise de -50% sur la 2ᵉ caméra est appliquée automatiquement au panier.</p>
+        </div>
+      </div>
+    </section>
+  {%- endunless -%}
 
   {%- comment -%} Feature 1 — Installation {%- endcomment -%}
   <section class="w503-section">
@@ -425,6 +526,11 @@
     <div class="w503-band w503-reveal">
       <h2>Protégez votre extérieur dès aujourd'hui</h2>
       <p>Livraison rapide, garantie 2 ans, et une installation qui prend quelques minutes.</p>
+      {%- unless includes_solar -%}
+        <div class="w503-band__toggle">
+          {%- render 'w503-pack-toggle' -%}
+        </div>
+      {%- endunless -%}
       {%- render 'w503-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
     </div>
   </div>
@@ -567,6 +673,11 @@
           {%- endif -%}
           {{ variant.price | money }} · Sans abonnement · Garantie 2 ans
         </p>
+        {%- unless includes_solar -%}
+          <div class="w503-final__toggle">
+            {%- render 'w503-pack-toggle' -%}
+          </div>
+        {%- endunless -%}
         <div class="w503-final__ctas">
           {%- render 'w503-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
@@ -599,6 +710,30 @@
       } else {
         revealEls.forEach(function (el) { el.classList.add('is-visible'); });
       }
+
+      /* Pack Duo selector: every card/toggle on the page (data-pack-option)
+         shares one quantity field and updates every "Ajouter au panier"
+         button label (.w503-atc-label) in sync, wherever it appears. */
+      var packOptions = root.querySelectorAll('[data-pack-option]');
+      var packQtyInput = root.querySelector('#W503Qty-{{ section.id }}');
+      var atcLabels = root.querySelectorAll('.w503-atc-label');
+      var packLabels = { '1': root.dataset.label1, '2': root.dataset.label2 };
+
+      function selectPackQty(qty) {
+        packOptions.forEach(function (el) {
+          var isMatch = el.getAttribute('data-qty') === qty;
+          el.classList.toggle('is-selected', isMatch);
+          el.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+        });
+        if (packQtyInput) packQtyInput.value = qty;
+        atcLabels.forEach(function (label) { label.textContent = packLabels[qty]; });
+      }
+
+      packOptions.forEach(function (el) {
+        el.addEventListener('click', function () {
+          selectPackQty(el.getAttribute('data-qty'));
+        });
+      });
 
       /* Sticky add-to-cart bar: show once the hero CTA has scrolled out of view */
       var heroCta = root.querySelector('#W503HeroCta-{{ section.id }}');
