@@ -41,7 +41,7 @@
     }
     .wcams-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--wcams-success);}
     .wcams-hero h1{font-size:clamp(30px,5vw,52px);max-width:820px;margin:0 auto;}
-    .wcams-hero__sub{
+    .wcams .wcams-hero__sub{
       font-size:clamp(16px,2vw,20px);color:var(--wcams-gray);max-width:620px;
       margin:20px auto 0;line-height:1.55;text-align:center;
     }
@@ -164,13 +164,13 @@
               {{ p_w503.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', alt: p_w503.title }}
             </a>
             <div class="wcams-card__body">
-              <span class="wcams-card__eyebrow">Entrée de gamme</span>
+              <span class="wcams-card__eyebrow">Modèle fixe</span>
               <h3><a href="{{ p_w503.url }}">W503</a></h3>
-              <p class="wcams-card__tagline">Autonome et 100% sans fil : l'essentiel pour surveiller une entrée, une terrasse ou un garage.</p>
+              <p class="wcams-card__tagline">Autonome et 100% sans fil, avec toute la technologie de détection et de vision nocturne.</p>
               <ul>
                 <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Batterie rechargeable intégrée</li>
-                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Full HD 1080p, vision nocturne infrarouge</li>
-                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Compatible panneau solaire (en option)</li>
+                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Vision nocturne couleur et infrarouge</li>
+                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Sirène 75&nbsp;dB et détection humaine jusqu'à 7-8&nbsp;m</li>
               </ul>
               <div class="wcams-card__price">{{ variant.price | money }} <span>· caméra seule</span></div>
               {%- form 'product', p_w503, id: form_id, is: 'product-form' -%}
@@ -201,8 +201,8 @@
               <p class="wcams-card__tagline">La même caméra W503, livrée avec son panneau solaire pour une autonomie quasi illimitée.</p>
               <ul>
                 <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Panneau solaire inclus</li>
-                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Full HD 1080p, vision nocturne infrarouge</li>
-                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Idéale résidence secondaire ou zone difficile d'accès</li>
+                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Vision nocturne couleur et infrarouge</li>
+                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Sirène 75&nbsp;dB et détection humaine jusqu'à 7-8&nbsp;m</li>
               </ul>
               <div class="wcams-card__price">{{ variant.price | money }} <span>· panneau inclus</span></div>
               {%- form 'product', p_w503_solaire, id: form_id, is: 'product-form' -%}
@@ -229,13 +229,13 @@
               {{ p_w512mw.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', alt: p_w512mw.title }}
             </a>
             <div class="wcams-card__body">
-              <span class="wcams-card__eyebrow">La plus avancée</span>
+              <span class="wcams-card__eyebrow">Rotative & haute résolution</span>
               <h3><a href="{{ p_w512mw.url }}">W512MW</a></h3>
-              <p class="wcams-card__tagline">Rotative, vision nocturne couleur et détection longue portée — pour une surveillance complète.</p>
+              <p class="wcams-card__tagline">Rotative et en 1440p, pour une couverture plus large et des images plus détaillées.</p>
               <ul>
                 <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Rotative, résolution 1440p</li>
                 <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Vision nocturne couleur, sirène 75&nbsp;dB intégrée</li>
-                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Panneau solaire déporté inclus, détection jusqu'à 7-8&nbsp;m</li>
+                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Panneau solaire déporté inclus, détection humaine jusqu'à 7-8&nbsp;m</li>
               </ul>
               <div class="wcams-card__price">{{ variant.price | money }} <span>· panneau inclus</span></div>
               {%- form 'product', p_w512mw, id: form_id, is: 'product-form' -%}
@@ -298,20 +298,20 @@
             </tr>
             <tr>
               <td>Vision nocturne</td>
-              <td>Infrarouge</td>
-              <td>Infrarouge</td>
+              <td>Couleur et infrarouge</td>
+              <td>Couleur et infrarouge</td>
               <td class="is-featured">Couleur</td>
             </tr>
             <tr>
               <td>Sirène intégrée</td>
-              <td>—</td>
-              <td>—</td>
+              <td>75 dB</td>
+              <td>75 dB</td>
               <td class="is-featured">75 dB</td>
             </tr>
             <tr>
               <td>Détection</td>
-              <td>Mouvement</td>
-              <td>Mouvement</td>
+              <td>Humaine intelligente, jusqu'à 7-8 m</td>
+              <td>Humaine intelligente, jusqu'à 7-8 m</td>
               <td class="is-featured">Humaine intelligente, jusqu'à 7-8 m</td>
             </tr>
             <tr>
