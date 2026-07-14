@@ -1,0 +1,399 @@
+{%- doc -%}
+  Body half of the bespoke EP506 product page (photo onward). Paired with
+  product-ep506-hero.liquid — see that file's doc comment for why the page
+  is split in two, and why fixed element ids are used instead of
+  section.id-scoped ones.
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign form_id = 'EP506Form'
+
+  assign gallery = product.images
+  assign hero_image = gallery[0] | default: product.featured_image
+  assign feat_image_vision = gallery[5] | default: hero_image
+  assign feat_image_rotation = gallery[6] | default: hero_image
+  assign feat_image_audio = gallery[7] | default: hero_image
+
+  assign has_compare = false
+  if variant.compare_at_price > variant.price
+    assign has_compare = true
+  endif
+-%}
+
+<div class="ep506">
+  {%- comment -%} Product photo {%- endcomment -%}
+  {%- if hero_image -%}
+    <div class="ep506-wrap">
+      <div class="ep506-hero__media ep506-reveal">
+        {{ hero_image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '600,900,1200,1600', alt: product.title }}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Trust strip {%- endcomment -%}
+  <div class="ep506-wrap">
+    <div class="ep506-strip ep506-reveal">
+      <div class="ep506-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Installation en quelques minutes
+      </div>
+      <div class="ep506-strip__item ep506-strip__item--highlight">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Aucune batterie, aucune coupure
+      </div>
+      <div class="ep506-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Compatible PoE
+      </div>
+      <div class="ep506-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Garantie 2 ans
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Wired power — the star feature {%- endcomment -%}
+  <section class="ep506-section">
+    <div class="ep506-wrap">
+      <div class="ep506-band-hl ep506-reveal">
+        <div>
+          <span class="ep506-band-hl__eyebrow">100% filaire</span>
+          <h2>Une alimentation qui ne faiblit jamais.</h2>
+          <p>
+            Contrairement à une caméra sur batterie, l'EP506 est raccordée en continu&nbsp;:
+            pas de recharge à prévoir, pas de coupure de surveillance pendant qu'elle charge,
+            pas d'autonomie à surveiller. Idéale pour une zone à couvrir sans interruption
+            (entrée principale, garage, zone d'activité).
+          </p>
+          <ul>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Surveillance continue, 24h/24, sans recharge</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Alimentation secteur fournie ou PoE en option</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Idéale pour un poste fixe, sans déplacement</li>
+          </ul>
+        </div>
+        <div class="ep506-plug-wrap">
+          <div class="ep506-plug" aria-hidden="true">
+            <span class="ep506-plug__pulse"></span>
+            <span class="ep506-plug__pulse ep506-plug__pulse--delay"></span>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#fde68a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 2v5"></path>
+              <path d="M15 2v5"></path>
+              <path d="M6 7h12v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V7Z"></path>
+              <path d="M12 17v5"></path>
+            </svg>
+          </div>
+          <span class="ep506-plug__status">Alimentation continue</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} PoE explainer {%- endcomment -%}
+  <section class="ep506-section ep506-section--alt">
+    <div class="ep506-wrap">
+      <div class="ep506-poe__head ep506-reveal">
+        <h2>Qu'est-ce que le PoE&nbsp;?</h2>
+        <p>
+          Le <strong>PoE (Power over Ethernet)</strong> permet d'alimenter la caméra
+          <strong>et</strong> de la connecter au réseau avec un <strong>seul câble RJ45</strong> —
+          plus besoin de prise électrique à proximité. C'est optionnel&nbsp;: l'EP506 fonctionne
+          très bien avec l'adaptateur secteur fourni et le Wi-Fi 2,4&nbsp;GHz si vous préférez.
+        </p>
+      </div>
+      <div class="ep506-poe__steps ep506-reveal">
+        <div class="ep506-poe__step">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01"></path></svg>
+          <h3>1. Injecteur ou switch PoE</h3>
+          <p>Un boîtier PoE (ou un switch réseau compatible) injecte l'alimentation électrique dans le câble réseau.</p>
+        </div>
+        <div class="ep506-poe__step">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          <h3>2. Un seul câble RJ45</h3>
+          <p>Ce câble transporte à la fois les données réseau et le courant jusqu'à la caméra.</p>
+        </div>
+        <div class="ep506-poe__step">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"></path></svg>
+          <h3>3. La caméra fonctionne</h3>
+          <p>Alimentation et connexion stables, sans dépendre du Wi-Fi ni d'une prise secteur sur place.</p>
+        </div>
+      </div>
+      <p class="ep506-poe__note ep506-reveal">
+        <strong>À retenir&nbsp;:</strong> le PoE est surtout utile pour une installation éloignée
+        d'une prise électrique, ou pour une connexion plus stable qu'en Wi-Fi (pas d'interférences,
+        pas de coupure de signal). Sans PoE, l'EP506 fonctionne normalement avec son adaptateur
+        secteur et le Wi-Fi 2,4&nbsp;GHz.
+      </p>
+    </div>
+  </section>
+
+  {%- comment -%} Feature — Vision & détection {%- endcomment -%}
+  <section class="ep506-section">
+    <div class="ep506-wrap">
+      <div class="ep506-feature ep506-reveal">
+        <div class="ep506-feature__media">
+          {{ feat_image_vision | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Vision de la caméra EP506' }}
+        </div>
+        <div class="ep506-feature__body">
+          <span class="ep506-feature__num">VISION & DÉTECTION</span>
+          <h2>Elle voit tout, de jour comme de nuit.</h2>
+          <p class="ep506-feature__text">
+            Résolution 4MP pour une image nette, avec vision nocturne infrarouge (et couleur selon
+            la luminosité). Le filtrage corps humain ne déclenche une alerte que pour les vraies
+            présences, en ignorant animaux et variations de lumière.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Résolution 4MP</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Vision nocturne infrarouge et couleur</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Filtrage corps humain intelligent</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Feature — Rotation & fonction Site {%- endcomment -%}
+  <section class="ep506-section ep506-section--alt">
+    <div class="ep506-wrap">
+      <div class="ep506-feature ep506-feature--reverse ep506-reveal">
+        <div class="ep506-feature__media">
+          {{ feat_image_rotation | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Rotation de la caméra EP506' }}
+        </div>
+        <div class="ep506-feature__body">
+          <span class="ep506-feature__num">ROTATION MOTORISÉE</span>
+          <h2>Elle couvre toute la zone, toute seule.</h2>
+          <p class="ep506-feature__text">
+            Rotation motorisée 355° à l'horizontale et 90° à la verticale, avec suivi automatique
+            des mouvements. La fonction "Site" permet d'enregistrer jusqu'à 4 positions favorites
+            pour y revenir en un tap depuis l'application.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>355° horizontal · 90° vertical</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Suivi automatique des mouvements</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>4 positions "Site" enregistrables</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Feature — Audio & sirène {%- endcomment -%}
+  <section class="ep506-section">
+    <div class="ep506-wrap">
+      <div class="ep506-feature ep506-reveal">
+        <div class="ep506-feature__media">
+          {{ feat_image_audio | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Audio bidirectionnel de la caméra EP506' }}
+        </div>
+        <div class="ep506-feature__body">
+          <span class="ep506-feature__num">ALERTES & AUDIO</span>
+          <h2>Prévenue tout de suite. Prête à réagir.</h2>
+          <p class="ep506-feature__text">
+            Notification instantanée dès qu'un mouvement ou un bruit inhabituel est détecté.
+            Micro et haut-parleur intégrés pour parler à distance, et sirène ~75&nbsp;dB pour
+            dissuader en cas d'intrusion.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Notification instantanée</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Audio bidirectionnel</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Sirène ~75&nbsp;dB intégrée</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Alarm compatibility {%- endcomment -%}
+  <section class="ep506-section ep506-section--alt">
+    <div class="ep506-wrap">
+      <div class="ep506-band-hl ep506-reveal">
+        <div>
+          <span class="ep506-band-hl__eyebrow">Compatibilité totale</span>
+          <h2>Un système, pas juste une caméra.</h2>
+          <p>
+            L'EP506 s'intègre parfaitement à toutes les alarmes Daewoo Security, ou fonctionne
+            seule via l'application Daewoo Home Connect.
+          </p>
+        </div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Compatible avec toutes les alarmes Daewoo Security</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Scénarios automatisés (ex&nbsp;: alarme armée → détection activée)</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Fonctionne aussi seule, sans centrale</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Mid-page CTA band {%- endcomment -%}
+  <div class="ep506-wrap">
+    <div class="ep506-band ep506-reveal">
+      <h2>Une surveillance qui ne s'arrête jamais</h2>
+      <p>Livraison rapide, garantie 2 ans, et une alimentation continue, jour et nuit.</p>
+      {%- render 'ep506-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+    </div>
+  </div>
+
+  {%- comment -%} Specs {%- endcomment -%}
+  <section class="ep506-section">
+    <div class="ep506-wrap">
+      <div class="ep506-specs__head ep506-reveal">
+        <h2>En résumé</h2>
+        <p>Tout ce qu'il faut savoir sur l'EP506.</p>
+      </div>
+      <dl class="ep506-specs__grid ep506-reveal">
+        <div class="ep506-specs__item">
+          <dt>Alimentation</dt>
+          <dd>Adaptateur secteur fourni, ou PoE en option (câble RJ45)</dd>
+        </div>
+        <div class="ep506-specs__item">
+          <dt>Connexion</dt>
+          <dd>Wi-Fi 2,4&nbsp;GHz ou RJ45/PoE</dd>
+        </div>
+        <div class="ep506-specs__item">
+          <dt>Résolution</dt>
+          <dd>4MP</dd>
+        </div>
+        <div class="ep506-specs__item">
+          <dt>Rotation</dt>
+          <dd>355° horizontal · 90° vertical, motorisée</dd>
+        </div>
+        <div class="ep506-specs__item">
+          <dt>Vision nocturne</dt>
+          <dd>Infrarouge et couleur selon luminosité</dd>
+        </div>
+        <div class="ep506-specs__item">
+          <dt>Sirène</dt>
+          <dd>~75&nbsp;dB intégrée</dd>
+        </div>
+        <div class="ep506-specs__item">
+          <dt>Stockage</dt>
+          <dd>Carte microSD 64&nbsp;Go max (non incluse) ou abonnement Cloud</dd>
+        </div>
+        <div class="ep506-specs__item">
+          <dt>Dimensions</dt>
+          <dd>12,5 × 15,5 × 11,5&nbsp;cm · câble secteur 1,5&nbsp;m</dd>
+        </div>
+        <div class="ep506-specs__item">
+          <dt>Compatibilité</dt>
+          <dd>Toutes les alarmes Daewoo Security, ou seule via l'app</dd>
+        </div>
+        <div class="ep506-specs__item">
+          <dt>Référence</dt>
+          <dd>EP506</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  {%- comment -%} Guarantee band {%- endcomment -%}
+  <section class="ep506-section ep506-section--alt">
+    <div class="ep506-wrap">
+      <div class="ep506-guarantee ep506-reveal">
+        <div class="ep506-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"></path></svg>
+          <h3>Garantie 2 ans</h3>
+          <p>Sur l'ensemble des produits Daewoo Security.</p>
+        </div>
+        <div class="ep506-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="15" height="11" rx="2"></rect><path d="M18 10h2.2a1 1 0 0 1 .9.6L23 14v4h-5"></path><circle cx="7.5" cy="18.5" r="1.5"></circle><circle cx="17.5" cy="18.5" r="1.5"></circle></svg>
+          <h3>Expédié sous 2 jours</h3>
+          <p>Livraison rapide depuis la France.</p>
+        </div>
+        <div class="ep506-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+          <h3>Retour sous 14 jours</h3>
+          <p>Changez d'avis facilement, sans justification.</p>
+        </div>
+        <div class="ep506-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+          <h3>Sans abonnement</h3>
+          <p>Votre caméra vous appartient, à vie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} FAQ {%- endcomment -%}
+  <section class="ep506-section">
+    <div class="ep506-wrap">
+      <div class="ep506-faq ep506-reveal">
+        <h2>Questions fréquentes</h2>
+
+        <details>
+          <summary>Qu'est-ce que le PoE et dois-je l'utiliser&nbsp;?<span class="ep506-faq__icon">＋</span></summary>
+          <p class="ep506-faq__a">Le PoE (Power over Ethernet) alimente la caméra et la connecte au réseau via un seul câble RJ45. C'est optionnel&nbsp;: sans PoE, l'EP506 fonctionne très bien avec l'adaptateur secteur fourni et le Wi-Fi 2,4&nbsp;GHz.</p>
+        </details>
+
+        <details>
+          <summary>Est-elle vraiment sans batterie&nbsp;?<span class="ep506-faq__icon">＋</span></summary>
+          <p class="ep506-faq__a">Oui. L'EP506 est une caméra 100% filaire&nbsp;: elle est alimentée en continu, sans batterie à recharger et sans coupure de surveillance.</p>
+        </details>
+
+        <details>
+          <summary>Ai-je besoin d'une prise électrique à proximité&nbsp;?<span class="ep506-faq__icon">＋</span></summary>
+          <p class="ep506-faq__a">Oui, sauf si vous utilisez le PoE&nbsp;: dans ce cas, un seul câble RJ45 suffit pour l'alimentation et le réseau, sans prise secteur sur place.</p>
+        </details>
+
+        <details>
+          <summary>Est-elle compatible avec mon alarme Daewoo&nbsp;?<span class="ep506-faq__icon">＋</span></summary>
+          <p class="ep506-faq__a">Oui, l'EP506 est compatible avec l'ensemble des alarmes Daewoo Security. Elle fonctionne aussi de façon autonome, sans centrale, via l'application.</p>
+        </details>
+
+        <details>
+          <summary>Où sont enregistrées les vidéos&nbsp;?<span class="ep506-faq__icon">＋</span></summary>
+          <p class="ep506-faq__a">Sur une carte microSD (jusqu'à 64&nbsp;Go, non incluse) insérée dans la caméra, ou via un abonnement de stockage Cloud à partir de 4,49&nbsp;€/mois.</p>
+        </details>
+
+        <details>
+          <summary>Est-ce que je vais recevoir trop de fausses alertes&nbsp;?<span class="ep506-faq__icon">＋</span></summary>
+          <p class="ep506-faq__a">Non&nbsp;: le filtrage corps humain ne déclenche une notification que pour les vraies présences, pas pour un animal ou une variation de lumière.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Final CTA {%- endcomment -%}
+  <section class="ep506-section ep506-final">
+    <div class="ep506-wrap">
+      <div class="ep506-reveal">
+        <h2>{{ product.title }}</h2>
+        <p>
+          {%- if has_compare -%}
+            <span class="ep506-hero__compare">{{ variant.compare_at_price | money }}</span>
+          {%- endif -%}
+          <span>{{ variant.price | money }}</span> · 100% filaire · Garantie 2 ans
+        </p>
+        <div class="ep506-final__ctas">
+          {%- render 'ep506-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+        </div>
+        <p class="ep506-final__legal">Livraison sous 2 jours ouvrés · Retour gratuit sous 14 jours · Service client basé en France</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      /* Reveal-on-scroll */
+      var revealEls = document.querySelectorAll('.ep506-reveal');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "EP506 – Contenu",
+  "settings": []
+}
+{% endschema %}

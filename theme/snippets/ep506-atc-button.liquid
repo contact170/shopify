@@ -1,0 +1,35 @@
+{%- doc -%}
+  Renders an "Add to cart" submit button bound to an external <form> via the
+  `form` attribute — it doesn't need to live inside the form.
+
+  @param {string} form_id - id of the hidden product form to submit
+  @param {object} variant - the selected/first available variant
+  @param {string} label - button label
+  @param {string} style - 'primary' | 'secondary'
+  @param {boolean} show_price - append the variant price to the label
+{%- enddoc -%}
+
+{%- liquid
+  assign btn_label = label | default: 'Ajouter au panier'
+  assign btn_style = style | default: 'primary'
+-%}
+<button
+  type="submit"
+  name="add"
+  form="{{ form_id }}"
+  class="ep506-btn ep506-btn--{{ btn_style }}"
+  is="hover-button"
+  {%- unless variant.available %} disabled{% endunless -%}
+>
+  <span class="btn-fill" data-fill aria-hidden="true"></span>
+  <span class="btn-text ep506-btn__text" style="position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;z-index:1;color:inherit;width:auto;height:auto;">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 8H6"></path></svg>
+    <span class="ep506-atc-label" style="display:inline;color:inherit;font-size:inherit;font-weight:inherit;">
+      {%- if variant.available -%}
+        {{ btn_label }}{% if show_price %} · {{ variant.price | money }}{% endif %}
+      {%- else -%}
+        Rupture de stock
+      {%- endif -%}
+    </span>
+  </span>
+</button>
