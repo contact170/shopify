@@ -3,1799 +3,1330 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VEILLE — La protection. Une fois. Pour toujours.</title>
+<title>VEILLE — Sécurité de Demain</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   TOKENS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* ── TOKENS ─────────────────────────────────────────────────── */
 :root {
-  --void:       #0C0A08;
-  --layer:      #181410;
-  --layer2:     #221E18;
-  --sand:       #C8A87A;
-  --sand-dim:   #8C7556;
-  --sand-pale:  #E8D8BC;
-  --cream:      #F5F0E6;
-  --parchment:  #FAF8F3;
-  --text:       #1C180F;
-  --muted:      #7A6E60;
-  --border:     #E4DDD2;
-  --border-dark:#2C2820;
-  --red:        #B83428;
-  --green:      #3A7A56;
+  --ink:        #0C0906;
+  --bronze:     #C8A87A;
+  --sand:       #D4B896;
+  --sand-pale:  #EAD9BE;
+  --parch:      #FAF8F3;
+  --mist:       rgba(250,243,230,0.06);
+  --line:       rgba(200,168,122,0.18);
 
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in:     cubic-bezier(0.4, 0, 1, 1);
-  --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+  --gls-blur-sm:  blur(16px) saturate(160%);
+  --gls-blur-md:  blur(28px) saturate(170%);
+  --gls-blur-lg:  blur(48px) saturate(180%);
+
+  /* Light glass — content panels on dark bg */
+  --gls-light-bg:     rgba(250,243,230,0.08);
+  --gls-light-border: rgba(255,255,255,0.18);
+  --gls-light-shine:  rgba(255,255,255,0.90);
+  --gls-light-shadow: 0 8px 32px rgba(14,10,4,0.28), inset 0 1px 0 rgba(255,255,255,0.18);
+
+  /* Dark glass — overlay surfaces */
+  --gls-dark-bg:      rgba(12,9,6,0.62);
+  --gls-dark-border:  rgba(200,168,122,0.15);
+  --gls-dark-shine:   rgba(200,168,122,0.10);
+  --gls-dark-shadow:  0 8px 32px rgba(0,0,0,0.55), inset 0 1px 0 rgba(200,168,122,0.10);
+
+  /* Mid glass */
+  --gls-mid-bg:       rgba(30,22,12,0.52);
+  --gls-mid-border:   rgba(200,168,122,0.20);
+  --gls-mid-shadow:   0 4px 20px rgba(0,0,0,0.40), inset 0 1px 0 rgba(200,168,122,0.14);
+
+  --text-on-dark: #EAD9BE;
+
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+  --ease-silk:   cubic-bezier(.25,.46,.45,.94);
+  --r-sm: 12px;
+  --r-md: 20px;
+  --r-lg: 28px;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   BASE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
+/* ── BASE ────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--parchment);
-  color: var(--text);
+  color: var(--sand-pale);
   overflow-x: hidden;
   cursor: none;
+  background: #0C0906;
+  background-image:
+    radial-gradient(ellipse 70% 55% at 15% 20%, rgba(180,130,60,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 85% 75%, rgba(100,60,20,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 50% at 50% 50%, rgba(60,30,10,0.35) 0%, transparent 70%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
-a { text-decoration: none; color: inherit; }
-button { font-family: 'Inter', sans-serif; cursor: none; border: none; background: none; }
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-thumb { background: var(--sand); }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CUSTOM CURSOR
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-#cur {
-  position: fixed; z-index: 9999;
-  width: 8px; height: 8px;
-  background: var(--text);
-  border-radius: 50%;
+/* ambient orbs that the glass blurs against */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
   pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: width .3s var(--ease-spring), height .3s var(--ease-spring), background .3s;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 10% 15%, rgba(180,130,60,0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 90% 80%, rgba(120,70,20,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 600px at 60% 30%, rgba(80,40,10,0.12) 0%, transparent 70%);
 }
-#cur.hover { width: 36px; height: 36px; background: transparent; border: 1.5px solid var(--sand); }
-#cur.quiz-mode { background: var(--sand); }
-#cur.quiz-mode.hover { border-color: var(--sand-pale); }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   NAV
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* ── CURSOR ──────────────────────────────────────────────────── */
+#cur {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--bronze); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .25s var(--ease-spring), height .25s var(--ease-spring), background .2s;
+}
+#cur.hover { width: 28px; height: 28px; background: transparent; border: 1.5px solid var(--bronze); }
+
+/* ── NAV ─────────────────────────────────────────────────────── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 48px;
+  height: 68px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 52px; height: 68px;
-  transition: background .4s, border-color .4s;
-}
-nav.solid {
-  background: rgba(250, 248, 243, 0.94);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  background: var(--gls-dark-bg);
+  backdrop-filter: var(--gls-blur-md);
+  -webkit-backdrop-filter: var(--gls-blur-md);
+  border-bottom: 1px solid var(--gls-dark-border);
+  box-shadow: var(--gls-dark-shadow);
 }
 .nav-logo {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem; font-weight: 600;
-  letter-spacing: 6px; text-transform: uppercase;
-  color: var(--text);
+  font-weight: 300; font-style: italic;
+  font-size: 22px; letter-spacing: .12em;
+  color: var(--bronze); text-decoration: none;
 }
-.nav-center { display: flex; gap: 40px; }
-.nav-center a {
-  font-size: .78rem; font-weight: 500; letter-spacing: 1.5px;
-  text-transform: uppercase; color: var(--muted);
-  transition: color .2s;
-}
-.nav-center a:hover { color: var(--text); }
-.nav-right { display: flex; align-items: center; gap: 28px; }
-.nav-tel {
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
   font-family: 'Space Mono', monospace;
-  font-size: .72rem; color: var(--muted);
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--sand); text-decoration: none;
+  opacity: .7; transition: opacity .2s, color .2s;
 }
-.btn-quiz-trigger {
-  display: flex; align-items: center; gap: 8px;
-  padding: 11px 24px;
-  background: var(--text); color: var(--parchment);
-  font-size: .78rem; font-weight: 600; letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: background .3s, transform .2s;
+.nav-links a:hover { opacity: 1; color: var(--bronze); }
+.nav-cta {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink); background: var(--bronze);
+  border: none; padding: 10px 22px; border-radius: 30px;
+  cursor: none; transition: transform .2s var(--ease-spring), box-shadow .2s;
 }
-.btn-quiz-trigger:hover { background: var(--layer2); transform: translateY(-1px); }
-.btn-quiz-trigger svg { flex-shrink: 0; }
+.nav-cta:hover { transform: scale(1.04); box-shadow: 0 4px 18px rgba(200,168,122,0.4); }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   HERO
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-#hero {
+/* ── HERO ────────────────────────────────────────────────────── */
+.hero {
   min-height: 100vh;
   display: grid; grid-template-columns: 1fr 1fr;
   align-items: center;
-  padding: 100px 52px 80px;
+  padding: 120px 80px 80px;
   gap: 60px;
-  position: relative; overflow: hidden;
-  background: var(--parchment);
+  position: relative; z-index: 1;
 }
-.hero-left { max-width: 560px; }
-.hero-overline {
+
+.hero-left {
+  background: var(--gls-light-bg);
+  backdrop-filter: var(--gls-blur-lg);
+  -webkit-backdrop-filter: var(--gls-blur-lg);
+  border: 1px solid var(--gls-light-border);
+  box-shadow: var(--gls-light-shadow);
+  border-radius: var(--r-lg);
+  padding: 56px 52px;
+}
+
+.hero-eyebrow {
   font-family: 'Space Mono', monospace;
-  font-size: .68rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 28px;
-  display: flex; align-items: center; gap: 14px;
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--bronze); opacity: .8; margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
 }
-.hero-overline::before {
-  content: ''; width: 32px; height: 1px; background: var(--sand);
+.hero-eyebrow::before {
+  content: ''; display: block;
+  width: 28px; height: 1px; background: var(--bronze); opacity: .5;
 }
-h1 {
+
+.hero-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3.2rem, 5.5vw, 5.4rem);
-  font-weight: 300; line-height: 1.05;
-  letter-spacing: -1px; color: var(--text);
+  font-weight: 300; font-style: italic;
+  font-size: clamp(52px, 6vw, 88px);
+  line-height: 1.05; letter-spacing: -.01em;
+  color: var(--sand-pale);
   margin-bottom: 28px;
 }
-h1 em {
-  font-style: italic; font-weight: 300;
-  color: var(--sand);
+.hero-title em { color: var(--bronze); font-style: italic; }
+
+.hero-sub {
+  font-size: 15px; line-height: 1.7;
+  color: var(--sand); opacity: .75;
+  max-width: 420px; margin-bottom: 44px;
 }
-.hero-body {
-  font-size: 1rem; line-height: 1.75;
-  color: var(--muted); max-width: 420px;
-  margin-bottom: 48px;
-}
-.hero-cta-row { display: flex; align-items: center; gap: 24px; }
+
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
 .btn-primary {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 15px 36px;
-  background: var(--text); color: var(--parchment);
-  font-size: .82rem; font-weight: 600; letter-spacing: 1.5px;
-  text-transform: uppercase;
-  transition: background .3s, transform .2s;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink); background: var(--bronze);
+  border: none; padding: 14px 32px; border-radius: 30px;
+  cursor: none; transition: transform .2s var(--ease-spring), box-shadow .2s;
   position: relative; overflow: hidden;
 }
 .btn-primary::after {
-  content: ''; position: absolute;
-  left: -100%; top: 0; bottom: 0; width: 100%;
-  background: rgba(255,255,255,.08);
-  transition: left .3s var(--ease-spring);
+  content: ''; position: absolute; inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: translateX(-110%) skewX(-20deg);
+  transition: transform .4s var(--ease-silk);
 }
-.btn-primary:hover { background: var(--layer2); transform: translateY(-2px); }
-.btn-primary:hover::after { left: 0; }
+.btn-primary:hover::after { transform: translateX(110%) skewX(-20deg); }
+.btn-primary:hover { transform: scale(1.04); box-shadow: 0 6px 24px rgba(200,168,122,0.45); }
+
 .btn-ghost {
-  font-size: .78rem; font-weight: 500; color: var(--muted);
-  letter-spacing: .5px;
-  display: inline-flex; align-items: center; gap: 6px;
-  transition: color .2s;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--bronze);
+  background: var(--gls-mid-bg);
+  backdrop-filter: var(--gls-blur-sm);
+  -webkit-backdrop-filter: var(--gls-blur-sm);
+  border: 1px solid var(--gls-mid-border);
+  box-shadow: var(--gls-mid-shadow);
+  padding: 14px 32px; border-radius: 30px;
+  cursor: none; transition: transform .2s var(--ease-spring), background .2s, box-shadow .2s;
 }
-.btn-ghost:hover { color: var(--text); }
-.hero-trust {
-  margin-top: 56px; padding-top: 32px;
-  border-top: 1px solid var(--border);
-  display: flex; gap: 36px; flex-wrap: wrap;
+.btn-ghost:hover {
+  transform: scale(1.04);
+  background: rgba(200,168,122,0.12);
+  box-shadow: 0 6px 28px rgba(200,168,122,0.2);
 }
-.trust-pill {
-  font-size: .72rem; font-weight: 500; color: var(--muted);
-  display: flex; align-items: center; gap: 8px;
-}
-.trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
 
-/* Hero SVG */
-.hero-right {
+/* ── HOUSE SVG ───────────────────────────────────────────────── */
+.hero-right { position: relative; }
+
+.house-wrap {
+  background: var(--gls-mid-bg);
+  backdrop-filter: var(--gls-blur-md);
+  -webkit-backdrop-filter: var(--gls-blur-md);
+  border: 1px solid var(--gls-mid-border);
+  box-shadow: var(--gls-mid-shadow);
+  border-radius: var(--r-lg);
+  padding: 40px;
   display: flex; align-items: center; justify-content: center;
-  position: relative;
-}
-.hero-svg-wrap {
-  width: 100%; max-width: 540px;
-  position: relative;
 }
 
-/* SVG path draw animation */
+.house-svg { width: 100%; max-width: 460px; height: auto; }
+
 .draw-path {
-  stroke-dasharray: 2000;
-  stroke-dashoffset: 2000;
-  animation: draw 2.4s var(--ease-spring) forwards;
+  fill: none;
+  stroke: rgba(200,168,122,0.22);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 2.2s var(--ease-silk) forwards;
 }
-.draw-path:nth-child(1)  { animation-delay: .1s; }
-.draw-path:nth-child(2)  { animation-delay: .3s; }
-.draw-path:nth-child(3)  { animation-delay: .5s; }
-.draw-path:nth-child(4)  { animation-delay: .65s; }
-.draw-path:nth-child(5)  { animation-delay: .8s; }
-.draw-path:nth-child(6)  { animation-delay: .9s; }
-.draw-path:nth-child(7)  { animation-delay: 1.0s; }
-.draw-path:nth-child(8)  { animation-delay: 1.1s; }
-.draw-path:nth-child(9)  { animation-delay: 1.2s; }
-.draw-path:nth-child(10) { animation-delay: 1.3s; }
-.draw-path:nth-child(11) { animation-delay: 1.4s; }
-.draw-path:nth-child(12) { animation-delay: 1.5s; }
-.draw-path:nth-child(13) { animation-delay: 1.6s; }
-.draw-path:nth-child(14) { animation-delay: 1.7s; }
-.draw-path:nth-child(15) { animation-delay: 1.75s; }
-@keyframes draw { to { stroke-dashoffset: 0; } }
+.draw-path:nth-child(1)  { animation-delay: .1s }
+.draw-path:nth-child(2)  { animation-delay: .2s }
+.draw-path:nth-child(3)  { animation-delay: .35s }
+.draw-path:nth-child(4)  { animation-delay: .45s }
+.draw-path:nth-child(5)  { animation-delay: .55s }
+.draw-path:nth-child(6)  { animation-delay: .65s }
+.draw-path:nth-child(7)  { animation-delay: .75s }
+.draw-path:nth-child(8)  { animation-delay: .85s }
+.draw-path:nth-child(9)  { animation-delay: .95s }
+.draw-path:nth-child(10) { animation-delay: 1.05s }
+.draw-path:nth-child(11) { animation-delay: 1.15s }
+.draw-path:nth-child(12) { animation-delay: 1.25s }
 
-/* Zone highlight pulses (triggered by JS) */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
 .zone-dot {
-  opacity: 0; transition: opacity .5s var(--ease-spring);
+  fill: rgba(200,168,122,0.18);
+  transition: fill .4s, r .4s;
+  r: 5;
 }
-.zone-dot.lit { opacity: 1; }
+.zone-dot.active { fill: var(--bronze); r: 7; }
+
 .zone-ring {
-  opacity: 0; r: 0;
-  transition: opacity .5s var(--ease-spring), r .6s var(--ease-spring);
+  fill: none;
+  stroke: var(--bronze);
+  stroke-width: 1.5;
+  r: 12;
+  opacity: 0;
+  transition: opacity .4s;
 }
-.zone-ring.lit { opacity: 1; r: 18; }
+.zone-ring.active { opacity: 1; animation: pulse-ring 1.4s ease-out infinite; }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   MARQUEE STRIP
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes pulse-ring {
+  0%   { r: 10; opacity: .9; }
+  100% { r: 22; opacity: 0; }
+}
+
+/* ── MARQUEE ─────────────────────────────────────────────────── */
 .marquee-strip {
-  background: var(--void); color: var(--sand);
-  padding: 18px 0;
-  overflow: hidden;
   position: relative; z-index: 1;
+  overflow: hidden; padding: 18px 0;
+  background: var(--gls-dark-bg);
+  backdrop-filter: var(--gls-blur-sm);
+  -webkit-backdrop-filter: var(--gls-blur-sm);
+  border-top: 1px solid var(--gls-dark-border);
+  border-bottom: 1px solid var(--gls-dark-border);
+  box-shadow: var(--gls-dark-shadow);
 }
-.marquee-track {
-  display: flex; width: max-content;
-  animation: marquee 22s linear infinite;
-}
-.marquee-item {
-  white-space: nowrap;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem; font-weight: 300; font-style: italic;
-  letter-spacing: 2px; padding: 0 40px;
-  display: flex; align-items: center; gap: 40px;
-}
-.marquee-sep { color: var(--sand-dim); font-style: normal; }
-@keyframes marquee { to { transform: translateX(-50%); } }
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   MANIFESTO SECTION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-#manifesto {
-  padding: 120px 52px;
-  background: var(--cream);
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: start;
-  position: relative;
-}
-#manifesto::before {
-  content: ''; position: absolute;
-  top: 0; left: 52px; right: 52px; height: 1px;
-  background: var(--border);
-}
-.manifesto-left {
-  position: sticky; top: 100px;
-}
-.manifesto-tag {
+.marquee-inner { display: flex; width: max-content; animation: scroll-left 28s linear infinite; }
+.marquee-inner span {
   font-family: 'Space Mono', monospace;
-  font-size: .65rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--sand); margin-bottom: 20px;
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--bronze); opacity: .55;
+  padding: 0 40px; white-space: nowrap;
 }
-.manifesto-left h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.6rem, 4vw, 4rem);
-  font-weight: 300; line-height: 1.1;
-  letter-spacing: -.5px; color: var(--text);
+.marquee-inner span::before { content: '◆'; margin-right: 16px; opacity: .4; }
+@keyframes scroll-left { to { transform: translateX(-50%); } }
+
+/* ── MANIFESTO ───────────────────────────────────────────────── */
+.manifesto {
+  position: relative; z-index: 1;
+  padding: 120px 80px;
 }
-.manifesto-left h2 em { font-style: italic; color: var(--sand); }
-.manifesto-right { display: flex; flex-direction: column; gap: 0; }
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--bronze); opacity: .6; margin-bottom: 56px;
+  display: flex; align-items: center; gap: 16px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); max-width: 200px; }
+
+.manifesto-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+}
 .manifesto-row {
-  padding: 36px 0;
-  border-bottom: 1px solid var(--border);
-  display: grid; grid-template-columns: 80px 1fr;
-  gap: 24px; align-items: start;
+  background: var(--gls-light-bg);
+  backdrop-filter: var(--gls-blur-md);
+  -webkit-backdrop-filter: var(--gls-blur-md);
+  border: 1px solid var(--gls-light-border);
+  box-shadow: var(--gls-light-shadow);
+  border-radius: var(--r-md);
+  padding: 40px 36px;
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .6s var(--ease-silk), transform .6s var(--ease-silk);
 }
-.manifesto-row:first-child { padding-top: 0; }
+.manifesto-row.visible { opacity: 1; transform: translateY(0); }
+.manifesto-row:nth-child(2) { transition-delay: .1s; }
+.manifesto-row:nth-child(3) { transition-delay: .2s; }
+
 .manifesto-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 3rem; font-weight: 300; font-style: italic;
-  color: var(--sand); line-height: 1;
-}
-.manifesto-content h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem; font-weight: 400;
-  color: var(--text); margin-bottom: 10px; letter-spacing: -.3px;
-}
-.manifesto-content p {
-  font-size: .88rem; line-height: 1.75; color: var(--muted);
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   QUIZ CTA INVITATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-#invite {
-  background: var(--void);
-  padding: 120px 52px;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: center;
-  position: relative; overflow: hidden;
-}
-.invite-bg-text {
-  position: absolute;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22vw; font-weight: 300; font-style: italic;
-  color: rgba(200,168,122,.04);
-  white-space: nowrap; pointer-events: none;
-  top: 50%; left: 50%; transform: translate(-50%,-50%);
-  letter-spacing: -4px; user-select: none;
-}
-.invite-left { position: relative; z-index: 1; }
-.invite-overline {
   font-family: 'Space Mono', monospace;
-  font-size: .65rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--sand-dim); margin-bottom: 24px;
-  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; letter-spacing: .1em;
+  color: var(--bronze); opacity: .5; margin-bottom: 20px;
 }
-.invite-overline::before { content: ''; width: 24px; height: 1px; background: var(--sand-dim); }
-.invite-left h2 {
+.manifesto-h {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.4rem, 3.8vw, 3.8rem);
-  font-weight: 300; line-height: 1.1;
-  color: var(--sand-pale); margin-bottom: 24px; letter-spacing: -.3px;
+  font-weight: 300; font-style: italic;
+  font-size: 26px; line-height: 1.2;
+  color: var(--sand-pale); margin-bottom: 16px;
 }
-.invite-left h2 em { font-style: italic; color: var(--sand); }
-.invite-body { font-size: .92rem; line-height: 1.75; color: var(--sand-dim); max-width: 420px; margin-bottom: 48px; }
-.btn-quiz-big {
-  display: inline-flex; align-items: center; gap: 12px;
-  padding: 18px 44px;
-  background: var(--sand); color: var(--void);
-  font-size: .82rem; font-weight: 600; letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: all .3s var(--ease-spring);
-  position: relative; overflow: hidden;
+.manifesto-p {
+  font-size: 14px; line-height: 1.7;
+  color: var(--sand); opacity: .7;
 }
-.btn-quiz-big::before {
-  content: ''; position: absolute;
-  inset: 0; background: var(--sand-pale);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .4s var(--ease-spring);
-  z-index: 0;
-}
-.btn-quiz-big span, .btn-quiz-big svg { position: relative; z-index: 1; }
-.btn-quiz-big:hover::before { transform: scaleX(1); }
-.btn-quiz-big:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,168,122,.25); }
 
-.invite-right { position: relative; z-index: 1; }
-.invite-stats { display: flex; flex-direction: column; gap: 1px; }
-.stat-row {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1px;
+/* ── INVITE / STATS ──────────────────────────────────────────── */
+.invite {
+  position: relative; z-index: 1;
+  padding: 80px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
 }
+
+.invite-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
 .stat-cell {
-  background: var(--layer); padding: 36px;
-  transition: background .3s;
+  background: var(--gls-mid-bg);
+  backdrop-filter: var(--gls-blur-md);
+  -webkit-backdrop-filter: var(--gls-blur-md);
+  border: 1px solid var(--gls-mid-border);
+  box-shadow: var(--gls-mid-shadow);
+  border-radius: var(--r-md);
+  padding: 32px 28px;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .5s var(--ease-silk), transform .5s var(--ease-silk);
 }
-.stat-cell:hover { background: var(--layer2); }
-.stat-val {
+.stat-cell.visible { opacity: 1; transform: translateY(0); }
+.stat-cell:nth-child(2) { transition-delay: .08s; }
+.stat-cell:nth-child(3) { transition-delay: .16s; }
+.stat-cell:nth-child(4) { transition-delay: .24s; }
+
+.stat-num {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 3.2rem; font-weight: 300; font-style: italic;
-  color: var(--sand); line-height: 1; letter-spacing: -1px;
-  margin-bottom: 6px;
+  font-weight: 300;
+  font-size: 44px; line-height: 1;
+  color: var(--bronze); margin-bottom: 8px;
 }
-.stat-lbl {
-  font-size: .72rem; color: var(--sand-dim);
-  letter-spacing: 1px; text-transform: uppercase;
+.stat-label {
   font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--sand); opacity: .55;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   COLLECTIONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-#collections {
-  padding: 120px 52px;
-  background: var(--parchment);
-}
-.collections-header {
-  display: flex; align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 72px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid var(--border);
-}
-.collections-header h2 {
+.invite-copy { }
+.invite-h {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.2rem, 3.5vw, 3.4rem);
-  font-weight: 300; letter-spacing: -.5px;
-  line-height: 1.1; color: var(--text);
+  font-weight: 300; font-style: italic;
+  font-size: clamp(36px, 4vw, 56px); line-height: 1.15;
+  color: var(--sand-pale); margin-bottom: 24px;
 }
-.collections-header h2 em { font-style: italic; color: var(--sand); }
-.collections-header p {
-  max-width: 300px; font-size: .85rem;
-  color: var(--muted); line-height: 1.7; text-align: right;
+.invite-p {
+  font-size: 14px; line-height: 1.7;
+  color: var(--sand); opacity: .7; margin-bottom: 36px;
 }
-.collections-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+
+/* ── COLLECTIONS ─────────────────────────────────────────────── */
+.collections {
+  position: relative; z-index: 1;
+  padding: 80px;
+}
+.col-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
+
 .col-card {
-  background: var(--cream);
-  display: flex; flex-direction: column;
+  border-radius: var(--r-lg);
   overflow: hidden;
-  transition: transform .4s var(--ease-spring);
+  border: 1px solid var(--gls-mid-border);
+  box-shadow: var(--gls-mid-shadow);
+  opacity: 0; transform: translateY(36px);
+  transition: opacity .6s var(--ease-silk), transform .6s var(--ease-silk);
   cursor: none;
 }
-.col-card:hover { transform: translateY(-4px); }
-.col-card-top {
-  background: var(--void); padding: 48px 40px 40px;
-  position: relative; overflow: hidden; flex-shrink: 0;
+.col-card.visible { opacity: 1; transform: translateY(0); }
+.col-card:nth-child(2) { transition-delay: .12s; }
+.col-card:nth-child(3) { transition-delay: .24s; }
+.col-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+
+.col-top {
+  background: var(--gls-dark-bg);
+  backdrop-filter: var(--gls-blur-md);
+  -webkit-backdrop-filter: var(--gls-blur-md);
+  padding: 36px 32px 24px;
+  border-bottom: 1px solid var(--gls-dark-border);
 }
-.col-card-top::after {
-  content: attr(data-letter);
-  position: absolute; bottom: -20px; right: -10px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 10rem; font-weight: 300; font-style: italic;
-  color: rgba(200,168,122,.06); line-height: 1;
-  pointer-events: none; user-select: none;
-}
-.col-tier {
+.col-badge {
   font-family: 'Space Mono', monospace;
-  font-size: .62rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--sand-dim); margin-bottom: 16px;
+  font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--bronze); opacity: .6; margin-bottom: 14px;
 }
 .col-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2.6rem; font-weight: 300;
-  color: var(--sand-pale); letter-spacing: -.5px;
-  margin-bottom: 8px; line-height: 1;
+  font-weight: 300; font-style: italic;
+  font-size: 30px; color: var(--sand-pale); margin-bottom: 10px;
 }
-.col-tagline { font-size: .82rem; color: var(--sand-dim); line-height: 1.6; }
 .col-price {
-  margin-top: 28px; padding-top: 20px;
-  border-top: 1px solid var(--border-dark);
+  font-family: 'Space Mono', monospace;
+  font-size: 22px; color: var(--bronze);
 }
-.col-from { font-family: 'Space Mono', monospace; font-size: .6rem; color: var(--sand-dim); letter-spacing: 2px; text-transform: uppercase; }
-.col-amount {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.2rem; font-weight: 300; font-style: italic;
-  color: var(--sand); line-height: 1.1;
-}
-.col-card-body { padding: 36px 40px; flex: 1; }
-.col-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
-.col-features li {
-  display: flex; align-items: flex-start; gap: 12px;
-  font-size: .85rem; color: var(--muted); line-height: 1.5;
-}
-.col-feat-dash { color: var(--sand); flex-shrink: 0; margin-top: 1px; }
-.col-cta {
-  width: 100%; padding: 13px 24px;
-  border: 1px solid var(--border);
-  color: var(--text); font-size: .78rem; font-weight: 500;
-  letter-spacing: 1px; text-transform: uppercase;
-  text-align: center;
-  transition: all .3s;
-  display: block;
-}
-.col-cta:hover { background: var(--text); color: var(--parchment); border-color: var(--text); }
+.col-price span { font-size: 11px; opacity: .6; letter-spacing: .1em; }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   QUIZ OVERLAY — FULL SCREEN TAKEOVER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.col-body {
+  background: var(--gls-light-bg);
+  backdrop-filter: var(--gls-blur-sm);
+  -webkit-backdrop-filter: var(--gls-blur-sm);
+  padding: 28px 32px 32px;
+}
+.col-features { list-style: none; }
+.col-features li {
+  font-size: 13px; color: var(--sand); opacity: .75;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(200,168,122,0.1);
+  display: flex; align-items: center; gap: 10px;
+}
+.col-features li::before {
+  content: '—'; color: var(--bronze); opacity: .5; font-size: 10px;
+  flex-shrink: 0;
+}
+.col-features li:last-child { border-bottom: none; }
+
+.col-cta {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink); background: var(--bronze);
+  border: none; padding: 12px 24px; border-radius: 30px;
+  cursor: none; width: 100%; margin-top: 20px;
+  transition: transform .2s var(--ease-spring), box-shadow .2s;
+}
+.col-cta:hover { transform: scale(1.03); box-shadow: 0 6px 20px rgba(200,168,122,0.4); }
+
+/* ── QUIZ OVERLAY ────────────────────────────────────────────── */
 #quiz-overlay {
   position: fixed; inset: 0; z-index: 500;
-  background: var(--void);
+  background: rgba(8,6,4,0.85);
+  backdrop-filter: var(--gls-blur-lg);
+  -webkit-backdrop-filter: var(--gls-blur-lg);
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s var(--ease-silk);
   display: flex; flex-direction: column;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .5s var(--ease-spring);
-  overflow: hidden;
 }
-#quiz-overlay.open {
-  pointer-events: all;
-  opacity: 1;
-}
+#quiz-overlay.open { opacity: 1; pointer-events: all; }
 
-/* Gold progress line */
-.quiz-progress-line {
-  position: absolute; top: 0; left: 0; height: 2px;
-  background: linear-gradient(90deg, var(--sand), var(--sand-pale));
-  width: 0%; transition: width .6s var(--ease-spring);
-  z-index: 10;
-}
-
-/* Background ghost house */
-.quiz-bg-house {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  pointer-events: none; opacity: .04;
-}
-.quiz-bg-house svg { width: 60%; max-width: 700px; }
-
-/* Quiz header */
 .quiz-header {
   padding: 0 60px;
   height: 68px;
   display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border-dark);
+  background: var(--gls-dark-bg);
+  backdrop-filter: var(--gls-blur-md);
+  -webkit-backdrop-filter: var(--gls-blur-md);
+  border-bottom: 1px solid var(--gls-dark-border);
   flex-shrink: 0;
-  position: relative; z-index: 10;
 }
 .quiz-logo {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem; font-weight: 600; letter-spacing: 5px;
-  text-transform: uppercase; color: var(--sand);
-}
-.quiz-step-num {
-  font-family: 'Space Mono', monospace;
-  font-size: .7rem; color: var(--sand-dim); letter-spacing: 2px;
+  font-weight: 300; font-style: italic;
+  font-size: 20px; color: var(--bronze);
 }
 .quiz-close {
-  display: flex; align-items: center; gap: 8px;
-  font-size: .72rem; font-weight: 500; letter-spacing: 1.5px;
-  text-transform: uppercase; color: var(--sand-dim);
-  transition: color .2s;
-  padding: 8px 0;
+  background: var(--gls-mid-bg);
+  backdrop-filter: var(--gls-blur-sm);
+  -webkit-backdrop-filter: var(--gls-blur-sm);
+  border: 1px solid var(--gls-mid-border);
+  box-shadow: var(--gls-mid-shadow);
+  color: var(--sand); font-size: 20px;
+  width: 40px; height: 40px; border-radius: 50%;
+  cursor: none; display: flex; align-items: center; justify-content: center;
+  transition: background .2s, color .2s, transform .2s;
 }
-.quiz-close:hover { color: var(--sand); }
+.quiz-close:hover { color: var(--bronze); transform: scale(1.1); }
 
-/* Quiz body */
-.quiz-body {
-  flex: 1; display: flex; flex-direction: column;
-  justify-content: center;
-  padding: 60px;
-  position: relative; z-index: 5;
-  overflow: hidden;
+.quiz-progress-bar {
+  height: 2px;
+  background: var(--gls-dark-bg);
+  position: relative;
+}
+.quiz-progress-fill {
+  height: 100%; background: var(--bronze);
+  transition: width .5s var(--ease-silk);
 }
 
-/* Steps */
+.quiz-body { flex: 1; position: relative; overflow: hidden; }
+
 .q-step {
-  position: absolute; inset: 60px;
+  position: absolute; inset: 0;
   display: flex; flex-direction: column;
-  justify-content: center;
-  opacity: 0; pointer-events: none;
-  transform: translateX(60px);
-  transition: opacity .4s var(--ease-spring), transform .4s var(--ease-spring);
+  align-items: center; justify-content: center;
+  padding: 60px 80px;
+  opacity: 0; transform: translateX(60px);
+  transition: opacity .5s var(--ease-spring), transform .5s var(--ease-spring);
+  pointer-events: none;
 }
 .q-step.active {
-  opacity: 1; pointer-events: all;
-  transform: translateX(0);
+  opacity: 1; transform: translateX(0);
+  pointer-events: all;
 }
-.q-step.leaving {
-  opacity: 0; pointer-events: none;
-  transform: translateX(-60px);
+.q-step.exit {
+  opacity: 0; transform: translateX(-60px);
 }
 
-.q-overline {
+.q-num {
   font-family: 'Space Mono', monospace;
-  font-size: .65rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--sand-dim); margin-bottom: 20px;
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--bronze); opacity: .5; margin-bottom: 20px;
 }
-.q-question {
+.q-text {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.2rem, 4vw, 3.8rem);
   font-weight: 300; font-style: italic;
-  color: var(--sand-pale); line-height: 1.15;
-  letter-spacing: -.5px; margin-bottom: 10px;
-  max-width: 680px;
+  font-size: clamp(28px, 3.5vw, 46px); line-height: 1.2;
+  color: var(--sand-pale); text-align: center;
+  max-width: 680px; margin-bottom: 48px;
 }
-.q-hint {
-  font-size: .82rem; color: var(--sand-dim); margin-bottom: 52px;
-  max-width: 480px; line-height: 1.6;
-}
-.q-answers {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 10px; max-width: 900px;
-}
-.q-answers.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 540px; }
-.q-answers.cols-3 { grid-template-columns: repeat(3, 1fr); max-width: 700px; }
+.q-answers { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 560px; }
 
-/* Answer button — the premium version */
 .q-ans {
-  padding: 22px 24px;
-  border: 1px solid var(--border-dark);
-  background: rgba(255,255,255,.02);
-  text-align: left; position: relative; overflow: hidden;
-  transition: border-color .25s, transform .2s var(--ease-spring);
-  display: flex; flex-direction: column; gap: 6px;
-}
-/* Sweep fill on selection */
-.q-ans::before {
-  content: ''; position: absolute;
-  inset: 0; background: var(--layer2);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .28s var(--ease-spring);
-  z-index: 0;
-}
-.q-ans.selected::before { transform: scaleX(1); }
-.q-ans.selected { border-color: var(--sand); }
-.q-ans.selected .q-ans-title { color: var(--sand-pale); }
-.q-ans.selected .q-ans-sub { color: var(--sand-dim); }
-.q-ans.selected .q-ans-sel { opacity: 1; }
-.q-ans:hover:not(.selected) { border-color: rgba(200,168,122,.3); transform: translateY(-2px); }
-.q-ans-title {
-  font-size: .85rem; font-weight: 600; color: var(--sand-pale);
-  position: relative; z-index: 1;
-  transition: color .2s;
-}
-.q-ans-sub {
-  font-size: .72rem; color: var(--sand-dim); line-height: 1.4;
-  position: relative; z-index: 1;
-  transition: color .2s;
-}
-.q-ans-sel {
-  position: absolute; top: 10px; right: 10px;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--sand);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity .25s;
-  z-index: 1;
-}
-
-/* Quiz footer nav */
-.quiz-footer {
-  padding: 0 60px;
-  height: 72px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-top: 1px solid var(--border-dark);
-  flex-shrink: 0;
-  position: relative; z-index: 10;
-}
-.q-back {
-  display: flex; align-items: center; gap: 8px;
-  font-size: .75rem; font-weight: 500; letter-spacing: 1px;
-  text-transform: uppercase; color: var(--sand-dim);
-  transition: color .2s;
-}
-.q-back:hover:not(:disabled) { color: var(--sand); }
-.q-back:disabled { opacity: .25; }
-.q-next {
-  display: flex; align-items: center; gap: 10px;
-  padding: 13px 36px;
-  background: var(--sand); color: var(--void);
-  font-size: .78rem; font-weight: 600; letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: all .3s var(--ease-spring);
+  background: var(--gls-mid-bg);
+  backdrop-filter: var(--gls-blur-sm);
+  -webkit-backdrop-filter: var(--gls-blur-sm);
+  border: 1px solid var(--gls-mid-border);
+  box-shadow: var(--gls-mid-shadow);
+  border-radius: var(--r-sm);
+  padding: 18px 24px;
+  color: var(--sand); font-size: 14px; line-height: 1.4;
+  cursor: none; text-align: left;
   position: relative; overflow: hidden;
+  transition: border-color .25s, color .25s, transform .2s var(--ease-spring), box-shadow .25s;
 }
-.q-next::before {
+.q-ans::before {
   content: ''; position: absolute; inset: 0;
-  background: var(--sand-pale);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .35s var(--ease-spring);
+  background: var(--bronze); opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .4s var(--ease-silk), opacity .1s;
 }
-.q-next span, .q-next svg { position: relative; z-index: 1; }
-.q-next:hover:not(:disabled)::before { transform: scaleX(1); }
-.q-next:hover:not(:disabled) { transform: translateY(-1px); }
-.q-next:disabled { opacity: .3; }
+.q-ans:hover {
+  border-color: rgba(200,168,122,0.4);
+  transform: translateX(4px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(200,168,122,0.18);
+}
+.q-ans.selected::before { clip-path: inset(0 0% 0 0); opacity: .15; }
+.q-ans.selected { border-color: var(--bronze); color: var(--sand-pale); }
+.q-ans.selected .ans-check { opacity: 1; }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   RESULT SCREEN (inside overlay)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.ans-check {
+  position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+  color: var(--bronze); font-size: 16px; opacity: 0; transition: opacity .25s;
+}
+
+/* ── QUIZ RESULT ─────────────────────────────────────────────── */
 #quiz-result {
-  position: absolute; inset: 68px 0 72px;
-  background: var(--void); overflow-y: auto;
-  opacity: 0; pointer-events: none;
-  transform: scale(.97) translateY(20px);
-  transition: opacity .5s var(--ease-spring), transform .5s var(--ease-spring);
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 80px; text-align: center;
 }
-#quiz-result.visible {
-  opacity: 1; pointer-events: all;
-  transform: scale(1) translateY(0);
-}
-.result-inner { max-width: 1000px; margin: 0 auto; padding: 60px; }
-.result-eyebrow {
+#quiz-result.active { display: flex; }
+
+.result-label {
   font-family: 'Space Mono', monospace;
-  font-size: .62rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--sand-dim); margin-bottom: 8px;
-  display: flex; align-items: center; gap: 12px;
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--bronze); opacity: .6; margin-bottom: 16px;
 }
-.result-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--sand-dim); }
-.result-pack-name {
+.result-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.6rem, 5vw, 5rem);
   font-weight: 300; font-style: italic;
-  color: var(--sand); letter-spacing: -1px;
-  line-height: 1; margin-bottom: 12px;
+  font-size: clamp(36px, 4vw, 60px); color: var(--sand-pale);
+  margin-bottom: 14px;
 }
-.result-tagline {
-  font-size: .9rem; color: var(--sand-dim);
-  max-width: 520px; line-height: 1.7; margin-bottom: 0;
-}
-.result-divider {
-  height: 1px; background: var(--border-dark);
-  margin: 40px 0;
-}
-.result-main { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+.result-sub { font-size: 14px; color: var(--sand); opacity: .65; margin-bottom: 48px; max-width: 500px; }
 
-/* Products */
-.result-products-title {
-  font-family: 'Space Mono', monospace;
-  font-size: .62rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--sand-dim); margin-bottom: 24px;
+.result-pack {
+  background: var(--gls-light-bg);
+  backdrop-filter: var(--gls-blur-lg);
+  -webkit-backdrop-filter: var(--gls-blur-lg);
+  border: 1px solid var(--gls-light-border);
+  box-shadow: var(--gls-light-shadow);
+  border-radius: var(--r-lg);
+  padding: 40px 48px;
+  width: 100%; max-width: 520px; text-align: left; margin-bottom: 28px;
 }
-.result-product-list { display: flex; flex-direction: column; gap: 2px; }
-.rp-item {
-  display: flex; align-items: center;
-  gap: 0;
-  background: var(--layer);
-  overflow: hidden;
-  opacity: 0; transform: translateX(-20px);
-  transition: opacity .4s var(--ease-spring), transform .4s var(--ease-spring);
-}
-.rp-item.in { opacity: 1; transform: translateX(0); }
-.rp-icon-cell {
-  width: 56px; height: 56px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem;
-  border-right: 1px solid var(--border-dark);
-}
-.rp-name { flex: 1; padding: 0 18px; font-size: .82rem; color: var(--sand-pale); }
-.rp-ref {
-  padding: 0 16px; font-family: 'Space Mono', monospace;
-  font-size: .62rem; color: var(--sand-dim);
-}
-.rp-qty {
-  padding: 0 16px; font-family: 'Space Mono', monospace;
-  font-size: .72rem; color: var(--sand);
-  border-left: 1px solid var(--border-dark);
-  height: 56px; display: flex; align-items: center;
-}
-
-/* Price + actions */
-.result-right { display: flex; flex-direction: column; gap: 0; }
-.result-price-block {
-  background: var(--layer);
-  padding: 36px; margin-bottom: 2px;
-}
-.rpr-label {
-  font-family: 'Space Mono', monospace;
-  font-size: .6rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--sand-dim); margin-bottom: 8px;
-}
-.rpr-amount {
+.pack-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 4rem; font-weight: 300; font-style: italic;
-  color: var(--sand); line-height: 1; letter-spacing: -2px;
+  font-weight: 300; font-style: italic;
+  font-size: 36px; color: var(--bronze); margin-bottom: 6px;
 }
-.rpr-note { font-size: .75rem; color: var(--sand-dim); margin-top: 6px; line-height: 1.5; }
-.result-why-block { background: var(--layer); padding: 36px; }
-.result-why-title {
+.pack-sku {
   font-family: 'Space Mono', monospace;
-  font-size: .6rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--sand-dim); margin-bottom: 20px;
+  font-size: 10px; letter-spacing: .14em;
+  color: var(--sand); opacity: .45; margin-bottom: 20px;
 }
-.rw-item {
-  display: flex; gap: 14px; margin-bottom: 16px;
-  font-size: .82rem; color: var(--sand-dim); line-height: 1.55;
+.pack-desc { font-size: 14px; color: var(--sand); opacity: .7; margin-bottom: 28px; line-height: 1.6; }
+.pack-price-row {
+  display: flex; align-items: center; gap: 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
 }
-.rw-item:last-child { margin-bottom: 0; }
-.rw-dash { color: var(--sand); flex-shrink: 0; margin-top: 1px; }
-.rw-item strong { color: var(--sand-pale); }
-.result-actions {
-  display: flex; gap: 12px; margin-top: 2px;
-  padding-top: 40px;
+.pack-price {
+  font-family: 'Space Mono', monospace;
+  font-size: 28px; color: var(--bronze);
 }
-.btn-result-primary {
-  flex: 1; padding: 16px;
-  background: var(--sand); color: var(--void);
-  font-size: .78rem; font-weight: 600; letter-spacing: 2px;
-  text-transform: uppercase; text-align: center;
-  transition: all .3s; display: block;
-}
-.btn-result-primary:hover { background: var(--sand-pale); }
-.btn-result-ghost {
-  flex: 1; padding: 16px;
-  border: 1px solid var(--border-dark); color: var(--sand-dim);
-  font-size: .78rem; font-weight: 500; letter-spacing: 1px;
-  text-transform: uppercase; text-align: center;
-  transition: all .3s; display: block;
-}
-.btn-result-ghost:hover { border-color: var(--sand-dim); color: var(--sand); }
-.btn-restart {
-  font-size: .72rem; color: var(--sand-dim);
-  letter-spacing: 1px; text-transform: uppercase;
-  display: flex; align-items: center; gap: 8px;
-  transition: color .2s;
-  padding: 16px 0;
-}
-.btn-restart:hover { color: var(--sand); }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   FOOTER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.result-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+/* ── QUIZ FOOTER ─────────────────────────────────────────────── */
+.quiz-footer {
+  padding: 20px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--gls-dark-bg);
+  backdrop-filter: var(--gls-blur-md);
+  -webkit-backdrop-filter: var(--gls-blur-md);
+  border-top: 1px solid var(--gls-dark-border);
+  flex-shrink: 0;
+}
+.quiz-step-dots { display: flex; gap: 8px; }
+.quiz-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(200,168,122,0.2);
+  transition: background .3s, width .3s;
+}
+.quiz-dot.active { background: var(--bronze); width: 20px; border-radius: 3px; }
+.quiz-dot.done { background: rgba(200,168,122,0.5); }
+
+.btn-quiz-nav {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  background: var(--gls-mid-bg);
+  backdrop-filter: var(--gls-blur-sm);
+  -webkit-backdrop-filter: var(--gls-blur-sm);
+  border: 1px solid var(--gls-mid-border);
+  box-shadow: var(--gls-mid-shadow);
+  color: var(--sand); padding: 10px 24px; border-radius: 30px;
+  cursor: none; transition: color .2s, border-color .2s, transform .2s;
+  display: none;
+}
+.btn-quiz-nav.visible { display: block; }
+.btn-quiz-nav:hover { color: var(--bronze); border-color: var(--bronze); transform: scale(1.03); }
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
 footer {
-  background: var(--void);
-  border-top: 1px solid var(--border-dark);
-  padding: 72px 52px 40px;
+  position: relative; z-index: 1;
+  padding: 80px;
+  background: var(--gls-dark-bg);
+  backdrop-filter: var(--gls-blur-lg);
+  -webkit-backdrop-filter: var(--gls-blur-lg);
+  border-top: 1px solid var(--gls-dark-border);
+  box-shadow: var(--gls-dark-shadow);
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
 }
-.footer-top {
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 60px; padding-bottom: 60px;
-  border-bottom: 1px solid var(--border-dark);
-  margin-bottom: 32px;
-}
-.footer-brand-name {
+.footer-brand .footer-logo {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem; font-weight: 300; font-style: italic;
-  color: var(--sand); letter-spacing: 2px; margin-bottom: 16px;
+  font-weight: 300; font-style: italic;
+  font-size: 28px; color: var(--bronze);
+  display: block; margin-bottom: 16px;
 }
-.footer-brand-desc {
-  font-size: .82rem; color: var(--sand-dim); line-height: 1.7;
-  max-width: 280px;
+.footer-tagline {
+  font-size: 13px; color: var(--sand); opacity: .55; line-height: 1.6; max-width: 260px;
 }
 .footer-col-title {
   font-family: 'Space Mono', monospace;
-  font-size: .6rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--sand-dim); margin-bottom: 20px;
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--bronze); opacity: .6; margin-bottom: 20px;
 }
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.footer-col a { font-size: .82rem; color: rgba(200,168,122,.4); transition: color .2s; }
-.footer-col a:hover { color: var(--sand); }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a {
+  font-size: 13px; color: var(--sand); opacity: .55; text-decoration: none;
+  transition: opacity .2s, color .2s;
+}
+.footer-links a:hover { opacity: 1; color: var(--bronze); }
+
 .footer-bottom {
+  position: relative; z-index: 1;
+  padding: 24px 80px;
+  background: var(--gls-dark-bg);
+  backdrop-filter: var(--gls-blur-sm);
+  -webkit-backdrop-filter: var(--gls-blur-sm);
+  border-top: 1px solid rgba(200,168,122,0.08);
   display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 16px;
 }
 .footer-copy {
   font-family: 'Space Mono', monospace;
-  font-size: .62rem; color: rgba(200,168,122,.2); letter-spacing: 1px;
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--sand); opacity: .35;
 }
-.footer-links-row { display: flex; gap: 24px; }
-.footer-links-row a {
-  font-size: .72rem; color: rgba(200,168,122,.25);
-  transition: color .2s;
-}
-.footer-links-row a:hover { color: var(--sand-dim); }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   REVEAL ANIMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* ── SCROLL REVEAL ───────────────────────────────────────────── */
 .reveal {
-  opacity: 0; transform: translateY(30px);
-  transition: opacity .8s var(--ease-spring), transform .8s var(--ease-spring);
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .7s var(--ease-silk), transform .7s var(--ease-silk);
 }
-.reveal.in { opacity: 1; transform: translateY(0); }
-.delay-1 { transition-delay: .1s; }
-.delay-2 { transition-delay: .2s; }
-.delay-3 { transition-delay: .32s; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   RESPONSIVE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-@media (max-width: 980px) {
-  nav { padding: 0 24px; }
-  .nav-center { display: none; }
-  .nav-tel { display: none; }
-  #hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; padding: 100px 40px 60px; }
   .hero-right { display: none; }
-  #manifesto { grid-template-columns: 1fr; padding: 72px 24px; }
-  .manifesto-left { position: static; }
-  #invite { grid-template-columns: 1fr; padding: 72px 24px; }
-  .collections-grid { grid-template-columns: 1fr; }
-  .q-answers { grid-template-columns: 1fr 1fr !important; max-width: 100% !important; }
+  .manifesto-grid { grid-template-columns: 1fr; }
+  .invite { grid-template-columns: 1fr; padding: 60px 40px; }
+  .col-grid { grid-template-columns: 1fr; }
+  .collections { padding: 60px 40px; }
+  footer { grid-template-columns: 1fr 1fr; gap: 40px; padding: 60px 40px; }
+  .manifesto { padding: 80px 40px; }
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
   .quiz-header, .quiz-footer { padding: 0 24px; }
-  .quiz-body { padding: 24px; }
-  .q-step { inset: 24px; }
-  .result-inner { padding: 32px 24px; }
-  .result-main { grid-template-columns: 1fr; gap: 32px; }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-  footer { padding: 52px 24px 32px; }
-  .invite-stats { display: none; }
-  #collections { padding: 72px 24px; }
+  .q-step { padding: 40px 24px; }
+  #quiz-result { padding: 40px 24px; }
+  .footer-bottom { padding: 20px 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 </style>
 </head>
 <body>
 
-<!-- ── CURSOR ─────────────────────────────────────────────── -->
+<!-- CURSOR -->
 <div id="cur"></div>
 
-<!-- ── NAV ───────────────────────────────────────────────── -->
-<nav id="nav">
-  <div class="nav-logo">Veille</div>
-  <div class="nav-center">
-    <a href="#collections">Collections</a>
-    <a href="#manifesto">Philosophie</a>
-    <a href="#invite">Configurateur</a>
-  </div>
-  <div class="nav-right">
-    <div class="nav-tel">+33 1 80 96 00 00</div>
-    <button class="btn-quiz-trigger" id="triggerTop">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5L12.5 4.2V7.8C12.5 10.6 10.1 13.2 7 14C3.9 13.2 1.5 10.6 1.5 7.8V4.2L7 1.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-      Configurer
-    </button>
-  </div>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Veille</a>
+  <ul class="nav-links">
+    <li><a href="#manifesto" data-hover>Manifeste</a></li>
+    <li><a href="#collections" data-hover>Collections</a></li>
+    <li><a href="#" onclick="openQuiz(); return false;" data-hover>Configurateur</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openQuiz()" data-hover>Configurer ma sécurité</button>
 </nav>
 
-<!-- ── HERO ───────────────────────────────────────────────── -->
-<section id="hero">
+<!-- HERO -->
+<section class="hero" id="hero">
   <div class="hero-left">
-    <div class="hero-overline">Systèmes d'alarme résidentiels</div>
-    <h1>
-      La protection.<br>
-      <em>Une fois.<br>Pour toujours.</em>
+    <div class="hero-eyebrow">Sécurité résidentielle</div>
+    <h1 class="hero-title">
+      Protéger<br>ce qui<br><em>compte.</em>
     </h1>
-    <p class="hero-body">
-      Des systèmes d'alarme conçus pour la maison française — sans abonnement, sans contrat, sans concession sur la qualité. Installez-les vous-même en moins de trente minutes.
+    <p class="hero-sub">
+      Systèmes d'alarme sans abonnement, configurés précisément pour votre maison.
+      Une protection sobre, permanente, sans frais mensuels.
     </p>
-    <div class="hero-cta-row">
-      <button class="btn-primary" id="triggerHero">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5L12.5 4.2V7.8C12.5 10.6 10.1 13.2 7 14C3.9 13.2 1.5 10.6 1.5 7.8V4.2L7 1.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-        Trouver mon système
-      </button>
-      <a href="#collections" class="btn-ghost">
-        Voir les gammes
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2.5 6.5H10.5M7.5 3.5L10.5 6.5L7.5 9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="hero-trust">
-      <div class="trust-pill"><span class="trust-dot"></span>0 € d'abonnement</div>
-      <div class="trust-pill"><span class="trust-dot"></span>Installation 30 min</div>
-      <div class="trust-pill"><span class="trust-dot"></span>Garantie 2 ans</div>
-      <div class="trust-pill"><span class="trust-dot"></span>+50 000 foyers protégés</div>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openQuiz()" data-hover>Lancer le configurateur</button>
+      <a href="#collections" class="btn-ghost" data-hover>Voir les packs</a>
     </div>
   </div>
 
   <div class="hero-right">
-    <div class="hero-svg-wrap">
-      <!-- ANIMATED ARCHITECTURAL HOUSE SVG -->
-      <svg id="heroHouse" viewBox="0 0 520 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-        <!-- Ground line -->
-        <line class="draw-path" x1="60" y1="420" x2="460" y2="420" stroke="#C8A87A" stroke-width=".8" opacity=".3"/>
-
-        <!-- Foundation -->
-        <rect class="draw-path" x="100" y="380" width="320" height="40" stroke="#C8A87A" stroke-width="1" fill="none" opacity=".4"/>
-
-        <!-- Main walls -->
-        <rect class="draw-path" x="100" y="200" width="320" height="180" stroke="#C8A87A" stroke-width="1.2" fill="none"/>
-
-        <!-- Roof left -->
-        <line class="draw-path" x1="100" y1="200" x2="260" y2="80" stroke="#C8A87A" stroke-width="1.2"/>
-        <!-- Roof right -->
-        <line class="draw-path" x1="420" y1="200" x2="260" y2="80" stroke="#C8A87A" stroke-width="1.2"/>
-        <!-- Roof overhang left -->
-        <line class="draw-path" x1="80" y1="208" x2="260" y2="72" stroke="#C8A87A" stroke-width=".6" opacity=".5"/>
-        <!-- Roof overhang right -->
-        <line class="draw-path" x1="440" y1="208" x2="260" y2="72" stroke="#C8A87A" stroke-width=".6" opacity=".5"/>
-
+    <div class="house-wrap">
+      <svg class="house-svg" viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Roof -->
+        <path class="draw-path" d="M160 30 L290 120 L30 120 Z"/>
+        <!-- Ridge -->
+        <path class="draw-path" d="M160 30 L160 120"/>
+        <!-- Left wall -->
+        <path class="draw-path" d="M60 120 L60 250"/>
+        <!-- Right wall -->
+        <path class="draw-path" d="M260 120 L260 250"/>
+        <!-- Floor -->
+        <path class="draw-path" d="M60 250 L260 250"/>
+        <!-- Door -->
+        <path class="draw-path" id="zone-door" d="M135 250 L135 190 Q160 178 185 190 L185 250"/>
+        <!-- Window left GF -->
+        <path class="draw-path" id="zone-win-gf-l" d="M75 155 L115 155 L115 185 L75 185 Z"/>
+        <path class="draw-path" d="M95 155 L95 185 M75 170 L115 170"/>
+        <!-- Window right GF -->
+        <path class="draw-path" id="zone-win-gf-r" d="M205 155 L245 155 L245 185 L205 185 Z"/>
+        <path class="draw-path" d="M225 155 L225 185 M205 170 L245 170"/>
+        <!-- Window left FF -->
+        <path class="draw-path" id="zone-win-ff-l" d="M80 125 L110 125 L110 150 L80 150 Z"/>
+        <!-- Window right FF -->
+        <path class="draw-path" id="zone-win-ff-r" d="M210 125 L240 125 L240 150 L210 150 Z"/>
         <!-- Chimney -->
-        <rect class="draw-path" x="340" y="96" width="28" height="60" stroke="#C8A87A" stroke-width=".8" fill="none" opacity=".7"/>
-        <line class="draw-path" x1="336" y1="93" x2="372" y2="93" stroke="#C8A87A" stroke-width="1"/>
+        <path class="draw-path" d="M200 52 L200 30 L220 30 L220 65"/>
 
-        <!-- Front door -->
-        <rect class="draw-path" id="svgDoor" x="214" y="308" width="72" height="112" stroke="#C8A87A" stroke-width="1" fill="none"/>
-        <!-- Door arch -->
-        <path class="draw-path" d="M214 320 Q250 296 286 320" stroke="#C8A87A" stroke-width=".8" fill="none"/>
-        <!-- Door center line -->
-        <line class="draw-path" x1="250" y1="308" x2="250" y2="420" stroke="#C8A87A" stroke-width=".6" opacity=".5"/>
-
-        <!-- Left GF window -->
-        <rect class="draw-path" id="svgWinL" x="120" y="255" width="72" height="60" stroke="#C8A87A" stroke-width="1" fill="none"/>
-        <line class="draw-path" x1="156" y1="257" x2="156" y2="313" stroke="#C8A87A" stroke-width=".6" opacity=".5"/>
-        <line class="draw-path" x1="122" y1="285" x2="190" y2="285" stroke="#C8A87A" stroke-width=".6" opacity=".5"/>
-
-        <!-- Right GF window -->
-        <rect class="draw-path" id="svgWinR" x="328" y="255" width="72" height="60" stroke="#C8A87A" stroke-width="1" fill="none"/>
-        <line class="draw-path" x1="364" y1="257" x2="364" y2="313" stroke="#C8A87A" stroke-width=".6" opacity=".5"/>
-        <line class="draw-path" x1="330" y1="285" x2="398" y2="285" stroke="#C8A87A" stroke-width=".6" opacity=".5"/>
-
-        <!-- FF windows -->
-        <rect class="draw-path" id="svgWinFF1" x="130" y="130" width="54" height="50" stroke="#C8A87A" stroke-width=".8" fill="none" opacity=".7"/>
-        <line class="draw-path" x1="157" y1="132" x2="157" y2="178" stroke="#C8A87A" stroke-width=".5" opacity=".4"/>
-        <rect class="draw-path" id="svgWinFF2" x="336" y="130" width="54" height="50" stroke="#C8A87A" stroke-width=".8" fill="none" opacity=".7"/>
-        <line class="draw-path" x1="363" y1="132" x2="363" y2="178" stroke="#C8A87A" stroke-width=".5" opacity=".4"/>
-
-        <!-- Dimensions lines (architectural) -->
-        <line class="draw-path" x1="60" y1="200" x2="60" y2="380" stroke="#C8A87A" stroke-width=".5" opacity=".25" stroke-dasharray="2 4"/>
-        <line class="draw-path" x1="55" y1="200" x2="65" y2="200" stroke="#C8A87A" stroke-width=".5" opacity=".25"/>
-        <line class="draw-path" x1="55" y1="380" x2="65" y2="380" stroke="#C8A87A" stroke-width=".5" opacity=".25"/>
-
-        <!-- ZONE DOTS (toggled by JS) -->
-        <!-- Door zone -->
-        <circle id="dotDoor" class="zone-dot" cx="214" cy="308" r="5" fill="#C8A87A"/>
-        <circle id="ringDoor" class="zone-ring" cx="214" cy="308" r="0" stroke="#C8A87A" stroke-width="1" fill="none" opacity=".4"/>
-
-        <!-- Window GF zone -->
-        <circle id="dotWinL" class="zone-dot" cx="120" cy="255" r="5" fill="#C8A87A"/>
-        <circle id="ringWinL" class="zone-ring" cx="120" cy="255" r="0" stroke="#C8A87A" stroke-width="1" fill="none" opacity=".4"/>
-        <circle id="dotWinR" class="zone-dot" cx="400" cy="255" r="5" fill="#C8A87A"/>
-
-        <!-- Window FF zone -->
-        <circle id="dotWinFF" class="zone-dot" cx="130" cy="130" r="5" fill="#C8A87A"/>
-
-        <!-- Motion -->
-        <circle id="dotMotion" class="zone-dot" cx="260" cy="218" r="5" fill="#C8A87A"/>
-        <circle id="ringMotion" class="zone-ring" cx="260" cy="218" r="0" stroke="#C8A87A" stroke-width="1" fill="none" opacity=".4"/>
-
-        <!-- Camera -->
-        <circle id="dotCam" class="zone-dot" cx="104" cy="204" r="5" fill="#C8A87A"/>
-
-        <!-- Smoke -->
-        <circle id="dotSmoke" class="zone-dot" cx="260" cy="210" r="5" fill="#B83428"/>
-        <circle id="ringSmoke" class="zone-ring" cx="260" cy="210" r="0" stroke="#B83428" stroke-width="1" fill="none" opacity=".5"/>
-
-        <!-- Siren -->
-        <circle id="dotSiren" class="zone-dot" cx="354" cy="144" r="5" fill="#C8A87A"/>
+        <!-- Zone dots -->
+        <g id="zone-motion">
+          <circle class="zone-dot" cx="160" cy="200" r="5"/>
+          <circle class="zone-ring" cx="160" cy="200" r="12"/>
+        </g>
+        <g id="zone-camera">
+          <circle class="zone-dot" cx="255" cy="130" r="5"/>
+          <circle class="zone-ring" cx="255" cy="130" r="12"/>
+        </g>
+        <g id="zone-siren">
+          <circle class="zone-dot" cx="160" cy="80" r="5"/>
+          <circle class="zone-ring" cx="160" cy="80" r="12"/>
+        </g>
+        <g id="zone-smoke">
+          <circle class="zone-dot" cx="100" cy="137" r="5"/>
+          <circle class="zone-ring" cx="100" cy="137" r="12"/>
+        </g>
       </svg>
     </div>
   </div>
 </section>
 
-<!-- ── MARQUEE ────────────────────────────────────────────── -->
+<!-- MARQUEE -->
 <div class="marquee-strip">
-  <div class="marquee-track" id="marqueeTrack">
-    <!-- duplicated for seamless loop -->
+  <div class="marquee-inner">
+    <span>Sans Abonnement</span>
+    <span>Installation Simple</span>
+    <span>Technologie Avancée</span>
+    <span>Protection 24h</span>
+    <span>Design Discret</span>
+    <span>Garanti 3 ans</span>
+    <span>Livraison Gratuite</span>
+    <span>Configurateur Personnalisé</span>
+    <span>Sans Abonnement</span>
+    <span>Installation Simple</span>
+    <span>Technologie Avancée</span>
+    <span>Protection 24h</span>
+    <span>Design Discret</span>
+    <span>Garanti 3 ans</span>
+    <span>Livraison Gratuite</span>
+    <span>Configurateur Personnalisé</span>
   </div>
 </div>
 
-<!-- ── MANIFESTO ─────────────────────────────────────────── -->
-<section id="manifesto">
-  <div class="manifesto-left reveal">
-    <div class="manifesto-tag">Notre philosophie</div>
-    <h2>
-      Sécuriser<br>
-      sans <em>jamais</em><br>
-      compromettre.
-    </h2>
-  </div>
-  <div class="manifesto-right">
+<!-- MANIFESTO -->
+<section class="manifesto" id="manifesto">
+  <div class="section-label">Notre approche</div>
+  <div class="manifesto-grid">
     <div class="manifesto-row reveal">
       <div class="manifesto-num">I</div>
-      <div class="manifesto-content">
-        <h3>Aucun abonnement, jamais</h3>
-        <p>Votre système fonctionne entièrement en local. Aucune télécommande de centre de surveillance, aucun frais mensuel caché, aucune dépendance envers un tiers. Vous payez une fois, vous êtes protégé à vie.</p>
-      </div>
+      <h3 class="manifesto-h">La sécurité ne s'abonne pas</h3>
+      <p class="manifesto-p">Vous achetez votre système une fois. Il vous protège pour toujours — sans facture mensuelle, sans dépendance à un opérateur tiers.</p>
     </div>
-    <div class="manifesto-row reveal delay-1">
+    <div class="manifesto-row reveal">
       <div class="manifesto-num">II</div>
-      <div class="manifesto-content">
-        <h3>Sur mesure, par conception</h3>
-        <p>Chaque foyer est unique. Notre gamme de plus de quarante accessoires compatibles vous permet de composer exactement le système qu'il vous faut — ni plus, ni moins — et de l'étendre au fil du temps.</p>
-      </div>
+      <h3 class="manifesto-h">Configuré pour votre maison</h3>
+      <p class="manifesto-p">Chaque foyer est unique. Notre configurateur analyse vos espaces et vos usages pour vous recommander exactement ce dont vous avez besoin.</p>
     </div>
-    <div class="manifesto-row reveal delay-2">
+    <div class="manifesto-row reveal">
       <div class="manifesto-num">III</div>
-      <div class="manifesto-content">
-        <h3>Installé par vous, en trente minutes</h3>
-        <p>Sans perçage, sans technicien, sans rendez-vous. Chaque composant se connecte automatiquement à la centrale. La notice tient sur une page. La protection commence immédiatement.</p>
-      </div>
+      <h3 class="manifesto-h">Sobre, fiable, invisible</h3>
+      <p class="manifesto-p">Des équipements qui s'effacent dans votre intérieur et se font oublier — jusqu'au moment où vous en avez besoin.</p>
     </div>
   </div>
 </section>
 
-<!-- ── QUIZ INVITATION ────────────────────────────────────── -->
-<section id="invite">
-  <div class="invite-bg-text">Veille</div>
-  <div class="invite-left reveal">
-    <div class="invite-overline">Configurateur personnel</div>
-    <h2>
-      Votre alarme,<br>
-      <em>composée pour vous.</em>
-    </h2>
-    <p class="invite-body">
-      Six questions. Un algorithme. Un pack composé parmi quarante accessoires — adapté à votre logement, vos habitudes, votre budget.
-    </p>
-    <button class="btn-quiz-big" id="triggerInvite">
-      <span>Démarrer la configuration</span>
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-  </div>
-  <div class="invite-right reveal delay-2">
-    <div class="invite-stats">
-      <div class="stat-row">
-        <div class="stat-cell">
-          <div class="stat-val">0 €</div>
-          <div class="stat-lbl">d'abonnement</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-val">30'</div>
-          <div class="stat-lbl">d'installation</div>
-        </div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-cell">
-          <div class="stat-val">40+</div>
-          <div class="stat-lbl">accessoires</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-val">50k</div>
-          <div class="stat-lbl">foyers protégés</div>
-        </div>
-      </div>
+<!-- INVITE / STATS -->
+<section class="invite" id="invite">
+  <div class="invite-stats">
+    <div class="stat-cell reveal">
+      <div class="stat-num" data-count="0">0€</div>
+      <div class="stat-label">Abonnement mensuel</div>
     </div>
+    <div class="stat-cell reveal">
+      <div class="stat-num" data-count="24">0</div>
+      <div class="stat-label">Heures de protection</div>
+    </div>
+    <div class="stat-cell reveal">
+      <div class="stat-num" data-count="3">0</div>
+      <div class="stat-label">Ans de garantie</div>
+    </div>
+    <div class="stat-cell reveal">
+      <div class="stat-num" data-count="98">0</div>
+      <div class="stat-label">% Clients satisfaits</div>
+    </div>
+  </div>
+  <div class="invite-copy">
+    <h2 class="invite-h reveal">Une protection pensée pour durer.</h2>
+    <p class="invite-p reveal">Nos systèmes sont conçus pour être installés une fois, oubliés, et redécouverts uniquement dans les moments qui comptent. Robustes, discrets, permanents.</p>
+    <button class="btn-primary reveal" onclick="openQuiz()" data-hover>Trouver mon pack</button>
   </div>
 </section>
 
-<!-- ── COLLECTIONS ────────────────────────────────────────── -->
-<section id="collections">
-  <div class="collections-header reveal">
-    <h2>Trois <em>gammes</em>,<br>un seul engagement.</h2>
-    <p>Du studio à la villa, chaque gamme répond à un besoin précis avec les mêmes exigences de qualité.</p>
-  </div>
-  <div class="collections-grid">
+<!-- COLLECTIONS -->
+<section class="collections" id="collections">
+  <div class="section-label">Packs disponibles</div>
+  <div class="col-grid">
 
-    <div class="col-card reveal">
-      <div class="col-card-top" data-letter="V">
-        <div class="col-tier">Gamme I — Essentielle</div>
-        <div class="col-name">Vigilia</div>
-        <div class="col-tagline">Télécommande, clavier et application mobile</div>
-        <div class="col-price">
-          <div class="col-from">À partir de</div>
-          <div class="col-amount">249 €</div>
-        </div>
+    <div class="col-card reveal" data-hover>
+      <div class="col-top">
+        <div class="col-badge">Pack Essentiel</div>
+        <div class="col-name">L'Essentiel</div>
+        <div class="col-price">299€ <span>TTC · livraison offerte</span></div>
       </div>
-      <div class="col-card-body">
+      <div class="col-body">
         <ul class="col-features">
-          <li><span class="col-feat-dash">—</span>Centrale sans fil 32 zones</li>
-          <li><span class="col-feat-dash">—</span>Télécommande et clavier à code</li>
-          <li><span class="col-feat-dash">—</span>Application mobile incluse</li>
-          <li><span class="col-feat-dash">—</span>Sirène 110 dB intégrée</li>
-          <li><span class="col-feat-dash">—</span>Batterie de secours 12h</li>
+          <li>Centrale d'alarme filaire</li>
+          <li>1 détecteur de mouvement PIR</li>
+          <li>2 contacts de porte/fenêtre</li>
+          <li>1 sirène intérieure 110 dB</li>
+          <li>Télécommande × 2</li>
         </ul>
-        <a href="#" class="col-cta" onclick="return false">Découvrir Vigilia</a>
+        <button class="col-cta" onclick="openQuiz()" data-hover>Configurer</button>
       </div>
     </div>
 
-    <div class="col-card reveal delay-1">
-      <div class="col-card-top" data-letter="T" style="background: linear-gradient(145deg, #0D1428, #1A2040)">
-        <div class="col-tier">Gamme II — Connectée</div>
-        <div class="col-name">Touch</div>
-        <div class="col-tagline">Écran tactile 4,3" ou 7" avec application complète</div>
-        <div class="col-price">
-          <div class="col-from">À partir de</div>
-          <div class="col-amount">449 €</div>
-        </div>
+    <div class="col-card reveal" data-hover>
+      <div class="col-top">
+        <div class="col-badge">Pack Maison — Le plus choisi</div>
+        <div class="col-name">Maison</div>
+        <div class="col-price">499€ <span>TTC · livraison offerte</span></div>
       </div>
-      <div class="col-card-body">
+      <div class="col-body">
         <ul class="col-features">
-          <li><span class="col-feat-dash">—</span>Centrale tactile couleur</li>
-          <li><span class="col-feat-dash">—</span>Notifications push en temps réel</li>
-          <li><span class="col-feat-dash">—</span>Visionnage caméras intégré</li>
-          <li><span class="col-feat-dash">—</span>WiFi + Ethernet + backup batterie</li>
-          <li><span class="col-feat-dash">—</span>Jusqu'à 64 zones</li>
+          <li>Centrale d'alarme + clavier LCD</li>
+          <li>3 détecteurs de mouvement</li>
+          <li>4 contacts magnétiques</li>
+          <li>1 sirène extérieure 120 dB</li>
+          <li>1 détecteur de fumée</li>
+          <li>App de contrôle mobile</li>
         </ul>
-        <a href="#" class="col-cta" onclick="return false">Découvrir Touch</a>
+        <button class="col-cta" onclick="openQuiz()" data-hover>Configurer</button>
       </div>
     </div>
 
-    <div class="col-card reveal delay-2">
-      <div class="col-card-top" data-letter="É" style="background: linear-gradient(145deg, #120C08, #1C1410)">
-        <div class="col-tier">Gamme III — Premium</div>
+    <div class="col-card reveal" data-hover>
+      <div class="col-top">
+        <div class="col-badge">Pack Élite</div>
         <div class="col-name">Élite</div>
-        <div class="col-tagline">Zigbee · WiFi · 4G — contrôle smartphone exclusif</div>
-        <div class="col-price">
-          <div class="col-from">À partir de</div>
-          <div class="col-amount">699 €</div>
-        </div>
+        <div class="col-price">799€ <span>TTC · livraison offerte</span></div>
       </div>
-      <div class="col-card-body">
+      <div class="col-body">
         <ul class="col-features">
-          <li><span class="col-feat-dash">—</span>Centrale PA501Z Zigbee 4G</li>
-          <li><span class="col-feat-dash">—</span>Double réseau WiFi + 4G backup</li>
-          <li><span class="col-feat-dash">—</span>Domotique avancée intégrée</li>
-          <li><span class="col-feat-dash">—</span>Anti-sabotage et autoprotection</li>
-          <li><span class="col-feat-dash">—</span>Zones illimitées</li>
+          <li>Centrale premium avec GSM intégré</li>
+          <li>5 détecteurs de mouvement</li>
+          <li>6 contacts magnétiques</li>
+          <li>2 sirènes (int. + ext.)</li>
+          <li>1 caméra intérieure HD</li>
+          <li>2 détecteurs de fumée</li>
+          <li>Télécommande × 4</li>
         </ul>
-        <a href="#" class="col-cta" onclick="return false">Découvrir Élite</a>
+        <button class="col-cta" onclick="openQuiz()" data-hover>Configurer</button>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-brand-name">Veille</div>
-      <p class="footer-brand-desc">Systèmes d'alarme résidentiels sans abonnement. Conçus pour durer, pensés pour vous.</p>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Produits</div>
-      <ul>
-        <li><a href="#" onclick="return false">Gamme Vigilia</a></li>
-        <li><a href="#" onclick="return false">Gamme Touch</a></li>
-        <li><a href="#" onclick="return false">Gamme Élite</a></li>
-        <li><a href="#" onclick="return false">Accessoires</a></li>
-        <li><a href="#" onclick="return false">Caméras</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Support</div>
-      <ul>
-        <li><a href="#" onclick="return false">Guides d'installation</a></li>
-        <li><a href="#" onclick="return false">FAQ</a></li>
-        <li><a href="#" onclick="return false">Télécharger l'app</a></li>
-        <li><a href="#" onclick="return false">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Entreprise</div>
-      <ul>
-        <li><a href="#" onclick="return false">À propos</a></li>
-        <li><a href="#" onclick="return false">Certifications</a></li>
-        <li><a href="#" onclick="return false">Revendeurs</a></li>
-        <li><a href="#" onclick="return false">Presse</a></li>
-      </ul>
-    </div>
+  <div class="footer-brand">
+    <span class="footer-logo">Veille</span>
+    <p class="footer-tagline">La sécurité résidentielle sans abonnement. Une protection pour toujours, une seule fois.</p>
   </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2026 VEILLE — TOUS DROITS RÉSERVÉS</div>
-    <div class="footer-links-row">
-      <a href="#" onclick="return false">Mentions légales</a>
-      <a href="#" onclick="return false">CGV</a>
-      <a href="#" onclick="return false">Confidentialité</a>
-    </div>
+  <div>
+    <div class="footer-col-title">Produits</div>
+    <ul class="footer-links">
+      <li><a href="#collections">Pack Essentiel</a></li>
+      <li><a href="#collections">Pack Maison</a></li>
+      <li><a href="#collections">Pack Élite</a></li>
+      <li><a href="#" onclick="openQuiz(); return false;">Configurateur</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Informations</div>
+    <ul class="footer-links">
+      <li><a href="#">À propos</a></li>
+      <li><a href="#">Installation</a></li>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Légal</div>
+    <ul class="footer-links">
+      <li><a href="#">CGV</a></li>
+      <li><a href="#">Politique de confidentialité</a></li>
+      <li><a href="#">Mentions légales</a></li>
+      <li><a href="#">Retours</a></li>
+    </ul>
   </div>
 </footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© 2026 Veille — Tous droits réservés</span>
+  <span class="footer-copy">Sans abonnement · Garanti 3 ans</span>
+</div>
 
-<!-- ════════════════════════════════════════════════════════
-     QUIZ OVERLAY
-════════════════════════════════════════════════════════ -->
-<div id="quiz-overlay" role="dialog" aria-modal="true" aria-label="Configurateur d'alarme">
-
-  <div class="quiz-progress-line" id="qProgressLine"></div>
-
-  <!-- Ghost house background -->
-  <div class="quiz-bg-house">
-    <svg viewBox="0 0 520 480" fill="none">
-      <rect x="100" y="200" width="320" height="220" stroke="#C8A87A" stroke-width="1.5"/>
-      <path d="M80 208 L260 72 L440 208" stroke="#C8A87A" stroke-width="1.5"/>
-      <rect x="215" y="310" width="70" height="110" stroke="#C8A87A" stroke-width="1.2"/>
-      <rect x="120" y="255" width="70" height="60" stroke="#C8A87A" stroke-width="1.2"/>
-      <rect x="330" y="255" width="70" height="60" stroke="#C8A87A" stroke-width="1.2"/>
-      <rect x="130" y="130" width="54" height="50" stroke="#C8A87A" stroke-width=".8"/>
-      <rect x="336" y="130" width="54" height="50" stroke="#C8A87A" stroke-width=".8"/>
-    </svg>
-  </div>
-
+<!-- QUIZ OVERLAY -->
+<div id="quiz-overlay">
   <div class="quiz-header">
-    <div class="quiz-logo">Veille</div>
-    <div class="quiz-step-num" id="qStepNum">01 / 06</div>
-    <button class="quiz-close" id="quizClose">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      Fermer
-    </button>
+    <span class="quiz-logo">Veille — Configurateur</span>
+    <button class="quiz-close" onclick="closeQuiz()" data-hover>✕</button>
+  </div>
+  <div class="quiz-progress-bar">
+    <div class="quiz-progress-fill" id="qpf" style="width:0%"></div>
   </div>
 
-  <div class="quiz-body">
+  <div class="quiz-body" id="quiz-body">
 
-    <!-- STEP 1 -->
-    <div class="q-step active" id="qs1">
-      <div class="q-overline">Question 01 — Type de logement</div>
-      <div class="q-question">Quel type de logement souhaitez-vous protéger ?</div>
-      <div class="q-hint">L'architecture détermine les zones de vulnérabilité à couvrir en priorité.</div>
+    <!-- Q1 -->
+    <div class="q-step active" id="q1">
+      <div class="q-num">01 / 06</div>
+      <p class="q-text">Quel est le type de votre logement ?</p>
       <div class="q-answers">
-        <button class="q-ans" data-step="1" data-val="0" data-zones="">
-          <div class="q-ans-title">Appartement</div>
-          <div class="q-ans-sub">Une porte, quelques fenêtres</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="1" data-val="1" data-zones="">
-          <div class="q-ans-title">Maison plain-pied</div>
-          <div class="q-ans-sub">Toutes les ouvertures au même niveau</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="1" data-val="2" data-zones="">
-          <div class="q-ans-title">Maison avec étage</div>
-          <div class="q-ans-sub">RDC et étage à sécuriser</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="1" data-val="3" data-zones="">
-          <div class="q-ans-title">Villa / Propriété</div>
-          <div class="q-ans-sub">Dépendances, terrain, annexes</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
+        <button class="q-ans" data-q="1" data-v="0" data-zones="">Appartement — moins de 50 m²<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="1" data-v="1" data-zones="">Appartement — plus de 50 m²<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="1" data-v="2" data-zones="zone-door,zone-win-gf-l,zone-win-gf-r">Maison de plain-pied<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="1" data-v="3" data-zones="zone-door,zone-win-gf-l,zone-win-gf-r,zone-win-ff-l,zone-win-ff-r">Maison à étages<span class="ans-check">✓</span></button>
       </div>
     </div>
 
-    <!-- STEP 2 -->
-    <div class="q-step" id="qs2">
-      <div class="q-overline">Question 02 — Ouvertures</div>
-      <div class="q-question">Combien d'ouvertures (portes et fenêtres) à protéger ?</div>
-      <div class="q-hint">Chaque contacteur magnétique couvre une ouverture.</div>
+    <!-- Q2 -->
+    <div class="q-step" id="q2">
+      <div class="q-num">02 / 06</div>
+      <p class="q-text">Combien d'entrées (portes + fenêtres de RDC) souhaitez-vous sécuriser ?</p>
       <div class="q-answers">
-        <button class="q-ans" data-step="2" data-val="0" data-zones="door">
-          <div class="q-ans-title">1 à 3</div>
-          <div class="q-ans-sub">Studio ou appartement compact</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="2" data-val="1" data-zones="door,win-gf">
-          <div class="q-ans-title">4 à 6</div>
-          <div class="q-ans-sub">Appartement 3 pièces ou maison standard</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="2" data-val="2" data-zones="door,win-gf,win-ff">
-          <div class="q-ans-title">7 à 10</div>
-          <div class="q-ans-sub">Grande maison, plusieurs accès</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="2" data-val="3" data-zones="door,win-gf,win-ff">
-          <div class="q-ans-title">11 et plus</div>
-          <div class="q-ans-sub">Villa, propriété avec dépendances</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
+        <button class="q-ans" data-q="2" data-v="0" data-zones="">1 à 2<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="2" data-v="1" data-zones="zone-door">3 à 4<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="2" data-v="2" data-zones="zone-door,zone-win-gf-l,zone-win-gf-r">5 à 6<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="2" data-v="3" data-zones="zone-door,zone-win-gf-l,zone-win-gf-r,zone-win-ff-l,zone-win-ff-r">7 et plus<span class="ans-check">✓</span></button>
       </div>
     </div>
 
-    <!-- STEP 3 -->
-    <div class="q-step" id="qs3">
-      <div class="q-overline">Question 03 — Détection</div>
-      <div class="q-question">Quel niveau de détection souhaitez-vous ?</div>
-      <div class="q-hint">La détection volumétrique couvre l'espace intérieur indépendamment des ouvertures.</div>
+    <!-- Q3 -->
+    <div class="q-step" id="q3">
+      <div class="q-num">03 / 06</div>
+      <p class="q-text">Souhaitez-vous intégrer un détecteur de mouvement ?</p>
       <div class="q-answers">
-        <button class="q-ans" data-step="3" data-val="0" data-zones="door">
-          <div class="q-ans-title">Entrées seulement</div>
-          <div class="q-ans-sub">Contacteurs sur portes et accès</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="3" data-val="1" data-zones="door,win-gf">
-          <div class="q-ans-title">Portes + fenêtres RDC</div>
-          <div class="q-ans-sub">Protection optimale du rez-de-chaussée</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="3" data-val="2" data-zones="door,win-gf,win-ff">
-          <div class="q-ans-title">Toutes les ouvertures</div>
-          <div class="q-ans-sub">RDC et étage couverts</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="3" data-val="3" data-zones="door,win-gf,win-ff,motion">
-          <div class="q-ans-title">Ouvertures + volumétrique</div>
-          <div class="q-ans-sub">Détecteurs de mouvement dans chaque pièce</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
+        <button class="q-ans" data-q="3" data-v="0" data-zones="">Non, contacts magnétiques suffisent<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="3" data-v="1" data-zones="zone-motion">Oui, pour les pièces de vie<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="3" data-v="2" data-zones="zone-motion">Oui, pour les couloirs et dégagements<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="3" data-v="3" data-zones="zone-motion">Oui, couverture complète<span class="ans-check">✓</span></button>
       </div>
     </div>
 
-    <!-- STEP 4 -->
-    <div class="q-step" id="qs4">
-      <div class="q-overline">Question 04 — Vidéosurveillance</div>
-      <div class="q-question">Souhaitez-vous intégrer des caméras de surveillance ?</div>
-      <div class="q-hint">Les caméras IP s'intègrent nativement à la centrale, avec visionnage en direct depuis votre smartphone.</div>
+    <!-- Q4 -->
+    <div class="q-step" id="q4">
+      <div class="q-num">04 / 06</div>
+      <p class="q-text">Souhaitez-vous une sirène extérieure ?</p>
       <div class="q-answers">
-        <button class="q-ans" data-step="4" data-val="0" data-zones="">
-          <div class="q-ans-title">Non</div>
-          <div class="q-ans-sub">Alarme seule, sans vidéo</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="4" data-val="1" data-zones="camera">
-          <div class="q-ans-title">Intérieure</div>
-          <div class="q-ans-sub">Surveillance des pièces à vivre</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="4" data-val="2" data-zones="camera">
-          <div class="q-ans-title">Extérieure</div>
-          <div class="q-ans-sub">Entrée, jardin, garage</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="4" data-val="3" data-zones="camera">
-          <div class="q-ans-title">Intérieure + extérieure</div>
-          <div class="q-ans-sub">Couverture complète 360°</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
+        <button class="q-ans" data-q="4" data-v="0" data-zones="">Non, sirène intérieure uniquement<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="4" data-v="2" data-zones="zone-siren">Oui, pour dissuasion visuelle<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="4" data-v="3" data-zones="zone-siren">Oui, avec flash lumineux<span class="ans-check">✓</span></button>
       </div>
     </div>
 
-    <!-- STEP 5 -->
-    <div class="q-step" id="qs5">
-      <div class="q-overline">Question 05 — Risques domestiques</div>
-      <div class="q-question">Souhaitez-vous une protection contre les risques du quotidien ?</div>
-      <div class="q-hint">Incendie, gaz, inondation — les détecteurs s'intègrent à votre centrale.</div>
+    <!-- Q5 -->
+    <div class="q-step" id="q5">
+      <div class="q-num">05 / 06</div>
+      <p class="q-text">Souhaitez-vous des détecteurs de fumée ou de CO ?</p>
       <div class="q-answers">
-        <button class="q-ans" data-step="5" data-val="0" data-zones="">
-          <div class="q-ans-title">Non, intrusion seulement</div>
-          <div class="q-ans-sub">Je me concentre sur la sécurité physique</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="5" data-val="1" data-zones="smoke">
-          <div class="q-ans-title">Détection fumée</div>
-          <div class="q-ans-sub">Alerte incendie immédiate (WSD301)</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="5" data-val="2" data-zones="smoke">
-          <div class="q-ans-title">Fumée + gaz</div>
-          <div class="q-ans-sub">Incendie et détection CO / gaz</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="5" data-val="3" data-zones="smoke">
-          <div class="q-ans-title">Protection complète</div>
-          <div class="q-ans-sub">Fumée, gaz et inondation (WSD301 + WWF301)</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
+        <button class="q-ans" data-q="5" data-v="0" data-zones="">Non merci<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="5" data-v="1" data-zones="zone-smoke">Oui, détecteur de fumée<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="5" data-v="2" data-zones="zone-smoke">Oui, fumée + CO<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="5" data-v="3" data-zones="zone-smoke,zone-camera">Oui, fumée + CO + caméra<span class="ans-check">✓</span></button>
       </div>
     </div>
 
-    <!-- STEP 6 -->
-    <div class="q-step" id="qs6">
-      <div class="q-overline">Question 06 — Contrôle</div>
-      <div class="q-question">Comment souhaitez-vous piloter votre système ?</div>
-      <div class="q-hint">Le mode de contrôle détermine la gamme de centrale recommandée.</div>
+    <!-- Q6 -->
+    <div class="q-step" id="q6">
+      <div class="q-num">06 / 06</div>
+      <p class="q-text">Comment souhaitez-vous contrôler votre système ?</p>
       <div class="q-answers">
-        <button class="q-ans" data-step="6" data-val="0" data-zones="siren">
-          <div class="q-ans-title">Télécommande</div>
-          <div class="q-ans-sub">Simple et rapide, sans écran — Gamme Vigilia</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="6" data-val="1" data-zones="siren">
-          <div class="q-ans-title">Clavier à code</div>
-          <div class="q-ans-sub">Saisie de code, très robuste — Gamme Vigilia Pro</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="6" data-val="2" data-zones="siren">
-          <div class="q-ans-title">Application smartphone</div>
-          <div class="q-ans-sub">Contrôle à distance, notifications — Gamme Touch</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="q-ans" data-step="6" data-val="3" data-zones="siren">
-          <div class="q-ans-title">Écran tactile + App</div>
-          <div class="q-ans-sub">Clavier 7" et pilotage total — Gamme Élite</div>
-          <div class="q-ans-sel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#0C0A08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
+        <button class="q-ans" data-q="6" data-v="0" data-zones="">Télécommande uniquement<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="6" data-v="1" data-zones="">Clavier à code + télécommande<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="6" data-v="2" data-zones="zone-camera">Application mobile + clavier<span class="ans-check">✓</span></button>
+        <button class="q-ans" data-q="6" data-v="3" data-zones="zone-camera">App mobile + clavier + notification GSM<span class="ans-check">✓</span></button>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="q-step" id="quiz-result">
+      <div class="result-label">Votre recommandation personnalisée</div>
+      <h2 class="result-title" id="res-title">Pack Maison</h2>
+      <p class="result-sub" id="res-sub">Basé sur vos réponses, voici le pack idéal pour votre foyer.</p>
+      <div class="result-pack">
+        <div class="pack-name" id="res-pack-name">Maison</div>
+        <div class="pack-sku" id="res-pack-sku">VL-MAISON-001</div>
+        <p class="pack-desc" id="res-pack-desc">Description du pack.</p>
+        <div class="pack-price-row">
+          <div class="pack-price" id="res-price">499€</div>
+          <button class="btn-primary" onclick="closeQuiz()" data-hover>Commander ce pack</button>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button class="btn-ghost" onclick="restartQuiz()" data-hover>Recommencer</button>
+        <a href="#collections" class="btn-ghost" onclick="closeQuiz()" data-hover>Voir tous les packs</a>
       </div>
     </div>
 
   </div><!-- /quiz-body -->
 
   <div class="quiz-footer">
-    <button class="q-back" id="qBack" disabled>
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M10 7H4M7 4L4 7L7 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Retour
-    </button>
-    <button class="q-next" id="qNext" disabled>
-      <span id="qNextLabel">Continuer</span>
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 7H10M7 4L10 7L7 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
+    <button class="btn-quiz-nav" id="btn-prev" onclick="prevStep()">← Précédent</button>
+    <div class="quiz-step-dots" id="q-dots"></div>
+    <button class="btn-quiz-nav visible" id="btn-next" onclick="nextStep()">Suivant →</button>
   </div>
-
-  <!-- RESULT PANEL -->
-  <div id="quiz-result">
-    <div class="result-inner">
-      <div class="result-eyebrow">Votre recommandation personnalisée</div>
-      <div class="result-pack-name" id="rPackName"></div>
-      <div class="result-tagline" id="rTagline"></div>
-      <div class="result-divider"></div>
-      <div class="result-main">
-        <div>
-          <div class="result-products-title">Composition du pack</div>
-          <div class="result-product-list" id="rProducts"></div>
-        </div>
-        <div class="result-right">
-          <div class="result-price-block">
-            <div class="rpr-label">Investissement unique</div>
-            <div class="rpr-amount" id="rPrice"></div>
-            <div class="rpr-note">Paiement en une fois — aucun abonnement, aucun engagement</div>
-          </div>
-          <div class="result-why-block">
-            <div class="result-why-title">Pourquoi ce pack</div>
-            <div id="rWhy"></div>
-          </div>
-        </div>
-      </div>
-      <div class="result-actions">
-        <a href="#" class="btn-result-primary" onclick="return false">Commander ce pack</a>
-        <a href="#" class="btn-result-ghost" onclick="return false">Personnaliser</a>
-        <button class="btn-restart" onclick="restartQuiz()">
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5C2 4.0 4.0 2 6.5 2C8.2 2 9.7 3 10.5 4.4M11 6.5C11 9.0 9.0 11 6.5 11C4.8 11 3.3 10 2.5 8.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M10 2V5H7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Recommencer
-        </button>
-      </div>
-    </div>
-  </div>
-
 </div><!-- /quiz-overlay -->
 
 <script>
-/* ══════════════════════════════════════════════════════
-   CURSOR
-══════════════════════════════════════════════════════ */
+/* ── CURSOR ── */
 const cur = document.getElementById('cur');
-let cx = 0, cy = 0;
 document.addEventListener('mousemove', e => {
-  cx = e.clientX; cy = e.clientY;
-  cur.style.left = cx + 'px';
-  cur.style.top  = cy + 'px';
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
 });
-document.querySelectorAll('a,button,.col-card,.stat-cell,.q-ans,.manifesto-row').forEach(el => {
+document.querySelectorAll('[data-hover], a, button').forEach(el => {
   el.addEventListener('mouseenter', () => cur.classList.add('hover'));
   el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
 });
 
-/* ══════════════════════════════════════════════════════
-   NAV SCROLL
-══════════════════════════════════════════════════════ */
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('solid', window.scrollY > 30);
-}, { passive: true });
+/* ── SCROLL REVEAL ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: .12 });
+document.querySelectorAll('.reveal, .manifesto-row, .stat-cell, .col-card').forEach(el => io.observe(el));
 
-/* ══════════════════════════════════════════════════════
-   MARQUEE BUILD
-══════════════════════════════════════════════════════ */
-const items = [
-  'Sans abonnement',
-  'Installation 30 minutes',
-  'Sur mesure',
-  'Garantie 2 ans',
-  'Zigbee · WiFi · 4G',
-  '50 000 foyers protégés',
-  'Zéro frais cachés',
-  'Compatible domotique',
-];
-const track = document.getElementById('marqueeTrack');
-[...items, ...items].forEach(txt => {
-  const d = document.createElement('div');
-  d.className = 'marquee-item';
-  d.innerHTML = `${txt} <span class="marquee-sep">◆</span>`;
-  track.appendChild(d);
-});
+/* ── QUIZ STATE ── */
+const TOTAL_STEPS = 6;
+let currentStep = 1;
+let answers = {};
+let scores  = {};
 
-/* ══════════════════════════════════════════════════════
-   SCROLL REVEAL
-══════════════════════════════════════════════════════ */
-const revObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
-
-/* ══════════════════════════════════════════════════════
-   QUIZ STATE
-══════════════════════════════════════════════════════ */
-const qs = {
-  current: 1,
-  total: 6,
-  answers: {},    // step -> { val, zones }
+const PACKS = {
+  essentiel: {
+    name: 'L\'Essentiel',
+    title: 'Pack Essentiel',
+    sku: 'VL-ESSENTIEL-001',
+    price: '299€',
+    desc: 'Protection de base idéale pour un petit logement. Centrale, détecteur de mouvement, contacts magnétiques, sirène intérieure et télécommandes.'
+  },
+  maison: {
+    name: 'Maison',
+    title: 'Pack Maison',
+    sku: 'VL-MAISON-001',
+    price: '499€',
+    desc: 'Notre bestseller. Protection complète pour une maison standard avec détecteurs multi-zones, sirène extérieure, détecteur de fumée et application mobile.'
+  },
+  premium: {
+    name: 'Premium',
+    title: 'Pack Premium',
+    sku: 'VL-PREMIUM-001',
+    price: '649€',
+    desc: 'Protection renforcée pour les grandes maisons avec caméra intérieure, deux sirènes, détecteurs de fumée et CO, et contrôle GSM intégré.'
+  },
+  elite: {
+    name: 'Élite',
+    title: 'Pack Élite',
+    sku: 'VL-ELITE-001',
+    price: '799€',
+    desc: 'La protection maximale. Couverture totale de votre propriété avec deux caméras, cinq détecteurs de mouvement, centrale GSM premium et supervision 24h.'
+  }
 };
 
-/* Open/close overlay */
 function openQuiz() {
   document.getElementById('quiz-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
-  cur.classList.add('quiz-mode');
+  buildDots();
+  updateProgress();
 }
 function closeQuiz() {
   document.getElementById('quiz-overlay').classList.remove('open');
   document.body.style.overflow = '';
-  cur.classList.remove('quiz-mode');
+}
+function restartQuiz() {
+  answers = {}; scores = {}; currentStep = 1;
+  document.querySelectorAll('.q-step').forEach(s => { s.classList.remove('active','exit'); });
+  document.querySelectorAll('.q-ans').forEach(b => b.classList.remove('selected'));
+  clearZones();
+  goToStep(1);
+  document.getElementById('quiz-result').classList.remove('active');
+  document.getElementById('btn-next').classList.add('visible');
+  document.getElementById('btn-prev').classList.remove('visible');
 }
 
-['triggerTop','triggerHero','triggerInvite'].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener('click', openQuiz);
-});
-document.getElementById('quizClose').addEventListener('click', closeQuiz);
+function buildDots() {
+  const c = document.getElementById('q-dots'); c.innerHTML = '';
+  for (let i=1; i<=TOTAL_STEPS; i++) {
+    const d = document.createElement('div');
+    d.className = 'quiz-dot' + (i === currentStep ? ' active' : '');
+    c.appendChild(d);
+  }
+}
+function updateProgress() {
+  const p = ((currentStep-1) / TOTAL_STEPS) * 100;
+  document.getElementById('qpf').style.width = p + '%';
+  const dots = document.querySelectorAll('.quiz-dot');
+  dots.forEach((d,i) => {
+    d.className = 'quiz-dot';
+    if (i+1 === currentStep) d.classList.add('active');
+    else if (i+1 < currentStep) d.classList.add('done');
+  });
+  document.getElementById('btn-prev').classList.toggle('visible', currentStep > 1);
+}
 
-/* ══════════════════════════════════════════════════════
-   ANSWER SELECTION
-══════════════════════════════════════════════════════ */
+function goToStep(n) {
+  document.querySelectorAll('.q-step').forEach(s => s.classList.remove('active','exit'));
+  const next = document.getElementById('q'+n);
+  if (next) { next.classList.add('active'); currentStep = n; }
+  updateProgress();
+}
+
+function nextStep() {
+  if (!answers[currentStep]) return; // must answer
+  if (currentStep >= TOTAL_STEPS) {
+    showResult(); return;
+  }
+  const cur = document.getElementById('q'+currentStep);
+  cur.classList.add('exit');
+  setTimeout(() => { cur.classList.remove('active','exit'); goToStep(currentStep+1); }, 350);
+}
+function prevStep() {
+  if (currentStep <= 1) return;
+  const cur = document.getElementById('q'+currentStep);
+  cur.classList.remove('active');
+  currentStep--;
+  goToStep(currentStep);
+}
+
 document.querySelectorAll('.q-ans').forEach(btn => {
   btn.addEventListener('click', () => {
-    const step = parseInt(btn.dataset.step);
-    document.querySelectorAll(`.q-ans[data-step="${step}"]`).forEach(b => b.classList.remove('selected'));
+    const q = +btn.dataset.q;
+    const v = +btn.dataset.v;
+    const zones = btn.dataset.zones || '';
+
+    document.querySelectorAll(`.q-ans[data-q="${q}"]`).forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
-    qs.answers[step] = {
-      val: parseInt(btn.dataset.val),
-      zones: btn.dataset.zones ? btn.dataset.zones.split(',').filter(Boolean) : []
-    };
-    document.getElementById('qNext').disabled = false;
-    updateHeroZones();
-  });
-});
+    answers[q] = v;
+    scores[q] = v;
 
-/* ══════════════════════════════════════════════════════
-   HERO SVG ZONE TOGGLE
-══════════════════════════════════════════════════════ */
-const ZONE_MAP = {
-  'door':   ['dotDoor','ringDoor'],
-  'win-gf': ['dotWinL','ringWinL','dotWinR'],
-  'win-ff': ['dotWinFF'],
-  'motion': ['dotMotion','ringMotion'],
-  'camera': ['dotCam'],
-  'smoke':  ['dotSmoke','ringSmoke'],
-  'siren':  ['dotSiren'],
-};
-function updateHeroZones() {
-  const active = new Set();
-  Object.values(qs.answers).forEach(a => a.zones.forEach(z => active.add(z)));
-  Object.entries(ZONE_MAP).forEach(([zone, ids]) => {
-    ids.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.classList.toggle('lit', active.has(zone));
+    // update house zones
+    clearZones();
+    // collect all active zones from all answered questions
+    Object.keys(answers).forEach(qq => {
+      const answered = document.querySelector(`.q-ans[data-q="${qq}"].selected`);
+      if (answered && answered.dataset.zones) {
+        answered.dataset.zones.split(',').filter(Boolean).forEach(activateZone);
+      }
     });
+    // also activate this button's zones
+    zones.split(',').filter(Boolean).forEach(activateZone);
+
+    // auto-advance after short delay
+    setTimeout(() => {
+      if (currentStep >= TOTAL_STEPS) { showResult(); return; }
+      const cur2 = document.getElementById('q'+currentStep);
+      cur2.classList.add('exit');
+      setTimeout(() => { cur2.classList.remove('active','exit'); goToStep(currentStep+1); }, 350);
+    }, 420);
   });
-}
-
-/* ══════════════════════════════════════════════════════
-   STEP NAVIGATION
-══════════════════════════════════════════════════════ */
-function goToStep(n) {
-  const cur_ = document.getElementById('qs' + qs.current);
-  const next_ = document.getElementById('qs' + n);
-  if (!next_) return;
-  cur_.classList.add('leaving');
-  setTimeout(() => {
-    cur_.classList.remove('active','leaving');
-    qs.current = n;
-    next_.classList.add('active');
-    updateQuizUI();
-  }, 380);
-}
-
-function updateQuizUI() {
-  const n = qs.current;
-  document.getElementById('qStepNum').textContent = String(n).padStart(2,'0') + ' / 0' + qs.total;
-  document.getElementById('qProgressLine').style.width = ((n / qs.total) * 100) + '%';
-  document.getElementById('qBack').disabled = n <= 1;
-  document.getElementById('qNext').disabled = !qs.answers[n];
-  document.getElementById('qNextLabel').textContent = n === qs.total ? 'Voir mon pack' : 'Continuer';
-}
-
-document.getElementById('qNext').addEventListener('click', () => {
-  if (qs.current < qs.total) {
-    goToStep(qs.current + 1);
-  } else {
-    showResult();
-  }
-});
-document.getElementById('qBack').addEventListener('click', () => {
-  if (qs.current > 1) goToStep(qs.current - 1);
 });
 
-/* ══════════════════════════════════════════════════════
-   PACKS DATA
-══════════════════════════════════════════════════════ */
-const PACKS = {
-  essentiel: {
-    name: 'Pack Vigilia Essentiel',
-    tagline: 'Protection efficace pour appartement ou petite maison. Installation vingt minutes, contrôle par télécommande et smartphone.',
-    price: '299 €',
-    products: [
-      { icon: '◈', name: 'Centrale Vigilia', ref: 'WDA303', qty: '×1' },
-      { icon: '◈', name: 'Contacteur magnétique', ref: 'WDS502Z', qty: '×2' },
-      { icon: '◈', name: 'Détecteur de mouvement', ref: 'WPS305', qty: '×1' },
-      { icon: '◈', name: 'Sirène intérieure 85 dB', ref: 'WOS305', qty: '×1' },
-      { icon: '◈', name: 'Télécommande', ref: 'WRC301', qty: '×2' },
-    ],
-    reasons: [
-      { strong: 'Logement compact', body: ' — la centrale Vigilia couvre jusqu\'à 32 zones sans fil.' },
-      { strong: 'Installation rapide', body: ' — 20 minutes, sans perçage, sans technicien.' },
-      { strong: 'Paiement unique', body: ' — aucun abonnement, aucun renouvellement.' },
-    ]
-  },
-  maison: {
-    name: 'Pack Vigilia Maison',
-    tagline: 'Conçu pour les maisons individuelles. Couverture complète des ouvertures RDC et étage, avec détection volumétrique.',
-    price: '499 €',
-    products: [
-      { icon: '◈', name: 'Centrale Vigilia Pro', ref: 'WDA305', qty: '×1' },
-      { icon: '◈', name: 'Contacteur magnétique', ref: 'WDS502Z', qty: '×4' },
-      { icon: '◈', name: 'Détecteur de mouvement', ref: 'WPS501', qty: '×2' },
-      { icon: '◈', name: 'Sirène extérieure 110 dB', ref: 'WOS305EXT', qty: '×1' },
-      { icon: '◈', name: 'Télécommande', ref: 'WRC301', qty: '×2' },
-      { icon: '◈', name: 'Caméra IP intérieure', ref: 'IP506P', qty: '×1' },
-    ],
-    reasons: [
-      { strong: 'Maison individuelle', body: ' — 4 contacteurs et 2 détecteurs couvrent toutes les zones critiques.' },
-      { strong: 'Sirène extérieure', body: ' — dissuasion maximale visible depuis la rue.' },
-      { strong: 'Caméra intégrée', body: ' — visionnage en direct depuis votre smartphone.' },
-    ]
-  },
-  premium: {
-    name: 'Pack Touch Premium',
-    tagline: 'Pour les grandes maisons. Écran tactile 7", couverture totale de toutes les ouvertures, caméras intérieur et extérieur.',
-    price: '799 €',
-    products: [
-      { icon: '◈', name: 'Centrale Touch 7"', ref: 'WDA507', qty: '×1' },
-      { icon: '◈', name: 'Contacteur magnétique', ref: 'WDS502Z', qty: '×6' },
-      { icon: '◈', name: 'Détecteur de mouvement', ref: 'WPS501', qty: '×3' },
-      { icon: '◈', name: 'Sirène extérieure 110 dB', ref: 'WOS305EXT', qty: '×1' },
-      { icon: '◈', name: 'Caméra IP intérieure', ref: 'IP506P', qty: '×1' },
-      { icon: '◈', name: 'Caméra IP extérieure', ref: 'W503', qty: '×2' },
-      { icon: '◈', name: 'Détecteur de fumée', ref: 'WSD301', qty: '×2' },
-    ],
-    reasons: [
-      { strong: 'Grande maison', body: ' — 6 contacteurs et 3 détecteurs pour zéro angle mort.' },
-      { strong: 'Écran Touch 7"', body: ' — pilotage intuitif et visionnage caméras sur la centrale.' },
-      { strong: 'Protection incendie', body: ' — 2 détecteurs fumée pour cuisine et couloir.' },
-    ]
-  },
-  elite: {
-    name: 'Pack Élite Sur-Mesure',
-    tagline: 'La protection ultime pour villa ou grande propriété. Technologie Zigbee, double réseau 4G, intégration domotique complète.',
-    price: '1 199 €',
-    products: [
-      { icon: '◈', name: 'Centrale Élite PA501Z', ref: 'PA501Z', qty: '×1' },
-      { icon: '◈', name: 'Contacteur Zigbee', ref: 'WDV301Z', qty: '×8' },
-      { icon: '◈', name: 'Détecteur Zigbee', ref: 'WPS501Z', qty: '×4' },
-      { icon: '◈', name: 'Sirène extérieure 120 dB', ref: 'WOS305EXT', qty: '×2' },
-      { icon: '◈', name: 'Caméra 360° solaire', ref: 'W512MW', qty: '×2' },
-      { icon: '◈', name: 'Caméra IP intérieure', ref: 'IP506P', qty: '×2' },
-      { icon: '◈', name: 'Détecteur fumée + gaz', ref: 'WSD301 + gaz', qty: '×3' },
-      { icon: '◈', name: 'Détecteur fuite d\'eau', ref: 'WWF301', qty: '×2' },
-    ],
-    reasons: [
-      { strong: 'Grande propriété', body: ' — réseau Zigbee longue portée, aucune zone aveugle.' },
-      { strong: '4G en secours', body: ' — l\'alarme reste active même en cas de coupure internet.' },
-      { strong: 'Protection totale', body: ' — intrusion, incendie, gaz et inondation.' },
-    ]
-  }
-};
-
-function calcPack() {
-  let score = 0;
-  Object.values(qs.answers).forEach(a => score += a.val);
-  if (score <= 3)  return 'essentiel';
-  if (score <= 7)  return 'maison';
-  if (score <= 12) return 'premium';
-  return 'elite';
+function clearZones() {
+  document.querySelectorAll('.zone-dot').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.zone-ring').forEach(r => r.classList.remove('active'));
+}
+function activateZone(id) {
+  const g = document.getElementById(id);
+  if (!g) return;
+  const dot = g.querySelector('.zone-dot');
+  const ring = g.querySelector('.zone-ring');
+  if (dot) dot.classList.add('active');
+  if (ring) ring.classList.add('active');
 }
 
-/* ══════════════════════════════════════════════════════
-   SHOW RESULT
-══════════════════════════════════════════════════════ */
 function showResult() {
-  // Hide all steps
-  document.querySelectorAll('.q-step').forEach(s => s.classList.remove('active'));
-  document.getElementById('qProgressLine').style.width = '100%';
+  const total = Object.values(scores).reduce((a,b) => a+b, 0);
+  let pack;
+  if (total <= 3)       pack = PACKS.essentiel;
+  else if (total <= 7)  pack = PACKS.maison;
+  else if (total <= 12) pack = PACKS.premium;
+  else                  pack = PACKS.elite;
 
-  const pack = PACKS[calcPack()];
-  document.getElementById('rPackName').textContent = pack.name;
-  document.getElementById('rTagline').textContent  = pack.tagline;
-  document.getElementById('rPrice').textContent    = pack.price;
+  document.getElementById('res-title').textContent    = pack.title;
+  document.getElementById('res-pack-name').textContent = pack.name;
+  document.getElementById('res-pack-sku').textContent  = pack.sku;
+  document.getElementById('res-pack-desc').textContent = pack.desc;
+  document.getElementById('res-price').textContent     = pack.price;
 
-  // Products
-  const list = document.getElementById('rProducts');
-  list.innerHTML = '';
-  pack.products.forEach((p, i) => {
-    const el = document.createElement('div');
-    el.className = 'rp-item';
-    el.innerHTML = `
-      <div class="rp-icon-cell">${p.icon}</div>
-      <div class="rp-name">${p.name}</div>
-      <div class="rp-ref">${p.ref}</div>
-      <div class="rp-qty">${p.qty}</div>
-    `;
-    list.appendChild(el);
-    setTimeout(() => el.classList.add('in'), 80 + i * 70);
-  });
-
-  // Reasons
-  const why = document.getElementById('rWhy');
-  why.innerHTML = '';
-  pack.reasons.forEach(r => {
-    const el = document.createElement('div');
-    el.className = 'rw-item';
-    el.innerHTML = `<span class="rw-dash">—</span><span><strong>${r.strong}</strong>${r.body}</span>`;
-    why.appendChild(el);
-  });
-
-  const resultEl = document.getElementById('quiz-result');
-  resultEl.classList.add('visible');
-
-  // Light up all hero zones
-  ['door','win-gf','win-ff','motion','camera','smoke','siren'].forEach(z => {
-    qs.answers[99] = { val: 0, zones: [z] };
-  });
-  updateHeroZones();
+  document.querySelectorAll('.q-step').forEach(s => s.classList.remove('active','exit'));
+  const res = document.getElementById('quiz-result');
+  res.classList.add('active');
+  document.getElementById('qpf').style.width = '100%';
+  document.getElementById('btn-next').classList.remove('visible');
+  document.querySelectorAll('.quiz-dot').forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
 }
 
-/* ══════════════════════════════════════════════════════
-   RESTART
-══════════════════════════════════════════════════════ */
-function restartQuiz() {
-  // Reset state
-  qs.current = 1;
-  qs.answers = {};
-  // Reset UI
-  document.querySelectorAll('.q-step').forEach(s => s.classList.remove('active','leaving'));
-  document.querySelectorAll('.q-ans').forEach(b => b.classList.remove('selected'));
-  document.getElementById('qs1').classList.add('active');
-  document.getElementById('quiz-result').classList.remove('visible');
-  document.getElementById('qProgressLine').style.width = '0%';
-  document.getElementById('qBack').disabled = true;
-  document.getElementById('qNext').disabled = true;
-  document.getElementById('qNextLabel').textContent = 'Continuer';
-  document.getElementById('qStepNum').textContent = '01 / 06';
-  updateHeroZones();
-}
-
-/* ══════════════════════════════════════════════════════
-   KEYBOARD: ESC to close
-══════════════════════════════════════════════════════ */
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeQuiz();
-});
-
-/* ══════════════════════════════════════════════════════
-   INITIAL HERO ZONE STATE (all inactive = opacity 0 by default via CSS)
-══════════════════════════════════════════════════════ */
-// zone dots start with opacity:0 via .zone-dot class — correct by default
+/* ── COUNTER ANIMATION ── */
+const counters = document.querySelectorAll('.stat-num[data-count]');
+const counterIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = +el.dataset.count;
+    if (target === 0) { el.textContent = '0€'; counterIO.unobserve(el); return; }
+    let start = 0;
+    const suffix = el.dataset.count === '98' ? '%' : (el.dataset.count === '24' ? 'h' : ' ans');
+    const dur = 1200;
+    const step = (ts) => {
+      if (!start) start = ts;
+      const p = Math.min((ts-start)/dur, 1);
+      el.textContent = Math.floor(p * target) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    };
+    requestAnimationFrame(step);
+    counterIO.unobserve(el);
+  });
+}, { threshold: .5 });
+counters.forEach(c => counterIO.observe(c));
 </script>
 </body>
 </html>
