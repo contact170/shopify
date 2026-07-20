@@ -1,0 +1,1191 @@
+{{ 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap' | stylesheet_tag }}
+
+<style>
+#dq { font-family: 'Poppins', sans-serif; max-width: 640px; margin: 2rem auto; }
+#dq * { box-sizing: border-box; margin: 0; padding: 0; font-family: inherit; }
+#dq .dq-card { background: #fff; border-radius: 20px; box-shadow: 0 8px 40px rgba(11,30,74,0.10); overflow: hidden; }
+#dq .dq-top { background: #0b1e4a; padding: 1.25rem 1.75rem; display: flex; align-items: center; gap: 16px; }
+#dq .dq-top-label { font-size: 12px; font-weight: 600; color: #7a99bf; white-space: nowrap; min-width: 80px; }
+#dq .dq-bar-wrap { flex: 1; background: rgba(255,255,255,0.15); border-radius: 99px; height: 5px; overflow: hidden; }
+#dq .dq-bar-fill { background: #0771e3; height: 100%; border-radius: 99px; transition: width 0.4s ease; }
+#dq .dq-step-dots { display: flex; gap: 5px; }
+#dq .dq-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: background 0.3s; }
+#dq .dq-dot.active { background: #0771e3; }
+#dq .dq-dot.done { background: rgba(255,255,255,0.5); }
+#dq .dq-body { padding: 2rem 1.75rem 1.5rem; }
+#dq .dq-step { display: none; }
+#dq .dq-step.active { display: block; animation: dqFadeIn 0.25s ease; }
+@keyframes dqFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+#dq .dq-q-number { font-size: 11px; font-weight: 700; color: #0771e3; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+#dq .dq-q-title { font-size: 20px; font-weight: 700; color: #0b1e4a; line-height: 1.3; margin-bottom: 0.4rem; }
+#dq .dq-q-sub { font-size: 13px; color: #7a8faa; margin-bottom: 1.75rem; line-height: 1.5; }
+#dq .dq-opts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
+#dq .dq-opts-grid.cols-1 { grid-template-columns: 1fr; }
+#dq .dq-opts-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+#dq .dq-opt { border: 2px solid #e8edf5; border-radius: 14px; padding: 1.1rem 1rem; cursor: pointer; background: #fff; transition: all 0.18s ease; text-align: center; position: relative; display: flex; flex-direction: column; align-items: center; }
+#dq .dq-opt[style*="flex-direction:row"] { flex-direction: row !important; align-items: center !important; text-align: left !important; }
+#dq .dq-opt:hover { border-color: #0771e3; background: #f5f8ff; transform: translateY(-1px); }
+#dq .dq-opt.selected { border-color: #0771e3; background: #f0f5ff; box-shadow: 0 0 0 4px rgba(7,113,227,0.08); }
+#dq .dq-opt.selected::after { content: '✓'; position: absolute; top: 8px; right: 10px; font-size: 11px; font-weight: 700; color: #0771e3; background: #dbeafe; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; line-height: 18px; }
+#dq .dq-opt-icon { font-size: 28px; margin-bottom: 0.5rem; display: block; }
+#dq .dq-opt-title { font-size: 13px; font-weight: 700; color: #0b1e4a; display: block; line-height: 1.3; }
+#dq .dq-opt-sub { font-size: 11px; color: #7a8faa; margin-top: 3px; display: block; line-height: 1.4; }
+#dq .dq-toggles { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+#dq .dq-toggle { display: flex; align-items: center; gap: 14px; border: 2px solid #e8edf5; border-radius: 12px; padding: 0.875rem 1rem; cursor: pointer; background: #fff; transition: all 0.18s; position: relative; }
+#dq .dq-toggle:hover { border-color: #0771e3; background: #f5f8ff; }
+#dq .dq-toggle.selected { border-color: #0771e3; background: #f0f5ff; }
+#dq .dq-toggle-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #cbd5e1; background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-size: 11px; color: white; font-weight: 700; }
+#dq .dq-toggle.selected .dq-toggle-check { background: #0771e3; border-color: #0771e3; }
+#dq .dq-toggle.selected .dq-toggle-check::after { content: '✓'; }
+#dq .dq-toggle-body { flex: 1; }
+#dq .dq-toggle-title { font-size: 13px; font-weight: 600; color: #0b1e4a; }
+#dq .dq-toggle-sub { font-size: 11px; color: #7a8faa; margin-top: 2px; line-height: 1.4; }
+#dq .dq-toggle-price { font-weight: 700; color: #0771e3; }
+#dq .dq-sub-opt { display: block !important; }
+#dq .dq-sub-opt > div:first-child { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 10px !important; }
+#dq .dq-counter-row { display: none; align-items: center; justify-content: space-between; background: #f8fafc; border-radius: 8px; padding: 8px 12px; margin-top: 6px; }
+#dq .dq-counter-row.visible { display: flex; }
+#dq .dq-counter-row-label { font-size: 12px; color: #5a6a8a; }
+#dq .dq-counter-btns { display: flex; align-items: center; gap: 10px; }
+#dq .dq-counter-btns button { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #0771e3; background: white; color: #0771e3; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.15s; }
+#dq .dq-counter-btns button:hover { background: #0771e3; color: white; }
+#dq .dq-counter-btns .dq-count { font-size: 16px; font-weight: 700; color: #0b1e4a; min-width: 20px; text-align: center; }
+#dq .dq-none-btn { width: 100%; border: 2px solid #0771e3; border-radius: 10px; padding: 0.75rem; background: white; color: #0771e3; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.18s; margin-bottom: 1.5rem; font-family: 'Poppins', sans-serif; }
+#dq .dq-none-btn:hover { background: #f0f5ff; }
+#dq .dq-none-btn.active { background: #0771e3; color: white; }
+#dq .dq-pack-notice { background: #fef9ec; border: 1px solid #f5d87e; border-radius: 10px; padding: 10px 14px; font-size: 12px; color: #7a5c00; margin-bottom: 1rem; display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
+#dq .dq-nav { display: flex; justify-content: space-between; align-items: center; padding-top: 1.25rem; border-top: 1px solid #f1f5f9; margin-top: 0.5rem; }
+#dq .dq-btn { padding: 0.75rem 1.5rem; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; font-family: 'Poppins', sans-serif; }
+#dq .dq-btn-back { background: transparent; border: 1.5px solid #e2e8f0; color: #7a8faa; }
+#dq .dq-btn-back:hover { border-color: #0b1e4a; color: #0b1e4a; }
+#dq .dq-btn-next { background: #0771e3; color: white; padding: 0.75rem 2rem; margin-left: auto; display: flex; align-items: center; gap: 6px; }
+#dq .dq-btn-next:hover { background: #0558b5; }
+#dq .dq-btn-next:disabled { background: #c8daf5; cursor: not-allowed; }
+#dq .dq-result { display: none; }
+#dq .dq-result.active { display: block; animation: dqFadeIn 0.3s ease; }
+#dq .dq-result-hero { background: linear-gradient(135deg, #0b1e4a 0%, #1a3a7a 100%); padding: 2rem 1.75rem 1.5rem; color: white; text-align: center; }
+#dq .dq-result-hero h3 { font-size: 13px; font-weight: 600; color: #7a99bf; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+#dq .dq-result-alarm-name { font-size: 22px; font-weight: 800; color: white; margin-bottom: 0.25rem; }
+#dq .dq-result-alarm-desc { font-size: 13px; color: #a8bcd8; line-height: 1.5; }
+#dq .dq-result-body { padding: 1.5rem 1.75rem; }
+#dq .dq-result-pack { background: #f8fafc; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+#dq .dq-result-pack-title { font-size: 11px; font-weight: 700; color: #0b1e4a; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 6px; }
+#dq .dq-result-pack ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+#dq .dq-result-pack li { font-size: 12px; color: #5a6a8a; display: flex; align-items: flex-start; gap: 6px; }
+#dq .dq-result-pack li::before { content: '✓'; color: #0771e3; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+#dq .dq-version-selector { background: #f0f5ff; border: 1.5px solid #c5d8f8; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+#dq .dq-version-title { font-size: 12px; font-weight: 700; color: #0b1e4a; margin-bottom: 0.75rem; }
+#dq .dq-version-opts { display: flex; flex-direction: column; gap: 6px; }
+#dq .dq-version-opt { display: flex; justify-content: space-between; align-items: center; background: white; border: 2px solid #e8edf5; border-radius: 8px; padding: 10px 14px; cursor: pointer; transition: all 0.15s; }
+#dq .dq-version-opt:hover { border-color: #0771e3; }
+#dq .dq-version-opt.selected { border-color: #0771e3; background: #f5f8ff; }
+#dq .dq-version-opt-left .dq-version-opt-name { font-size: 13px; font-weight: 600; color: #0b1e4a; }
+#dq .dq-version-opt-left .dq-version-opt-sub { font-size: 11px; color: #7a8faa; margin-top: 1px; }
+#dq .dq-version-opt-price { font-size: 14px; font-weight: 700; color: #0771e3; white-space: nowrap; margin-left: 10px; }
+#dq .dq-result-acc-title { font-size: 13px; font-weight: 700; color: #0b1e4a; margin-bottom: 0.75rem; }
+#dq .dq-result-acc-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.25rem; }
+#dq .dq-result-acc-item { display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid #e8edf5; border-radius: 10px; padding: 0.7rem 1rem; }
+#dq .dq-result-acc-name { font-size: 13px; font-weight: 600; color: #0b1e4a; }
+#dq .dq-result-acc-ref { font-size: 11px; color: #7a8faa; }
+#dq .dq-result-acc-price { font-size: 13px; font-weight: 700; color: #0771e3; white-space: nowrap; margin-left: 8px; }
+#dq .dq-qty-badge { display: inline-block; background: #0771e3; color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 99px; margin-right: 5px; }
+#dq .dq-discount-box { background: linear-gradient(135deg, #0b1e4a 0%, #1a3a7a 100%); border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; display: none; position: relative; overflow: hidden; }
+#dq .dq-discount-box::before { content: ''; position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(7,113,227,0.15); border-radius: 50%; }
+#dq .dq-discount-label { font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 4px; }
+#dq .dq-discount-sub { font-size: 12px; color: #a8bcd8; margin-bottom: 8px; }
+#dq .dq-discount-urgency { font-size: 12px; color: #fbbf24; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+#dq .dq-total-box { background: #0b1e4a; border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+#dq .dq-total-left .dq-total-label { font-size: 13px; color: #a8bcd8; margin-bottom: 2px; }
+#dq .dq-total-left .dq-total-sub { font-size: 11px; color: #5a7aa8; }
+#dq .dq-total-right { text-align: right; }
+#dq .dq-total-original { font-size: 14px; color: #a0b4cc; text-decoration: line-through; margin-bottom: 2px; }
+#dq .dq-total-amount { font-size: 28px; font-weight: 800; color: white; }
+#dq .dq-total-saving { font-size: 12px; color: #4ade80; margin-top: 2px; }
+#dq .dq-btn-cart { display: block; width: 100%; text-align: center; background: #16a34a; color: white; padding: 1rem; border-radius: 12px; font-size: 15px; font-weight: 700; border: none; cursor: pointer; font-family: 'Poppins', sans-serif; transition: background 0.2s; margin-bottom: 1rem; }
+#dq .dq-btn-cart:hover { background: #15803d; }
+#dq .dq-btn-cart:disabled { background: #86efac; cursor: not-allowed; }
+#dq .dq-restart { text-align: center; margin-top: 1rem; }
+#dq .dq-restart button { background: none; border: none; color: #7a8faa; font-size: 12px; cursor: pointer; text-decoration: underline; font-family: 'Poppins', sans-serif; }
+@media (max-width: 520px) {
+  #dq .dq-body { padding: 1.5rem 1.25rem 1.25rem; }
+  #dq .dq-opts-grid { grid-template-columns: 1fr; }
+  #dq .dq-opts-grid.cols-3 { grid-template-columns: 1fr; }
+  #dq .dq-q-title { font-size: 17px; }
+  #dq .dq-result-body { padding: 1.25rem; }
+  #dq .dq-total-box { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+</style>
+
+<div id="dq">
+  <div class="dq-card">
+
+    <div class="dq-top" id="dq-top">
+      <span class="dq-top-label" id="dq-top-label">Étape 1 / 7</span>
+      <div class="dq-bar-wrap"><div class="dq-bar-fill" id="dq-bar" style="width:0%"></div></div>
+      <div class="dq-step-dots" id="dq-dots"></div>
+    </div>
+
+    <div class="dq-body">
+
+      <!-- ÉTAPE 1 -->
+      <div class="dq-step active" id="step-1">
+        <div class="dq-q-number">Question 1</div>
+        <div class="dq-q-title">Quel type de logement souhaitez-vous protéger ?</div>
+        <div class="dq-q-sub">Cela nous aide à calibrer votre installation.</div>
+        <div class="dq-opts-grid">
+          <div class="dq-opt" data-group="logement" data-val="appartement" onclick="selectOpt(this)">
+            <span class="dq-opt-icon">🏢</span>
+            <span class="dq-opt-title">Appartement</span>
+            <span class="dq-opt-sub">Studio, T2, T3…</span>
+          </div>
+          <div class="dq-opt" data-group="logement" data-val="maison" onclick="selectOpt(this)">
+            <span class="dq-opt-icon">🏠</span>
+            <span class="dq-opt-title">Maison</span>
+            <span class="dq-opt-sub">Individuelle, mitoyenne…</span>
+          </div>
+        </div>
+        <div class="dq-nav">
+          <span></span>
+          <button class="dq-btn dq-btn-next" id="next-1" disabled onclick="goTo(2)">Suivant →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 2 -->
+      <div class="dq-step" id="step-2">
+        <div class="dq-q-number">Question 2</div>
+        <div class="dq-q-title">Comment souhaitez-vous contrôler votre alarme ?</div>
+        <div class="dq-q-sub">Choisissez ce qui vous correspond le mieux.</div>
+        <div class="dq-opts-grid cols-1">
+          <div class="dq-opt" data-group="tech" data-val="clavier" onclick="selectOpt(this)" style="flex-direction:row;align-items:center;gap:14px;text-align:left;">
+            <img id="alarm-img-vigilia" src="https://daewoo-security.fr/cdn/shop/files/958b5e1e-36cd-47db-93da-efc4b7f2d77c.jpg?v=1770108516&width=1600" alt="Vigilia" style="width:72px;height:72px;object-fit:contain;border-radius:8px;flex-shrink:0;background:#f5f8ff;">
+            <div>
+              <span class="dq-opt-title">Clavier physique + télécommande + appli</span>
+              <span class="dq-opt-sub">La solution la plus populaire — Alarme Vigilia</span>
+            </div>
+          </div>
+          <div class="dq-opt" data-group="tech" data-val="tactile" onclick="selectOpt(this)" style="flex-direction:row;align-items:center;gap:14px;text-align:left;">
+            <img id="alarm-img-touch" src="" alt="Touch" style="width:72px;height:72px;object-fit:contain;border-radius:8px;flex-shrink:0;background:#f5f8ff;">
+            <div>
+              <span class="dq-opt-title">Écran tactile sur la centrale + appli</span>
+              <span class="dq-opt-sub">Grand écran 4,3'' ou 7'' — Alarme Touch</span>
+            </div>
+          </div>
+          <div class="dq-opt" data-group="tech" data-val="appli" onclick="selectOpt(this)" style="flex-direction:row;align-items:center;gap:14px;text-align:left;">
+            <img id="alarm-img-elite" src="" alt="Élite" style="width:72px;height:72px;object-fit:contain;border-radius:8px;flex-shrink:0;background:#f5f8ff;">
+            <div>
+              <span class="dq-opt-title">100% depuis mon smartphone</span>
+              <span class="dq-opt-sub">Technologie Zigbee, ultra-fiable — Alarme Élite</span>
+            </div>
+          </div>
+        </div>
+        <div class="dq-nav">
+          <button class="dq-btn dq-btn-back" onclick="goTo(1)">← Retour</button>
+          <button class="dq-btn dq-btn-next" id="next-2" disabled onclick="goTo(3)">Suivant →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 3 -->
+      <div class="dq-step" id="step-3">
+        <div class="dq-q-number">Question 3</div>
+        <div class="dq-q-title">Quels accès voulez-vous sécuriser ?</div>
+        <div class="dq-q-sub">Le pack de base inclut déjà 2 contacteurs de porte/fenêtre.</div>
+        <div class="dq-pack-notice"><span>📦</span><span>Votre pack inclut déjà <strong>2 contacteurs de porte/fenêtre</strong>. Indiquez uniquement si vous en avez besoin de plus.</span></div>
+        <div class="dq-toggles">
+          <div>
+            <div class="dq-toggle" id="tog-portes" onclick="toggleItem('portes')">
+              <div class="dq-toggle-check" id="chk-portes"></div>
+              <img id="timg-WDV301" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Portes et fenêtres supplémentaires</div>
+                <div class="dq-toggle-sub"><span id="tlabel-contacteur">Contacteur ouverture + vibration WDV301</span> — <span class="dq-toggle-price" id="tprice-WDV301">39,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-portes">
+              <span class="dq-counter-row-label">Combien de portes / fenêtres supplémentaires ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('portesQty',-1)">−</button>
+                <span class="dq-count" id="cnt-portesQty">1</span>
+                <button type="button" onclick="changeCount('portesQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="dq-toggle" id="tog-baies" onclick="toggleItem('baies')">
+              <div class="dq-toggle-check" id="chk-baies"></div>
+              <img id="timg-WVD301" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Baies vitrées ou grandes fenêtres</div>
+                <div class="dq-toggle-sub"><span id="tlabel-vibration">Détecteur de vibration WVD301</span> — <span class="dq-toggle-price" id="tprice-WVD301">34,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-baies">
+              <span class="dq-counter-row-label">Combien de baies vitrées ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('baiesQty',-1)">−</button>
+                <span class="dq-count" id="cnt-baiesQty">1</span>
+                <button type="button" onclick="changeCount('baiesQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="dq-toggle" id="tog-garage" onclick="toggleItem('garage')">
+              <div class="dq-toggle-check" id="chk-garage"></div>
+              <img id="timg-WDG301" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Porte de garage</div>
+                <div class="dq-toggle-sub"><span id="tlabel-garage">Contacteur spécial garage WDG301</span> — <span class="dq-toggle-price" id="tprice-WDG301">49,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-garage">
+              <span class="dq-counter-row-label">Combien de garage ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('garageQty',-1)">−</button>
+                <span class="dq-count" id="cnt-garageQty">1</span>
+                <button type="button" onclick="changeCount('garageQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="dq-none-btn" id="none-3" onclick="toggleNone(3)">✓ Le pack de base suffit, pas besoin de plus</button>
+        <div class="dq-nav">
+          <button class="dq-btn dq-btn-back" onclick="goTo(2)">← Retour</button>
+          <button class="dq-btn dq-btn-next" id="next-3" disabled onclick="goTo(4)">Suivant →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 4 -->
+      <div class="dq-step" id="step-4">
+        <div class="dq-q-number">Question 4</div>
+        <div class="dq-q-title">Avez-vous des besoins particuliers pour la détection de mouvement ?</div>
+        <div class="dq-q-sub">Tous nos détecteurs sont compatibles animaux de compagnie.</div>
+        <div class="dq-pack-notice"><span>📦</span><span>Votre pack inclut déjà <strong>1 détecteur de mouvement compatible animaux</strong>. Cochez uniquement si vous avez des besoins supplémentaires.</span></div>
+        <div class="dq-toggles">
+          <div>
+            <div class="dq-toggle" id="tog-mouvement" onclick="toggleItem('mouvement')">
+              <div class="dq-toggle-check" id="chk-mouvement"></div>
+              <img id="timg-WPS305-int" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Pièces intérieures supplémentaires à couvrir</div>
+                <div class="dq-toggle-sub"><span id="tlabel-mouvement">Détecteur mouvement WPS305</span> — <span class="dq-toggle-price" id="tprice-WPS305-int">34,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-mouvement">
+              <span class="dq-counter-row-label">Combien de pièces supplémentaires ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('mouvementQty',-1)">−</button>
+                <span class="dq-count" id="cnt-mouvementQty">1</span>
+                <button type="button" onclick="changeCount('mouvementQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="dq-toggle" id="tog-jardin" onclick="toggleItem('jardin')">
+              <div class="dq-toggle-check" id="chk-jardin"></div>
+              <img id="timg-WMO301-tog" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">J'ai un extérieur à surveiller</div>
+                <div class="dq-toggle-sub" id="jardin-toggle-sub">Jardin, allée, terrasse ou périmètre extérieur</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-jardin-elite">
+              <span class="dq-counter-row-label">Combien de zones extérieures ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('jardinExtQty',-1)">−</button>
+                <span class="dq-count" id="cnt-jardinExtQty-elite">1</span>
+                <button type="button" onclick="changeCount('jardinExtQty',1)">+</button>
+              </div>
+            </div>
+            <div id="sub-jardin" style="display:none; margin-top:8px; background:#f0f5ff; border-radius:10px; padding:12px 14px; border:1px solid #c5d8f8;">
+              <div style="font-size:12px;font-weight:700;color:#0b1e4a;margin-bottom:10px;">Quel type d'extérieur ?</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div>
+                  <div id="sub-allee-opt" class="dq-sub-opt dq-vt-only" onclick="toggleJardinType('allee')" style="background:white;border:2px solid #e8edf5;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all 0.15s;">
+                    <div style="display:flex !important;flex-direction:row !important;align-items:center !important;gap:10px !important;">
+                      <div style="width:14px;height:14px;min-width:14px;border-radius:4px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:700;flex-shrink:0;" id="chk-allee"></div>
+                      <img id="simg-BIR301" src="" alt="" style="width:40px;height:40px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+                      <div>
+                        <div style="font-size:13px;font-weight:600;color:#0b1e4a;">Une allée ou un passage</div>
+                        <div style="font-size:11px;color:#7a8faa;margin-top:2px;">BIR301 — Barrières infrarouge — <span class="dq-toggle-price" id="tprice-BIR301">89,90 €</span> / unité</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dq-counter-row" id="ctr-allee" style="margin-top:6px;">
+                    <span class="dq-counter-row-label">Combien d'allées ?</span>
+                    <div class="dq-counter-btns">
+                      <button type="button" onclick="changeCount('alleeQty',-1)">−</button>
+                      <span class="dq-count" id="cnt-alleeQty">1</span>
+                      <button type="button" onclick="changeCount('alleeQty',1)">+</button>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div id="sub-jardin-opt" class="dq-sub-opt" onclick="toggleJardinType('jardin')" style="background:white;border:2px solid #e8edf5;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all 0.15s;">
+                    <div style="display:flex !important;flex-direction:row !important;align-items:center !important;gap:10px !important;">
+                      <div style="width:14px;height:14px;min-width:14px;border-radius:4px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:700;flex-shrink:0;" id="chk-jardin-sub"></div>
+                      <img id="simg-WMO" src="" alt="" style="width:40px;height:40px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+                      <div>
+                        <div style="font-size:13px;font-weight:600;color:#0b1e4a;">Un jardin ou une cour</div>
+                        <div style="font-size:11px;color:#7a8faa;margin-top:2px;"><span id="tlabel-WMO">WMO301</span> — <span class="dq-toggle-price" id="tprice-WMO">79,90 €</span> / unité</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dq-counter-row" id="ctr-jardin-ext" style="margin-top:6px;">
+                    <span class="dq-counter-row-label" id="lbl-jardin-ext-qty">Combien de zones extérieures ?</span>
+                    <div class="dq-counter-btns">
+                      <button type="button" onclick="changeCount('jardinExtQty',-1)">−</button>
+                      <span class="dq-count" id="cnt-jardinExtQty">1</span>
+                      <button type="button" onclick="changeCount('jardinExtQty',1)">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="dq-none-btn" id="none-4" onclick="toggleNone(4)">✓ Le pack de base me suffit</button>
+        <div class="dq-nav">
+          <button class="dq-btn dq-btn-back" onclick="goTo(3)">← Retour</button>
+          <button class="dq-btn dq-btn-next" id="next-4" disabled onclick="goTo(5)">Suivant →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 5 -->
+      <div class="dq-step" id="step-5">
+        <div class="dq-q-number">Question 5</div>
+        <div class="dq-q-title">Souhaitez-vous des caméras de surveillance ?</div>
+        <div class="dq-q-sub" id="cam-pack-sub"></div>
+        <div id="cam-pack-notice" class="dq-pack-notice" style="display:none;"><span>📦</span><span id="cam-pack-notice-text"></span></div>
+        <div class="dq-toggles">
+          <div>
+            <div class="dq-toggle" id="tog-cam-int" onclick="toggleItem('camInt')">
+              <div class="dq-toggle-check" id="chk-camInt"></div>
+              <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-645500.webp?v=1767965265" id="cam-img-int" alt="IP506P" style="width:48px;height:48px;object-fit:contain;border-radius:6px;flex-shrink:0;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Caméra intérieure</div>
+                <div class="dq-toggle-sub">IP506P — nécessite une alimentation électrique — <span class="dq-toggle-price" id="tprice-IP506P">69,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-camInt">
+              <span class="dq-counter-row-label">Combien de caméras intérieures ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('camIntQty',-1)">−</button>
+                <span class="dq-count" id="cnt-camIntQty">1</span>
+                <button type="button" onclick="changeCount('camIntQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="dq-toggle" id="tog-cam-ext-fixe" onclick="toggleItem('camExtFixe')">
+              <div class="dq-toggle-check" id="chk-camExtFixe"></div>
+              <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/OFFRESPECIAL_7.png?v=1772203809" id="cam-img-ext" alt="W503" style="width:48px;height:48px;object-fit:contain;border-radius:6px;flex-shrink:0;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Caméra extérieure sans fil</div>
+                <div class="dq-toggle-sub">W503 — totalement autonome (batterie) — <span class="dq-toggle-price" id="tprice-W503">99,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-camExtFixe">
+              <span class="dq-counter-row-label">Combien de caméras extérieures ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('camExtFixeQty',-1)">−</button>
+                <span class="dq-count" id="cnt-camExtFixeQty">1</span>
+                <button type="button" onclick="changeCount('camExtFixeQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="dq-toggle" id="tog-cam-ext-360" onclick="toggleItem('camExt360')">
+              <div class="dq-toggle-check" id="chk-camExt360"></div>
+              <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/OFFRESPECIAL_8.png?v=1772204007" id="cam-img-360" alt="W512MW" style="width:48px;height:48px;object-fit:contain;border-radius:6px;flex-shrink:0;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Caméra extérieure 360° solaire</div>
+                <div class="dq-toggle-sub">W512MW — totalement autonome (solaire) — <span class="dq-toggle-price" id="tprice-W512MW">129,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-camExt360">
+              <span class="dq-counter-row-label">Combien de caméras 360° ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('camExt360Qty',-1)">−</button>
+                <span class="dq-count" id="cnt-camExt360Qty">1</span>
+                <button type="button" onclick="changeCount('camExt360Qty',1)">+</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="dq-toggle" id="tog-cam-ext-filaire" onclick="toggleItem('camExtFilaire')">
+              <div class="dq-toggle-check" id="chk-camExtFilaire"></div>
+              <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/ep506_c523bfff-8249-467c-b353-bf2ee6266f5e.png?v=1744033126" id="cam-img-filaire" alt="EP506" style="width:48px;height:48px;object-fit:contain;border-radius:6px;flex-shrink:0;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Caméra extérieure filaire</div>
+                <div class="dq-toggle-sub">EP506 — nécessite alimentation électrique ou PoE — <span class="dq-toggle-price" id="tprice-EP506">99,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-camExtFilaire">
+              <span class="dq-counter-row-label">Combien de caméras filaires ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('camExtFilaireQty',-1)">−</button>
+                <span class="dq-count" id="cnt-camExtFilaireQty">1</span>
+                <button type="button" onclick="changeCount('camExtFilaireQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="dq-none-btn" id="none-5" onclick="toggleNone(5)">✓ Pas de caméra pour l'instant</button>
+        <div class="dq-nav">
+          <button class="dq-btn dq-btn-back" onclick="goTo(4)">← Retour</button>
+          <button class="dq-btn dq-btn-next" id="next-5" disabled onclick="goTo(6)">Suivant →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 6 -->
+      <div class="dq-step" id="step-6">
+        <div class="dq-q-number">Question 6</div>
+        <div class="dq-q-title">Souhaitez-vous renforcer votre protection ?</div>
+        <div class="dq-q-sub">Sirène, détecteurs domestiques, canon à fumée…</div>
+        <div class="dq-toggles">
+          <div>
+            <div class="dq-toggle" id="tog-sirene" onclick="toggleItem('sirene')">
+              <div class="dq-toggle-check" id="chk-sirene"></div>
+              <img id="timg-WOS305S" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Sirène extérieure 110dB</div>
+                <div class="dq-toggle-sub"><span id="tlabel-sirene">WOS305S / WOS305</span> — <span id="tlabel-sirene-prefix">à partir de </span><span class="dq-toggle-price" id="tprice-sirene">89,90 €</span></div>
+              </div>
+            </div>
+            <div id="sub-sirene" style="display:none; margin-top:8px; background:#f0f5ff; border-radius:10px; padding:12px 14px; border:1px solid #c5d8f8;">
+              <div style="font-size:12px;font-weight:700;color:#0b1e4a;margin-bottom:10px;">Avez-vous une prise électrique disponible à l'endroit souhaité ?</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div id="sub-sirene-solaire" class="dq-sub-opt" onclick="selectSireneType('solaire')" style="background:white;border:2px solid #0771e3;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all 0.15s;">
+                  <div style="display:flex !important;flex-direction:row !important;align-items:center !important;gap:10px !important;">
+                    <div style="width:14px;height:14px;min-width:14px;border-radius:50%;border:2px solid #0771e3;background:#0771e3;flex-shrink:0;" id="radio-sirene-solaire"></div>
+                    <img id="simg-sirene-sol" src="" alt="" style="width:40px;height:40px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+                    <div>
+                      <div style="font-size:13px;font-weight:600;color:#0b1e4a;">Non, je choisis la version solaire</div>
+                      <div style="font-size:11px;color:#7a8faa;margin-top:2px;"><span id="tlabel-WOS-solaire">WOS305S</span> — Panneau solaire intégré — <span class="dq-toggle-price" id="tprice-WOS-solaire">129,90 €</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div id="sub-sirene-filaire" class="dq-sub-opt dq-vt-only" onclick="selectSireneType('filaire')" style="background:white;border:2px solid #e8edf5;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all 0.15s;">
+                  <div style="display:flex !important;flex-direction:row !important;align-items:center !important;gap:10px !important;">
+                    <div style="width:14px;height:14px;min-width:14px;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;" id="radio-sirene-filaire"></div>
+                    <img id="simg-sirene-fil" src="" alt="" style="width:40px;height:40px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+                    <div>
+                      <div style="font-size:13px;font-weight:600;color:#0b1e4a;">Oui, la version filaire me convient</div>
+                      <div style="font-size:11px;color:#7a8faa;margin-top:2px;" id="sub-sirene-filaire-sub">WOS305 — Alimentation électrique — Batterie de secours — <span class="dq-toggle-price" id="tprice-WOS-filaire">89,90 €</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-sirene">
+              <span class="dq-counter-row-label">Combien de sirènes ? (maximum 4)</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('sireneQty',-1)">−</button>
+                <span class="dq-count" id="cnt-sireneQty">1</span>
+                <button type="button" onclick="changeCount('sireneQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="dq-toggle" id="tog-domestique" onclick="toggleItem('domestique')">
+              <div class="dq-toggle-check" id="chk-domestique"></div>
+              <img id="timg-WSD301-tog" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Protection contre les accidents domestiques</div>
+                <div class="dq-toggle-sub">Détecteur de fumée et/ou de fuite d'eau</div>
+              </div>
+            </div>
+            <div id="sub-domestique" style="display:none; margin-top:8px; background:#f0f5ff; border-radius:10px; padding:12px 14px; border:1px solid #c5d8f8;">
+              <div style="font-size:12px;font-weight:700;color:#0b1e4a;margin-bottom:10px;">Que souhaitez-vous protéger ?</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div>
+                  <div id="sub-fumee-opt" onclick="toggleDomestique('fumee')" style="background:white;border:2px solid #e8edf5;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all 0.15s;">
+                    <div style="display:flex !important;flex-direction:row !important;align-items:center !important;gap:10px !important;">
+                      <div style="width:14px;height:14px;min-width:14px;border-radius:4px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:700;flex-shrink:0;" id="chk-fumee-sub"></div>
+                      <img id="simg-WSD" src="" alt="" style="width:40px;height:40px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+                      <div>
+                        <div style="font-size:13px;font-weight:600;color:#0b1e4a;">Détecteur de fumée connecté</div>
+                        <div style="font-size:11px;color:#7a8faa;"><span id="tlabel-fumee">WSD301</span> — Alerte incendie 24h/24 — <span class="dq-toggle-price" id="tprice-WSD">39,90 €</span> / unité</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dq-counter-row" id="ctr-fumee" style="margin-top:6px;">
+                    <span class="dq-counter-row-label">Combien de détecteurs de fumée ?</span>
+                    <div class="dq-counter-btns">
+                      <button type="button" onclick="changeCount('fumeeQty',-1)">−</button>
+                      <span class="dq-count" id="cnt-fumeeQty">1</span>
+                      <button type="button" onclick="changeCount('fumeeQty',1)">+</button>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div id="sub-eau-opt" onclick="toggleDomestique('eau')" style="background:white;border:2px solid #e8edf5;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all 0.15s;">
+                    <div style="display:flex !important;flex-direction:row !important;align-items:center !important;gap:10px !important;">
+                      <div style="width:14px;height:14px;min-width:14px;border-radius:4px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:700;flex-shrink:0;" id="chk-eau-sub"></div>
+                      <img id="simg-WWF" src="" alt="" style="width:40px;height:40px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+                      <div>
+                        <div style="font-size:13px;font-weight:600;color:#0b1e4a;">Détecteur de fuite d'eau connecté</div>
+                        <div style="font-size:11px;color:#7a8faa;"><span id="tlabel-eau">WWF301</span> — Cuisine, salle de bain, machine à laver… <span class="dq-toggle-price" id="tprice-WWF">39,90 €</span> / unité</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dq-counter-row" id="ctr-eau" style="margin-top:6px;">
+                    <span class="dq-counter-row-label">Combien de détecteurs d'eau ?</span>
+                    <div class="dq-counter-btns">
+                      <button type="button" onclick="changeCount('eauQty',-1)">−</button>
+                      <span class="dq-count" id="cnt-eauQty">1</span>
+                      <button type="button" onclick="changeCount('eauQty',1)">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="dq-toggle" id="tog-canon" onclick="toggleItem('canon')">
+              <div class="dq-toggle-check" id="chk-canon"></div>
+              <img id="timg-F502W" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Canon à fumée</div>
+                <div class="dq-toggle-sub">F502W — Brouillard opaque en 30 secondes — <span class="dq-toggle-price" id="tprice-F502W">199,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-canon">
+              <span class="dq-counter-row-label">Combien de canons à fumée ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('canonQty',-1)">−</button>
+                <span class="dq-count" id="cnt-canonQty">1</span>
+                <button type="button" onclick="changeCount('canonQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="dq-none-btn" id="none-6" onclick="toggleNone(6)">✓ Non merci, passer au résultat</button>
+        <div class="dq-nav">
+          <button class="dq-btn dq-btn-back" onclick="goTo(5)">← Retour</button>
+          <button class="dq-btn dq-btn-next" id="next-6" disabled onclick="goTo(7)">Suivant →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 7 -->
+      <div class="dq-step" id="step-7">
+        <div class="dq-q-number">Question 7</div>
+        <div class="dq-q-title">Qui aura accès à l'alarme chez vous ?</div>
+        <div class="dq-q-sub" id="q7-sub">Le pack inclut déjà 1 télécommande.</div>
+        <div class="dq-pack-notice"><span>📦</span><span id="q7-pack-notice">Votre pack inclut déjà <strong>1 télécommande</strong>. Ajoutez-en si plusieurs personnes utilisent l'alarme.</span></div>
+        <div class="dq-toggles">
+          <div>
+            <div class="dq-toggle" id="tog-telecommande" onclick="toggleItem('telecommande')">
+              <div class="dq-toggle-check" id="chk-telecommande"></div>
+              <img id="timg-WRC305" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Télécommande(s) supplémentaire(s)</div>
+                <div class="dq-toggle-sub"><span id="tlabel-telecommande">WRC305</span> — Activation en un clic — <span class="dq-toggle-price" id="tprice-telecommande">23,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-telecommande">
+              <span class="dq-counter-row-label">Combien de télécommandes ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('telecommandeQty',-1)">−</button>
+                <span class="dq-count" id="cnt-telecommandeQty">1</span>
+                <button type="button" onclick="changeCount('telecommandeQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="dq-toggle" id="tog-clavier" onclick="toggleItem('clavier')">
+              <div class="dq-toggle-check" id="chk-clavier"></div>
+              <img id="timg-WKE301" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title">Clavier déporté sans fil</div>
+                <div class="dq-toggle-sub"><span id="tlabel-clavier">WKE301</span> — <span id="tlabel-clavier-detail">Avec 2 badges RFID inclus</span> — <span class="dq-toggle-price" id="tprice-clavier">49,90 €</span> / unité</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-clavier">
+              <span class="dq-counter-row-label">Combien de claviers ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('clavierQty',-1)">−</button>
+                <span class="dq-count" id="cnt-clavierQty">1</span>
+                <button type="button" onclick="changeCount('clavierQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="tog-badge-container" style="display:none;">
+          <div>
+            <div class="dq-toggle" id="tog-badge" onclick="toggleItem('badge')">
+              <div class="dq-toggle-check" id="chk-badge"></div>
+              <img id="timg-WRF301-kit" src="" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#f5f8ff;">
+              <div class="dq-toggle-body">
+                <div class="dq-toggle-title" id="badge-toggle-title">Badges RFID supplémentaires</div>
+                <div class="dq-toggle-sub" id="badge-toggle-sub"><span id="tlabel-badge-ref">WRF301</span> — <span id="tlabel-badge-desc">Pack de 2 badges</span> — <span class="dq-toggle-price" id="tprice-badge">14,90 €</span> / kit</div>
+              </div>
+            </div>
+            <div class="dq-counter-row" id="ctr-badge">
+              <span class="dq-counter-row-label">Combien de badges supplémentaires ?</span>
+              <div class="dq-counter-btns">
+                <button type="button" onclick="changeCount('badgeQty',-1)">−</button>
+                <span class="dq-count" id="cnt-badgeQty">1</span>
+                <button type="button" onclick="changeCount('badgeQty',1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="dq-none-btn" id="none-7" onclick="toggleNone(7)">✓ Pas besoin, voir ma recommandation</button>
+        <div class="dq-nav">
+          <button class="dq-btn dq-btn-back" onclick="goTo(6)">← Retour</button>
+          <button class="dq-btn dq-btn-next" id="next-7" disabled onclick="showResult()">Voir ma recommandation →</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RÉSULTAT -->
+    <div class="dq-result" id="dq-result">
+      <div class="dq-result-hero">
+        <h3>Votre configuration idéale</h3>
+        <div class="dq-result-alarm-name" id="res-alarm-name"></div>
+        <div class="dq-result-alarm-desc" id="res-alarm-desc"></div>
+      </div>
+      <div class="dq-result-body">
+        <div class="dq-version-selector" id="res-version-selector" style="display:none;">
+          <div class="dq-version-title" id="res-version-title">Quelle version souhaitez-vous ?</div>
+          <div class="dq-version-opts" id="res-version-opts"></div>
+        </div>
+        <div class="dq-result-pack">
+          <div class="dq-result-pack-title">📦 Déjà inclus dans votre pack</div>
+          <ul id="res-pack-contents"></ul>
+        </div>
+        <div id="res-acc-section" style="display:none;">
+          <div class="dq-result-acc-title">Accessoires recommandés</div>
+          <div class="dq-result-acc-list" id="res-acc-list"></div>
+        </div>
+        <div class="dq-discount-box" id="res-discount-box">
+          <div class="dq-discount-label" id="res-discount-label"></div>
+          <div class="dq-discount-sub" id="res-discount-sub"></div>
+          <div class="dq-discount-urgency" id="res-discount-urgency"></div>
+        </div>
+        <div class="dq-total-box">
+          <div class="dq-total-left">
+            <div class="dq-total-label">Estimation totale</div>
+            <div class="dq-total-sub">Pack + accessoires · Prix indicatifs</div>
+          </div>
+          <div class="dq-total-right">
+            <div class="dq-total-original" id="res-total-original" style="display:none;"></div>
+            <div class="dq-total-amount" id="res-total">0 €</div>
+            <div class="dq-total-saving" id="res-total-saving" style="display:none;"></div>
+          </div>
+        </div>
+        <button class="dq-btn-cart" id="res-btn-cart" onclick="addAllToCart()">Ajouter ma sélection au panier →</button>
+        <div class="dq-restart"><button onclick="restart()">↩ Recommencer le quiz</button></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+
+  var TOTAL = 7;
+  var A = { logement: null, tech: null, portes: false, portesQty: 1, baies: false, baiesQty: 1, garage: false, garageQty: 1, jardin: false, jardinType: null, jardinQty: 1, alleeQty: 1, jardinExtQty: 1, jardin_allee: false, jardin_jardin: false, mouvement: false, mouvementQty: 1, camInt: false, camIntQty: 1, camExtFixe: false, camExtFixeQty: 1, camExt360: false, camExt360Qty: 1, camExtFilaire: false, camExtFilaireQty: 1, sirene: false, sireneType: 'solaire', sireneQty: 1, fumee: false, fumeeQty: 1, eau: false, eauQty: 1, domestique: false, canon: false, canonQty: 1, telecommande: false, telecommandeQty: 1, clavier: false, clavierQty: 1, badge: false, badgeQty: 1 };
+  var noneState = { 3: false, 4: false, 5: false, 6: false, 7: false };
+  var selectedVid = null;
+  var currentGrouped = [];
+  var addSimCard = false;
+  var simCardVid = '12260207067476';
+
+  var alarms = {
+    vigilia: { name: 'Alarme Vigilia', desc: 'Clavier physique intégré, télécommande et application — la solution idéale pour la majorité des foyers.', packContents: ['1 centrale Vigilia sans fil', '1 détecteur de mouvement WPS305 (compatible animaux)', '2 contacteurs ouverture/vibration WDV301', '1 caméra intérieure IP506P Full HD', '1 télécommande WRC305', '2 badges RFID WRF301'], price: 139.90, hasIntCamera: true },
+    touch:   { name: 'Alarme Touch AM301', desc: 'Écran tactile 4,3\'\' ou 7\'\' directement sur la centrale, en plus de l\'application.', packContents: ['1 centrale Touch AM301 (sirène & batterie intégrées)', '2 contacteurs ouverture/vibration WDV301', '1 détecteur de mouvement WPS305 (compatible animaux)', '2 télécommandes WRC301'], price: 199.90, hasIntCamera: false },
+    elite:   { name: 'Alarme Élite PA501Z', desc: 'Gestion 100% via smartphone, triple connexion Wi-Fi + Ethernet + 4G, technologie Zigbee.', packContents: ['1 centrale Élite PA501Z (Wi-Fi + Ethernet + 4G)', '2 contacteurs d\'ouverture WDS502Z', '1 détecteur de mouvement WPS501', '2 télécommandes WRC501'], price: 299.90, hasIntCamera: false }
+  };
+
+  var alarmVids = { vigilia: '53352323416404', touch: '51276200051028', elite: '53352276722004' };
+  var alarmVidsAlt = { vigilia_gsm: '53352323449172', touch_xl: '51276200083796' };
+
+  var acc = {
+    vt: {
+      contacteur: { name: 'Contacteur ouverture/vibration', ref: 'WDV301', price: 39.90, vid: '51927975952724' },
+      vibration:  { name: 'Détecteur de vibration', ref: 'WVD301', price: 34.90, vid: '51634009637204' },
+      garage:     { name: 'Contacteur porte de garage', ref: 'WDG301', price: 49.90, vid: '51637993570644' },
+      mouv_ani:   { name: 'Détecteur mouvement animaux', ref: 'WPS305', price: 34.90, vid: '52615888699732' },
+      mouv_std:   { name: 'Détecteur de mouvement compatible animaux', ref: 'WPS305', price: 34.90, vid: '52615888699732' },
+      mouv_ext:   { name: 'Détecteur mouvement extérieur', ref: 'WMO301', price: 79.90, vid: '51637979873620' },
+      barriere:   { name: 'Barrières infrarouge', ref: 'BIR301', price: 89.90, vid: '51637992358228' },
+      badge_kit:  { name: 'Pack de 2 badges RFID WRF301', ref: 'WRF301-KIT', price: 14.90, vid: '43915247059157' },
+      sirene:         { name: 'Sirène extérieure solaire', ref: 'WOS305S', price: 129.90, vid: '52522850091348' },
+      sirene_filaire: { name: 'Sirène extérieure filaire', ref: 'WOS305', price: 89.90, vid: '52522876010836' },
+      clavier:    { name: 'Clavier sans fil + 2 badges RFID', ref: 'WKE301', price: 49.90, vid: '51637988524372' },
+      telecommande: { name: 'Télécommande supplémentaire', ref: 'WRC305', price: 27.90, vid: '52547690627412' },
+      fumee:      { name: 'Détecteur de fumée', ref: 'WSD301', price: 39.90, vid: '51637975646548' },
+      eau:        { name: 'Détecteur de fuite d\'eau', ref: 'WWF301', price: 39.90, vid: '51637982658900' }
+    },
+    elite: {
+      contacteur: { name: 'Contacteur de porte Zigbee', ref: 'WDS502Z', price: 34.90, vid: '51647156420948' },
+      vibration:  { name: 'Détecteur de vibration Zigbee', ref: 'WVD502Z', price: 44.90, vid: '51647187222868' },
+      garage:     { name: 'Contacteur porte de garage', ref: 'WDG501', price: 49.90, vid: '51644638462292' },
+      mouv_ani:   { name: 'Détecteur mouvement animaux', ref: 'WPS501', price: 35.90, vid: '51644379496788' },
+      mouv_std:   { name: 'Détecteur de mouvement', ref: 'WPS501', price: 35.90, vid: '51644379496788' },
+      mouv_ext:   { name: 'Détecteur mouvement extérieur', ref: 'WMO501', price: 79.90, vid: '51644630106452' },
+      barriere:   null,
+      sirene:     { name: 'Sirène extérieure solaire', ref: 'WOS501S', price: 129.90, vid: '51644627976532' },
+      clavier:    { name: 'Clavier sans fil Zigbee', ref: 'WKE502Z', price: 59.90, vid: '51647199707476' },
+      telecommande: { name: 'Télécommande supplémentaire', ref: 'WRC501', price: 23.90, vid: '51644430385492' },
+      fumee:      { name: 'Détecteur de fumée', ref: 'WSD501', price: 39.90, vid: '51644458303828' },
+      eau:        { name: 'Détecteur de fuite d\'eau', ref: 'WWF501', price: 39.90, vid: '51644636758356' },
+      badge:      { name: 'Badge RFID supplémentaire', ref: 'WRF501', price: 9.90, vid: '51644510699860' }
+    },
+    cameras: {
+      int:     { name: 'Caméra intérieure IP506P', ref: 'IP506P', price: 69.90, vid: '51638347858260' },
+      ext:     { name: 'Caméra extérieure W503', ref: 'W503', price: 99.90, vid: '52530187403604' },
+      ext360:  { name: 'Caméra 360° solaire W512MW', ref: 'W512MW', price: 129.90, vid: '52338611880276' },
+      filaire: { name: 'Caméra extérieure filaire EP506', ref: 'EP506', price: 99.90, vid: '51638392488276' }
+    },
+    commun: { canon: { name: 'Canon à fumée F502W', ref: 'F502W', price: 199.90, vid: '51638597583188' } }
+  };
+
+  var accHandles = {
+    'WDV301':'contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302-1','WVD301':'detecteur-de-vibration-wvd301-compatible-avec-lalarme-am301-am302-copie','WDG301':'contacteur-de-porte-de-garage-wdg301-compatible-avec-lalarme-am301-am302','WPS305':'detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x-copie','WPS301':'detecteur-de-mouvement-animaux-wps301-compatible-avec-lalarme-am301-am302-copie','WMO301':'detecteur-de-mouvement-exterieur-wmo301-compatible-am301-am302-copie','BIR301':'daewoo-barrieres-infrarouge-pour-alarme-am301-am302-1','WRF301-KIT':'pack-de-2-badges-rfid-wrf301','WOS305S':'sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire-1','WOS305':'sirene-exterieure-wos305-sirene-avec-batterie-de-secours-et-prise-secteur','WKE301':'clavier-sans-fil-wke301-avec-2-badges-rfid-compatible-avec-lalarme-am301-am302','WRC305':'telecommande-compatible-vigilia-touch-1','WSD301':'detecteur-de-fumee-wsd301-compatible-avec-lalarme-am301-am302-copie','WWF301':'detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302-copie','WDS502Z':'contacteur-de-porte-zigbee-wds502z-compatible-avec-la-centrale-pa501z-1','WVD502Z':'detecteur-de-vibration-zigbee-wvd502z-compatible-avec-la-centrale-pa501z-1','WDG501':'contacteur-de-porte-de-garage-wdg501-compatible-avec-lalarme-sa501-pa501z','WPS501':'detecteur-de-mouvement-animaux-wps501-compatible-avec-lalarme-sa501-pa501z','WMO501':'detecteur-de-mouvement-exterieur-wmo501-compatible-avec-lalarme-sa501-pa501z','WOS501S':'sirene-exterieure-solaire-wos501s-compatible-avec-lalarme-sa501-pa501z','WKE502Z':'clavier-wke502z','WRC501':'telecommande-wrc501-compatible-avec-lalarme-sa501-pa501z','WRF501':'badge-rfid-wrf501-compatible-avec-lalarme-sa501-pa501z-copie','WSD501':'detecteur-de-fumee-connecte-wsd501-compatible-avec-lalarme-sa501-pa501z','WWF501':'detecteur-de-fuite-deau-wwf501-compatible-avec-lalarme-sa501-pa501z','IP506P':'camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-copie','W503':'camera-daewoo-w503-autonome-haute-resolution-wifi-1080p-1','W512MW':'camera-w512mw-exterieure-rotative-1440p-avec-panneau-solaire-1','EP506':'camera-ep506-exterieure-rotative-filaire-4mp','F502W':'canon-a-fumee-daewoo-f502w'
+  };
+
+  var alarmHandles = { vigilia: 'starter-pack-vigilia', vigilia_gsm: 'starter-pack-vigilia', touch: 'alarme-daewoo-wifi-gsm-4g-starter-pack-am301', touch_xl: 'alarme-daewoo-wifi-gsm-4g-starter-pack-am301', elite: 'starter-pack-elite-daewoo' };
+
+  var priceCache = {};
+  var imgCache = {};
+
+  function fetchPrice(handle, callback) {
+    if (priceCache[handle] !== undefined) { callback(priceCache[handle]); return; }
+    fetch('/products/' + handle + '.json').then(function(r) { return r.json(); }).then(function(data) {
+      var v = data.product.variants[0];
+      var price = parseFloat(v.price);
+      var compare = v.compare_at_price ? parseFloat(v.compare_at_price) : null;
+      priceCache[handle] = price;
+      if (compare && compare > price) priceCache[handle + '_compare'] = compare;
+      callback(price);
+    }).catch(function() { callback(null); });
+  }
+
+  function fetchVariantPrice(vid, handle, callback) {
+    var cacheKey = 'variant_' + vid;
+    if (priceCache[cacheKey] !== undefined) { callback(priceCache[cacheKey]); return; }
+    fetch('/products/' + handle + '.json').then(function(r) { return r.json(); }).then(function(data) {
+      var price = null;
+      data.product.variants.forEach(function(v) { if (String(v.id) === String(vid)) price = parseFloat(v.price); });
+      if (price !== null) priceCache[cacheKey] = price;
+      callback(price);
+    }).catch(function() { callback(null); });
+  }
+
+  function getLivePrice(ref, fallback) {
+    var handle = accHandles[ref];
+    if (handle && priceCache[handle] !== undefined) return priceCache[handle];
+    return fallback;
+  }
+
+  function loadImg(imgId, handle) {
+    var el = document.getElementById(imgId);
+    if (!el || !handle) return;
+    if (imgCache[handle]) { el.src = imgCache[handle]; return; }
+    fetch('/products/' + handle + '.json').then(function(r) { return r.json(); }).then(function(data) {
+      var src = data.product.image && data.product.image.src;
+      if (src) { imgCache[handle] = src; el.src = src; }
+    }).catch(function() {});
+  }
+
+  function loadAlarmImages() {
+    // Vigilia : URL fixe
+    var vigiliaImg = document.getElementById('alarm-img-vigilia');
+    if (vigiliaImg) vigiliaImg.src = 'https://daewoo-security.fr/cdn/shop/files/958b5e1e-36cd-47db-93da-efc4b7f2d77c.jpg?v=1770108516&width=1600';
+    // Touch et Élite depuis Shopify
+    [{ imgId: 'alarm-img-touch', handle: alarmHandles.touch }, { imgId: 'alarm-img-elite', handle: alarmHandles.elite }].forEach(function(item) {
+      var imgEl = document.getElementById(item.imgId);
+      if (!imgEl || !item.handle) return;
+      var cacheKey = 'img_' + item.handle;
+      if (priceCache[cacheKey]) { imgEl.src = priceCache[cacheKey]; return; }
+      fetch('/products/' + item.handle + '.json').then(function(r) { return r.json(); }).then(function(data) {
+        var src = data.product.image && data.product.image.src;
+        if (src) { priceCache[cacheKey] = src; imgEl.src = src; }
+      }).catch(function() {});
+    });
+  }
+  loadAlarmImages();
+
+  function loadStepImages(step, alarmKey) {
+    var db = alarmKey === 'elite' ? acc.elite : acc.vt;
+    var maps = {
+      3: [['timg-WDV301', accHandles[db.contacteur.ref]], ['timg-WVD301', accHandles[db.vibration.ref]], ['timg-WDG301', accHandles[db.garage.ref]]],
+      4: [['timg-WPS305-int', accHandles[db.mouv_std.ref]], ['timg-WMO301-tog', accHandles[db.mouv_ext.ref]], ['simg-BIR301', alarmKey !== 'elite' && acc.vt.barriere ? accHandles[acc.vt.barriere.ref] : accHandles[db.mouv_ext.ref]], ['simg-WMO', accHandles[db.mouv_ext.ref]]],
+      6: [['timg-WOS305S', accHandles[alarmKey === 'elite' ? acc.elite.sirene.ref : acc.vt.sirene.ref]], ['timg-WSD301-tog', accHandles[db.fumee.ref]], ['timg-F502W', accHandles[acc.commun.canon.ref]], ['simg-sirene-sol', accHandles[alarmKey === 'elite' ? acc.elite.sirene.ref : acc.vt.sirene.ref]], ['simg-sirene-fil', alarmKey !== 'elite' && acc.vt.sirene_filaire ? accHandles[acc.vt.sirene_filaire.ref] : null], ['simg-WSD', accHandles[db.fumee.ref]], ['simg-WWF', accHandles[db.eau.ref]]],
+      7: [['timg-WRC305', accHandles[db.telecommande.ref]], ['timg-WKE301', accHandles[db.clavier.ref]], ['timg-WRF301-kit', alarmKey === 'elite' ? accHandles['WRF501'] : accHandles['WRF301-KIT']]]
+    };
+    (maps[step] || []).forEach(function(pair) { if (pair[1]) loadImg(pair[0], pair[1]); });
+  }
+
+  function updateCameraImages() {
+    [{ imgId: 'cam-img-int', handle: accHandles['IP506P'] }, { imgId: 'cam-img-ext', handle: accHandles['W503'] }, { imgId: 'cam-img-360', handle: accHandles['W512MW'] }, { imgId: 'cam-img-filaire', handle: accHandles['EP506'] }].forEach(function(cam) {
+      var imgEl = document.getElementById(cam.imgId);
+      if (!imgEl || !cam.handle) return;
+      var cacheKey = 'img_' + cam.handle;
+      if (priceCache[cacheKey]) { imgEl.src = priceCache[cacheKey]; return; }
+      fetch('/products/' + cam.handle + '.json').then(function(r) { return r.json(); }).then(function(data) {
+        var src = data.product.image && data.product.image.src;
+        if (src) { priceCache[cacheKey] = src; imgEl.src = src; }
+      }).catch(function() {});
+    });
+  }
+
+  function updateTogglePrices(alarmKey) {
+    var db = alarmKey === 'elite' ? acc.elite : acc.vt;
+    var labels = { 'tlabel-contacteur': db.contacteur ? (alarmKey === 'elite' ? 'Contacteur Zigbee ' + db.contacteur.ref : 'Contacteur ouverture + vibration ' + db.contacteur.ref) : '', 'tlabel-vibration': db.vibration ? 'Détecteur de vibration ' + db.vibration.ref : '', 'tlabel-garage': db.garage ? 'Contacteur spécial garage ' + db.garage.ref : '', 'tlabel-mouvement': db.mouv_std ? 'Détecteur mouvement ' + db.mouv_std.ref : '', 'tlabel-WMO': db.mouv_ext ? db.mouv_ext.ref : '', 'tlabel-sirene': alarmKey === 'elite' ? 'WOS501S (solaire)' : 'WOS305S / WOS305', 'tlabel-WOS-solaire': alarmKey === 'elite' ? 'WOS501S' : 'WOS305S', 'tlabel-fumee': db.fumee ? db.fumee.ref : '', 'tlabel-eau': db.eau ? db.eau.ref : '', 'tlabel-telecommande': db.telecommande ? db.telecommande.ref : '', 'tlabel-clavier': db.clavier ? db.clavier.ref : '', 'tlabel-clavier-detail': alarmKey === 'elite' ? 'Aucun badge RFID inclus' : 'Avec 2 badges RFID inclus' };
+    Object.keys(labels).forEach(function(id) { var el = document.getElementById(id); if (el && labels[id]) el.textContent = labels[id]; });
+    var map = { 'tprice-WDV301': { ref: db.contacteur.ref, fallback: db.contacteur.price }, 'tprice-WVD301': { ref: db.vibration.ref, fallback: db.vibration.price }, 'tprice-WDG301': { ref: db.garage.ref, fallback: db.garage.price }, 'tprice-WPS305-int': { ref: db.mouv_std.ref, fallback: db.mouv_std.price }, 'tprice-WMO': { ref: db.mouv_ext.ref, fallback: db.mouv_ext.price }, 'tprice-BIR301': { ref: alarmKey !== 'elite' && acc.vt.barriere ? acc.vt.barriere.ref : db.mouv_ext.ref, fallback: alarmKey !== 'elite' && acc.vt.barriere ? acc.vt.barriere.price : db.mouv_ext.price }, 'tprice-IP506P': { ref: acc.cameras.int.ref, fallback: acc.cameras.int.price }, 'tprice-W503': { ref: acc.cameras.ext.ref, fallback: acc.cameras.ext.price }, 'tprice-W512MW': { ref: acc.cameras.ext360.ref, fallback: acc.cameras.ext360.price }, 'tprice-EP506': { ref: acc.cameras.filaire.ref, fallback: acc.cameras.filaire.price }, 'tprice-sirene': { ref: alarmKey === 'elite' ? acc.elite.sirene.ref : acc.vt.sirene_filaire ? acc.vt.sirene_filaire.ref : acc.vt.sirene.ref, fallback: alarmKey === 'elite' ? acc.elite.sirene.price : acc.vt.sirene_filaire ? acc.vt.sirene_filaire.price : acc.vt.sirene.price }, 'tprice-WOS-solaire': { ref: alarmKey === 'elite' ? acc.elite.sirene.ref : acc.vt.sirene.ref, fallback: alarmKey === 'elite' ? acc.elite.sirene.price : acc.vt.sirene.price }, 'tprice-WOS-filaire': { ref: alarmKey !== 'elite' && acc.vt.sirene_filaire ? acc.vt.sirene_filaire.ref : acc.vt.sirene.ref, fallback: alarmKey !== 'elite' && acc.vt.sirene_filaire ? acc.vt.sirene_filaire.price : acc.vt.sirene.price }, 'tprice-WSD': { ref: db.fumee.ref, fallback: db.fumee.price }, 'tprice-WWF': { ref: db.eau.ref, fallback: db.eau.price }, 'tprice-F502W': { ref: acc.commun.canon.ref, fallback: acc.commun.canon.price }, 'tprice-telecommande': { ref: db.telecommande.ref, fallback: db.telecommande.price }, 'tprice-clavier': { ref: db.clavier.ref, fallback: db.clavier.price }, 'tprice-badge': { ref: alarmKey === 'elite' ? (acc.elite.badge ? acc.elite.badge.ref : 'WRF501') : 'WRF301-KIT', fallback: alarmKey === 'elite' ? 9.90 : 14.90 } };
+    var sirenePrefix = document.getElementById('tlabel-sirene-prefix');
+    if (sirenePrefix) sirenePrefix.style.display = alarmKey === 'elite' ? 'none' : '';
+    var badgeRef = document.getElementById('tlabel-badge-ref');
+    var badgeDesc = document.getElementById('tlabel-badge-desc');
+    if (badgeRef) badgeRef.textContent = alarmKey === 'elite' ? 'WRF501' : 'WRF301';
+    if (badgeDesc) badgeDesc.textContent = alarmKey === 'elite' ? 'Désarmement rapide sans code' : 'Pack de 2 badges';
+    Object.keys(map).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var ref = map[id].ref;
+      var p = getLivePrice(ref, map[id].fallback);
+      var handle = accHandles[ref];
+      var compare = handle ? priceCache[handle + '_compare'] : null;
+      if (compare && compare > p) { el.innerHTML = '<span style="text-decoration:line-through;color:#aab4c4;font-weight:400;margin-right:4px;">' + compare.toFixed(2).replace('.', ',') + ' €</span>' + p.toFixed(2).replace('.', ',') + ' €'; }
+      else { el.textContent = p.toFixed(2).replace('.', ',') + ' €'; }
+    });
+  }
+
+  (function initDots() {
+    var c = document.getElementById('dq-dots');
+    for (var i = 0; i < TOTAL; i++) { var d = document.createElement('div'); d.className = 'dq-dot' + (i === 0 ? ' active' : ''); d.id = 'dot-' + (i + 1); c.appendChild(d); }
+  })();
+
+  function updateProgress(step) {
+    document.getElementById('dq-bar').style.width = ((step - 1) / TOTAL * 100) + '%';
+    document.getElementById('dq-top-label').textContent = 'Étape ' + step + ' / ' + TOTAL;
+    for (var i = 1; i <= TOTAL; i++) { var d = document.getElementById('dot-' + i); if (!d) continue; d.className = 'dq-dot' + (i < step ? ' done' : i === step ? ' active' : ''); }
+  }
+
+  window.goTo = function(step) {
+    document.querySelectorAll('#dq .dq-step').forEach(function(s) { s.classList.remove('active'); });
+    var el = document.getElementById('step-' + step);
+    if (el) { el.classList.add('active'); updateProgress(step); }
+    document.getElementById('dq-top').style.display = 'flex';
+    document.getElementById('dq-result').classList.remove('active');
+    document.getElementById('dq').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (step === 5) { updateCamStep(); updateCameraImages(); }
+    if (step >= 3) loadStepImages(step, pickAlarm());
+    if (step >= 4) updateEliteCompat();
+    if (step >= 3) {
+      var key = pickAlarm();
+      var db = key === 'elite' ? acc.elite : acc.vt;
+      var refsToFetch = [];
+      [db.contacteur, db.vibration, db.garage, db.mouv_std, db.mouv_ext, db.barriere, db.sirene, db.sirene_filaire, db.fumee, db.eau, db.telecommande, db.clavier, acc.cameras.int, acc.cameras.ext, acc.cameras.ext360, acc.cameras.filaire, acc.commun.canon].forEach(function(item) { if (item && accHandles[item.ref] && refsToFetch.indexOf(item.ref) === -1) refsToFetch.push(item.ref); });
+      var loaded = 0;
+      if (refsToFetch.length === 0) { updateTogglePrices(key); return; }
+      refsToFetch.forEach(function(ref) { fetchPrice(accHandles[ref], function() { loaded++; if (loaded === refsToFetch.length) updateTogglePrices(key); }); });
+    }
+  };
+
+  function updateEliteCompat() {
+    var isElite = pickAlarm() === 'elite';
+    document.querySelectorAll('#dq .dq-vt-only').forEach(function(el) { el.style.display = isElite ? 'none' : ''; });
+    var currentStep = 0;
+    document.querySelectorAll('#dq .dq-step.active').forEach(function(s) { var m = s.id.match(/step-(\d+)/); if (m) currentStep = parseInt(m[1]); });
+    if (currentStep >= 3) loadStepImages(currentStep, isElite ? 'elite' : 'vigilia');
+    var clavierTitle = document.querySelector('#tog-clavier .dq-toggle-title');
+    if (clavierTitle) clavierTitle.textContent = isElite ? 'Clavier déporté sans fil' : 'Clavier déporté avec 2 badges RFID';
+    var badgeContainer = document.getElementById('tog-badge-container');
+    if (badgeContainer) badgeContainer.style.display = A.clavier ? 'block' : 'none';
+    if (!A.clavier && A.badge) { A.badge = false; var togBadge = document.getElementById('tog-badge'); if (togBadge) togBadge.classList.remove('selected'); var ctrBadge = document.getElementById('ctr-badge'); if (ctrBadge) ctrBadge.classList.remove('visible'); }
+    var q7sub = document.getElementById('q7-sub'); var q7notice = document.getElementById('q7-pack-notice');
+    if (isElite) { if (q7sub) q7sub.textContent = 'Le pack Élite inclut déjà 2 télécommandes WRC501.'; if (q7notice) q7notice.innerHTML = 'Votre pack inclut déjà <strong>2 télécommandes WRC501</strong>. Ajoutez-en si nécessaire.'; }
+    else { if (q7sub) q7sub.textContent = 'Le pack inclut déjà 1 télécommande.'; if (q7notice) q7notice.innerHTML = 'Votre pack inclut déjà <strong>1 télécommande</strong>. Ajoutez-en si plusieurs personnes utilisent l\'alarme.'; }
+    var jardinSub = document.getElementById('jardin-toggle-sub');
+    if (jardinSub) jardinSub.innerHTML = isElite ? 'Détecteur mouvement extérieur WMO501 — <span class="dq-toggle-price" id="tprice-WMO">79,90 €</span> / unité' : 'Jardin, allée, terrasse ou périmètre extérieur';
+    if (isElite && A.jardin_allee) { A.jardin_allee = false; A.jardinType = A.jardin_jardin ? 'set' : null; var chkA = document.getElementById('chk-allee'); var optA = document.getElementById('sub-allee-opt'); var ctrA = document.getElementById('ctr-allee'); if (chkA) { chkA.style.background='white'; chkA.style.borderColor='#cbd5e1'; chkA.textContent=''; } if (optA) { optA.style.borderColor='#e8edf5'; optA.style.background='white'; } if (ctrA) ctrA.classList.remove('visible'); }
+    if (isElite && A.sireneType === 'filaire') { A.sireneType = 'solaire'; selectSireneType('solaire'); }
+  }
+
+  function updateCamStep() {
+    var key = pickAlarm();
+    var notice = document.getElementById('cam-pack-notice');
+    var noticeText = document.getElementById('cam-pack-notice-text');
+    var sub = document.getElementById('cam-pack-sub');
+    if (key === 'vigilia') { sub.textContent = 'Votre pack Vigilia inclut déjà une caméra intérieure.'; noticeText.innerHTML = 'Votre pack inclut déjà <strong>1 caméra intérieure IP506P</strong>. Souhaitez-vous en ajouter d\'autres ou des caméras extérieures ?'; notice.style.display = 'flex'; }
+    else { sub.textContent = 'Toutes nos caméras sont compatibles avec votre alarme.'; notice.style.display = 'none'; }
+  }
+
+  window.selectOpt = function(el) {
+    var group = el.getAttribute('data-group'); var val = el.getAttribute('data-val');
+    el.closest('.dq-opts-grid').querySelectorAll('.dq-opt').forEach(function(o) { o.classList.remove('selected'); });
+    el.classList.add('selected'); A[group] = val;
+    if (group === 'logement') document.getElementById('next-1').disabled = !A.logement;
+    if (group === 'tech') document.getElementById('next-2').disabled = false;
+  };
+
+  var toggleGroups = { portes: 3, baies: 3, garage: 3, jardin: 4, mouvement: 4, camInt: 5, camExtFixe: 5, camExt360: 5, camExtFilaire: 5, sirene: 6, domestique: 6, canon: 6, telecommande: 7, clavier: 7, badge: 7 };
+  var htmlMap = { portes: 'tog-portes', baies: 'tog-baies', garage: 'tog-garage', jardin: 'tog-jardin', mouvement: 'tog-mouvement', camInt: 'tog-cam-int', camExtFixe: 'tog-cam-ext-fixe', camExt360: 'tog-cam-ext-360', camExtFilaire: 'tog-cam-ext-filaire', sirene: 'tog-sirene', domestique: 'tog-domestique', canon: 'tog-canon', telecommande: 'tog-telecommande', clavier: 'tog-clavier', badge: 'tog-badge' };
+
+  window.toggleItem = function(key) {
+    A[key] = !A[key];
+    var togEl = document.getElementById(htmlMap[key]);
+    if (togEl) togEl.classList.toggle('selected', A[key]);
+    if (key === 'jardin') {
+      var isElite = pickAlarm() === 'elite'; var sub = document.getElementById('sub-jardin');
+      if (isElite) { if (sub) sub.style.display = 'none'; var ctrElite = document.getElementById('ctr-jardin-elite'); if (A[key]) { A.jardin_jardin = true; A.jardinType = 'set'; if (ctrElite) ctrElite.classList.add('visible'); } else { A.jardin_jardin = false; A.jardinType = null; if (ctrElite) ctrElite.classList.remove('visible'); } }
+      else { var ctrEliteOff = document.getElementById('ctr-jardin-elite'); if (ctrEliteOff) ctrEliteOff.classList.remove('visible'); if (sub) sub.style.display = A[key] ? 'block' : 'none'; if (!A[key]) { A.jardinType = null; A.jardin_allee = false; A.jardin_jardin = false; } }
+    }
+    if (key === 'sirene') {
+      var isEliteSir = pickAlarm() === 'elite'; var subS = document.getElementById('sub-sirene');
+      if (isEliteSir) { if (subS) subS.style.display = 'none'; A.sireneType = 'solaire'; var ctrSir = document.getElementById('ctr-sirene'); if (ctrSir) ctrSir.classList.toggle('visible', A[key]); }
+      else { if (subS) subS.style.display = A[key] ? 'block' : 'none'; }
+    }
+    if (key === 'domestique') { var subD = document.getElementById('sub-domestique'); if (subD) subD.style.display = A[key] ? 'block' : 'none'; if (!A[key]) { A.fumee = false; A.eau = false; resetDomestiqueUI(); } }
+    if (key === 'clavier') { var badgeContainer = document.getElementById('tog-badge-container'); if (badgeContainer) { badgeContainer.style.display = A[key] ? 'block' : 'none'; if (!A[key]) { A.badge = false; var togB = document.getElementById('tog-badge'); if (togB) togB.classList.remove('selected'); var ctrB = document.getElementById('ctr-badge'); if (ctrB) ctrB.classList.remove('visible'); } } }
+    var ctrMap = { portes: 'ctr-portes', baies: 'ctr-baies', garage: 'ctr-garage', mouvement: 'ctr-mouvement', camInt: 'ctr-camInt', camExtFixe: 'ctr-camExtFixe', camExt360: 'ctr-camExt360', camExtFilaire: 'ctr-camExtFilaire', sirene: 'ctr-sirene', canon: 'ctr-canon', telecommande: 'ctr-telecommande', clavier: 'ctr-clavier', badge: 'ctr-badge' };
+    if (ctrMap[key]) { var ctr = document.getElementById(ctrMap[key]); if (ctr) ctr.classList.toggle('visible', A[key]); }
+    var step = toggleGroups[key];
+    if (A[key] && noneState[step]) { noneState[step] = false; var nb = document.getElementById('none-' + step); if (nb) nb.classList.remove('active'); }
+    checkStepNext(step);
+  };
+
+  window.toggleJardinType = function(type) {
+    A['jardin_' + type] = !A['jardin_' + type]; A.jardinType = (A.jardin_allee || A.jardin_jardin) ? 'set' : null;
+    var chk = document.getElementById(type === 'allee' ? 'chk-allee' : 'chk-jardin-sub'); var opt = document.getElementById('sub-' + type + '-opt'); var ctr = document.getElementById(type === 'allee' ? 'ctr-allee' : 'ctr-jardin-ext'); var sel = A['jardin_' + type];
+    if (chk) { chk.style.background = sel ? '#0771e3' : 'white'; chk.style.borderColor = sel ? '#0771e3' : '#cbd5e1'; chk.textContent = sel ? '✓' : ''; }
+    if (opt) { opt.style.borderColor = sel ? '#0771e3' : '#e8edf5'; opt.style.background = sel ? '#f0f5ff' : 'white'; }
+    if (ctr) ctr.classList.toggle('visible', sel);
+    checkStepNext(4);
+  };
+
+  window.selectSireneType = function(type) {
+    A.sireneType = type;
+    ['solaire','filaire'].forEach(function(t) { var opt = document.getElementById('sub-sirene-' + t); var radio = document.getElementById('radio-sirene-' + t); var sel = t === type; if (opt) { opt.style.borderColor = sel ? '#0771e3' : '#e8edf5'; opt.style.background = sel ? '#f0f5ff' : 'white'; } if (radio) { radio.style.borderColor = sel ? '#0771e3' : '#cbd5e1'; radio.style.background = sel ? '#0771e3' : 'white'; } });
+  };
+
+  window.toggleDomestique = function(type) {
+    A[type] = !A[type]; A.domestique = A.fumee || A.eau;
+    var opt = document.getElementById('sub-' + type + '-opt'); var chk = document.getElementById('chk-' + type + '-sub'); var ctr = document.getElementById('ctr-' + type);
+    if (opt) { opt.style.borderColor = A[type] ? '#0771e3' : '#e8edf5'; opt.style.background = A[type] ? '#f0f5ff' : 'white'; }
+    if (chk) { chk.style.background = A[type] ? '#0771e3' : 'white'; chk.style.borderColor = A[type] ? '#0771e3' : '#cbd5e1'; chk.textContent = A[type] ? '\u2713' : ''; }
+    if (ctr) ctr.classList.toggle('visible', A[type]);
+    checkStepNext(6);
+  };
+
+  function resetDomestiqueUI() {
+    ['fumee','eau'].forEach(function(type) { var opt = document.getElementById('sub-' + type + '-opt'); var chk = document.getElementById('chk-' + type + '-sub'); var ctr = document.getElementById('ctr-' + type); if (opt) { opt.style.borderColor = '#e8edf5'; opt.style.background = 'white'; } if (chk) { chk.style.background = 'white'; chk.style.borderColor = '#cbd5e1'; chk.textContent = ''; } if (ctr) ctr.classList.remove('visible'); });
+  }
+
+  function checkStepNext(step) {
+    var stepKeys = { 3: ['portes','baies','garage'], 4: ['jardin','mouvement'], 5: ['camInt','camExtFixe','camExt360','camExtFilaire'], 6: ['sirene','domestique','canon'], 7: ['telecommande','clavier','badge'] };
+    var keys = stepKeys[step]; var anyChecked = keys && keys.some(function(k) { return A[k]; });
+    if (step === 4 && A.jardin && !A.jardinType && pickAlarm() !== 'elite') anyChecked = false;
+    var btn = document.getElementById('next-' + step); if (btn) btn.disabled = !(anyChecked || noneState[step]);
+  }
+
+  window.toggleNone = function(step) {
+    noneState[step] = !noneState[step]; var nb = document.getElementById('none-' + step); if (nb) nb.classList.toggle('active', noneState[step]);
+    if (noneState[step]) {
+      var stepKeys = { 3:['portes','baies','garage'], 4:['jardin','mouvement'], 5:['camInt','camExtFixe','camExt360','camExtFilaire'], 6:['sirene','domestique','canon'], 7:['telecommande','clavier'] };
+      (stepKeys[step] || []).forEach(function(k) { A[k] = false; var el = document.getElementById(htmlMap[k]); if (el) el.classList.remove('selected'); var ctrMap2 = { portes:'ctr-portes',baies:'ctr-baies',garage:'ctr-garage',mouvement:'ctr-mouvement',camInt:'ctr-camInt',camExtFixe:'ctr-camExtFixe',camExt360:'ctr-camExt360',camExtFilaire:'ctr-camExtFilaire',canon:'ctr-canon',telecommande:'ctr-telecommande',clavier:'ctr-clavier' }; if (ctrMap2[k]) { var c = document.getElementById(ctrMap2[k]); if (c) c.classList.remove('visible'); } var subIds = { jardin:'sub-jardin', sirene:'sub-sirene', domestique:'sub-domestique' }; if (subIds[k]) { var s = document.getElementById(subIds[k]); if (s) s.style.display = 'none'; } });
+      if (step === 4) { A.jardinType = null; A.jardin_allee = false; A.jardin_jardin = false; }
+      if (step === 6) { A.fumee = false; A.eau = false; A.sireneType = 'solaire'; resetDomestiqueUI(); }
+      noneState[step] = true;
+    }
+    checkStepNext(step);
+  };
+
+  window.changeCount = function(field, delta) {
+    A[field] = Math.max(1, (A[field] || 1) + delta);
+    var el = document.getElementById('cnt-' + field); if (el) el.textContent = A[field];
+    if (field === 'jardinExtQty') { var el2 = document.getElementById('cnt-jardinExtQty-elite'); if (el2) el2.textContent = A[field]; }
+  };
+
+  function pickAlarm() { if (A.tech === 'appli') return 'elite'; if (A.tech === 'tactile') return 'touch'; return 'vigilia'; }
+
+  function buildAccessories(key) {
+    var db = key === 'elite' ? acc.elite : acc.vt; var list = [];
+    function addN(item, n) { if (!item) return; for (var i = 0; i < (n||1); i++) list.push(item); }
+    if (A.portes)    addN(db.contacteur, A.portesQty);
+    if (A.baies)     addN(db.vibration, A.baiesQty);
+    if (A.garage)    addN(db.garage, A.garageQty);
+    if (A.mouvement) addN(db.mouv_std, A.mouvementQty);
+    if (A.jardin) { if (A.jardin_allee) { if (key !== 'elite' && acc.vt.barriere) { addN(acc.vt.barriere, A.alleeQty); } else { addN(db.mouv_ext, A.alleeQty); } } if (A.jardin_jardin) { addN(db.mouv_ext, A.jardinExtQty); } }
+    if (A.camInt)        addN(acc.cameras.int, A.camIntQty);
+    if (A.camExtFixe)    addN(acc.cameras.ext, A.camExtFixeQty);
+    if (A.camExt360)     addN(acc.cameras.ext360, A.camExt360Qty);
+    if (A.camExtFilaire) addN(acc.cameras.filaire, A.camExtFilaireQty);
+    if (A.sirene) { if (key === 'elite') { addN(acc.elite.sirene, A.sireneQty); } else if (A.sireneType === 'filaire') { addN(acc.vt.sirene_filaire || acc.vt.sirene, A.sireneQty); } else { addN(acc.vt.sirene, A.sireneQty); } }
+    if (A.fumee) addN(db.fumee, A.fumeeQty);
+    if (A.eau)   addN(db.eau, A.eauQty);
+    if (A.canon) addN(acc.commun.canon, A.canonQty);
+    if (A.telecommande) addN(db.telecommande, A.telecommandeQty);
+    if (A.clavier)      addN(db.clavier, A.clavierQty);
+    if (A.badge) { if (key === 'elite' && acc.elite.badge) addN(acc.elite.badge, A.badgeQty); else if (acc.vt.badge_kit) addN(acc.vt.badge_kit, A.badgeQty); }
+    return list;
+  }
+
+  function groupAcc(list) {
+    var map = {}, order = [];
+    list.forEach(function(a) { if (!a) return; var livePrice = getLivePrice(a.ref, a.price); if (map[a.ref]) { map[a.ref].qty++; map[a.ref].total += livePrice; } else { map[a.ref] = { name: a.name, ref: a.ref, price: livePrice, total: livePrice, qty: 1, vid: a.vid }; order.push(a.ref); } });
+    return order.map(function(k) { return map[k]; });
+  }
+
+  function fmtPrice(p) { return p.toFixed(2).replace('.', ',') + ' €'; }
+
+  /* ✅ FIX : remise uniquement à partir de 300€ */
+  function getDiscount(total) {
+    if (total >= 900) return { pct: 25, code: 'CONFIGURATEUR25' };
+    if (total >= 700) return { pct: 20, code: 'CONFIGURATEUR20' };
+    if (total >= 450) return { pct: 15, code: 'CONFIGURATEUR15' };
+    if (total >= 300) return { pct: 10, code: 'CONFIGURATEUR10' };
+    return null;
+  }
+
+  function renderDiscount(total) {
+    var disc = getDiscount(total); var discBox = document.getElementById('res-discount-box');
+    if (disc) {
+      var saving = Math.round(total * disc.pct / 100 * 100) / 100; var discTotal = total - saving;
+      discBox.style.display = 'block';
+      document.getElementById('res-discount-label').textContent = '🎉 -' + disc.pct + '% sur votre commande !';
+      document.getElementById('res-discount-sub').textContent = 'Utilisez le code ' + disc.code + ' dans votre panier pour en bénéficier';
+      document.getElementById('res-discount-urgency').innerHTML = '⏰ Ce code est valable 48h — ne passez pas à côté !';
+      document.getElementById('res-total-original').textContent = fmtPrice(total);
+      document.getElementById('res-total-original').style.display = 'block';
+      document.getElementById('res-total').textContent = fmtPrice(discTotal);
+      document.getElementById('res-total-saving').textContent = '🎁 Vous économisez ' + fmtPrice(saving) + ' avec ce code';
+      document.getElementById('res-total-saving').style.display = 'block';
+    } else {
+      discBox.style.display = 'none';
+      document.getElementById('res-total-original').style.display = 'none';
+      document.getElementById('res-total-saving').style.display = 'none';
+      document.getElementById('res-total').textContent = fmtPrice(total);
+    }
+  }
+
+  window.showResult = function() {
+    var key = pickAlarm(); var alarm = alarms[key]; var raw = buildAccessories(key);
+    document.querySelectorAll('#dq .dq-step').forEach(function(s) { s.classList.remove('active'); });
+    document.getElementById('dq-top').style.display = 'none';
+    document.getElementById('dq-result').classList.add('active');
+    document.getElementById('dq').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var resBody = document.querySelector('#dq-result .dq-result-body');
+    resBody.style.opacity = '0.4'; resBody.style.pointerEvents = 'none';
+    document.getElementById('res-alarm-name').textContent = alarm.name;
+    document.getElementById('res-alarm-desc').textContent = '⏳ Chargement des prix…';
+    var uniqueRefs = []; raw.forEach(function(a) { if (a && uniqueRefs.indexOf(a.ref) === -1) uniqueRefs.push(a.ref); });
+    var alarmHandle = alarmHandles[key]; var totalToFetch = 1 + uniqueRefs.length; var fetched = 0; var finalAlarmPrice = alarm.price;
+    function onAllFetched() {
+      fetched++;
+      if (fetched < totalToFetch) return;
+      resBody.style.opacity = '1'; resBody.style.pointerEvents = '';
+      updateTogglePrices(key);
+      document.getElementById('res-alarm-name').textContent = alarm.name;
+      document.getElementById('res-alarm-desc').textContent = alarm.desc;
+      var pcEl = document.getElementById('res-pack-contents'); pcEl.innerHTML = '';
+      alarm.packContents.forEach(function(c) { var li = document.createElement('li'); li.textContent = c; pcEl.appendChild(li); });
+      selectedVid = alarmVids[key]; addSimCard = false;
+      var vsEl = document.getElementById('res-version-selector'); var voEl = document.getElementById('res-version-opts'); voEl.innerHTML = '';
+      var versions = [];
+      if (key === 'vigilia') {
+        var pWifi = finalAlarmPrice; var pGsmLive = priceCache[alarmHandles.vigilia_gsm] || (finalAlarmPrice + 50);
+        versions = [{ name: 'Wi-Fi', sub: 'Connexion via votre box — idéal pour la majorité', price: pWifi, vid: alarmVids.vigilia, selected: true, simNote: false }, { name: 'Wi-Fi + GSM 4G', sub: 'Fonctionne même si internet est coupé — nécessite une carte SIM', price: pGsmLive, vid: alarmVidsAlt.vigilia_gsm, selected: false, simNote: true }];
+        fetchVariantPrice(alarmVidsAlt.vigilia_gsm, 'starter-pack-vigilia', function(p) { if (p) { versions[1].price = p; var opt = document.getElementById('vopt-1'); if (opt) { var priceEl = opt.querySelector('.dq-version-opt-price'); if (priceEl) priceEl.textContent = fmtPrice(p); } } });
+      } else if (key === 'touch') {
+        var pTouch = finalAlarmPrice; var pXlLive = priceCache[alarmHandles.touch_xl] || (finalAlarmPrice + 100);
+        versions = [{ name: 'Touch AM301 — écran 4,3\'\'', sub: 'Format compact et discret', price: pTouch, vid: alarmVids.touch, selected: true, simNote: false }, { name: 'Touch XL AM302 — écran 7\'\'', sub: 'Grand écran — autonomie batterie 20h', price: pXlLive, vid: alarmVidsAlt.touch_xl, selected: false, simNote: false }];
+        fetchVariantPrice(alarmVidsAlt.touch_xl, 'alarme-daewoo-wifi-gsm-4g-starter-pack-am301', function(p) { if (p) { versions[1].price = p; var opt = document.getElementById('vopt-1'); if (opt) { var priceEl = opt.querySelector('.dq-version-opt-price'); if (priceEl) priceEl.textContent = fmtPrice(p); } } });
+      }
+      if (versions.length) {
+        vsEl.style.display = 'block';
+        document.getElementById('res-version-title').textContent = key === 'vigilia' ? 'Quelle connexion préférez-vous ?' : 'Quelle taille d\'écran ?';
+        versions.forEach(function(v, idx) {
+          var d = document.createElement('div'); d.className = 'dq-version-opt' + (v.selected ? ' selected' : ''); d.id = 'vopt-' + idx;
+          var simHtml = v.simNote ? '<div style="font-size:11px;color:#b45309;background:#fef3c7;border-radius:5px;padding:4px 8px;margin-top:6px;display:inline-block;">📶 La version GSM nécessite une carte SIM — disponible sur notre site</div>' : '';
+          d.innerHTML = '<div class="dq-version-opt-left"><div class="dq-version-opt-name">' + v.name + '</div><div class="dq-version-opt-sub">' + v.sub + '</div>' + simHtml + '</div><div class="dq-version-opt-price">' + fmtPrice(v.price) + '</div>';
+          d.onclick = (function(vid, i, hasSimNote, vRef, vName) { return function() {
+            selectedVid = vid; voEl.querySelectorAll('.dq-version-opt').forEach(function(el, j) { el.classList.toggle('selected', j === i); }); addSimCard = hasSimNote;
+            if (vName && vName.indexOf('AM302') !== -1) { var pcEl2 = document.getElementById('res-pack-contents'); if (pcEl2) { pcEl2.innerHTML = ''; ['1 centrale Touch XL AM302 (sirène & batterie intégrées)', '2 contacteurs de porte WDS301', '1 détecteur de mouvement WPS301', '2 télécommandes WRC301'].forEach(function(c) { var li = document.createElement('li'); li.textContent = c; pcEl2.appendChild(li); }); } }
+            else if (vName && vName.indexOf('AM301') !== -1) { var pcEl3 = document.getElementById('res-pack-contents'); if (pcEl3) { pcEl3.innerHTML = ''; alarms.touch.packContents.forEach(function(c) { var li = document.createElement('li'); li.textContent = c; pcEl3.appendChild(li); }); } }
+            var totalAcc = currentGrouped.reduce(function(s, a) { return s + a.total; }, 0);
+            renderDiscount(versions[vRef].price + totalAcc);
+          }; })(v.vid, idx, v.simNote, idx, v.name);
+          voEl.appendChild(d);
+        });
+      } else { vsEl.style.display = 'none'; }
+      currentGrouped = groupAcc(raw);
+      var accSection = document.getElementById('res-acc-section'); var accList = document.getElementById('res-acc-list'); accList.innerHTML = '';
+      if (currentGrouped.length) {
+        accSection.style.display = 'block';
+        currentGrouped.forEach(function(a) { var div = document.createElement('div'); div.className = 'dq-result-acc-item'; var qtyBadge = a.qty > 1 ? '<span class="dq-qty-badge">×' + a.qty + '</span>' : ''; div.innerHTML = '<div><div class="dq-result-acc-name">' + qtyBadge + a.name + '</div><div class="dq-result-acc-ref">' + a.ref + (a.qty > 1 ? ' · ' + a.qty + ' × ' + fmtPrice(a.price) : '') + '</div></div><div class="dq-result-acc-price">' + fmtPrice(a.total) + '</div>'; accList.appendChild(div); });
+      } else { accSection.style.display = 'none'; }
+      var totalAcc = currentGrouped.reduce(function(s, a) { return s + a.total; }, 0);
+      renderDiscount(finalAlarmPrice + totalAcc);
+    }
+    fetchPrice(alarmHandle, function(p) { if (p !== null) finalAlarmPrice = p; onAllFetched(); });
+    if (uniqueRefs.length === 0) { totalToFetch = 1; }
+    else { uniqueRefs.forEach(function(ref) { var handle = accHandles[ref]; if (handle) { fetchPrice(handle, function() { onAllFetched(); }); } else { onAllFetched(); } }); }
+  };
+
+  /* ✅ TRACKING QUIZ → SEGMENT SHOPIFY */
+  function tagCartWithQuizSource(callback) {
+    fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attributes: { 'Source': 'quiz-alarme' } }) })
+    .then(function() { callback(); }).catch(function() { callback(); });
+  }
+
+  window.addAllToCart = function() {
+    var btn = document.getElementById('res-btn-cart');
+    var vid = selectedVid || alarmVids[pickAlarm()];
+    var items = [];
+    if (vid) items.push({ id: vid, qty: 1 });
+    if (addSimCard && simCardVid) items.push({ id: simCardVid, qty: 1 });
+    currentGrouped.forEach(function(a) { if (a.vid) items.push({ id: a.vid, qty: a.qty }); });
+    if (items.length === 0) { alert('Aucun produit à ajouter.'); return; }
+    btn.disabled = true; btn.textContent = '⏳ Ajout en cours…';
+    tagCartWithQuizSource(function() {
+      function addNext(index) {
+        if (index >= items.length) { window.location.href = '/cart'; return; }
+        var item = items[index];
+        fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'id=' + item.id + '&quantity=' + item.qty })
+        .then(function(r) { if (r.ok) { addNext(index + 1); } else { return r.json().then(function(err) { console.error('Erreur item ' + item.id + ' :', err); addNext(index + 1); }); } })
+        .catch(function() { addNext(index + 1); });
+      }
+      addNext(0);
+    });
+  };
+
+  window.restart = function() {
+    A = { logement: null, tech: null, portes: false, portesQty: 1, baies: false, baiesQty: 1, garage: false, garageQty: 1, jardin: false, jardinType: null, jardinQty: 1, alleeQty: 1, jardinExtQty: 1, jardin_allee: false, jardin_jardin: false, mouvement: false, mouvementQty: 1, camInt: false, camIntQty: 1, camExtFixe: false, camExtFixeQty: 1, camExt360: false, camExt360Qty: 1, camExtFilaire: false, camExtFilaireQty: 1, sirene: false, sireneType: 'solaire', sireneQty: 1, fumee: false, fumeeQty: 1, eau: false, eauQty: 1, domestique: false, canon: false, canonQty: 1, telecommande: false, telecommandeQty: 1, clavier: false, clavierQty: 1, badge: false, badgeQty: 1 };
+    noneState = { 3: false, 4: false, 5: false, 6: false, 7: false };
+    selectedVid = null; currentGrouped = []; addSimCard = false;
+    document.querySelectorAll('#dq .dq-opt').forEach(function(o) { o.classList.remove('selected'); });
+    document.querySelectorAll('#dq .dq-toggle').forEach(function(t) { t.classList.remove('selected'); });
+    document.querySelectorAll('#dq .dq-counter-row').forEach(function(c) { c.classList.remove('visible'); });
+    document.querySelectorAll('#dq .dq-none-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('#dq .dq-count').forEach(function(c) { c.textContent = '1'; });
+    ['sub-jardin','sub-sirene','sub-domestique'].forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
+    ['allee', 'jardin-sub'].forEach(function(t) { var chk = document.getElementById('chk-' + t); var opt = document.getElementById('sub-' + (t === 'allee' ? 'allee' : 'jardin') + '-opt'); var ctr = document.getElementById(t === 'allee' ? 'ctr-allee' : 'ctr-jardin-ext'); if (chk) { chk.style.background = 'white'; chk.style.borderColor = '#cbd5e1'; chk.textContent = ''; } if (opt) { opt.style.borderColor = '#e8edf5'; opt.style.background = 'white'; } if (ctr) ctr.classList.remove('visible'); });
+    resetDomestiqueUI(); selectSireneType('solaire');
+    [1,2,3,4,5,6,7].forEach(function(n) { var b = document.getElementById('next-' + n); if (b) b.disabled = true; });
+    document.getElementById('dq-result').classList.remove('active');
+    document.getElementById('dq-top').style.display = 'flex';
+    document.getElementById('res-btn-cart').disabled = false;
+    document.getElementById('res-btn-cart').textContent = 'Ajouter ma sélection au panier →';
+    goTo(1);
+  };
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Daewoo Quiz",
+  "tag": "section",
+  "class": "daewoo-quiz-section",
+  "settings": [],
+  "presets": [{ "name": "Daewoo Quiz configurateur" }]
+}
+{% endschema %}
