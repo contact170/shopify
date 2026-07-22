@@ -1,0 +1,878 @@
+{%- doc -%}
+  Bespoke, conversion-focused product page for the Daewoo Starter Pack
+  Vigilia (Système d'alarme Vigilia | Alarme à clavier — handle
+  daewoo-vigilia-starter-pack). Same Apple-style design system and
+  shared-hidden-form technique as sections/product-w512mw-landing.liquid
+  and sections/product-pack-vigilia-landing.liquid, reused here so the
+  whole Vigilia line reads as one consistent premium experience.
+
+  This is the entry-level Vigilia kit, so the cross-sell at the bottom of
+  the page offers two ways to go further: the configurator (fully custom)
+  or the bigger, ready-made Pack Vigilia (2 caméras & sirène solaire).
+
+  Reuses snippets/pv-atc-button.liquid and snippets/pv-connectivity-toggle.liquid
+  as-is — both are already generic (WiFi uniquement / WiFi & GSM 4G).
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign form_id = 'PVForm-' | append: section.id
+
+  for v in product.variants
+    if v.title contains 'GSM'
+      assign gsm_variant = v
+    else
+      assign wifi_variant = v
+    endif
+  endfor
+  assign wifi_variant = wifi_variant | default: product.variants.first
+  assign gsm_variant = gsm_variant | default: product.variants.last
+
+  assign selected_key = 'wifi'
+  if variant == gsm_variant
+    assign selected_key = 'gsm'
+  endif
+
+  assign wifi_has_compare = false
+  if wifi_variant.compare_at_price > wifi_variant.price
+    assign wifi_has_compare = true
+  endif
+  assign gsm_has_compare = false
+  if gsm_variant.compare_at_price > gsm_variant.price
+    assign gsm_has_compare = true
+  endif
+
+  assign variant_has_compare = false
+  if variant.compare_at_price > variant.price
+    assign variant_has_compare = true
+  endif
+
+  assign gallery = product.images
+  assign hero_image = product.featured_image | default: gallery[0]
+  assign feat_image_1 = gallery[1] | default: hero_image
+  assign feat_image_2 = gallery[6] | default: hero_image
+  assign feat_image_3 = gallery[7] | default: hero_image
+  assign feat_image_4 = gallery[5] | default: hero_image
+-%}
+
+<div id="shopify-section-{{ section.id }}" class="pv">
+  <script type="application/json" id="PVData-{{ section.id }}">
+    {
+      "{{ wifi_variant.id }}": {
+        "key": "wifi",
+        "price": {{ wifi_variant.price | money | strip_html | json }},
+        "compare": {{ wifi_variant.compare_at_price | money | strip_html | json }},
+        "hasCompare": {{ wifi_has_compare | json }},
+        "config": "/products/configurateur-kit-vigilia-wi-fi"
+      },
+      "{{ gsm_variant.id }}": {
+        "key": "gsm",
+        "price": {{ gsm_variant.price | money | strip_html | json }},
+        "compare": {{ gsm_variant.compare_at_price | money | strip_html | json }},
+        "hasCompare": {{ gsm_has_compare | json }},
+        "config": "/products/configurateur-kit-vigilia-wi-fi-gsm"
+      }
+    }
+  </script>
+  <style>
+    #shopify-section-{{ section.id }} .pv{
+      --pv-navy:#0c1e4a;
+      --pv-navy-dark:#081430;
+      --pv-ink:#1d1d1f;
+      --pv-gray:#6e6e73;
+      --pv-bg-alt:#f5f5f7;
+      --pv-line:#d2d2d7;
+      --pv-success:#037e05;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      color:var(--pv-ink);
+      background:#fff;
+      overflow-x:hidden;
+    }
+    .pv *{box-sizing:border-box;}
+    .pv .pv-wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+    .pv img{max-width:100%;display:block;}
+
+    /* ---- sticky bar ---- */
+    .pv-sticky{
+      position:fixed;left:0;right:0;bottom:0;z-index:60;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:12px 20px;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border-top:1px solid var(--pv-line);
+      transform:translateY(110%);transition:transform .35s ease;
+    }
+    .pv-sticky.is-shown{transform:translateY(0);}
+    .pv-sticky__info{display:flex;align-items:center;gap:12px;min-width:0;}
+    .pv-sticky__thumb{width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--pv-bg-alt);}
+    .pv-sticky__thumb img{width:100%;height:100%;object-fit:cover;}
+    .pv-sticky__text{min-width:0;}
+    .pv-sticky__name{font-size:13px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw;}
+    .pv-sticky__toggle{display:none;}
+    @media (min-width:640px){.pv-sticky__toggle{display:block;}}
+
+    /* ---- generic section rhythm ---- */
+    .pv-section{padding:72px 0;}
+    .pv-section--alt{background:var(--pv-bg-alt);}
+    .pv-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+      color:var(--pv-navy);margin-bottom:18px;
+    }
+    .pv-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--pv-success);}
+    .pv h1,.pv h2,.pv h3{font-weight:600;letter-spacing:-.02em;line-height:1.08;margin:0;}
+    .pv p{margin:0;}
+
+    /* ---- hero ---- */
+    .pv-hero{padding:96px 0 56px;text-align:center;}
+    .pv-hero h1{font-size:clamp(34px,6vw,60px);max-width:900px;margin:0 auto;}
+    .pv .pv-hero__sub{
+      font-size:clamp(17px,2.2vw,22px);color:var(--pv-gray);
+      max-width:660px;margin:22px auto 0;line-height:1.5;font-weight:400;text-align:center;
+    }
+    .pv-hero__cta{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:14px;}
+    .pv-hero__price{font-size:15px;color:var(--pv-gray);}
+    .pv-hero__price strong{color:var(--pv-ink);font-size:17px;}
+    .pv-price-compare{text-decoration:line-through;color:var(--pv-gray);margin-right:6px;display:none;}
+    .pv-price-compare.is-visible{display:inline;}
+    .pv-hero__rating{margin-top:6px;}
+    .pv-hero__rating .product__rating{justify-content:center;}
+    .pv-hero__trust{
+      margin-top:30px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;
+      font-size:13px;color:var(--pv-gray);
+    }
+    .pv-hero__trust span{display:inline-flex;align-items:center;gap:6px;}
+    .pv-hero__media{margin-top:56px;}
+    .pv-hero__media img{
+      width:100%;max-width:640px;margin:0 auto;border-radius:28px;
+      background:var(--pv-bg-alt);
+    }
+
+    /* ---- buttons ---- */
+    .pv-btn{
+      position:relative;overflow:hidden;isolation:isolate;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      border:none;border-radius:999px;cursor:pointer;
+      font-family:inherit;font-size:16px;font-weight:600;
+      padding:15px 30px;min-width:230px;
+      transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease;
+    }
+    .pv-btn:active{transform:scale(.98);}
+    .pv-btn[disabled]{opacity:.5;cursor:not-allowed;}
+    .pv-btn--primary{background:var(--pv-navy);color:#fff;box-shadow:0 8px 20px -8px rgba(12,30,74,.55);}
+    .pv-btn--primary .btn-fill{background:var(--pv-navy-dark);}
+    .pv-btn--secondary{background:var(--pv-ink);color:#fff;}
+    .pv-btn--secondary .btn-fill{background:#000;}
+    .pv-btn .btn-fill{position:absolute;inset:0;z-index:-1;transform:translateY(100%);}
+    .pv-btn__text{position:relative;display:inline-flex;align-items:center;gap:10px;}
+    .pv-btn--ghost{background:transparent;color:var(--pv-navy);border:1.5px solid var(--pv-navy);padding:13px 28px;box-shadow:none;min-width:0;}
+    .pv-btn--sm{min-width:0;padding:11px 22px;font-size:14px;}
+
+    /* ---- connectivity toggle ---- */
+    .pv-toggle{display:inline-flex;background:var(--pv-bg-alt);border-radius:999px;padding:4px;gap:4px;}
+    .pv-toggle__btn{
+      border:none;background:transparent;padding:9px 16px;border-radius:999px;
+      font-family:inherit;font-size:13px;font-weight:600;color:var(--pv-gray);cursor:pointer;
+      display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+      transition:background .15s ease,color .15s ease;
+    }
+    .pv-toggle__btn.is-selected{background:var(--pv-navy);color:#fff;}
+    .pv-toggle__badge{font-size:11px;font-weight:700;background:#e11d48;color:#fff;padding:2px 7px;border-radius:999px;}
+    .pv-toggle--compact{padding:3px;}
+    .pv-toggle--compact .pv-toggle__btn{padding:6px 10px;font-size:12px;}
+    .pv-hero__toggle{margin-bottom:4px;}
+    .pv-band__toggle,.pv-final__toggle{display:flex;justify-content:center;margin-top:30px;margin-bottom:26px;}
+    .pv-band .pv-toggle{background:rgba(255,255,255,.15);}
+    .pv-band .pv-toggle__btn{color:rgba(255,255,255,.75);}
+    .pv-band .pv-toggle__btn.is-selected{background:#fff;color:var(--pv-navy);}
+
+    /* ---- trust strip ---- */
+    .pv-strip{
+      display:flex;flex-wrap:wrap;justify-content:center;gap:14px;
+      padding:28px 0;border-top:1px solid var(--pv-line);border-bottom:1px solid var(--pv-line);
+    }
+    .pv-strip__item{
+      display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;
+      padding:10px 18px;border-radius:999px;background:var(--pv-bg-alt);
+    }
+    .pv-strip__item svg{color:var(--pv-navy);flex-shrink:0;}
+
+    /* ---- pack contents ---- */
+    .pv-contents__head{text-align:center;max-width:640px;margin:0 auto 44px;}
+    .pv-contents__head h2{font-size:clamp(26px,3.4vw,38px);}
+    .pv-contents__head p{margin-top:14px;color:var(--pv-gray);font-size:17px;}
+    .pv-contents__grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--pv-line);border:1px solid var(--pv-line);border-radius:20px;overflow:hidden;}
+    .pv-contents__item{background:#fff;padding:22px 24px;display:flex;gap:14px;align-items:flex-start;}
+    .pv-contents__qty{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--pv-navy);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+    .pv-contents__name{font-size:15px;font-weight:600;line-height:1.4;}
+    .pv-contents__desc{margin-top:4px;font-size:13.5px;color:var(--pv-gray);line-height:1.5;}
+    @media (min-width:700px){.pv-contents__grid{grid-template-columns:1fr 1fr;}}
+
+    /* ---- connectivity comparison ---- */
+    .pv-compare__head{text-align:center;max-width:640px;margin:0 auto 40px;}
+    .pv-compare__head h2{font-size:clamp(26px,3.4vw,38px);}
+    .pv-compare__head p{margin-top:14px;color:var(--pv-gray);font-size:17px;}
+    .pv-compare__grid{display:grid;grid-template-columns:1fr;gap:18px;max-width:840px;margin:0 auto;}
+    @media (min-width:700px){.pv-compare__grid{grid-template-columns:1fr 1fr;}}
+    .pv-compare__card{
+      position:relative;display:block;width:100%;text-align:left;cursor:pointer;
+      border:2px solid var(--pv-line);border-radius:20px;padding:28px 26px;background:#fff;
+      font-family:inherit;transition:border-color .2s ease,box-shadow .2s ease;
+    }
+    .pv-compare__card:hover{border-color:#b9bcc7;}
+    .pv-compare__card.is-selected{border-color:var(--pv-navy);box-shadow:0 0 0 3px rgba(12,30,74,.08);}
+    .pv-compare__radio{position:absolute;top:26px;right:26px;width:20px;height:20px;border-radius:50%;border:2px solid var(--pv-line);}
+    .pv-compare__card.is-selected .pv-compare__radio{border-color:var(--pv-navy);}
+    .pv-compare__card.is-selected .pv-compare__radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--pv-navy);}
+    .pv-compare__badge{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:#e11d48;padding:4px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+    .pv-compare__name{display:block;font-size:18px;font-weight:600;margin-bottom:12px;padding-right:32px;}
+    .pv-compare__card ul{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:9px;}
+    .pv-compare__card ul li{display:flex;gap:9px;font-size:14px;line-height:1.5;color:var(--pv-ink);}
+    .pv-compare__card ul li svg{flex-shrink:0;margin-top:3px;color:var(--pv-success);}
+    .pv-compare__price{display:flex;align-items:baseline;gap:8px;padding-top:14px;border-top:1px solid var(--pv-line);}
+    .pv-compare__price strong{font-size:22px;}
+
+    /* ---- features ---- */
+    .pv-feature{
+      display:grid;grid-template-columns:1fr;gap:40px;align-items:center;
+      padding:64px 0;
+    }
+    .pv-feature__media img{border-radius:24px;background:var(--pv-bg-alt);}
+    .pv-feature__num{font-size:13px;font-weight:700;color:var(--pv-navy);letter-spacing:.08em;margin-bottom:14px;display:block;}
+    .pv-feature h2{font-size:clamp(26px,3.4vw,38px);}
+    .pv-feature__text{margin-top:18px;color:var(--pv-gray);font-size:17px;line-height:1.6;max-width:480px;}
+    .pv-feature ul{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px;max-width:480px;}
+    .pv-feature ul li{display:flex;gap:10px;font-size:15px;line-height:1.5;color:var(--pv-ink);}
+    .pv-feature ul li svg{flex-shrink:0;margin-top:3px;color:var(--pv-success);}
+    @media (min-width:900px){
+      .pv-feature{grid-template-columns:1fr 1fr;gap:72px;}
+      .pv-feature--reverse .pv-feature__media{order:2;}
+      .pv-feature--reverse .pv-feature__body{order:1;}
+    }
+
+    /* ---- mid CTA band ---- */
+    .pv-band{
+      background:var(--pv-navy);color:#fff;border-radius:28px;
+      padding:56px 32px;text-align:center;margin:24px 0;
+    }
+    .pv-band h2{color:#fff;font-size:clamp(24px,3vw,34px);max-width:620px;margin:0 auto;}
+    .pv-band p{color:rgba(255,255,255,.72);margin-top:14px;font-size:16px;max-width:520px;margin-left:auto;margin-right:auto;}
+    .pv-band .pv-btn{margin-top:26px;background:#fff;color:var(--pv-navy);}
+    .pv-band .pv-btn .btn-fill{background:#e9e9ee;}
+
+    /* ---- specs ---- */
+    .pv-specs__head{text-align:center;max-width:640px;margin:0 auto 48px;}
+    .pv-specs__head h2{font-size:clamp(26px,3.4vw,38px);}
+    .pv-specs__head p{margin-top:14px;color:var(--pv-gray);font-size:17px;}
+    .pv-specs__grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--pv-line);border:1px solid var(--pv-line);border-radius:20px;overflow:hidden;}
+    .pv-specs__item{background:#fff;padding:24px 28px;}
+    .pv-specs__item dt{font-size:13px;font-weight:700;color:var(--pv-navy);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+    .pv-specs__item dd{margin:0;font-size:15px;color:var(--pv-ink);line-height:1.5;white-space:pre-line;}
+    @media (min-width:700px){.pv-specs__grid{grid-template-columns:1fr 1fr;}}
+    @media (min-width:1000px){.pv-specs__grid{grid-template-columns:1fr 1fr 1fr;}}
+
+    /* ---- guarantee band ---- */
+    .pv-guarantee{display:grid;grid-template-columns:1fr;gap:28px;text-align:center;}
+    @media (min-width:700px){.pv-guarantee{grid-template-columns:repeat(4,1fr);}}
+    .pv-guarantee__item{padding:0 12px;}
+    .pv-guarantee__item svg{color:var(--pv-navy);margin:0 auto 14px;display:block;}
+    .pv-guarantee__item h3{font-size:16px;font-weight:600;}
+    .pv-guarantee__item p{margin-top:8px;font-size:14px;color:var(--pv-gray);line-height:1.5;}
+
+    /* ---- cross-sell ---- */
+    .pv-crosssell__head{text-align:center;max-width:640px;margin:0 auto 40px;}
+    .pv-crosssell__head h2{font-size:clamp(26px,3.4vw,38px);}
+    .pv-crosssell__head p{margin-top:14px;color:var(--pv-gray);font-size:17px;}
+    .pv-crosssell__grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:840px;margin:0 auto;}
+    @media (min-width:700px){.pv-crosssell__grid{grid-template-columns:1fr 1fr;}}
+    .pv-crosssell__card{
+      border:1px solid var(--pv-line);border-radius:24px;padding:32px 28px;
+      display:flex;flex-direction:column;gap:14px;background:#fff;
+    }
+    .pv-crosssell__icon{width:46px;height:46px;border-radius:14px;background:var(--pv-bg-alt);display:flex;align-items:center;justify-content:center;color:var(--pv-navy);}
+    .pv-crosssell__card h3{font-size:19px;font-weight:600;}
+    .pv-crosssell__card p{color:var(--pv-gray);font-size:14.5px;line-height:1.55;flex-grow:1;}
+    .pv-crosssell__card .pv-btn{align-self:flex-start;margin-top:4px;}
+
+    /* ---- faq ---- */
+    .pv-faq{max-width:760px;margin:0 auto;}
+    .pv-faq h2{text-align:center;font-size:clamp(26px,3.4vw,38px);margin-bottom:40px;}
+    .pv-faq details{border-bottom:1px solid var(--pv-line);padding:20px 0;}
+    .pv-faq summary{
+      cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;
+      font-size:17px;font-weight:500;
+    }
+    .pv-faq summary::-webkit-details-marker{display:none;}
+    .pv-faq summary .pv-faq__icon{flex-shrink:0;transition:transform .25s ease;color:var(--pv-navy);}
+    .pv-faq details[open] summary .pv-faq__icon{transform:rotate(45deg);}
+    .pv-faq__a{margin-top:14px;color:var(--pv-gray);font-size:15px;line-height:1.6;max-width:660px;}
+
+    /* ---- final cta ---- */
+    .pv-final{text-align:center;}
+    .pv-final h2{font-size:clamp(28px,4vw,44px);max-width:700px;margin:0 auto;}
+    .pv-final p{margin-top:16px;color:var(--pv-gray);font-size:17px;}
+    .pv-final__ctas{margin-top:32px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+    .pv-final__legal{margin-top:22px;font-size:13px;color:var(--pv-gray);}
+
+    /* ---- reveal-on-scroll ---- */
+    .pv-reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+    .pv-reveal.is-visible{opacity:1;transform:none;}
+    @media (prefers-reduced-motion:reduce){
+      .pv-reveal{opacity:1;transform:none;transition:none;}
+      .pv-sticky{transition:none;}
+    }
+  </style>
+
+  {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
+  {%- form 'product', product, id: form_id, data-type: 'add-to-cart-form', is: 'product-form', class: 'pv-visually-hidden' -%}
+    <input type="hidden" name="id" value="{{ variant.id }}" id="PVVariantId-{{ section.id }}">
+    <input type="hidden" name="quantity" value="1">
+    {%- comment -%}
+      The theme's ProductForm custom element looks up its own submit button
+      with `this.querySelector('[type="submit"]')` — since every real
+      "Ajouter au panier" button on this page lives outside this hidden
+      form (linked via form="…"), that lookup would return null and throw
+      before the cart request is ever sent. This dummy button keeps that
+      lookup valid; the real buttons are still toggled via the page-wide
+      `submitButtons` query.
+    {%- endcomment -%}
+    <button type="submit" name="add" tabindex="-1" aria-hidden="true"></button>
+    <div class="product-form__error-message alert alert--error" role="alert" hidden style="position:fixed;left:16px;right:16px;bottom:84px;z-index:70;background:#fff;border:1px solid #e11d48;color:#e11d48;padding:12px 16px;border-radius:12px;font-size:14px;"></div>
+  {%- endform -%}
+  <style>.pv-visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
+
+  {%- comment -%} Sticky add-to-cart bar {%- endcomment -%}
+  <div class="pv-sticky" id="PVSticky-{{ section.id }}">
+    <div class="pv-sticky__info">
+      <div class="pv-sticky__thumb">
+        {%- if hero_image -%}
+          {{ hero_image | image_url: width: 80 | image_tag: loading: 'lazy', widths: '80,160' }}
+        {%- endif -%}
+      </div>
+      <div class="pv-sticky__text">
+        <div class="pv-sticky__name">Starter Pack Vigilia</div>
+      </div>
+    </div>
+    <div class="pv-sticky__toggle">
+      {%- render 'pv-connectivity-toggle', selected: selected_key, compact: true -%}
+    </div>
+    {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+  </div>
+
+  {%- comment -%} Hero {%- endcomment -%}
+  <section class="pv-hero">
+    <div class="pv-wrap">
+      <span class="pv-eyebrow">Daewoo Security · Starter Pack Vigilia</span>
+      <h1>Le point de départ d'une maison protégée.</h1>
+      <p class="pv-hero__sub">
+        Centrale d'alarme à clavier, détecteurs et caméra intérieure réunis dans un kit essentiel.
+        Installation en 10 minutes, sans technicien, sans abonnement.
+      </p>
+      <div class="pv-hero__cta">
+        <div class="pv-hero__toggle">
+          {%- render 'pv-connectivity-toggle', selected: selected_key -%}
+        </div>
+        <div id="PVHeroCta-{{ section.id }}">
+          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+        </div>
+        <div class="pv-hero__price">
+          <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
+          <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
+        </div>
+        <div class="pv-hero__rating">
+          {%- render 'product-rating', product: product -%}
+        </div>
+      </div>
+      <div class="pv-hero__trust">
+        <span>🔒 Sans abonnement</span>
+        <span>📷 Caméra intérieure incluse</span>
+        <span>🎛️ Clavier physique intégré</span>
+        <span>🧩 Évolutif jusqu'à 60 accessoires</span>
+      </div>
+      {%- if hero_image -%}
+        <div class="pv-hero__media pv-reveal">
+          {{ hero_image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '600,900,1200', alt: product.title }}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- comment -%} Trust strip {%- endcomment -%}
+  <div class="pv-wrap">
+    <div class="pv-strip pv-reveal">
+      <div class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Installation sans technicien, en 10 minutes
+      </div>
+      <div class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Sans abonnement, à vie
+      </div>
+      <div class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Compatible avec les accessoires Touch et Touch XL
+      </div>
+      <div class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Garantie 2 ans
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Pack contents {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-contents__head pv-reveal">
+        <h2>L'essentiel pour démarrer, dans une seule boîte</h2>
+        <p>7 éléments pensés pour protéger votre logement dès le déballage.</p>
+      </div>
+      <div class="pv-contents__grid pv-reveal">
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">1×</span>
+          <div>
+            <div class="pv-contents__name">Centrale d'alarme Vigilia sans fil</div>
+            <div class="pv-contents__desc">Wi-Fi ou Wi-Fi + GSM 4G selon la version choisie, avec clavier physique</div>
+          </div>
+        </div>
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">1×</span>
+          <div>
+            <div class="pv-contents__name">Détecteur de mouvement WPS305</div>
+            <div class="pv-contents__desc">Compatible animaux, sans fausses alertes</div>
+          </div>
+        </div>
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">2×</span>
+          <div>
+            <div class="pv-contents__name">Détecteurs d'ouverture et de vibration WDV301</div>
+            <div class="pv-contents__desc">Pour portes, fenêtres et surfaces vitrées</div>
+          </div>
+        </div>
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">1×</span>
+          <div>
+            <div class="pv-contents__name">Caméra intérieure filaire IP506P Full HD</div>
+            <div class="pv-contents__desc">Mode confidentialité automatique</div>
+          </div>
+        </div>
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">1×</span>
+          <div>
+            <div class="pv-contents__name">Télécommande WRC305</div>
+            <div class="pv-contents__desc">Armement / désarmement en un geste</div>
+          </div>
+        </div>
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">2×</span>
+          <div>
+            <div class="pv-contents__name">Badges RFID WRF301</div>
+            <div class="pv-contents__desc">Désactivation rapide, sans code</div>
+          </div>
+        </div>
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">2×</span>
+          <div>
+            <div class="pv-contents__name">Autocollants dissuasifs</div>
+            <div class="pv-contents__desc">Daewoo Security, à apposer sur vos accès</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} WiFi vs WiFi+GSM comparison {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-compare__head pv-reveal">
+        <h2>Wi-Fi ou Wi-Fi + GSM 4G : la différence essentielle</h2>
+        <p>Deux versions de centrale selon le niveau de sécurité souhaité.</p>
+      </div>
+
+      <div class="pv-compare__grid pv-reveal">
+        <button type="button" class="pv-compare__card{% if selected_key == 'wifi' %} is-selected{% endif %}" data-pv-connectivity="wifi" aria-pressed="{% if selected_key == 'wifi' %}true{% else %}false{% endif %}">
+          <span class="pv-compare__radio" aria-hidden="true"></span>
+          <span class="pv-compare__name">Version Wi-Fi</span>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>La centrale se connecte uniquement à votre réseau Wi-Fi</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Fonctionnement local de l'alarme même sans Internet</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Solution simple pour un logement avec une connexion Internet stable</li>
+          </ul>
+          <span class="pv-compare__price">
+            {%- if wifi_has_compare -%}<span class="pv-price-compare is-visible">{{ wifi_variant.compare_at_price | money }}</span>{%- endif -%}
+            <strong>{{ wifi_variant.price | money }}</strong>
+          </span>
+        </button>
+
+        <button type="button" class="pv-compare__card{% if selected_key == 'gsm' %} is-selected{% endif %}" data-pv-connectivity="gsm" aria-pressed="{% if selected_key == 'gsm' %}true{% else %}false{% endif %}">
+          <span class="pv-compare__radio" aria-hidden="true"></span>
+          <span class="pv-compare__badge">Recommandé</span>
+          <span class="pv-compare__name">Version Wi-Fi + GSM 4G</span>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Ajoute une fonction GSM (carte SIM non fournie) en plus du Wi-Fi</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>En cas de coupure Wi-Fi ou Internet, bascule automatiquement sur le réseau mobile 4G</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Idéale pour résidence secondaire, connexion instable ou sécurité renforcée</li>
+          </ul>
+          <span class="pv-compare__price">
+            {%- if gsm_has_compare -%}<span class="pv-price-compare is-visible">{{ gsm_variant.compare_at_price | money }}</span>{%- endif -%}
+            <strong>{{ gsm_variant.price | money }}</strong>
+          </span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Feature 1 — Protection intérieure {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-feature pv-reveal">
+        <div class="pv-feature__media">
+          {{ feat_image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Protection intérieure du Starter Pack Vigilia' }}
+        </div>
+        <div class="pv-feature__body">
+          <span class="pv-feature__num">PROTECTION INTÉRIEURE</span>
+          <h2>Elle veille pendant que vous vivez.</h2>
+          <p class="pv-feature__text">
+            Le détecteur de mouvement WPS305 compatible animaux et les deux détecteurs
+            2-en-1 WDV301 couvrent vos portes, fenêtres et pièces de vie sans jamais
+            confondre votre chat avec un intrus.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Détection fiable, sans fausses alertes liées aux animaux</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Alerte dès la tentative d'ouverture ou de choc, avant même l'intrusion</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Feature 2 — Vidéosurveillance {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-feature pv-feature--reverse pv-reveal">
+        <div class="pv-feature__media">
+          {{ feat_image_2 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Caméra intérieure du Starter Pack Vigilia' }}
+        </div>
+        <div class="pv-feature__body">
+          <span class="pv-feature__num">VIDÉOSURVEILLANCE</span>
+          <h2>Un œil chez vous, sans perdre votre intimité.</h2>
+          <p class="pv-feature__text">
+            La caméra intérieure IP506P Full HD diffuse en direct sur votre smartphone.
+            Un mode confidentialité automatique protège votre vie privée au quotidien,
+            sans abonnement pour le stockage local.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Visualisation en direct depuis votre smartphone</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Notifications instantanées en cas de détection</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Feature 3 — Contrôle total {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-feature pv-reveal">
+        <div class="pv-feature__media">
+          {{ feat_image_3 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Application Daewoo Home Connect' }}
+        </div>
+        <div class="pv-feature__body">
+          <span class="pv-feature__num">CONTRÔLE TOTAL DEPUIS VOTRE TÉLÉPHONE</span>
+          <h2>Un clavier physique, et une app pour tout le reste.</h2>
+          <p class="pv-feature__text">
+            La centrale se pilote au clavier ou depuis l'application Daewoo Home Connect,
+            gratuite. Armez, désarmez et gérez vos utilisateurs où que vous soyez.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Armement / désarmement à distance, à tout moment</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Gestion des badges RFID et de la télécommande incluse</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Mid-page CTA band {%- endcomment -%}
+  <div class="pv-wrap">
+    <div class="pv-band pv-reveal">
+      <h2>Protégez votre maison dès aujourd'hui</h2>
+      <p>Livraison rapide, garantie 2 ans, et un système qui s'installe seul en 10 minutes.</p>
+      <div class="pv-band__toggle">
+        {%- render 'pv-connectivity-toggle', selected: selected_key -%}
+      </div>
+      {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+    </div>
+  </div>
+
+  {%- comment -%} Feature 4 — Système évolutif {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-feature pv-feature--reverse pv-reveal">
+        <div class="pv-feature__media">
+          {{ feat_image_4 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Système évolutif Vigilia' }}
+        </div>
+        <div class="pv-feature__body">
+          <span class="pv-feature__num">UNE ALARME ÉVOLUTIVE</span>
+          <h2>Commencez petit. Agrandissez quand vous voulez.</h2>
+          <p class="pv-feature__text">
+            Le système Vigilia est 100&nbsp;% évolutif&nbsp;: ajoutez jusqu'à 60 accessoires
+            supplémentaires — détecteurs, caméras, sirènes, télécommandes, détecteurs de
+            fumée — au fur et à mesure de vos besoins.
+          </p>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Compatible avec les accessoires Touch et Touch XL</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Ajoutez un accessoire à tout moment, sans changer de centrale</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Specs {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-specs__head pv-reveal">
+        <h2>En résumé</h2>
+        <p>Tout ce qu'il faut savoir sur le Starter Pack Vigilia.</p>
+      </div>
+      <dl class="pv-specs__grid pv-reveal">
+        <div class="pv-specs__item">
+          <dt>Connectivité</dt>
+          <dd>Wi-Fi 2.4 GHz&#10;GSM en option (carte SIM non fournie, indisponible sur la version Wi-Fi)</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Alimentation &amp; autonomie</dt>
+          <dd>Secteur + batterie de secours intégrée&#10;Autonomie de 4 heures en cas de coupure</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Commande &amp; pilotage</dt>
+          <dd>Clavier physique intégré&#10;Application Daewoo Home Connect, notifications push ou SMS</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Caméra incluse</dt>
+          <dd>1 caméra intérieure IP506P Full HD (filaire)&#10;Mode confidentialité automatique</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Évolutivité</dt>
+          <dd>Jusqu'à 60 accessoires compatibles&#10;Détecteurs, caméras, sirènes, claviers, télécommandes</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Installation</dt>
+          <dd>Sans technicien ni câblage&#10;Environ 10 minutes, guidée par l'application</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Compatibilité</dt>
+          <dd>Accessoires Touch et Touch XL&#10;Assistants vocaux Google Home / Alexa</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Référence</dt>
+          <dd>{{ variant.sku | default: 'vigilia' }}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  {%- comment -%} Guarantee band {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-guarantee pv-reveal">
+        <div class="pv-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"></path></svg>
+          <h3>Garantie 2 ans</h3>
+          <p>Sur l'ensemble des produits Daewoo Security.</p>
+        </div>
+        <div class="pv-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="15" height="11" rx="2"></rect><path d="M18 10h2.2a1 1 0 0 1 .9.6L23 14v4h-5"></path><circle cx="7.5" cy="18.5" r="1.5"></circle><circle cx="17.5" cy="18.5" r="1.5"></circle></svg>
+          <h3>Expédié sous 2 jours</h3>
+          <p>Livraison rapide depuis la France.</p>
+        </div>
+        <div class="pv-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+          <h3>Retour sous 14 jours</h3>
+          <p>Changez d'avis facilement, sans justification.</p>
+        </div>
+        <div class="pv-guarantee__item">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+          <h3>Sans abonnement</h3>
+          <p>Votre système vous appartient, à vie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Cross-sell — configurator & bigger pack {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-crosssell__head pv-reveal">
+        <h2>Besoin de plus dès le départ ?</h2>
+        <p>Composez un pack sur mesure avec le configurateur, ou passez directement au Pack Vigilia complet.</p>
+      </div>
+      <div class="pv-crosssell__grid pv-reveal">
+        <div class="pv-crosssell__card">
+          <div class="pv-crosssell__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"></path></svg>
+          </div>
+          <h3>Configurez votre pack sur mesure</h3>
+          <p>Partez de cette centrale et ajoutez caméras, détecteurs et sirènes supplémentaires pour une protection adaptée à votre logement.</p>
+          <a href="/products/configurateur-kit-vigilia-wi-fi" data-pv-config-link class="pv-btn pv-btn--ghost pv-btn--sm">Configurer mon pack</a>
+        </div>
+        <div class="pv-crosssell__card">
+          <div class="pv-crosssell__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 4l9 5.5"></path><path d="M5 10.5V19a1 1 0 0 0 1 1h4v-5h4v5h4a1 1 0 0 0 1-1v-8.5"></path></svg>
+          </div>
+          <h3>Le Pack Vigilia complet</h3>
+          <p>2 caméras (intérieure + extérieure) et sirène solaire extérieure incluses, pour une protection intérieure et extérieure dès l'installation.</p>
+          <a href="/products/offre-exclusive-pack-vigilia-compatible-animaux-wifi-ou-wifi-gsm-4g" class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Pack complet</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} FAQ {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-faq pv-reveal">
+        <h2>Questions fréquentes</h2>
+
+        <details>
+          <summary>Ai-je besoin d'un abonnement&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Non. Vous achetez ce pack une seule fois&nbsp;: pas de mensualité, pas de frais cachés. Le pilotage se fait au clavier ou via l'application Daewoo Home Connect, incluse et gratuite.</p>
+        </details>
+
+        <details>
+          <summary>Quelle est la différence entre la version Wi-Fi et Wi-Fi + GSM 4G&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">La version Wi-Fi se connecte uniquement à votre réseau Wi-Fi. La version Wi-Fi + GSM 4G ajoute une fonction GSM (carte SIM non fournie)&nbsp;: en cas de coupure Wi-Fi ou Internet, la centrale bascule automatiquement sur le réseau mobile et continue de transmettre les alertes. Recommandée pour une résidence secondaire ou une sécurité renforcée.</p>
+        </details>
+
+        <details>
+          <summary>Que se passe-t-il en cas de coupure de courant&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">En cas de coupure de courant, la centrale dispose d'une batterie de secours qui prend le relais pendant environ 4 heures. Si votre box internet est également coupée, sur la version Wi-Fi la centrale continue de fonctionner en local (détection et sirène) mais ne peut plus vous notifier. Sur la version Wi-Fi + GSM avec une carte SIM installée, vous continuez de recevoir des alertes par SMS. Dans tous les cas, sans Wi-Fi ni électricité, la caméra IP506P incluse n'est pas accessible à distance.</p>
+        </details>
+
+        <details>
+          <summary>La caméra est-elle bien incluse dans le pack&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Oui. Ce starter pack inclut la centrale, 1 détecteur de mouvement, 2 détecteurs d'ouverture/vibration, 1 télécommande, 2 badges RFID — et la caméra intérieure IP506P avec fonction vie privée.</p>
+        </details>
+
+        <details>
+          <summary>Puis-je agrandir mon système plus tard&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Oui. Le système Vigilia accepte jusqu'à 60 accessoires (détecteurs, caméras, sirènes, claviers, télécommandes). Utilisez notre configurateur pour composer un pack plus complet dès maintenant, ou découvrez directement le Pack Vigilia complet avec 2 caméras et sirène solaire.</p>
+        </details>
+
+        <details>
+          <summary>Comment se passe l'installation&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Aucune compétence technique requise&nbsp;: branchez la centrale sur une prise, fixez les capteurs fournis et suivez les étapes affichées dans l'application Daewoo Home Connect. En moins de 30 minutes, votre système est opérationnel.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Final CTA {%- endcomment -%}
+  <section class="pv-section pv-final">
+    <div class="pv-wrap">
+      <div class="pv-reveal">
+        <h2>Starter Pack Vigilia — Le kit essentiel</h2>
+        <p>
+          <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
+          <span class="pv-price-amount">{{ variant.price | money }}</span> · Sans abonnement · Garantie 2 ans
+        </p>
+        <div class="pv-final__toggle">
+          {%- render 'pv-connectivity-toggle', selected: selected_key -%}
+        </div>
+        <div class="pv-final__ctas">
+          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+        </div>
+        <p class="pv-final__legal">Livraison sous 2 jours ouvrés · Retour gratuit sous 14 jours · Service client basé en France</p>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">
+    {{ product | structured_data }}
+  </script>
+
+  <script>
+    (function () {
+      var root = document.getElementById('shopify-section-{{ section.id }}');
+      if (!root) return;
+
+      /* Reveal-on-scroll */
+      var revealEls = root.querySelectorAll('.pv-reveal');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+
+      /* Connectivity toggle: every toggle button and comparison card
+         (data-pv-connectivity) shares one hidden variant-id field and
+         updates every "Ajouter au panier" price/compare display and the
+         "Configurer mon pack" link, wherever they appear on the page. */
+      var dataScript = root.querySelector('#PVData-{{ section.id }}');
+      var variantData = {};
+      if (dataScript) {
+        try { variantData = JSON.parse(dataScript.textContent); } catch (e) { /* keep empty */ }
+      }
+      var keyToVariantId = {};
+      Object.keys(variantData).forEach(function (id) {
+        keyToVariantId[variantData[id].key] = id;
+      });
+
+      var toggleEls = root.querySelectorAll('[data-pv-connectivity]');
+      var variantIdInput = root.querySelector('#PVVariantId-{{ section.id }}');
+      var priceAmounts = root.querySelectorAll('.pv-price-amount');
+      var priceCompares = root.querySelectorAll('.pv-price-compare');
+      var configLinks = root.querySelectorAll('[data-pv-config-link]');
+
+      function selectConnectivity(key) {
+        var variantId = keyToVariantId[key];
+        if (!variantId) return;
+        var data = variantData[variantId];
+
+        toggleEls.forEach(function (el) {
+          var isMatch = el.getAttribute('data-pv-connectivity') === key;
+          el.classList.toggle('is-selected', isMatch);
+          el.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+        });
+        if (variantIdInput) variantIdInput.value = variantId;
+        priceAmounts.forEach(function (el) { el.textContent = data.price; });
+        priceCompares.forEach(function (el) {
+          el.textContent = data.compare;
+          el.classList.toggle('is-visible', !!data.hasCompare);
+        });
+        configLinks.forEach(function (el) { el.setAttribute('href', data.config); });
+      }
+
+      toggleEls.forEach(function (el) {
+        el.addEventListener('click', function () {
+          selectConnectivity(el.getAttribute('data-pv-connectivity'));
+        });
+      });
+
+      /* Sticky add-to-cart bar: show once the hero CTA has scrolled out of view */
+      var heroCta = root.querySelector('#PVHeroCta-{{ section.id }}');
+      var stickyBar = root.querySelector('#PVSticky-{{ section.id }}');
+      if (heroCta && stickyBar && 'IntersectionObserver' in window) {
+        var stickyIo = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            stickyBar.classList.toggle('is-shown', !entry.isIntersecting);
+          });
+        }, { threshold: 0, rootMargin: '-64px 0px 0px 0px' });
+        stickyIo.observe(heroCta);
+      }
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Starter Pack Vigilia",
+  "settings": []
+}
+{% endschema %}
