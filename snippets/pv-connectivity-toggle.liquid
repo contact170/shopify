@@ -1,0 +1,20 @@
+{%- doc -%}
+  WiFi uniquement / WiFi & GSM 4G pill toggle. Every instance on the page
+  shares the same data-pv-connectivity contract, so one page-wide script
+  keeps every toggle, every comparison card and every "Ajouter au panier"
+  button in sync — and actually swaps the selected variant, price and
+  compare-at price (this page has two real, separately priced variants,
+  unlike a simple quantity toggle).
+
+  @param {string} selected - 'wifi' | 'gsm', which option is active on load
+  @param {boolean} compact - use the smaller size (sticky bar)
+{%- enddoc -%}
+
+<div class="pv-toggle{% if compact %} pv-toggle--compact{% endif %}" role="group" aria-label="Choix de la connectivité">
+  <button type="button" class="pv-toggle__btn{% if selected == 'wifi' %} is-selected{% endif %}" data-pv-connectivity="wifi" aria-pressed="{% if selected == 'wifi' %}true{% else %}false{% endif %}">
+    WiFi uniquement
+  </button>
+  <button type="button" class="pv-toggle__btn{% if selected == 'gsm' %} is-selected{% endif %}" data-pv-connectivity="gsm" aria-pressed="{% if selected == 'gsm' %}true{% else %}false{% endif %}">
+    WiFi &amp; GSM 4G <span class="pv-toggle__badge">Recommandé</span>
+  </button>
+</div>
