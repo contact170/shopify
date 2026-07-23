@@ -92,11 +92,16 @@
     .pv-sticky{
       position:fixed;left:0;right:0;bottom:0;z-index:60;
       display:flex;align-items:center;justify-content:space-between;gap:16px;
-      padding:12px 20px;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      padding:12px 20px calc(12px + env(safe-area-inset-bottom, 0px)) 20px;
+      background:rgba(255,255,255,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
       border-top:1px solid var(--pv-line);
       transform:translateY(110%);transition:transform .35s ease;
+      pointer-events:none;
     }
-    .pv-sticky.is-shown{transform:translateY(0);}
+    /* pointer-events stays off while hidden so an incomplete translateY (e.g.
+       mobile browsers resizing the visual viewport as the URL bar
+       collapses) can never swallow a tap meant for the real button behind it */
+    .pv-sticky.is-shown{transform:translateY(0);pointer-events:auto;}
     .pv-sticky__info{display:flex;align-items:center;gap:12px;min-width:0;}
     .pv-sticky__thumb{width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--pv-bg-alt);}
     .pv-sticky__thumb img{width:100%;height:100%;object-fit:cover;}
@@ -302,7 +307,13 @@
     .pv-faq__a{margin-top:14px;color:var(--pv-gray);font-size:15px;line-height:1.6;max-width:660px;}
 
     /* ---- final cta ---- */
-    .pv-final{text-align:center;}
+    .pv-final{
+      text-align:center;
+      /* physical clearance so the real button here can never end up
+         underneath the fixed sticky bar at max scroll, regardless of the
+         JS visibility toggle */
+      padding-bottom:calc(72px + 90px + env(safe-area-inset-bottom, 0px));
+    }
     .pv-final h2{font-size:clamp(28px,4vw,44px);max-width:700px;margin:0 auto;}
     .pv-final p{margin-top:16px;color:var(--pv-gray);font-size:17px;}
     .pv-final__ctas{margin-top:32px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
@@ -594,7 +605,9 @@
       <div class="pv-band__toggle">
         {%- render 'pv-connectivity-toggle', selected: selected_key -%}
       </div>
-      {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+      <div id="PVBandCta-{{ section.id }}">
+        {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+      </div>
     </div>
   </div>
 
@@ -850,11 +863,12 @@
       });
 
       /* Sticky add-to-cart bar: shown once the hero CTA has scrolled out of
-         view, but hidden again whenever a real "Ajouter au panier" button
-         (hero or final CTA) is on screen — otherwise the fixed bar can sit
-         on top of the final section's own button and swallow the tap. */
-      var heroCta = root.querySelector('#PVHeroCta-{{ section.id }}');
-      var finalCta = root.querySelector('#PVFinalCta-{{ section.id }}');
+         view, but hidden again whenever any real "Ajouter au panier" button
+         on the page (hero, mid band, or final CTA) is close to the viewport
+         — otherwise the fixed bar can sit on top of one of those buttons
+         and swallow the tap. The CSS also backs this up with pointer-events
+         and physical spacing, in case this JS timing is ever off. */
+      var stickyCtaIds = ['PVHeroCta-{{ section.id }}', 'PVBandCta-{{ section.id }}', 'PVFinalCta-{{ section.id }}'];
       var stickyBar = root.querySelector('#PVSticky-{{ section.id }}');
       if (stickyBar && 'IntersectionObserver' in window) {
         var ctaVisible = {};
@@ -869,9 +883,11 @@
             ctaVisible[entry.target.id] = entry.isIntersecting;
           });
           updateStickyVisibility();
-        }, { threshold: 0, rootMargin: '-64px 0px 0px 0px' });
-        if (heroCta) { ctaVisible[heroCta.id] = false; stickyIo.observe(heroCta); }
-        if (finalCta) { ctaVisible[finalCta.id] = false; stickyIo.observe(finalCta); }
+        }, { threshold: 0, rootMargin: '-64px 0px -90px 0px' });
+        stickyCtaIds.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) { ctaVisible[id] = false; stickyIo.observe(el); }
+        });
       }
     })();
   </script>
