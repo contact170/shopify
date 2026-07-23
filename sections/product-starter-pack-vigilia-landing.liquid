@@ -773,7 +773,7 @@
         <div class="pv-final__toggle">
           {%- render 'pv-connectivity-toggle', selected: selected_key -%}
         </div>
-        <div class="pv-final__ctas">
+        <div class="pv-final__ctas" id="PVFinalCta-{{ section.id }}">
           {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
         <p class="pv-final__legal">Livraison sous 2 jours ouvrés · Retour gratuit sous 14 jours · Service client basé en France</p>
@@ -849,16 +849,29 @@
         });
       });
 
-      /* Sticky add-to-cart bar: show once the hero CTA has scrolled out of view */
+      /* Sticky add-to-cart bar: shown once the hero CTA has scrolled out of
+         view, but hidden again whenever a real "Ajouter au panier" button
+         (hero or final CTA) is on screen — otherwise the fixed bar can sit
+         on top of the final section's own button and swallow the tap. */
       var heroCta = root.querySelector('#PVHeroCta-{{ section.id }}');
+      var finalCta = root.querySelector('#PVFinalCta-{{ section.id }}');
       var stickyBar = root.querySelector('#PVSticky-{{ section.id }}');
-      if (heroCta && stickyBar && 'IntersectionObserver' in window) {
+      if (stickyBar && 'IntersectionObserver' in window) {
+        var ctaVisible = {};
+        function updateStickyVisibility() {
+          var anyCtaVisible = Object.keys(ctaVisible).some(function (key) {
+            return ctaVisible[key];
+          });
+          stickyBar.classList.toggle('is-shown', !anyCtaVisible);
+        }
         var stickyIo = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            stickyBar.classList.toggle('is-shown', !entry.isIntersecting);
+            ctaVisible[entry.target.id] = entry.isIntersecting;
           });
+          updateStickyVisibility();
         }, { threshold: 0, rootMargin: '-64px 0px 0px 0px' });
-        stickyIo.observe(heroCta);
+        if (heroCta) { ctaVisible[heroCta.id] = false; stickyIo.observe(heroCta); }
+        if (finalCta) { ctaVisible[finalCta.id] = false; stickyIo.observe(finalCta); }
       }
     })();
   </script>
