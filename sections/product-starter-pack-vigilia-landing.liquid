@@ -102,6 +102,11 @@
        mobile browsers resizing the visual viewport as the URL bar
        collapses) can never swallow a tap meant for the real button behind it */
     .pv-sticky.is-shown{transform:translateY(0);pointer-events:auto;}
+    /* The theme's cart drawer (#CartDrawer) sits at z-35 — below our bar's
+       z-60 — so when "Ajouter au panier" opens it, this bar was rendering
+       on top of the drawer's own checkout button. Force-hidden (regardless
+       of .is-shown) whenever the drawer is open. */
+    .pv-sticky.pv-sticky--suppressed{transform:translateY(110%) !important;pointer-events:none !important;}
     .pv-sticky__info{display:flex;align-items:center;gap:12px;min-width:0;}
     .pv-sticky__thumb{width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--pv-bg-alt);}
     .pv-sticky__thumb img{width:100%;height:100%;object-fit:cover;}
@@ -888,6 +893,20 @@
           var el = document.getElementById(id);
           if (el) { ctaVisible[id] = false; stickyIo.observe(el); }
         });
+      }
+
+      /* Force-hide the sticky bar while the theme's cart drawer is open —
+         the drawer renders at a lower z-index than this bar, so without
+         this the bar sits on top of the drawer's own checkout button. */
+      var cartDrawerEl = document.getElementById('CartDrawer');
+      if (stickyBar && cartDrawerEl) {
+        var updateForCartDrawer = function () {
+          stickyBar.classList.toggle('pv-sticky--suppressed', !cartDrawerEl.hidden);
+        };
+        updateForCartDrawer();
+        if ('MutationObserver' in window) {
+          new MutationObserver(updateForCartDrawer).observe(cartDrawerEl, { attributes: true, attributeFilter: ['hidden'] });
+        }
       }
     })();
   </script>
