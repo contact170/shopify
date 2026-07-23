@@ -897,15 +897,25 @@
 
       /* Force-hide the sticky bar while the theme's cart drawer is open —
          the drawer renders at a lower z-index than this bar, so without
-         this the bar sits on top of the drawer's own checkout button. */
-      var cartDrawerEl = document.getElementById('CartDrawer');
-      if (stickyBar && cartDrawerEl) {
+         this the bar sits on top of the drawer's own checkout button.
+         The drawer element (#CartDrawer) can be inserted/upgraded into the
+         DOM after this inline script runs, so looking it up once here and
+         observing that single node is a load-order race — it can silently
+         never attach. Observing document.body's whole subtree instead
+         means we react to the drawer's `open`/`hidden` attributes no
+         matter when it shows up, re-checking its live state each time. */
+      if (stickyBar) {
         var updateForCartDrawer = function () {
-          stickyBar.classList.toggle('pv-sticky--suppressed', !cartDrawerEl.hidden);
+          var cartDrawerEl = document.getElementById('CartDrawer');
+          stickyBar.classList.toggle('pv-sticky--suppressed', !!cartDrawerEl && !cartDrawerEl.hidden);
         };
         updateForCartDrawer();
         if ('MutationObserver' in window) {
-          new MutationObserver(updateForCartDrawer).observe(cartDrawerEl, { attributes: true, attributeFilter: ['hidden'] });
+          new MutationObserver(updateForCartDrawer).observe(document.body, {
+            attributes: true,
+            attributeFilter: ['hidden', 'open'],
+            subtree: true
+          });
         }
       }
     })();
