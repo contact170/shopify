@@ -49,8 +49,6 @@
 
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
-  assign feat_image_1 = gallery[1] | default: hero_image
-  assign feat_image_2 = gallery[6] | default: hero_image
   assign feat_image_3 = gallery[7] | default: hero_image
   assign feat_image_4 = gallery[5] | default: hero_image
 -%}
@@ -524,7 +522,7 @@
     <div class="pv-wrap">
       <div class="pv-feature pv-reveal">
         <div class="pv-feature__media">
-          {{ feat_image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Protection intérieure du Starter Pack Vigilia' }}
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Vigilia-specs.webp?v=1784791751&width=1000" srcset="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Vigilia-specs.webp?v=1784791751&width=500 500w, https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Vigilia-specs.webp?v=1784791751&width=750 750w, https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Vigilia-specs.webp?v=1784791751&width=1000 1000w" sizes="(min-width: 900px) 50vw, 100vw" loading="lazy" alt="Protection intérieure du Starter Pack Vigilia">
         </div>
         <div class="pv-feature__body">
           <span class="pv-feature__num">PROTECTION INTÉRIEURE</span>
@@ -548,7 +546,7 @@
     <div class="pv-wrap">
       <div class="pv-feature pv-feature--reverse pv-reveal">
         <div class="pv-feature__media">
-          {{ feat_image_2 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Caméra intérieure du Starter Pack Vigilia' }}
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=1000" srcset="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=500 500w, https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=750 750w, https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=1000 1000w" sizes="(min-width: 900px) 50vw, 100vw" loading="lazy" alt="Caméra intérieure du Starter Pack Vigilia">
         </div>
         <div class="pv-feature__body">
           <span class="pv-feature__num">VIDÉOSURVEILLANCE</span>
