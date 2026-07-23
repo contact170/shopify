@@ -60,15 +60,13 @@
         "key": "wifi",
         "price": {{ wifi_variant.price | money | strip_html | json }},
         "compare": {{ wifi_variant.compare_at_price | money | strip_html | json }},
-        "hasCompare": {{ wifi_has_compare | json }},
-        "config": "/products/configurateur-kit-vigilia-wi-fi"
+        "hasCompare": {{ wifi_has_compare | json }}
       },
       "{{ gsm_variant.id }}": {
         "key": "gsm",
         "price": {{ gsm_variant.price | money | strip_html | json }},
         "compare": {{ gsm_variant.compare_at_price | money | strip_html | json }},
-        "hasCompare": {{ gsm_has_compare | json }},
-        "config": "/products/configurateur-kit-vigilia-wi-fi-gsm"
+        "hasCompare": {{ gsm_has_compare | json }}
       }
     }
   </script>
@@ -710,7 +708,7 @@
           </div>
           <h3>Configurez votre pack sur mesure</h3>
           <p>Partez de cette centrale et ajoutez caméras, détecteurs et sirènes supplémentaires pour une protection adaptée à votre logement.</p>
-          <a href="/products/configurateur-kit-vigilia-wi-fi" data-pv-config-link class="pv-btn pv-btn--ghost pv-btn--sm">Configurer mon pack</a>
+          <a href="/pages/configurateur_2" class="pv-btn pv-btn--ghost pv-btn--sm">Configurer mon pack</a>
         </div>
         <div class="pv-crosssell__card">
           <div class="pv-crosssell__icon">
@@ -718,7 +716,7 @@
           </div>
           <h3>Le Pack Vigilia complet</h3>
           <p>2 caméras (intérieure + extérieure) et sirène solaire extérieure incluses, pour une protection intérieure et extérieure dès l'installation.</p>
-          <a href="/products/offre-exclusive-pack-vigilia-compatible-animaux-wifi-ou-wifi-gsm-4g" class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Pack complet</a>
+          <a href="/pages/pack-alarmes" class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Pack complet</a>
         </div>
       </div>
     </div>
@@ -826,7 +824,6 @@
       var variantIdInput = root.querySelector('#PVVariantId-{{ section.id }}');
       var priceAmounts = root.querySelectorAll('.pv-price-amount');
       var priceCompares = root.querySelectorAll('.pv-price-compare');
-      var configLinks = root.querySelectorAll('[data-pv-config-link]');
 
       function selectConnectivity(key) {
         var variantId = keyToVariantId[key];
@@ -844,7 +841,6 @@
           el.textContent = data.compare;
           el.classList.toggle('is-visible', !!data.hasCompare);
         });
-        configLinks.forEach(function (el) { el.setAttribute('href', data.config); });
       }
 
       toggleEls.forEach(function (el) {
