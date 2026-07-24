@@ -274,14 +274,19 @@
     .pel-faq__a{margin-top:12px;color:var(--pel-gray);font-size:14.5px;line-height:1.6;max-width:660px;}
 
     /* ---- final cta ---- */
-    .pel-final{text-align:center;background:var(--pel-navy-deep);color:#fff;}
-    .pel-final h2{font-size:clamp(26px,4vw,42px);max-width:680px;margin:0 auto;color:#fff;}
-    .pel-final p{margin-top:14px;color:rgba(255,255,255,.68);font-size:16px;}
-    .pel-final__ctas{
-      margin-top:30px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;
+    .pel-final{
+      text-align:center;background:var(--pel-navy-deep);color:#fff;
+      /* physical clearance so the real button here can never end up
+         underneath the fixed sticky bar at max scroll, regardless of the
+         JS visibility toggle — kept on the section itself, after the
+         legal line, so it doesn't create a gap between the button and
+         the legal text above it */
       padding-bottom:calc(72px + 90px + env(safe-area-inset-bottom, 0px));
     }
-    .pel-final__legal{margin-top:-64px;font-size:12.5px;color:rgba(255,255,255,.5);position:relative;z-index:1;}
+    .pel-final h2{font-size:clamp(26px,4vw,42px);max-width:680px;margin:0 auto;color:#fff;}
+    .pel-final p{margin-top:14px;color:rgba(255,255,255,.68);font-size:16px;}
+    .pel-final__ctas{margin-top:30px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+    .pel-final__legal{margin-top:22px;font-size:12.5px;color:rgba(255,255,255,.5);}
 
     /* ---- reveal-on-scroll ---- */
     .pel-reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
