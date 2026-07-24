@@ -1,0 +1,38 @@
+{%- doc -%}
+  "Add to cart" submit button for the Pack Élite landing page, bound to an
+  external <form> via the `form` attribute so every instance on the page
+  (hero, mid band, final CTA, sticky bar) can share one hidden product form.
+  Single-variant product — no connectivity toggle, so this never needs to
+  swap variants at runtime.
+
+  @param {string} form_id - id of the hidden product form to submit
+  @param {object} variant - the product's variant
+  @param {string} label - button label
+  @param {string} style - 'primary' | 'ghost'
+  @param {boolean} show_price - append the variant price to the label
+{%- enddoc -%}
+
+{%- liquid
+  assign btn_label = label | default: 'Ajouter au panier'
+  assign btn_style = style | default: 'primary'
+-%}
+<button
+  type="submit"
+  name="add"
+  form="{{ form_id }}"
+  class="pel-btn pel-btn--{{ btn_style }}"
+  is="hover-button"
+  {%- unless variant.available %} disabled{% endunless -%}
+>
+  <span class="btn-fill" data-fill aria-hidden="true"></span>
+  <span class="btn-text pel-btn__text">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 8H6"></path></svg>
+    <span class="pel-atc-label">
+      {%- if variant.available -%}
+        {{ btn_label }}{% if show_price %} · {{ variant.price | money }}{% endif %}
+      {%- else -%}
+        Rupture de stock
+      {%- endif -%}
+    </span>
+  </span>
+</button>
