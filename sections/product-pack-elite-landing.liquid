@@ -53,6 +53,7 @@
       --pel-line:#dde1ea;
       --pel-gold:#ad8438;
       --pel-gold-soft:#f4ead9;
+      --pel-gold-text:#8a6526;
       font-family:'Poppins', sans-serif;
       color:var(--pel-ink);
       background:#fff;
@@ -89,7 +90,7 @@
     .pel-eyebrow{
       display:inline-flex;align-items:center;gap:8px;
       font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-      color:var(--pel-gold);margin-bottom:16px;
+      color:var(--pel-gold-text);margin-bottom:16px;
     }
     .pel-eyebrow::before{content:"";width:16px;height:2px;background:var(--pel-gold);}
     .pel h1,.pel h2,.pel h3{font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:0;}
@@ -193,7 +194,7 @@
     .pel-steps__head p{margin-top:14px;color:var(--pel-gray);font-size:17px;}
     .pel-steps__grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--pel-line);border:1px solid var(--pel-line);border-radius:20px;overflow:hidden;}
     .pel-steps__item{background:#fff;padding:26px 24px;}
-    .pel-steps__num{display:block;font-size:13px;font-weight:700;color:var(--pel-gold);letter-spacing:.06em;margin-bottom:10px;}
+    .pel-steps__num{display:block;font-size:13px;font-weight:700;color:var(--pel-gold-text);letter-spacing:.06em;margin-bottom:10px;}
     .pel-steps__item h3{font-size:16.5px;font-weight:600;margin-bottom:8px;}
     .pel-steps__item p{font-size:14px;color:var(--pel-gray);line-height:1.55;}
     @media (min-width:700px){.pel-steps__grid{grid-template-columns:1fr 1fr;}}
@@ -220,7 +221,7 @@
       padding:56px 0;
     }
     .pel-feature__media img{border-radius:24px;background:var(--pel-paper);}
-    .pel-feature__num{font-size:12.5px;font-weight:700;color:var(--pel-gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:block;}
+    .pel-feature__num{font-size:12.5px;font-weight:700;color:var(--pel-gold-text);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:block;}
     .pel-feature h2{font-size:clamp(24px,3.4vw,34px);}
     .pel-feature__text{margin-top:16px;color:var(--pel-gray);font-size:16.5px;line-height:1.6;max-width:480px;}
     .pel-feature__note{margin-top:12px;font-size:13.5px;color:var(--pel-gray);font-style:italic;max-width:480px;}
@@ -247,7 +248,7 @@
     .pel-specs__head h2{font-size:clamp(26px,3.6vw,36px);}
     .pel-specs__grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--pel-line);border:1px solid var(--pel-line);border-radius:20px;overflow:hidden;}
     .pel-specs__item{background:#fff;padding:22px 26px;}
-    .pel-specs__item dt{font-size:12.5px;font-weight:700;color:var(--pel-gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+    .pel-specs__item dt{font-size:12.5px;font-weight:700;color:var(--pel-gold-text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
     .pel-specs__item dd{margin:0;font-size:14.5px;color:var(--pel-ink);line-height:1.55;white-space:pre-line;}
     @media (min-width:700px){.pel-specs__grid{grid-template-columns:1fr 1fr;}}
     @media (min-width:1000px){.pel-specs__grid{grid-template-columns:1fr 1fr 1fr;}}
@@ -269,7 +270,7 @@
       font-size:16.5px;font-weight:500;
     }
     .pel-faq summary::-webkit-details-marker{display:none;}
-    .pel-faq summary .pel-faq__icon{flex-shrink:0;transition:transform .25s ease;color:var(--pel-gold);}
+    .pel-faq summary .pel-faq__icon{flex-shrink:0;transition:transform .25s ease;color:var(--pel-gold-text);}
     .pel-faq details[open] summary .pel-faq__icon{transform:rotate(45deg);}
     .pel-faq__a{margin-top:12px;color:var(--pel-gray);font-size:14.5px;line-height:1.6;max-width:660px;}
 
@@ -325,7 +326,7 @@
       <div class="pel-sticky__text">
         <div class="pel-sticky__name">Pack Élite</div>
         <div class="pel-sticky__price">
-          {%- if has_compare -%}<span style="text-decoration:line-through;color:#98a0ad;">{{ variant.compare_at_price | money }}</span> {%- endif -%}
+          {%- if has_compare -%}<span style="text-decoration:line-through;color:var(--pel-gray);">{{ variant.compare_at_price | money }}</span> {%- endif -%}
           {{ variant.price | money }}
         </div>
       </div>
