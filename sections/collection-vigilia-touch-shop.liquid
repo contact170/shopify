@@ -136,6 +136,10 @@
       --vts-amber:#f79009;
       --vts-red:#c0362c;
       --vts-red-soft:#fbe9e7;
+      --vts-cta:#ffd814;
+      --vts-cta-hover:#f7ca00;
+      --vts-cta-border:#fcd200;
+      --vts-cta-ink:#0f1111;
       --vts-mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
       font-family:'Poppins', sans-serif;
       color:var(--vts-ink);
@@ -198,7 +202,7 @@
 
     .vts-zone{
       flex-shrink:0;display:flex;flex-direction:column;gap:10px;
-      min-width:130px;padding:13px 14px 12px;border-radius:14px;
+      width:124px;padding:13px 14px 12px;border-radius:14px;
       border:1px solid var(--vts-line);background:#fff;cursor:pointer;text-align:left;
       transition:border-color .15s ease,background .15s ease,box-shadow .2s ease;
     }
@@ -208,7 +212,10 @@
       border:1.5px solid var(--vts-line);flex-shrink:0;transition:all .2s ease;
     }
     .vts-zone__icon{color:var(--vts-navy);opacity:.65;display:flex;transition:color .2s ease,opacity .2s ease;}
-    .vts-zone__label{font-size:12.5px;font-weight:600;color:var(--vts-ink);line-height:1.3;}
+    .vts-zone__label{
+      font-size:12.5px;font-weight:600;color:var(--vts-ink);line-height:1.3;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em;
+    }
     .vts-zone__count{
       font-family:var(--vts-mono);font-size:12.5px;font-weight:600;letter-spacing:.03em;
       color:var(--vts-gray);background:var(--vts-paper);border-radius:6px;padding:2px 7px;
@@ -289,13 +296,13 @@
     .vts-add{
       position:relative;overflow:hidden;isolation:isolate;
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      border:none;border-radius:10px;cursor:pointer;height:40px;
+      border:1px solid var(--vts-cta-border);border-radius:10px;cursor:pointer;height:40px;
       font-family:inherit;font-size:13.5px;font-weight:600;
-      background:var(--vts-green);color:#fff;
+      background:var(--vts-cta);color:var(--vts-cta-ink);
       transition:transform .15s ease,opacity .15s ease;
     }
     .vts-add:active{transform:scale(.98);}
-    .vts-add .btn-fill{position:absolute;inset:0;z-index:-1;transform:translateY(100%);background:#026404;}
+    .vts-add .btn-fill{position:absolute;inset:0;z-index:-1;transform:translateY(100%);background:var(--vts-cta-hover);}
     .vts-add__text{position:relative;display:inline-flex;align-items:center;gap:8px;}
 
     .vts-card__unavailable{
@@ -377,9 +384,9 @@
         <button type="button" class="vts-zone" data-filter="telecommandes" aria-pressed="false">
           <span class="vts-zone__top">
             <span class="vts-zone__led" aria-hidden="true"></span>
-            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="20" rx="2"></rect><circle cx="12" cy="7" r="1.3"></circle><path d="M10 11h4M10 14h4M10 17h4"></path></svg></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="15" r="3.2"></circle><path d="M9.3 12.7L18 4"></path><path d="M14.5 8.2l2.3 2.3"></path><path d="M17.2 5.5l2.3 2.3"></path></svg></span>
           </span>
-          <span class="vts-zone__label">Télécommandes &amp; badges</span>
+          <span class="vts-zone__label">Contrôle d&#8217;accès</span>
           <span class="vts-zone__count">{{ count_telecommandes_str }}</span>
         </button>
         <button type="button" class="vts-zone" data-filter="centrale" aria-pressed="false">
