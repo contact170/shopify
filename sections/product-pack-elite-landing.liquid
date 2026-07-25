@@ -11,6 +11,11 @@
   this product's real differentiator — triple connectivity with automatic
   failover — instead of a generic icon grid.
 
+  The page is light by default; navy is deliberately confined to three
+  small, bounded cards (the resilience gauge in the hero, the mid-page CTA
+  band, and the final CTA card) instead of full-bleed dark sections, so the
+  dark accent stays a precise, premium touch rather than dominating the page.
+
   Single real variant (no WiFi/GSM toggle needed: this pack always ships
   with the 4G+GSM centrale), so the JS here is simpler than the toggle-based
   pages — no PVData variant-swap logic required.
@@ -97,12 +102,13 @@
     .pel h2{font-weight:600;letter-spacing:-.015em;}
     .pel p{margin:0;}
 
-    /* ---- hero ---- */
-    .pel-hero{padding:88px 0 48px;background:var(--pel-navy-deep);color:#fff;text-align:center;}
-    .pel-hero .pel-eyebrow{color:var(--pel-gold);}
-    .pel-hero h1{font-size:clamp(30px,6.4vw,52px);max-width:820px;margin:0 auto;color:#fff;}
+    /* ---- hero (light — dark is reserved for two small, precise cards:
+       the resilience gauge below and the final CTA further down the
+       page — see section comments there) ---- */
+    .pel-hero{padding:76px 0 48px;background:var(--pel-paper);text-align:center;}
+    .pel-hero h1{font-size:clamp(30px,6.4vw,52px);max-width:820px;margin:0 auto;color:var(--pel-ink);}
     .pel-hero__sub{
-      font-size:clamp(16px,2vw,19px);color:rgba(255,255,255,.72);
+      font-size:clamp(16px,2vw,19px);color:var(--pel-gray);
       max-width:620px;margin:20px auto 0;line-height:1.55;font-weight:400;
     }
     .pel-hero__price-row{margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:14px;}
@@ -112,27 +118,36 @@
       font-size:13px;font-weight:700;letter-spacing:.02em;
       padding:6px 14px;border-radius:999px;
     }
-    .pel-hero__price{font-size:15px;color:rgba(255,255,255,.75);}
-    .pel-price-compare{text-decoration:line-through;color:rgba(255,255,255,.5);margin-right:8px;}
-    .pel-hero__price strong{color:#fff;font-size:24px;font-weight:700;}
+    .pel-hero__price{font-size:15px;color:var(--pel-gray);}
+    .pel-price-compare{text-decoration:line-through;color:var(--pel-gray);margin-right:8px;}
+    .pel-hero__price strong{color:var(--pel-ink);font-size:24px;font-weight:700;}
     .pel-hero__cta{margin-top:6px;}
     .pel-hero__media{margin-top:44px;}
     .pel-hero__media img{
       width:100%;max-width:600px;margin:0 auto;border-radius:24px;
-      background:rgba(255,255,255,.05);
+      background:#fff;box-shadow:0 30px 70px -30px rgba(7,18,40,.35);
     }
 
     /* ---- resilience gauge (signature component) ----
-       CSS grid keeps the dots/links row and the labels row on the same
-       column tracks, so each label sits exactly under its own dot instead
-       of being centered against a node block that includes the label
-       itself (which would drift the connecting line off-center). */
+       The one deliberately dark element in the hero: a compact, bounded
+       navy card rather than a full-bleed dark section, so "always
+       connected" still reads as a distinct premium moment without
+       darkening the whole page. CSS grid keeps the dots/links row and the
+       labels row on the same column tracks, so each label sits exactly
+       under its own dot instead of being centered against a node block
+       that includes the label itself (which would drift the connecting
+       line off-center). */
+    .pel-resilience-card{
+      background:var(--pel-navy-deep);border-radius:22px;
+      padding:26px 24px 22px;margin:36px auto 0;max-width:460px;
+      box-shadow:0 20px 46px -22px rgba(7,18,40,.5);
+    }
     .pel-resilience{
       display:grid;
       grid-template-columns:auto minmax(18px,64px) auto minmax(18px,64px) auto;
       align-items:center;
-      max-width:440px;
-      margin:34px auto 0;
+      max-width:400px;
+      margin:0 auto;
     }
     .pel-resilience__dot{width:9px;height:9px;border-radius:50%;background:var(--pel-gold);justify-self:center;}
     .pel-resilience__link{height:2px;background:var(--pel-gold);opacity:.55;}
@@ -146,7 +161,7 @@
     .pel-resilience__label--gsm{grid-column:5;}
     .pel-resilience__caption{
       margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.6);
-      max-width:380px;margin-left:auto;margin-right:auto;line-height:1.5;
+      max-width:340px;margin-left:auto;margin-right:auto;line-height:1.5;
     }
 
     /* ---- buttons ---- */
@@ -274,9 +289,12 @@
     .pel-faq details[open] summary .pel-faq__icon{transform:rotate(45deg);}
     .pel-faq__a{margin-top:12px;color:var(--pel-gray);font-size:14.5px;line-height:1.6;max-width:660px;}
 
-    /* ---- final cta ---- */
+    /* ---- final cta ----
+       Outer section stays light; only the card wrapping the actual CTA
+       content is dark, keeping this — like the resilience gauge — a
+       small, precise dark moment rather than a full-bleed dark section. */
     .pel-final{
-      text-align:center;background:var(--pel-navy-deep);color:#fff;
+      text-align:center;background:var(--pel-paper);
       /* physical clearance so the real button here can never end up
          underneath the fixed sticky bar at max scroll, regardless of the
          JS visibility toggle — kept on the section itself, after the
@@ -284,8 +302,15 @@
          the legal text above it */
       padding-bottom:calc(72px + 90px + env(safe-area-inset-bottom, 0px));
     }
-    .pel-final h2{font-size:clamp(26px,4vw,42px);max-width:680px;margin:0 auto;color:#fff;}
-    .pel-final p{margin-top:14px;color:rgba(255,255,255,.68);font-size:16px;}
+    .pel-final__card{
+      background:var(--pel-navy-deep);border-radius:28px;
+      padding:56px 32px;box-shadow:0 24px 60px -28px rgba(7,18,40,.45);
+    }
+    .pel-final__card h2{font-size:clamp(26px,4vw,42px);max-width:680px;margin:0 auto;color:#fff;}
+    .pel-final__card p{margin-top:14px;color:rgba(255,255,255,.68);font-size:16px;}
+    /* .pel-price-compare defaults to --pel-gray for its other use in the
+       (now light) hero — override back to a light color on this dark card */
+    .pel-final__card .pel-price-compare{color:rgba(255,255,255,.5);}
     .pel-final__ctas{margin-top:30px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
     .pel-final__legal{margin-top:22px;font-size:12.5px;color:rgba(255,255,255,.5);}
 
@@ -344,17 +369,19 @@
         Zigbee et vidéosurveillance extérieure autonome, sans abonnement.
       </p>
 
-      <div class="pel-resilience" role="img" aria-label="Triple connectivité : Wi-Fi, Ethernet et 4G+ GSM de secours">
-        <span class="pel-resilience__dot" aria-hidden="true"></span>
-        <span class="pel-resilience__link" aria-hidden="true"></span>
-        <span class="pel-resilience__dot" aria-hidden="true"></span>
-        <span class="pel-resilience__link" aria-hidden="true"></span>
-        <span class="pel-resilience__dot" aria-hidden="true"></span>
-        <span class="pel-resilience__label pel-resilience__label--wifi" aria-hidden="true">Wi-Fi</span>
-        <span class="pel-resilience__label pel-resilience__label--eth" aria-hidden="true">Ethernet</span>
-        <span class="pel-resilience__label pel-resilience__label--gsm" aria-hidden="true">4G+ GSM</span>
+      <div class="pel-resilience-card">
+        <div class="pel-resilience" role="img" aria-label="Triple connectivité : Wi-Fi, Ethernet et 4G+ GSM de secours">
+          <span class="pel-resilience__dot" aria-hidden="true"></span>
+          <span class="pel-resilience__link" aria-hidden="true"></span>
+          <span class="pel-resilience__dot" aria-hidden="true"></span>
+          <span class="pel-resilience__link" aria-hidden="true"></span>
+          <span class="pel-resilience__dot" aria-hidden="true"></span>
+          <span class="pel-resilience__label pel-resilience__label--wifi" aria-hidden="true">Wi-Fi</span>
+          <span class="pel-resilience__label pel-resilience__label--eth" aria-hidden="true">Ethernet</span>
+          <span class="pel-resilience__label pel-resilience__label--gsm" aria-hidden="true">4G+ GSM</span>
+        </div>
+        <p class="pel-resilience__caption">Si une connexion tombe, la centrale bascule automatiquement sur la suivante — vos alertes ne s'arrêtent jamais.</p>
       </div>
-      <p class="pel-resilience__caption">Si une connexion tombe, la centrale bascule automatiquement sur la suivante — vos alertes ne s'arrêtent jamais.</p>
 
       <div class="pel-hero__price-row">
         {%- if has_compare -%}<span class="pel-hero__badge">-{{ discount_pct }}% aujourd'hui</span>{%- endif -%}
@@ -778,7 +805,7 @@
   {%- comment -%} Final CTA {%- endcomment -%}
   <section class="pel-section pel-final">
     <div class="pel-wrap">
-      <div class="pel-reveal">
+      <div class="pel-final__card pel-reveal">
         <h2>Pack Élite — la protection intégrale Daewoo Security</h2>
         <p>
           {%- if has_compare -%}<span class="pel-price-compare">{{ variant.compare_at_price | money }}</span>{%- endif -%}
