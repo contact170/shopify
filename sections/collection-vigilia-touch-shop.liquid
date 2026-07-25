@@ -50,7 +50,8 @@
   assign contacteurs_handles = "contacteur-de-porte-wds301,contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302,contacteur-de-porte-de-garage-wdg301" | split: ","
   assign sirenes_handles = "sirene-exterieure-wos305-filaire-compatible-panneau-solaire,sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire,sirene-filaire-wos301-compatible-avec-lalarme-am301-am302,sirene-exterieure-solaire-wos301s,sirene-interieure-sans-fil-100-db-wis305,panneau-solaire-spwos305-compatible-avec-lasirene-wos305,adaptateur-secteur-wos301s" | split: ","
   assign telecommandes_handles = "clavier-wke301-avec-2-badges-rfid,pack-de-2-badges-rfid-wrf301,telecommande-compatible-vigilia-touch,telecommande-wrc301" | split: ","
-  assign centrale_handles = "centrale-touch-am301-avec-ecran-tactile-4-3,amplificateur-de-signal-radio-compatible-avec-la-gamme-am301" | split: ","
+  assign centrale_handles = "centrale-touch-am301-avec-ecran-tactile-4-3" | split: ","
+  assign amplificateur_handles = "amplificateur-de-signal-radio-compatible-avec-la-gamme-am301" | split: ","
   assign sim_handles = "carte-sim-m2m-afone-1-an-prepaye-pour-centrale-vigilia,carte-sim-m2m-afone-1-an-prepaye,carte-m2m-afone-40-min-ou-100-sms" | split: ","
 
   assign count_detecteurs = 0
@@ -58,6 +59,7 @@
   assign count_sirenes = 0
   assign count_telecommandes = 0
   assign count_centrale = 0
+  assign count_amplificateur = 0
   assign count_sim = 0
   assign count_accessoires = 0
   assign total_count = 0
@@ -77,6 +79,8 @@
       assign count_telecommandes = count_telecommandes | plus: 1
     elsif centrale_handles contains product.handle
       assign count_centrale = count_centrale | plus: 1
+    elsif amplificateur_handles contains product.handle
+      assign count_amplificateur = count_amplificateur | plus: 1
     elsif sim_handles contains product.handle
       assign count_sim = count_sim | plus: 1
     else
@@ -107,6 +111,10 @@
   assign count_centrale_str = count_centrale
   if count_centrale < 10
     assign count_centrale_str = count_centrale | prepend: "0"
+  endif
+  assign count_amplificateur_str = count_amplificateur
+  if count_amplificateur < 10
+    assign count_amplificateur_str = count_amplificateur | prepend: "0"
   endif
   assign count_sim_str = count_sim
   if count_sim < 10
@@ -405,8 +413,16 @@
             <span class="vts-zone__led" aria-hidden="true"></span>
             <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"></path></svg></span>
           </span>
-          <span class="vts-zone__label">Centrale &amp; réseau</span>
+          <span class="vts-zone__label">Centrale</span>
           <span class="vts-zone__count">{{ count_centrale_str }}</span>
+        </button>
+        <button type="button" class="vts-zone" data-filter="amplificateur" aria-pressed="false">
+          <span class="vts-zone__top">
+            <span class="vts-zone__led" aria-hidden="true"></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"></path><path d="M8.5 20v-6"></path><path d="M15.5 20v-6"></path><path d="M5 20v-3"></path><path d="M19 20v-3"></path><path d="M8.5 8a5 5 0 0 1 7 0"></path><path d="M5.5 5a9 9 0 0 1 13 0"></path></svg></span>
+          </span>
+          <span class="vts-zone__label">Amplificateur</span>
+          <span class="vts-zone__count">{{ count_amplificateur_str }}</span>
         </button>
         <button type="button" class="vts-zone" data-filter="sim" aria-pressed="false">
           <span class="vts-zone__top">
@@ -446,6 +462,8 @@
             {%- assign card_cat = "telecommandes" -%}
           {%- elsif centrale_handles contains product.handle -%}
             {%- assign card_cat = "centrale" -%}
+          {%- elsif amplificateur_handles contains product.handle -%}
+            {%- assign card_cat = "amplificateur" -%}
           {%- elsif sim_handles contains product.handle -%}
             {%- assign card_cat = "sim" -%}
           {%- endif -%}

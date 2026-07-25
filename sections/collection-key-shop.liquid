@@ -1,0 +1,529 @@
+{%- doc -%}
+  Bespoke "shop by category" page for the Daewoo Key (SA501) accessory
+  collection (handle: accessoires — live title "ACCESSOIRES KEY (SA501)").
+  Sibling of collection-vigilia-touch-shop.liquid and
+  collection-elite-shop.liquid — same design system (control-panel "zone"
+  rail signature, monospace digital-readout counts, LED indicators,
+  Amazon-yellow CTA, persistent view-details cue), reused deliberately so
+  the three accessory shop pages read as one family. Prefixed `das-`
+  (Daewoo Accessory Shop), shared with the Élite page.
+
+  NOTE: unlike the other two collections, this collection already has a
+  templateSuffix set on the LIVE theme (`collec-accessoires-sa501`) — this
+  file and its template (collection.key-shop.json) are new, separate
+  files and don't touch that existing one. Switching the collection over
+  to this new template is a separate, deliberate step (not done by
+  creating these files).
+
+  Loops `collection.products` directly (NOT `all_products[handle]`, which
+  caps at 20 unique handles per page and silently broke an earlier
+  version of the Vigilia/Touch page). One duplicate "cadeau" 0,00 € SKU
+  in the live collection is excluded by handle. The Starter Pack Key
+  units themselves (the alarm panel, not an accessory) are kept and
+  grouped under "Centrale" rather than excluded, mirroring how the
+  Vigilia/Touch page treats its own centrale product. Every remaining
+  product gets an explicit category via handle arrays + if/elsif (default
+  "accessoires" for anything unmapped), since neither `product_type` nor
+  `tags` are populated consistently enough on this catalog to group by
+  automatically. No Zigbee or Amplificateur zones here — the Key (SA501)
+  range doesn't have those products, unlike Élite.
+{%- enddoc -%}
+
+{%- liquid
+  assign excluded_handles = "cadeau-detecteur-de-fuite-deau-wwf501-compatible-key-elite-sa501-pa501z" | split: ","
+  assign detecteurs_handles = "detecteur-de-mouvement-pet-immune-wps501-pour-alarme-daewoo,detecteur-de-vibration-wvd501-pour-alarme-daewoo-sa501,detecteur-de-mouvement-exterieur-wmo501-pour-alarme-daewoo,detecteur-de-fumee-wsd501-pour-alarme-daewoo-sa501,detecteur-de-fuite-deau-compatible-avec-lalarme-daewoo" | split: ","
+  assign contacteurs_handles = "contacteur-de-porte-wds501,detecteur-douverture-de-porte-de-garage" | split: ","
+  assign sirenes_handles = "sirene-interieure-wis502,sirene-exterieure-wos501-pour-alarme-daewoo,sirene-exterieure-solaire-pour-alarme-daewoo-sa501" | split: ","
+  assign acces_handles = "telecommande-pour-alarme-daewoo,badge-rfid-wrf501-pour-alarme-daewoo-sa501,clavier-numerique-sans-fil-pour-alarme-daewoo" | split: ","
+  assign centrale_handles = "alarme-maison-sans-fil-daewoo-sa501,starter-pack-key-sa501-4g" | split: ","
+  assign sim_handles = "carte-m2m-afone-40-min-ou-100-sms,carte-sim-m2m-afone-1-an-prepaye" | split: ","
+
+  assign count_detecteurs = 0
+  assign count_contacteurs = 0
+  assign count_sirenes = 0
+  assign count_acces = 0
+  assign count_centrale = 0
+  assign count_sim = 0
+  assign count_accessoires = 0
+  assign total_count = 0
+
+  for product in collection.products
+    if excluded_handles contains product.handle
+      continue
+    endif
+    assign total_count = total_count | plus: 1
+    if detecteurs_handles contains product.handle
+      assign count_detecteurs = count_detecteurs | plus: 1
+    elsif contacteurs_handles contains product.handle
+      assign count_contacteurs = count_contacteurs | plus: 1
+    elsif sirenes_handles contains product.handle
+      assign count_sirenes = count_sirenes | plus: 1
+    elsif acces_handles contains product.handle
+      assign count_acces = count_acces | plus: 1
+    elsif centrale_handles contains product.handle
+      assign count_centrale = count_centrale | plus: 1
+    elsif sim_handles contains product.handle
+      assign count_sim = count_sim | plus: 1
+    else
+      assign count_accessoires = count_accessoires | plus: 1
+    endif
+  endfor
+
+  assign total_count_str = total_count
+  if total_count < 10
+    assign total_count_str = total_count | prepend: "0"
+  endif
+  assign count_detecteurs_str = count_detecteurs
+  if count_detecteurs < 10
+    assign count_detecteurs_str = count_detecteurs | prepend: "0"
+  endif
+  assign count_contacteurs_str = count_contacteurs
+  if count_contacteurs < 10
+    assign count_contacteurs_str = count_contacteurs | prepend: "0"
+  endif
+  assign count_sirenes_str = count_sirenes
+  if count_sirenes < 10
+    assign count_sirenes_str = count_sirenes | prepend: "0"
+  endif
+  assign count_acces_str = count_acces
+  if count_acces < 10
+    assign count_acces_str = count_acces | prepend: "0"
+  endif
+  assign count_centrale_str = count_centrale
+  if count_centrale < 10
+    assign count_centrale_str = count_centrale | prepend: "0"
+  endif
+  assign count_sim_str = count_sim
+  if count_sim < 10
+    assign count_sim_str = count_sim | prepend: "0"
+  endif
+  assign count_accessoires_str = count_accessoires
+  if count_accessoires < 10
+    assign count_accessoires_str = count_accessoires | prepend: "0"
+  endif
+-%}
+
+<div id="shopify-section-{{ section.id }}" class="das">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+    #shopify-section-{{ section.id }} .das{
+      --das-navy:#0c1e4a;
+      --das-navy-deep:#071228;
+      --das-panel:#12161f;
+      --das-ink:#171b23;
+      --das-gray:#5b6270;
+      --das-paper:#eef1f6;
+      --das-line:#dde3ec;
+      --das-green:#037e05;
+      --das-green-glow:#22c55e;
+      --das-green-soft:#e6f5ea;
+      --das-red:#c0362c;
+      --das-red-soft:#fbe9e7;
+      --das-cta:#ffd814;
+      --das-cta-hover:#f7ca00;
+      --das-cta-border:#fcd200;
+      --das-cta-ink:#0f1111;
+      --das-mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-family:'Poppins', sans-serif;
+      color:var(--das-ink);
+      background:#fff;
+    }
+    .das *{box-sizing:border-box;}
+    .das .das-wrap{max-width:1240px;margin:0 auto;padding:0 24px;}
+    .das img{max-width:100%;display:block;}
+    .das button{font-family:inherit;}
+
+    .das-readout{background:var(--das-panel);color:#fff;padding:11px 0;}
+    .das-readout__row{
+      display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;
+      font-family:var(--das-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+    }
+    .das-readout__status{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:600;}
+    .das-readout__dot{
+      width:7px;height:7px;border-radius:50%;background:var(--das-green-glow);flex-shrink:0;
+      animation:das-pulse 2.4s ease-in-out infinite;
+    }
+    .das-readout__sep{color:rgba(255,255,255,.28);}
+    .das-readout__meta{color:rgba(255,255,255,.62);font-weight:500;}
+    @keyframes das-pulse{
+      0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.55);}
+      50%{box-shadow:0 0 0 5px rgba(34,197,94,0);}
+    }
+
+    .das-hero{padding:40px 0 30px;background:var(--das-paper);text-align:center;}
+    .das-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+      color:var(--das-green);margin-bottom:14px;
+    }
+    .das-eyebrow::before{content:"";width:14px;height:2px;background:var(--das-green);}
+    .das-hero h1{
+      font-weight:700;letter-spacing:-.02em;line-height:1.12;margin:0;
+      font-size:clamp(26px,4.6vw,40px);max-width:720px;margin:0 auto;color:var(--das-navy-deep);
+    }
+    .das-hero__sub{
+      font-size:clamp(15px,1.8vw,17px);color:var(--das-gray);
+      max-width:600px;margin:16px auto 0;line-height:1.55;
+    }
+
+    .das-filters{padding:24px 0 22px;border-bottom:1px solid var(--das-line);}
+    .das-filters__label{
+      font-family:var(--das-mono);font-size:11px;font-weight:600;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--das-gray);margin:0 0 12px;
+    }
+    .das-filters__row{
+      display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;
+      scrollbar-width:none;-ms-overflow-style:none;
+    }
+    .das-filters__row::-webkit-scrollbar{display:none;}
+
+    .das-zone{
+      flex-shrink:0;display:flex;flex-direction:column;gap:10px;
+      width:124px;padding:13px 14px 12px;border-radius:14px;
+      border:1px solid var(--das-line);background:#fff;cursor:pointer;text-align:left;
+      transition:border-color .15s ease,background .15s ease,box-shadow .2s ease;
+    }
+    .das-zone__top{display:flex;align-items:center;justify-content:space-between;}
+    .das-zone__led{
+      width:8px;height:8px;border-radius:50%;background:transparent;
+      border:1.5px solid var(--das-line);flex-shrink:0;transition:all .2s ease;
+    }
+    .das-zone__icon{color:var(--das-navy);opacity:.65;display:flex;transition:color .2s ease,opacity .2s ease;}
+    .das-zone__label{
+      font-size:12.5px;font-weight:600;color:var(--das-ink);line-height:1.3;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em;
+    }
+    .das-zone__count{
+      font-family:var(--das-mono);font-size:12.5px;font-weight:600;letter-spacing:.03em;
+      color:var(--das-gray);background:var(--das-paper);border-radius:6px;padding:2px 7px;
+      align-self:flex-start;transition:background .2s ease,color .2s ease;
+    }
+    .das-zone:hover{border-color:var(--das-navy);}
+    .das-zone.is-active{
+      border-color:var(--das-green);background:var(--das-green-soft);
+      box-shadow:0 8px 20px -14px rgba(3,126,5,.45);
+    }
+    .das-zone.is-active .das-zone__led{
+      background:var(--das-green-glow);border-color:var(--das-green-glow);
+      box-shadow:0 0 0 4px rgba(34,197,94,.22);
+    }
+    .das-zone.is-active .das-zone__icon{color:var(--das-green);opacity:1;}
+    .das-zone.is-active .das-zone__count{background:var(--das-navy);color:#fff;}
+
+    .das-grid-section{padding:30px 0 72px;}
+    .das-count{font-size:13.5px;color:var(--das-gray);margin-bottom:18px;}
+    .das-count strong{font-family:var(--das-mono);color:var(--das-ink);font-weight:600;}
+    .das-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+    }
+    @media (min-width:700px){.das-grid{grid-template-columns:repeat(3,1fr);gap:20px;}}
+    @media (min-width:1080px){.das-grid{grid-template-columns:repeat(4,1fr);}}
+
+    .das-card{
+      display:flex;flex-direction:column;
+      border:1px solid var(--das-line);border-radius:18px;overflow:hidden;background:#fff;
+      transition:box-shadow .2s ease,transform .2s ease;
+    }
+    .das-card:hover{box-shadow:0 16px 32px -20px rgba(7,18,40,.25);transform:translateY(-2px);}
+    .das-card.is-hidden{display:none;}
+
+    .das-card__media{position:relative;display:block;aspect-ratio:1/1;background:var(--das-paper);overflow:hidden;}
+    .das-card__media img{width:100%;height:100%;object-fit:contain;padding:14px;}
+    .das-card--oos .das-card__media img{opacity:.45;}
+    .das-card__badge{
+      position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;
+      padding:5px 10px;border-radius:999px;letter-spacing:.02em;
+    }
+    .das-card__badge--oos{background:var(--das-red-soft);color:var(--das-red);}
+
+    .das-card__media::before,.das-card__media::after{
+      content:"";position:absolute;width:14px;height:14px;opacity:0;
+      transition:opacity .2s ease;pointer-events:none;
+    }
+    .das-card__media::before{top:8px;left:8px;border-top:2px solid var(--das-green);border-left:2px solid var(--das-green);}
+    .das-card__media::after{bottom:8px;right:8px;border-bottom:2px solid var(--das-green);border-right:2px solid var(--das-green);}
+    .das-card:hover .das-card__media::before,.das-card:hover .das-card__media::after{opacity:1;}
+
+    .das-card__view{
+      position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;pointer-events:none;
+      background:rgba(255,255,255,.92);color:var(--das-navy);
+      box-shadow:0 4px 10px -4px rgba(7,18,40,.4);
+      transition:transform .2s ease,background .2s ease,color .2s ease;
+    }
+    .das-card:hover .das-card__view{transform:scale(1.1);background:var(--das-navy);color:#fff;}
+
+    .das-card__body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
+    .das-card__title{
+      font-size:13.5px;font-weight:600;line-height:1.4;color:var(--das-ink);text-decoration:none;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.8em;
+    }
+    .das-card__title:hover{color:var(--das-navy);}
+    .das-card__price{font-size:16px;font-weight:700;color:var(--das-navy-deep);}
+
+    .das-card__form{margin-top:auto;display:flex;flex-direction:column;gap:8px;}
+    .das-qty{
+      display:inline-flex;align-items:center;justify-content:space-between;
+      border:1px solid var(--das-line);border-radius:10px;overflow:hidden;height:38px;
+    }
+    .das-qty__btn{
+      width:36px;height:100%;border:none;background:var(--das-paper);color:var(--das-navy);
+      font-size:16px;line-height:1;cursor:pointer;flex-shrink:0;
+    }
+    .das-qty__btn:hover{background:var(--das-line);}
+    .das-qty__input{
+      width:100%;border:none;text-align:center;font-family:var(--das-mono);font-size:13.5px;font-weight:600;
+      color:var(--das-ink);-moz-appearance:textfield;background:#fff;
+    }
+    .das-qty__input::-webkit-outer-spin-button,.das-qty__input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+
+    .das-add{
+      position:relative;overflow:hidden;isolation:isolate;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      border:1px solid var(--das-cta-border);border-radius:10px;cursor:pointer;height:40px;
+      font-family:inherit;font-size:13.5px;font-weight:600;
+      background:var(--das-cta);color:var(--das-cta-ink);
+      transition:transform .15s ease,opacity .15s ease;
+    }
+    .das-add:active{transform:scale(.98);}
+    .das-add .btn-fill{position:absolute;inset:0;z-index:-1;transform:translateY(100%);background:var(--das-cta-hover);}
+    .das-add__text{position:relative;display:inline-flex;align-items:center;gap:8px;}
+
+    .das-card__unavailable{
+      margin-top:auto;font-size:12.5px;font-weight:600;color:var(--das-gray);
+      background:var(--das-paper);border-radius:10px;padding:10px;text-align:center;
+    }
+
+    .das-zone:focus-visible,.das-add:focus-visible,.das-qty__btn:focus-visible,
+    .das-card__title:focus-visible{outline:2px solid var(--das-navy);outline-offset:2px;}
+
+    @media (prefers-reduced-motion:reduce){
+      .das-card{transition:none;}
+      .das-readout__dot{animation:none;}
+    }
+  </style>
+
+  {%- comment -%} Status readout strip {%- endcomment -%}
+  <div class="das-readout">
+    <div class="das-wrap">
+      <div class="das-readout__row">
+        <span class="das-readout__status"><span class="das-readout__dot" aria-hidden="true"></span>Système en ligne</span>
+        <span class="das-readout__sep">·</span>
+        <span class="das-readout__meta">{{ total_count_str }} accessoires disponibles</span>
+        <span class="das-readout__sep">·</span>
+        <span class="das-readout__meta">Compatible centrale Key SA501</span>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Intro {%- endcomment -%}
+  <section class="das-hero">
+    <div class="das-wrap">
+      <span class="das-eyebrow">Daewoo Security</span>
+      <h1>Complétez votre système Key, zone par zone</h1>
+      <p class="das-hero__sub">
+        Détecteurs, sirènes, contrôle d'accès et accessoires compatibles avec votre
+        centrale Key (SA501). Sélectionnez une zone, réglez la quantité, ajoutez au panier.
+      </p>
+    </div>
+  </section>
+
+  {%- comment -%} Zone selector {%- endcomment -%}
+  <div class="das-filters">
+    <div class="das-wrap">
+      <p class="das-filters__label">Sélectionner une zone</p>
+      <div class="das-filters__row" role="group" aria-label="Filtrer par catégorie">
+        <button type="button" class="das-zone is-active" data-filter="all" aria-pressed="true">
+          <span class="das-zone__top">
+            <span class="das-zone__led" aria-hidden="true"></span>
+            <span class="das-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg></span>
+          </span>
+          <span class="das-zone__label">Tous</span>
+          <span class="das-zone__count">{{ total_count_str }}</span>
+        </button>
+        <button type="button" class="das-zone" data-filter="detecteurs" aria-pressed="false">
+          <span class="das-zone__top">
+            <span class="das-zone__led" aria-hidden="true"></span>
+            <span class="das-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"></circle><path d="M8 8a5.66 5.66 0 0 1 8 0"></path><path d="M5 5a10 10 0 0 1 14 0"></path></svg></span>
+          </span>
+          <span class="das-zone__label">Détecteurs</span>
+          <span class="das-zone__count">{{ count_detecteurs_str }}</span>
+        </button>
+        <button type="button" class="das-zone" data-filter="contacteurs" aria-pressed="false">
+          <span class="das-zone__top">
+            <span class="das-zone__led" aria-hidden="true"></span>
+            <span class="das-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="10" height="18" rx="1"></rect><circle cx="12" cy="12" r="1"></circle><path d="M15 3l4 2v16l-4-2"></path></svg></span>
+          </span>
+          <span class="das-zone__label">Contacteurs</span>
+          <span class="das-zone__count">{{ count_contacteurs_str }}</span>
+        </button>
+        <button type="button" class="das-zone" data-filter="sirenes" aria-pressed="false">
+          <span class="das-zone__top">
+            <span class="das-zone__led" aria-hidden="true"></span>
+            <span class="das-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg></span>
+          </span>
+          <span class="das-zone__label">Sirènes</span>
+          <span class="das-zone__count">{{ count_sirenes_str }}</span>
+        </button>
+        <button type="button" class="das-zone" data-filter="acces" aria-pressed="false">
+          <span class="das-zone__top">
+            <span class="das-zone__led" aria-hidden="true"></span>
+            <span class="das-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="15" r="3.2"></circle><path d="M9.3 12.7L18 4"></path><path d="M14.5 8.2l2.3 2.3"></path><path d="M17.2 5.5l2.3 2.3"></path></svg></span>
+          </span>
+          <span class="das-zone__label">Contrôle d&#8217;accès</span>
+          <span class="das-zone__count">{{ count_acces_str }}</span>
+        </button>
+        <button type="button" class="das-zone" data-filter="centrale" aria-pressed="false">
+          <span class="das-zone__top">
+            <span class="das-zone__led" aria-hidden="true"></span>
+            <span class="das-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"></path></svg></span>
+          </span>
+          <span class="das-zone__label">Centrale</span>
+          <span class="das-zone__count">{{ count_centrale_str }}</span>
+        </button>
+        <button type="button" class="das-zone" data-filter="sim" aria-pressed="false">
+          <span class="das-zone__top">
+            <span class="das-zone__led" aria-hidden="true"></span>
+            <span class="das-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h6l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"></path><rect x="9.5" y="9" width="5" height="4" rx="1"></rect></svg></span>
+          </span>
+          <span class="das-zone__label">Cartes SIM</span>
+          <span class="das-zone__count">{{ count_sim_str }}</span>
+        </button>
+        <button type="button" class="das-zone" data-filter="accessoires" aria-pressed="false">
+          <span class="das-zone__top">
+            <span class="das-zone__led" aria-hidden="true"></span>
+            <span class="das-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"></path></svg></span>
+          </span>
+          <span class="das-zone__label">Accessoires</span>
+          <span class="das-zone__count">{{ count_accessoires_str }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Product grid {%- endcomment -%}
+  <section class="das-grid-section">
+    <div class="das-wrap">
+      <p class="das-count" aria-live="polite"><strong data-visible-count>{{ total_count }}</strong> accessoire{{ total_count | pluralize: '', 's' }} affiché{{ total_count | pluralize: '', 's' }}</p>
+      <div class="das-grid">
+        {%- for product in collection.products -%}
+          {%- if excluded_handles contains product.handle -%}{%- continue -%}{%- endif -%}
+          {%- assign card_cat = "accessoires" -%}
+          {%- if detecteurs_handles contains product.handle -%}
+            {%- assign card_cat = "detecteurs" -%}
+          {%- elsif contacteurs_handles contains product.handle -%}
+            {%- assign card_cat = "contacteurs" -%}
+          {%- elsif sirenes_handles contains product.handle -%}
+            {%- assign card_cat = "sirenes" -%}
+          {%- elsif acces_handles contains product.handle -%}
+            {%- assign card_cat = "acces" -%}
+          {%- elsif centrale_handles contains product.handle -%}
+            {%- assign card_cat = "centrale" -%}
+          {%- elsif sim_handles contains product.handle -%}
+            {%- assign card_cat = "sim" -%}
+          {%- endif -%}
+          {%- assign card_variant = product.selected_or_first_available_variant -%}
+          {%- assign card_form_id = "DASForm-" | append: forloop.index | append: "-" | append: section.id -%}
+          <div class="das-card{% unless card_variant.available %} das-card--oos{% endunless %}" data-category="{{ card_cat }}">
+            <a href="{{ product.url }}" class="das-card__media">
+              {%- if product.featured_image -%}
+                {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,375,500', alt: product.title, sizes: '(min-width: 1080px) 25vw, (min-width: 700px) 33vw, 50vw' }}
+              {%- endif -%}
+              {%- unless card_variant.available -%}
+                <span class="das-card__badge das-card__badge--oos">Rupture de stock</span>
+              {%- endunless -%}
+              <span class="das-card__view" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </span>
+            </a>
+            <div class="das-card__body">
+              <a href="{{ product.url }}" class="das-card__title">{{ product.title }}</a>
+              <div class="das-card__price">{{ card_variant.price | money }}</div>
+
+              {%- if card_variant.available -%}
+                {%- form 'product', product, is: 'product-form', id: card_form_id, class: 'das-card__form' -%}
+                  <input type="hidden" name="id" value="{{ card_variant.id }}">
+                  <div class="das-qty" data-qty>
+                    <button type="button" class="das-qty__btn" data-qty-decrease aria-label="Diminuer la quantité">−</button>
+                    <input type="number" class="das-qty__input" name="quantity" value="1" min="1" inputmode="numeric" data-qty-input aria-label="Quantité, {{ product.title }}">
+                    <button type="button" class="das-qty__btn" data-qty-increase aria-label="Augmenter la quantité">+</button>
+                  </div>
+                  <button type="submit" class="das-add" is="hover-button">
+                    <span class="btn-fill" data-fill aria-hidden="true"></span>
+                    <span class="btn-text das-add__text">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 8H6"></path></svg>
+                      Ajouter
+                    </span>
+                  </button>
+                {%- endform -%}
+              {%- else -%}
+                <div class="das-card__unavailable">Indisponible pour le moment</div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var root = document.getElementById('shopify-section-{{ section.id }}');
+      if (!root) return;
+
+      /* Quantity steppers */
+      root.querySelectorAll('[data-qty]').forEach(function (wrap) {
+        var input = wrap.querySelector('[data-qty-input]');
+        var dec = wrap.querySelector('[data-qty-decrease]');
+        var inc = wrap.querySelector('[data-qty-increase]');
+        function clamp(v) {
+          v = parseInt(v, 10);
+          if (isNaN(v) || v < 1) v = 1;
+          return v;
+        }
+        dec.addEventListener('click', function () {
+          input.value = clamp(parseInt(input.value, 10) - 1);
+        });
+        inc.addEventListener('click', function () {
+          input.value = clamp(parseInt(input.value, 10) + 1);
+        });
+        input.addEventListener('change', function () {
+          input.value = clamp(input.value);
+        });
+      });
+
+      /* Zone (category) filter — instant client-side show/hide */
+      var zones = root.querySelectorAll('[data-filter]');
+      var cards = root.querySelectorAll('.das-card');
+      var countEl = root.querySelector('[data-visible-count]');
+      function applyFilter(filter) {
+        var visible = 0;
+        cards.forEach(function (card) {
+          var match = filter === 'all' || card.getAttribute('data-category') === filter;
+          card.classList.toggle('is-hidden', !match);
+          if (match) visible++;
+        });
+        if (countEl) countEl.textContent = visible;
+      }
+      zones.forEach(function (zone) {
+        zone.addEventListener('click', function () {
+          zones.forEach(function (z) {
+            z.classList.remove('is-active');
+            z.setAttribute('aria-pressed', 'false');
+          });
+          zone.classList.add('is-active');
+          zone.setAttribute('aria-pressed', 'true');
+          applyFilter(zone.getAttribute('data-filter'));
+        });
+      });
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Key accessories shop",
+  "settings": []
+}
+{% endschema %}
