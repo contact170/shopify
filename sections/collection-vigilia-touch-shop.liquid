@@ -10,17 +10,25 @@
   collection serves that same product family, rather than inventing a
   fourth accent color for the site.
 
-  Products are curated by handle via `all_products` rather than looping
-  `collection.products` directly, so that:
-  - four duplicate/"gratuit" 0,00 € SKUs present in the live collection
-    (two cadeau/GRATUIT duplicates of real products, one duplicate RFID
-    badge pack listing) are excluded from this catalog view — they exist
-    for other flows (upsells/configurators), not direct browsing;
-  - every remaining product gets an explicit, correct category, since
-    neither `product_type` nor `tags` are populated consistently enough
-    on this catalog to group by automatically (checked: product_type
-    blank on 25/31 products, tags mostly just the generic brand tag
-    "Daewoo Security").
+  Loops `collection.products` directly (NOT `all_products[handle]` — that
+  object silently caps at 20 unique handles per page, which is why an
+  earlier version of this file showed only some of the 27 curated
+  products). `collection.products` has no such cap; it returns up to 50
+  products without a `paginate` block, which covers this collection's 31
+  products, so no paginate wrapper is needed today — add one if this
+  collection ever grows past 50 products.
+
+  Four duplicate/"gratuit" 0,00 € SKUs present in the live collection
+  (two cadeau/GRATUIT duplicates of real products, one duplicate RFID
+  badge pack listing) are excluded by handle — they exist for other
+  flows (upsells/configurators), not direct browsing.
+
+  Every remaining product gets an explicit category via a handle
+  `case`/`when` (default "accessoires" for anything unmapped, e.g. a
+  future product added to the collection), since neither `product_type`
+  nor `tags` are populated consistently enough on this catalog to group
+  by automatically (checked: product_type blank on 25/31 products, tags
+  mostly just the generic brand tag "Daewoo Security").
 
   Category filtering is instant client-side show/hide (no page reload,
   no dependency on Search & Discovery facet configuration). Deliberately
@@ -37,8 +45,13 @@
 {%- enddoc -%}
 
 {%- liquid
-  assign product_handles = "detecteur-de-mouvement-wps301|detecteurs,detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x|detecteurs,detecteur-de-vibration-wvd301|detecteurs,detecteur-de-mouvement-exterieur-wmo301|detecteurs,detecteur-de-fumee-wsd301|detecteurs,detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302|detecteurs,daewoo-barrieres-infrarouge-pour-alarme-am301-am302|detecteurs,contacteur-de-porte-wds301|contacteurs,contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302|contacteurs,contacteur-de-porte-de-garage-wdg301|contacteurs,sirene-exterieure-wos305-filaire-compatible-panneau-solaire|sirenes,sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire|sirenes,sirene-filaire-wos301-compatible-avec-lalarme-am301-am302|sirenes,sirene-exterieure-solaire-wos301s|sirenes,sirene-interieure-sans-fil-100-db-wis305|sirenes,panneau-solaire-spwos305-compatible-avec-lasirene-wos305|sirenes,adaptateur-secteur-wos301s|sirenes,clavier-wke301-avec-2-badges-rfid|telecommandes,pack-de-2-badges-rfid-wrf301|telecommandes,telecommande-compatible-vigilia-touch|telecommandes,telecommande-wrc301|telecommandes,centrale-touch-am301-avec-ecran-tactile-4-3|centrale,amplificateur-de-signal-radio-compatible-avec-la-gamme-am301|centrale,carte-sim-m2m-afone-1-an-prepaye-pour-centrale-vigilia|sim,carte-sim-m2m-afone-1-an-prepaye|sim,carte-m2m-afone-40-min-ou-100-sms|sim,bracelet-sos-sos301|accessoires"
-  assign product_entries = product_handles | split: ","
+  assign excluded_handles = "daewoo-pack-de-2-badges-rfid-wrf301,cadeau-detecteur-de-fuite-deau-wwf301-compatible-touch-am301-am302,cadeau-detecteur-de-fumee-wsd301-compatible-touch-vigilia-am30x,configurateur-sirene-interieure-sans-fil-100-db-wis305-alimentation-electrique-batterie-de-secours-copie-1" | split: ","
+  assign detecteurs_handles = "detecteur-de-mouvement-wps301,detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x,detecteur-de-vibration-wvd301,detecteur-de-mouvement-exterieur-wmo301,detecteur-de-fumee-wsd301,detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302,daewoo-barrieres-infrarouge-pour-alarme-am301-am302" | split: ","
+  assign contacteurs_handles = "contacteur-de-porte-wds301,contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302,contacteur-de-porte-de-garage-wdg301" | split: ","
+  assign sirenes_handles = "sirene-exterieure-wos305-filaire-compatible-panneau-solaire,sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire,sirene-filaire-wos301-compatible-avec-lalarme-am301-am302,sirene-exterieure-solaire-wos301s,sirene-interieure-sans-fil-100-db-wis305,panneau-solaire-spwos305-compatible-avec-lasirene-wos305,adaptateur-secteur-wos301s" | split: ","
+  assign telecommandes_handles = "clavier-wke301-avec-2-badges-rfid,pack-de-2-badges-rfid-wrf301,telecommande-compatible-vigilia-touch,telecommande-wrc301" | split: ","
+  assign centrale_handles = "centrale-touch-am301-avec-ecran-tactile-4-3,amplificateur-de-signal-radio-compatible-avec-la-gamme-am301" | split: ","
+  assign sim_handles = "carte-sim-m2m-afone-1-an-prepaye-pour-centrale-vigilia,carte-sim-m2m-afone-1-an-prepaye,carte-m2m-afone-40-min-ou-100-sms" | split: ","
 
   assign count_detecteurs = 0
   assign count_contacteurs = 0
@@ -47,29 +60,29 @@
   assign count_centrale = 0
   assign count_sim = 0
   assign count_accessoires = 0
+  assign total_count = 0
 
-  for entry in product_entries
-    assign parts = entry | split: "|"
-    assign cat = parts.last
-    case cat
-      when "detecteurs"
-        assign count_detecteurs = count_detecteurs | plus: 1
-      when "contacteurs"
-        assign count_contacteurs = count_contacteurs | plus: 1
-      when "sirenes"
-        assign count_sirenes = count_sirenes | plus: 1
-      when "telecommandes"
-        assign count_telecommandes = count_telecommandes | plus: 1
-      when "centrale"
-        assign count_centrale = count_centrale | plus: 1
-      when "sim"
-        assign count_sim = count_sim | plus: 1
-      when "accessoires"
-        assign count_accessoires = count_accessoires | plus: 1
-    endcase
+  for product in collection.products
+    if excluded_handles contains product.handle
+      continue
+    endif
+    assign total_count = total_count | plus: 1
+    if detecteurs_handles contains product.handle
+      assign count_detecteurs = count_detecteurs | plus: 1
+    elsif contacteurs_handles contains product.handle
+      assign count_contacteurs = count_contacteurs | plus: 1
+    elsif sirenes_handles contains product.handle
+      assign count_sirenes = count_sirenes | plus: 1
+    elsif telecommandes_handles contains product.handle
+      assign count_telecommandes = count_telecommandes | plus: 1
+    elsif centrale_handles contains product.handle
+      assign count_centrale = count_centrale | plus: 1
+    elsif sim_handles contains product.handle
+      assign count_sim = count_sim | plus: 1
+    else
+      assign count_accessoires = count_accessoires | plus: 1
+    endif
   endfor
-
-  assign total_count = product_entries.size
 -%}
 
 <div id="shopify-section-{{ section.id }}" class="vts">
@@ -249,33 +262,43 @@
     <div class="vts-wrap">
       <p class="vts-count" aria-live="polite"><strong data-visible-count>{{ total_count }}</strong> accessoire{{ total_count | pluralize: '', 's' }} affiché{{ total_count | pluralize: '', 's' }}</p>
       <div class="vts-grid">
-        {%- for entry in product_entries -%}
-          {%- assign parts = entry | split: "|" -%}
-          {%- assign card_handle = parts.first -%}
-          {%- assign card_cat = parts.last -%}
-          {%- assign card_product = all_products[card_handle] -%}
-          {%- continue unless card_product -%}
-          {%- assign card_variant = card_product.selected_or_first_available_variant -%}
+        {%- for product in collection.products -%}
+          {%- if excluded_handles contains product.handle -%}{%- continue -%}{%- endif -%}
+          {%- assign card_cat = "accessoires" -%}
+          {%- if detecteurs_handles contains product.handle -%}
+            {%- assign card_cat = "detecteurs" -%}
+          {%- elsif contacteurs_handles contains product.handle -%}
+            {%- assign card_cat = "contacteurs" -%}
+          {%- elsif sirenes_handles contains product.handle -%}
+            {%- assign card_cat = "sirenes" -%}
+          {%- elsif telecommandes_handles contains product.handle -%}
+            {%- assign card_cat = "telecommandes" -%}
+          {%- elsif centrale_handles contains product.handle -%}
+            {%- assign card_cat = "centrale" -%}
+          {%- elsif sim_handles contains product.handle -%}
+            {%- assign card_cat = "sim" -%}
+          {%- endif -%}
+          {%- assign card_variant = product.selected_or_first_available_variant -%}
           {%- assign card_form_id = "VTSForm-" | append: forloop.index | append: "-" | append: section.id -%}
           <div class="vts-card{% unless card_variant.available %} vts-card--oos{% endunless %}" data-category="{{ card_cat }}">
-            <a href="{{ card_product.url }}" class="vts-card__media">
-              {%- if card_product.featured_image -%}
-                {{ card_product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,375,500', alt: card_product.title, sizes: '(min-width: 1080px) 25vw, (min-width: 700px) 33vw, 50vw' }}
+            <a href="{{ product.url }}" class="vts-card__media">
+              {%- if product.featured_image -%}
+                {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,375,500', alt: product.title, sizes: '(min-width: 1080px) 25vw, (min-width: 700px) 33vw, 50vw' }}
               {%- endif -%}
               {%- unless card_variant.available -%}
                 <span class="vts-card__badge vts-card__badge--oos">Rupture de stock</span>
               {%- endunless -%}
             </a>
             <div class="vts-card__body">
-              <a href="{{ card_product.url }}" class="vts-card__title">{{ card_product.title }}</a>
+              <a href="{{ product.url }}" class="vts-card__title">{{ product.title }}</a>
               <div class="vts-card__price">{{ card_variant.price | money }}</div>
 
               {%- if card_variant.available -%}
-                {%- form 'product', card_product, is: 'product-form', id: card_form_id, class: 'vts-card__form' -%}
+                {%- form 'product', product, is: 'product-form', id: card_form_id, class: 'vts-card__form' -%}
                   <input type="hidden" name="id" value="{{ card_variant.id }}">
                   <div class="vts-qty" data-qty>
                     <button type="button" class="vts-qty__btn" data-qty-decrease aria-label="Diminuer la quantité">−</button>
-                    <input type="number" class="vts-qty__input" name="quantity" value="1" min="1" inputmode="numeric" data-qty-input aria-label="Quantité, {{ card_product.title }}">
+                    <input type="number" class="vts-qty__input" name="quantity" value="1" min="1" inputmode="numeric" data-qty-input aria-label="Quantité, {{ product.title }}">
                     <button type="button" class="vts-qty__btn" data-qty-increase aria-label="Augmenter la quantité">+</button>
                   </div>
                   <button type="submit" class="vts-add" is="hover-button">
