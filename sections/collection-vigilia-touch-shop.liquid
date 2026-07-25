@@ -1,0 +1,358 @@
+{%- doc -%}
+  Bespoke "shop by category" page for the Daewoo Vigilia / Touch accessory
+  collection (handle: compatible-gamme-vigilia-touch).
+
+  Distinct in kind, not just name, from the bespoke product landing pages
+  (pv-/pel-/w512mw- prefixes): this is a catalog page, so the "signature"
+  here is the category filter bar with live counts, not a single hero
+  moment. Reuses the Vigilia family's navy + green identity (see
+  product-starter-pack-vigilia-landing.liquid, --pv-success) since this
+  collection serves that same product family, rather than inventing a
+  fourth accent color for the site.
+
+  Products are curated by handle via `all_products` rather than looping
+  `collection.products` directly, so that:
+  - four duplicate/"gratuit" 0,00 € SKUs present in the live collection
+    (two cadeau/GRATUIT duplicates of real products, one duplicate RFID
+    badge pack listing) are excluded from this catalog view — they exist
+    for other flows (upsells/configurators), not direct browsing;
+  - every remaining product gets an explicit, correct category, since
+    neither `product_type` nor `tags` are populated consistently enough
+    on this catalog to group by automatically (checked: product_type
+    blank on 25/31 products, tags mostly just the generic brand tag
+    "Daewoo Security").
+
+  Category filtering is instant client-side show/hide (no page reload,
+  no dependency on Search & Discovery facet configuration). Deliberately
+  NOT position:sticky — avoids reintroducing the exact sticky-bar/header
+  z-index overlap class of bug already fixed the hard way on the product
+  landing pages, without being able to verify this theme's live header
+  height/z-index here.
+
+  Each card is its own independent product-form with a quantity stepper,
+  reusing the theme's existing ProductForm custom element (assets/theme.js,
+  registered globally as `product-form`) — add-to-cart and opening the
+  cart drawer need no bespoke JS at all, only the stepper and the
+  category-filter toggle do.
+{%- enddoc -%}
+
+{%- liquid
+  assign product_handles = "detecteur-de-mouvement-wps301|detecteurs,detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x|detecteurs,detecteur-de-vibration-wvd301|detecteurs,detecteur-de-mouvement-exterieur-wmo301|detecteurs,detecteur-de-fumee-wsd301|detecteurs,detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302|detecteurs,daewoo-barrieres-infrarouge-pour-alarme-am301-am302|detecteurs,contacteur-de-porte-wds301|contacteurs,contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302|contacteurs,contacteur-de-porte-de-garage-wdg301|contacteurs,sirene-exterieure-wos305-filaire-compatible-panneau-solaire|sirenes,sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire|sirenes,sirene-filaire-wos301-compatible-avec-lalarme-am301-am302|sirenes,sirene-exterieure-solaire-wos301s|sirenes,sirene-interieure-sans-fil-100-db-wis305|sirenes,panneau-solaire-spwos305-compatible-avec-lasirene-wos305|sirenes,adaptateur-secteur-wos301s|sirenes,clavier-wke301-avec-2-badges-rfid|telecommandes,pack-de-2-badges-rfid-wrf301|telecommandes,telecommande-compatible-vigilia-touch|telecommandes,telecommande-wrc301|telecommandes,centrale-touch-am301-avec-ecran-tactile-4-3|centrale,amplificateur-de-signal-radio-compatible-avec-la-gamme-am301|centrale,carte-sim-m2m-afone-1-an-prepaye-pour-centrale-vigilia|sim,carte-sim-m2m-afone-1-an-prepaye|sim,carte-m2m-afone-40-min-ou-100-sms|sim,bracelet-sos-sos301|accessoires"
+  assign product_entries = product_handles | split: ","
+
+  assign count_detecteurs = 0
+  assign count_contacteurs = 0
+  assign count_sirenes = 0
+  assign count_telecommandes = 0
+  assign count_centrale = 0
+  assign count_sim = 0
+  assign count_accessoires = 0
+
+  for entry in product_entries
+    assign parts = entry | split: "|"
+    assign cat = parts.last
+    case cat
+      when "detecteurs"
+        assign count_detecteurs = count_detecteurs | plus: 1
+      when "contacteurs"
+        assign count_contacteurs = count_contacteurs | plus: 1
+      when "sirenes"
+        assign count_sirenes = count_sirenes | plus: 1
+      when "telecommandes"
+        assign count_telecommandes = count_telecommandes | plus: 1
+      when "centrale"
+        assign count_centrale = count_centrale | plus: 1
+      when "sim"
+        assign count_sim = count_sim | plus: 1
+      when "accessoires"
+        assign count_accessoires = count_accessoires | plus: 1
+    endcase
+  endfor
+
+  assign total_count = product_entries.size
+-%}
+
+<div id="shopify-section-{{ section.id }}" class="vts">
+  <style>
+    #shopify-section-{{ section.id }} .vts{
+      --vts-navy:#0c1e4a;
+      --vts-navy-deep:#071228;
+      --vts-ink:#171b23;
+      --vts-gray:#5b6270;
+      --vts-paper:#f5f6fa;
+      --vts-line:#dde1ea;
+      --vts-green:#037e05;
+      --vts-green-soft:#e6f5e6;
+      --vts-red:#c0362c;
+      --vts-red-soft:#fbe9e7;
+      font-family:'Poppins', sans-serif;
+      color:var(--vts-ink);
+      background:#fff;
+    }
+    .vts *{box-sizing:border-box;}
+    .vts .vts-wrap{max-width:1240px;margin:0 auto;padding:0 24px;}
+    .vts img{max-width:100%;display:block;}
+
+    /* ---- intro ---- */
+    .vts-hero{padding:52px 0 32px;background:var(--vts-paper);text-align:center;}
+    .vts-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+      color:var(--vts-green);margin-bottom:14px;
+    }
+    .vts-eyebrow::before{content:"";width:14px;height:2px;background:var(--vts-green);}
+    .vts-hero h1{
+      font-weight:700;letter-spacing:-.02em;line-height:1.12;margin:0;
+      font-size:clamp(26px,4.6vw,40px);max-width:720px;margin:0 auto;color:var(--vts-navy-deep);
+    }
+    .vts-hero__sub{
+      font-size:clamp(15px,1.8vw,17px);color:var(--vts-gray);
+      max-width:600px;margin:16px auto 0;line-height:1.55;
+    }
+    .vts-hero__meta{
+      margin-top:22px;display:inline-flex;align-items:center;gap:8px;
+      font-size:13.5px;font-weight:600;color:var(--vts-navy);
+      background:#fff;border:1px solid var(--vts-line);border-radius:999px;padding:8px 16px;
+    }
+
+    /* ---- category filter bar ----
+       Intentionally not sticky (see file doc comment). Horizontal scroll
+       on narrow screens keeps every chip one tap away without wrapping
+       into a tall block above the grid. */
+    .vts-filters{padding:22px 0;border-bottom:1px solid var(--vts-line);}
+    .vts-filters__row{
+      display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;
+      scrollbar-width:none;-ms-overflow-style:none;
+    }
+    .vts-filters__row::-webkit-scrollbar{display:none;}
+    .vts-chip{
+      flex-shrink:0;display:inline-flex;align-items:center;gap:8px;
+      font-family:inherit;font-size:14px;font-weight:600;color:var(--vts-navy);
+      background:var(--vts-paper);border:1px solid var(--vts-line);border-radius:999px;
+      padding:10px 16px;cursor:pointer;transition:background .15s ease,color .15s ease,border-color .15s ease;
+    }
+    .vts-chip:hover{border-color:var(--vts-navy);}
+    .vts-chip__count{
+      font-size:12px;font-weight:700;color:var(--vts-gray);
+      background:#fff;border-radius:999px;padding:2px 7px;
+    }
+    .vts-chip.is-active{background:var(--vts-navy);border-color:var(--vts-navy);color:#fff;}
+    .vts-chip.is-active .vts-chip__count{background:rgba(255,255,255,.18);color:#fff;}
+
+    /* ---- grid ---- */
+    .vts-grid-section{padding:32px 0 72px;}
+    .vts-count{font-size:13.5px;color:var(--vts-gray);margin-bottom:18px;}
+    .vts-count strong{color:var(--vts-ink);font-weight:600;}
+    .vts-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+    }
+    @media (min-width:700px){.vts-grid{grid-template-columns:repeat(3,1fr);gap:20px;}}
+    @media (min-width:1080px){.vts-grid{grid-template-columns:repeat(4,1fr);}}
+
+    .vts-card{
+      display:flex;flex-direction:column;
+      border:1px solid var(--vts-line);border-radius:18px;overflow:hidden;background:#fff;
+      transition:box-shadow .2s ease,transform .2s ease;
+    }
+    .vts-card:hover{box-shadow:0 16px 32px -20px rgba(7,18,40,.25);transform:translateY(-2px);}
+    .vts-card.is-hidden{display:none;}
+
+    .vts-card__media{position:relative;display:block;aspect-ratio:1/1;background:var(--vts-paper);}
+    .vts-card__media img{width:100%;height:100%;object-fit:contain;padding:14px;}
+    .vts-card--oos .vts-card__media img{opacity:.45;}
+    .vts-card__badge{
+      position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;
+      padding:5px 10px;border-radius:999px;letter-spacing:.02em;
+    }
+    .vts-card__badge--oos{background:var(--vts-red-soft);color:var(--vts-red);}
+
+    .vts-card__body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
+    .vts-card__title{
+      font-size:13.5px;font-weight:600;line-height:1.4;color:var(--vts-ink);text-decoration:none;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.8em;
+    }
+    .vts-card__title:hover{color:var(--vts-navy);}
+    .vts-card__price{font-size:16px;font-weight:700;color:var(--vts-navy-deep);}
+
+    .vts-card__form{margin-top:auto;display:flex;flex-direction:column;gap:8px;}
+    .vts-qty{
+      display:inline-flex;align-items:center;justify-content:space-between;
+      border:1px solid var(--vts-line);border-radius:10px;overflow:hidden;height:38px;
+    }
+    .vts-qty__btn{
+      width:36px;height:100%;border:none;background:var(--vts-paper);color:var(--vts-navy);
+      font-size:16px;line-height:1;cursor:pointer;flex-shrink:0;
+    }
+    .vts-qty__btn:hover{background:var(--vts-line);}
+    .vts-qty__input{
+      width:100%;border:none;text-align:center;font-family:inherit;font-size:14px;font-weight:600;
+      color:var(--vts-ink);-moz-appearance:textfield;background:#fff;
+    }
+    .vts-qty__input::-webkit-outer-spin-button,.vts-qty__input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+
+    .vts-add{
+      position:relative;overflow:hidden;isolation:isolate;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      border:none;border-radius:10px;cursor:pointer;height:40px;
+      font-family:inherit;font-size:13.5px;font-weight:600;
+      background:var(--vts-green);color:#fff;
+      transition:transform .15s ease,opacity .15s ease;
+    }
+    .vts-add:active{transform:scale(.98);}
+    .vts-add .btn-fill{position:absolute;inset:0;z-index:-1;transform:translateY(100%);background:#026404;}
+    .vts-add__text{position:relative;display:inline-flex;align-items:center;gap:8px;}
+
+    .vts-card__unavailable{
+      margin-top:auto;font-size:12.5px;font-weight:600;color:var(--vts-gray);
+      background:var(--vts-paper);border-radius:10px;padding:10px;text-align:center;
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .vts-card{transition:none;}
+    }
+  </style>
+
+  {%- comment -%} Intro {%- endcomment -%}
+  <section class="vts-hero">
+    <div class="vts-wrap">
+      <span class="vts-eyebrow">Daewoo Security</span>
+      <h1>Accessoires compatibles Vigilia &amp; Touch</h1>
+      <p class="vts-hero__sub">
+        Détecteurs, sirènes, contacteurs, télécommandes et accessoires pour compléter votre
+        centrale Vigilia ou Touch (AM30x). Choisissez une catégorie, réglez la quantité, ajoutez au panier.
+      </p>
+      <span class="vts-hero__meta">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Compatible avec les centrales Touch AM301 &amp; Vigilia AM30x
+      </span>
+    </div>
+  </section>
+
+  {%- comment -%} Category filter bar {%- endcomment -%}
+  <div class="vts-filters">
+    <div class="vts-wrap">
+      <div class="vts-filters__row" role="group" aria-label="Filtrer par catégorie">
+        <button type="button" class="vts-chip is-active" data-filter="all" aria-pressed="true">Tous <span class="vts-chip__count">{{ total_count }}</span></button>
+        <button type="button" class="vts-chip" data-filter="detecteurs" aria-pressed="false">Détecteurs <span class="vts-chip__count">{{ count_detecteurs }}</span></button>
+        <button type="button" class="vts-chip" data-filter="contacteurs" aria-pressed="false">Contacteurs <span class="vts-chip__count">{{ count_contacteurs }}</span></button>
+        <button type="button" class="vts-chip" data-filter="sirenes" aria-pressed="false">Sirènes <span class="vts-chip__count">{{ count_sirenes }}</span></button>
+        <button type="button" class="vts-chip" data-filter="telecommandes" aria-pressed="false">Télécommandes &amp; badges <span class="vts-chip__count">{{ count_telecommandes }}</span></button>
+        <button type="button" class="vts-chip" data-filter="centrale" aria-pressed="false">Centrale &amp; réseau <span class="vts-chip__count">{{ count_centrale }}</span></button>
+        <button type="button" class="vts-chip" data-filter="sim" aria-pressed="false">Cartes SIM <span class="vts-chip__count">{{ count_sim }}</span></button>
+        <button type="button" class="vts-chip" data-filter="accessoires" aria-pressed="false">Accessoires <span class="vts-chip__count">{{ count_accessoires }}</span></button>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Product grid {%- endcomment -%}
+  <section class="vts-grid-section">
+    <div class="vts-wrap">
+      <p class="vts-count" aria-live="polite"><strong data-visible-count>{{ total_count }}</strong> accessoire{{ total_count | pluralize: '', 's' }} affiché{{ total_count | pluralize: '', 's' }}</p>
+      <div class="vts-grid">
+        {%- for entry in product_entries -%}
+          {%- assign parts = entry | split: "|" -%}
+          {%- assign card_handle = parts.first -%}
+          {%- assign card_cat = parts.last -%}
+          {%- assign card_product = all_products[card_handle] -%}
+          {%- continue unless card_product -%}
+          {%- assign card_variant = card_product.selected_or_first_available_variant -%}
+          {%- assign card_form_id = "VTSForm-" | append: forloop.index | append: "-" | append: section.id -%}
+          <div class="vts-card{% unless card_variant.available %} vts-card--oos{% endunless %}" data-category="{{ card_cat }}">
+            <a href="{{ card_product.url }}" class="vts-card__media">
+              {%- if card_product.featured_image -%}
+                {{ card_product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,375,500', alt: card_product.title, sizes: '(min-width: 1080px) 25vw, (min-width: 700px) 33vw, 50vw' }}
+              {%- endif -%}
+              {%- unless card_variant.available -%}
+                <span class="vts-card__badge vts-card__badge--oos">Rupture de stock</span>
+              {%- endunless -%}
+            </a>
+            <div class="vts-card__body">
+              <a href="{{ card_product.url }}" class="vts-card__title">{{ card_product.title }}</a>
+              <div class="vts-card__price">{{ card_variant.price | money }}</div>
+
+              {%- if card_variant.available -%}
+                {%- form 'product', card_product, is: 'product-form', id: card_form_id, class: 'vts-card__form' -%}
+                  <input type="hidden" name="id" value="{{ card_variant.id }}">
+                  <div class="vts-qty" data-qty>
+                    <button type="button" class="vts-qty__btn" data-qty-decrease aria-label="Diminuer la quantité">−</button>
+                    <input type="number" class="vts-qty__input" name="quantity" value="1" min="1" inputmode="numeric" data-qty-input aria-label="Quantité, {{ card_product.title }}">
+                    <button type="button" class="vts-qty__btn" data-qty-increase aria-label="Augmenter la quantité">+</button>
+                  </div>
+                  <button type="submit" class="vts-add" is="hover-button">
+                    <span class="btn-fill" data-fill aria-hidden="true"></span>
+                    <span class="btn-text vts-add__text">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 8H6"></path></svg>
+                      Ajouter
+                    </span>
+                  </button>
+                {%- endform -%}
+              {%- else -%}
+                <div class="vts-card__unavailable">Indisponible pour le moment</div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var root = document.getElementById('shopify-section-{{ section.id }}');
+      if (!root) return;
+
+      /* Quantity steppers */
+      root.querySelectorAll('[data-qty]').forEach(function (wrap) {
+        var input = wrap.querySelector('[data-qty-input]');
+        var dec = wrap.querySelector('[data-qty-decrease]');
+        var inc = wrap.querySelector('[data-qty-increase]');
+        function clamp(v) {
+          v = parseInt(v, 10);
+          if (isNaN(v) || v < 1) v = 1;
+          return v;
+        }
+        dec.addEventListener('click', function () {
+          input.value = clamp(parseInt(input.value, 10) - 1);
+        });
+        inc.addEventListener('click', function () {
+          input.value = clamp(parseInt(input.value, 10) + 1);
+        });
+        input.addEventListener('change', function () {
+          input.value = clamp(input.value);
+        });
+      });
+
+      /* Category filter (instant client-side show/hide) */
+      var chips = root.querySelectorAll('[data-filter]');
+      var cards = root.querySelectorAll('.vts-card');
+      var countEl = root.querySelector('[data-visible-count]');
+      function applyFilter(filter) {
+        var visible = 0;
+        cards.forEach(function (card) {
+          var match = filter === 'all' || card.getAttribute('data-category') === filter;
+          card.classList.toggle('is-hidden', !match);
+          if (match) visible++;
+        });
+        if (countEl) countEl.textContent = visible;
+      }
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          chips.forEach(function (c) {
+            c.classList.remove('is-active');
+            c.setAttribute('aria-pressed', 'false');
+          });
+          chip.classList.add('is-active');
+          chip.setAttribute('aria-pressed', 'true');
+          applyFilter(chip.getAttribute('data-filter'));
+        });
+      });
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Vigilia/Touch shop",
+  "settings": []
+}
+{% endschema %}
