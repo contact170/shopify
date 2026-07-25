@@ -1,41 +1,41 @@
 {%- doc -%}
   Bespoke "shop by category" page for the Daewoo Vigilia / Touch accessory
-  collection (handle: compatible-gamme-vigilia-touch).
+  collection (handle: compatible-gamme-vigilia-touch). v2 design pass.
 
-  Distinct in kind, not just name, from the bespoke product landing pages
-  (pv-/pel-/w512mw- prefixes): this is a catalog page, so the "signature"
-  here is the category filter bar with live counts, not a single hero
-  moment. Reuses the Vigilia family's navy + green identity (see
-  product-starter-pack-vigilia-landing.liquid, --pv-success) since this
-  collection serves that same product family, rather than inventing a
-  fourth accent color for the site.
+  Signature element: the category selector is styled as a control-panel
+  "zone" rail, not a generic pill filter — each category is a tile with an
+  LED indicator, an icon, and a count set in a monospace "digital readout"
+  face, echoing the actual AM301 Touch keypad/screen vernacular this
+  collection's products belong to. Selecting a category visually "arms"
+  that zone (lit green LED + glow). This is the one deliberate risk this
+  page takes; everything else (product grid, cards) stays quiet so that
+  signature reads clearly, per the site's existing light, low-drama tone
+  on catalog pages.
+
+  Secondary, restrained echo of the same vernacular: product image hover
+  reveals a two-corner "detection frame" bracket (camera-viewfinder /
+  sensor-zone reticle), not a full 4-corner frame — quieter, still legible
+  as the same idea.
 
   Loops `collection.products` directly (NOT `all_products[handle]` — that
-  object silently caps at 20 unique handles per page, which is why an
-  earlier version of this file showed only some of the 27 curated
-  products). `collection.products` has no such cap; it returns up to 50
-  products without a `paginate` block, which covers this collection's 31
-  products, so no paginate wrapper is needed today — add one if this
-  collection ever grows past 50 products.
+  object silently caps at 20 unique handles per page, which broke an
+  earlier version of this file). `collection.products` has no such cap
+  and returns up to 50 products without a `paginate` block, which covers
+  this collection's 31 products — add paginate if it ever grows past 50.
 
-  Four duplicate/"gratuit" 0,00 € SKUs present in the live collection
-  (two cadeau/GRATUIT duplicates of real products, one duplicate RFID
-  badge pack listing) are excluded by handle — they exist for other
-  flows (upsells/configurators), not direct browsing.
+  Four duplicate/"gratuit" 0,00 € SKUs present in the live collection are
+  excluded by handle (see excluded_handles) — they exist for other flows
+  (upsells/configurators), not direct browsing. Every remaining product
+  gets an explicit category via handle arrays + if/elsif (default
+  "accessoires" for anything unmapped), since neither `product_type` nor
+  `tags` are populated consistently enough on this catalog to group by
+  automatically.
 
-  Every remaining product gets an explicit category via a handle
-  `case`/`when` (default "accessoires" for anything unmapped, e.g. a
-  future product added to the collection), since neither `product_type`
-  nor `tags` are populated consistently enough on this catalog to group
-  by automatically (checked: product_type blank on 25/31 products, tags
-  mostly just the generic brand tag "Daewoo Security").
-
-  Category filtering is instant client-side show/hide (no page reload,
-  no dependency on Search & Discovery facet configuration). Deliberately
-  NOT position:sticky — avoids reintroducing the exact sticky-bar/header
-  z-index overlap class of bug already fixed the hard way on the product
-  landing pages, without being able to verify this theme's live header
-  height/z-index here.
+  Category filtering is instant client-side show/hide (no page reload).
+  Deliberately NOT position:sticky on the zone rail — avoids the
+  sticky-bar/header z-index overlap class of bug already fixed the hard
+  way on the product landing pages, without being able to verify this
+  theme's live header height/z-index here.
 
   Each card is its own independent product-form with a quantity stepper,
   reusing the theme's existing ProductForm custom element (assets/theme.js,
@@ -83,21 +83,60 @@
       assign count_accessoires = count_accessoires | plus: 1
     endif
   endfor
+
+  assign total_count_str = total_count
+  if total_count < 10
+    assign total_count_str = total_count | prepend: "0"
+  endif
+  assign count_detecteurs_str = count_detecteurs
+  if count_detecteurs < 10
+    assign count_detecteurs_str = count_detecteurs | prepend: "0"
+  endif
+  assign count_contacteurs_str = count_contacteurs
+  if count_contacteurs < 10
+    assign count_contacteurs_str = count_contacteurs | prepend: "0"
+  endif
+  assign count_sirenes_str = count_sirenes
+  if count_sirenes < 10
+    assign count_sirenes_str = count_sirenes | prepend: "0"
+  endif
+  assign count_telecommandes_str = count_telecommandes
+  if count_telecommandes < 10
+    assign count_telecommandes_str = count_telecommandes | prepend: "0"
+  endif
+  assign count_centrale_str = count_centrale
+  if count_centrale < 10
+    assign count_centrale_str = count_centrale | prepend: "0"
+  endif
+  assign count_sim_str = count_sim
+  if count_sim < 10
+    assign count_sim_str = count_sim | prepend: "0"
+  endif
+  assign count_accessoires_str = count_accessoires
+  if count_accessoires < 10
+    assign count_accessoires_str = count_accessoires | prepend: "0"
+  endif
 -%}
 
 <div id="shopify-section-{{ section.id }}" class="vts">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
     #shopify-section-{{ section.id }} .vts{
       --vts-navy:#0c1e4a;
       --vts-navy-deep:#071228;
+      --vts-panel:#12161f;
       --vts-ink:#171b23;
       --vts-gray:#5b6270;
-      --vts-paper:#f5f6fa;
-      --vts-line:#dde1ea;
+      --vts-paper:#eef1f6;
+      --vts-line:#dde3ec;
       --vts-green:#037e05;
-      --vts-green-soft:#e6f5e6;
+      --vts-green-glow:#22c55e;
+      --vts-green-soft:#e6f5ea;
+      --vts-amber:#f79009;
       --vts-red:#c0362c;
       --vts-red-soft:#fbe9e7;
+      --vts-mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
       font-family:'Poppins', sans-serif;
       color:var(--vts-ink);
       background:#fff;
@@ -105,9 +144,28 @@
     .vts *{box-sizing:border-box;}
     .vts .vts-wrap{max-width:1240px;margin:0 auto;padding:0 24px;}
     .vts img{max-width:100%;display:block;}
+    .vts button{font-family:inherit;}
+
+    /* ---- status readout strip ---- */
+    .vts-readout{background:var(--vts-panel);color:#fff;padding:11px 0;}
+    .vts-readout__row{
+      display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;
+      font-family:var(--vts-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+    }
+    .vts-readout__status{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:600;}
+    .vts-readout__dot{
+      width:7px;height:7px;border-radius:50%;background:var(--vts-green-glow);flex-shrink:0;
+      animation:vts-pulse 2.4s ease-in-out infinite;
+    }
+    .vts-readout__sep{color:rgba(255,255,255,.28);}
+    .vts-readout__meta{color:rgba(255,255,255,.62);font-weight:500;}
+    @keyframes vts-pulse{
+      0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.55);}
+      50%{box-shadow:0 0 0 5px rgba(34,197,94,0);}
+    }
 
     /* ---- intro ---- */
-    .vts-hero{padding:52px 0 32px;background:var(--vts-paper);text-align:center;}
+    .vts-hero{padding:40px 0 30px;background:var(--vts-paper);text-align:center;}
     .vts-eyebrow{
       display:inline-flex;align-items:center;gap:8px;
       font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
@@ -122,40 +180,56 @@
       font-size:clamp(15px,1.8vw,17px);color:var(--vts-gray);
       max-width:600px;margin:16px auto 0;line-height:1.55;
     }
-    .vts-hero__meta{
-      margin-top:22px;display:inline-flex;align-items:center;gap:8px;
-      font-size:13.5px;font-weight:600;color:var(--vts-navy);
-      background:#fff;border:1px solid var(--vts-line);border-radius:999px;padding:8px 16px;
-    }
 
-    /* ---- category filter bar ----
-       Intentionally not sticky (see file doc comment). Horizontal scroll
-       on narrow screens keeps every chip one tap away without wrapping
-       into a tall block above the grid. */
-    .vts-filters{padding:22px 0;border-bottom:1px solid var(--vts-line);}
+    /* ---- zone selector (signature) ----
+       Not position:sticky (see file doc comment). Horizontal scroll on
+       narrow screens keeps every zone one tap away without wrapping into
+       a tall block above the grid. */
+    .vts-filters{padding:24px 0 22px;border-bottom:1px solid var(--vts-line);}
+    .vts-filters__label{
+      font-family:var(--vts-mono);font-size:11px;font-weight:600;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--vts-gray);margin:0 0 12px;
+    }
     .vts-filters__row{
-      display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;
+      display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;
       scrollbar-width:none;-ms-overflow-style:none;
     }
     .vts-filters__row::-webkit-scrollbar{display:none;}
-    .vts-chip{
-      flex-shrink:0;display:inline-flex;align-items:center;gap:8px;
-      font-family:inherit;font-size:14px;font-weight:600;color:var(--vts-navy);
-      background:var(--vts-paper);border:1px solid var(--vts-line);border-radius:999px;
-      padding:10px 16px;cursor:pointer;transition:background .15s ease,color .15s ease,border-color .15s ease;
+
+    .vts-zone{
+      flex-shrink:0;display:flex;flex-direction:column;gap:10px;
+      min-width:130px;padding:13px 14px 12px;border-radius:14px;
+      border:1px solid var(--vts-line);background:#fff;cursor:pointer;text-align:left;
+      transition:border-color .15s ease,background .15s ease,box-shadow .2s ease;
     }
-    .vts-chip:hover{border-color:var(--vts-navy);}
-    .vts-chip__count{
-      font-size:12px;font-weight:700;color:var(--vts-gray);
-      background:#fff;border-radius:999px;padding:2px 7px;
+    .vts-zone__top{display:flex;align-items:center;justify-content:space-between;}
+    .vts-zone__led{
+      width:8px;height:8px;border-radius:50%;background:transparent;
+      border:1.5px solid var(--vts-line);flex-shrink:0;transition:all .2s ease;
     }
-    .vts-chip.is-active{background:var(--vts-navy);border-color:var(--vts-navy);color:#fff;}
-    .vts-chip.is-active .vts-chip__count{background:rgba(255,255,255,.18);color:#fff;}
+    .vts-zone__icon{color:var(--vts-navy);opacity:.65;display:flex;transition:color .2s ease,opacity .2s ease;}
+    .vts-zone__label{font-size:12.5px;font-weight:600;color:var(--vts-ink);line-height:1.3;}
+    .vts-zone__count{
+      font-family:var(--vts-mono);font-size:12.5px;font-weight:600;letter-spacing:.03em;
+      color:var(--vts-gray);background:var(--vts-paper);border-radius:6px;padding:2px 7px;
+      align-self:flex-start;transition:background .2s ease,color .2s ease;
+    }
+    .vts-zone:hover{border-color:var(--vts-navy);}
+    .vts-zone.is-active{
+      border-color:var(--vts-green);background:var(--vts-green-soft);
+      box-shadow:0 8px 20px -14px rgba(3,126,5,.45);
+    }
+    .vts-zone.is-active .vts-zone__led{
+      background:var(--vts-green-glow);border-color:var(--vts-green-glow);
+      box-shadow:0 0 0 4px rgba(34,197,94,.22);
+    }
+    .vts-zone.is-active .vts-zone__icon{color:var(--vts-green);opacity:1;}
+    .vts-zone.is-active .vts-zone__count{background:var(--vts-navy);color:#fff;}
 
     /* ---- grid ---- */
-    .vts-grid-section{padding:32px 0 72px;}
+    .vts-grid-section{padding:30px 0 72px;}
     .vts-count{font-size:13.5px;color:var(--vts-gray);margin-bottom:18px;}
-    .vts-count strong{color:var(--vts-ink);font-weight:600;}
+    .vts-count strong{font-family:var(--vts-mono);color:var(--vts-ink);font-weight:600;}
     .vts-grid{
       display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
     }
@@ -170,7 +244,7 @@
     .vts-card:hover{box-shadow:0 16px 32px -20px rgba(7,18,40,.25);transform:translateY(-2px);}
     .vts-card.is-hidden{display:none;}
 
-    .vts-card__media{position:relative;display:block;aspect-ratio:1/1;background:var(--vts-paper);}
+    .vts-card__media{position:relative;display:block;aspect-ratio:1/1;background:var(--vts-paper);overflow:hidden;}
     .vts-card__media img{width:100%;height:100%;object-fit:contain;padding:14px;}
     .vts-card--oos .vts-card__media img{opacity:.45;}
     .vts-card__badge{
@@ -178,6 +252,15 @@
       padding:5px 10px;border-radius:999px;letter-spacing:.02em;
     }
     .vts-card__badge--oos{background:var(--vts-red-soft);color:var(--vts-red);}
+
+    /* detection-frame corners: quiet echo of the zone-rail LED motif */
+    .vts-card__media::before,.vts-card__media::after{
+      content:"";position:absolute;width:14px;height:14px;opacity:0;
+      transition:opacity .2s ease;pointer-events:none;
+    }
+    .vts-card__media::before{top:8px;left:8px;border-top:2px solid var(--vts-green);border-left:2px solid var(--vts-green);}
+    .vts-card__media::after{bottom:8px;right:8px;border-bottom:2px solid var(--vts-green);border-right:2px solid var(--vts-green);}
+    .vts-card:hover .vts-card__media::before,.vts-card:hover .vts-card__media::after{opacity:1;}
 
     .vts-card__body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
     .vts-card__title{
@@ -198,7 +281,7 @@
     }
     .vts-qty__btn:hover{background:var(--vts-line);}
     .vts-qty__input{
-      width:100%;border:none;text-align:center;font-family:inherit;font-size:14px;font-weight:600;
+      width:100%;border:none;text-align:center;font-family:var(--vts-mono);font-size:13.5px;font-weight:600;
       color:var(--vts-ink);-moz-appearance:textfield;background:#fff;
     }
     .vts-qty__input::-webkit-outer-spin-button,.vts-qty__input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
@@ -220,39 +303,109 @@
       background:var(--vts-paper);border-radius:10px;padding:10px;text-align:center;
     }
 
+    .vts-zone:focus-visible,.vts-add:focus-visible,.vts-qty__btn:focus-visible,
+    .vts-card__title:focus-visible{outline:2px solid var(--vts-navy);outline-offset:2px;}
+
     @media (prefers-reduced-motion:reduce){
       .vts-card{transition:none;}
+      .vts-readout__dot{animation:none;}
     }
   </style>
+
+  {%- comment -%} Status readout strip {%- endcomment -%}
+  <div class="vts-readout">
+    <div class="vts-wrap">
+      <div class="vts-readout__row">
+        <span class="vts-readout__status"><span class="vts-readout__dot" aria-hidden="true"></span>Système en ligne</span>
+        <span class="vts-readout__sep">·</span>
+        <span class="vts-readout__meta">{{ total_count_str }} accessoires disponibles</span>
+        <span class="vts-readout__sep">·</span>
+        <span class="vts-readout__meta">Compatible AM301 Touch &amp; Vigilia AM30x</span>
+      </div>
+    </div>
+  </div>
 
   {%- comment -%} Intro {%- endcomment -%}
   <section class="vts-hero">
     <div class="vts-wrap">
       <span class="vts-eyebrow">Daewoo Security</span>
-      <h1>Accessoires compatibles Vigilia &amp; Touch</h1>
+      <h1>Chaque zone de votre maison, son accessoire</h1>
       <p class="vts-hero__sub">
-        Détecteurs, sirènes, contacteurs, télécommandes et accessoires pour compléter votre
-        centrale Vigilia ou Touch (AM30x). Choisissez une catégorie, réglez la quantité, ajoutez au panier.
+        Détecteurs, sirènes, contacteurs, télécommandes et accessoires compatibles avec votre
+        centrale Vigilia ou Touch. Sélectionnez une zone, réglez la quantité, ajoutez au panier.
       </p>
-      <span class="vts-hero__meta">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-        Compatible avec les centrales Touch AM301 &amp; Vigilia AM30x
-      </span>
     </div>
   </section>
 
-  {%- comment -%} Category filter bar {%- endcomment -%}
+  {%- comment -%} Zone selector {%- endcomment -%}
   <div class="vts-filters">
     <div class="vts-wrap">
+      <p class="vts-filters__label">Sélectionner une zone</p>
       <div class="vts-filters__row" role="group" aria-label="Filtrer par catégorie">
-        <button type="button" class="vts-chip is-active" data-filter="all" aria-pressed="true">Tous <span class="vts-chip__count">{{ total_count }}</span></button>
-        <button type="button" class="vts-chip" data-filter="detecteurs" aria-pressed="false">Détecteurs <span class="vts-chip__count">{{ count_detecteurs }}</span></button>
-        <button type="button" class="vts-chip" data-filter="contacteurs" aria-pressed="false">Contacteurs <span class="vts-chip__count">{{ count_contacteurs }}</span></button>
-        <button type="button" class="vts-chip" data-filter="sirenes" aria-pressed="false">Sirènes <span class="vts-chip__count">{{ count_sirenes }}</span></button>
-        <button type="button" class="vts-chip" data-filter="telecommandes" aria-pressed="false">Télécommandes &amp; badges <span class="vts-chip__count">{{ count_telecommandes }}</span></button>
-        <button type="button" class="vts-chip" data-filter="centrale" aria-pressed="false">Centrale &amp; réseau <span class="vts-chip__count">{{ count_centrale }}</span></button>
-        <button type="button" class="vts-chip" data-filter="sim" aria-pressed="false">Cartes SIM <span class="vts-chip__count">{{ count_sim }}</span></button>
-        <button type="button" class="vts-chip" data-filter="accessoires" aria-pressed="false">Accessoires <span class="vts-chip__count">{{ count_accessoires }}</span></button>
+        <button type="button" class="vts-zone is-active" data-filter="all" aria-pressed="true">
+          <span class="vts-zone__top">
+            <span class="vts-zone__led" aria-hidden="true"></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg></span>
+          </span>
+          <span class="vts-zone__label">Tous</span>
+          <span class="vts-zone__count">{{ total_count_str }}</span>
+        </button>
+        <button type="button" class="vts-zone" data-filter="detecteurs" aria-pressed="false">
+          <span class="vts-zone__top">
+            <span class="vts-zone__led" aria-hidden="true"></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"></circle><path d="M8 8a5.66 5.66 0 0 1 8 0"></path><path d="M5 5a10 10 0 0 1 14 0"></path></svg></span>
+          </span>
+          <span class="vts-zone__label">Détecteurs</span>
+          <span class="vts-zone__count">{{ count_detecteurs_str }}</span>
+        </button>
+        <button type="button" class="vts-zone" data-filter="contacteurs" aria-pressed="false">
+          <span class="vts-zone__top">
+            <span class="vts-zone__led" aria-hidden="true"></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="10" height="18" rx="1"></rect><circle cx="12" cy="12" r="1"></circle><path d="M15 3l4 2v16l-4-2"></path></svg></span>
+          </span>
+          <span class="vts-zone__label">Contacteurs</span>
+          <span class="vts-zone__count">{{ count_contacteurs_str }}</span>
+        </button>
+        <button type="button" class="vts-zone" data-filter="sirenes" aria-pressed="false">
+          <span class="vts-zone__top">
+            <span class="vts-zone__led" aria-hidden="true"></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg></span>
+          </span>
+          <span class="vts-zone__label">Sirènes</span>
+          <span class="vts-zone__count">{{ count_sirenes_str }}</span>
+        </button>
+        <button type="button" class="vts-zone" data-filter="telecommandes" aria-pressed="false">
+          <span class="vts-zone__top">
+            <span class="vts-zone__led" aria-hidden="true"></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="20" rx="2"></rect><circle cx="12" cy="7" r="1.3"></circle><path d="M10 11h4M10 14h4M10 17h4"></path></svg></span>
+          </span>
+          <span class="vts-zone__label">Télécommandes &amp; badges</span>
+          <span class="vts-zone__count">{{ count_telecommandes_str }}</span>
+        </button>
+        <button type="button" class="vts-zone" data-filter="centrale" aria-pressed="false">
+          <span class="vts-zone__top">
+            <span class="vts-zone__led" aria-hidden="true"></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"></path></svg></span>
+          </span>
+          <span class="vts-zone__label">Centrale &amp; réseau</span>
+          <span class="vts-zone__count">{{ count_centrale_str }}</span>
+        </button>
+        <button type="button" class="vts-zone" data-filter="sim" aria-pressed="false">
+          <span class="vts-zone__top">
+            <span class="vts-zone__led" aria-hidden="true"></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h6l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"></path><rect x="9.5" y="9" width="5" height="4" rx="1"></rect></svg></span>
+          </span>
+          <span class="vts-zone__label">Cartes SIM</span>
+          <span class="vts-zone__count">{{ count_sim_str }}</span>
+        </button>
+        <button type="button" class="vts-zone" data-filter="accessoires" aria-pressed="false">
+          <span class="vts-zone__top">
+            <span class="vts-zone__led" aria-hidden="true"></span>
+            <span class="vts-zone__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"></path></svg></span>
+          </span>
+          <span class="vts-zone__label">Accessoires</span>
+          <span class="vts-zone__count">{{ count_accessoires_str }}</span>
+        </button>
       </div>
     </div>
   </div>
@@ -345,8 +498,8 @@
         });
       });
 
-      /* Category filter (instant client-side show/hide) */
-      var chips = root.querySelectorAll('[data-filter]');
+      /* Zone (category) filter — instant client-side show/hide */
+      var zones = root.querySelectorAll('[data-filter]');
       var cards = root.querySelectorAll('.vts-card');
       var countEl = root.querySelector('[data-visible-count]');
       function applyFilter(filter) {
@@ -358,15 +511,15 @@
         });
         if (countEl) countEl.textContent = visible;
       }
-      chips.forEach(function (chip) {
-        chip.addEventListener('click', function () {
-          chips.forEach(function (c) {
-            c.classList.remove('is-active');
-            c.setAttribute('aria-pressed', 'false');
+      zones.forEach(function (zone) {
+        zone.addEventListener('click', function () {
+          zones.forEach(function (z) {
+            z.classList.remove('is-active');
+            z.setAttribute('aria-pressed', 'false');
           });
-          chip.classList.add('is-active');
-          chip.setAttribute('aria-pressed', 'true');
-          applyFilter(chip.getAttribute('data-filter'));
+          zone.classList.add('is-active');
+          zone.setAttribute('aria-pressed', 'true');
+          applyFilter(zone.getAttribute('data-filter'));
         });
       });
     })();
