@@ -1,0 +1,226 @@
+{% comment %}
+  Spatial UI hero — interactive 3D house.
+  The zone list below always renders as real, crawlable, no-JS-safe HTML
+  (SEO + prefers-reduced-motion fallback). The canvas is a progressive
+  enhancement mounted on top of it by assets/spatial-hero.js.
+{% endcomment %}
+
+{{ 'spatial-hero.css' | asset_url | stylesheet_tag }}
+
+<section id="spatial-hero" data-section-id="{{ section.id }}" class="relative w-full">
+  <div class="relative mx-auto flex min-h-[640px] w-full max-w-[1400px] flex-col px-6 py-16 sm:px-10 lg:px-16">
+    <div class="spatial-hero-heading relative z-10 max-w-[46ch]">
+      {% if section.settings.eyebrow != blank %}
+        <p class="mono mb-4 text-[11px] uppercase tracking-[0.14em] text-blue-soft">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h1 class="font-display text-[clamp(28px,4.2vw,48px)] font-semibold leading-[1.05] text-white">
+        {{ section.settings.heading }}
+      </h1>
+      {% if section.settings.subheading != blank %}
+        <p class="mt-4 text-[15px] leading-relaxed text-white/60">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    <div id="spatial-hero-canvas-root" class="pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
+    <div id="spatial-hero-card-layer" class="pointer-events-none absolute inset-0 z-20" aria-hidden="true"></div>
+    <div id="spatial-hero-hotspots" class="pointer-events-none absolute inset-0 z-30"></div>
+
+    <p class="spatial-hero-scroll-cue mono pointer-events-none relative z-10 mt-auto self-start text-[11px] text-white/40">
+      {{ section.settings.scroll_hint | default: 'Faire défiler ↓' }}
+    </p>
+  </div>
+
+  <div id="spatial-hero-fallback" class="relative z-10 mx-auto w-full max-w-[1400px] px-6 pb-16 sm:px-10 lg:px-16">
+    <h2 class="font-display mb-6 text-[22px] font-semibold text-white">Ce que protège chaque pièce</h2>
+    <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for block in section.blocks %}
+        {% if block.type == 'zone' %}
+          <li {{ block.shopify_attributes }} class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            {% if block.settings.image %}
+              {{ block.settings.image | image_url: width: 300 | image_tag: loading: 'lazy', alt: block.settings.title, class: 'mb-3 h-32 w-full rounded-xl object-cover' }}
+            {% else %}
+              <img src="{{ block.settings.fallback_image_url }}" alt="{{ block.settings.title }}" loading="lazy" width="300" height="128" class="mb-3 h-32 w-full rounded-xl object-cover">
+            {% endif %}
+            <p class="mono text-[10px] uppercase tracking-[0.08em] text-blue-soft">{{ block.settings.eyebrow }}</p>
+            <h3 class="font-display text-[15px] font-semibold text-white">{{ block.settings.title }}</h3>
+            <p class="mt-1 text-[13px] text-white/60">{{ block.settings.description }}</p>
+            <p class="mt-2 text-[12px] text-white/40">{{ block.settings.price }} · réf. {{ block.settings.sku }}</p>
+            <a href="{{ block.settings.link | default: '#' }}" class="mt-3 inline-block text-[12px] font-medium text-blue-soft">Découvrir →</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+  {%- assign zone_json_parts = '' -%}
+  {%- assign has_entry = false -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'zone' and block.settings.zone_id != blank -%}
+      {%- assign img_url = block.settings.image | image_url: width: 400 -%}
+      {%- if block.settings.image == blank -%}{%- assign img_url = block.settings.fallback_image_url -%}{%- endif -%}
+      {%- capture entry -%}
+        "{{ block.settings.zone_id }}":{
+          "id":{{ block.settings.zone_id | json }},
+          {%- if block.settings.eyebrow != blank -%}"eyebrow":{{ block.settings.eyebrow | json }},{%- endif -%}
+          {%- if block.settings.title != blank -%}"title":{{ block.settings.title | json }},{%- endif -%}
+          {%- if block.settings.description != blank -%}"description":{{ block.settings.description | json }},{%- endif -%}
+          {%- if block.settings.price != blank -%}"price":{{ block.settings.price | json }},{%- endif -%}
+          {%- if block.settings.sku != blank -%}"sku":{{ block.settings.sku | json }},{%- endif -%}
+          "image":{{ img_url | json }},
+          "link":{{ block.settings.link | default: '#' | json }}
+        }
+      {%- endcapture -%}
+      {%- unless has_entry -%}{%- assign has_entry = true -%}{%- else -%}{%- assign zone_json_parts = zone_json_parts | append: ',' -%}{%- endunless -%}
+      {%- assign zone_json_parts = zone_json_parts | append: entry -%}
+    {%- endif -%}
+  {%- endfor -%}
+  <script type="application/json" id="spatial-hero-data">{ {{ zone_json_parts }} }</script>
+</section>
+
+<script src="{{ 'spatial-hero.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Hero maison interactive",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Libellé",
+      "default": "Daewoo Security"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre",
+      "default": "La maison qui vous protège, expliquée pièce par pièce."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Sous-titre",
+      "default": "Survolez une zone de la maison pour découvrir l'accessoire Daewoo qui la protège."
+    },
+    {
+      "type": "text",
+      "id": "scroll_hint",
+      "label": "Texte d'invite au défilement",
+      "default": "Faire défiler ↓"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "zone",
+      "name": "Zone de la maison",
+      "settings": [
+        {
+          "type": "select",
+          "id": "zone_id",
+          "label": "Zone",
+          "options": [
+            { "value": "entree", "label": "Entrée" },
+            { "value": "fenetres", "label": "Fenêtres" },
+            { "value": "couloir", "label": "Couloir" },
+            { "value": "salon", "label": "Salon" },
+            { "value": "garage", "label": "Garage" },
+            { "value": "jardin", "label": "Jardin & terrasse" }
+          ]
+        },
+        { "type": "text", "id": "eyebrow", "label": "Libellé de zone" },
+        { "type": "text", "id": "title", "label": "Nom du produit" },
+        { "type": "textarea", "id": "description", "label": "Description courte" },
+        { "type": "text", "id": "price", "label": "Prix affiché" },
+        { "type": "text", "id": "sku", "label": "Référence" },
+        { "type": "url", "id": "link", "label": "Lien produit ou collection" },
+        { "type": "image_picker", "id": "image", "label": "Photo (remplace la photo par défaut)" },
+        { "type": "text", "id": "fallback_image_url", "label": "Photo par défaut (URL, utilisée tant qu'aucune photo n'est choisie ci-dessus)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero maison interactive",
+      "blocks": [
+        {
+          "type": "zone",
+          "settings": {
+            "zone_id": "entree",
+            "eyebrow": "Entrée",
+            "title": "Contacteur de porte",
+            "description": "Détecte chaque ouverture, en silence, jour et nuit.",
+            "price": "39,90 €",
+            "sku": "WDV301",
+            "link": "/collections/systeme-d-alarme",
+            "fallback_image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/products/camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-645500.webp?v=1767965265"
+          }
+        },
+        {
+          "type": "zone",
+          "settings": {
+            "zone_id": "fenetres",
+            "eyebrow": "Fenêtres",
+            "title": "Détecteur de vibration",
+            "description": "Repère un choc ou une tentative d'effraction avant l'intrusion.",
+            "price": "34,90 €",
+            "sku": "WVD301",
+            "link": "/collections/systeme-d-alarme",
+            "fallback_image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/products/camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-645500.webp?v=1767965265"
+          }
+        },
+        {
+          "type": "zone",
+          "settings": {
+            "zone_id": "couloir",
+            "eyebrow": "Couloir",
+            "title": "Détecteur de mouvement",
+            "description": "Couvre le passage, compatible animaux de compagnie.",
+            "price": "34,90 €",
+            "sku": "WPS305",
+            "link": "/collections/systeme-d-alarme",
+            "fallback_image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/products/camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-645500.webp?v=1767965265"
+          }
+        },
+        {
+          "type": "zone",
+          "settings": {
+            "zone_id": "salon",
+            "eyebrow": "Salon",
+            "title": "Caméra intérieure rotative",
+            "description": "Vision Full HD, suit le mouvement, respecte votre vie privée.",
+            "price": "69,90 €",
+            "sku": "IP506P",
+            "link": "/collections/cameras",
+            "fallback_image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/products/camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-645500.webp?v=1767965265"
+          }
+        },
+        {
+          "type": "zone",
+          "settings": {
+            "zone_id": "garage",
+            "eyebrow": "Garage",
+            "title": "Contacteur porte de garage",
+            "description": "Renforcé pour les grandes ouvertures, résiste aux vibrations du moteur.",
+            "price": "49,90 €",
+            "sku": "WDG301",
+            "link": "/collections/systeme-d-alarme",
+            "fallback_image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/OFFRESPECIAL_7.png?v=1772203809"
+          }
+        },
+        {
+          "type": "zone",
+          "settings": {
+            "zone_id": "jardin",
+            "eyebrow": "Jardin & terrasse",
+            "title": "Sirène extérieure 110 dB",
+            "description": "S'active en moins d'une seconde et prévient tout le voisinage.",
+            "price": "129,90 €",
+            "sku": "WOS305S",
+            "link": "/collections/systeme-d-alarme",
+            "fallback_image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/OFFRESPECIAL_8.png?v=1772204007"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

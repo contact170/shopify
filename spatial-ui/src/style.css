@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Preflight is disabled (Tailwind must not reset the rest of the theme), so
+   the handful of resets the section actually needs are scoped locally. */
+#spatial-hero,
+#spatial-hero *,
+#spatial-hero *::before,
+#spatial-hero *::after {
+  box-sizing: border-box;
+}
+
+#spatial-hero {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(1400px 900px at 30% 10%, rgba(61, 120, 239, 0.16), transparent 60%), #04060d;
+}
+
+#spatial-hero button {
+  font: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+#spatial-hero a {
+  text-decoration: none;
+}
+
+#spatial-hero canvas {
+  display: block;
+  touch-action: none;
+}
+
+#spatial-hero .mono {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}
+
+#spatial-hero .spatial-hotspot {
+  transition: outline-color 0.2s ease;
+}
+
+/* Once the camera dollies into a zone, the static headline and scroll cue
+   would otherwise sit on top of the close-up scene — clear the stage for
+   the product story instead of layering text over it. */
+#spatial-hero .spatial-hero-heading,
+#spatial-hero .spatial-hero-scroll-cue {
+  transition: opacity 0.5s ease;
+}
+#spatial-hero[data-active-zone] .spatial-hero-heading,
+#spatial-hero[data-active-zone] .spatial-hero-scroll-cue {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #spatial-hero-canvas-root {
+    display: none;
+  }
+  #spatial-hero-fallback {
+    position: static !important;
+    clip: auto !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Preview — Spatial Hero</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #04060d; }
+</style>
+<link rel="stylesheet" href="/assets/spatial-hero.css" />
+</head>
+<body>
+<section id="spatial-hero" data-section-id="preview" class="relative w-full">
+  <div class="relative mx-auto flex min-h-[640px] w-full max-w-[1400px] flex-col px-6 py-16 sm:px-10 lg:px-16">
+    <div class="spatial-hero-heading relative z-10 max-w-[46ch]">
+      <p class="mono mb-4 text-[11px] uppercase tracking-[0.14em] text-blue-soft">Daewoo Security</p>
+      <h1 class="font-display text-[clamp(28px,4.2vw,48px)] font-semibold leading-[1.05] text-white">
+        La maison qui vous protège, expliquée pièce par pièce.
+      </h1>
+      <p class="mt-4 text-[15px] leading-relaxed text-white/60">Survolez une zone de la maison pour découvrir l'accessoire Daewoo qui la protège.</p>
+    </div>
+
+    <div id="spatial-hero-canvas-root" class="pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
+    <div id="spatial-hero-card-layer" class="pointer-events-none absolute inset-0 z-20" aria-hidden="true"></div>
+    <div id="spatial-hero-hotspots" class="pointer-events-none absolute inset-0 z-30"></div>
+
+    <p class="spatial-hero-scroll-cue mono pointer-events-none relative z-10 mt-auto self-start text-[11px] text-white/40">
+      Faire défiler ↓
+    </p>
+  </div>
+
+  <div id="spatial-hero-fallback" class="relative z-10 mx-auto w-full max-w-[1400px] px-6 pb-16 sm:px-10 lg:px-16"></div>
+
+  <script type="application/json" id="spatial-hero-data">
+  {
+    "entree": {"id":"entree","eyebrow":"Entrée","title":"Contacteur de porte","description":"Détecte chaque ouverture, en silence, jour et nuit.","price":"39,90 €","sku":"WDV301","image":"https://cdn.shopify.com/s/files/1/0326/3132/4811/products/camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-645500.webp?v=1767965265","link":"/collections/systeme-d-alarme"},
+    "fenetres": {"id":"fenetres","eyebrow":"Fenêtres","title":"Détecteur de vibration","description":"Repère un choc ou une tentative d'effraction avant l'intrusion.","price":"34,90 €","sku":"WVD301","image":"https://cdn.shopify.com/s/files/1/0326/3132/4811/products/camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-645500.webp?v=1767965265","link":"/collections/systeme-d-alarme"},
+    "couloir": {"id":"couloir","eyebrow":"Couloir","title":"Détecteur de mouvement","description":"Couvre le passage, compatible animaux de compagnie.","price":"34,90 €","sku":"WPS305","image":"https://cdn.shopify.com/s/files/1/0326/3132/4811/products/camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-645500.webp?v=1767965265","link":"/collections/systeme-d-alarme"},
+    "salon": {"id":"salon","eyebrow":"Salon","title":"Caméra intérieure rotative","description":"Vision Full HD, suit le mouvement, respecte votre vie privée.","price":"69,90 €","sku":"IP506P","image":"https://cdn.shopify.com/s/files/1/0326/3132/4811/products/camera-interieure-rotative-daewoo-ip506p-wifi-full-hd-vie-privee-645500.webp?v=1767965265","link":"/collections/cameras"},
+    "garage": {"id":"garage","eyebrow":"Garage","title":"Contacteur porte de garage","description":"Renforcé pour les grandes ouvertures, résiste aux vibrations du moteur.","price":"49,90 €","sku":"WDG301","image":"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/OFFRESPECIAL_7.png?v=1772203809","link":"/collections/systeme-d-alarme"},
+    "jardin": {"id":"jardin","eyebrow":"Jardin & terrasse","title":"Sirène extérieure 110 dB","description":"S'active en moins d'une seconde et prévient tout le voisinage.","price":"129,90 €","sku":"WOS305S","image":"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/OFFRESPECIAL_8.png?v=1772204007","link":"/collections/systeme-d-alarme"}
+  }
+  </script>
+</section>
+<script src="/assets/spatial-hero.js" defer></script>
+</body>
+</html>
