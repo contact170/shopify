@@ -1,0 +1,266 @@
+{%- doc -%}
+  Bespoke hub/routing page for the "Tous les accessoires" collection
+  (handle: tous-les-accessoires) — the page a visitor lands on from the
+  nav's "Accessoires" entry without picking a specific range first.
+
+  Deliberately NOT a product grid, unlike its three sibling pages
+  (collection-vigilia-touch-shop / -elite-shop / -key-shop). This
+  collection mixes 52 products across three mutually INCOMPATIBLE alarm
+  ecosystems (Vigilia/Touch AM30x, Élite PA501Z, Key SA501) — showing
+  them together risks a customer adding an accessory that won't work
+  with their actual system. So the job here is routing (pick your
+  system, then land on the right shop page) plus general education
+  (what do these accessory types even do), not browsing/buying — no
+  add-to-cart, no quantity steppers, no JS filtering, no cart-drawer
+  wiring. Static page, on purpose.
+
+  Signature: the three system cards read as "device profiles" rather
+  than plain nav tiles — model code set large in the same IBM Plex Mono
+  used for the shop pages' digital-readout counts, a steady green LED
+  (not a filter toggle here, just "this system is available"), and one
+  verified differentiator per system pulled from real product copy
+  (Élite's Zigbee compatibility, Touch's 4.3" touchscreen, Key's
+  "sans abonnement" line lifted from the Starter Pack Key's own product
+  description) — deliberately not invented claims.
+
+  The accessory-type glossary below reuses the exact same 6 category
+  icons already drawn for the three shop pages, for full visual
+  continuity across the family of pages rather than a fresh icon set.
+
+  Prefixed `hub-` (distinct from the shop pages' `das-`/`vts-`) since
+  this is a different kind of page, not another shop.
+{%- enddoc -%}
+
+<div id="shopify-section-{{ section.id }}" class="hub">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+    #shopify-section-{{ section.id }} .hub{
+      --hub-navy:#0c1e4a;
+      --hub-navy-deep:#071228;
+      --hub-ink:#171b23;
+      --hub-gray:#5b6270;
+      --hub-paper:#f5f6fa;
+      --hub-line:#dde3ec;
+      --hub-green:#037e05;
+      --hub-green-glow:#22c55e;
+      --hub-mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-family:'Poppins', sans-serif;
+      color:var(--hub-ink);
+      background:#fff;
+    }
+    .hub *{box-sizing:border-box;}
+    .hub .hub-wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+    .hub svg{display:block;}
+
+    /* ---- hero ---- */
+    .hub-hero{padding:64px 0 48px;text-align:center;}
+    .hub-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+      color:var(--hub-green);margin-bottom:16px;
+    }
+    .hub-eyebrow::before{content:"";width:14px;height:2px;background:var(--hub-green);}
+    .hub-hero h1{
+      font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:0 auto;
+      font-size:clamp(28px,5vw,44px);max-width:640px;color:var(--hub-navy-deep);
+    }
+    .hub-hero__sub{
+      font-size:clamp(15px,1.8vw,17px);color:var(--hub-gray);
+      max-width:560px;margin:18px auto 0;line-height:1.6;
+    }
+
+    /* ---- system selector (signature) ---- */
+    .hub-systems{padding:8px 0 72px;}
+    .hub-systems__grid{display:grid;grid-template-columns:1fr;gap:18px;}
+    @media (min-width:820px){.hub-systems__grid{grid-template-columns:repeat(3,1fr);gap:22px;}}
+
+    .hub-system{
+      display:flex;flex-direction:column;gap:16px;text-decoration:none;color:inherit;
+      border:1px solid var(--hub-line);border-radius:20px;padding:30px 26px;background:#fff;
+      transition:box-shadow .25s ease,transform .25s ease,border-color .25s ease;
+    }
+    .hub-system:hover{
+      box-shadow:0 24px 48px -28px rgba(7,18,40,.28);transform:translateY(-4px);
+      border-color:var(--hub-navy);
+    }
+    .hub-system__status{
+      display:flex;align-items:center;gap:8px;font-family:var(--hub-mono);
+      font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--hub-gray);
+    }
+    .hub-system__dot{
+      width:7px;height:7px;border-radius:50%;background:var(--hub-green-glow);flex-shrink:0;
+      box-shadow:0 0 0 3px rgba(34,197,94,.18);
+    }
+    .hub-system__code{
+      font-family:var(--hub-mono);font-size:13px;font-weight:600;letter-spacing:.05em;color:var(--hub-green);
+    }
+    .hub-system__name{font-size:25px;font-weight:700;letter-spacing:-.01em;color:var(--hub-navy-deep);line-height:1.2;}
+    .hub-system__desc{font-size:14px;line-height:1.6;color:var(--hub-gray);flex:1;}
+    .hub-system__chip{
+      align-self:flex-start;font-size:11.5px;font-weight:600;color:var(--hub-navy);
+      background:var(--hub-paper);border:1px solid var(--hub-line);border-radius:999px;padding:5px 12px;
+    }
+    .hub-system__cta{
+      display:inline-flex;align-items:center;gap:8px;margin-top:4px;
+      font-size:13.5px;font-weight:600;color:var(--hub-navy);
+    }
+    .hub-system__cta svg{transition:transform .2s ease;}
+    .hub-system:hover .hub-system__cta svg{transform:translateX(3px);}
+
+    /* ---- glossary ---- */
+    .hub-glossary{padding:56px 0 72px;background:var(--hub-paper);}
+    .hub-glossary__head{text-align:center;max-width:560px;margin:0 auto 40px;}
+    .hub-glossary__head h2{
+      font-size:clamp(22px,3vw,28px);font-weight:700;letter-spacing:-.01em;color:var(--hub-navy-deep);margin:0 0 10px;
+    }
+    .hub-glossary__head p{font-size:14.5px;color:var(--hub-gray);line-height:1.6;margin:0;}
+
+    .hub-glossary__grid{display:grid;grid-template-columns:1fr;gap:16px;}
+    @media (min-width:700px){.hub-glossary__grid{grid-template-columns:repeat(2,1fr);gap:20px;}}
+    @media (min-width:1020px){.hub-glossary__grid{grid-template-columns:repeat(3,1fr);}}
+
+    .hub-term{
+      display:flex;gap:14px;background:#fff;border:1px solid var(--hub-line);border-radius:16px;padding:20px 22px;
+    }
+    .hub-term__icon{
+      flex-shrink:0;width:34px;height:34px;border-radius:10px;background:var(--hub-paper);
+      display:flex;align-items:center;justify-content:center;color:var(--hub-navy);
+    }
+    .hub-term__name{font-size:14.5px;font-weight:700;color:var(--hub-ink);margin:0 0 4px;}
+    .hub-term__desc{font-size:13px;line-height:1.55;color:var(--hub-gray);margin:0;}
+
+    .hub-note{
+      display:flex;gap:10px;align-items:flex-start;max-width:820px;margin:32px auto 0;
+      padding:14px 16px;background:#fff;border-left:3px solid #f79009;border-radius:10px;
+    }
+    .hub-note svg{flex-shrink:0;margin-top:2px;color:#9a6a00;}
+    .hub-note p{margin:0;font-size:13px;line-height:1.55;color:var(--hub-ink);}
+
+    .hub-system:focus-visible,.hub-system__cta:focus-visible{outline:2px solid var(--hub-navy);outline-offset:3px;}
+
+    @media (prefers-reduced-motion:reduce){
+      .hub-system{transition:none;}
+      .hub-system__cta svg{transition:none;}
+    }
+  </style>
+
+  {%- comment -%} Hero {%- endcomment -%}
+  <section class="hub-hero">
+    <div class="hub-wrap">
+      <span class="hub-eyebrow">Daewoo Security</span>
+      <h1>Trouvez les accessoires faits pour votre système</h1>
+      <p class="hub-hero__sub">
+        Daewoo Security propose trois gammes d'alarme, chacune avec ses propres accessoires
+        compatibles. Choisissez votre système pour accéder directement aux bons produits.
+      </p>
+    </div>
+  </section>
+
+  {%- comment -%} System selector {%- endcomment -%}
+  <section class="hub-systems">
+    <div class="hub-wrap">
+      <div class="hub-systems__grid">
+        <a href="/collections/compatible-gamme-vigilia-touch" class="hub-system">
+          <span class="hub-system__status"><span class="hub-system__dot" aria-hidden="true"></span>Système disponible</span>
+          <span class="hub-system__code">AM30x</span>
+          <span class="hub-system__name">Vigilia / Touch</span>
+          <p class="hub-system__desc">Centrale avec écran tactile 4,3" et large gamme d'accessoires sans fil, du détecteur à la sirène.</p>
+          <span class="hub-system__chip">Écran tactile</span>
+          <span class="hub-system__cta">
+            Voir les accessoires
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+          </span>
+        </a>
+        <a href="/collections/gamme-elite-accessoires" class="hub-system">
+          <span class="hub-system__status"><span class="hub-system__dot" aria-hidden="true"></span>Système disponible</span>
+          <span class="hub-system__code">PA501Z</span>
+          <span class="hub-system__name">Élite</span>
+          <p class="hub-system__desc">Système compatible Zigbee, pour une sécurité connectée et évolutive au fil de vos besoins.</p>
+          <span class="hub-system__chip">Zigbee</span>
+          <span class="hub-system__cta">
+            Voir les accessoires
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+          </span>
+        </a>
+        <a href="/collections/accessoires" class="hub-system">
+          <span class="hub-system__status"><span class="hub-system__dot" aria-hidden="true"></span>Système disponible</span>
+          <span class="hub-system__code">SA501</span>
+          <span class="hub-system__name">Key</span>
+          <p class="hub-system__desc">Alarme sans fil simple et fiable, sans abonnement, pour une protection efficace au quotidien.</p>
+          <span class="hub-system__chip">Sans abonnement</span>
+          <span class="hub-system__cta">
+            Voir les accessoires
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Glossary {%- endcomment -%}
+  <section class="hub-glossary">
+    <div class="hub-wrap">
+      <div class="hub-glossary__head">
+        <h2>Comprendre les types d'accessoires</h2>
+        <p>Chaque système d'alarme Daewoo Security se complète avec les mêmes grandes familles d'accessoires. Voici à quoi elles servent.</p>
+      </div>
+      <div class="hub-glossary__grid">
+        <div class="hub-term">
+          <span class="hub-term__icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"></circle><path d="M8 8a5.66 5.66 0 0 1 8 0"></path><path d="M5 5a10 10 0 0 1 14 0"></path></svg></span>
+          <div>
+            <p class="hub-term__name">Détecteurs</p>
+            <p class="hub-term__desc">Mouvement, vibration, fumée ou fuite d'eau : ils surveillent en continu et déclenchent l'alarme au moindre signe anormal.</p>
+          </div>
+        </div>
+        <div class="hub-term">
+          <span class="hub-term__icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="10" height="18" rx="1"></rect><circle cx="12" cy="12" r="1"></circle><path d="M15 3l4 2v16l-4-2"></path></svg></span>
+          <div>
+            <p class="hub-term__name">Contacteurs</p>
+            <p class="hub-term__desc">Posés sur une porte, une fenêtre ou un garage, ils détectent la moindre ouverture non autorisée.</p>
+          </div>
+        </div>
+        <div class="hub-term">
+          <span class="hub-term__icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg></span>
+          <div>
+            <p class="hub-term__name">Sirènes</p>
+            <p class="hub-term__desc">Intérieures ou extérieures, elles dissuadent l'intrus et alertent le voisinage en cas d'intrusion.</p>
+          </div>
+        </div>
+        <div class="hub-term">
+          <span class="hub-term__icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="15" r="3.2"></circle><path d="M9.3 12.7L18 4"></path><path d="M14.5 8.2l2.3 2.3"></path><path d="M17.2 5.5l2.3 2.3"></path></svg></span>
+          <div>
+            <p class="hub-term__name">Contrôle d'accès</p>
+            <p class="hub-term__desc">Télécommandes, badges et claviers permettent d'armer ou désarmer votre système en toute simplicité.</p>
+          </div>
+        </div>
+        <div class="hub-term">
+          <span class="hub-term__icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"></path></svg></span>
+          <div>
+            <p class="hub-term__name">Centrale</p>
+            <p class="hub-term__desc">Le cœur du système : elle reçoit les alertes de tous vos accessoires et les transmet en cas de besoin. Un amplificateur peut étendre sa portée radio dans les grandes maisons.</p>
+          </div>
+        </div>
+        <div class="hub-term">
+          <span class="hub-term__icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h6l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"></path><rect x="9.5" y="9" width="5" height="4" rx="1"></rect></svg></span>
+          <div>
+            <p class="hub-term__name">Cartes SIM</p>
+            <p class="hub-term__desc">Pour une connexion indépendante de votre box internet, en cas de coupure ou d'absence de Wifi.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hub-note">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-5"></path><path d="M12 8h.01"></path></svg>
+        <p><strong>Bon à savoir.</strong> Les accessoires ne sont pas interchangeables d'un système à l'autre : un accessoire Vigilia/Touch ne fonctionne pas avec une centrale Élite ou Key. Utilisez les trois cartes ci-dessus pour retrouver les accessoires compatibles avec votre système.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Accessories hub",
+  "settings": []
+}
+{% endschema %}
