@@ -1,0 +1,139 @@
+{% comment %}
+  "Pourquoi Daewoo" — three real differentiators (verified against the
+  Vigilia/Touch/Élite ranges and the accessory catalog in
+  sections/Daewoo-quizz.liquid), not generic trust badges.
+{% endcomment %}
+
+<style>
+  #why-daewoo { position: relative; padding: 120px 24px; background: #04060d; overflow: hidden; }
+  #why-daewoo::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(900px 500px at 80% 0%, rgba(61,120,239,0.14), transparent 60%);
+  }
+  #why-daewoo .wd-inner { position: relative; max-width: 1180px; margin: 0 auto; }
+  #why-daewoo .wd-eyebrow {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #6f9bff; margin: 0 0 18px;
+  }
+  #why-daewoo h2 {
+    font-family: 'Poppins', sans-serif; font-weight: 600; color: #f4f6ff;
+    font-size: clamp(26px, 3.4vw, 40px); line-height: 1.15; max-width: 22ch; margin: 0 0 64px;
+  }
+  #why-daewoo .wd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 860px) { #why-daewoo .wd-grid { grid-template-columns: 1fr; } }
+  #why-daewoo .wd-card {
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 32px 28px;
+    background: rgba(255,255,255,0.04); backdrop-filter: blur(16px);
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  #why-daewoo .wd-card.is-visible { opacity: 1; transform: translateY(0); }
+  #why-daewoo .wd-icon {
+    width: 40px; height: 40px; border-radius: 12px; margin-bottom: 22px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(61,120,239,0.14); color: #6f9bff;
+  }
+  #why-daewoo .wd-card h3 {
+    font-family: 'Poppins', sans-serif; font-weight: 600; color: #f4f6ff;
+    font-size: 17px; margin: 0 0 10px;
+  }
+  #why-daewoo .wd-card p { color: rgba(244,246,255,0.6); font-size: 14px; line-height: 1.6; margin: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #why-daewoo .wd-card { transition: none; opacity: 1; transform: none; }
+  }
+</style>
+
+<section id="why-daewoo">
+  <div class="wd-inner">
+    <p class="wd-eyebrow">{{ section.settings.eyebrow | default: 'Pourquoi Daewoo Security' }}</p>
+    <h2>{{ section.settings.heading | default: 'Trois choix qui changent tout au quotidien.' }}</h2>
+    <div class="wd-grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'reason' %}
+          <div class="wd-card" {{ block.shopify_attributes }}>
+            <div class="wd-icon" aria-hidden="true">{{ block.settings.icon }}</div>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.description }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var cards = document.querySelectorAll('#why-daewoo .wd-card');
+    if (!cards.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      cards.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry, i) {
+          if (entry.isIntersecting) {
+            entry.target.style.transitionDelay = (i * 0.1) + 's';
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+    cards.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Pourquoi Daewoo",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Libellé", "default": "Pourquoi Daewoo Security" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Trois choix qui changent tout au quotidien." }
+  ],
+  "blocks": [
+    {
+      "type": "reason",
+      "name": "Raison",
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icône (SVG)" },
+        { "type": "text", "id": "title", "label": "Titre" },
+        { "type": "textarea", "id": "description", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pourquoi Daewoo",
+      "blocks": [
+        {
+          "type": "reason",
+          "settings": {
+            "title": "Trois façons de piloter votre alarme",
+            "description": "Clavier et télécommande avec Vigilia, écran tactile sur la centrale avec Touch, ou 100 % depuis votre smartphone avec Élite — vous choisissez, pas nous.",
+            "icon": "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><rect x=\"3\" y=\"6\" width=\"7\" height=\"12\" rx=\"1.5\"/><circle cx=\"17.5\" cy=\"12\" r=\"4.5\"/></svg>"
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "title": "Une centrale jamais hors ligne",
+            "description": "La centrale Élite PA501Z combine Wi-Fi, Ethernet et 4G : même en cas de coupure internet, votre alarme reste joignable.",
+            "icon": "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M4 9a12 12 0 0 1 16 0\"/><path d=\"M7.5 12.5a7.5 7.5 0 0 1 9 0\"/><circle cx=\"12\" cy=\"18\" r=\"1.4\" fill=\"currentColor\" stroke=\"none\"/></svg>"
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "title": "Une gamme qui s'agrandit avec vous",
+            "description": "Contacteurs, caméras, sirènes, détecteurs de fumée ou d'eau : ajoutez un accessoire à la fois, quand votre logement évolue.",
+            "icon": "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M12 5v14M5 12h14\"/></svg>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

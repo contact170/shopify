@@ -1320,10 +1320,97 @@
         "subheading": "Survolez une zone de la maison pour découvrir l'accessoire Daewoo qui la protège.",
         "scroll_hint": "Faire défiler ↓"
       }
+    },
+    "why_daewoo": {
+      "type": "why-daewoo",
+      "blocks": {
+        "reason_1": {
+          "type": "reason",
+          "settings": {
+            "title": "Trois façons de piloter votre alarme",
+            "description": "Clavier et télécommande avec Vigilia, écran tactile sur la centrale avec Touch, ou 100 % depuis votre smartphone avec Élite — vous choisissez, pas nous.",
+            "icon": "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><rect x=\"3\" y=\"6\" width=\"7\" height=\"12\" rx=\"1.5\"/><circle cx=\"17.5\" cy=\"12\" r=\"4.5\"/></svg>"
+          }
+        },
+        "reason_2": {
+          "type": "reason",
+          "settings": {
+            "title": "Une centrale jamais hors ligne",
+            "description": "La centrale Élite PA501Z combine Wi-Fi, Ethernet et 4G : même en cas de coupure internet, votre alarme reste joignable.",
+            "icon": "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M4 9a12 12 0 0 1 16 0\"/><path d=\"M7.5 12.5a7.5 7.5 0 0 1 9 0\"/><circle cx=\"12\" cy=\"18\" r=\"1.4\" fill=\"currentColor\" stroke=\"none\"/></svg>"
+          }
+        },
+        "reason_3": {
+          "type": "reason",
+          "settings": {
+            "title": "Une gamme qui s'agrandit avec vous",
+            "description": "Contacteurs, caméras, sirènes, détecteurs de fumée ou d'eau : ajoutez un accessoire à la fois, quand votre logement évolue.",
+            "icon": "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M12 5v14M5 12h14\"/></svg>"
+          }
+        }
+      },
+      "block_order": [
+        "reason_1",
+        "reason_2",
+        "reason_3"
+      ],
+      "settings": {
+        "eyebrow": "Pourquoi Daewoo Security",
+        "heading": "Trois choix qui changent tout au quotidien."
+      }
+    },
+    "how_it_works": {
+      "type": "how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "label": "01 · CAPTEUR",
+            "title": "Détecte",
+            "description": "Contact, vibration ou mouvement — chaque accessoire est choisi pour la pièce où il est installé."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "label": "02 · CENTRALE",
+            "title": "Analyse",
+            "description": "Vigilia, Touch ou Élite traite l'information en local, en une fraction de seconde."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "label": "03 · APPLICATION",
+            "title": "Vous alerte",
+            "description": "Notification instantanée sur votre smartphone, où que vous soyez."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "label": "04 · VOUS",
+            "title": "Agissez",
+            "description": "Armez, désarmez ou déclenchez la sirène à distance, en un geste."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
+      "settings": {
+        "eyebrow": "Comment fonctionne le système",
+        "heading": "La même logique, du capteur jusqu'à vous."
+      }
     }
   },
   "order": [
     "spatial_hero",
+    "why_daewoo",
+    "how_it_works",
     "slideshow_BKBykn",
     "custom_liquid_KWm6E3",
     "custom_liquid_UpnCfz",

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Preview — Why Daewoo + How it works</title>
+<style>html,body{margin:0;padding:0;background:#04060d;}</style>
+</head>
+<body>
+
+<style>
+  #why-daewoo { position: relative; padding: 120px 24px; background: #04060d; overflow: hidden; }
+  #why-daewoo::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(900px 500px at 80% 0%, rgba(61,120,239,0.14), transparent 60%);
+  }
+  #why-daewoo .wd-inner { position: relative; max-width: 1180px; margin: 0 auto; }
+  #why-daewoo .wd-eyebrow {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #6f9bff; margin: 0 0 18px;
+  }
+  #why-daewoo h2 {
+    font-family: 'Poppins', sans-serif; font-weight: 600; color: #f4f6ff;
+    font-size: clamp(26px, 3.4vw, 40px); line-height: 1.15; max-width: 22ch; margin: 0 0 64px;
+  }
+  #why-daewoo .wd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 860px) { #why-daewoo .wd-grid { grid-template-columns: 1fr; } }
+  #why-daewoo .wd-card {
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 32px 28px;
+    background: rgba(255,255,255,0.04); backdrop-filter: blur(16px);
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  #why-daewoo .wd-card.is-visible { opacity: 1; transform: translateY(0); }
+  #why-daewoo .wd-icon {
+    width: 40px; height: 40px; border-radius: 12px; margin-bottom: 22px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(61,120,239,0.14); color: #6f9bff;
+  }
+  #why-daewoo .wd-card h3 {
+    font-family: 'Poppins', sans-serif; font-weight: 600; color: #f4f6ff;
+    font-size: 17px; margin: 0 0 10px;
+  }
+  #why-daewoo .wd-card p { color: rgba(244,246,255,0.6); font-size: 14px; line-height: 1.6; margin: 0; }
+</style>
+
+<section id="why-daewoo">
+  <div class="wd-inner">
+    <p class="wd-eyebrow">Pourquoi Daewoo Security</p>
+    <h2>Trois choix qui changent tout au quotidien.</h2>
+    <div class="wd-grid">
+      <div class="wd-card">
+        <div class="wd-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="7" height="12" rx="1.5"/><circle cx="17.5" cy="12" r="4.5"/></svg></div>
+        <h3>Trois façons de piloter votre alarme</h3>
+        <p>Clavier et télécommande avec Vigilia, écran tactile sur la centrale avec Touch, ou 100 % depuis votre smartphone avec Élite — vous choisissez, pas nous.</p>
+      </div>
+      <div class="wd-card">
+        <div class="wd-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9a12 12 0 0 1 16 0"/><path d="M7.5 12.5a7.5 7.5 0 0 1 9 0"/><circle cx="12" cy="18" r="1.4" fill="currentColor" stroke="none"/></svg></div>
+        <h3>Une centrale jamais hors ligne</h3>
+        <p>La centrale Élite PA501Z combine Wi-Fi, Ethernet et 4G : même en cas de coupure internet, votre alarme reste joignable.</p>
+      </div>
+      <div class="wd-card">
+        <div class="wd-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></div>
+        <h3>Une gamme qui s'agrandit avec vous</h3>
+        <p>Contacteurs, caméras, sirènes, détecteurs de fumée ou d'eau : ajoutez un accessoire à la fois, quand votre logement évolue.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var cards = document.querySelectorAll('#why-daewoo .wd-card');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = (i * 0.1) + 's';
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+    cards.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+<style>
+  #how-it-works { position: relative; padding: 100px 24px 120px; background: #04060d; }
+  #how-it-works .hiw-inner { max-width: 1180px; margin: 0 auto; }
+  #how-it-works .hiw-eyebrow {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #6f9bff; margin: 0 0 18px;
+  }
+  #how-it-works h2 {
+    font-family: 'Poppins', sans-serif; font-weight: 600; color: #f4f6ff;
+    font-size: clamp(26px, 3.4vw, 40px); line-height: 1.15; max-width: 26ch; margin: 0 0 72px;
+  }
+  #how-it-works .hiw-flow { display: flex; align-items: stretch; gap: 0; }
+  #how-it-works .hiw-node {
+    flex: 1; border: 1px dashed rgba(111,155,255,0.4); border-radius: 14px;
+    padding: 24px 20px; background: rgba(111,155,255,0.05);
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  #how-it-works .hiw-node.is-visible { opacity: 1; transform: translateY(0); }
+  #how-it-works .hiw-node-index {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: #6f9bff; margin: 0 0 14px; display: block;
+  }
+  #how-it-works .hiw-node h3 {
+    font-family: 'Poppins', sans-serif; font-weight: 600; color: #f4f6ff; font-size: 16px; margin: 0 0 8px;
+  }
+  #how-it-works .hiw-node p { color: rgba(244,246,255,0.6); font-size: 13px; line-height: 1.55; margin: 0; }
+  #how-it-works .hiw-connector {
+    flex: 0 0 44px; display: flex; align-items: center; justify-content: center;
+    color: rgba(111,155,255,0.5); font-family: ui-monospace, monospace; font-size: 15px;
+  }
+</style>
+
+<section id="how-it-works">
+  <div class="hiw-inner">
+    <p class="hiw-eyebrow">Comment fonctionne le système</p>
+    <h2>La même logique, du capteur jusqu'à vous.</h2>
+    <div class="hiw-flow">
+      <div class="hiw-node"><span class="hiw-node-index">01 · CAPTEUR</span><h3>Détecte</h3><p>Contact, vibration ou mouvement — chaque accessoire est choisi pour la pièce où il est installé.</p></div>
+      <div class="hiw-connector" aria-hidden="true">→</div>
+      <div class="hiw-node"><span class="hiw-node-index">02 · CENTRALE</span><h3>Analyse</h3><p>Vigilia, Touch ou Élite traite l'information en local, en une fraction de seconde.</p></div>
+      <div class="hiw-connector" aria-hidden="true">→</div>
+      <div class="hiw-node"><span class="hiw-node-index">03 · APPLICATION</span><h3>Vous alerte</h3><p>Notification instantanée sur votre smartphone, où que vous soyez.</p></div>
+      <div class="hiw-connector" aria-hidden="true">→</div>
+      <div class="hiw-node"><span class="hiw-node-index">04 · VOUS</span><h3>Agissez</h3><p>Armez, désarmez ou déclenchez la sirène à distance, en un geste.</p></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var nodes = document.querySelectorAll('#how-it-works .hiw-node');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var index = Array.prototype.indexOf.call(nodes, entry.target);
+          entry.target.style.transitionDelay = (index * 0.12) + 's';
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    nodes.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
