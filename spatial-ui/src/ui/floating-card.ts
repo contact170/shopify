@@ -28,6 +28,13 @@ export class FloatingCard {
   show(content: ZoneContent, mode: CardMode = 'hover') {
     this.mode = mode;
     this.el.innerHTML = `
+      ${
+        content.image
+          ? `<img src="${encodeURI(content.image)}" alt="" loading="lazy" width="220" height="110"
+                 class="mb-3 h-[110px] w-full rounded-xl object-cover bg-white/5"
+                 onerror="this.remove()">`
+          : ''
+      }
       <p class="mono text-[9px] uppercase tracking-[0.08em] text-blue-soft mb-1">${escapeHtml(content.eyebrow)}</p>
       <h3 class="font-display text-[15px] font-semibold leading-snug mb-1">${escapeHtml(content.title)}</h3>
       <p class="text-[11.5px] leading-snug text-white/65 mb-2">${escapeHtml(content.description)}</p>
