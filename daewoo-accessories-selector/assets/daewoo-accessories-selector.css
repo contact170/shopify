@@ -239,6 +239,62 @@ html {
   }
 }
 
+/* ---------- Range card: "product" variant ----------
+   For plain studio product photography (no lifestyle/interior shot yet):
+   the image sits contained on a neutral stage instead of being cropped
+   edge-to-edge, and copy reads as normal text below rather than a
+   white-on-photo overlay. */
+
+.daewoo-range-card--product {
+  display: flex;
+  flex-direction: column;
+  background: rgb(var(--color-background));
+  border: 1px solid rgb(var(--color-foreground) / 0.08);
+}
+
+.daewoo-range-card--product .daewoo-range-card__media {
+  position: relative !important;
+  inset: auto !important;
+  flex: 1 1 auto;
+  min-height: 55%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: radial-gradient(120% 100% at 50% 100%, rgb(var(--color-foreground) / 0.06), transparent 70%);
+}
+
+.daewoo-range-card--product .daewoo-range-card__picture {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  display: flex;
+}
+
+.daewoo-range-card--product .daewoo-range-card__img,
+.daewoo-range-card--product .daewoo-range-card__img.placeholder-svg {
+  width: auto !important;
+  height: 100% !important;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 24px rgb(var(--color-foreground) / 0.18));
+}
+
+.daewoo-range-card--product .daewoo-range-card__scrim {
+  display: none;
+}
+
+.daewoo-range-card--product .daewoo-range-card__content {
+  position: relative !important;
+  inset: auto !important;
+  flex: 0 0 auto;
+  color: rgb(var(--color-foreground));
+}
+
+.daewoo-range-card--product .daewoo-range-card__badge {
+  background: rgb(var(--color-foreground) / 0.08);
+}
+
 /* ---------- Reassurance strip ---------- */
 
 .daewoo-reassurance {

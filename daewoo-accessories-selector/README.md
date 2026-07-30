@@ -87,12 +87,23 @@ l'éditeur :
 
 Rien n'est codé en dur dans le Liquid — tout passe par ces champs.
 
-## 4. Ajouter les visuels lifestyle
+## 4. Ajouter les visuels
 
-Pour chaque carte : **Image desktop** (pleine largeur, format large ~16:10 à
-21:9) et **Image mobile** (format plus vertical) dans les réglages du bloc.
-Sans image, un placeholder Shopify propre s'affiche — la page reste
-utilisable en attendant vos photos.
+Chaque carte a un réglage **Style de l'image** :
+
+- **Lifestyle** (par défaut) : photo pleine largeur, texte en surimpression.
+  Fait pour de vraies photos d'intérieur, format large ~16:10 à 21:9, avec
+  une variante **Image mobile** plus verticale.
+- **Produit** : la photo reste entière (non recadrée) sur un fond neutre,
+  le texte passe en dessous plutôt qu'en surimpression. Pensé pour vos
+  photos studio existantes (fond blanc), en attendant vos prises de vue
+  lifestyle.
+
+Dans le thème brouillon, les 4 cartes utilisent déjà vos vraies photos
+produit existantes (celles de vos fiches produit centrales) en style
+**Produit** — nettement plus premium qu'un aperçu vide, mais toujours en
+attente de vos photos lifestyle pour le rendu final visé par le brief.
+Sans image du tout, un placeholder Shopify propre s'affiche.
 
 Utilisez uniquement de vraies photos de vos centrales (Vigilia, Touch AM301,
 Touch XL AM302, SA501 Key, PA501Z Elite) : rien dans le code ne modifie ou

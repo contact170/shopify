@@ -7,6 +7,14 @@
   @param {string} [size] - 'lg' or 'sm', controls proportions in the editorial grid
   @param {string} [loading] - 'eager' or 'lazy' (default 'lazy')
 
+  Block setting `image_style` picks the visual treatment:
+  - 'lifestyle' (default) - full-bleed photo with text overlay, for real
+    lifestyle/interior shots.
+  - 'product' - image shown contained on a neutral panel with text below,
+    for plain studio product photography (avoids cropping a white-background
+    product shot edge-to-edge, which reads as a badly cropped image rather
+    than a deliberate design choice).
+
   @example
   {% render 'daewoo-range-card', block: block, size: 'lg', loading: 'eager' %}
 {%- enddoc -%}
@@ -14,6 +22,7 @@
 {%- liquid
   assign s = block.settings
   assign is_dark = s.color_theme == 'dark'
+  assign is_product = s.image_style == 'product'
   assign loading = loading | default: 'lazy'
   assign card_alt = s.image_alt | default: s.heading | strip_html
 -%}
@@ -21,7 +30,7 @@
 <a
   href="{{ s.button_link | default: '#' }}"
   id="DaewooRangeCard-{{ block.id }}"
-  class="daewoo-range-card daewoo-range-card--{{ size | default: 'lg' }}{% if is_dark %} daewoo-range-card--dark{% endif %} relative block overflow-hidden"
+  class="daewoo-range-card daewoo-range-card--{{ size | default: 'lg' }}{% if is_dark %} daewoo-range-card--dark{% endif %}{% if is_product %} daewoo-range-card--product{% endif %} relative block overflow-hidden"
   aria-label="{{ s.heading | strip_html | escape }}{% if s.subheading != blank %} — {{ s.subheading | strip_html | escape }}{% endif %}"
   {{ block.shopify_attributes }}
 >
