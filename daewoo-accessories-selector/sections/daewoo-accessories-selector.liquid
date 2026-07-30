@@ -95,23 +95,17 @@
   {%- if card_count > 0 -%}
     <div class="daewoo-selector page-width" id="DaewooSelector-{{ section.id }}">
       <div class="daewoo-selector__grid daewoo-selector__grid--{{ card_count }} grid">
-        {%- liquid
-          assign i = 0
-          for block in section.blocks
-            if block.type contains 'card_' and block.settings.enabled
-              assign i = i | plus: 1
-              assign card_size = 'sm'
-              if i <= 2
-                assign card_size = 'lg'
-              endif
-        -%}
-        <div class="daewoo-selector__item daewoo-selector__item--{{ card_size }}">
-          {%- render 'daewoo-range-card', block: block, size: card_size, loading: 'lazy' -%}
-        </div>
-        {%- liquid
-            endif
-          endfor
-        -%}
+        {%- assign i = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type contains 'card_' and block.settings.enabled -%}
+            {%- assign i = i | plus: 1 -%}
+            {%- assign card_size = 'sm' -%}
+            {%- if i <= 2 -%}{%- assign card_size = 'lg' -%}{%- endif -%}
+            <div class="daewoo-selector__item daewoo-selector__item--{{ card_size }}">
+              {%- render 'daewoo-range-card', block: block, size: card_size, loading: 'lazy' -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     </div>
   {%- endif -%}
@@ -211,7 +205,7 @@
 
 {% schema %}
 {
-  "name": "Daewoo — Sélecteur accessoires",
+  "name": "Daewoo — Accessoires",
   "class": "daewoo-accessories-section",
   "settings": [
     { "type": "header", "content": "Hero" },
@@ -237,7 +231,7 @@
     { "type": "textarea", "id": "identify_text", "label": "Texte", "default": "Comparez votre équipement avec les modèles ci-dessous pour trouver les accessoires compatibles." },
     { "type": "text", "id": "identify_button_label", "label": "Texte du bouton (partagé)", "default": "C'est ma centrale" },
     { "type": "text", "id": "identify_contact_label", "label": "Lien de contact", "default": "Besoin d'aide pour identifier votre alarme ? Contactez-nous" },
-    { "type": "url", "id": "identify_contact_link", "label": "URL du lien de contact", "default": "/pages/contact" },
+    { "type": "url", "id": "identify_contact_link", "label": "URL du lien de contact" },
 
     { "type": "header", "content": "Transition catalogue" },
     { "type": "checkbox", "id": "enable_transition", "label": "Afficher la transition éditoriale", "default": true },
@@ -246,7 +240,7 @@
     { "type": "textarea", "id": "catalog_text", "label": "Texte", "default": "Retrouvez les détecteurs, sirènes, télécommandes et équipements complémentaires compatibles avec votre système Daewoo Security." },
     { "type": "checkbox", "id": "enable_quick_nav", "label": "Afficher la barre de sélection rapide", "default": true },
     { "type": "text", "id": "quick_nav_all_label", "label": "Libellé \"Tous les accessoires\"", "default": "Tous les accessoires" },
-    { "type": "url", "id": "quick_nav_all_link", "label": "URL \"Tous les accessoires\"", "default": "/collections/tous-les-accessoires" },
+    { "type": "url", "id": "quick_nav_all_link", "label": "URL \"Tous les accessoires\"" },
 
     { "type": "header", "content": "Mise en page" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Espacement au-dessus", "default": 0 },
@@ -269,7 +263,7 @@
         { "type": "textarea", "id": "description", "label": "Description", "default": "Ajoutez facilement des détecteurs, sirènes, télécommandes et équipements complémentaires à votre système Vigilia." },
         { "type": "text", "id": "identify_feature", "label": "Caractéristique (section identification)", "default": "Centrale Vigilia / Vigilia +" },
         { "type": "text", "id": "button_label", "label": "Texte du CTA", "default": "Découvrir les accessoires Vigilia" },
-        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "info": "Peut être identique à celle de la carte Touch / Touch XL : les deux gammes partagent la même collection d'accessoires tout en gardant chacune leur propre visuel.", "default": "/collections/compatible-gamme-vigilia-touch" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "info": "Peut être identique à celle de la carte Touch / Touch XL : les deux gammes partagent la même collection d'accessoires tout en gardant chacune leur propre visuel." },
         { "type": "select", "id": "color_theme", "label": "Thème de la carte", "default": "dark", "options": [
           { "value": "light", "label": "Clair" },
           { "value": "dark", "label": "Sombre" }
@@ -291,7 +285,7 @@
         { "type": "textarea", "id": "description", "label": "Description", "default": "Complétez votre centrale Touch ou Touch XL avec des accessoires compatibles conçus pour faire évoluer votre installation." },
         { "type": "text", "id": "identify_feature", "label": "Caractéristique (section identification)", "default": "Touch AM301 (4,3\") / Touch XL AM302 (7\")" },
         { "type": "text", "id": "button_label", "label": "Texte du CTA", "default": "Découvrir les accessoires Touch" },
-        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "info": "Peut être identique à celle de la carte Vigilia : les deux gammes partagent la même collection d'accessoires tout en gardant chacune leur propre visuel.", "default": "/collections/compatible-gamme-vigilia-touch" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "info": "Peut être identique à celle de la carte Vigilia : les deux gammes partagent la même collection d'accessoires tout en gardant chacune leur propre visuel." },
         { "type": "select", "id": "color_theme", "label": "Thème de la carte", "default": "dark", "options": [
           { "value": "light", "label": "Clair" },
           { "value": "dark", "label": "Sombre" }
@@ -313,7 +307,7 @@
         { "type": "textarea", "id": "description", "label": "Description", "default": "Découvrez les détecteurs, sirènes, télécommandes et accessoires compatibles avec la centrale SA501 Key." },
         { "type": "text", "id": "identify_feature", "label": "Caractéristique (section identification)", "default": "Centrale SA501 Key, clavier intégré" },
         { "type": "text", "id": "button_label", "label": "Texte du CTA", "default": "Découvrir les accessoires SA501 Key" },
-        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "default": "/collections/accessoires" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires" },
         { "type": "select", "id": "color_theme", "label": "Thème de la carte", "default": "light", "options": [
           { "value": "light", "label": "Clair" },
           { "value": "dark", "label": "Sombre" }
@@ -335,7 +329,7 @@
         { "type": "textarea", "id": "description", "label": "Description", "default": "Découvrez les accessoires Zigbee et les équipements conçus pour compléter votre centrale PA501Z Elite." },
         { "type": "text", "id": "identify_feature", "label": "Caractéristique (section identification)", "default": "Centrale PA501Z Elite, Zigbee" },
         { "type": "text", "id": "button_label", "label": "Texte du CTA", "default": "Découvrir les accessoires Elite" },
-        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "default": "/collections/gamme-elite-accessoires" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires" },
         { "type": "select", "id": "color_theme", "label": "Thème de la carte", "default": "dark", "options": [
           { "value": "light", "label": "Clair" },
           { "value": "dark", "label": "Sombre" }
@@ -364,7 +358,7 @@
   ],
   "presets": [
     {
-      "name": "Daewoo — Sélecteur accessoires",
+      "name": "Daewoo — Accessoires",
       "blocks": [
         { "type": "card_vigilia" },
         { "type": "card_touch" },

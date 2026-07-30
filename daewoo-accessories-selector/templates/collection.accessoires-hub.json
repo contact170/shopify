@@ -1,0 +1,155 @@
+{
+  "sections": {
+    "daewoo_accessories_selector": {
+      "type": "daewoo-accessories-selector",
+      "blocks": {
+        "card_vigilia": {
+          "type": "card_vigilia",
+          "settings": {
+            "button_link": "shopify://collections/compatible-gamme-vigilia-touch"
+          }
+        },
+        "card_touch": {
+          "type": "card_touch",
+          "settings": {
+            "button_link": "shopify://collections/compatible-gamme-vigilia-touch"
+          }
+        },
+        "card_key": {
+          "type": "card_key",
+          "settings": {
+            "button_link": "shopify://collections/accessoires"
+          }
+        },
+        "card_elite": {
+          "type": "card_elite",
+          "settings": {
+            "button_link": "shopify://collections/gamme-elite-accessoires"
+          }
+        },
+        "reassurance-1": {
+          "type": "reassurance_item",
+          "settings": {
+            "icon": "plus-2",
+            "title": "Installation facile",
+            "text": "Ajoutez vos accessoires en quelques minutes."
+          }
+        },
+        "reassurance-2": {
+          "type": "reassurance_item",
+          "settings": {
+            "icon": "lock",
+            "title": "Sans abonnement",
+            "text": "Votre système reste utilisable sans frais mensuels imposés."
+          }
+        },
+        "reassurance-3": {
+          "type": "reassurance_item",
+          "settings": {
+            "icon": "increase",
+            "title": "Installation évolutive",
+            "text": "Complétez votre équipement selon vos besoins."
+          }
+        },
+        "reassurance-4": {
+          "type": "reassurance_item",
+          "settings": {
+            "icon": "comment",
+            "title": "Assistance française",
+            "text": "Notre équipe vous accompagne dans le choix et l'installation."
+          }
+        }
+      },
+      "block_order": [
+        "card_vigilia",
+        "card_touch",
+        "card_key",
+        "card_elite",
+        "reassurance-1",
+        "reassurance-2",
+        "reassurance-3",
+        "reassurance-4"
+      ],
+      "settings": {
+        "quick_nav_all_link": "shopify://collections/tous-les-accessoires"
+      }
+    },
+    "main-collection": {
+      "type": "main-collection",
+      "blocks": {
+        "subcollections": {
+          "type": "subcollections",
+          "settings": {
+            "menu": "tous-les-accessoires",
+            "show_count": true
+          }
+        },
+        "promotion-1": {
+          "type": "promotion",
+          "disabled": true,
+          "settings": {
+            "position": 8,
+            "column_size": "2",
+            "row_size": "1",
+            "image": "shopify://shop_images/Visuellifestyleaccessoires_1.png",
+            "content_position": "md:items-end",
+            "text_alignment": "center",
+            "content_layout": "default",
+            "subheading": "",
+            "heading": "Indispensable",
+            "heading_size": "title-xl tracking-heading",
+            "content": "<p>Caméra autonome Haute Résolution W502</p>",
+            "button_label": "En savoir plus",
+            "button_link": "shopify://products/camera-daewoo-autonome-w502-full-hd",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true,
+            "content_position_mobile": "items-end",
+            "text_alignment_mobile": "center",
+            "direction": "left",
+            "speed": 20,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "color_text": "#ffffff",
+            "color_background": "#171717",
+            "gradient_background": "",
+            "color_highlight": "",
+            "gradient_highlight": "",
+            "color_button_text": "#171717",
+            "color_button_background": "#ffffff",
+            "color_button_gradient": "",
+            "color_overlay": "#171717",
+            "overlay_opacity": 15
+          }
+        }
+      },
+      "block_order": [
+        "subcollections",
+        "promotion-1"
+      ],
+      "settings": {
+        "products_per_page": 50,
+        "columns": 4,
+        "columns_mobile": "2",
+        "pagination": "paginated",
+        "enable_filtering": true,
+        "filter_type": "drawer",
+        "filter_collapsed": false,
+        "filter_color_swatches": true,
+        "enable_sorting": false,
+        "show_on_model": false,
+        "buttons_style": "secondary",
+        "padding_top": 40,
+        "padding_bottom": 100,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "daewoo_accessories_selector",
+    "main-collection"
+  ]
+}

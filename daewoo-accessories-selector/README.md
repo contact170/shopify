@@ -13,23 +13,57 @@ produits **native** du thème Impact (Maestrooo), inchangée.
 | `snippets/daewoo-range-card.liquid` | **Nouveau** | Une des 4 grandes cartes lifestyle (image + texte + CTA), toute la carte est un seul `<a>` sémantique. |
 | `snippets/daewoo-identify-card.liquid` | **Nouveau** | Carte compacte de la section « Vous ne connaissez pas votre centrale ? », réutilise les réglages de la carte correspondante. |
 | `snippets/product-badges.liquid` | **Modifié** | Ajout de 4 lignes en fin de fichier pour afficher le badge de compatibilité. Le reste du fichier est inchangé — copiez uniquement le bloc marqué `Daewoo —` si vous avez modifié ce fichier depuis. |
+| `templates/collection.accessoires-hub.json` | **Nouveau** | Template alternatif dédié : ma section + la section `main-collection` native, réglée avec vos filtres/tri/pagination actuels. Ne remplace pas votre `collection.json` par défaut. |
 
 Aucun fichier JavaScript n'a été nécessaire : navigation par vraies URLs de
 collection, défilement doux en CSS (`scroll-behavior: smooth`), état actif de
 la barre de sélection calculé côté serveur (Liquid), `prefers-reduced-motion`
 respecté en CSS.
 
+## Déjà déployé — thème brouillon
+
+Ces 6 fichiers sont déjà en ligne dans un thème **brouillon** dédié :
+**« Sélecteur accessoires (Claude) »** (id `200542421332`) — dupliqué depuis
+votre thème actif, donc zéro impact sur le site en ligne tant qu'il n'est pas
+publié.
+
+Aperçu direct :
+```
+https://daewoo-security.myshopify.com/admin/themes/200542421332/editor?template=collection.accessoires-hub&previewPath=%2Fcollections%2Ftous-les-accessoires
+```
+
+Les sections ci-dessous restent utiles si vous voulez recréer ça vous-même
+dans un autre thème, ou comprendre ce qui a été fait.
+
 ## 1. Installation dans le thème
 
-1. Dans l'admin Shopify : **Boutique en ligne → Thèmes → Impact → Modifier le code**.
-2. Créez les 4 nouveaux fichiers ci-dessus dans les bons dossiers (`Add a new section/asset/snippet`), en collant le contenu correspondant.
+1. Dans l'admin Shopify : **Boutique en ligne → Thèmes → (votre thème) → Modifier le code**.
+2. Créez les fichiers ci-dessus dans les bons dossiers (`Add a new section/asset/snippet/template`), en collant le contenu correspondant.
 3. Ouvrez `snippets/product-badges.liquid` existant et collez le bloc ajouté en fin de fichier (juste avant le `</div>` final) — ne remplacez pas le reste du fichier.
+
+> Note technique : les réglages de type URL (`button_link`, `quick_nav_all_link`,
+> `identify_contact_link`) n'ont pas de valeur par défaut dans le schéma —
+> Shopify rejette les chemins relatifs comme défaut de schéma. Dans le template
+> `collection.accessoires-hub.json` fourni, les 4 cartes sont déjà pré-remplies
+> avec vos vraies URLs de collection (via `shopify://collections/...`) ; si vous
+> ajoutez la section manuellement ailleurs, il faudra renseigner ces URLs une
+> fois dans l'éditeur (voir section 3 ci-dessous).
 
 ## 2. Ajouter la section au template de collection
 
-1. **Éditeur de thème → Collection par défaut** (ou le template spécifique utilisé par `tous-les-accessoires` si vous en avez un dédié).
-2. **Ajouter une section** → choisissez *Daewoo — Sélecteur accessoires*. Placez-la **au-dessus** de la section *Collection principale* (grille produits native).
-3. Elle arrive pré-remplie (voir `presets`) : hero, 4 cartes, 4 avantages de réassurance — vous n'avez qu'à ajouter les images.
+Deux options :
+
+- **Option rapide (déjà faite dans le brouillon) :** utiliser
+  `templates/collection.accessoires-hub.json` tel quel comme template
+  alternatif, puis l'assigner à la collection `tous-les-accessoires` via
+  **Réglages de la collection → Modèle de theme** dans l'admin (uniquement
+  une fois le thème publié — voir plus bas).
+- **Option manuelle :** dans **Éditeur de thème → template de collection de
+  votre choix → Ajouter une section**, choisissez *Daewoo — Accessoires*.
+  Placez-la **au-dessus** de la section *Collection principale* (grille
+  produits native). Elle arrive pré-remplie (voir `presets`) : hero, 4
+  cartes, 4 avantages de réassurance — il ne manque que les images et les
+  4 URLs (voir section 3).
 
 Répétez l'étape sur les templates des collections dédiées (`accessoires` pour
 Key, `gamme-elite-accessoires` pour Elite, `compatible-gamme-vigilia-touch`)
@@ -39,17 +73,19 @@ sélection rapide détectera automatiquement la page active.
 ## 3. Configurer les URLs des 4 cartes
 
 Chaque carte (`Carte — Vigilia`, `Carte — Touch / Touch XL`, `Carte — SA501 Key`,
-`Carte — PA501Z Elite`) a son propre champ **URL de la collection d'accessoires**.
-Les valeurs par défaut pointent déjà vers vos collections réelles :
+`Carte — PA501Z Elite`) a son propre champ **URL de la collection d'accessoires**,
+sans valeur par défaut dans le schéma (Shopify l'exige ainsi). Dans le
+template fourni elles sont déjà renseignées ; si vous ajoutez la section à la
+main ailleurs, remplissez-les vous-même via le sélecteur de collection de
+l'éditeur :
 
-- Vigilia **et** Touch / Touch XL → `/collections/compatible-gamme-vigilia-touch`
-  (les deux cartes peuvent partager cette même URL tout en gardant chacune
-  leur propre image, titre et badge — c'est intentionnel, pas un bug).
-- SA501 Key → `/collections/accessoires`
-- PA501Z Elite → `/collections/gamme-elite-accessoires`
+- Vigilia **et** Touch / Touch XL → collection *Compatible gamme Vigilia / Touch*
+  (les deux cartes peuvent partager cette même collection tout en gardant
+  chacune leur propre image, titre et badge — c'est intentionnel, pas un bug).
+- SA501 Key → collection *ACCESSOIRES KEY (SA501)*
+- PA501Z Elite → collection *Compatible gamme Élite*
 
-Changez-les librement dans l'éditeur si vos handles de collection évoluent —
-rien n'est codé en dur dans le Liquid.
+Rien n'est codé en dur dans le Liquid — tout passe par ces champs.
 
 ## 4. Ajouter les visuels lifestyle
 
