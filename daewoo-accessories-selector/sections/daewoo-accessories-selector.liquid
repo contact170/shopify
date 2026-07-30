@@ -1,0 +1,381 @@
+{%- doc -%}
+  Daewoo Security — accessories range selector.
+
+  Sits ABOVE the theme's native `main-collection` section on a collection
+  template. It never touches product data: it only helps the visitor pick
+  their alarm range (Vigilia, Touch/Touch XL, SA501 Key, PA501Z Elite) and
+  navigate to the right accessories collection. The product grid, filters,
+  sorting, pagination, quick add and reviews all keep coming from the
+  existing `main-collection` section untouched.
+
+  Card content lives in four fixed, reorderable blocks (card_vigilia,
+  card_touch, card_key, card_elite) so Vigilia/Touch and Touch XL can share
+  one destination collection while keeping their own image, copy and visual
+  state — exactly as requested. Reassurance icons are a repeatable block.
+
+  The "editorial asymmetric" sizing (2 large cards + 2 smaller ones) follows
+  block ORDER, not identity, so reordering blocks in the editor reorders and
+  resizes the grid together — no template edit needed.
+{%- enddoc -%}
+
+{{ 'daewoo-accessories-selector.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign hero_heading_tag = section.settings.hero_heading_tag | default: 'h2'
+  assign card_count = 0
+  for block in section.blocks
+    if block.type contains 'card_' and block.settings.enabled
+      assign card_count = card_count | plus: 1
+    endif
+  endfor
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="section daewoo-accessories section--padding{% if section.settings.divider %} section--divider{% endif %}">
+
+  {%- if section.settings.enable_hero -%}
+    <div class="daewoo-hero relative" id="DaewooHero-{{ section.id }}">
+      <div class="daewoo-hero__media absolute inset-0" aria-hidden="true">
+        {%- if section.settings.hero_image != blank -%}
+          <picture class="block w-full h-full">
+            {%- if section.settings.hero_image_mobile != blank -%}
+              <source
+                media="(max-width: 767px)"
+                srcset="{{ section.settings.hero_image_mobile | image_url: width: 800 }} 800w, {{ section.settings.hero_image_mobile | image_url: width: 1200 }} 1200w"
+                width="{{ section.settings.hero_image_mobile.width }}"
+                height="{{ section.settings.hero_image_mobile.height }}"
+              >
+            {%- endif -%}
+            {{-
+              section.settings.hero_image
+              | image_url: width: section.settings.hero_image.width
+              | image_tag:
+                loading: 'eager',
+                widths: '750,1100,1500,1920,2400',
+                sizes: '100vw',
+                alt: '',
+                class: 'daewoo-hero__img w-full h-full'
+            -}}
+          </picture>
+        {%- endif -%}
+        <span class="daewoo-hero__gradient absolute inset-0"></span>
+      </div>
+
+      <div class="page-width relative daewoo-hero__inner">
+        {%- if section.settings.hero_eyebrow != blank -%}
+          <p class="daewoo-hero__eyebrow">{{ section.settings.hero_eyebrow | escape }}</p>
+        {%- endif -%}
+
+        <{{ hero_heading_tag }} class="daewoo-hero__heading heading">{{ section.settings.hero_heading }}</{{ hero_heading_tag }}>
+
+        {%- if section.settings.hero_subheading != blank -%}
+          <p class="daewoo-hero__subheading">{{ section.settings.hero_subheading }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.hero_text != blank -%}
+          <p class="daewoo-hero__text">{{ section.settings.hero_text }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.enable_identify and section.settings.hero_help_label != blank -%}
+          <a href="#DaewooIdentify-{{ section.id }}" class="daewoo-hero__help link icon-with-text">
+            <span class="link-text">{{ section.settings.hero_help_label | escape }}</span>
+            {%- render 'icon', icon: 'arrow-down', size: 'sm' -%}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if card_count > 0 -%}
+    <div class="daewoo-selector page-width" id="DaewooSelector-{{ section.id }}">
+      <div class="daewoo-selector__grid daewoo-selector__grid--{{ card_count }} grid">
+        {%- liquid
+          assign i = 0
+          for block in section.blocks
+            if block.type contains 'card_' and block.settings.enabled
+              assign i = i | plus: 1
+              assign card_size = 'sm'
+              if i <= 2
+                assign card_size = 'lg'
+              endif
+        -%}
+        <div class="daewoo-selector__item daewoo-selector__item--{{ card_size }}">
+          {%- render 'daewoo-range-card', block: block, size: card_size, loading: 'lazy' -%}
+        </div>
+        {%- liquid
+            endif
+          endfor
+        -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.enable_reassurance -%}
+    {%- assign reassurance_items = section.blocks | where: 'type', 'reassurance_item' -%}
+    {%- if reassurance_items.size > 0 -%}
+      <div class="daewoo-reassurance page-width">
+        <ul class="daewoo-reassurance__list grid">
+          {%- for block in reassurance_items -%}
+            <li class="daewoo-reassurance__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                {%- render 'icon', icon: block.settings.icon, size: 'lg', class: 'daewoo-reassurance__icon' -%}
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <p class="daewoo-reassurance__title">{{ block.settings.title | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="daewoo-reassurance__text">{{ block.settings.text }}</p>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if section.settings.enable_identify and card_count > 0 -%}
+    <div class="daewoo-identify page-width" id="DaewooIdentify-{{ section.id }}">
+      {%- if section.settings.identify_heading != blank -%}
+        <h2 class="daewoo-identify__heading heading">{{ section.settings.identify_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.identify_text != blank -%}
+        <p class="daewoo-identify__text">{{ section.settings.identify_text }}</p>
+      {%- endif -%}
+
+      <div class="daewoo-identify__grid grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type contains 'card_' and block.settings.enabled -%}
+            {%- render 'daewoo-identify-card', block: block, button_label: section.settings.identify_button_label, loading: 'lazy' -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.identify_contact_label != blank -%}
+        {%- render 'button',
+          label: section.settings.identify_contact_label,
+          link: section.settings.identify_contact_link,
+          style: 'link',
+          show_icon: true,
+          classes: 'daewoo-identify__contact'
+        -%}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.enable_transition -%}
+    <div class="daewoo-transition page-width">
+      {%- if section.settings.catalog_eyebrow != blank -%}
+        <p class="daewoo-transition__eyebrow">{{ section.settings.catalog_eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.catalog_heading != blank -%}
+        <h2 class="daewoo-transition__heading heading">{{ section.settings.catalog_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.catalog_text != blank -%}
+        <p class="daewoo-transition__text">{{ section.settings.catalog_text }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.enable_quick_nav and card_count > 0 -%}
+        <nav class="daewoo-quicknav" aria-label="Filtrer par gamme">
+          <ul class="daewoo-quicknav__list flex">
+            {%- if section.settings.quick_nav_all_label != blank -%}
+              {%- liquid
+                assign all_link = section.settings.quick_nav_all_link | default: '/collections/tous-les-accessoires'
+              -%}
+              <li class="daewoo-quicknav__item">
+                <a href="{{ all_link }}" class="daewoo-quicknav__link{% if collection.url == all_link %} is-active{% endif %}"{% if collection.url == all_link %} aria-current="page"{% endif %}>
+                  {{- section.settings.quick_nav_all_label | escape -}}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type contains 'card_' and block.settings.enabled and block.settings.button_link != blank -%}
+                <li class="daewoo-quicknav__item">
+                  <a href="{{ block.settings.button_link }}" class="daewoo-quicknav__link{% if collection.url == block.settings.button_link %} is-active{% endif %}"{% if collection.url == block.settings.button_link %} aria-current="page"{% endif %}>
+                    {{- block.settings.heading | strip_html -}}
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Daewoo — Sélecteur accessoires",
+  "class": "daewoo-accessories-section",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "checkbox", "id": "enable_hero", "label": "Afficher le hero", "default": true },
+    { "type": "select", "id": "hero_heading_tag", "label": "Balise du titre", "info": "Utilisez H1 uniquement si aucun autre H1 (ex. bannière de collection) n'est déjà affiché sur cette page.", "default": "h2", "options": [
+      { "value": "h1", "label": "H1" },
+      { "value": "h2", "label": "H2" }
+    ]},
+    { "type": "text", "id": "hero_eyebrow", "label": "Sur-titre", "default": "ACCESSOIRES DAEWOO SECURITY" },
+    { "type": "text", "id": "hero_heading", "label": "Titre principal", "default": "Faites évoluer votre système de sécurité." },
+    { "type": "textarea", "id": "hero_subheading", "label": "Sous-titre", "default": "Identifiez votre centrale et découvrez les accessoires compatibles avec votre installation." },
+    { "type": "textarea", "id": "hero_text", "label": "Phrase secondaire", "default": "Détecteurs, sirènes, télécommandes et équipements complémentaires pour renforcer votre sécurité sans abonnement." },
+    { "type": "text", "id": "hero_help_label", "label": "Lien d'aide", "info": "Fait défiler vers la section d'identification ci-dessous (masqué si celle-ci est désactivée).", "default": "Je ne connais pas ma centrale" },
+    { "type": "image_picker", "id": "hero_image", "label": "Image desktop" },
+    { "type": "image_picker", "id": "hero_image_mobile", "label": "Image mobile" },
+
+    { "type": "header", "content": "Réassurance" },
+    { "type": "checkbox", "id": "enable_reassurance", "label": "Afficher le bandeau de réassurance", "default": true },
+
+    { "type": "header", "content": "Identification des centrales" },
+    { "type": "checkbox", "id": "enable_identify", "label": "Afficher la section d'identification", "default": true },
+    { "type": "text", "id": "identify_heading", "label": "Titre", "default": "Vous ne connaissez pas votre centrale ?" },
+    { "type": "textarea", "id": "identify_text", "label": "Texte", "default": "Comparez votre équipement avec les modèles ci-dessous pour trouver les accessoires compatibles." },
+    { "type": "text", "id": "identify_button_label", "label": "Texte du bouton (partagé)", "default": "C'est ma centrale" },
+    { "type": "text", "id": "identify_contact_label", "label": "Lien de contact", "default": "Besoin d'aide pour identifier votre alarme ? Contactez-nous" },
+    { "type": "url", "id": "identify_contact_link", "label": "URL du lien de contact", "default": "/pages/contact" },
+
+    { "type": "header", "content": "Transition catalogue" },
+    { "type": "checkbox", "id": "enable_transition", "label": "Afficher la transition éditoriale", "default": true },
+    { "type": "text", "id": "catalog_eyebrow", "label": "Sur-titre", "default": "TOUS LES ACCESSOIRES" },
+    { "type": "text", "id": "catalog_heading", "label": "Titre", "default": "Complétez votre installation." },
+    { "type": "textarea", "id": "catalog_text", "label": "Texte", "default": "Retrouvez les détecteurs, sirènes, télécommandes et équipements complémentaires compatibles avec votre système Daewoo Security." },
+    { "type": "checkbox", "id": "enable_quick_nav", "label": "Afficher la barre de sélection rapide", "default": true },
+    { "type": "text", "id": "quick_nav_all_label", "label": "Libellé \"Tous les accessoires\"", "default": "Tous les accessoires" },
+    { "type": "url", "id": "quick_nav_all_link", "label": "URL \"Tous les accessoires\"", "default": "/collections/tous-les-accessoires" },
+
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Espacement au-dessus", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Espacement en dessous", "default": 36 },
+    { "type": "checkbox", "id": "divider", "label": "Séparateur", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "card_vigilia",
+      "name": "Carte — Vigilia",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "enabled", "label": "Activer cette carte", "default": true },
+        { "type": "image_picker", "id": "image", "label": "Image desktop (lifestyle)" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Image mobile" },
+        { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "Gamme Vigilia" },
+        { "type": "text", "id": "heading", "label": "Titre", "default": "Vigilia" },
+        { "type": "text", "id": "subheading", "label": "Sous-titre", "default": "L'alarme simple, complète et évolutive." },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Ajoutez facilement des détecteurs, sirènes, télécommandes et équipements complémentaires à votre système Vigilia." },
+        { "type": "text", "id": "identify_feature", "label": "Caractéristique (section identification)", "default": "Centrale Vigilia / Vigilia +" },
+        { "type": "text", "id": "button_label", "label": "Texte du CTA", "default": "Découvrir les accessoires Vigilia" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "info": "Peut être identique à celle de la carte Touch / Touch XL : les deux gammes partagent la même collection d'accessoires tout en gardant chacune leur propre visuel.", "default": "/collections/compatible-gamme-vigilia-touch" },
+        { "type": "select", "id": "color_theme", "label": "Thème de la carte", "default": "dark", "options": [
+          { "value": "light", "label": "Clair" },
+          { "value": "dark", "label": "Sombre" }
+        ]}
+      ]
+    },
+    {
+      "type": "card_touch",
+      "name": "Carte — Touch / Touch XL",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "enabled", "label": "Activer cette carte", "default": true },
+        { "type": "image_picker", "id": "image", "label": "Image desktop (lifestyle)" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Image mobile" },
+        { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "Écrans 4,3\" et 7\"" },
+        { "type": "text", "id": "heading", "label": "Titre", "default": "Touch / Touch XL" },
+        { "type": "text", "id": "subheading", "label": "Sous-titre", "default": "Le confort du pilotage tactile." },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Complétez votre centrale Touch ou Touch XL avec des accessoires compatibles conçus pour faire évoluer votre installation." },
+        { "type": "text", "id": "identify_feature", "label": "Caractéristique (section identification)", "default": "Touch AM301 (4,3\") / Touch XL AM302 (7\")" },
+        { "type": "text", "id": "button_label", "label": "Texte du CTA", "default": "Découvrir les accessoires Touch" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "info": "Peut être identique à celle de la carte Vigilia : les deux gammes partagent la même collection d'accessoires tout en gardant chacune leur propre visuel.", "default": "/collections/compatible-gamme-vigilia-touch" },
+        { "type": "select", "id": "color_theme", "label": "Thème de la carte", "default": "dark", "options": [
+          { "value": "light", "label": "Clair" },
+          { "value": "dark", "label": "Sombre" }
+        ]}
+      ]
+    },
+    {
+      "type": "card_key",
+      "name": "Carte — SA501 Key",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "enabled", "label": "Activer cette carte", "default": true },
+        { "type": "image_picker", "id": "image", "label": "Image desktop (lifestyle)" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Image mobile" },
+        { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "Centrale à clavier" },
+        { "type": "text", "id": "heading", "label": "Titre", "default": "SA501 Key" },
+        { "type": "text", "id": "subheading", "label": "Sous-titre", "default": "L'essentiel de la sécurité, simplement." },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Découvrez les détecteurs, sirènes, télécommandes et accessoires compatibles avec la centrale SA501 Key." },
+        { "type": "text", "id": "identify_feature", "label": "Caractéristique (section identification)", "default": "Centrale SA501 Key, clavier intégré" },
+        { "type": "text", "id": "button_label", "label": "Texte du CTA", "default": "Découvrir les accessoires SA501 Key" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "default": "/collections/accessoires" },
+        { "type": "select", "id": "color_theme", "label": "Thème de la carte", "default": "light", "options": [
+          { "value": "light", "label": "Clair" },
+          { "value": "dark", "label": "Sombre" }
+        ]}
+      ]
+    },
+    {
+      "type": "card_elite",
+      "name": "Carte — PA501Z Elite",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "enabled", "label": "Activer cette carte", "default": true },
+        { "type": "image_picker", "id": "image", "label": "Image desktop (lifestyle)" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Image mobile" },
+        { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "Technologie Zigbee" },
+        { "type": "text", "id": "heading", "label": "Titre", "default": "PA501Z Elite" },
+        { "type": "text", "id": "subheading", "label": "Sous-titre", "default": "La sécurité nouvelle génération." },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Découvrez les accessoires Zigbee et les équipements conçus pour compléter votre centrale PA501Z Elite." },
+        { "type": "text", "id": "identify_feature", "label": "Caractéristique (section identification)", "default": "Centrale PA501Z Elite, Zigbee" },
+        { "type": "text", "id": "button_label", "label": "Texte du CTA", "default": "Découvrir les accessoires Elite" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection d'accessoires", "default": "/collections/gamme-elite-accessoires" },
+        { "type": "select", "id": "color_theme", "label": "Thème de la carte", "default": "dark", "options": [
+          { "value": "light", "label": "Clair" },
+          { "value": "dark", "label": "Sombre" }
+        ]}
+      ]
+    },
+    {
+      "type": "reassurance_item",
+      "name": "Avantage",
+      "limit": 4,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icône", "default": "plus-2", "options": [
+          { "value": "plus-2", "label": "Plus" },
+          { "value": "lock", "label": "Cadenas" },
+          { "value": "increase", "label": "Croissance" },
+          { "value": "comment", "label": "Assistance" },
+          { "value": "check-circle", "label": "Coche" },
+          { "value": "thumbs-up", "label": "Pouce levé" },
+          { "value": "package", "label": "Colis" },
+          { "value": "power", "label": "Prise" }
+        ]},
+        { "type": "text", "id": "title", "label": "Titre", "default": "Installation facile" },
+        { "type": "textarea", "id": "text", "label": "Texte", "default": "Ajoutez vos accessoires en quelques minutes." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Daewoo — Sélecteur accessoires",
+      "blocks": [
+        { "type": "card_vigilia" },
+        { "type": "card_touch" },
+        { "type": "card_key" },
+        { "type": "card_elite" },
+        { "type": "reassurance_item", "settings": { "icon": "plus-2", "title": "Installation facile", "text": "Ajoutez vos accessoires en quelques minutes." } },
+        { "type": "reassurance_item", "settings": { "icon": "lock", "title": "Sans abonnement", "text": "Votre système reste utilisable sans frais mensuels imposés." } },
+        { "type": "reassurance_item", "settings": { "icon": "increase", "title": "Installation évolutive", "text": "Complétez votre équipement selon vos besoins." } },
+        { "type": "reassurance_item", "settings": { "icon": "comment", "title": "Assistance française", "text": "Notre équipe vous accompagne dans le choix et l'installation." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

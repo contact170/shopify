@@ -1,0 +1,455 @@
+/*
+  Daewoo accessories selector — layout & motion only.
+  Colors, fonts, spacing scale and radii are all read from the theme's own
+  custom properties (--color-foreground, --color-background, --sp-*,
+  --animation-primary, --rounded-full, --border-radius-medium…) so this
+  section stays in sync automatically if the merchant changes the theme's
+  color or typography settings later.
+*/
+
+.daewoo-accessories {
+  --daewoo-gap: clamp(1rem, 2vw, 1.75rem);
+  --daewoo-radius: var(--border-radius-medium, 20px);
+  color: rgb(var(--color-foreground));
+}
+
+.daewoo-accessories .heading {
+  text-wrap: balance;
+}
+
+/* ---------- Hero ---------- */
+
+.daewoo-hero {
+  min-height: clamp(420px, 56vw, 680px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: rgb(var(--color-background));
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.daewoo-hero__media {
+  z-index: 0;
+}
+
+.daewoo-hero__img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.daewoo-hero__gradient {
+  background: linear-gradient(
+    to top,
+    rgb(var(--color-background) / 0.92) 0%,
+    rgb(var(--color-background) / 0.55) 32%,
+    rgb(var(--color-background) / 0.08) 62%,
+    rgb(var(--color-background) / 0) 100%
+  );
+}
+
+.daewoo-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  max-width: 46rem;
+}
+
+.daewoo-hero__eyebrow {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: var(--font-medium);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-highlight, var(--color-foreground)));
+}
+
+.daewoo-hero__heading {
+  margin: 0;
+  font-size: clamp(1.9rem, 3.4vw + 1rem, 3.4rem);
+  font-weight: var(--font-bold);
+  line-height: 1.08;
+}
+
+.daewoo-hero__subheading {
+  margin: 0;
+  font-size: clamp(1rem, 0.4vw + 0.9rem, 1.2rem);
+  color: rgb(var(--color-foreground) / 0.8);
+  max-width: 42ch;
+}
+
+.daewoo-hero__text {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgb(var(--color-foreground) / 0.65);
+  max-width: 48ch;
+}
+
+.daewoo-hero__help {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  gap: 0.4rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---------- Range selector grid ---------- */
+
+.daewoo-selector {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.daewoo-selector__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--daewoo-gap);
+}
+
+.daewoo-selector__item--lg {
+  grid-column: 1 / -1;
+}
+
+.daewoo-selector__item--lg .daewoo-range-card {
+  min-height: clamp(320px, 34vw, 480px);
+}
+
+.daewoo-selector__item--sm .daewoo-range-card {
+  min-height: clamp(300px, 28vw, 420px);
+}
+
+@media screen and (max-width: 767px) {
+  .daewoo-selector__item--lg,
+  .daewoo-selector__item--sm {
+    grid-column: 1 / -1;
+  }
+}
+
+.daewoo-range-card {
+  height: 100%;
+  border-radius: var(--daewoo-radius);
+  isolation: isolate;
+}
+
+.daewoo-range-card__media,
+.daewoo-range-card__scrim {
+  border-radius: inherit;
+}
+
+.daewoo-range-card__img,
+.daewoo-range-card__img.placeholder-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--animation-primary, 0.5s cubic-bezier(0.3, 1, 0.3, 1));
+}
+
+.daewoo-range-card__scrim {
+  background: linear-gradient(to top, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0) 55%);
+  pointer-events: none;
+}
+
+.daewoo-range-card:not(.daewoo-range-card--dark) .daewoo-range-card__scrim {
+  background: linear-gradient(to top, rgb(255 255 255 / 0.92), rgb(255 255 255 / 0) 55%);
+}
+
+.daewoo-range-card--dark .daewoo-range-card__content {
+  color: #fff;
+}
+
+.daewoo-range-card:not(.daewoo-range-card--dark) .daewoo-range-card__content {
+  color: rgb(var(--color-foreground));
+}
+
+.daewoo-range-card__content {
+  padding: clamp(1.25rem, 2.5vw, 2.25rem);
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.daewoo-range-card__badge {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--rounded-full, 999px);
+  font-size: 0.6875rem;
+  font-weight: var(--font-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgb(255 255 255 / 0.16);
+  backdrop-filter: blur(6px);
+}
+
+.daewoo-range-card:not(.daewoo-range-card--dark) .daewoo-range-card__badge {
+  background: rgb(var(--color-foreground) / 0.08);
+}
+
+.daewoo-range-card__heading {
+  font-size: clamp(1.4rem, 1.1vw + 1.1rem, 2rem);
+  font-weight: var(--font-bold);
+  line-height: 1.1;
+}
+
+.daewoo-range-card__subheading {
+  font-size: 1rem;
+  font-weight: var(--font-medium);
+  opacity: 0.9;
+}
+
+.daewoo-range-card__description {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  max-width: 40ch;
+}
+
+.daewoo-range-card__cta {
+  margin-top: 0.4rem;
+  gap: 0.5rem;
+  font-weight: var(--font-medium);
+}
+
+.daewoo-range-card__arrow {
+  width: var(--sp-4, 1rem);
+  height: var(--sp-4, 1rem);
+  transition: transform var(--animation-fast, 0.3s cubic-bezier(0.7, 0, 0.3, 1));
+}
+
+@media screen and (pointer: fine) {
+  .daewoo-range-card {
+    transition: transform var(--animation-primary, 0.5s cubic-bezier(0.3, 1, 0.3, 1)),
+      box-shadow var(--animation-primary, 0.5s cubic-bezier(0.3, 1, 0.3, 1));
+  }
+
+  .daewoo-range-card:hover,
+  .daewoo-range-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -24px rgb(var(--color-foreground) / 0.35);
+  }
+
+  .daewoo-range-card:hover .daewoo-range-card__img,
+  .daewoo-range-card:focus-visible .daewoo-range-card__img {
+    transform: scale(1.045);
+  }
+
+  .daewoo-range-card:hover .daewoo-range-card__arrow,
+  .daewoo-range-card:focus-visible .daewoo-range-card__arrow {
+    transform: translateX(4px);
+  }
+}
+
+/* ---------- Reassurance strip ---------- */
+
+.daewoo-reassurance {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.daewoo-reassurance__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .daewoo-reassurance__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.daewoo-reassurance__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.daewoo-reassurance__icon {
+  width: var(--sp-8, 2rem);
+  height: var(--sp-8, 2rem);
+  color: rgb(var(--color-foreground) / 0.7);
+  stroke-width: 1.4;
+}
+
+.daewoo-reassurance__title {
+  margin: 0;
+  font-weight: var(--font-bold);
+  font-size: 1rem;
+}
+
+.daewoo-reassurance__text {
+  margin: 0;
+  font-size: 0.875rem;
+  color: rgb(var(--color-foreground) / 0.65);
+}
+
+/* ---------- Identification ---------- */
+
+.daewoo-identify {
+  padding-top: clamp(3rem, 6vw, 5rem);
+  scroll-margin-top: calc(var(--header-height, 0px) + 24px);
+}
+
+.daewoo-identify__heading {
+  font-size: clamp(1.4rem, 1.5vw + 1rem, 2rem);
+  font-weight: var(--font-bold);
+  margin: 0 0 0.5rem;
+}
+
+.daewoo-identify__text {
+  margin: 0 0 1.75rem;
+  color: rgb(var(--color-foreground) / 0.7);
+  max-width: 56ch;
+}
+
+.daewoo-identify__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 2vw, 1.75rem);
+  margin-bottom: 1.5rem;
+}
+
+@media screen and (max-width: 767px) {
+  .daewoo-identify__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.daewoo-identify-card__media {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: calc(var(--daewoo-radius) * 0.6);
+  overflow: hidden;
+  background: rgb(var(--color-foreground) / 0.05);
+  margin-bottom: 0.75rem;
+}
+
+.daewoo-identify-card__img,
+.daewoo-identify-card__img.placeholder-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.daewoo-identify-card__heading {
+  font-size: 1rem;
+  font-weight: var(--font-bold);
+  margin: 0;
+}
+
+.daewoo-identify-card__feature {
+  display: block;
+  font-size: 0.8125rem;
+  color: rgb(var(--color-foreground) / 0.65);
+  margin: 0.15rem 0 0.75rem;
+}
+
+/* ---------- Catalog transition + quick nav ---------- */
+
+.daewoo-transition {
+  padding-top: clamp(3rem, 6vw, 5rem);
+  text-align: center;
+}
+
+.daewoo-transition__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: var(--font-medium);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-highlight, var(--color-foreground)));
+}
+
+.daewoo-transition__heading {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.5rem, 1.6vw + 1.1rem, 2.25rem);
+  font-weight: var(--font-bold);
+}
+
+.daewoo-transition__text {
+  margin: 0 auto 1.75rem;
+  max-width: 52ch;
+  color: rgb(var(--color-foreground) / 0.7);
+}
+
+.daewoo-quicknav {
+  display: flex;
+  justify-content: center;
+}
+
+.daewoo-quicknav__list {
+  display: flex;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem;
+  max-width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.daewoo-quicknav__list::-webkit-scrollbar {
+  display: none;
+}
+
+.daewoo-quicknav__item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.daewoo-quicknav__link {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--rounded-full, 999px);
+  border: 1px solid rgb(var(--color-foreground) / 0.15);
+  font-size: 0.875rem;
+  font-weight: var(--font-medium);
+  color: rgb(var(--color-foreground) / 0.75);
+  transition: background var(--animation-fast, 0.3s), color var(--animation-fast, 0.3s), border-color var(--animation-fast, 0.3s);
+}
+
+.daewoo-quicknav__link:hover {
+  border-color: rgb(var(--color-foreground) / 0.4);
+}
+
+.daewoo-quicknav__link.is-active {
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+  border-color: transparent;
+}
+
+/* ---------- Compatibility badge (native product card) ---------- */
+
+.badge--compat {
+  background: transparent;
+  border: 1px solid rgb(var(--color-foreground) / 0.18);
+  color: rgb(var(--color-foreground) / 0.75);
+}
+
+/* ---------- Motion & accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .daewoo-range-card,
+  .daewoo-range-card__img,
+  .daewoo-range-card__arrow,
+  .daewoo-quicknav__link {
+    transition: none !important;
+  }
+
+  .daewoo-range-card:hover,
+  .daewoo-range-card:focus-visible,
+  .daewoo-range-card:hover .daewoo-range-card__img,
+  .daewoo-range-card:focus-visible .daewoo-range-card__img,
+  .daewoo-range-card:hover .daewoo-range-card__arrow,
+  .daewoo-range-card:focus-visible .daewoo-range-card__arrow {
+    transform: none !important;
+  }
+}

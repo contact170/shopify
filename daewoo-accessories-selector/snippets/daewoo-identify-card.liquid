@@ -1,0 +1,55 @@
+{%- doc -%}
+  Compact identification card for the "Vous ne connaissez pas votre centrale ?"
+  section. Deliberately reuses a range-card block's image/heading/link instead
+  of duplicating the same settings a second time — only the short identifying
+  feature line is specific to this snippet.
+
+  @param {object} block - a card_vigilia / card_touch / card_key / card_elite block
+  @param {string} button_label - shared "C'est ma centrale" label (section-level setting)
+  @param {string} [loading] - 'eager' or 'lazy' (default 'lazy')
+
+  @example
+  {% render 'daewoo-identify-card', block: block, button_label: section.settings.identify_button_label %}
+{%- enddoc -%}
+
+{%- liquid
+  assign s = block.settings
+  assign loading = loading | default: 'lazy'
+  assign card_alt = s.image_alt | default: s.heading | strip_html
+-%}
+
+<div class="daewoo-identify-card flex flex-col items-start" {{ block.shopify_attributes }}>
+  <span class="daewoo-identify-card__media block overflow-hidden">
+    {%- if s.image != blank -%}
+      {{-
+        s.image
+        | image_url: width: s.image.width
+        | image_tag:
+          loading: loading,
+          widths: '160,240,320,480',
+          sizes: '(max-width: 767px) 25vw, 160px',
+          alt: card_alt,
+          class: 'daewoo-identify-card__img w-full h-full'
+      -}}
+    {%- else -%}
+      {{- 'product-1' | placeholder_svg_tag: 'daewoo-identify-card__img placeholder-svg w-full h-full' -}}
+    {%- endif -%}
+  </span>
+
+  <span class="daewoo-identify-card__heading heading">{{ s.heading }}</span>
+
+  {%- if s.identify_feature != blank -%}
+    <span class="daewoo-identify-card__feature">{{ s.identify_feature }}</span>
+  {%- endif -%}
+
+  {%- if button_label != blank and s.button_link != blank -%}
+    {%- render 'button',
+      label: button_label,
+      link: s.button_link,
+      style: 'secondary',
+      size: 'sm',
+      show_icon: true,
+      classes: 'daewoo-identify-card__button'
+    -%}
+  {%- endif -%}
+</div>

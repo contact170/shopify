@@ -1,0 +1,79 @@
+{%- doc -%}
+  Renders one clickable lifestyle range-selector card for the Daewoo accessories
+  selector (hero "univers" grid). The whole card is a single semantic <a> —
+  no nested button/link — so it stays keyboard- and screen-reader-friendly.
+
+  @param {object} block - a card_vigilia / card_touch / card_key / card_elite block
+  @param {string} [size] - 'lg' or 'sm', controls proportions in the editorial grid
+  @param {string} [loading] - 'eager' or 'lazy' (default 'lazy')
+
+  @example
+  {% render 'daewoo-range-card', block: block, size: 'lg', loading: 'eager' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign s = block.settings
+  assign is_dark = s.color_theme == 'dark'
+  assign loading = loading | default: 'lazy'
+  assign card_alt = s.image_alt | default: s.heading | strip_html
+-%}
+
+<a
+  href="{{ s.button_link | default: '#' }}"
+  id="DaewooRangeCard-{{ block.id }}"
+  class="daewoo-range-card daewoo-range-card--{{ size | default: 'lg' }}{% if is_dark %} daewoo-range-card--dark{% endif %} relative block overflow-hidden"
+  aria-label="{{ s.heading | strip_html | escape }}{% if s.subheading != blank %} — {{ s.subheading | strip_html | escape }}{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  <span class="daewoo-range-card__media absolute inset-0 block overflow-hidden" aria-hidden="true">
+    <picture class="daewoo-range-card__picture block w-full h-full">
+      {%- if s.image_mobile != blank -%}
+        <source
+          media="(max-width: 767px)"
+          srcset="{{ s.image_mobile | image_url: width: 600 }} 600w, {{ s.image_mobile | image_url: width: 900 }} 900w, {{ s.image_mobile | image_url: width: 1200 }} 1200w"
+          width="{{ s.image_mobile.width }}"
+          height="{{ s.image_mobile.height }}"
+        >
+      {%- endif -%}
+      {%- if s.image != blank -%}
+        {{-
+          s.image
+          | image_url: width: s.image.width
+          | image_tag:
+            loading: loading,
+            widths: '480,720,960,1200,1600,2000',
+            sizes: '(max-width: 767px) 100vw, 50vw',
+            alt: card_alt,
+            class: 'daewoo-range-card__img w-full h-full'
+        -}}
+      {%- else -%}
+        {{- 'lifestyle-1' | placeholder_svg_tag: 'daewoo-range-card__img placeholder-svg w-full h-full' -}}
+      {%- endif -%}
+    </picture>
+  </span>
+
+  <span class="daewoo-range-card__scrim absolute inset-0 block" aria-hidden="true"></span>
+
+  <span class="daewoo-range-card__content relative flex flex-col items-start">
+    {%- if s.badge != blank -%}
+      <span class="daewoo-range-card__badge">{{ s.badge | escape }}</span>
+    {%- endif -%}
+
+    <span class="daewoo-range-card__heading heading">{{ s.heading }}</span>
+
+    {%- if s.subheading != blank -%}
+      <span class="daewoo-range-card__subheading">{{ s.subheading }}</span>
+    {%- endif -%}
+
+    {%- if s.description != blank -%}
+      <span class="daewoo-range-card__description">{{ s.description }}</span>
+    {%- endif -%}
+
+    {%- if s.button_label != blank -%}
+      <span class="daewoo-range-card__cta icon-with-text">
+        <span class="link-text">{{ s.button_label | escape }}</span>
+        {%- render 'icon', icon: 'arrow-right', size: 'sm', class: 'daewoo-range-card__arrow' -%}
+      </span>
+    {%- endif -%}
+  </span>
+</a>
