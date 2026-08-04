@@ -1043,22 +1043,14 @@
     </div>
   </section>
 
-  {%- comment -%} Cross-sell — configurator & bigger pack {%- endcomment -%}
+  {%- comment -%} Cross-sell — 2 other real packs, never the configurator {%- endcomment -%}
   <section class="pv-section">
     <div class="pv-wrap">
       <div class="pv-crosssell__head pv-reveal">
         <h2>Besoin de plus dès le départ ?</h2>
-        <p>Composez un pack sur mesure avec le configurateur, ou passez directement au Pack Vigilia complet.</p>
+        <p>Découvrez les autres packs Daewoo Security, pour aller plus loin ou changer de gamme.</p>
       </div>
       <div class="pv-crosssell__grid pv-reveal">
-        <div class="pv-crosssell__card">
-          <div class="pv-crosssell__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"></path></svg>
-          </div>
-          <h3>Configurez votre pack sur mesure</h3>
-          <p>Partez de cette centrale et ajoutez caméras, détecteurs et sirènes supplémentaires pour une protection adaptée à votre logement.</p>
-          <a href="/pages/configurateur_2" class="pv-btn pv-btn--ghost pv-btn--sm">Configurer mon pack</a>
-        </div>
         <div class="pv-crosssell__card">
           <div class="pv-crosssell__icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 4l9 5.5"></path><path d="M5 10.5V19a1 1 0 0 0 1 1h4v-5h4v5h4a1 1 0 0 0 1-1v-8.5"></path></svg>
@@ -1066,6 +1058,14 @@
           <h3>Le Pack Vigilia complet</h3>
           <p>2 caméras (intérieure + extérieure) et sirène solaire extérieure incluses, pour une protection intérieure et extérieure dès l'installation{% if pack_variant.price %} — à partir de {{ pack_variant.price | money }}{% endif %}.</p>
           <a href="{{ pack_url }}" class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Pack complet</a>
+        </div>
+        <div class="pv-crosssell__card">
+          <div class="pv-crosssell__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"></rect><circle cx="12" cy="12" r="3.2"></circle></svg>
+          </div>
+          <h3>Une autre gamme ? Le Pack Touch</h3>
+          <p>Centrale à écran tactile et double caméra extérieure, pour un autre style de pilotage — dès 499,90&nbsp;€.</p>
+          <a href="/products/offre-exclusive-pack-touch-compatible-animaux-sans-abonnement" class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Pack Touch</a>
         </div>
       </div>
     </div>
