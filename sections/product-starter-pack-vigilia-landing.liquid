@@ -74,14 +74,17 @@
     endif
   endfor
 
-  assign rating_value = product.metafields.reviews.rating.value.rating
-  assign rating_max = product.metafields.reviews.rating.value.scale_max | default: 5
-  assign rating_count = product.metafields.reviews.rating_count.value
-  assign has_rating = false
-  if product.metafields.reviews.rating.value != blank and rating_count > 0
-    assign has_rating = true
-    assign rating_pct = rating_value | times: 100.0 | divided_by: rating_max
-  endif
+  # The star badge / "X avis" copy reflects the curated set of 68 real
+  # Vigilia-family reviews embedded in #PVAllReviews below (average 4.6,
+  # computed directly from that dataset: 47 five-star, 16 four-star,
+  # 3 three-star, 2 two-star) rather than product.metafields.reviews,
+  # which only counts the ~19 reviews submitted against this exact SKU
+  # and undercounts what's actually shown when a visitor clicks through.
+  assign rating_value = 4.6
+  assign rating_max = 5
+  assign rating_count = 68
+  assign has_rating = true
+  assign rating_pct = rating_value | times: 100.0 | divided_by: rating_max
   assign reviews_anchor = 'PVReviews-' | append: section.id
 -%}
 
@@ -597,10 +600,26 @@
           </div>
         {%- endif -%}
         <div class="pv-pay">
-          {%- if shop.enabled_payment_types.size > 0 -%}
+          {%- comment -%}
+            Two icons the merchant asked to drop from this row — best-guess
+            identifiers from the small reference screenshots (klarna's pink
+            badge, bancontact's blue/orange mark). Flagged to the merchant:
+            if either is still showing, the real shop.enabled_payment_types
+            string for it is different and this list needs the correct name.
+          {%- endcomment -%}
+          {%- assign pv_pay_excluded = "klarna,bancontact" | split: "," -%}
+          {%- assign pv_pay_visible_count = 0 -%}
+          {%- for type in shop.enabled_payment_types -%}
+            {%- unless pv_pay_excluded contains type -%}
+              {%- assign pv_pay_visible_count = pv_pay_visible_count | plus: 1 -%}
+            {%- endunless -%}
+          {%- endfor -%}
+          {%- if pv_pay_visible_count > 0 -%}
             <div class="pv-pay__methods">
               {%- for type in shop.enabled_payment_types -%}
-                {{ type | payment_type_svg_tag: class: 'pv-pay__icon' }}
+                {%- unless pv_pay_excluded contains type -%}
+                  {{ type | payment_type_svg_tag: class: 'pv-pay__icon' }}
+                {%- endunless -%}
               {%- endfor -%}
             </div>
           {%- endif -%}
