@@ -92,13 +92,15 @@
         "key": "wifi",
         "price": {{ wifi_variant.price | money | strip_html | json }},
         "compare": {{ wifi_variant.compare_at_price | money | strip_html | json }},
-        "hasCompare": {{ wifi_has_compare | json }}
+        "hasCompare": {{ wifi_has_compare | json }},
+        "priceCents": {{ wifi_variant.price | json }}
       },
       "{{ gsm_variant.id }}": {
         "key": "gsm",
         "price": {{ gsm_variant.price | money | strip_html | json }},
         "compare": {{ gsm_variant.compare_at_price | money | strip_html | json }},
-        "hasCompare": {{ gsm_has_compare | json }}
+        "hasCompare": {{ gsm_has_compare | json }},
+        "priceCents": {{ gsm_variant.price | json }}
       }
     }
   </script>
@@ -201,9 +203,46 @@
     .pv-pay__alma{
       display:inline-flex;align-items:center;gap:8px;padding:6px 12px;
       border:1px solid var(--pv-line);border-radius:8px;background:#fff;
+      cursor:pointer;font-family:inherit;transition:border-color .15s ease,box-shadow .15s ease;
     }
+    .pv-pay__alma:hover{border-color:var(--pv-navy);}
+    .pv-pay__alma:focus-visible{outline:2px solid var(--pv-navy);outline-offset:2px;}
     .pv-pay__alma-badge{font-weight:800;font-style:italic;font-size:13px;color:var(--pv-ink);letter-spacing:-.01em;}
     .pv-pay__alma-text{font-size:11.5px;color:var(--pv-gray);font-weight:500;}
+    .pv-pay__alma-info{color:var(--pv-line);flex-shrink:0;}
+
+    /* ---- Alma installments modal ---- */
+    .pv-modal{
+      border:none;border-radius:24px;padding:0;max-width:420px;width:calc(100% - 40px);
+      box-shadow:0 40px 80px -20px rgba(0,0,0,.35);color:var(--pv-ink);
+    }
+    .pv-modal::backdrop{background:rgba(8,20,48,.55);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+    .pv-modal__inner{
+      position:relative;padding:32px 28px 28px;opacity:0;transform:translateY(16px) scale(.97);
+      transition:opacity .28s ease,transform .28s cubic-bezier(.16,1,.3,1);
+    }
+    .pv-modal.is-open .pv-modal__inner{opacity:1;transform:translateY(0) scale(1);}
+    .pv-modal__close{
+      position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;border-radius:50%;
+      background:var(--pv-bg-alt);color:var(--pv-ink);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .pv-modal__close:hover{background:var(--pv-line);}
+    .pv-alma-badge-lg{
+      display:inline-block;font-weight:800;font-style:italic;font-size:20px;
+      color:var(--pv-ink);letter-spacing:-.01em;margin-bottom:10px;
+    }
+    .pv-modal h3{font-size:21px;}
+    .pv-modal__inner > p{margin-top:8px;color:var(--pv-gray);font-size:14px;line-height:1.5;}
+    .pv-alma-plans{margin-top:22px;display:grid;gap:10px;}
+    .pv-alma-plan{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:14px 16px;border:1px solid var(--pv-line);border-radius:14px;
+    }
+    .pv-alma-plan__title{font-size:14px;font-weight:600;}
+    .pv-alma-plan__note{font-size:12px;color:var(--pv-gray);margin-top:2px;}
+    .pv-alma-plan__amount{font-size:15px;font-weight:700;white-space:nowrap;}
+    .pv-modal__legal{margin-top:20px;font-size:12px;color:var(--pv-gray);line-height:1.5;}
 
     .pv-hero__trust{
       margin-top:30px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;
@@ -416,6 +455,21 @@
     .pv-review-card__meta{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--pv-gray);}
     .pv-review-card__name{font-weight:600;color:var(--pv-ink);}
     .pv-review-card__dot{width:3px;height:3px;border-radius:50%;background:var(--pv-line);flex-shrink:0;}
+    .pv-reviews__all-btn{
+      margin-top:16px;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--pv-navy);
+      background:none;border:none;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:4px;
+    }
+
+    /* ---- full reviews list (inside modal) ---- */
+    .pv-modal--reviews .pv-modal__inner{max-height:min(640px,80vh);display:flex;flex-direction:column;}
+    .pv-all-reviews{margin-top:16px;overflow-y:auto;display:flex;flex-direction:column;gap:16px;padding-right:4px;}
+    .pv-all-review{border-bottom:1px solid var(--pv-line);padding-bottom:16px;}
+    .pv-all-review:last-child{border-bottom:none;padding-bottom:0;}
+    .pv-all-review__stars{color:#f5a623;font-size:13px;letter-spacing:1px;}
+    .pv-all-review__text{margin-top:6px;font-size:13.5px;line-height:1.55;color:var(--pv-ink);}
+    .pv-all-review__meta{margin-top:6px;font-size:12px;color:var(--pv-gray);}
+    .pv-all-review__meta strong{color:var(--pv-ink);font-weight:600;}
+    .pv-all-reviews__loading{font-size:13.5px;color:var(--pv-gray);}
 
     /* ---- faq ---- */
     .pv-faq{max-width:760px;margin:0 auto;}
@@ -550,10 +604,11 @@
               {%- endfor -%}
             </div>
           {%- endif -%}
-          <div class="pv-pay__alma">
+          <button type="button" class="pv-pay__alma" data-pv-alma-open>
             <span class="pv-pay__alma-badge">alma</span>
-            <span class="pv-pay__alma-text">3x, 4x ou 10x avec frais</span>
-          </div>
+            <span class="pv-pay__alma-text">3x, 4x sans frais</span>
+            <svg class="pv-pay__alma-info" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-5"></path><path d="M12 8h.01"></path></svg>
+          </button>
         </div>
       </div>
       <div class="pv-hero__trust">
@@ -912,13 +967,15 @@
             <strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés
           </p>
         {%- endif -%}
+        <br>
+        <button type="button" class="pv-reviews__all-btn" data-pv-reviews-open>Lire tous les avis</button>
       </div>
       <div class="pv-reviews__track pv-reveal">
         <div class="pv-review-card">
           <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
           <p class="pv-review-card__text">Ce pack est parfait pour un bon démarrage surtout si on a un logement "basique" et s'il faut rajouter des éléments, cela est tout à fait possible.</p>
           <div class="pv-review-card__meta">
-            <span class="pv-review-card__name">Rémy P.</span>
+            <span class="pv-review-card__name">Client vérifié</span>
             <span class="pv-review-card__dot" aria-hidden="true"></span>
             <span>Noyelles-sous-Lens</span>
           </div>
@@ -1096,6 +1153,129 @@
     </div>
   </section>
 
+  {%- comment -%} Alma installments modal {%- endcomment -%}
+  <dialog class="pv-modal" id="PVAlmaModal-{{ section.id }}">
+    <div class="pv-modal__inner">
+      <button type="button" class="pv-modal__close" aria-label="Fermer" data-pv-modal-close>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+      </button>
+      <span class="pv-alma-badge-lg">alma</span>
+      <h3>Payez en plusieurs fois</h3>
+      <p>Choisissez votre échéancier au moment du paiement, sans engagement.</p>
+      <div class="pv-alma-plans">
+        <div class="pv-alma-plan">
+          <div>
+            <div class="pv-alma-plan__title">3x sans frais</div>
+            <div class="pv-alma-plan__note">Dès le premier euro d'achat</div>
+          </div>
+          <div class="pv-alma-plan__amount" data-pv-alma-3x>—</div>
+        </div>
+        <div class="pv-alma-plan">
+          <div>
+            <div class="pv-alma-plan__title">4x sans frais</div>
+            <div class="pv-alma-plan__note">À partir de 100&nbsp;€ d'achat</div>
+          </div>
+          <div class="pv-alma-plan__amount" data-pv-alma-4x>—</div>
+        </div>
+        <div class="pv-alma-plan" data-pv-alma-10x-wrap hidden>
+          <div>
+            <div class="pv-alma-plan__title">10x avec frais</div>
+            <div class="pv-alma-plan__note">À partir de 200&nbsp;€ d'achat · 7,34&nbsp;% de frais</div>
+          </div>
+          <div class="pv-alma-plan__amount" data-pv-alma-10x>—</div>
+        </div>
+      </div>
+      <p class="pv-modal__legal">Simulation pour un achat de <strong data-pv-alma-total>—</strong>. Le paiement en plusieurs fois est proposé par Alma au moment du paiement, sous réserve d'acceptation de votre dossier.</p>
+    </div>
+  </dialog>
+
+  {%- comment -%} All reviews modal {%- endcomment -%}
+  <dialog class="pv-modal pv-modal--reviews" id="PVReviewsModal-{{ section.id }}">
+    <div class="pv-modal__inner">
+      <button type="button" class="pv-modal__close" aria-label="Fermer" data-pv-modal-close>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+      </button>
+      <h3>Tous les avis clients</h3>
+      {%- if has_rating -%}
+        <p><strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés</p>
+      {%- endif -%}
+      <div class="pv-all-reviews" data-pv-all-reviews-list></div>
+    </div>
+  </dialog>
+
+  <script type="application/json" id="PVAllReviews-{{ section.id }}">
+    [
+      {"r":4,"t":"Installation facile après que le technicien m'ai expliqué que une fois la sirène configurée, elle n'apparaît pas dans les éléments connectés sur la centrale M302 alors qu'elle l'est !","n":"Patrick B.","c":"","d":"janvier 2024"},
+      {"r":5,"t":"Très satisfait des produits qui fonctionnent très bien, sauf les télécommandes qui sont à mon goût trop sensibles et se déclenchent trop facilement dans la poche. J'ai eu besoin d'aide pour l'installation et j'ai eu toutes les solutions par mail pour résoudre mes petits problèmes très facilement et très rapidement. Merci encore pour le SAV, je recommande.","n":"Jean Claude C.","c":"Limoges","d":"janvier 2024"},
+      {"r":3,"t":"J'ai commandé deux détecteurs anti-vibration pour la centrale d'alarme, j'ai reçu ma commande très rapidement, par contre un détecteur sur les deux reste allumé en rouge, après contrôle la pile était à remplacer... Dommage que ce ne soit pas contrôlé avant l'envoi.","n":"Vincent F.","c":"","d":"septembre 2024"},
+      {"r":5,"t":"Achetée après que je ne puisse plus communiquer avec la centrale alarme via la carte SIM d'un célèbre fournisseur d'accès. Après avoir validé mon compte sur le site, un numéro à 14 chiffres m'a été communiqué. Le service client au téléphone est très réactif et aimable.","n":"Frédéric G.","c":"Marignane","d":"novembre 2024"},
+      {"r":4,"t":"J'ai acheté ce contacteur pour protéger ma porte d'entrée en remplacement d'un détecteur volumétrique que j'ai été obligé de mettre à l'arrêt car il me faisait à chaque détection des perturbations sur la réception de la télévision TNT, problème que j'ai signalé au service support. Le détecteur de porte, lui, marche bien.","n":"Jacky T.","c":"Châtellerault","d":"novembre 2024"},
+      {"r":5,"t":"Carte SIM Machine to Machine : elle a permis le dialogue entre la centrale d'alarme Daewoo et mon téléphone portable. Le processus de validation est très clair et rend la carte opérationnelle très rapidement. L'option à 72€/an est intéressante, avec une plateforme AFONE pour répondre aux questions.","n":"Lucien S.","c":"","d":"décembre 2024"},
+      {"r":4,"t":"Rapide à installer et à mettre en fonction. Restera à voir la durée des piles mais très satisfait de mon achat.","n":"Sébastien G.","c":"Uccle","d":"janvier 2025"},
+      {"r":5,"t":"Une sirène qui fait son travail, petite mais puissante. Pas de risque de ne pas l'entendre, et pour un prix tout à fait correct.","n":"Guy V.","c":"Verviers","d":"janvier 2025"},
+      {"r":5,"t":"RAS.","n":"Patrick J.","c":"Massy","d":"février 2025"},
+      {"r":5,"t":"Sirène très sonore et facile à installer. Association avec la centrale AM302 bien expliquée. Dommage qu'il ne soit pas possible de couper la lumière clignotante en dehors des périodes où la sirène se met en mode alarme.","n":"Brigitte T.","c":"Villeparisis","d":"février 2025"},
+      {"r":2,"t":"Bon fonctionnement mais il manque une protection sur les boutons, trop sensible sur un trousseau de clés.","n":"Client vérifié","c":"","d":"mars 2025"},
+      {"r":4,"t":"Ce capteur est plus fiable que le WDS301 car limité par la distance. Le gros reproche est qu'il n'est pas prévu pour transmettre la position de la porte (ouvert/fermé) sur la centrale AM302 comme le WDS301, qui lui affiche un signal d'ouverture.","n":"Client vérifié","c":"Elbeuf","d":"avril 2025"},
+      {"r":5,"t":"Simple à installer, fonctionne parfaitement.","n":"Laurent K.","c":"Illkirch-Graffenstaden","d":"avril 2025"},
+      {"r":4,"t":"Utile et rapide à mettre en œuvre.","n":"Patrick A.","c":"Lormont","d":"mai 2025"},
+      {"r":5,"t":"Bonne portée.","n":"Jean Marc G.","c":"Corbeil-Essonnes","d":"mai 2025"},
+      {"r":4,"t":"La sirène fonctionne bien, le son est très bien, mais on dirait un petit peu un jouet pour enfants, dommage que ce ne soit pas un peu plus volumineux.","n":"Christophe P.","c":"Fontenay-Trésigny","d":"mai 2025"},
+      {"r":5,"t":"Fonctionne parfaitement, très qualitatif.","n":"Christophe P.","c":"Fontenay-Trésigny","d":"mai 2025"},
+      {"r":5,"t":"Excellent, très bien comme accessoires.","n":"Véronique","c":"Rouen","d":"août 2025"},
+      {"r":5,"t":"Très bon, on apprécie beaucoup.","n":"Véronique","c":"Rouen","d":"août 2025"},
+      {"r":5,"t":"Facile à installer, excellent produit.","n":"Marie Pierre","c":"Limoges","d":"août 2025"},
+      {"r":5,"t":"Excellent produit.","n":"Marie Pierre","c":"Limoges","d":"août 2025"},
+      {"r":5,"t":"Parfait pour compléter mon système d'alarme, convient aussi bien pour une baie coulissante qu'en ouverture à la française. Facile à installer et à configurer.","n":"Olivier B.","c":"Jallais","d":"septembre 2025"},
+      {"r":5,"t":"Pas d'appel intempestif. Qualité des images caméras.","n":"Christian C.","c":"Braine-l'Alleud","d":"septembre 2025"},
+      {"r":3,"t":"Problème d'appareillage avec la centrale. Équipement retourné au SAV pour vérification.","n":"Serge B.","c":"Limoges","d":"septembre 2025"},
+      {"r":4,"t":"Très bien, la seule chose importante c'est qu'il n'est pas expliqué que pour paramétrer les contacteurs il faut enlever le capot et appuyer sur le bouton on.","n":"Client vérifié","c":"","d":"octobre 2025"},
+      {"r":5,"t":"Très bien.","n":"Yoland B.","c":"Voreppe","d":"novembre 2025"},
+      {"r":4,"t":"Le produit est facile à installer, attention DAEWOO ne précise pas que le modèle avec carte SIM nécessite un abonnement. Excellent service clients et service technique qui répondent très rapidement.","n":"JJB","c":"Boulogne-Billancourt","d":"novembre 2025"},
+      {"r":4,"t":"Bonne télécommande, plus pratique que celle par défaut fournie avec la station.","n":"Jean-Pierre S.","c":"","d":"décembre 2025"},
+      {"r":5,"t":"Facilité d'installation.","n":"Patrick D.","c":"Angoulême","d":"décembre 2025"},
+      {"r":5,"t":"Ras, bon produit, je recommande.","n":"Christophe J.","c":"Virsac","d":"décembre 2025"},
+      {"r":5,"t":"Super, facile installé.","n":"TAM Flexibles","c":"Nîmes","d":"janvier 2026"},
+      {"r":5,"t":"Matériel fiable et très facile à installer.","n":"Carole M.","c":"Toulouse","d":"janvier 2026"},
+      {"r":5,"t":"Très performant.","n":"Philippe C.","c":"Carcassonne","d":"janvier 2026"},
+      {"r":5,"t":"Cette petite télécommande est très pratique et a un look super sympa, très bien en guise de porte-clé, à recommander.","n":"Philippe Z.","c":"Montlhéry","d":"janvier 2026"},
+      {"r":3,"t":"Quel dommage que sur la notice de vos contacteurs de porte vous ayez omis le plus important pour la mise en service ! Ce petit interrupteur noir, quasiment invisible, n'est notifié nulle part, c'est ballot.","n":"Velasco J.","c":"Paris","d":"janvier 2026"},
+      {"r":5,"t":"Installé en toute simplicité, pack sécurité complet et à un prix raisonnable. Merci.","n":"Pierre P.","c":"Marseille","d":"janvier 2026"},
+      {"r":5,"t":"Tous fonctionnent bien.","n":"Jan Z.","c":"Nancy","d":"janvier 2026"},
+      {"r":5,"t":"En fait j'ai mis 3 étoiles au départ, mais elle est installée que depuis deux jours, je verrai dans le temps. J'apprécie le fait qu'il y a un flash clignotant lorsque l'alarme est active, c'est bien visible de la rue.","n":"Berndt","c":"Maule","d":"février 2026"},
+      {"r":5,"t":"Je le conseillerai à mes amis.","n":"Francois T.","c":"Blagnac","d":"février 2026"},
+      {"r":5,"t":"Ce petit badge est hyper pratique, peu encombrant avec mes clés et plutôt joli, je le recommande sans hésiter.","n":"Philippe Z.","c":"Montlhéry","d":"février 2026"},
+      {"r":5,"t":"C'est une super alarme.","n":"Michel C.","c":"Istres","d":"février 2026"},
+      {"r":4,"t":"Facile à installer et à utiliser.","n":"Stephane G.","c":"Nice","d":"février 2026"},
+      {"r":5,"t":"Parfait, il fait le travail.","n":"Christophe H.","c":"Kédange-sur-Canner","d":"février 2026"},
+      {"r":2,"t":"J'ai été obligé de reprendre les soudures du système de batterie.","n":"Dominique B.","c":"Moussac","d":"février 2026"},
+      {"r":5,"t":"Commande reçue très rapidement, facile d'installation, je recommande fortement.","n":"Fabien D.","c":"Issoire","d":"mars 2026"},
+      {"r":5,"t":"Une fois la prise en main de l'application fait, c'est top 👍","n":"Stephane B.","c":"Parmilieu","d":"mars 2026"},
+      {"r":5,"t":"Parfait, réception et installation rapide.","n":"Berndt","c":"Maule","d":"mars 2026"},
+      {"r":5,"t":"Alarme très bien, application fluide et très simple d'utilisation. Seul petit bémol, une puce sur l'ensemble du coffret ne fonctionne pas.","n":"Vincent R.","c":"","d":"avril 2026"},
+      {"r":4,"t":"Montage sans problème à l'exception de la synchronisation de la sirène WOS305 (appui sur le symbole engrenage) qui doit être synchronisée dans la minute qui suit l'allumage. Cette contrainte n'est mentionnée nulle part, il m'a fallu interroger la hotline pour obtenir l'information.","n":"Joel L.","c":"La Rochelle","d":"avril 2026"},
+      {"r":5,"t":"Correspond à mon attente.","n":"Eric B.","c":"Marseille","d":"avril 2026"},
+      {"r":5,"t":"Très satisfait, montage facile, livraison rapide, je recommande vivement.","n":"Jean M.","c":"La Motte","d":"avril 2026"},
+      {"r":4,"t":"Mériterait un peu plus d'explications en vidéo.","n":"Eric B.","c":"Anglet","d":"mai 2026"},
+      {"r":5,"t":"Très bon produit, facile à mettre en place.","n":"Cedric J.","c":"","d":"juin 2026"},
+      {"r":5,"t":"Bien, mais peut-être commercialiser des cales de différentes épaisseurs en option pour l'installation.","n":"Laurent L.","c":"Rezé","d":"juin 2026"},
+      {"r":4,"t":"Je suis tout à fait ravi de cette alarme. Facile à programmer et à installer, et le service après-vente est sans faille. Le seul bémol : la résolution des photos prises par les caméras est floue lors de leur agrandissement. Mais dans l'ensemble, je conseille vivement Daewoo Security.","n":"Tony D.","c":"","d":"juin 2026"},
+      {"r":4,"t":"Élément de base qui fonctionne bien. Peu élaboré sur la question des fixations mais correct. La documentation papier de la gamme Vigilia est en revanche mauvaise : il manque des informations essentielles. La documentation web est meilleure mais il faut lire jusqu'au bout pour les indications de mise en service.","n":"Michel N.","c":"Saint-Orens-de-Gameville","d":"juin 2026"},
+      {"r":5,"t":"Très bon produit, facile à installer. Le support répond très bien et de façon précise à toutes les questions.","n":"Christophe C.","c":"Lorient","d":"juin 2026"},
+      {"r":5,"t":"Facile d'emploi.","n":"Christian K.","c":"Hénin-Beaumont","d":"juin 2026"},
+      {"r":5,"t":"Ensemble suffisant pour sécuriser mon logement. Facile à mettre en œuvre avec l'application.","n":"Jean-Marie J.","c":"Gouzeaucourt","d":"juin 2026"},
+      {"r":5,"t":"Super.","n":"Nadia D.","c":"Châteauroux","d":"juin 2026"},
+      {"r":5,"t":"Je recommande.","n":"Nadia D.","c":"Châteauroux","d":"juin 2026"},
+      {"r":4,"t":"Problème de piles malgré que la télécommande soit neuve. Sinon les produits en général sont impeccables.","n":"Tony D.","c":"Castelnau-sur-Gupie","d":"juin 2026"},
+      {"r":5,"t":"C'est parfait.","n":"Philippe B.","c":"Marlenheim","d":"juin 2026"},
+      {"r":5,"t":"Excellente acquisition, facile à appairer, design superbe, format mini, et j'apprécie beaucoup le volet glissant recouvrant les touches qui empêche toute manœuvre involontaire.","n":"Jean Luc M.","c":"","d":"juillet 2026"},
+      {"r":5,"t":"Bien. Dommage qu'il n'y ait pas de LED quand il charge.","n":"Michael S.","c":"Étrépagny","d":"juillet 2026"},
+      {"r":4,"t":"Bien.","n":"Christian R.","c":"Le Neubourg","d":"juillet 2026"},
+      {"r":5,"t":"Pour l'instant rien à redire, facile à installer, facile à faire fonctionner, top.","n":"Angeline B.","c":"Montmélian","d":"juillet 2026"},
+      {"r":5,"t":"Je ne peux me prononcer que sur le contacteur, car je l'ai déjà utilisé. Ma commande était toujours en attente, bloquée en transit à Lyon.","n":"Douadi A.","c":"","d":"août 2026"}
+    ]
+  </script>
+
   <script type="application/ld+json">
     {{ product | structured_data }}
   </script>
@@ -1227,6 +1407,124 @@
             thumbs.forEach(function (t) { t.classList.remove('is-active'); });
             thumb.classList.add('is-active');
           });
+        });
+      }
+
+      /* Generic modal open/close (Alma installments + full reviews list),
+         both plain dialog elements so Escape/backdrop dismissal and
+         focus-trapping come from the browser for free. The .is-open class
+         is added a frame after showModal() so the CSS transition on
+         .pv-modal__inner actually runs (animating [open] directly isn't
+         reliably supported without @starting-style). */
+      function openModal(dialogEl) {
+        if (!dialogEl || typeof dialogEl.showModal !== 'function') return;
+        dialogEl.showModal();
+        requestAnimationFrame(function () { dialogEl.classList.add('is-open'); });
+      }
+      function closeModal(dialogEl) {
+        if (!dialogEl) return;
+        dialogEl.classList.remove('is-open');
+        dialogEl.close();
+      }
+      root.querySelectorAll('.pv-modal').forEach(function (dialogEl) {
+        dialogEl.querySelectorAll('[data-pv-modal-close]').forEach(function (btn) {
+          btn.addEventListener('click', function () { closeModal(dialogEl); });
+        });
+        dialogEl.addEventListener('click', function (e) {
+          if (e.target === dialogEl) closeModal(dialogEl);
+        });
+        dialogEl.addEventListener('close', function () { dialogEl.classList.remove('is-open'); });
+      });
+
+      /* Alma installments popup: 3x/4x are always fee-free, 10x only
+         applies (and only shows) from 200€, with a real 7.34% fee — kept
+         in sync with whichever variant (Wi-Fi / Wi-Fi+GSM) is currently
+         selected via the same variantData used for the price toggle. */
+      var almaModal = document.getElementById('PVAlmaModal-{{ section.id }}');
+      var almaOpenBtn = root.querySelector('[data-pv-alma-open]');
+      function formatEuros(cents) {
+        return (cents / 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      }
+      function updateAlmaAmounts() {
+        if (!almaModal) return;
+        var cents = null;
+        if (variantIdInput && variantData[variantIdInput.value]) {
+          cents = variantData[variantIdInput.value].priceCents;
+        }
+        if (cents == null) cents = {{ variant.price | json }};
+
+        var totalEl = almaModal.querySelector('[data-pv-alma-total]');
+        var el3x = almaModal.querySelector('[data-pv-alma-3x]');
+        var el4x = almaModal.querySelector('[data-pv-alma-4x]');
+        var wrap10x = almaModal.querySelector('[data-pv-alma-10x-wrap]');
+        var el10x = almaModal.querySelector('[data-pv-alma-10x]');
+
+        if (totalEl) totalEl.textContent = formatEuros(cents);
+        if (el3x) el3x.textContent = '3 x ' + formatEuros(Math.round(cents / 3));
+        if (el4x) el4x.textContent = '4 x ' + formatEuros(Math.round(cents / 4));
+
+        var showTenX = cents >= 20000;
+        if (wrap10x) wrap10x.hidden = !showTenX;
+        if (showTenX && el10x) {
+          var totalWithFees = Math.round(cents * 1.0734);
+          el10x.textContent = '10 x ' + formatEuros(Math.round(totalWithFees / 10));
+        }
+      }
+      if (almaOpenBtn && almaModal) {
+        almaOpenBtn.addEventListener('click', function () {
+          updateAlmaAmounts();
+          openModal(almaModal);
+        });
+      }
+
+      /* Full reviews list: rendered once, on first open, from the JSON
+         data blob rather than at page load, since it's ~70 entries and
+         only needed if a visitor actually asks to see them all. */
+      var reviewsModal = document.getElementById('PVReviewsModal-{{ section.id }}');
+      var reviewsOpenBtn = root.querySelector('[data-pv-reviews-open]');
+      var reviewsListEl = reviewsModal ? reviewsModal.querySelector('[data-pv-all-reviews-list]') : null;
+      var reviewsRendered = false;
+      function renderAllReviews() {
+        if (reviewsRendered || !reviewsListEl) return;
+        reviewsRendered = true;
+        var dataScript = document.getElementById('PVAllReviews-{{ section.id }}');
+        var reviews = [];
+        if (dataScript) {
+          try { reviews = JSON.parse(dataScript.textContent); } catch (e) { reviews = []; }
+        }
+        var frag = document.createDocumentFragment();
+        reviews.forEach(function (rev) {
+          var item = document.createElement('div');
+          item.className = 'pv-all-review';
+
+          var stars = document.createElement('div');
+          stars.className = 'pv-all-review__stars';
+          stars.setAttribute('aria-hidden', 'true');
+          stars.textContent = '★★★★★'.slice(0, rev.r) + '☆☆☆☆☆'.slice(0, 5 - rev.r);
+          item.appendChild(stars);
+
+          var text = document.createElement('p');
+          text.className = 'pv-all-review__text';
+          text.textContent = rev.t;
+          item.appendChild(text);
+
+          var meta = document.createElement('p');
+          meta.className = 'pv-all-review__meta';
+          var strong = document.createElement('strong');
+          strong.textContent = rev.n;
+          meta.appendChild(strong);
+          var rest = [rev.c, rev.d].filter(Boolean).join(' · ');
+          if (rest) meta.appendChild(document.createTextNode(' · ' + rest));
+          item.appendChild(meta);
+
+          frag.appendChild(item);
+        });
+        reviewsListEl.appendChild(frag);
+      }
+      if (reviewsOpenBtn && reviewsModal) {
+        reviewsOpenBtn.addEventListener('click', function () {
+          renderAllReviews();
+          openModal(reviewsModal);
         });
       }
     })();
