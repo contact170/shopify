@@ -50,8 +50,29 @@
 
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
-  assign feat_image_3 = gallery[7] | default: hero_image
-  assign feat_image_4 = gallery[5] | default: hero_image
+
+  # Matched by filename rather than a raw gallery index — the merchant
+  # replaced/reordered the product's photos once already, which silently
+  # broke the old index-based (gallery[7]/gallery[5]) references. Falls
+  # back to hero_image if a named file isn't found (e.g. renamed again).
+  assign feat_image_3 = hero_image
+  assign feat_image_4 = hero_image
+  for img in gallery
+    if img.src contains 'Pilotage_distance'
+      assign feat_image_3 = img
+    endif
+    if img.src contains 'Avantages_Daewoo'
+      assign feat_image_4 = img
+    endif
+  endfor
+
+  assign camera_video = nil
+  for media in product.media
+    if media.media_type == 'video'
+      assign camera_video = media
+      break
+    endif
+  endfor
 -%}
 
 <div id="shopify-section-{{ section.id }}" class="pv">
@@ -131,9 +152,13 @@
     /* ---- hero ---- */
     .pv-hero{padding:96px 0 56px;text-align:center;}
     .pv-hero h1{font-size:clamp(34px,6vw,60px);max-width:900px;margin:0 auto;}
+    .pv .pv-hero__tagline{
+      font-size:clamp(16px,2vw,19px);font-weight:600;color:var(--pv-navy);
+      max-width:640px;margin:18px auto 0;line-height:1.4;text-align:center;
+    }
     .pv .pv-hero__sub{
       font-size:clamp(17px,2.2vw,22px);color:var(--pv-gray);
-      max-width:660px;margin:22px auto 0;line-height:1.5;font-weight:400;text-align:center;
+      max-width:660px;margin:12px auto 0;line-height:1.5;font-weight:400;text-align:center;
     }
     .pv-hero__cta{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:14px;}
     .pv-hero__price{font-size:15px;color:var(--pv-gray);}
@@ -258,6 +283,21 @@
       padding:64px 0;
     }
     .pv-feature__media img{border-radius:24px;background:var(--pv-bg-alt);}
+    .pv-feature__media--video{position:relative;}
+    .pv-feature__media--video video{
+      width:100%;display:block;border-radius:24px;background:var(--pv-navy-dark);
+      box-shadow:0 30px 60px -30px rgba(12,30,74,.4);
+    }
+    .pv-feature__media--video::after{
+      content:"";position:absolute;inset:0;border-radius:24px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);pointer-events:none;
+    }
+    .pv-feature__video-badge{
+      position:absolute;bottom:16px;left:16px;z-index:1;
+      display:inline-flex;align-items:center;gap:7px;
+      background:rgba(12,30,74,.82);color:#fff;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+      font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:999px;pointer-events:none;
+    }
     .pv-feature__num{font-size:13px;font-weight:700;color:var(--pv-navy);letter-spacing:.08em;margin-bottom:14px;display:block;}
     .pv-feature h2{font-size:clamp(26px,3.4vw,38px);}
     .pv-feature__text{margin-top:18px;color:var(--pv-gray);font-size:17px;line-height:1.6;max-width:480px;}
@@ -407,6 +447,9 @@
     <div class="pv-wrap">
       <span class="pv-eyebrow">Daewoo Security · Starter Pack Vigilia</span>
       <h1>Le point de départ d'une maison protégée.</h1>
+      <p class="pv-hero__tagline">
+        Un système d'alarme connecté&nbsp;: toute votre sécurité, pilotée depuis votre téléphone.
+      </p>
       <p class="pv-hero__sub">
         Centrale d'alarme à clavier, détecteurs et caméra intérieure réunis dans un kit essentiel.
         Installation en 10 minutes, sans technicien, sans abonnement.
@@ -608,9 +651,19 @@
   <section class="pv-section pv-section--alt">
     <div class="pv-wrap">
       <div class="pv-feature pv-feature--reverse pv-reveal">
-        <div class="pv-feature__media">
-          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=1000" srcset="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=500 500w, https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=750 750w, https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=1000 1000w" sizes="(min-width: 900px) 50vw, 100vw" loading="lazy" alt="Caméra intérieure du Starter Pack Vigilia">
-        </div>
+        {%- if camera_video -%}
+          <div class="pv-feature__media pv-feature__media--video">
+            {{ camera_video | video_tag: autoplay: true, loop: true, muted: true, controls: true, image_size: '1000x' }}
+            <span class="pv-feature__video-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"></path><circle cx="12" cy="12" r="3"></circle><path d="M4 4l16 16"></path></svg>
+              Volet de confidentialité automatique
+            </span>
+          </div>
+        {%- else -%}
+          <div class="pv-feature__media">
+            <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=1000" srcset="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=500 500w, https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=750 750w, https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IP506P_1.png?v=1775220472&width=1000 1000w" sizes="(min-width: 900px) 50vw, 100vw" loading="lazy" alt="Caméra intérieure du Starter Pack Vigilia">
+          </div>
+        {%- endif -%}
         <div class="pv-feature__body">
           <span class="pv-feature__num">VIDÉOSURVEILLANCE</span>
           <h2>Un œil chez vous, sans perdre votre intimité.</h2>
