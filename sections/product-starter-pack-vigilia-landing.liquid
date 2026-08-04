@@ -1462,7 +1462,7 @@
       var almaModal = document.getElementById('PVAlmaModal-{{ section.id }}');
       var almaOpenBtn = root.querySelector('[data-pv-alma-open]');
       function formatEuros(cents) {
-        return (cents / 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+        return (cents / 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '\u00A0€';
       }
       function updateAlmaAmounts() {
         if (!almaModal) return;
