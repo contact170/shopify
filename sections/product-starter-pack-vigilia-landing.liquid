@@ -34,6 +34,26 @@
     assign selected_key = 'gsm'
   endif
 
+  # Cross-sell target: the bigger, ready-made Pack Vigilia (2 caméras &
+  # sirène solaire). Deep-links to whichever connectivity variant matches
+  # what the visitor already selected on this page, so they don't have to
+  # re-pick it. Looked up by handle (single one-off lookup, not a loop)
+  # rather than hardcoded variant IDs so it stays correct if variants are
+  # ever recreated.
+  assign pack_vigilia = all_products['offre-exclusive-pack-vigilia-compatible-animaux-wifi-ou-wifi-gsm-4g-2']
+  for v in pack_vigilia.variants
+    if v.title contains 'GSM'
+      assign pack_gsm_variant = v
+    else
+      assign pack_wifi_variant = v
+    endif
+  endfor
+  assign pack_variant = pack_wifi_variant
+  if selected_key == 'gsm'
+    assign pack_variant = pack_gsm_variant | default: pack_wifi_variant
+  endif
+  assign pack_url = pack_vigilia.url | append: '?variant=' | append: pack_variant.id
+
   assign wifi_has_compare = false
   if wifi_variant.compare_at_price > wifi_variant.price
     assign wifi_has_compare = true
@@ -1044,8 +1064,8 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 4l9 5.5"></path><path d="M5 10.5V19a1 1 0 0 0 1 1h4v-5h4v5h4a1 1 0 0 0 1-1v-8.5"></path></svg>
           </div>
           <h3>Le Pack Vigilia complet</h3>
-          <p>2 caméras (intérieure + extérieure) et sirène solaire extérieure incluses, pour une protection intérieure et extérieure dès l'installation.</p>
-          <a href="/pages/pack-alarmes" class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Pack complet</a>
+          <p>2 caméras (intérieure + extérieure) et sirène solaire extérieure incluses, pour une protection intérieure et extérieure dès l'installation{% if pack_variant.price %} — à partir de {{ pack_variant.price | money }}{% endif %}.</p>
+          <a href="{{ pack_url }}" class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Pack complet</a>
         </div>
       </div>
     </div>
