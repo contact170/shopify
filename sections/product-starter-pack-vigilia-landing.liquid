@@ -585,50 +585,7 @@
           <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
           <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
         </div>
-        {%- if has_rating -%}
-          <div class="pv-hero__rating">
-            <a href="#{{ reviews_anchor }}" class="pv-rating-badge" aria-label="Note {{ rating_value }} sur {{ rating_max }}, {{ rating_count }} avis — voir les avis">
-              <span class="pv-rating-badge__stars" aria-hidden="true">
-                <span class="pv-rating-badge__stars-bg">★★★★★</span>
-                <span class="pv-rating-badge__stars-fg" style="width:{{ rating_pct }}%">★★★★★</span>
-              </span>
-              <strong class="pv-rating-badge__score">{{ rating_value }}</strong>
-              <span class="pv-rating-badge__sep" aria-hidden="true">·</span>
-              <span class="pv-rating-badge__count">{{ rating_count }} avis</span>
-              <svg class="pv-rating-badge__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
-            </a>
-          </div>
-        {%- endif -%}
-        <div class="pv-pay">
-          {%- comment -%}
-            Two icons the merchant asked to drop from this row — best-guess
-            identifiers from the small reference screenshots (klarna's pink
-            badge, bancontact's blue/orange mark). Flagged to the merchant:
-            if either is still showing, the real shop.enabled_payment_types
-            string for it is different and this list needs the correct name.
-          {%- endcomment -%}
-          {%- assign pv_pay_excluded = "klarna,bancontact" | split: "," -%}
-          {%- assign pv_pay_visible_count = 0 -%}
-          {%- for type in shop.enabled_payment_types -%}
-            {%- unless pv_pay_excluded contains type -%}
-              {%- assign pv_pay_visible_count = pv_pay_visible_count | plus: 1 -%}
-            {%- endunless -%}
-          {%- endfor -%}
-          {%- if pv_pay_visible_count > 0 -%}
-            <div class="pv-pay__methods">
-              {%- for type in shop.enabled_payment_types -%}
-                {%- unless pv_pay_excluded contains type -%}
-                  {{ type | payment_type_svg_tag: class: 'pv-pay__icon' }}
-                {%- endunless -%}
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
-          <button type="button" class="pv-pay__alma" data-pv-alma-open>
-            <span class="pv-pay__alma-badge">alma</span>
-            <span class="pv-pay__alma-text">3x, 4x sans frais</span>
-            <svg class="pv-pay__alma-info" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-5"></path><path d="M12 8h.01"></path></svg>
-          </button>
-        </div>
+        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
       </div>
       <div class="pv-hero__trust">
         <span>🔒 Sans abonnement</span>
@@ -876,6 +833,7 @@
       <div id="PVBandCta-{{ section.id }}">
         {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
       </div>
+      {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
     </div>
   </div>
 
@@ -1167,6 +1125,7 @@
         <div class="pv-final__ctas" id="PVFinalCta-{{ section.id }}">
           {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
+        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
         <p class="pv-final__legal">Livraison sous 2 jours ouvrés · Retour gratuit sous 14 jours · Service client basé en France</p>
       </div>
     </div>
