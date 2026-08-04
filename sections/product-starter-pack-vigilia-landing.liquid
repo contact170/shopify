@@ -73,6 +73,16 @@
       break
     endif
   endfor
+
+  assign rating_value = product.metafields.reviews.rating.value.rating
+  assign rating_max = product.metafields.reviews.rating.value.scale_max | default: 5
+  assign rating_count = product.metafields.reviews.rating_count.value
+  assign has_rating = false
+  if product.metafields.reviews.rating.value != blank and rating_count > 0
+    assign has_rating = true
+    assign rating_pct = rating_value | times: 100.0 | divided_by: rating_max
+  endif
+  assign reviews_anchor = 'PVReviews-' | append: section.id
 -%}
 
 <div id="shopify-section-{{ section.id }}" class="pv">
@@ -167,6 +177,34 @@
     .pv-price-compare.is-visible{display:inline;}
     .pv-hero__rating{margin-top:6px;}
     .pv-hero__rating .product__rating{justify-content:center;}
+
+    /* ---- rating badge (links down to the reviews section) ---- */
+    .pv-rating-badge{
+      display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+      background:var(--pv-bg-alt);border:1px solid var(--pv-line);border-radius:999px;
+      padding:8px 16px;font-size:13.5px;color:var(--pv-ink);
+      transition:background .15s ease,border-color .15s ease;
+    }
+    .pv-rating-badge:hover{background:#ececee;border-color:var(--pv-navy);}
+    .pv-rating-badge__stars{position:relative;display:inline-block;font-size:14px;line-height:1;letter-spacing:1px;color:var(--pv-line);}
+    .pv-rating-badge__stars-bg{display:block;}
+    .pv-rating-badge__stars-fg{position:absolute;top:0;left:0;overflow:hidden;white-space:nowrap;color:#f5a623;}
+    .pv-rating-badge__score{font-weight:700;}
+    .pv-rating-badge__sep{color:var(--pv-line);}
+    .pv-rating-badge__count{color:var(--pv-gray);}
+    .pv-rating-badge__chevron{color:var(--pv-gray);flex-shrink:0;}
+
+    /* ---- payment badges ---- */
+    .pv-pay{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin-top:14px;}
+    .pv-pay__methods{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;}
+    .pv-pay__icon{height:22px;width:auto;border-radius:4px;box-shadow:0 0 0 1px var(--pv-line);}
+    .pv-pay__alma{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 12px;
+      border:1px solid var(--pv-line);border-radius:8px;background:#fff;
+    }
+    .pv-pay__alma-badge{font-weight:800;font-style:italic;font-size:13px;color:var(--pv-ink);letter-spacing:-.01em;}
+    .pv-pay__alma-text{font-size:11.5px;color:var(--pv-gray);font-weight:500;}
+
     .pv-hero__trust{
       margin-top:30px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;
       font-size:13px;color:var(--pv-gray);
@@ -354,6 +392,31 @@
     .pv-crosssell__card p{color:var(--pv-gray);font-size:14.5px;line-height:1.55;flex-grow:1;}
     .pv-crosssell__card .pv-btn{align-self:flex-start;margin-top:4px;}
 
+    /* ---- reviews ---- */
+    .pv-reviews__head{text-align:center;max-width:600px;margin:0 auto 36px;}
+    .pv-reviews__head h2{font-size:clamp(26px,3.4vw,38px);margin-top:14px;}
+    .pv-reviews__summary{
+      margin-top:14px;display:inline-flex;align-items:center;gap:8px;
+      font-size:14px;color:var(--pv-gray);
+    }
+    .pv-reviews__summary strong{color:var(--pv-ink);}
+    .pv-reviews__track{
+      display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+      padding:4px 4px 18px;-webkit-overflow-scrolling:touch;
+    }
+    .pv-review-card{
+      scroll-snap-align:start;flex-shrink:0;width:min(280px,80vw);
+      background:#fff;border:1px solid var(--pv-line);border-radius:20px;padding:26px;
+      display:flex;flex-direction:column;gap:14px;
+    }
+    .pv-review-card__stars{color:#f5a623;font-size:15px;letter-spacing:2px;}
+    .pv-review-card__text{font-size:14.5px;line-height:1.6;color:var(--pv-ink);flex:1;}
+    .pv-review-card__text::before{content:"\201C";}
+    .pv-review-card__text::after{content:"\201D";}
+    .pv-review-card__meta{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--pv-gray);}
+    .pv-review-card__name{font-weight:600;color:var(--pv-ink);}
+    .pv-review-card__dot{width:3px;height:3px;border-radius:50%;background:var(--pv-line);flex-shrink:0;}
+
     /* ---- faq ---- */
     .pv-faq{max-width:760px;margin:0 auto;}
     .pv-faq h2{text-align:center;font-size:clamp(26px,3.4vw,38px);margin-bottom:40px;}
@@ -465,8 +528,32 @@
           <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
           <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
         </div>
-        <div class="pv-hero__rating">
-          {%- render 'product-rating', product: product -%}
+        {%- if has_rating -%}
+          <div class="pv-hero__rating">
+            <a href="#{{ reviews_anchor }}" class="pv-rating-badge" aria-label="Note {{ rating_value }} sur {{ rating_max }}, {{ rating_count }} avis — voir les avis">
+              <span class="pv-rating-badge__stars" aria-hidden="true">
+                <span class="pv-rating-badge__stars-bg">★★★★★</span>
+                <span class="pv-rating-badge__stars-fg" style="width:{{ rating_pct }}%">★★★★★</span>
+              </span>
+              <strong class="pv-rating-badge__score">{{ rating_value }}</strong>
+              <span class="pv-rating-badge__sep" aria-hidden="true">·</span>
+              <span class="pv-rating-badge__count">{{ rating_count }} avis</span>
+              <svg class="pv-rating-badge__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+            </a>
+          </div>
+        {%- endif -%}
+        <div class="pv-pay">
+          {%- if shop.enabled_payment_types.size > 0 -%}
+            <div class="pv-pay__methods">
+              {%- for type in shop.enabled_payment_types -%}
+                {{ type | payment_type_svg_tag: class: 'pv-pay__icon' }}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          <div class="pv-pay__alma">
+            <span class="pv-pay__alma-badge">alma</span>
+            <span class="pv-pay__alma-text">3x, 4x ou 10x avec frais</span>
+          </div>
         </div>
       </div>
       <div class="pv-hero__trust">
@@ -809,6 +896,95 @@
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>
           <h3>Sans abonnement</h3>
           <p>Votre système vous appartient, à vie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Reviews {%- endcomment -%}
+  <section class="pv-section" id="{{ reviews_anchor }}">
+    <div class="pv-wrap">
+      <div class="pv-reviews__head pv-reveal">
+        <span class="pv-eyebrow">Avis clients</span>
+        <h2>Ce qu'en disent nos clients</h2>
+        {%- if has_rating -%}
+          <p class="pv-reviews__summary">
+            <strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés
+          </p>
+        {%- endif -%}
+      </div>
+      <div class="pv-reviews__track pv-reveal">
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
+          <p class="pv-review-card__text">Ce pack est parfait pour un bon démarrage surtout si on a un logement "basique" et s'il faut rajouter des éléments, cela est tout à fait possible.</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Rémy P.</span>
+            <span class="pv-review-card__dot" aria-hidden="true"></span>
+            <span>Noyelles-sous-Lens</span>
+          </div>
+        </div>
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
+          <p class="pv-review-card__text">Une fois la prise en main de l'application fait, c'est top 👍</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Stéphane B.</span>
+            <span class="pv-review-card__dot" aria-hidden="true"></span>
+            <span>Parmilieu</span>
+          </div>
+        </div>
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
+          <p class="pv-review-card__text">Ensemble suffisant pour sécuriser mon logement. Facile à mettre en œuvre avec l'application.</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Jean-Marie J.</span>
+            <span class="pv-review-card__dot" aria-hidden="true"></span>
+            <span>Gouzeaucourt</span>
+          </div>
+        </div>
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
+          <p class="pv-review-card__text">Commande reçue très rapidement, facile d'installation, je recommande fortement.</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Fabien D.</span>
+            <span class="pv-review-card__dot" aria-hidden="true"></span>
+            <span>Issoire</span>
+          </div>
+        </div>
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
+          <p class="pv-review-card__text">Très satisfait, montage facile, livraison rapide, je recommande vivement.</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Jean M.</span>
+            <span class="pv-review-card__dot" aria-hidden="true"></span>
+            <span>La Motte</span>
+          </div>
+        </div>
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★☆</div>
+          <p class="pv-review-card__text">Rapide à installer et à mettre en fonction. Restera à voir la durée des piles mais très satisfait de mon achat.</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Sébastien G.</span>
+            <span class="pv-review-card__dot" aria-hidden="true"></span>
+            <span>Uccle</span>
+          </div>
+        </div>
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
+          <p class="pv-review-card__text">Sirène très sonore et facile à installer. Association avec la centrale AM302 bien expliquée.</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Brigitte T.</span>
+            <span class="pv-review-card__dot" aria-hidden="true"></span>
+            <span>Villeparisis</span>
+          </div>
+        </div>
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
+          <p class="pv-review-card__text">Matériel fiable et très facile à installer.</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Carole M.</span>
+            <span class="pv-review-card__dot" aria-hidden="true"></span>
+            <span>Toulouse</span>
+          </div>
         </div>
       </div>
     </div>
