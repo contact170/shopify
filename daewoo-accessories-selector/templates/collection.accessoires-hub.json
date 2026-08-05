@@ -3,11 +3,19 @@
     "daewoo_hub": {
       "type": "daewoo-accessories-hub",
       "blocks": {
-        "card_vigilia_touch": {
-          "type": "card_vigilia_touch",
+        "card_vigilia": {
+          "type": "card_vigilia",
+          "settings": {
+            "image": "shopify://shop_images/VIG501_1.png",
+            "image_alt": "Centrale d'alarme Vigilia",
+            "button_link": "shopify://collections/compatible-gamme-vigilia-touch"
+          }
+        },
+        "card_touch": {
+          "type": "card_touch",
           "settings": {
             "image": "shopify://shop_images/AM301S.png",
-            "image_alt": "Centrales Vigilia et Touch",
+            "image_alt": "Centrale Touch AM301",
             "button_link": "shopify://collections/compatible-gamme-vigilia-touch"
           }
         },
@@ -28,15 +36,9 @@
           }
         }
       },
-      "block_order": [
-        "card_vigilia_touch",
-        "card_key",
-        "card_elite"
-      ],
+      "block_order": ["card_vigilia", "card_touch", "card_key", "card_elite"],
       "settings": {}
     }
   },
-  "order": [
-    "daewoo_hub"
-  ]
+  "order": ["daewoo_hub"]
 }

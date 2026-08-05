@@ -1,12 +1,12 @@
 {%- doc -%}
   Daewoo Security — accessories consolidation hub.
 
-  A proper hero band (explanatory eyebrow + title + subtitle, optional
-  background image) followed by three equal cards routing to the three real
-  accessory collections (Vigilia & Touch/Touch XL share one collection,
-  SA501 Key and PA501Z Elite each have their own). No product grid, no
-  filters, no reassurance strip — this page's only job is "help the visitor
-  understand where to go, and get there in one click."
+  Hero (left-aligned title + subtitle + scroll hint, image on the right)
+  followed by four large alternating rows — one per centrale range — each
+  with a badge icon, heading, tagline, CTA and a short feature list, then a
+  closing "don't know your centrale?" band with two calls to action. No
+  product grid, no filters — this page only has to get the visitor to the
+  right destination.
 {%- enddoc -%}
 
 {{ 'daewoo-accessories-hub.css' | asset_url | stylesheet_tag }}
@@ -20,37 +20,9 @@
 
 <div class="section daewoo-hub section--padding{% if section.settings.divider %} section--divider{% endif %}">
 
-  <div class="daewoo-hub__hero relative">
-    {%- if section.settings.hero_image != blank -%}
-      <div class="daewoo-hub__hero-media absolute inset-0" aria-hidden="true">
-        <picture class="block w-full h-full">
-          {%- if section.settings.hero_image_mobile != blank -%}
-            <source
-              media="(max-width: 767px)"
-              srcset="{{ section.settings.hero_image_mobile | image_url: width: 800 }} 800w, {{ section.settings.hero_image_mobile | image_url: width: 1200 }} 1200w"
-              width="{{ section.settings.hero_image_mobile.width }}"
-              height="{{ section.settings.hero_image_mobile.height }}"
-            >
-          {%- endif -%}
-          {{-
-            section.settings.hero_image
-            | image_url: width: section.settings.hero_image.width
-            | image_tag:
-              loading: 'eager',
-              widths: '750,1100,1500,1920,2400',
-              sizes: '100vw',
-              alt: '',
-              class: 'daewoo-hub__hero-img w-full h-full'
-          -}}
-        </picture>
-        <span class="daewoo-hub__hero-gradient absolute inset-0"></span>
-      </div>
-    {%- else -%}
-      <span class="daewoo-hub__hero-wash absolute inset-0" aria-hidden="true"></span>
-    {%- endif -%}
-
-    <div class="page-width relative">
-      <div class="daewoo-hub__header">
+  {%- if section.settings.enable_hero -%}
+    <div class="daewoo-hub__hero page-width{% if section.settings.hero_image != blank %} daewoo-hub__hero--has-image{% endif %}">
+      <div class="daewoo-hub__hero-text">
         {%- if section.settings.eyebrow != blank -%}
           <p class="daewoo-hub__eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {%- endif -%}
@@ -60,21 +32,69 @@
         {%- if section.settings.subheading != blank -%}
           <p class="daewoo-hub__subheading">{{ section.settings.subheading }}</p>
         {%- endif -%}
+        {%- if section.settings.scroll_label != blank -%}
+          <a href="#DaewooHubRows-{{ section.id }}" class="daewoo-hub__scroll link icon-with-text">
+            {%- render 'icon', icon: 'arrow-down', size: 'sm' -%}
+            <span class="link-text">{{ section.settings.scroll_label | escape }}</span>
+          </a>
+        {%- endif -%}
       </div>
+      {%- if section.settings.hero_image != blank -%}
+        <div class="daewoo-hub__hero-media">
+          {{-
+            section.settings.hero_image
+            | image_url: width: section.settings.hero_image.width
+            | image_tag:
+              loading: 'eager',
+              widths: '400,600,800,1000,1200',
+              sizes: '(max-width: 900px) 100vw, 45vw',
+              alt: '',
+              class: 'daewoo-hub__hero-img'
+          -}}
+        </div>
+      {%- endif -%}
     </div>
+  {%- endif -%}
+
+  <div class="daewoo-hub__rows page-width" id="DaewooHubRows-{{ section.id }}">
+    {%- liquid
+      assign i = 0
+      for block in section.blocks
+        if block.type contains 'card_' and block.settings.enabled
+          assign i = i | plus: 1
+          render 'daewoo-hub-row', block: block, index: i, loading: 'lazy'
+        endif
+      endfor
+    -%}
   </div>
 
-  <div class="page-width">
-    <div class="daewoo-hub__grid grid">
-      {%- for block in section.blocks -%}
-        {%- if block.type contains 'card_' and block.settings.enabled -%}
-          <div class="daewoo-hub__item">
-            {%- render 'daewoo-hub-card', block: block, loading: 'eager' -%}
-          </div>
+  {%- if section.settings.enable_help -%}
+    <div class="daewoo-hub__help page-width">
+      <div class="daewoo-hub__help-inner">
+        {%- if section.settings.help_icon != blank -%}
+          <span class="daewoo-hub__help-icon">
+            {%- render 'daewoo-hub-icon', icon: section.settings.help_icon -%}
+          </span>
         {%- endif -%}
-      {%- endfor -%}
+        <div class="daewoo-hub__help-text">
+          {%- if section.settings.help_heading != blank -%}
+            <p class="daewoo-hub__help-heading">{{ section.settings.help_heading }}</p>
+          {%- endif -%}
+          {%- if section.settings.help_text != blank -%}
+            <p class="daewoo-hub__help-description">{{ section.settings.help_text }}</p>
+          {%- endif -%}
+        </div>
+        <div class="daewoo-hub__help-actions">
+          {%- if section.settings.help_primary_label != blank -%}
+            {%- render 'button', label: section.settings.help_primary_label, link: section.settings.help_primary_link, style: 'primary', size: 'md', show_icon: true -%}
+          {%- endif -%}
+          {%- if section.settings.help_secondary_label != blank -%}
+            {%- render 'button', label: section.settings.help_secondary_label, link: section.settings.help_secondary_link, style: 'secondary', size: 'md' -%}
+          {%- endif -%}
+        </div>
+      </div>
     </div>
-  </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
@@ -83,11 +103,28 @@
   "class": "daewoo-hub-section",
   "settings": [
     { "type": "header", "content": "Hero" },
+    { "type": "checkbox", "id": "enable_hero", "label": "Afficher le hero", "default": true },
     { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "ACCESSOIRES DAEWOO SECURITY" },
-    { "type": "text", "id": "heading", "label": "Titre", "default": "Trouvez les accessoires faits pour votre centrale" },
-    { "type": "textarea", "id": "subheading", "label": "Sous-titre", "default": "Chaque gamme d'alarme a ses propres accessoires compatibles. Choisissez votre centrale ci-dessous pour accéder directement à la bonne sélection." },
-    { "type": "image_picker", "id": "hero_image", "label": "Image de fond (optionnelle)", "info": "Sans image, un fond dégradé sobre s'affiche automatiquement." },
-    { "type": "image_picker", "id": "hero_image_mobile", "label": "Image de fond mobile (optionnelle)" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Choisissez votre gamme d'accessoires" },
+    { "type": "textarea", "id": "subheading", "label": "Sous-titre", "default": "Sélectionnez votre centrale pour découvrir les accessoires compatibles avec votre système Daewoo." },
+    { "type": "text", "id": "scroll_label", "label": "Texte du lien de défilement", "default": "Faire défiler" },
+    { "type": "image_picker", "id": "hero_image", "label": "Image" },
+
+    { "type": "header", "content": "Bandeau d'aide" },
+    { "type": "checkbox", "id": "enable_help", "label": "Afficher le bandeau d'aide", "default": true },
+    { "type": "select", "id": "help_icon", "label": "Icône", "default": "touch", "options": [
+      { "value": "shield", "label": "Bouclier" },
+      { "value": "touch", "label": "Contact/Aide" },
+      { "value": "key", "label": "Clé" },
+      { "value": "diamond", "label": "Diamant" },
+      { "value": "sliders", "label": "Réglages" }
+    ]},
+    { "type": "text", "id": "help_heading", "label": "Titre", "default": "Vous ne connaissez pas votre centrale ?" },
+    { "type": "textarea", "id": "help_text", "label": "Texte", "default": "Utilisez notre configurateur pour identifier la centrale qui correspond à votre installation, ou contactez-nous directement." },
+    { "type": "text", "id": "help_primary_label", "label": "Bouton principal — texte", "default": "Configurer mon système" },
+    { "type": "url", "id": "help_primary_link", "label": "Bouton principal — URL" },
+    { "type": "text", "id": "help_secondary_label", "label": "Bouton secondaire — texte", "default": "Contacter un conseiller" },
+    { "type": "url", "id": "help_secondary_link", "label": "Bouton secondaire — URL" },
 
     { "type": "header", "content": "Mise en page" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Espacement au-dessus", "default": 0 },
@@ -96,45 +133,139 @@
   ],
   "blocks": [
     {
-      "type": "card_vigilia_touch",
-      "name": "Carte — Vigilia & Touch",
+      "type": "card_vigilia",
+      "name": "Rangée — Vigilia",
       "limit": 1,
       "settings": [
-        { "type": "checkbox", "id": "enabled", "label": "Activer cette carte", "default": true },
+        { "type": "checkbox", "id": "enabled", "label": "Activer cette rangée", "default": true },
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" },
-        { "type": "text", "id": "heading", "label": "Titre", "default": "Vigilia & Touch / Touch XL" },
-        { "type": "textarea", "id": "description", "label": "Description", "default": "Détecteurs, sirènes, télécommandes et accessoires compatibles." },
-        { "type": "text", "id": "button_label", "label": "Texte du lien", "default": "Voir les accessoires" },
-        { "type": "url", "id": "button_link", "label": "URL de la collection" }
+        { "type": "select", "id": "badge_icon", "label": "Icône", "default": "shield", "options": [
+          { "value": "shield", "label": "Bouclier" }, { "value": "touch", "label": "Contact" }, { "value": "key", "label": "Clé" }, { "value": "diamond", "label": "Diamant" }, { "value": "sliders", "label": "Réglages" }
+        ]},
+        { "type": "color", "id": "badge_tint", "label": "Couleur du badge", "default": "#e8effc" },
+        { "type": "text", "id": "heading", "label": "Titre", "default": "Vigilia" },
+        { "type": "text", "id": "tagline", "label": "Description courte", "default": "Simple, complète et évolutive" },
+        { "type": "text", "id": "button_label", "label": "Texte du bouton", "default": "Découvrir les accessoires Vigilia" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection" },
+        { "type": "select", "id": "feature_1_icon", "label": "Icône 1", "default": "sensor", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_1_label", "label": "Texte 1", "default": "Détecteurs" },
+        { "type": "select", "id": "feature_2_icon", "label": "Icône 2", "default": "siren", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_2_label", "label": "Texte 2", "default": "Sirènes" },
+        { "type": "select", "id": "feature_3_icon", "label": "Icône 3", "default": "remote", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_3_label", "label": "Texte 3", "default": "Télécommandes" },
+        { "type": "select", "id": "feature_4_icon", "label": "Icône 4", "default": "camera", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_4_label", "label": "Texte 4", "default": "Caméras compatibles" }
+      ]
+    },
+    {
+      "type": "card_touch",
+      "name": "Rangée — Touch",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "enabled", "label": "Activer cette rangée", "default": true },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" },
+        { "type": "select", "id": "badge_icon", "label": "Icône", "default": "touch", "options": [
+          { "value": "shield", "label": "Bouclier" }, { "value": "touch", "label": "Contact" }, { "value": "key", "label": "Clé" }, { "value": "diamond", "label": "Diamant" }, { "value": "sliders", "label": "Réglages" }
+        ]},
+        { "type": "color", "id": "badge_tint", "label": "Couleur du badge", "default": "#e8effc" },
+        { "type": "text", "id": "heading", "label": "Titre", "default": "Touch / Touch XL" },
+        { "type": "text", "id": "tagline", "label": "Description courte", "default": "Le confort de l'écran tactile" },
+        { "type": "text", "id": "button_label", "label": "Texte du bouton", "default": "Découvrir les accessoires Touch" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection" },
+        { "type": "select", "id": "feature_1_icon", "label": "Icône 1", "default": "sensor", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_1_label", "label": "Texte 1", "default": "Détecteurs" },
+        { "type": "select", "id": "feature_2_icon", "label": "Icône 2", "default": "siren", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_2_label", "label": "Texte 2", "default": "Sirènes" },
+        { "type": "select", "id": "feature_3_icon", "label": "Icône 3", "default": "key", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_3_label", "label": "Texte 3", "default": "Badges" },
+        { "type": "select", "id": "feature_4_icon", "label": "Icône 4", "default": "connectivity", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_4_label", "label": "Texte 4", "default": "Modules complémentaires" }
       ]
     },
     {
       "type": "card_key",
-      "name": "Carte — SA501 Key",
+      "name": "Rangée — SA501 Key",
       "limit": 1,
       "settings": [
-        { "type": "checkbox", "id": "enabled", "label": "Activer cette carte", "default": true },
+        { "type": "checkbox", "id": "enabled", "label": "Activer cette rangée", "default": true },
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" },
+        { "type": "select", "id": "badge_icon", "label": "Icône", "default": "key", "options": [
+          { "value": "shield", "label": "Bouclier" }, { "value": "touch", "label": "Contact" }, { "value": "key", "label": "Clé" }, { "value": "diamond", "label": "Diamant" }, { "value": "sliders", "label": "Réglages" }
+        ]},
+        { "type": "color", "id": "badge_tint", "label": "Couleur du badge", "default": "#e6f4ec" },
         { "type": "text", "id": "heading", "label": "Titre", "default": "SA501 Key" },
-        { "type": "textarea", "id": "description", "label": "Description", "default": "Détecteurs, sirènes, télécommandes et accessoires compatibles." },
-        { "type": "text", "id": "button_label", "label": "Texte du lien", "default": "Voir les accessoires" },
-        { "type": "url", "id": "button_link", "label": "URL de la collection" }
+        { "type": "text", "id": "tagline", "label": "Description courte", "default": "Compacte, pratique et efficace" },
+        { "type": "text", "id": "button_label", "label": "Texte du bouton", "default": "Découvrir les accessoires Key" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection" },
+        { "type": "select", "id": "feature_1_icon", "label": "Icône 1", "default": "sensor", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_1_label", "label": "Texte 1", "default": "Détecteurs" },
+        { "type": "select", "id": "feature_2_icon", "label": "Icône 2", "default": "siren", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_2_label", "label": "Texte 2", "default": "Sirènes" },
+        { "type": "select", "id": "feature_3_icon", "label": "Icône 3", "default": "remote", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_3_label", "label": "Texte 3", "default": "Télécommandes" },
+        { "type": "select", "id": "feature_4_icon", "label": "Icône 4", "default": "key", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_4_label", "label": "Texte 4", "default": "Accessoires compatibles" }
       ]
     },
     {
       "type": "card_elite",
-      "name": "Carte — PA501Z Elite",
+      "name": "Rangée — PA501Z Elite",
       "limit": 1,
       "settings": [
-        { "type": "checkbox", "id": "enabled", "label": "Activer cette carte", "default": true },
+        { "type": "checkbox", "id": "enabled", "label": "Activer cette rangée", "default": true },
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" },
+        { "type": "select", "id": "badge_icon", "label": "Icône", "default": "diamond", "options": [
+          { "value": "shield", "label": "Bouclier" }, { "value": "touch", "label": "Contact" }, { "value": "key", "label": "Clé" }, { "value": "diamond", "label": "Diamant" }, { "value": "sliders", "label": "Réglages" }
+        ]},
+        { "type": "color", "id": "badge_tint", "label": "Couleur du badge", "default": "#efe9fb" },
         { "type": "text", "id": "heading", "label": "Titre", "default": "PA501Z Elite" },
-        { "type": "textarea", "id": "description", "label": "Description", "default": "Accessoires Zigbee et équipements compatibles." },
-        { "type": "text", "id": "button_label", "label": "Texte du lien", "default": "Voir les accessoires" },
-        { "type": "url", "id": "button_link", "label": "URL de la collection" }
+        { "type": "text", "id": "tagline", "label": "Description courte", "default": "La solution la plus avancée" },
+        { "type": "text", "id": "button_label", "label": "Texte du bouton", "default": "Découvrir les accessoires Elite" },
+        { "type": "url", "id": "button_link", "label": "URL de la collection" },
+        { "type": "select", "id": "feature_1_icon", "label": "Icône 1", "default": "connectivity", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_1_label", "label": "Texte 1", "default": "Accessoires Zigbee" },
+        { "type": "select", "id": "feature_2_icon", "label": "Icône 2", "default": "sensor", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_2_label", "label": "Texte 2", "default": "Détecteurs avancés" },
+        { "type": "select", "id": "feature_3_icon", "label": "Icône 3", "default": "camera", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_3_label", "label": "Texte 3", "default": "Caméras" },
+        { "type": "select", "id": "feature_4_icon", "label": "Icône 4", "default": "sliders", "options": [
+          { "value": "sensor", "label": "Détecteur" }, { "value": "siren", "label": "Sirène" }, { "value": "remote", "label": "Télécommande" }, { "value": "camera", "label": "Caméra" }, { "value": "connectivity", "label": "Connectivité" }, { "value": "sliders", "label": "Contrôle" }, { "value": "key", "label": "Badge" }
+        ]},
+        { "type": "text", "id": "feature_4_label", "label": "Texte 4", "default": "Contrôle renforcé" }
       ]
     }
   ],
@@ -142,7 +273,8 @@
     {
       "name": "Daewoo — Hub accessoires",
       "blocks": [
-        { "type": "card_vigilia_touch" },
+        { "type": "card_vigilia" },
+        { "type": "card_touch" },
         { "type": "card_key" },
         { "type": "card_elite" }
       ]

@@ -1,19 +1,23 @@
 # Page accessoires — Daewoo Security
 
-Refonte de `/collections/tous-les-accessoires` en page de **consolidation** :
-un titre court et trois cartes sobres qui renvoient chacune vers la vraie
-collection d'accessoires correspondante. Pas de grille produits sur cette
-page — elle ne fait qu'aiguiller le client vers la bonne page en un coup
-d'œil.
+Refonte de `/collections/tous-les-accessoires` en page de **consolidation
+premium** : un hero (titre, sous-titre, lien de défilement, image) suivi de
+**quatre grandes rangées alternées** (une par centrale : Vigilia, Touch /
+Touch XL, SA501 Key, PA501Z Elite), chacune avec un badge icône, un titre,
+une accroche, un bouton d'action et une liste de 4 fonctionnalités
+compatibles, puis un bandeau final « vous ne connaissez pas votre
+centrale ? » avec deux boutons. Pas de grille produits sur cette page —
+elle ne fait qu'aiguiller le client vers la bonne collection.
 
-## Fichiers actuels (page de consolidation)
+## Fichiers actuels (hero + 4 rangées alternées)
 
 | Fichier | Statut | Rôle |
 |---|---|---|
-| `sections/daewoo-accessories-hub.liquid` | **Nouveau** | Titre + sous-titre courts, puis 3 cartes égales. |
-| `assets/daewoo-accessories-hub.css` | **Nouveau** | Style sobre : bordures fines, une seule couleur d'accent (`--color-highlight`, au survol uniquement), pas d'ombre ni de dégradé lourd. Variables du thème uniquement. |
-| `snippets/daewoo-hub-card.liquid` | **Nouveau** | Une carte : image entière sur fond neutre (jamais recadrée), titre, description courte, lien. Toute la carte est un seul `<a>`. |
-| `templates/collection.accessoires-hub.json` | **Nouveau** | Template dédié à `tous-les-accessoires` — uniquement cette section, rien d'autre. |
+| `sections/daewoo-accessories-hub.liquid` | **Nouveau** | Hero (titre/sous-titre/lien de défilement/image) + boucle sur les 4 blocs de rangée + bandeau d'aide final. |
+| `assets/daewoo-accessories-hub.css` | **Nouveau** | Hero 2 colonnes (ou centré si pas d'image), rangées alternées en grille 2 colonnes avec bordure fine et coins arrondis, bandeau d'aide teinté `--color-highlight`. Variables du thème uniquement. |
+| `snippets/daewoo-hub-row.liquid` | **Nouveau** | Une rangée : image d'un côté, contenu de l'autre (badge, titre, accroche, CTA, 4 fonctionnalités). Le côté alterne automatiquement selon l'index. |
+| `snippets/daewoo-hub-icon.liquid` | **Nouveau** | Jeu de 10 icônes SVG monoligne (bouclier, contact, clé, diamant, détecteur, sirène, télécommande, caméra, connectivité, réglages) — le thème n'a pas d'icônes du domaine sécurité. |
+| `templates/collection.accessoires-hub.json` | **Nouveau** | Template dédié à `tous-les-accessoires` : 4 blocs (`card_vigilia`, `card_touch`, `card_key`, `card_elite`) avec vraies photos produit et vrais liens de collection. |
 | `snippets/product-badges.liquid` | **Modifié** | Ajout de 4 lignes en fin de fichier pour le badge de compatibilité produit (voir section « Badges »). Indépendant du reste de ce livrable. |
 
 Aucun JavaScript : navigation par vraies URLs de collection,
@@ -31,12 +35,21 @@ Aperçu direct :
 https://daewoo-security.myshopify.com/admin/themes/200542421332/editor?template=collection.accessoires-hub&previewPath=%2Fcollections%2Ftous-les-accessoires
 ```
 
-Les 3 cartes utilisent déjà vos vraies photos produit (Touch AM301, SA501
-Key, PA501Z Elite) et pointent vers vos 3 vraies collections :
+Les 4 rangées utilisent déjà vos vraies photos produit (Vigilia VIG501,
+Touch AM301, SA501 Key, PA501Z Elite) et pointent vers vos vraies
+collections :
 
-- **Vigilia & Touch / Touch XL** → *Compatible gamme Vigilia / Touch*
+- **Vigilia** → *Compatible gamme Vigilia / Touch*
+- **Touch / Touch XL** → *Compatible gamme Vigilia / Touch* (même collection que Vigilia, rangée distincte visuellement)
 - **SA501 Key** → *ACCESSOIRES KEY (SA501)*
 - **PA501Z Elite** → *Compatible gamme Élite*
+
+Les photos utilisées sont vos vraies photos produit (studio, fond neutre),
+détourées sur un panneau clair dans chaque rangée. Ce ne sont pas des
+photos « lifestyle » (produits en situation dans un intérieur) — aucune
+photo de ce type n'existe actuellement dans votre bibliothèque Shopify.
+Si vous en avez, elles peuvent remplacer les visuels actuels directement
+depuis l'éditeur de thème (champ **Image** de chaque rangée).
 
 ## Installation manuelle (si besoin de la refaire ailleurs)
 

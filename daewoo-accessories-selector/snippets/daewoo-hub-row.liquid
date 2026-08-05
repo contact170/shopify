@@ -1,0 +1,87 @@
+{%- doc -%}
+  Renders one large alternating row for the accessories hub: product image
+  on one side, content (badge icon, heading, tagline, CTA, feature list) on
+  the other. Side alternates by row index so the page reads as a relaxed
+  editorial sequence rather than a repeated block.
+
+  @param {object} block - a card_vigilia / card_touch / card_key / card_elite block
+  @param {number} index - 1-based position in the sequence, drives the alternation
+  @param {string} [loading] - 'eager' or 'lazy' (default 'lazy')
+
+  @example
+  {% render 'daewoo-hub-row', block: block, index: 1 %}
+{%- enddoc -%}
+
+{%- liquid
+  assign s = block.settings
+  assign loading = loading | default: 'lazy'
+  assign card_alt = s.image_alt | default: s.heading | strip_html
+  assign reversed = false
+  assign remainder = index | modulo: 2
+  if remainder == 0
+    assign reversed = true
+  endif
+-%}
+
+<div class="daewoo-hub-row{% if reversed %} daewoo-hub-row--reversed{% endif %}" {{ block.shopify_attributes }}>
+  <div class="daewoo-hub-row__media">
+    {%- if s.image != blank -%}
+      {{-
+        s.image
+        | image_url: width: s.image.width
+        | image_tag:
+          loading: loading,
+          widths: '400,600,800,1000',
+          sizes: '(max-width: 900px) 100vw, 45vw',
+          alt: card_alt,
+          class: 'daewoo-hub-row__img'
+      -}}
+    {%- else -%}
+      {{- 'product-1' | placeholder_svg_tag: 'daewoo-hub-row__img placeholder-svg' -}}
+    {%- endif -%}
+  </div>
+
+  <div class="daewoo-hub-row__content">
+    {%- if s.badge_icon != blank -%}
+      <span class="daewoo-hub-row__badge" style="{% if s.badge_tint != blank %}background:{{ s.badge_tint }};{% endif %}">
+        {%- render 'daewoo-hub-icon', icon: s.badge_icon, class: 'daewoo-hub-row__badge-icon' -%}
+      </span>
+    {%- endif -%}
+
+    {%- if s.heading != blank -%}
+      <h2 class="daewoo-hub-row__heading heading">{{ s.heading }}</h2>
+    {%- endif -%}
+
+    {%- if s.tagline != blank -%}
+      <p class="daewoo-hub-row__tagline">{{ s.tagline }}</p>
+    {%- endif -%}
+
+    {%- if s.button_label != blank -%}
+      {%- render 'button',
+        label: s.button_label,
+        link: s.button_link,
+        style: 'primary',
+        size: 'md',
+        show_icon: true,
+        classes: 'daewoo-hub-row__cta'
+      -%}
+    {%- endif -%}
+
+    <ul class="daewoo-hub-row__features">
+      {%- for i in (1..4) -%}
+        {%- case i -%}
+          {%- when 1 -%}{%- assign f_icon = s.feature_1_icon -%}{%- assign f_label = s.feature_1_label -%}
+          {%- when 2 -%}{%- assign f_icon = s.feature_2_icon -%}{%- assign f_label = s.feature_2_label -%}
+          {%- when 3 -%}{%- assign f_icon = s.feature_3_icon -%}{%- assign f_label = s.feature_3_label -%}
+          {%- when 4 -%}{%- assign f_icon = s.feature_4_icon -%}{%- assign f_label = s.feature_4_label -%}
+        {%- endcase -%}
+        {%- if f_label != blank -%}
+          <li class="daewoo-hub-row__feature">
+            {%- render 'daewoo-hub-icon', icon: f_icon, class: 'daewoo-hub-row__feature-icon' -%}
+            <span>{{ f_label }}</span>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
