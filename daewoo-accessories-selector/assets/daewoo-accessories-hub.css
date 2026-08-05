@@ -1,0 +1,136 @@
+/*
+  Daewoo accessories hub — deliberately restrained: one accent color
+  (the theme's own --color-highlight, used only on hover), hairline
+  borders instead of shadows, generous whitespace. Reads all colors,
+  spacing and radii from the theme's own custom properties.
+*/
+
+.daewoo-hub {
+  color: rgb(var(--color-foreground));
+}
+
+.daewoo-hub__header {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.daewoo-hub__eyebrow {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: var(--font-medium);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-highlight, var(--color-foreground)));
+}
+
+.daewoo-hub__heading {
+  margin: 0;
+  font-size: clamp(1.75rem, 1.6vw + 1.3rem, 2.75rem);
+  font-weight: var(--font-bold);
+  line-height: 1.1;
+}
+
+.daewoo-hub__subheading {
+  margin: 0;
+  font-size: 1.0625rem;
+  color: rgb(var(--color-foreground) / 0.65);
+  max-width: 42ch;
+}
+
+.daewoo-hub__grid {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+@media screen and (max-width: 900px) {
+  .daewoo-hub__grid {
+    grid-template-columns: 1fr;
+    max-width: 26rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.daewoo-hub-card {
+  padding: clamp(2rem, 4vw, 2.75rem) clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid rgb(var(--color-foreground) / 0.1);
+  border-radius: var(--border-radius-medium, 20px);
+  gap: 0.9rem;
+  transition: border-color var(--animation-fast, 0.3s), transform var(--animation-primary, 0.5s cubic-bezier(0.3, 1, 0.3, 1)),
+    box-shadow var(--animation-primary, 0.5s cubic-bezier(0.3, 1, 0.3, 1));
+}
+
+.daewoo-hub-card__stage {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin-bottom: 0.4rem;
+}
+
+.daewoo-hub-card__img,
+.daewoo-hub-card__img.placeholder-svg {
+  max-width: 68%;
+  max-height: 82%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.daewoo-hub-card__heading {
+  font-size: 1.1875rem;
+  font-weight: var(--font-bold);
+}
+
+.daewoo-hub-card__description {
+  font-size: 0.9375rem;
+  color: rgb(var(--color-foreground) / 0.65);
+  max-width: 30ch;
+}
+
+.daewoo-hub-card__cta {
+  margin-top: 0.3rem;
+  gap: 0.45rem;
+  font-size: 0.9375rem;
+  font-weight: var(--font-medium);
+  color: rgb(var(--color-highlight, var(--color-foreground)));
+}
+
+.daewoo-hub-card__arrow {
+  width: var(--sp-4, 1rem);
+  height: var(--sp-4, 1rem);
+  transition: transform var(--animation-fast, 0.3s cubic-bezier(0.7, 0, 0.3, 1));
+}
+
+@media screen and (pointer: fine) {
+  .daewoo-hub-card:hover,
+  .daewoo-hub-card:focus-visible {
+    border-color: rgb(var(--color-foreground) / 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px -28px rgb(var(--color-foreground) / 0.35);
+  }
+
+  .daewoo-hub-card:hover .daewoo-hub-card__arrow,
+  .daewoo-hub-card:focus-visible .daewoo-hub-card__arrow {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .daewoo-hub-card,
+  .daewoo-hub-card__arrow {
+    transition: none !important;
+  }
+
+  .daewoo-hub-card:hover,
+  .daewoo-hub-card:focus-visible,
+  .daewoo-hub-card:hover .daewoo-hub-card__arrow,
+  .daewoo-hub-card:focus-visible .daewoo-hub-card__arrow {
+    transform: none !important;
+  }
+}
