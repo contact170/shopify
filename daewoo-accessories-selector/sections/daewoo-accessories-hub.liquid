@@ -1,15 +1,12 @@
 {%- doc -%}
   Daewoo Security — accessories consolidation hub.
 
-  Deliberately minimal: a short header and three equal cards routing to the
-  three real accessory collections (Vigilia & Touch/Touch XL share one
-  collection, SA501 Key and PA501Z Elite each have their own). No product
-  grid, no filters, no reassurance strip, no identification section — this
-  page's only job is "help the visitor find the right destination in one
-  glance," so it is intentionally sober rather than exhaustive.
-
-  Replaces daewoo-accessories-hub's previous, more elaborate section on
-  purpose: fewer moving parts is the point here, not a missing feature.
+  A proper hero band (explanatory eyebrow + title + subtitle, optional
+  background image) followed by three equal cards routing to the three real
+  accessory collections (Vigilia & Touch/Touch XL share one collection,
+  SA501 Key and PA501Z Elite each have their own). No product grid, no
+  filters, no reassurance strip — this page's only job is "help the visitor
+  understand where to go, and get there in one click."
 {%- enddoc -%}
 
 {{ 'daewoo-accessories-hub.css' | asset_url | stylesheet_tag }}
@@ -22,19 +19,52 @@
 </style>
 
 <div class="section daewoo-hub section--padding{% if section.settings.divider %} section--divider{% endif %}">
-  <div class="page-width">
-    <div class="daewoo-hub__header">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="daewoo-hub__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-      {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h1 class="daewoo-hub__heading heading">{{ section.settings.heading }}</h1>
-      {%- endif -%}
-      {%- if section.settings.subheading != blank -%}
-        <p class="daewoo-hub__subheading">{{ section.settings.subheading }}</p>
-      {%- endif -%}
-    </div>
 
+  <div class="daewoo-hub__hero relative">
+    {%- if section.settings.hero_image != blank -%}
+      <div class="daewoo-hub__hero-media absolute inset-0" aria-hidden="true">
+        <picture class="block w-full h-full">
+          {%- if section.settings.hero_image_mobile != blank -%}
+            <source
+              media="(max-width: 767px)"
+              srcset="{{ section.settings.hero_image_mobile | image_url: width: 800 }} 800w, {{ section.settings.hero_image_mobile | image_url: width: 1200 }} 1200w"
+              width="{{ section.settings.hero_image_mobile.width }}"
+              height="{{ section.settings.hero_image_mobile.height }}"
+            >
+          {%- endif -%}
+          {{-
+            section.settings.hero_image
+            | image_url: width: section.settings.hero_image.width
+            | image_tag:
+              loading: 'eager',
+              widths: '750,1100,1500,1920,2400',
+              sizes: '100vw',
+              alt: '',
+              class: 'daewoo-hub__hero-img w-full h-full'
+          -}}
+        </picture>
+        <span class="daewoo-hub__hero-gradient absolute inset-0"></span>
+      </div>
+    {%- else -%}
+      <span class="daewoo-hub__hero-wash absolute inset-0" aria-hidden="true"></span>
+    {%- endif -%}
+
+    <div class="page-width relative">
+      <div class="daewoo-hub__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="daewoo-hub__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="daewoo-hub__heading heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="daewoo-hub__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="page-width">
     <div class="daewoo-hub__grid grid">
       {%- for block in section.blocks -%}
         {%- if block.type contains 'card_' and block.settings.enabled -%}
@@ -52,12 +82,15 @@
   "name": "Daewoo — Hub accessoires",
   "class": "daewoo-hub-section",
   "settings": [
+    { "type": "header", "content": "Hero" },
     { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "ACCESSOIRES DAEWOO SECURITY" },
-    { "type": "text", "id": "heading", "label": "Titre", "default": "Choisissez votre centrale" },
-    { "type": "textarea", "id": "subheading", "label": "Sous-titre", "default": "Sélectionnez votre système d'alarme pour découvrir les accessoires compatibles." },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Trouvez les accessoires faits pour votre centrale" },
+    { "type": "textarea", "id": "subheading", "label": "Sous-titre", "default": "Chaque gamme d'alarme a ses propres accessoires compatibles. Choisissez votre centrale ci-dessous pour accéder directement à la bonne sélection." },
+    { "type": "image_picker", "id": "hero_image", "label": "Image de fond (optionnelle)", "info": "Sans image, un fond dégradé sobre s'affiche automatiquement." },
+    { "type": "image_picker", "id": "hero_image_mobile", "label": "Image de fond mobile (optionnelle)" },
 
     { "type": "header", "content": "Mise en page" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Espacement au-dessus", "default": 64 },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Espacement au-dessus", "default": 0 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Espacement en dessous", "default": 96 },
     { "type": "checkbox", "id": "divider", "label": "Séparateur", "default": false }
   ],
