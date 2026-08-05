@@ -1,13 +1,20 @@
 {%- doc -%}
-  Bespoke, conversion-focused product page for the Daewoo Pack Vigilia
-  (OFFRE EXCLUSIVE | Pack Vigilia | 2 Caméras & Sirène Solaire). Same
-  Apple-style layout (white background, large type, generous whitespace)
-  and shared-hidden-form technique as sections/product-w512mw-landing.liquid,
-  reused here so both pages read as one consistent premium design system.
+  Bespoke, conversion-focused product page for the Daewoo Pack Vigilia.
+  Same Apple-style layout (white background, large type, generous
+  whitespace) and shared-hidden-form technique as
+  sections/product-w512mw-landing.liquid, reused here so both pages read
+  as one consistent premium design system.
 
-  Unlike the W512MW page, this product has two real, separately priced
-  variants (WiFi uniquement / WiFi & GSM 4G) — the connectivity toggle
-  swaps the actual selected variant, not just a quantity.
+  This templateSuffix ("pack-vigilia") is shared by two separate product
+  listings with genuinely different box contents — this copy describes
+  the 1-camera / 110dB-siren variant (249,90€ listing, handle ending
+  "-2"). The other listing (359,90€, "2 Caméras & Sirène Solaire") has 2
+  cameras and an 85dB siren, so if that listing is ever pointed at this
+  same template again its actual contents won't match this page's text.
+
+  This product has two real, separately priced variants (WiFi uniquement
+  / WiFi & GSM 4G) — the connectivity toggle swaps the actual selected
+  variant, not just a quantity.
 {%- enddoc -%}
 
 {%- liquid
@@ -488,7 +495,7 @@
       <span class="pv-eyebrow">Daewoo Security · Pack Vigilia</span>
       <h1>Toute votre maison protégée.<br>Intérieur, extérieur, jour et nuit.</h1>
       <p class="pv-hero__sub">
-        Alarme connectée, 2 caméras et sirène solaire réunis dans un seul pack évolutif.
+        Alarme connectée, caméra intérieure et sirène solaire 110&nbsp;dB réunies dans un seul pack évolutif.
         Installation en 20 minutes, sans technicien, sans abonnement.
       </p>
       <div class="pv-hero__cta">
@@ -506,8 +513,8 @@
       </div>
       <div class="pv-hero__trust">
         <span>🔒 Sans abonnement</span>
-        <span>📷 2 caméras incluses</span>
-        <span>🔔 Sirène solaire 85 dB</span>
+        <span>📷 Caméra intérieure incluse</span>
+        <span>🔔 Sirène solaire 110 dB</span>
         <span>🧩 Évolutif jusqu'à 60 accessoires</span>
       </div>
       {%- if hero_image -%}
@@ -545,7 +552,7 @@
     <div class="pv-wrap">
       <div class="pv-contents__head pv-reveal">
         <h2>Tout ce qu'il faut, dans une seule boîte</h2>
-        <p>9 éléments pensés pour couvrir votre logement de l'intérieur à l'extérieur, dès le déballage.</p>
+        <p>8 éléments pensés pour couvrir votre logement de l'intérieur à l'extérieur, dès le déballage.</p>
       </div>
       <div class="pv-contents__grid pv-reveal">
         <div class="pv-contents__item">
@@ -556,10 +563,10 @@
           </div>
         </div>
         <div class="pv-contents__item">
-          <span class="pv-contents__qty">2×</span>
+          <span class="pv-contents__qty">1×</span>
           <div>
-            <div class="pv-contents__name">Détecteurs de mouvement WPS305</div>
-            <div class="pv-contents__desc">Compatibles animaux, sans fausses alertes</div>
+            <div class="pv-contents__name">Détecteur de mouvement WPS305</div>
+            <div class="pv-contents__desc">Compatible animaux, sans fausses alertes</div>
           </div>
         </div>
         <div class="pv-contents__item">
@@ -573,7 +580,7 @@
           <span class="pv-contents__qty">1×</span>
           <div>
             <div class="pv-contents__name">Sirène extérieure solaire WOS305S</div>
-            <div class="pv-contents__desc">85 dB, autonome, aucun câblage électrique</div>
+            <div class="pv-contents__desc">110 dB, autonome, aucun câblage électrique</div>
           </div>
         </div>
         <div class="pv-contents__item">
@@ -581,13 +588,6 @@
           <div>
             <div class="pv-contents__name">Caméra intérieure Full HD IP506P</div>
             <div class="pv-contents__desc">Filaire, mode confidentialité automatique</div>
-          </div>
-        </div>
-        <div class="pv-contents__item">
-          <span class="pv-contents__qty">1×</span>
-          <div>
-            <div class="pv-contents__name">Caméra extérieure autonome W503</div>
-            <div class="pv-contents__desc">Surveillance des abords et alertes de mouvement</div>
           </div>
         </div>
         <div class="pv-contents__item">
@@ -667,7 +667,7 @@
           <span class="pv-feature__num">PROTECTION INTÉRIEURE</span>
           <h2>Elle veille pendant que vous vivez.</h2>
           <p class="pv-feature__text">
-            Deux détecteurs de mouvement WPS305 compatibles animaux et quatre contacteurs
+            Un détecteur de mouvement WPS305 compatible animaux et quatre contacteurs
             2-en-1 WDV301 couvrent portes, fenêtres et pièces de vie sans jamais confondre
             votre chat avec un intrus.
           </p>
@@ -691,9 +691,8 @@
           <span class="pv-feature__num">PROTECTION EXTÉRIEURE</span>
           <h2>Dissuasion immédiate, dès la détection.</h2>
           <p class="pv-feature__text">
-            La sirène extérieure solaire WOS305S déclenche 85 dB dès qu'un mouvement est
-            détecté, pendant que la caméra extérieure autonome W503 surveille vos abords —
-            sans aucun câblage électrique à prévoir.
+            La sirène extérieure solaire WOS305S déclenche 110 dB dès qu'un mouvement est
+            détecté aux abords de votre logement — sans aucun câblage électrique à prévoir.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Dissuasion sonore immédiate en cas de détection</li>
@@ -715,9 +714,8 @@
           <span class="pv-feature__num">VIDÉOSURVEILLANCE</span>
           <h2>Un œil chez vous, sans perdre votre intimité.</h2>
           <p class="pv-feature__text">
-            La caméra intérieure IP506P et la caméra extérieure W503 diffusent en direct sur
-            votre smartphone. Un mode confidentialité automatique protège votre vie privée
-            au quotidien.
+            La caméra intérieure IP506P diffuse en direct sur votre smartphone. Un mode
+            confidentialité automatique protège votre vie privée au quotidien.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Visualisation en direct depuis votre smartphone</li>
@@ -790,8 +788,8 @@
           <dd>Application Daewoo Home Connect&#10;Notifications push ou SMS, scénarios personnalisés</dd>
         </div>
         <div class="pv-specs__item">
-          <dt>Caméras incluses</dt>
-          <dd>1 caméra intérieure IP506P (filaire)&#10;1 caméra extérieure autonome W503</dd>
+          <dt>Caméra incluse</dt>
+          <dd>1 caméra intérieure IP506P (filaire)&#10;Mode confidentialité automatique</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Évolutivité</dt>
@@ -983,12 +981,12 @@
 
         <details>
           <summary>Que se passe-t-il en cas de coupure de courant ou d'internet&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">En cas de coupure de courant, la centrale bascule sur sa batterie de secours intégrée (environ 4 heures d'autonomie). Sur la version Wi-Fi, si votre box internet est également coupée, la centrale continue de fonctionner en local (sirène et détection) mais ne peut plus vous notifier. Avec la version Wi-Fi + GSM 4G et une carte SIM installée, vous continuez de recevoir des alertes par SMS. Dans tous les cas, sans Wi-Fi ni électricité, les caméras IP506P et W503 ne sont pas accessibles à distance.</p>
+          <p class="pv-faq__a">En cas de coupure de courant, la centrale bascule sur sa batterie de secours intégrée (environ 4 heures d'autonomie). Sur la version Wi-Fi, si votre box internet est également coupée, la centrale continue de fonctionner en local (sirène et détection) mais ne peut plus vous notifier. Avec la version Wi-Fi + GSM 4G et une carte SIM installée, vous continuez de recevoir des alertes par SMS. Dans tous les cas, sans Wi-Fi ni électricité, la caméra IP506P n'est pas accessible à distance.</p>
         </details>
 
         <details>
           <summary>Que contient exactement le pack&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">La centrale VIGILIA, 2 détecteurs de mouvement WPS305, 4 contacteurs/détecteurs de vibration WDV301, 1 sirène extérieure solaire WOS305S, 1 caméra intérieure IP506P, 1 caméra extérieure autonome W503, 1 télécommande WRC305, 2 badges RFID et 2 autocollants de dissuasion — voir le détail complet plus haut sur cette page.</p>
+          <p class="pv-faq__a">La centrale VIGILIA, 1 détecteur de mouvement WPS305, 4 contacteurs/détecteurs de vibration WDV301, 1 sirène extérieure solaire WOS305S (110&nbsp;dB), 1 caméra intérieure IP506P, 1 télécommande WRC305, 2 badges RFID et 2 autocollants de dissuasion — voir le détail complet plus haut sur cette page.</p>
         </details>
 
         <details>
