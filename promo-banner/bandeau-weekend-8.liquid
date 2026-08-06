@@ -1,0 +1,192 @@
+{%- comment -%}
+  ============================================================================
+  Daewoo Security — Bandeau promo « Week-end +8% » (page d'accueil)
+  ----------------------------------------------------------------------------
+  Remise supplémentaire de +8%, CUMULABLE avec les remises paliers du
+  configurateur (jusqu'à -25%). Aucun code : la remise est appliquée
+  automatiquement par le configurateur (Lovable).
+
+  À coller dans une section « Contenu Liquid » / Custom Liquid, sur la page
+  d'accueil (idéalement juste sous le slideshow).
+
+  À personnaliser (bloc RÉGLAGES) :
+    - cta_url → l'URL du configurateur
+  Le compte à rebours vise AUTOMATIQUEMENT le dimanche 23h59 de la semaine
+  en cours. Rien à changer chaque week-end.
+  ============================================================================
+{%- endcomment -%}
+
+{%- assign cta_url = '/pages/configurateurs' -%}
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+  .dwp{
+    --ink:#12224a; --amber:#ffc02e; --orange:#ff6a13; --coral:#ff2e5e; --cream:#fff7ec;
+    position:relative; overflow:hidden; isolation:isolate;
+    width:100vw; max-width:100vw; margin-left:calc(-50vw + 50%); margin-right:calc(-50vw + 50%);
+    background:linear-gradient(112deg,#ffca3a 0%,#ff7a18 46%,#ff2e5e 100%);
+    font-family:'DM Sans',sans-serif; color:var(--ink);
+    padding:44px clamp(20px,5vw,64px); box-sizing:border-box;
+  }
+  .dwp *{ box-sizing:border-box; }
+  .dwp__stripes{ position:absolute; inset:-40% -10%; z-index:0; pointer-events:none; opacity:.5;
+    background:repeating-linear-gradient(115deg,rgba(255,255,255,.12) 0 20px,transparent 20px 46px);
+    animation:dwp-stripes 14s linear infinite; }
+  .dwp__spark{ position:absolute; z-index:0; color:#fff7ec; opacity:.9; pointer-events:none;
+    animation:dwp-twinkle 2.6s ease-in-out infinite; }
+  .dwp__spark.s1{ top:18%; left:47%; width:22px; animation-delay:.2s; }
+  .dwp__spark.s2{ top:66%; left:40%; width:14px; animation-delay:1.1s; }
+  .dwp__spark.s3{ top:30%; right:6%;  width:18px; animation-delay:.7s; }
+
+  .dwp__inner{ position:relative; z-index:1; max-width:1160px; margin:0 auto;
+    display:grid; grid-template-columns:1.25fr .75fr; gap:clamp(24px,4vw,48px); align-items:center; }
+
+  .dwp__eyebrow{ display:inline-flex; align-items:center; gap:9px; background:var(--ink); color:#fff;
+    border-radius:100px; padding:7px 15px; font-size:11.5px; font-weight:700;
+    letter-spacing:.12em; text-transform:uppercase; margin-bottom:18px; }
+  .dwp__eyebrow .d{ width:7px; height:7px; border-radius:50%; background:var(--amber);
+    animation:dwp-pulse 1.6s ease-out infinite; }
+
+  .dwp__title{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--ink);
+    font-size:clamp(30px,4.6vw,50px); line-height:1.02; letter-spacing:-.02em; margin:0 0 14px; }
+  .dwp__title .big{ display:inline-block; color:#fff; text-shadow:0 3px 0 rgba(18,34,74,.28); }
+  .dwp__lede{ margin:0 0 20px; font-size:16px; line-height:1.5; color:#3a1e10; max-width:42ch; font-weight:500; }
+  .dwp__lede b{ color:var(--ink); font-weight:700; }
+
+  .dwp__tiers{ display:flex; align-items:center; gap:9px; margin:0 0 26px; flex-wrap:wrap; }
+  .dwp__chip{ background:rgba(255,255,255,.32); border:1.5px solid rgba(18,34,74,.22);
+    color:var(--ink); font-weight:700; font-size:12.5px; padding:6px 12px; border-radius:100px;
+    font-family:'Poppins',sans-serif; }
+  .dwp__chip.max{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .dwp__plus{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--ink); font-size:16px; }
+  .dwp__chip.boost{ background:#fff; color:var(--coral); border-color:#fff;
+    box-shadow:0 6px 18px -6px rgba(180,10,50,.5); }
+
+  .dwp__cta-row{ display:flex; flex-wrap:wrap; align-items:center; gap:14px; }
+  .dwp__btn{ position:relative; display:inline-flex; align-items:center; gap:10px; overflow:hidden;
+    background:var(--ink); color:#fff !important; text-decoration:none; font-weight:700; font-size:15.5px;
+    padding:15px 28px; border-radius:100px; box-shadow:0 14px 30px -10px rgba(18,34,74,.6);
+    transition:transform .18s ease, box-shadow .18s ease; }
+  .dwp__btn::after{ content:""; position:absolute; top:0; left:-120%; width:55%; height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent); transform:skewX(-18deg);
+    animation:dwp-sheen 3.4s ease-in-out infinite; }
+  .dwp__btn:hover{ transform:translateY(-2px); box-shadow:0 20px 40px -12px rgba(18,34,74,.7); }
+  .dwp__btn svg{ width:17px; height:17px; }
+  .dwp__auto{ display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:#3a1e10; }
+  .dwp__auto svg{ width:15px; height:15px; }
+
+  .dwp__right{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .dwp__burst{ position:relative; width:210px; height:210px; display:grid; place-items:center; }
+  .dwp__rays{ position:absolute; inset:0; border-radius:50%;
+    background:repeating-conic-gradient(from 0deg,#fff7ec 0deg 9deg,transparent 9deg 18deg);
+    -webkit-mask:radial-gradient(circle,#000 62%,transparent 63%); mask:radial-gradient(circle,#000 62%,transparent 63%);
+    animation:dwp-spin 22s linear infinite; opacity:.85; }
+  .dwp__disc{ position:relative; width:150px; height:150px; border-radius:50%; background:#fff;
+    display:grid; place-items:center; text-align:center; box-shadow:0 18px 40px -14px rgba(120,10,40,.55);
+    border:4px solid #12224a; }
+  .dwp__disc small{ display:block; font-family:'Poppins',sans-serif; font-weight:700; font-size:10px;
+    letter-spacing:.14em; text-transform:uppercase; color:#ff2e5e; margin-bottom:-2px; }
+  .dwp__disc b{ font-family:'Poppins',sans-serif; font-weight:800; font-size:52px; line-height:.9; color:var(--ink); }
+  .dwp__disc em{ font-style:normal; font-family:'Poppins',sans-serif; font-weight:700; font-size:12px;
+    letter-spacing:.10em; text-transform:uppercase; color:#7a6a52; }
+
+  .dwp__count{ display:flex; gap:7px; }
+  .dwp__u{ min-width:52px; text-align:center; background:rgba(255,255,255,.9); border-radius:11px;
+    padding:9px 6px 7px; box-shadow:0 8px 20px -12px rgba(120,40,0,.5); }
+  .dwp__u b{ font-family:'Poppins',sans-serif; font-size:22px; font-weight:800; line-height:1; color:var(--ink);
+    font-variant-numeric:tabular-nums; display:block; }
+  .dwp__u span{ font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:#a5623a; margin-top:4px; display:block; font-weight:700; }
+
+  @keyframes dwp-stripes{ to{ transform:translateX(46px);} }
+  @keyframes dwp-spin{ to{ transform:rotate(360deg);} }
+  @keyframes dwp-pulse{ 0%{ box-shadow:0 0 0 0 rgba(255,192,46,.7);} 100%{ box-shadow:0 0 0 9px rgba(255,192,46,0);} }
+  @keyframes dwp-sheen{ 0%,100%{ left:-120%;} 55%,100%{ left:160%;} }
+  @keyframes dwp-twinkle{ 0%,100%{ transform:scale(.7); opacity:.35;} 50%{ transform:scale(1); opacity:1;} }
+  @media (prefers-reduced-motion:reduce){
+    .dwp__stripes,.dwp__rays,.dwp__spark,.dwp__eyebrow .d,.dwp__btn::after{ animation:none; }
+  }
+  @media (max-width:840px){
+    .dwp__inner{ grid-template-columns:1fr; gap:28px; }
+    .dwp__right{ order:-1; }
+    .dwp{ padding:34px 22px; }
+  }
+</style>
+
+<section class="dwp" aria-label="Offre week-end : +8% de remise supplémentaire sur le configurateur">
+  <div class="dwp__stripes"></div>
+  <svg class="dwp__spark s1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5z"/></svg>
+  <svg class="dwp__spark s2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5z"/></svg>
+  <svg class="dwp__spark s3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5z"/></svg>
+
+  <div class="dwp__inner">
+    <div class="dwp__msg">
+      <span class="dwp__eyebrow"><span class="d"></span>Offre week-end &middot; 48&nbsp;h chrono</span>
+      <h2 class="dwp__title"><span class="big">+8&nbsp;%</span> de remise<br>supplémentaire sur votre configuration</h2>
+      <p class="dwp__lede">Ce week-end, on empile les réductions : <b>+8&nbsp;% cumulés avec vos remises paliers</b> qui grimpent déjà jusqu'à &minus;25&nbsp;% dans le configurateur.</p>
+
+      <div class="dwp__tiers">
+        <span class="dwp__chip">&minus;5&nbsp;%</span>
+        <span class="dwp__chip">&minus;15&nbsp;%</span>
+        <span class="dwp__chip max">jusqu'à &minus;25&nbsp;%</span>
+        <span class="dwp__plus">+</span>
+        <span class="dwp__chip boost">+8&nbsp;% week-end</span>
+      </div>
+
+      <div class="dwp__cta-row">
+        <a class="dwp__btn" href="{{ cta_url }}">
+          Configurer mon alarme
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <span class="dwp__auto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#12224a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Aucun code &mdash; remise appliquée automatiquement
+        </span>
+      </div>
+    </div>
+
+    <div class="dwp__right">
+      <div class="dwp__burst">
+        <div class="dwp__rays"></div>
+        <div class="dwp__disc">
+          <small>Ce week-end</small>
+          <b>+8%</b>
+          <em>en plus</em>
+        </div>
+      </div>
+      <div class="dwp__count" id="dwp-count" role="timer" aria-live="off">
+        <div class="dwp__u"><b data-d>00</b><span>Jours</span></div>
+        <div class="dwp__u"><b data-h>00</b><span>Heures</span></div>
+        <div class="dwp__u"><b data-m>00</b><span>Min</span></div>
+        <div class="dwp__u"><b data-s>00</b><span>Sec</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  // Cible : dimanche 23:59:59 de la semaine en cours (dimanche suivant si déjà passé).
+  function target(){
+    var n = new Date();
+    var toSun = (7 - n.getDay()) % 7;
+    var t = new Date(n.getFullYear(), n.getMonth(), n.getDate() + toSun, 23, 59, 59, 0);
+    if (t.getTime() < n.getTime()) t.setDate(t.getDate() + 7);
+    return t;
+  }
+  var end = target();
+  var d=document.querySelector('[data-d]'), h=document.querySelector('[data-h]'),
+      m=document.querySelector('[data-m]'), s=document.querySelector('[data-s]');
+  function p(n){ return (n<10?'0':'')+n; }
+  function tick(){
+    var diff = Math.max(0, end.getTime() - Date.now());
+    var sec = Math.floor(diff/1000);
+    if(d) d.textContent = p(Math.floor(sec/86400));
+    if(h) h.textContent = p(Math.floor(sec%86400/3600));
+    if(m) m.textContent = p(Math.floor(sec%3600/60));
+    if(s) s.textContent = p(sec%60);
+    if(diff===0){ end = target(); }
+  }
+  tick(); setInterval(tick, 1000);
+})();
+</script>
