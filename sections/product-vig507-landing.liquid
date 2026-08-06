@@ -74,16 +74,30 @@
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
 
-  # No distinctive filenames on this product's gallery (VIG507_4.png,
-  # 4_xxx.png, 1_xxx.png, 2_xxx.png, 3_xxx.png, 5_xxx.png…) to match by
-  # name the way the VIG501 fork does, so this falls back to simple
-  # gallery-index assignment as instructed. Every assign falls back to
-  # hero_image if the gallery is ever shorter than expected.
+  # Matched by filename rather than a raw gallery index, same rule as
+  # VIG501's fork — the merchant uploaded the same shared infographic
+  # set here. Falls back to hero_image if a named file isn't found.
+  # feat_image_fire has no matching infographic in this set (no smoke/fire
+  # photo was uploaded), so it stays on a plain gallery-index fallback.
   assign feat_image_fire = gallery[1] | default: hero_image
-  assign feat_image_1 = gallery[2] | default: hero_image
-  assign feat_image_2 = gallery[3] | default: hero_image
-  assign feat_image_3 = gallery[4] | default: hero_image
-  assign feat_image_4 = gallery[5] | default: hero_image
+  assign feat_image_1 = hero_image
+  assign feat_image_2 = hero_image
+  assign feat_image_3 = hero_image
+  assign feat_image_4 = hero_image
+  for img in gallery
+    if img.src contains 'Securite_a_Distance'
+      assign feat_image_1 = img
+    endif
+    if img.src contains 'Protection_GSM'
+      assign feat_image_2 = img
+    endif
+    if img.src contains 'IP506'
+      assign feat_image_3 = img
+    endif
+    if img.src contains 'Pilotage_distance'
+      assign feat_image_4 = img
+    endif
+  endfor
 
   # Cross-sell card: the Starter Pack Vigilia, looked up by handle for a
   # real photo + live price rather than a hardcoded description.
