@@ -1,0 +1,1783 @@
+{
+  "sections": {
+    "main-product": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 20,
+            "text": "{{ product.vendor }}",
+            "text_size": "text-base"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "product-title-sm",
+            "title_size_mobile": "product-title-sm",
+            "show_price": true,
+            "show_rating": true
+          }
+        },
+        "price_77QjE8": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "alma_widget_alma_widget_block_fMrxd7": {
+          "type": "shopify://apps/alma-widget/blocks/alma_widget_block/4f38fc15-ea4e-44b3-96e0-0c0f2daa413f",
+          "settings": {
+            "display_widget_not_eligible": true,
+            "widget_position": "flex-start",
+            "update_quantity_in_widget": true,
+            "widget_monochrome": false
+          }
+        },
+        "countdown_TjtRV6": {
+          "type": "countdown",
+          "settings": {
+            "heading": "Vite !",
+            "subheading": "Fin de la promo dans :",
+            "color_text": "#e11d48",
+            "color_background": "#ffffff",
+            "gradient_background": ""
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "show_variant_labels": true,
+            "picker_type": "button",
+            "enable_color_swatches": true,
+            "color_swatch_type": "variant",
+            "size_chart": ""
+          }
+        },
+        "product_bundle_bfdPYX": {
+          "type": "product_bundle",
+          "settings": {
+            "opened": true,
+            "clickable": false,
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 20,
+            "heading": "Souvent acheté avec",
+            "products": "{{ product.metafields[\"shopify--discovery--product_recommendation\"].complementary_products.value }}",
+            "metafield": ""
+          }
+        },
+        "buy_box_selling_points_WbVRwd": {
+          "type": "shopify://apps/buy-box/blocks/selling-points/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "settings": {
+            "show_box": false,
+            "sellingPoint_1_text": "Alarme connectée<strong> sans abonnement</strong>",
+            "sellingPoint_2_text": "Installation <strong>simple</strong> et contrôle total avec <strong>l'application gratuite</strong>",
+            "sellingPoint_3_text": "Meilleur <strong>rapport qualité / prix</strong> du marché",
+            "sellingPoint_4_text": "<strong>Caméra Full HD</strong> avec mode Vie Privée incluse dans le kit",
+            "sellingPoint_5_text": "<strong>Armez/désarmez </strong>avec le clavier, la télécommande, le badge RFID ou l'application !",
+            "icon": "checkmark-circle-outlined",
+            "icon_color": "#037e05",
+            "text_color": "#212121",
+            "background_color": "#fafafa",
+            "border_color": "#eaeaea",
+            "icon_size": 16,
+            "text_size": 12,
+            "border_radius": 6,
+            "alignment": "start",
+            "row_spacing": 8,
+            "margin_top": 5,
+            "margin_bottom": 5,
+            "max-width": "44rem"
+          }
+        },
+        "collapsible_tab_6pgQUR": {
+          "type": "collapsible_tab",
+          "settings": {
+            "opened": false,
+            "style": "with-border",
+            "icon": "none",
+            "heading": "Description",
+            "content": "{{ product.description }}",
+            "page": "",
+            "liquid": "",
+            "text_size": "text-sm"
+          }
+        },
+        "moast_carousel_Qe3zjp": {
+          "type": "shopify://apps/moast/blocks/carousel/1ac7547b-5443-446c-868c-7fab4566ee16",
+          "settings": {
+            "dynamic": true,
+            "feed": "",
+            "feed_usage": "back_up",
+            "header": "",
+            "slide_type": "stories",
+            "product_cards": "none",
+            "autoplay_mode": "none",
+            "autoscroll_duration": 0,
+            "slide_size": "250",
+            "aspect_ratio": "vertical",
+            "border": 0,
+            "border_color": "linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)",
+            "slide_rounding": "20",
+            "slide_spacing": 16,
+            "padding_top": 40,
+            "pagination": "below",
+            "alignment": "center",
+            "click_action": "fullscreen",
+            "float_location": "bottom_right",
+            "float_size": "medium",
+            "show_captions": false,
+            "custom_css": ""
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_price": true,
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true,
+            "enable_back_in_stock": true,
+            "show_back_in_stock_name": true,
+            "show_back_in_stock_phone": true
+          }
+        },
+        "help_desk_wy6ECd": {
+          "type": "help_desk",
+          "settings": {
+            "help_label": "Besoin d'aide ?",
+            "help_type": "drawer",
+            "help_page": "",
+            "help_page_external": false
+          }
+        },
+        "liquid_4imjDX": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<div class=\"manuel-utilisation-wrapper\">\n  <a href=\"https://cdn.shopify.com/s/files/1/0619/2562/1837/files/Manuel_complet_Vigilia_14022025.pdf?v=1739536468\" target=\"_blank\" class=\"manuel-link\">\n    Manuel d'utilisation\n  </a>\n</div>"
+          }
+        },
+        "share": {
+          "type": "share",
+          "disabled": true,
+          "settings": {
+            "share_label": "Partager",
+            "show_help_desk": true,
+            "help_label": "Besoin d'aide ?",
+            "help_type": "drawer",
+            "help_page": "",
+            "help_page_external": false
+          }
+        },
+        "text-1": {
+          "type": "text",
+          "settings": {
+            "icon": "truck",
+            "iwidth": "custom",
+            "icon_width": 20,
+            "text": "En stock ! Expédié sous 2 jours ouvrables.",
+            "text_size": "text-sm"
+          }
+        },
+        "text-2": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "icon": "headphone",
+            "iwidth": "custom",
+            "icon_width": 20,
+            "text": "Essai sans risque de 90 jours",
+            "text_size": "text-sm"
+          }
+        },
+        "text-3": {
+          "type": "text",
+          "settings": {
+            "icon": "award",
+            "iwidth": "custom",
+            "icon_width": 20,
+            "text": "Garantie 2 ans",
+            "text_size": "text-sm"
+          }
+        },
+        "text-4": {
+          "type": "text",
+          "settings": {
+            "icon": "box",
+            "iwidth": "custom",
+            "icon_width": 20,
+            "text": "Expédition et retours facile",
+            "text_size": "text-sm"
+          }
+        },
+        "icon_list_kTGr4M": {
+          "type": "icon_list",
+          "settings": {
+            "heading": "Caractéristiques",
+            "enable_carousel": false,
+            "show_below_media": true
+          }
+        },
+        "sticky_buy_button": {
+          "type": "sticky_buy_button",
+          "settings": {}
+        },
+        "liquid_WitAqM": {
+          "type": "liquid",
+          "settings": {
+            "liquid": ""
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price_77QjE8",
+        "alma_widget_alma_widget_block_fMrxd7",
+        "countdown_TjtRV6",
+        "variant_picker",
+        "product_bundle_bfdPYX",
+        "buy_box_selling_points_WbVRwd",
+        "collapsible_tab_6pgQUR",
+        "moast_carousel_Qe3zjp",
+        "buy_buttons",
+        "help_desk_wy6ECd",
+        "liquid_4imjDX",
+        "share",
+        "text-1",
+        "text-2",
+        "text-3",
+        "text-4",
+        "icon_list_kTGr4M",
+        "sticky_buy_button",
+        "liquid_WitAqM"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "media_size": 50,
+        "gallery_layout": "thumbnail",
+        "thumbnail_position": "below",
+        "image_ratio": "adapt_first",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_autoplay": true,
+        "enable_video_looping": true,
+        "mobile_layout": "full_width",
+        "image_ratio_mobile": "adapt_first",
+        "mobile_thumbnail": false,
+        "padding_top": 0,
+        "padding_bottom": 84,
+        "divider": false,
+        "full_width": true,
+        "rounded": false
+      },
+      "disabled": true
+    },
+    "main": {
+      "type": "product-vig507-landing",
+      "settings": {}
+    },
+    "video_hero_HFmF6c": {
+      "type": "video-hero",
+      "blocks": {
+        "slide_xamVJ7": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "heading": "Alerte en temps réel",
+            "heading_size": "title-lg tracking-heading",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "slide_zbgeHD": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "heading": "Contrôle à distance",
+            "heading_size": "title-lg tracking-heading",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "slide_RxeLb3": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "heading": "Technologie fiable",
+            "heading_size": "title-lg tracking-heading",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "slide_xamVJ7",
+        "slide_zbgeHD",
+        "slide_RxeLb3"
+      ],
+      "settings": {
+        "transparent_header": false,
+        "video_url": "https://www.youtube.com/watch?v=ONW07if0FdM",
+        "description": "",
+        "enable_video_autoplay": true,
+        "enable_video_looping": true,
+        "content_width": "small",
+        "video_url_mobile": "",
+        "color_text": "#ffffff",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_overlay": "#171717",
+        "overlay_opacity": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "full_width": true,
+        "rounded": false
+      },
+      "disabled": true
+    },
+    "rich_text_jRnifT": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_dtqtnH": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Envie d’une alarme 100% personnalisée ?</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_3j3a97": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Créez votre système sur mesure en quelques clics avec notre configurateur interactif.</p><p><strong>Étape 1</strong> → Choisissez votre <strong>centrale d'alarme</strong><br/><br/><strong>Étape 2</strong> → Sélectionnez vos <strong>accessoires </strong>(détecteurs, sirènes...)<br/><br/><strong>Étape 3</strong> → Ajoutez vos <strong>caméras de surveillance</strong><br/><br/><strong>Étape 4</strong> → Votre alarme personnalisée <strong>est prête !</strong></p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "button_LbYE73": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Configurer mon alarme",
+            "button_link": "{{ product.metafields.custom.url.value }}",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_dtqtnH",
+        "text_3j3a97",
+        "button_LbYE73"
+      ],
+      "disabled": true,
+      "name": "t:sections.rich-text.name",
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_width": "small",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 0,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "apps_Ak8hBJ": {
+      "type": "apps",
+      "disabled": true,
+      "settings": {
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "fonctionnalites_media_cdcCgE": {
+      "type": "fonctionnalites-media",
+      "blocks": {
+        "feature_cCJVKW": {
+          "type": "feature",
+          "settings": {
+            "video": "",
+            "titre": "Propriété à vie",
+            "description": "Vous achetez votre systeme une seule fois. Il vous appartient, sans abonnement, sans frais cache."
+          }
+        },
+        "feature_EfrXwA": {
+          "type": "feature",
+          "settings": {
+            "video": "",
+            "titre": "Installation en 20 minutes",
+            "description": "Aucun technicien, aucun percage. Posez vous-meme les detecteurs et la centrale."
+          }
+        },
+        "feature_JzFUfi": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/419deba1-1cea-4928-900e-507af842dcb3.png",
+            "video": "",
+            "titre": "En vacances ? Recevez tout depuis votre téléphone",
+            "description": "Armer, desarmer, ajouter une camera : tout se gere depuis l'application mobile, ou que vous soyez."
+          }
+        },
+        "feature_PyVewm": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/d98f7663-3057-44b7-b7c0-c53a74b8c899.png",
+            "video": "",
+            "titre": "Notifications en temps reel",
+            "description": "Mouvement detecte, intrusion : recevez une alerte instantanee et decidez de l'action a prendre."
+          }
+        },
+        "feature_EUgVFD": {
+          "type": "feature",
+          "disabled": true,
+          "settings": {
+            "titre": "Installation rapide",
+            "description": "Posez votre systeme vous-meme en moins de 20 minutes, sans technicien ni percage."
+          }
+        },
+        "feature_WHfhJd": {
+          "type": "feature",
+          "disabled": true,
+          "settings": {
+            "titre": "Installation rapide",
+            "description": "Posez votre systeme vous-meme en moins de 20 minutes, sans technicien ni percage."
+          }
+        }
+      },
+      "block_order": [
+        "feature_cCJVKW",
+        "feature_EfrXwA",
+        "feature_JzFUfi",
+        "feature_PyVewm",
+        "feature_EUgVFD",
+        "feature_WHfhJd"
+      ],
+      "name": "Fonctionnalites media",
+      "settings": {
+        "titre": "Fonctionnalites",
+        "sous_titre": "",
+        "bg_color": "#f2f3ff",
+        "titre_color": "#0a1d45",
+        "texte_color": "#0a1d45",
+        "max_width": 1100,
+        "media_radius": 16,
+        "padding_v": 64,
+        "padding_h": 32
+      },
+      "disabled": true
+    },
+    "collage_RDkDHU": {
+      "type": "collage",
+      "blocks": {
+        "image_F4YCrC": {
+          "type": "image",
+          "settings": {
+            "subheading": "<em>Daewoo Home Connect</em>",
+            "heading": "<strong>Contrôle à distance</strong>",
+            "link": "",
+            "invert_subheading_heading": true,
+            "image": "shopify://shop_images/ChatGPT_Image_17_juil._2025_18_48_36.png",
+            "image_ratio": "portrait",
+            "content_position": "md:items-end md:justify-center",
+            "text_alignment": "left",
+            "image_mobile": "shopify://shop_images/ChatGPT_Image_17_juil._2025_18_48_36.png",
+            "image_ratio_mobile": "portrait",
+            "content_position_mobile": "items-end justify-start",
+            "text_alignment_mobile": "left",
+            "highlighted_text": "text",
+            "highlighted_scribble": "circle",
+            "color_text": "#ffffff",
+            "color_highlight": "#fde047",
+            "gradient_highlight": "",
+            "color_overlay": "#171717",
+            "overlay_opacity": 30
+          }
+        },
+        "image_xx4dkb": {
+          "type": "image",
+          "settings": {
+            "subheading": "<em>Compatible animaux</em>",
+            "heading": "<strong>s’adapte à votre quotidien</strong>",
+            "link": "",
+            "invert_subheading_heading": false,
+            "image": "shopify://shop_images/Visuel_lifestyle_accessoires_13.png",
+            "image_ratio": "portrait",
+            "content_position": "md:items-end md:justify-center",
+            "text_alignment": "right",
+            "image_ratio_mobile": "portrait",
+            "content_position_mobile": "items-end justify-end",
+            "text_alignment_mobile": "right",
+            "highlighted_text": "text",
+            "highlighted_scribble": "circle",
+            "color_text": "#ffffff",
+            "color_highlight": "#fde047",
+            "gradient_highlight": "",
+            "color_overlay": "#171717",
+            "overlay_opacity": 30
+          }
+        },
+        "image_EFfCin": {
+          "type": "image",
+          "settings": {
+            "subheading": "<em>sans frais cachés</em>",
+            "heading": "<strong>Aucune dépense mensuelle</strong>",
+            "link": "",
+            "invert_subheading_heading": false,
+            "image": "shopify://shop_images/ChatGPT_Image_17_juil._2025_18_59_54.png",
+            "image_ratio": "portrait",
+            "content_position": "md:items-end md:justify-start",
+            "text_alignment": "left",
+            "image_mobile": "shopify://shop_images/ChatGPT_Image_17_juil._2025_18_59_54.png",
+            "image_ratio_mobile": "landscape",
+            "content_position_mobile": "items-end justify-end",
+            "text_alignment_mobile": "left",
+            "highlighted_text": "text",
+            "highlighted_scribble": "circle",
+            "color_text": "#ffffff",
+            "color_highlight": "#fde047",
+            "gradient_highlight": "",
+            "color_overlay": "#171717",
+            "overlay_opacity": 30
+          }
+        },
+        "image_YjV46m": {
+          "type": "image",
+          "settings": {
+            "subheading": "<em>Installation</em>",
+            "heading": "<strong>Simple & rapide</strong>",
+            "link": "",
+            "invert_subheading_heading": true,
+            "image": "shopify://shop_images/Visuel_lifestyle_accessoires_11.png",
+            "image_ratio": "square",
+            "content_position": "md:items-end md:justify-start",
+            "text_alignment": "left",
+            "image_mobile": "shopify://shop_images/Visuel_lifestyle_accessoires_11.png",
+            "image_ratio_mobile": "portrait",
+            "content_position_mobile": "items-end justify-end",
+            "text_alignment_mobile": "right",
+            "highlighted_text": "text",
+            "highlighted_scribble": "circle",
+            "color_text": "#ffffff",
+            "color_highlight": "#fde047",
+            "gradient_highlight": "",
+            "color_overlay": "#171717",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "image_F4YCrC",
+        "image_xx4dkb",
+        "image_EFfCin",
+        "image_YjV46m"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "<strong>L’alarme pensée pour votre quotidien</strong>",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "<p>Simple à installer, facile à utiliser et <strong>sans abonnement</strong>, nos alarmes s’adaptent à votre mode de vie.<br/><br/>Découvrez les 4 atouts qui font la différence au moment de <strong>protéger votre foyer.</strong></p>",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "scribble",
+        "highlighted_scribble": "basic-underline",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 0,
+        "divider": false,
+        "full_width": false,
+        "rounded": false,
+        "enable_parallax": true
+      }
+    },
+    "countdown_timer_nAJVYi": {
+      "type": "countdown-timer",
+      "blocks": {
+        "heading_hXhwMq": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>OFFRE FLASH : -6% </strong>Sur tous les packs personnalisés",
+            "heading_size": "title-sm",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "subheading_wzzTnQ": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "OFFRE VALABLE PENDANT",
+            "subheading_size": "subtitle-md",
+            "secondary_color": false
+          }
+        },
+        "timer_fjcB8B": {
+          "type": "timer",
+          "settings": {
+            "year": "2025",
+            "month": "10",
+            "day": "20",
+            "hour": "09",
+            "minute": "30",
+            "text_font": "heading",
+            "text_size": "title-lg tracking-heading",
+            "message": ""
+          }
+        },
+        "text_M6bF3m": {
+          "type": "text",
+          "settings": {
+            "text": "<p><em><strong>*utilisez le code novembre6</strong></em></p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "full_text",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_hXhwMq",
+        "subheading_wzzTnQ",
+        "timer_fjcB8B",
+        "text_M6bF3m"
+      ],
+      "disabled": true,
+      "name": "t:sections.countdown-timer.name",
+      "settings": {
+        "transparent_header": false,
+        "image": "shopify://shop_images/Design_sans_titre_10_3a9efbf3-6858-4877-b3aa-c178e1f8280b.png",
+        "image_height": "400px",
+        "content_width": "small",
+        "content_position": "md:items-center md:justify-center",
+        "text_alignment": "center",
+        "image_height_mobile": "300px",
+        "content_position_mobile": "items-center justify-center",
+        "text_alignment_mobile": "center",
+        "color_text": "#ffffff",
+        "color_background": "#0c1e4a",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#171717",
+        "color_button_background": "#ffffff",
+        "color_button_gradient": "",
+        "color_overlay": "#171717",
+        "overlay_opacity": 0,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "full_width": true,
+        "rounded": false,
+        "enable_parallax": true,
+        "parallax_direction": "vertical"
+      }
+    },
+    "multicolumn_RyN3K7": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_QfpLcM": {
+          "type": "column",
+          "settings": {
+            "show_border": false,
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "image": "shopify://shop_images/Copie_de_WWF501_5.png",
+            "image_ratio": "adapt",
+            "heading": "<strong>Installez votre système en 10 minutes</strong>",
+            "heading_size": "text-lg-2xl",
+            "text": "<p>Aucune compétence technique requise : fixez les capteurs, connectez la centrale à votre Wi-Fi et votre maison est protégée.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "secondary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_KPPwAt": {
+          "type": "column",
+          "settings": {
+            "show_border": false,
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "image": "shopify://shop_images/Design_sans_titre_10.png",
+            "image_ratio": "adapt",
+            "heading": "<strong>Gérez tout depuis l’application</strong>",
+            "heading_size": "text-lg-2xl",
+            "text": "<p>Activez, désactivez et recevez des alertes instantanées sur votre smartphone, où que vous soyez dans le monde.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "secondary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_dwextf": {
+          "type": "column",
+          "settings": {
+            "show_border": false,
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "image": "shopify://shop_images/Performance_max_Carre_1200_x_1200_px_Gmail_Discover_Display_responsive.png",
+            "image_ratio": "adapt",
+            "heading": "<strong>Protégez-vous sans abonnement</strong>",
+            "heading_size": "text-lg-2xl",
+            "text": "<p>Aucune mensualité, aucune contrainte : vous restez propriétaire de votre système, libre et sécurisé.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "secondary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "column_QfpLcM",
+        "column_KPPwAt",
+        "column_dwextf"
+      ],
+      "name": "t:sections.multicolumn.name",
+      "settings": {
+        "gap": "large",
+        "columns": 3,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "heading": "<strong>Protéger sa maison n’a jamais été aussi facile</strong>",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "<p>Installez votre alarme en 10 minutes, gérez-la depuis votre smartphone et recevez des alertes instantanées en cas d’intrusion.<br/><br/>Daewoo Security simplifie la sécurité à la maison — sans câbles, sans technicien et sans abonnement.</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      },
+      "disabled": true
+    },
+    "rich_text_pCad4B": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_x9EmNT": {
+          "type": "heading",
+          "settings": {
+            "heading": "Pourquoi choisir ce système d’alarme sans abonnement ?",
+            "heading_size": "title-lg tracking-heading",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_jfW3Cy": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Votre maison mérite d’être protégée, même quand vous êtes absent.<br/><br/>Ce système d’alarme a été conçu pour les particuliers qui cherchent <strong>une solution simple, fiable et sans engagement</strong>. Pas besoin de travaux ni de technicien : <strong>vous l’installez vous-même, en quelques minutes</strong>, et recevez directement les alertes sur votre téléphone.</p><p></p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_x9EmNT",
+        "text_jfW3Cy"
+      ],
+      "disabled": true,
+      "name": "t:sections.rich-text.name",
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_width": "small",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 100,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "product-details": {
+      "type": "product-details",
+      "blocks": {
+        "collapsible_tab-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "Connectivité",
+            "content": "<h6><strong>Connexion</strong> </h6><p>Wi-Fi 2.4 GHz </p><h6><strong>Connexion GSM </strong></h6><p>(carte SIM – en option) Non disponible pour Vigilia WiFi</p><h6><strong>Notification en temps réel via application mobile</strong></h6><p>Envoi de SMS (via GSM | Nécessite une carte Sim) - <em>Non disponible sur la Vigilia Wifi</em></p><h6><strong>Compatibilité assistants vocaux </strong></h6><p>(Google Home / Alexa)</p>",
+            "metafields": "",
+            "text_size": "text-base"
+          }
+        },
+        "collapsible_tab-2": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "Alimentation & Autonomie",
+            "content": "<h6><strong>Batterie de secours intégrée</strong></h6><p>Autonomie de 4 heures</p><h6><strong>Fonctionnalité GSM</strong></h6><p>Fonctionnement même en cas de coupure de WiFi (Nécessite une carte Sim non fournie)</p><p><em>Non disponible pour Vigilia WiFi</em></p>",
+            "metafields": "",
+            "text_size": "text-base"
+          }
+        },
+        "collapsible_tab-3": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "Commande & pilotage",
+            "content": "<h6><strong>Contrôle à distance </strong></h6><p>via l’application Daewoo Home Connect </p><h6><strong>Notifications push ou SMS </strong></h6><p>en cas d’alerte, recevez une notification sur votre téléphone ou un SMS (Nécessite une carte Sim)</p><h6><strong>Activation/désactivation à distance </strong></h6><h6><strong>Création de scénarios personnalisés </strong>( sur l'application directement en quelques minutes )</h6>",
+            "metafields": "",
+            "text_size": "text-base"
+          }
+        },
+        "collapsible_tab-4": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "Évolutivité & compatibilité",
+            "content": "<h6><strong>Système évolutif</strong></h6><p>Ajoutez jusqu’à 60 accessoires et autant de caméras que vous le souhaitez.</p><h6><strong>Compatibilité avec tous les accessoires</strong></h6><p>Détecteurs, claviers, télécommandes, badges, sirènes, etc. (Suivre les compatibilités Vigilia/Touch)<br/>Caméras et Maison Connectée : Compatible toutes gammes </p><h6><strong>Système 100 % personnalisable</strong></h6><p>Selon vos besoins - Achetez que ce qui est nécessaire et complétez au fur et à mesure</p>",
+            "metafields": "",
+            "text_size": "text-base"
+          }
+        },
+        "collapsible_tab_V9XUpH": {
+          "type": "collapsible_tab",
+          "settings": {
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "Sécurité & détection",
+            "content": "<h6><strong>Sirène intégrée </strong></h6><p>Vigilia = 85dB</p><h6><strong>Détection d’arrachement </strong></h6><p>(centrale arrachée = alerte) </p><h6><strong>Communication cryptée entre centrale et accessoires </strong></h6><h6><strong>Modes de surveillance</strong></h6><p><br/>Total, Partiel ( Maison ), Désarmée</p><p>Fonction SOS en cas d’agression au domicile</p><h6>Programmation de scénarios et délais personnalisés</h6><p>Programmation de scénarios et Temporisation ( Pour entrée ou sortir du domicile )</p><h6></h6><h6></h6>",
+            "metafields": "",
+            "text_size": "text-base"
+          }
+        },
+        "specification": {
+          "type": "specification",
+          "disabled": true,
+          "repeater": "{{ product.metafields.custom.icon_inclus_dans_le_pack.value }}",
+          "settings": {
+            "icon": "{{ block.repeater.icon_inclus_dans_le_pack.value }}",
+            "heading": "{{ block.repeater.titre_de_l_icon.value }}",
+            "text_size": "text-sm"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_tab-1",
+        "collapsible_tab-2",
+        "collapsible_tab-3",
+        "collapsible_tab-4",
+        "collapsible_tab_V9XUpH",
+        "specification"
+      ],
+      "settings": {
+        "style": "with-background",
+        "open_first_row": true,
+        "specifications_heading": "Inclus dans le pack",
+        "heading": "Détails produit",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      },
+      "disabled": true
+    },
+    "video_with_text_96jhe8": {
+      "type": "video-with-text",
+      "blocks": {
+        "heading_J7D3Nc": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Installation en 10 minutes</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_cMdtWX": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Grâce à sa conception sans fil et son design compact, <strong>l’alarme Vigilia Daewoo</strong> s’installe facilement dans tous les logements — appartement ou maison.</p><p>Pas besoin d’être un pro de la domotique !</p><p>1. Branchez la centrale sur secteur<br/><br/>2. Connectez-la à votre Wi-Fi depuis l’application Daewoo Home Connect<br/><br/>3. Placez vos détecteurs et contacteurs où vous le souhaitez<br/><br/>4. Profitez d’une maison protégée, sans abonnement</p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_J7D3Nc",
+        "text_cMdtWX"
+      ],
+      "disabled": true,
+      "name": "t:sections.video-with-text.name",
+      "settings": {
+        "video": "",
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "description": "",
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "image_height": "550px",
+        "video_width": "medium",
+        "layout": "text_first",
+        "text_alignment": "left",
+        "content_position": "align-self-center",
+        "video_url_mobile": "",
+        "image_height_mobile": "auto",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false,
+        "enable_parallax": false,
+        "parallax_direction": "vertical"
+      }
+    },
+    "scrolling_banner_DjLpk3": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "image_aGmhPx": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/ARME_4.png",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>1. Téléchargez l’application mobile</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p>Avant de commencer, installez l’application gratuite <strong>Daewoo Home Connect</strong> sur votre smartphone. Elle vous guidera étape par étape dans la configuration du système.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "image_6y63Hn": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/ARME_1.png",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>2. Connectez votre alarme en quelques minutes</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p>Branchez la centrale, suivez les instructions affichées dans l’application, et votre alarme sera prête en <strong>2 à 5 minutes</strong>. Pas besoin de compétences techniques : <strong>Suivez la procédure sur l'application.</strong></p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "image_KfJ3zM": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/ARME_2.png",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>3. Installez vos accessoires</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p><strong>Ajoutez vos accessoires un par un :</strong> détecteurs de mouvement, contacteurs de porte, caméras, sirènes, claviers…<br/><br/>L’association est automatique et l’installation est simplifiée grâce aux adhésifs fournis.<br/><br/>Dans la plupart des cas, aucun câblage n’est nécessaire. Toutefois, certains accessoires (comme les détecteurs de mouvement ou les sirènes extérieures) peuvent nécessiter un perçage pour une fixation optimale.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "image_cFRUDV": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/WPS501_5.png",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>4. Recevez des alertes en temps réel</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p>Dès qu’un mouvement ou une ouverture est détecté, vous recevez une <strong>notification immédiate</strong> sur votre téléphone.Vous pouvez activer/désactiver votre système <strong>à distance</strong> et consulter l’historique en temps réel.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "image_aGmhPx",
+        "image_6y63Hn",
+        "image_KfJ3zM",
+        "image_cFRUDV"
+      ],
+      "disabled": true,
+      "name": "t:sections.scrolling-banner.name",
+      "settings": {
+        "image_height": "650px",
+        "image_width": "small",
+        "layout": "image_first",
+        "text_alignment": "left",
+        "content_position": "items-center",
+        "image_height_mobile": "auto",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 32,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "scrolling_banner_cjAhgx": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "video_8prwLU": {
+          "type": "video",
+          "disabled": true,
+          "settings": {
+            "video": "",
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>2. Connectez votre alarme en quelques minutes</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p>Branchez la centrale, suivez les instructions affichées dans l’application, et votre alarme sera prête en <strong>2 à 5 minutes</strong>. Pas besoin de compétences techniques : <strong>tout est assisté à l’écran</strong>.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "image_rfUpwy": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/ARME_4.png",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>1. Téléchargez l’application mobile</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p>Avant de commencer, installez l’application gratuite <strong>Daewoo Home Connect</strong> sur votre smartphone. Elle vous guidera étape par étape dans la configuration du système.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "image_emxFGY": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/ARME_1.png",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>2. Connectez votre alarme en quelques minutes</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p>Branchez la centrale, suivez les instructions affichées dans l’application, et votre alarme sera prête en <strong>2 à 5 minutes</strong>. Pas besoin de compétences techniques : <strong>tout est assisté à l’écran</strong>.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "video_C6UzYe": {
+          "type": "video",
+          "disabled": true,
+          "settings": {
+            "video": "",
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>3. Installez vos accessoires</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p><strong>Ajoutez vos accessoires un par un :</strong> détecteurs de mouvement, contacteurs de porte, caméras, sirènes, claviers…<br/><br/>L’association est automatique et l’installation est simplifiée grâce aux adhésifs fournis.<br/><br/>Dans la plupart des cas, aucun câblage n’est nécessaire. Toutefois, certains accessoires (comme les détecteurs de mouvement ou les sirènes extérieures) peuvent nécessiter un perçage pour une fixation optimale.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "image_rrjwbK": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/ARME_2.png",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>3. Installez vos accessoires</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p><strong>Ajoutez vos accessoires un par un :</strong> détecteurs de mouvement, contacteurs de porte, caméras, sirènes, claviers…<br/><br/>L’association est automatique et l’installation est simplifiée grâce aux adhésifs fournis.<br/><br/>Dans la plupart des cas, aucun câblage n’est nécessaire. Toutefois, certains accessoires (comme les détecteurs de mouvement ou les sirènes extérieures) peuvent nécessiter un perçage pour une fixation optimale.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "image_bgazDC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/WPS501_5.png",
+            "icon": "none",
+            "iwidth": "custom",
+            "icon_width": 24,
+            "heading": "<strong>4. Recevez des alertes en temps réel</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "subheading": "",
+            "description": "<p>Dès qu’un mouvement ou une ouverture est détecté, vous recevez une <strong>notification immédiate</strong> sur votre téléphone.Vous pouvez activer/désactiver votre système <strong>à distance</strong> et consulter l’historique en temps réel.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "video_8prwLU",
+        "image_rfUpwy",
+        "image_emxFGY",
+        "video_C6UzYe",
+        "image_rrjwbK",
+        "image_bgazDC"
+      ],
+      "name": "t:sections.scrolling-banner.name",
+      "settings": {
+        "image_height": "100vh",
+        "image_width": "small",
+        "layout": "image_first",
+        "text_alignment": "left",
+        "content_position": "items-center",
+        "image_height_mobile": "auto",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 32,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "image_with_text_QbLyDz": {
+      "type": "image-with-text",
+      "blocks": {
+        "image_QMkRV9": {
+          "type": "image",
+          "settings": {
+            "image_width": "custom",
+            "image_max_width": 50,
+            "image_max_width_mobile": 50
+          }
+        },
+        "heading_FBXKrU": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>IP506P – La caméra intérieure du Starter Pack Vigilia : sécurité & intimité réunies</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_B8tRiy": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Inclus dans le Starter Pack Vigilia, la caméra Wi-Fi IP506P Daewoo Security protège votre intérieur en toute simplicité. Compacte et intelligente, elle vous offre une surveillance en direct depuis l’application Daewoo Home Connect, tout en respectant votre vie privée grâce à son mode confidentialité automatique. Notifications instantanées, vision fluide et stockage local sans abonnement : une sécurité efficace, discrète et accessible pour votre foyer.</p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "image_QMkRV9",
+        "heading_FBXKrU",
+        "text_B8tRiy"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/ip506P_d369dd17-3f2d-4c98-badc-9d72b9cc9fe8.png",
+        "image_height": "adapt",
+        "image_width": "medium",
+        "layout": "text_first",
+        "text_alignment": "left",
+        "content_position": "align-self-center",
+        "image_height_mobile": "400px",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "#fafafa",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false,
+        "enable_parallax": false,
+        "parallax_direction": "vertical"
+      },
+      "disabled": true
+    },
+    "help-drawer": {
+      "type": "help-drawer",
+      "blocks": {
+        "content_bYAbKg": {
+          "type": "content",
+          "settings": {
+            "icon": "phone",
+            "heading": "Besoin d’un conseil ?",
+            "text": "<p>Une question sur un produit ? </p><p>Écrivez-nous à<em><strong> contact@daewoo-security.fr</strong></em> ou utilisez notre chat : un conseiller vous répondra rapidement.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "color_text": "#4d7c0f",
+            "color_background": "#f7fee7",
+            "gradient_background": "",
+            "color_highlight": "#ffddbf",
+            "gradient_highlight": ""
+          }
+        },
+        "content_jMekii": {
+          "type": "content",
+          "settings": {
+            "icon": "return",
+            "heading": "Retour & rétractation faciles",
+            "text": "<p>Vous disposez de 14 jours pour changer d’avis. En cas de souci, notre service client vous guide dans le retour ou l’échange de votre produit.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "color_text": "#b45309",
+            "color_background": "#fffbeb",
+            "gradient_background": "",
+            "color_highlight": "#ffddbf",
+            "gradient_highlight": ""
+          }
+        },
+        "content_yiBF6p": {
+          "type": "content",
+          "settings": {
+            "icon": "headphone",
+            "heading": "Service après-vente",
+            "text": "<p>Notre équipe basée en France répond rapidement à toutes vos demandes. Pour les contacter rendez-vous sur la page assistance</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "color_text": "#0369a1",
+            "color_background": "#f0f9ff",
+            "gradient_background": "",
+            "color_highlight": "#ffddbf",
+            "gradient_highlight": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_bYAbKg",
+        "content_jMekii",
+        "content_yiBF6p"
+      ],
+      "settings": {
+        "heading": "Besoin d'aide ?",
+        "description": "<p>Pour toutes questions, n'hésitez pas à nous contacter. Nous vous répondrons dans les plus brefs délais.</p>"
+      }
+    },
+    "scrolling-text": {
+      "type": "scrolling-text",
+      "settings": {
+        "direction": "left",
+        "speed": 20,
+        "grid_horizontal": 70,
+        "enable_twin": false,
+        "enable_parallax": true,
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "divider": false,
+        "rounded": false
+      }
+    },
+    "image_with_text_FFzfXB": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_Fmp6zt": {
+          "type": "heading",
+          "settings": {
+            "heading": "Ils ont choisi Daewoo Security",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_jJxgQq": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Céline, 35 ans, a sécurisé son appartement à Lyon avec l’alarme <strong>Vigilia</strong>.<br/><br/>Découvrez <strong>sa configuration complète</strong>, les accessoires qu’elle a choisis et le budget total de son installation.</p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "button_m8iphe": {
+          "type": "button",
+          "settings": {
+            "button_label": "Voir sa configuration",
+            "button_link": "shopify://pages/ils-ont-choisi-daewoo-security",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_Fmp6zt",
+        "text_jJxgQq",
+        "button_m8iphe"
+      ],
+      "name": "t:sections.image-with-text.name",
+      "settings": {
+        "image": "shopify://shop_images/Capture_d_ecran_le_2025-10-30_a_10.11.21.png",
+        "image_height": "650px",
+        "image_width": "medium",
+        "layout": "image_first",
+        "text_alignment": "left",
+        "content_position": "align-self-center",
+        "image_height_mobile": "auto",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false,
+        "enable_parallax": true,
+        "parallax_direction": "vertical"
+      }
+    },
+    "faq_EJRtd8": {
+      "type": "faq",
+      "blocks": {
+        "question_x8mey7": {
+          "type": "question",
+          "settings": {
+            "title": "Est-ce que je peux installer le système moi même",
+            "text": "<p>Oui, tout a été conçu pour une installation simple et rapide, sans technicien.<br/><br/>Branchez la centrale sur une prise, fixez les capteurs fournis, et suivez les étapes dans l’application Daewoo Home Connect. En moins de 30 minutes, votre système est opérationnel.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_YCcPrW": {
+          "type": "question",
+          "settings": {
+            "title": "Que se passe t'il en cas de coupure de courant",
+            "text": "<p>En cas de <strong>coupure de courant, </strong>la centrale dispose d'une <strong>batterie de secours</strong>. Celle-ci va prendre le relai et permettre à la centrale de continuer de fonctionner pendant 4 heures environ. Si votre box internet est également coupée, sur le modèle Vigilia Wifi, la centrale ne sera plus accessible et fonctionnera uniquement localement ( déclenchement et sirène mais pas de notification ). Si vous optez pour le modèle Vigilia Wifi et GSM et que vous installez une carte Sim, vous recevrez alors des notifications par SMS en cas de panne de Wifi. <br/>Merci de noter que dans tous les cas, <strong>sans Wifi ou sans électricité</strong>, la caméra <strong>IP506 incluse ne sera pas accessible.</strong></p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_NJDDGH": {
+          "type": "question",
+          "settings": {
+            "title": "Est-ce que la caméra est bien incluse dans le pack ?",
+            "text": "<p>Oui, le kit de départ Daewoo Vigilia inclus <strong>la centrale, 2 contacteurs de porte/Détecteurs de vibration, 1 détecteur de mouvement, 1 Télécommande et 2 badges RFID </strong>mais également <strong>la caméra IP506P</strong> avec fonction Vie Privée.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_TxRKLa": {
+          "type": "question",
+          "settings": {
+            "title": "Est-ce que le système déclenche l'alarme avant une effraction?",
+            "text": "<p>Oui. Grâce aux <strong>détecteurs de vibration</strong>, le système peut déclencher l’alerte <strong>dès qu’une tentative d’intrusion est détectée </strong>(avant même l’ouverture de la porte ou fenêtre). Vous pouvez également ajouter à ce système d'alarme, un détecteur de mouvement pour <a href=\"/products/detecteur-de-mouvement-exterieur-wmo301\" target=\"_blank\" title=\"Détecteur de mouvement extérieur | Compatible Touch/Vigilia (AM30x)\"><strong>l'extérieure WMO301</strong></a> ou bien des <a href=\"/products/daewoo-barrieres-infrarouge-pour-alarme-am301-am302\" target=\"_blank\" title=\"Barrières Infrarouge | Compatible Touch/Vigilia (AM30x)\"><strong>barrières infrarouge BIR301.</strong></a></p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_4x4iDD": {
+          "type": "question",
+          "settings": {
+            "title": "Mon enfant peut-il l'utiliser facilement?",
+            "text": "<p>Oui. Grâce aux <strong>badges RFID </strong>et aux <strong>télécommandes</strong>, même un enfant peut activer ou désactiver l’alarme sans avoir besoin d’un smartphone. Le badge RFID va simplement se passer sur la centrale pour la désarmer et vous pouvez également <strong>paramétrer une temporisation</strong> pour avoir le temps de rentrer pour passer le badge ou taper le code sur la centrale.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_UwrMPf": {
+          "type": "question",
+          "settings": {
+            "title": "Est-ce que je peux ajouter des accessoires plus tard?",
+            "text": "<p>Oui, le système est <strong>évolutif  jusqu’à 60 accessoires </strong>ce qui est largement suffisant pour n'importe quelle maison <strong>.</strong> Vous pouvez également ajouter autant de caméras ou de périphériques pour rendre votre maison connectée ( prises, interrupteurs .... ) sur votre application Daewoo Home Connect. </p><p><strong>Vous allez contrôler tous vos appareils sur une seule application mobile.</strong></p><p></p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_VWYTcE": {
+          "type": "question",
+          "settings": {
+            "title": "Est-ce que mes caméras sont privées?",
+            "text": "<p>De manière générale, grâce au système Daewoo, vous êtes <strong>le seul à avoir accès à vos caméras</strong>. Aucune autre personne comme pour un centre de télésurveillance ne peut accéder à vos caméras. De plus, la <strong>caméra IP506P</strong> livrée dans ce pack apporte un <strong>confort supplémentair</strong>e en se refermant sur elle même si vous activez le mode Vie Privée.  </p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "contact_6zDHjf": {
+          "type": "contact",
+          "settings": {
+            "heading": "Vous n’avez pas trouvé votre réponse ?",
+            "text": "<p>N'hésitez pas à nous contacter</p>",
+            "show_phone": false,
+            "avatar_height": 60,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "question_x8mey7",
+        "question_YCcPrW",
+        "question_NJDDGH",
+        "question_TxRKLa",
+        "question_4x4iDD",
+        "question_UwrMPf",
+        "question_VWYTcE",
+        "contact_6zDHjf"
+      ],
+      "settings": {
+        "style": "with-background",
+        "heading": "FAQ",
+        "heading_size": "title-lg tracking-heading",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "<p>Consultez notre page <a href=\"/pages/assistance-1\" target=\"_blank\" title=\"Aide en ligne : manuels, questions fréquentes et plus\"><strong>Assistance</strong></a> si vous avez d'autres questions.</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#ffffff",
+        "color_background": "#0c1e4a",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "#0c1e4a",
+        "color_button_background": "#ffffff",
+        "color_button_gradient": "",
+        "color_overlay": "#ffffff",
+        "overlay_opacity": 4,
+        "padding_top": 84,
+        "padding_bottom": 84,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      },
+      "disabled": true
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "product_limit": 6,
+        "columns": 4,
+        "carousel_on_desktop": true,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "heading": "vous aimerez aussi",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": true
+      }
+    }
+  },
+  "order": [
+    "main-product",
+    "main",
+    "video_hero_HFmF6c",
+    "rich_text_jRnifT",
+    "apps_Ak8hBJ",
+    "fonctionnalites_media_cdcCgE",
+    "collage_RDkDHU",
+    "countdown_timer_nAJVYi",
+    "multicolumn_RyN3K7",
+    "rich_text_pCad4B",
+    "product-details",
+    "video_with_text_96jhe8",
+    "scrolling_banner_DjLpk3",
+    "scrolling_banner_cjAhgx",
+    "image_with_text_QbLyDz",
+    "help-drawer",
+    "scrolling-text",
+    "image_with_text_FFzfXB",
+    "faq_EJRtd8",
+    "product-recommendations"
+  ]
+}
