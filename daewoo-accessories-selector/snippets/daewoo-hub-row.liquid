@@ -1,8 +1,9 @@
 {%- doc -%}
-  Renders one large alternating row for the accessories hub: product image
-  on one side, content (badge icon, heading, tagline, CTA, feature list) on
-  the other. Side alternates by row index so the page reads as a relaxed
-  editorial sequence rather than a repeated block.
+  Renders one row of the accessories hub: product photo on one side (set
+  against a soft signal-ring backdrop), content on the other — model-code
+  chip, heading, tagline, compatibility tags, text-link CTA. Side
+  alternates by row index. No card border — rows are separated by a
+  hairline rule, read as an editorial list rather than a feature grid.
 
   @param {object} block - a card_vigilia / card_touch / card_key / card_elite block
   @param {number} index - 1-based position in the sequence, drives the alternation
@@ -25,6 +26,7 @@
 
 <div class="daewoo-hub-row{% if reversed %} daewoo-hub-row--reversed{% endif %}" {{ block.shopify_attributes }}>
   <div class="daewoo-hub-row__media">
+    <div class="daewoo-hub__ring daewoo-hub__ring--row" aria-hidden="true"></div>
     {%- if s.image != blank -%}
       {{-
         s.image
@@ -42,10 +44,8 @@
   </div>
 
   <div class="daewoo-hub-row__content">
-    {%- if s.badge_icon != blank -%}
-      <span class="daewoo-hub-row__badge" style="{% if s.badge_tint != blank %}background:{{ s.badge_tint }};{% endif %}">
-        {%- render 'daewoo-hub-icon', icon: s.badge_icon, class: 'daewoo-hub-row__badge-icon' -%}
-      </span>
+    {%- if s.model_code != blank -%}
+      <p class="daewoo-hub-row__code">{{ s.model_code | escape }}</p>
     {%- endif -%}
 
     {%- if s.heading != blank -%}
@@ -56,32 +56,27 @@
       <p class="daewoo-hub-row__tagline">{{ s.tagline }}</p>
     {%- endif -%}
 
+    {%- assign has_tags = false -%}
+    {%- if s.feature_1_label != blank or s.feature_2_label != blank or s.feature_3_label != blank or s.feature_4_label != blank -%}
+      {%- assign has_tags = true -%}
+    {%- endif -%}
+    {%- if has_tags -%}
+      <ul class="daewoo-hub-row__tags">
+        {%- if s.feature_1_label != blank -%}<li>{{ s.feature_1_label }}</li>{%- endif -%}
+        {%- if s.feature_2_label != blank -%}<li>{{ s.feature_2_label }}</li>{%- endif -%}
+        {%- if s.feature_3_label != blank -%}<li>{{ s.feature_3_label }}</li>{%- endif -%}
+        {%- if s.feature_4_label != blank -%}<li>{{ s.feature_4_label }}</li>{%- endif -%}
+      </ul>
+    {%- endif -%}
+
     {%- if s.button_label != blank -%}
       {%- render 'button',
         label: s.button_label,
         link: s.button_link,
-        style: 'primary',
-        size: 'md',
+        style: 'link',
         show_icon: true,
         classes: 'daewoo-hub-row__cta'
       -%}
     {%- endif -%}
-
-    <ul class="daewoo-hub-row__features">
-      {%- for i in (1..4) -%}
-        {%- case i -%}
-          {%- when 1 -%}{%- assign f_icon = s.feature_1_icon -%}{%- assign f_label = s.feature_1_label -%}
-          {%- when 2 -%}{%- assign f_icon = s.feature_2_icon -%}{%- assign f_label = s.feature_2_label -%}
-          {%- when 3 -%}{%- assign f_icon = s.feature_3_icon -%}{%- assign f_label = s.feature_3_label -%}
-          {%- when 4 -%}{%- assign f_icon = s.feature_4_icon -%}{%- assign f_label = s.feature_4_label -%}
-        {%- endcase -%}
-        {%- if f_label != blank -%}
-          <li class="daewoo-hub-row__feature">
-            {%- render 'daewoo-hub-icon', icon: f_icon, class: 'daewoo-hub-row__feature-icon' -%}
-            <span>{{ f_label }}</span>
-          </li>
-        {%- endif -%}
-      {%- endfor -%}
-    </ul>
   </div>
 </div>

@@ -1,27 +1,32 @@
 # Page accessoires — Daewoo Security
 
 Refonte de `/collections/tous-les-accessoires` en page de **consolidation
-premium** : un hero (titre, sous-titre, lien de défilement, image) suivi de
-**quatre grandes rangées alternées** (une par centrale : Vigilia, Touch /
-Touch XL, SA501 Key, PA501Z Elite), chacune avec un badge icône, un titre,
-une accroche, un bouton d'action et une liste de 4 fonctionnalités
-compatibles, puis un bandeau final « vous ne connaissez pas votre
-centrale ? » avec deux boutons. Pas de grille produits sur cette page —
-elle ne fait qu'aiguiller le client vers la bonne collection.
+premium**, direction « signal » : un bandeau **encre** (fond `#0c1e4a`,
+la couleur de marque, déjà utilisée en plein fond ailleurs sur le site)
+avec titre + sous-titre + lien de défilement, puis une liste éditoriale
+sur fond **brume** (`#f2f3ff`) de **quatre rangées** séparées par un
+simple filet — une par centrale (Vigilia, Touch/Touch XL, SA501 Key,
+PA501Z Elite), chacune avec sa référence produit en petites capitales
+monospace (ex. `VIG-501`), un titre, une accroche, ses compatibilités et
+un lien d'action — puis un second bandeau encre de clôture avec deux
+boutons. Le motif récurrent (anneaux concentriques avec point qui pulse,
+autour de la photo produit et en fond du hero) tient lieu de photo
+lifestyle : pas de visuel générique, un signal, cohérent avec une marque
+d'alarme. Pas de grille produits sur cette page — elle ne fait qu'aiguiller
+le client vers la bonne collection.
 
-## Fichiers actuels (hero + 4 rangées alternées)
+## Fichiers actuels (bandeau encre + liste éditoriale + bandeau encre)
 
 | Fichier | Statut | Rôle |
 |---|---|---|
-| `sections/daewoo-accessories-hub.liquid` | **Nouveau** | Hero (titre/sous-titre/lien de défilement/image) + boucle sur les 4 blocs de rangée + bandeau d'aide final. |
-| `assets/daewoo-accessories-hub.css` | **Nouveau** | Hero 2 colonnes (ou centré si pas d'image), rangées alternées en grille 2 colonnes avec bordure fine et coins arrondis, bandeau d'aide teinté `--color-highlight`. Variables du thème uniquement. |
-| `snippets/daewoo-hub-row.liquid` | **Nouveau** | Une rangée : image d'un côté, contenu de l'autre (badge, titre, accroche, CTA, 4 fonctionnalités). Le côté alterne automatiquement selon l'index. |
-| `snippets/daewoo-hub-icon.liquid` | **Nouveau** | Jeu de 10 icônes SVG monoligne (bouclier, contact, clé, diamant, détecteur, sirène, télécommande, caméra, connectivité, réglages) — le thème n'a pas d'icônes du domaine sécurité. |
+| `sections/daewoo-accessories-hub.liquid` | **Nouveau** | Bandeau hero (titre/sous-titre/lien de défilement) + boucle sur les 4 blocs de rangée + bandeau de clôture. |
+| `assets/daewoo-accessories-hub.css` | **Nouveau** | Tokens de couleur/typo (encre, brume, signal, mono) tirés des vrais réglages du thème. Motif d'anneaux en CSS pur (`repeating-radial-gradient`), pas d'image requise. |
+| `snippets/daewoo-hub-row.liquid` | **Nouveau** | Une rangée : photo sur fond d'anneaux d'un côté, contenu de l'autre (référence, titre, accroche, compatibilités, lien). Le côté alterne selon l'index. |
 | `templates/collection.accessoires-hub.json` | **Nouveau** | Template dédié à `tous-les-accessoires` : 4 blocs (`card_vigilia`, `card_touch`, `card_key`, `card_elite`) avec vraies photos produit et vrais liens de collection. |
 | `snippets/product-badges.liquid` | **Modifié** | Ajout de 4 lignes en fin de fichier pour le badge de compatibilité produit (voir section « Badges »). Indépendant du reste de ce livrable. |
 
 Aucun JavaScript : navigation par vraies URLs de collection,
-`prefers-reduced-motion` respecté en CSS.
+`prefers-reduced-motion` respecté en CSS (anneau statique, pas de pulsation).
 
 ## Déjà déployé — thème brouillon
 
