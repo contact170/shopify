@@ -1,0 +1,302 @@
+{%- comment -%}
+  ============================================================================
+  Franck – Barre flottante d'assistant IA (Chatbase)
+  ----------------------------------------------------------------------------
+  Affiche une barre discrète en bas de page (style "Dialog AI") qui ouvre,
+  au clic, un panneau de conversation contenant l'agent Franck via l'iframe
+  officielle Chatbase.
+
+  Configuration : Personnalisation du thème > Paramètres du thème >
+  "Franck – Assistant IA".
+
+  Réglages utilisés (config/settings_schema.json) :
+    settings.franck_enabled        : active/désactive la barre
+    settings.franck_chatbot_id     : ID du chatbot Chatbase (obligatoire)
+    settings.franck_scope          : "product" (pages produits) ou "all"
+    settings.franck_handles        : handles produits, séparés par des virgules
+                                     (vide = tous les produits du scope choisi)
+    settings.franck_title          : nom affiché (def. "Franck")
+    settings.franck_subtitle       : sous-titre (def. "Assistant virtuel")
+    settings.franck_teaser         : phrase d'accroche dans la barre
+    settings.franck_placeholder    : texte du faux champ de saisie
+    settings.franck_avatar         : image d'avatar (image_picker)
+    settings.franck_accent         : couleur d'accent
+  ============================================================================
+{%- endcomment -%}
+
+{%- liquid
+  assign franck_show = false
+
+  if settings.franck_enabled and settings.franck_chatbot_id != blank
+    # Portée : pages produits uniquement, ou tout le site
+    if settings.franck_scope == 'all'
+      assign franck_show = true
+    elsif template.name == 'product'
+      assign franck_show = true
+    endif
+
+    # Restriction optionnelle à des handles produits précis (pour le test)
+    if franck_show and settings.franck_handles != blank and template.name == 'product'
+      assign franck_show = false
+      assign franck_handle_list = settings.franck_handles | replace: ' ', '' | downcase | split: ','
+      for h in franck_handle_list
+        if h == product.handle
+          assign franck_show = true
+          break
+        endif
+      endfor
+    endif
+  endif
+-%}
+
+{%- if franck_show -%}
+  {%- liquid
+    assign franck_title = settings.franck_title | default: 'Franck'
+    assign franck_subtitle = settings.franck_subtitle | default: 'Assistant virtuel'
+    assign franck_teaser = settings.franck_teaser | default: 'Une question ? Discutez avec Franck, votre assistant.'
+    assign franck_placeholder = settings.franck_placeholder | default: 'Posez votre question…'
+    assign franck_accent = settings.franck_accent | default: '#1f6feb'
+    assign franck_iframe_src = 'https://www.chatbase.co/chatbot-iframe/' | append: settings.franck_chatbot_id
+  -%}
+
+  <style>
+    #franck-widget{
+      --franck-accent: {{ franck_accent }};
+      --franck-radius: 16px;
+      position: fixed;
+      left: 50%;
+      bottom: max(16px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      z-index: 2147483000;
+      width: min(680px, calc(100vw - 24px));
+      font-family: inherit;
+      pointer-events: none;
+    }
+    #franck-widget *{ box-sizing: border-box; }
+    #franck-widget[hidden]{ display: none; }
+
+    /* ---- Barre repliée ---- */
+    .franck-bar{
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 10px 12px;
+      background: #fff;
+      color: #14181f;
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: var(--franck-radius);
+      box-shadow: 0 12px 40px rgba(0,0,0,.18);
+      cursor: pointer;
+      text-align: left;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .franck-bar:hover{ transform: translateY(-2px); box-shadow: 0 16px 48px rgba(0,0,0,.22); }
+    .franck-bar:focus-visible{ outline: 2px solid var(--franck-accent); outline-offset: 2px; }
+
+    .franck-avatar{
+      flex: 0 0 auto;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--franck-accent);
+      display: grid; place-items: center;
+      color: #fff; font-weight: 700; font-size: 16px;
+    }
+    .franck-copy{ flex: 1 1 auto; min-width: 0; }
+    .franck-copy .franck-name{ font-weight: 600; font-size: 14px; line-height: 1.2; }
+    .franck-copy .franck-teaser{
+      font-size: 13px; color: #5b6472; line-height: 1.3;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .franck-fakefield{
+      flex: 0 0 auto;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #f2f4f7;
+      color: #8a93a2;
+      font-size: 13px;
+      max-width: 240px;
+    }
+    .franck-send{
+      flex: 0 0 auto;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--franck-accent);
+      display: grid; place-items: center;
+    }
+    .franck-send svg{ width: 18px; height: 18px; fill: #fff; }
+
+    @media (min-width: 640px){
+      .franck-copy .franck-teaser{ font-size: 13px; }
+      .franck-fakefield{ display: inline-flex; }
+    }
+
+    .franck-close-bar{
+      flex: 0 0 auto;
+      width: 26px; height: 26px;
+      border: 0; background: transparent; cursor: pointer;
+      color: #98a2b3; border-radius: 50%;
+      display: grid; place-items: center;
+    }
+    .franck-close-bar:hover{ background: #f2f4f7; color: #475467; }
+    .franck-close-bar svg{ width: 14px; height: 14px; fill: currentColor; }
+
+    /* ---- Panneau ouvert ---- */
+    .franck-panel{
+      pointer-events: auto;
+      position: absolute;
+      right: 0; bottom: 0;
+      width: 100%;
+      height: min(70vh, 640px);
+      background: #fff;
+      border-radius: var(--franck-radius);
+      box-shadow: 0 20px 60px rgba(0,0,0,.28);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+    }
+    .franck-panel__head{
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 14px;
+      background: var(--franck-accent);
+      color: #fff;
+      flex: 0 0 auto;
+    }
+    .franck-panel__head .franck-avatar{ width: 34px; height: 34px; background: rgba(255,255,255,.2); }
+    .franck-panel__head .franck-name{ font-weight: 600; font-size: 15px; }
+    .franck-panel__head .franck-sub{ font-size: 12px; opacity: .85; }
+    .franck-panel__head .spacer{ flex: 1 1 auto; }
+    .franck-panel__head button{
+      border: 0; background: rgba(255,255,255,.16); color: #fff;
+      width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+      display: grid; place-items: center;
+    }
+    .franck-panel__head button:hover{ background: rgba(255,255,255,.28); }
+    .franck-panel__head button svg{ width: 16px; height: 16px; fill: #fff; }
+    .franck-panel__body{ flex: 1 1 auto; position: relative; background: #fff; }
+    .franck-panel__body iframe{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+    /* ---- État ouvert ---- */
+    #franck-widget.is-open .franck-bar{ display: none; }
+    #franck-widget.is-open .franck-panel{ display: flex; }
+
+    @media (max-width: 639px){
+      #franck-widget{ width: calc(100vw - 16px); left: 8px; right: 8px; transform: none; }
+      .franck-panel{ height: min(78vh, 620px); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .franck-bar{ transition: none; }
+      .franck-bar:hover{ transform: none; }
+    }
+  </style>
+
+  <div id="franck-widget"
+       data-iframe-src="{{ franck_iframe_src }}"
+       role="region"
+       aria-label="Assistant {{ franck_title | escape }}">
+
+    <!-- Barre repliée -->
+    <div class="franck-bar" role="button" tabindex="0" aria-expanded="false"
+         aria-label="Ouvrir la conversation avec {{ franck_title | escape }}">
+      {%- if settings.franck_avatar != blank -%}
+        <img class="franck-avatar" src="{{ settings.franck_avatar | image_url: width: 80 }}"
+             alt="{{ franck_title | escape }}" width="40" height="40" loading="lazy">
+      {%- else -%}
+        <span class="franck-avatar" aria-hidden="true">{{ franck_title | slice: 0 | upcase }}</span>
+      {%- endif -%}
+
+      <span class="franck-copy">
+        <span class="franck-name">{{ franck_title }}</span>
+        <span class="franck-teaser">{{ franck_teaser }}</span>
+      </span>
+
+      <span class="franck-fakefield" aria-hidden="true">{{ franck_placeholder }}</span>
+
+      <span class="franck-send" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M3.4 20.4l17.45-7.48a1 1 0 000-1.84L3.4 3.6a.993.993 0 00-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg>
+      </span>
+
+      <button type="button" class="franck-close-bar" aria-label="Masquer l'assistant">
+        <svg viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 00-1.41 0L12 10.59 7.11 5.7A1 1 0 105.7 7.11L10.59 12 5.7 16.89a1 1 0 101.41 1.41L12 13.41l4.89 4.89a1 1 0 001.41-1.41L13.41 12l4.89-4.89a1 1 0 000-1.4z"/></svg>
+      </button>
+    </div>
+
+    <!-- Panneau de conversation -->
+    <div class="franck-panel" role="dialog" aria-modal="false" aria-label="Conversation avec {{ franck_title | escape }}">
+      <div class="franck-panel__head">
+        {%- if settings.franck_avatar != blank -%}
+          <img class="franck-avatar" src="{{ settings.franck_avatar | image_url: width: 68 }}"
+               alt="" width="34" height="34" loading="lazy">
+        {%- else -%}
+          <span class="franck-avatar" aria-hidden="true">{{ franck_title | slice: 0 | upcase }}</span>
+        {%- endif -%}
+        <span>
+          <span class="franck-name" style="display:block">{{ franck_title }}</span>
+          <span class="franck-sub">{{ franck_subtitle }}</span>
+        </span>
+        <span class="spacer"></span>
+        <button type="button" class="franck-minimize" aria-label="Réduire la conversation">
+          <svg viewBox="0 0 24 24"><path d="M6 13h12a1 1 0 000-2H6a1 1 0 000 2z"/></svg>
+        </button>
+      </div>
+      <div class="franck-panel__body"><!-- l'iframe est injectée à la 1re ouverture --></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var widget = document.getElementById('franck-widget');
+      if(!widget) return;
+
+      // Masqué pour la session si l'utilisateur a fermé la barre
+      try{
+        if(sessionStorage.getItem('franck-dismissed') === '1'){ widget.setAttribute('hidden',''); return; }
+      }catch(e){}
+
+      var bar       = widget.querySelector('.franck-bar');
+      var body      = widget.querySelector('.franck-panel__body');
+      var iframeSrc = widget.getAttribute('data-iframe-src');
+      var loaded    = false;
+
+      function loadIframe(){
+        if(loaded || !iframeSrc) return;
+        var f = document.createElement('iframe');
+        f.src = iframeSrc;
+        f.title = 'Conversation Franck';
+        f.setAttribute('allow', 'clipboard-write; microphone');
+        body.appendChild(f);
+        loaded = true;
+      }
+      function open(){
+        loadIframe();
+        widget.classList.add('is-open');
+        bar.setAttribute('aria-expanded','true');
+      }
+      function close(){
+        widget.classList.remove('is-open');
+        bar.setAttribute('aria-expanded','false');
+      }
+      function dismiss(e){
+        e.stopPropagation();
+        widget.setAttribute('hidden','');
+        try{ sessionStorage.setItem('franck-dismissed','1'); }catch(err){}
+      }
+
+      bar.addEventListener('click', open);
+      bar.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); }
+      });
+      widget.querySelector('.franck-close-bar').addEventListener('click', dismiss);
+      widget.querySelector('.franck-minimize').addEventListener('click', close);
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && widget.classList.contains('is-open')){ close(); }
+      });
+    })();
+  </script>
+{%- endif -%}
