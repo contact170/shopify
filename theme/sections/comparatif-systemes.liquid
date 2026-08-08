@@ -1,8 +1,8 @@
 {%- comment -%}
-  Comparatif systèmes d'alarme Daewoo — SA501 · AM301 · PA501Z
-  Section autonome, style « Apple ». Tout est scopé sous .dw-cmp pour éviter
-  les conflits avec le thème. Les textes, prix, images et liens sont éditables
-  dans le personnalisateur de thème (voir schema en bas).
+  Comparatif systèmes d'alarme Daewoo — Vigilia · Touch/Touch XL · Élite (PA501Z)
+  Section autonome, style « Apple ». Tout est scopé sous .dw-cmp pour éviter les
+  conflits avec le thème. Textes, prix, images et liens éditables dans le
+  personnalisateur de thème (voir schema en bas).
 {%- endcomment -%}
 
 <style>
@@ -10,13 +10,12 @@
     --bg:#ffffff;--bg-alt:#f5f5f7;--card:#ffffff;
     --ink:#1d1d1f;--ink-2:#6e6e73;--ink-3:#86868b;
     --line:#e3e3e6;--line-strong:#d2d2d7;
-    --key:#7d7d82;--touch:#0071e3;--elite:#5e5ce6;--yes:#1a7f37;
+    --vigilia:#0a8f8f;--touch:#0071e3;--elite:#5e5ce6;--yes:#1a7f37;
     --shadow:0 4px 24px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.05);
     --shadow-lg:0 18px 60px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.06);
     --radius:22px;
     --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.5;
-    -webkit-font-smoothing:antialiased;
+    background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.5;-webkit-font-smoothing:antialiased;
   }
   .dw-cmp *{box-sizing:border-box;margin:0;padding:0}
   .dw-cmp .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
@@ -28,38 +27,41 @@
 
   .dw-cmp .hero{text-align:center;padding:110px 0 72px;background:radial-gradient(120% 90% at 50% -10%,var(--bg-alt) 0%,var(--bg) 60%)}
   .dw-cmp .hero h1{font-size:clamp(38px,7vw,76px);line-height:1.03;margin:18px 0 22px}
-  .dw-cmp .hero .lede{font-size:clamp(18px,2.4vw,25px);color:var(--ink-2);font-weight:400;max-width:640px;margin:0 auto;line-height:1.32}
+  .dw-cmp .hero .lede{font-size:clamp(18px,2.4vw,25px);color:var(--ink-2);font-weight:400;max-width:660px;margin:0 auto;line-height:1.32}
   .dw-cmp .hero .meta{margin-top:34px;display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-size:15px;color:var(--ink-2)}
   .dw-cmp .hero .meta span{display:inline-flex;align-items:center;gap:8px}
   .dw-cmp .dot{width:6px;height:6px;border-radius:50%;background:var(--yes);display:inline-block}
 
   .dw-cmp .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .dw-cmp .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 30px;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+  .dw-cmp .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
   .dw-cmp .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
   .dw-cmp .card.is-featured{border-color:transparent;box-shadow:0 0 0 2px var(--elite),var(--shadow-lg)}
-  .dw-cmp .badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--elite);color:#fff;font-size:12px;font-weight:600;letter-spacing:.03em;padding:6px 14px;border-radius:999px;white-space:nowrap}
-  .dw-cmp .viz{height:170px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
-  .dw-cmp .viz img{max-height:170px;max-width:82%;object-fit:contain}
+  .dw-cmp .badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);color:#fff;font-size:12px;font-weight:600;letter-spacing:.03em;padding:6px 14px;border-radius:999px;white-space:nowrap}
+  .dw-cmp .badge.elite{background:var(--elite)}
+  .dw-cmp .badge.cam{background:var(--vigilia)}
+  .dw-cmp .viz{height:180px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+  .dw-cmp .viz img{max-height:180px;max-width:88%;object-fit:contain}
   .dw-cmp .kicker{font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
-  .dw-cmp .card--key .kicker{color:var(--key)}
+  .dw-cmp .card--vigilia .kicker{color:var(--vigilia)}
   .dw-cmp .card--touch .kicker{color:var(--touch)}
   .dw-cmp .card--elite .kicker{color:var(--elite)}
-  .dw-cmp .card h3{font-size:27px;margin:6px 0 4px}
+  .dw-cmp .card h3{font-size:26px;margin:6px 0 4px}
+  .dw-cmp .card h3 span{font-weight:400;color:var(--ink-3);font-size:16px}
   .dw-cmp .card .tag{color:var(--ink-2);font-size:16px;min-height:44px}
   .dw-cmp .price{margin:16px 0 6px;font-size:15px;color:var(--ink-3)}
   .dw-cmp .price b{display:block;font-size:30px;color:var(--ink);font-weight:600;letter-spacing:-.02em}
   .dw-cmp .ideal{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:14.5px;color:var(--ink-2);flex:1}
   .dw-cmp .ideal strong{color:var(--ink);font-weight:600}
   .dw-cmp .btn{margin-top:22px;display:inline-flex;justify-content:center;align-items:center;height:46px;border-radius:999px;font-size:16px;font-weight:500;background:var(--touch);color:#fff;transition:opacity .2s}
-  .dw-cmp .card--key .btn{background:var(--key)}
+  .dw-cmp .card--vigilia .btn{background:var(--vigilia)}
   .dw-cmp .card--elite .btn{background:var(--elite)}
   .dw-cmp .btn:hover{opacity:.88}
   .dw-cmp .btn.ghost{background:transparent;color:var(--touch);border:1px solid var(--line-strong)}
-  .dw-cmp .card--key .btn.ghost{color:var(--key)}
+  .dw-cmp .card--vigilia .btn.ghost{color:var(--vigilia)}
   .dw-cmp .card--elite .btn.ghost{color:var(--elite)}
 
   .dw-cmp .matrix-sec{background:var(--bg-alt)}
-  .dw-cmp .sec-head{text-align:center;max-width:660px;margin:0 auto 52px}
+  .dw-cmp .sec-head{text-align:center;max-width:680px;margin:0 auto 52px}
   .dw-cmp .sec-head h2{font-size:clamp(30px,4.5vw,46px);margin-bottom:16px}
   .dw-cmp .sec-head p{color:var(--ink-2);font-size:19px}
   .dw-cmp .matrix-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius)}
@@ -68,7 +70,7 @@
   .dw-cmp table.matrix thead th:first-child{text-align:left;width:32%}
   .dw-cmp .th-name{font-size:19px;font-weight:600}
   .dw-cmp .th-sub{font-size:13px;color:var(--ink-3);font-weight:400;margin-top:3px}
-  .dw-cmp .th-key .th-name{color:var(--key)}
+  .dw-cmp .th-vigilia .th-name{color:var(--vigilia)}
   .dw-cmp .th-touch .th-name{color:var(--touch)}
   .dw-cmp .th-elite .th-name{color:var(--elite)}
   .dw-cmp .grp td{background:var(--bg-alt);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding:14px 18px}
@@ -84,13 +86,13 @@
   .dw-cmp .choice{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .dw-cmp .persona{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;box-shadow:var(--shadow)}
   .dw-cmp .persona .num{font-size:14px;font-weight:600;color:var(--ink-3)}
-  .dw-cmp .persona--key .num{color:var(--key)}
+  .dw-cmp .persona--vigilia .num{color:var(--vigilia)}
   .dw-cmp .persona--touch .num{color:var(--touch)}
   .dw-cmp .persona--elite .num{color:var(--elite)}
   .dw-cmp .persona h3{font-size:21px;margin:12px 0 10px}
   .dw-cmp .persona p{color:var(--ink-2);font-size:15.5px;margin-bottom:16px}
   .dw-cmp .persona .pick{font-size:14px;font-weight:600}
-  .dw-cmp .persona--key .pick{color:var(--key)}
+  .dw-cmp .persona--vigilia .pick{color:var(--vigilia)}
   .dw-cmp .persona--touch .pick{color:var(--touch)}
   .dw-cmp .persona--elite .pick{color:var(--elite)}
 
@@ -115,6 +117,21 @@
   @media(prefers-reduced-motion:reduce){.dw-cmp *{transition:none!important}}
 </style>
 
+{%- liquid
+  assign vig_img = section.settings.vigilia_image_url
+  if section.settings.vigilia_image != blank
+    assign vig_img = section.settings.vigilia_image | image_url: width: 560
+  endif
+  assign eli_img = section.settings.elite_image_url
+  if section.settings.elite_image != blank
+    assign eli_img = section.settings.elite_image | image_url: width: 560
+  endif
+  assign tou_img = section.settings.touch_image_url
+  if section.settings.touch_image != blank
+    assign tou_img = section.settings.touch_image | image_url: width: 560
+  endif
+-%}
+
 <div class="dw-cmp">
 
   <div class="hero">
@@ -134,49 +151,32 @@
     <div class="wrap">
       <div class="cards">
 
-        <article class="card card--key">
-          <div class="viz">
-            {%- if section.settings.key_image != blank -%}
-              <img src="{{ section.settings.key_image | image_url: width: 500 }}" alt="SA501" loading="lazy">
-            {%- else -%}
-              <img src="{{ section.settings.key_image_url }}" alt="SA501" loading="lazy">
-            {%- endif -%}
-          </div>
-          <p class="kicker">{{ section.settings.key_kicker }}</p>
-          <h3>{{ section.settings.key_name }}</h3>
-          <p class="tag">{{ section.settings.key_tag }}</p>
-          <div class="price">À partir de <b>{{ section.settings.key_price }}</b></div>
-          <div class="ideal"><strong>Idéal pour :</strong> {{ section.settings.key_ideal }}</div>
-          <a class="btn ghost" href="{{ section.settings.key_link }}">{{ section.settings.key_cta }}</a>
+        <article class="card card--vigilia">
+          {%- if section.settings.vigilia_badge != blank -%}<span class="badge cam">{{ section.settings.vigilia_badge }}</span>{%- endif -%}
+          <div class="viz"><img src="{{ vig_img }}" alt="{{ section.settings.vigilia_name }}" loading="lazy"></div>
+          <p class="kicker">{{ section.settings.vigilia_kicker }}</p>
+          <h3>{{ section.settings.vigilia_name }}</h3>
+          <p class="tag">{{ section.settings.vigilia_tag }}</p>
+          <div class="price">À partir de <b>{{ section.settings.vigilia_price }}</b></div>
+          <div class="ideal"><strong>Idéal pour :</strong> {{ section.settings.vigilia_ideal }}</div>
+          <a class="btn ghost" href="{{ section.settings.vigilia_link }}">{{ section.settings.vigilia_cta }}</a>
         </article>
 
         <article class="card card--elite is-featured">
-          <span class="badge">{{ section.settings.elite_badge }}</span>
-          <div class="viz">
-            {%- if section.settings.elite_image != blank -%}
-              <img src="{{ section.settings.elite_image | image_url: width: 500 }}" alt="PA501Z" loading="lazy">
-            {%- else -%}
-              <img src="{{ section.settings.elite_image_url }}" alt="PA501Z" loading="lazy">
-            {%- endif -%}
-          </div>
+          {%- if section.settings.elite_badge != blank -%}<span class="badge elite">{{ section.settings.elite_badge }}</span>{%- endif -%}
+          <div class="viz"><img src="{{ eli_img }}" alt="{{ section.settings.elite_name }}" loading="lazy"></div>
           <p class="kicker">{{ section.settings.elite_kicker }}</p>
-          <h3>{{ section.settings.elite_name }}</h3>
+          <h3>{{ section.settings.elite_name }} <span>{{ section.settings.elite_ref }}</span></h3>
           <p class="tag">{{ section.settings.elite_tag }}</p>
-          <div class="price">À partir de <b>{{ section.settings.elite_price }}</b></div>
+          <div class="price"><b>{{ section.settings.elite_price }}</b></div>
           <div class="ideal"><strong>Idéal pour :</strong> {{ section.settings.elite_ideal }}</div>
           <a class="btn" href="{{ section.settings.elite_link }}">{{ section.settings.elite_cta }}</a>
         </article>
 
         <article class="card card--touch">
-          <div class="viz">
-            {%- if section.settings.touch_image != blank -%}
-              <img src="{{ section.settings.touch_image | image_url: width: 500 }}" alt="AM301" loading="lazy">
-            {%- else -%}
-              <img src="{{ section.settings.touch_image_url }}" alt="AM301" loading="lazy">
-            {%- endif -%}
-          </div>
+          <div class="viz"><img src="{{ tou_img }}" alt="{{ section.settings.touch_name }}" loading="lazy"></div>
           <p class="kicker">{{ section.settings.touch_kicker }}</p>
-          <h3>{{ section.settings.touch_name }}</h3>
+          <h3>{{ section.settings.touch_name }} <span>{{ section.settings.touch_ref }}</span></h3>
           <p class="tag">{{ section.settings.touch_tag }}</p>
           <div class="price">À partir de <b>{{ section.settings.touch_price }}</b></div>
           <div class="ideal"><strong>Idéal pour :</strong> {{ section.settings.touch_ideal }}</div>
@@ -198,21 +198,25 @@
           <thead>
             <tr>
               <th></th>
-              <th class="th-key"><div class="th-name">SA501</div><div class="th-sub">Key · dès 159,90&nbsp;€</div></th>
-              <th class="th-elite col-elite"><div class="th-name">PA501Z</div><div class="th-sub">Élite · dès 199,90&nbsp;€</div></th>
-              <th class="th-touch"><div class="th-name">AM301</div><div class="th-sub">Touch · dès 199,90&nbsp;€</div></th>
+              <th class="th-vigilia"><div class="th-name">Vigilia</div><div class="th-sub">dès 139,90&nbsp;€</div></th>
+              <th class="th-elite col-elite"><div class="th-name">Élite</div><div class="th-sub">PA501Z · 199,90&nbsp;€</div></th>
+              <th class="th-touch"><div class="th-name">Touch</div><div class="th-sub">/ XL · dès 199,90&nbsp;€</div></th>
             </tr>
           </thead>
           <tbody>
             <tr class="grp"><td colspan="4">Pilotage &amp; confort</td></tr>
+            <tr><td>Interface sur la centrale</td><td class="val">Clavier physique</td><td class="val col-elite">100 % application</td><td class="val">Écran tactile 4,3″/7″</td></tr>
             <tr><td>Application Daewoo Home Connect</td><td class="yes">✓</td><td class="yes col-elite">✓</td><td class="yes">✓</td></tr>
-            <tr><td>Écran tactile intégré à la centrale</td><td class="no">—</td><td class="no col-elite">—</td><td class="val">4,3″ ou 7″</td></tr>
             <tr><td>Télécommandes &amp; badges RFID</td><td class="yes">✓</td><td class="yes col-elite">✓</td><td class="yes">✓</td></tr>
             <tr><td>Scénarios &amp; automatisations</td><td class="no">—</td><td class="yes col-elite">✓</td><td class="no">—</td></tr>
 
+            <tr class="grp"><td colspan="4">Vidéo</td></tr>
+            <tr><td>Caméra incluse dans le pack</td><td class="val">✓<small>intérieure Full HD</small></td><td class="no col-elite">—</td><td class="no">—</td></tr>
+            <tr><td>Compatible caméras Daewoo</td><td class="yes">✓</td><td class="yes col-elite">✓</td><td class="yes">✓</td></tr>
+
             <tr class="grp"><td colspan="4">Connectivité</td></tr>
             <tr><td>Wi-Fi</td><td class="yes">✓</td><td class="yes col-elite">✓</td><td class="yes">✓</td></tr>
-            <tr><td>GSM / 4G</td><td class="val">En option<small>carte SIM</small></td><td class="val col-elite">Intégré<small>SIM en option</small></td><td class="val">En option<small>carte SIM</small></td></tr>
+            <tr><td>GSM / 4G</td><td class="val">Version Vigilia+<small>+50&nbsp;€</small></td><td class="val col-elite">Intégré<small>SIM en option</small></td><td class="val">En option<small>carte SIM</small></td></tr>
             <tr><td>Ethernet (filaire)</td><td class="no">—</td><td class="yes col-elite">✓</td><td class="no">—</td></tr>
             <tr><td>Zigbee (maison connectée)</td><td class="no">—</td><td class="yes col-elite">✓</td><td class="no">—</td></tr>
             <tr><td>Bascule réseau automatique</td><td class="no">—</td><td class="val col-elite">Wi-Fi · Ethernet · 4G</td><td class="no">—</td></tr>
@@ -224,8 +228,8 @@
             <tr><td>Alerte intrusion &amp; anti-arrachement</td><td class="yes">✓</td><td class="yes col-elite">✓</td><td class="yes">✓</td></tr>
 
             <tr class="grp"><td colspan="4">Évolutivité &amp; compatibilité</td></tr>
-            <tr><td>Gamme d'accessoires</td><td class="val">Série 501</td><td class="val col-elite">Série 501 + Zigbee</td><td class="val">Série 301</td></tr>
-            <tr><td>Capacité d'accessoires</td><td class="val">Extensible</td><td class="val col-elite">Jusqu'à 200</td><td class="val">Jusqu'à 90</td></tr>
+            <tr><td>Gamme d'accessoires</td><td class="val">Série 301</td><td class="val col-elite">Série 501 + Zigbee</td><td class="val">Série 301</td></tr>
+            <tr><td>Capacité d'accessoires</td><td class="val">Jusqu'à 60</td><td class="val col-elite">Jusqu'à 200</td><td class="val">Jusqu'à 90</td></tr>
             <tr><td>Périphériques Zigbee du marché</td><td class="no">—</td><td class="yes col-elite">✓</td><td class="no">—</td></tr>
             <tr><td>Alexa &amp; Google Home</td><td class="no">—</td><td class="val col-elite">Non<small>sécurité renforcée</small></td><td class="yes">✓</td></tr>
             <tr><td>Sans abonnement</td><td class="yes">✓</td><td class="yes col-elite">✓</td><td class="yes">✓</td></tr>
@@ -242,23 +246,23 @@
         <p>Trois profils, trois réponses. Repérez le vôtre en un coup d'œil.</p>
       </div>
       <div class="choice">
-        <article class="persona persona--key">
-          <div class="num">Le budget maîtrisé</div>
-          <h3>« Je veux l'essentiel, bien fait. »</h3>
-          <p>Une protection sans fil complète, pilotée depuis l'app, sans abonnement — pour un appartement ou une première installation.</p>
-          <div class="pick">→ SA501 · Key</div>
+        <article class="persona persona--vigilia">
+          <div class="num">Le pack complet</div>
+          <h3>« Je veux tout, tout de suite. »</h3>
+          <p>Une protection clé en main avec caméra Full HD, clavier physique et 6 accessoires inclus — prête à poser, sans abonnement.</p>
+          <div class="pick">→ Vigilia</div>
         </article>
         <article class="persona persona--touch">
           <div class="num">Le confort au quotidien</div>
           <h3>« Je veux tout gérer d'un geste. »</h3>
-          <p>Un écran tactile sur la centrale, l'application en complément et la compatibilité Alexa &amp; Google Home pour votre maison connectée.</p>
-          <div class="pick">→ AM301 · Touch</div>
+          <p>Un écran tactile 4,3″ ou 7″ sur la centrale, l'application en complément et la compatibilité Alexa &amp; Google Home.</p>
+          <div class="pick">→ Touch / Touch XL</div>
         </article>
         <article class="persona persona--elite">
           <div class="num">La sécurité sans compromis</div>
           <h3>« Je veux le maximum de fiabilité. »</h3>
           <p>Quadruple connexion, radio cryptée anti-brouillage, batterie 10&nbsp;h et écosystème Zigbee évolutif. La protection continue, même réseau coupé.</p>
-          <div class="pick">→ PA501Z · Élite</div>
+          <div class="pick">→ Élite</div>
         </article>
       </div>
     </div>
@@ -306,48 +310,51 @@
     { "type": "header", "content": "En-tête" },
     { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Systèmes d'alarme Daewoo Security" },
     { "type": "text", "id": "title", "label": "Titre", "default": "Trois systèmes. Une seule exigence : vous protéger." },
-    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Du plus simple au plus connecté. Comparez le confort, la connectivité et le niveau de sécurité — et trouvez celui qui protège votre logement." },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "De la solution complète clé en main à la sécurité la plus connectée. Comparez le confort, la connectivité et le niveau de protection — et trouvez celui qui protège votre logement." },
     { "type": "text", "id": "badge_1", "label": "Argument 1", "default": "Sans abonnement" },
     { "type": "text", "id": "badge_2", "label": "Argument 2", "default": "Installation en 15 min" },
     { "type": "text", "id": "badge_3", "label": "Argument 3", "default": "Fabriqué pour durer" },
 
-    { "type": "header", "content": "Carte SA501 (Key)" },
-    { "type": "image_picker", "id": "key_image", "label": "Image" },
-    { "type": "text", "id": "key_image_url", "label": "URL image (secours)", "default": "https://cdn.shopify.com/s/files/1/0326/3132/4811/products/pack-starter-sa501-554621.jpg" },
-    { "type": "text", "id": "key_kicker", "label": "Gamme", "default": "Gamme Key" },
-    { "type": "text", "id": "key_name", "label": "Nom", "default": "SA501" },
-    { "type": "text", "id": "key_tag", "label": "Accroche", "default": "L'essentiel de la sécurité, simple et fiable." },
-    { "type": "text", "id": "key_price", "label": "Prix", "default": "159,90 €" },
-    { "type": "textarea", "id": "key_ideal", "label": "Idéal pour", "default": "une première alarme, un appartement ou une petite maison, un budget maîtrisé sans compromis sur la protection." },
-    { "type": "text", "id": "key_cta", "label": "Libellé bouton", "default": "Découvrir le SA501" },
-    { "type": "url", "id": "key_link", "label": "Lien", "default": "/products/alarme-maison-sans-fil-daewoo-sa501" },
+    { "type": "header", "content": "Carte Vigilia" },
+    { "type": "text", "id": "vigilia_badge", "label": "Badge (laisser vide pour masquer)", "default": "Caméra incluse" },
+    { "type": "image_picker", "id": "vigilia_image", "label": "Image" },
+    { "type": "text", "id": "vigilia_image_url", "label": "URL image (secours)", "default": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Vigilia.png" },
+    { "type": "text", "id": "vigilia_kicker", "label": "Gamme", "default": "Gamme Vigilia" },
+    { "type": "text", "id": "vigilia_name", "label": "Nom", "default": "Vigilia" },
+    { "type": "text", "id": "vigilia_tag", "label": "Accroche", "default": "La solution complète, prête à l'emploi — caméra incluse." },
+    { "type": "text", "id": "vigilia_price", "label": "Prix", "default": "139,90 €" },
+    { "type": "textarea", "id": "vigilia_ideal", "label": "Idéal pour", "default": "équiper un logement d'un coup — pack complet avec caméra Full HD, clavier physique et 6 accessoires, sans abonnement." },
+    { "type": "text", "id": "vigilia_cta", "label": "Libellé bouton", "default": "Découvrir la Vigilia" },
+    { "type": "url", "id": "vigilia_link", "label": "Lien", "default": "/products/starter-pack-vigilia" },
 
-    { "type": "header", "content": "Carte PA501Z (Élite) — mise en avant" },
-    { "type": "text", "id": "elite_badge", "label": "Badge", "default": "Le plus complet" },
+    { "type": "header", "content": "Carte Élite (PA501Z) — mise en avant" },
+    { "type": "text", "id": "elite_badge", "label": "Badge (laisser vide pour masquer)", "default": "Le plus complet" },
     { "type": "image_picker", "id": "elite_image", "label": "Image" },
     { "type": "text", "id": "elite_image_url", "label": "URL image (secours)", "default": "https://cdn.shopify.com/s/files/1/0326/3132/4811/products/strongcentrale-dalarmestrong-pa501z-311321.jpg" },
     { "type": "text", "id": "elite_kicker", "label": "Gamme", "default": "Gamme Élite" },
-    { "type": "text", "id": "elite_name", "label": "Nom", "default": "PA501Z" },
+    { "type": "text", "id": "elite_name", "label": "Nom", "default": "Élite" },
+    { "type": "text", "id": "elite_ref", "label": "Référence (petit)", "default": "PA501Z" },
     { "type": "text", "id": "elite_tag", "label": "Accroche", "default": "Sécurité maximale et maison connectée, sans compromis." },
     { "type": "text", "id": "elite_price", "label": "Prix", "default": "199,90 €" },
-    { "type": "textarea", "id": "elite_ideal", "label": "Idéal pour", "default": "qui veut le plus haut niveau de fiabilité — quadruple connexion, radio cryptée anti-brouillage et écosystème Zigbee évolutif." },
-    { "type": "text", "id": "elite_cta", "label": "Libellé bouton", "default": "Découvrir le PA501Z" },
+    { "type": "textarea", "id": "elite_ideal", "label": "Idéal pour", "default": "le plus haut niveau de fiabilité — quadruple connexion, radio cryptée anti-brouillage et écosystème Zigbee évolutif." },
+    { "type": "text", "id": "elite_cta", "label": "Libellé bouton", "default": "Découvrir l'Élite" },
     { "type": "url", "id": "elite_link", "label": "Lien", "default": "/products/strong-centrale-dalarme-strong-elite" },
 
-    { "type": "header", "content": "Carte AM301 (Touch)" },
+    { "type": "header", "content": "Carte Touch / Touch XL" },
     { "type": "image_picker", "id": "touch_image", "label": "Image" },
     { "type": "text", "id": "touch_image_url", "label": "URL image (secours)", "default": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Touch_e31e5742-619e-4dd3-86a8-bf9898bdd8de.png" },
     { "type": "text", "id": "touch_kicker", "label": "Gamme", "default": "Gamme Touch" },
-    { "type": "text", "id": "touch_name", "label": "Nom", "default": "AM301" },
+    { "type": "text", "id": "touch_name", "label": "Nom", "default": "Touch" },
+    { "type": "text", "id": "touch_ref", "label": "Référence (petit)", "default": "/ Touch XL" },
     { "type": "text", "id": "touch_tag", "label": "Accroche", "default": "Le confort d'un écran tactile, directement sur la centrale." },
     { "type": "text", "id": "touch_price", "label": "Prix", "default": "199,90 €" },
-    { "type": "textarea", "id": "touch_ideal", "label": "Idéal pour", "default": "piloter son alarme d'un geste sur l'écran ou l'app, avec compatibilité Alexa & Google Home." },
-    { "type": "text", "id": "touch_cta", "label": "Libellé bouton", "default": "Découvrir l'AM301" },
+    { "type": "textarea", "id": "touch_ideal", "label": "Idéal pour", "default": "piloter son alarme d'un geste sur l'écran 4,3″ ou 7″, avec compatibilité Alexa & Google Home." },
+    { "type": "text", "id": "touch_cta", "label": "Libellé bouton", "default": "Découvrir la Touch" },
     { "type": "url", "id": "touch_link", "label": "Lien", "default": "/products/alarme-daewoo-wifi-gsm-4g-starter-pack-am301" },
 
     { "type": "header", "content": "Tableau comparatif" },
     { "type": "text", "id": "matrix_title", "label": "Titre", "default": "Comparez ligne par ligne" },
-    { "type": "textarea", "id": "matrix_subtitle", "label": "Sous-titre", "default": "Les mêmes fondamentaux Daewoo — sans abonnement, sans fil, pilotables depuis l'application. La différence tient à la connectivité, à la sécurité et au confort d'usage." },
+    { "type": "textarea", "id": "matrix_subtitle", "label": "Sous-titre", "default": "Les mêmes fondamentaux Daewoo — sans abonnement, sans fil, pilotables depuis l'application. La différence tient à la vidéo, à la connectivité et au niveau de sécurité." },
 
     { "type": "header", "content": "Appel à l'action final" },
     { "type": "text", "id": "cta_title", "label": "Titre", "default": "Toujours hésitant ?" },
