@@ -8,12 +8,12 @@
 </style>
 
 <div class="daewoo-reset-step3">
-  STEP 4 TEST — boucle sur les blocs (sans appel au snippet) —
-  blocks.size: {{ section.blocks.size }}
-  {%- for block in section.blocks -%}
-    | bloc {{ forloop.index0 }}: type={{ block.type }}
-  {%- endfor -%}
+  STEP 5 TEST — avec appel au snippet ci-dessous —
 </div>
+
+{%- for block in section.blocks -%}
+  {%- render 'daewoo-hub-image-link', block: block, loading: 'eager' -%}
+{%- endfor -%}
 
 {% schema %}
 {
