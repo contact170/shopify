@@ -11,17 +11,6 @@
 {{ 'daewoo-accessories-hub.css' | asset_url | stylesheet_tag }}
 
 <div class="section daewoo-hub section--padding">
-  <div style="display:block !important; position:relative !important; z-index:99999 !important; background:#ffeb3b !important; color:#000 !important; font-size:16px !important; font-family:monospace !important; padding:16px !important; margin:0 !important; border:4px solid #c00 !important; white-space:pre-wrap !important; text-align:left !important;">
-DIAGNOSTIC —
-heading: "{{ section.settings.heading }}"
-subheading: "{{ section.settings.subheading }}"
-blocks.size: {{ section.blocks.size }}
-{%- for block in section.blocks %}
-{%- assign has_image = false -%}
-{%- if block.settings.image != blank -%}{%- assign has_image = true -%}{%- endif -%}
-block[{{ forloop.index0 }}] type="{{ block.type }}" enabled="{{ block.settings.enabled }}" image="{{ block.settings.image }}" image_present="{{ has_image }}" link="{{ block.settings.link }}"
-{%- endfor %}
-  </div>
   <div class="page-width daewoo-hub__intro">
     {%- if section.settings.heading != blank -%}
       <h1 class="daewoo-hub__heading heading">{{ section.settings.heading }}</h1>
