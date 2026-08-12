@@ -3,40 +3,29 @@
     "daewoo_hub": {
       "type": "daewoo-accessories-hub",
       "blocks": {
-        "card_vigilia": {
-          "type": "card_vigilia",
+        "card_elite": {
+          "type": "card",
           "settings": {
-            "image": "shopify://shop_images/VIG501_1.png",
-            "image_alt": "Centrale d'alarme Vigilia",
-            "button_link": "shopify://collections/compatible-gamme-vigilia-touch"
-          }
-        },
-        "card_touch": {
-          "type": "card_touch",
-          "settings": {
-            "image": "shopify://shop_images/AM301S.png",
-            "image_alt": "Centrale Touch AM301",
-            "button_link": "shopify://collections/compatible-gamme-vigilia-touch"
+            "image_alt": "Accessoires compatibles centrale PA501Z Elite : accessoires Zigbee, sirène solaire, télécommande",
+            "link": "/collections/gamme-elite-accessoires"
           }
         },
         "card_key": {
-          "type": "card_key",
+          "type": "card",
           "settings": {
-            "image": "shopify://shop_images/SA501DaewooPanelSide.jpg",
-            "image_alt": "Centrale SA501 Key",
-            "button_link": "shopify://collections/accessoires"
+            "image_alt": "Accessoires compatibles centrale SA501 Key : détecteurs, sirène, télécommande, badge RFID",
+            "link": "/collections/accessoires"
           }
         },
-        "card_elite": {
-          "type": "card_elite",
+        "card_vigilia_touch": {
+          "type": "card",
           "settings": {
-            "image": "shopify://shop_images/strongcentrale-dalarmestrong-pa501z-907530.jpg",
-            "image_alt": "Centrale PA501Z Elite",
-            "button_link": "shopify://collections/gamme-elite-accessoires"
+            "image_alt": "Accessoires compatibles centrales Vigilia, Touch et Touch XL",
+            "link": "/collections/compatible-gamme-vigilia-touch"
           }
         }
       },
-      "block_order": ["card_vigilia", "card_touch", "card_key", "card_elite"],
+      "block_order": ["card_elite", "card_key", "card_vigilia_touch"],
       "settings": {}
     }
   },

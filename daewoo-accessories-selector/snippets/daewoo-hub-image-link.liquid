@@ -1,0 +1,39 @@
+{%- doc -%}
+  Renders one full-image link for the accessories hub: the merchant's own
+  compatibility infographic, entirely clickable, no caption text added on
+  top (the image already carries its own title and detail).
+
+  @param {object} block - a 'card' block with image / image_alt / link settings
+  @param {string} [loading] - 'eager' or 'lazy' (default 'lazy')
+
+  @example
+  {% render 'daewoo-hub-image-link', block: block %}
+{%- enddoc -%}
+
+{%- liquid
+  assign s = block.settings
+  assign loading = loading | default: 'lazy'
+  assign img_alt = s.image_alt | default: 'Accessoires compatibles' | strip_html
+-%}
+
+<a
+  href="{{ s.link | default: '#' }}"
+  class="daewoo-hub-image-link"
+  {% if s.link == blank %}role="link" aria-disabled="true"{% endif %}
+  {{ block.shopify_attributes }}
+>
+  {%- if s.image != blank -%}
+    {{-
+      s.image
+      | image_url: width: s.image.width
+      | image_tag:
+        loading: loading,
+        widths: '400,600,800,1000,1400',
+        sizes: '(max-width: 767px) 92vw, (max-width: 1100px) 46vw, 380px',
+        alt: img_alt,
+        class: 'daewoo-hub-image-link__img'
+    -}}
+  {%- else -%}
+    {{- 'image' | placeholder_svg_tag: 'daewoo-hub-image-link__img placeholder-svg' -}}
+  {%- endif -%}
+</a>
