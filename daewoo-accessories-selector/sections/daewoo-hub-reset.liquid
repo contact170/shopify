@@ -82,8 +82,8 @@
   }
 </style>
 
-<div class="section daewoo-hub section--padding">
-  <div class="page-width daewoo-hub__intro">
+<div class="daewoo-wrap-outer">
+  <div class="daewoo-hub__intro">
     {%- if section.settings.heading != blank -%}
       <h1 class="daewoo-hub__heading heading">{{ section.settings.heading }}</h1>
     {%- endif -%}
@@ -92,7 +92,7 @@
     {%- endif -%}
   </div>
 
-  <div class="page-width daewoo-hub__grid">
+  <div class="daewoo-hub__grid">
     {%- for block in section.blocks -%}
       {%- if block.type == 'card' -%}
         {%- render 'daewoo-hub-image-link', block: block, loading: 'eager' -%}
