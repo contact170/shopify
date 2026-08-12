@@ -8,12 +8,11 @@
 </style>
 
 <div class="daewoo-reset-step3">
-  STEP 3 TEST —
-  {%- if section.settings.heading != blank -%}
-    titre: "{{ section.settings.heading }}"
-  {%- else -%}
-    (titre vide)
-  {%- endif -%}
+  STEP 4 TEST — boucle sur les blocs (sans appel au snippet) —
+  blocks.size: {{ section.blocks.size }}
+  {%- for block in section.blocks -%}
+    | bloc {{ forloop.index0 }}: type={{ block.type }}
+  {%- endfor -%}
 </div>
 
 {% schema %}
