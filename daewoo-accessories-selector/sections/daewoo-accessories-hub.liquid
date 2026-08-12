@@ -93,13 +93,11 @@
   </div>
 
   <div class="page-width daewoo-hub__grid">
-    {%- liquid
-      for block in section.blocks
-        if block.type == 'card' and block.settings.enabled
-          render 'daewoo-hub-image-link', block: block, loading: 'eager'
-        endif
-      endfor
-    -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'card' and block.settings.enabled -%}
+        {%- render 'daewoo-hub-image-link', block: block, loading: 'eager' -%}
+      {%- endif -%}
+    {%- endfor -%}
   </div>
 </div>
 
