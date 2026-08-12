@@ -1,15 +1,12 @@
-{%- doc -%}
+{%- comment -%}
   Renders one full-image link for the accessories hub: the merchant's own
   compatibility infographic, entirely clickable, no caption text added on
   top (the image already carries its own title and detail).
 
-  @param {object} block - a 'card' block with image / image_alt / link settings
-  @param {string} [loading] - 'eager' or 'lazy' (default 'eager' — these 3
-    images are the entire above-the-fold content of the page)
-
-  @example
-  {% render 'daewoo-hub-image-link', block: block %}
-{%- enddoc -%}
+  Params: block (a 'card' block with image / image_alt / link settings),
+  loading ('eager' or 'lazy', default 'eager' — these 3 images are the
+  entire above-the-fold content of the page).
+{%- endcomment -%}
 
 {%- liquid
   assign s = block.settings
