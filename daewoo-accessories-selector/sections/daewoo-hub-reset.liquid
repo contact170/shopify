@@ -1,0 +1,41 @@
+{%- doc -%}
+  Daewoo Security — accessories hub (reset build under a fresh section
+  type name, to rule out any stale state tied to the old
+  daewoo-accessories-hub identifier after many API + editor round trips).
+
+  Static isolation test: no Liquid conditionals, no blocks, no images.
+{%- enddoc -%}
+
+<style>
+  .daewoo-reset__intro {
+    max-width: 42rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .daewoo-reset__grid {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+</style>
+
+<div class="section daewoo-reset section--padding">
+  <div class="page-width daewoo-reset__intro">
+    <h1 class="heading">TEST RESET — nouveau nom de section</h1>
+    <p>Si vous voyez ce texte et 3 rectangles colorés, le reset a fonctionné.</p>
+  </div>
+  <div class="page-width daewoo-reset__grid">
+    <div style="background:#c00; height:200px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; border-radius:16px;">BOX 1</div>
+    <div style="background:#080; height:200px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; border-radius:16px;">BOX 2</div>
+    <div style="background:#06c; height:200px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; border-radius:16px;">BOX 3</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Daewoo — Reset test",
+  "settings": []
+}
+{% endschema %}
