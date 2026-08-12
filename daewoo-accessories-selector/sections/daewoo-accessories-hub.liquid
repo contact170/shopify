@@ -6,9 +6,26 @@
   the matching real collection. The images already carry their own title,
   product photography and icon set, so this section adds no caption text
   of its own — it only frames, links and orders them.
+
+  Note: this section intentionally avoids the theme's own "section",
+  "section--padding" and "page-width" class names on its own wrapper
+  elements — reusing those names on a custom section caused the whole
+  section to render blank with no error, for reasons not fully
+  understood. Layout/spacing is replicated here under custom class names
+  instead.
 {%- endcomment -%}
 
 <style>
+  .daewoo-hub-wrap {
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+
+  .daewoo-hub-container {
+    margin-inline: auto;
+    max-width: var(--page-container, 1600px);
+    padding-inline: var(--page-padding, 1.5rem);
+  }
+
   .daewoo-hub__intro {
     max-width: 42rem;
     margin: 0 auto;
@@ -42,6 +59,8 @@
 
   .daewoo-hub-image-link {
     display: block;
+    max-width: 85%;
+    margin-inline: auto;
     border-radius: var(--border-radius-medium, 16px);
     overflow: hidden;
     box-shadow: 0 1px 2px rgb(var(--color-shadow, var(--color-foreground)) / 0.08), 0 12px 28px rgb(var(--color-shadow, var(--color-foreground)) / 0.1);
@@ -73,6 +92,10 @@
       margin-left: auto;
       margin-right: auto;
     }
+
+    .daewoo-hub-image-link {
+      max-width: 100%;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -82,22 +105,24 @@
   }
 </style>
 
-<div class="section daewoo-hub section--padding">
-  <div class="page-width daewoo-hub__intro">
-    {%- if section.settings.heading != blank -%}
-      <h1 class="daewoo-hub__heading heading">{{ section.settings.heading }}</h1>
-    {%- endif -%}
-    {%- if section.settings.subheading != blank -%}
-      <p class="daewoo-hub__subheading">{{ section.settings.subheading }}</p>
-    {%- endif -%}
-  </div>
-
-  <div class="page-width daewoo-hub__grid">
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'card' and block.settings.enabled -%}
-        {%- render 'daewoo-hub-image-link', block: block, loading: 'eager' -%}
+<div class="daewoo-hub-wrap">
+  <div class="daewoo-hub-container">
+    <div class="daewoo-hub__intro">
+      {%- if section.settings.heading != blank -%}
+        <h1 class="daewoo-hub__heading heading">{{ section.settings.heading }}</h1>
       {%- endif -%}
-    {%- endfor -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="daewoo-hub__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="daewoo-hub__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'card' and block.settings.enabled -%}
+          {%- render 'daewoo-hub-image-link', block: block, loading: 'eager' -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
   </div>
 </div>
 
