@@ -16,57 +16,55 @@ collection.
 | `sections/daewoo-accessories-hub.liquid` | **Nouveau** | Titre + texte d'explication, puis boucle sur les blocs `card` (un par visuel). |
 | `assets/daewoo-accessories-hub.css` | **Nouveau** | Grille de 3 colonnes (1 colonne sous 900px), coins arrondis, ombre douce, léger effet de survol. Aucun texte ajouté sur les images. |
 | `snippets/daewoo-hub-image-link.liquid` | **Nouveau** | Un visuel = un seul `<a>` cliquable contenant l'image en entier. |
-| `templates/collection.accessoires-hub.json` | **Nouveau** | Template dédié à `tous-les-accessoires` : 3 blocs (`card_elite`, `card_key`, `card_vigilia_touch`) avec les vrais liens de collection déjà renseignés. |
+| `templates/collection.accessories-hub.json` | **Nouveau** | Template dédié à `tous-les-accessoires` : 3 blocs (`card_elite`, `card_key`, `card_vigilia_touch`) avec les vrais liens de collection et les 3 images déjà renseignés. |
 | `snippets/product-badges.liquid` | **Modifié** | Ajout de 4 lignes en fin de fichier pour le badge de compatibilité produit (voir section « Badges »). Indépendant du reste de ce livrable. |
 
 Aucun JavaScript : navigation par vraies URLs de collection,
 `prefers-reduced-motion` respecté en CSS.
 
-## Vos 3 visuels — à déposer vous-même
+## Vos 3 visuels
 
-Je n'ai pas pu récupérer les 3 images que vous avez partagées dans la
-conversation (elles n'existent pas comme fichiers accessibles de mon
-côté). Le champ **Image** de chaque bloc est prêt à les recevoir — il
-suffit de :
+Vous les avez déposés dans votre bibliothèque de fichiers Shopify et
+partagé les 3 URL — ils sont déjà reliés dans le template :
 
-1. Ouvrir l'éditeur de thème sur le thème brouillon (lien ci-dessous).
-2. Cliquer sur la section **Daewoo — Hub accessoires**, puis sur chacun
-   des 3 blocs **Visuel compatibilité**.
-3. Cliquer sur **Sélectionner une image** et déposer le fichier
-   correspondant.
-
-Les 3 blocs sont déjà dans le bon ordre, avec les bons liens et un texte
-alternatif d'accessibilité pré-rempli :
-
-| Bloc | Visuel attendu | Lien |
+| Bloc | Visuel | Lien |
 |---|---|---|
-| 1 | Infographie **PA501Z Elite** | `/collections/gamme-elite-accessoires` |
-| 2 | Infographie **SA501 Key** | `/collections/accessoires` |
-| 3 | Infographie **Vigilia · Touch · Touch XL** | `/collections/compatible-gamme-vigilia-touch` |
+| 1 | `Collection_Accessoires_Elite_PA501Z.png` | `/collections/gamme-elite-accessoires` |
+| 2 | `Collection_Accessoires_SA501_Key.png` | `/collections/accessoires` |
+| 3 | `Collection_Accessoires_Touch_Vigilia.png` | `/collections/compatible-gamme-vigilia-touch` |
 
 ## Déjà déployé — thème brouillon
 
 Ces fichiers sont en ligne dans un thème **brouillon** dédié :
-**« Sélecteur accessoires (Claude) »** (id `200542421332`) — dupliqué depuis
-votre thème actif, donc zéro impact sur le site en ligne tant qu'il n'est
-pas publié.
+**« Sélecteur accessoires (Claude) »** (id `200542421332`) — un thème
+non publié, donc zéro impact sur le site en ligne tant qu'il n'est pas
+publié.
+
+**Piège corrigé le 12/08 :** la collection `tous-les-accessoires` a un
+modèle réellement assigné, `accessories-hub` (en anglais) — probablement
+choisi par inadvertance dans le sélecteur de modèle de l'éditeur. Notre
+fichier s'appelait `collection.accessoires-hub.json` (en français) : les
+deux noms ne correspondaient jamais, donc l'aperçu retombait toujours sur
+le modèle par défaut, silencieusement. Le fichier est maintenant nommé
+`templates/collection.accessories-hub.json` pour correspondre exactement
+au modèle réellement assigné — l'aperçu direct fonctionne désormais sans
+paramètre `?view=` ni sélection manuelle dans l'éditeur.
 
 Aperçu direct :
 ```
-https://daewoo-security.myshopify.com/admin/themes/200542421332/editor?template=collection.accessoires-hub&previewPath=%2Fcollections%2Ftous-les-accessoires
+https://daewoo-security.myshopify.com/admin/themes/200542421332/editor?previewPath=%2Fcollections%2Ftous-les-accessoires
 ```
 
 ## Installation manuelle (si besoin de la refaire ailleurs)
 
 1. **Boutique en ligne → Thèmes → Modifier le code** : créez les fichiers
    ci-dessus dans les bons dossiers, en collant le contenu correspondant.
-2. Assignez `collection.accessoires-hub.json` à la collection
-   `tous-les-accessoires` via **Réglages de la collection → Modèle de
-   thème** (uniquement possible une fois le thème brouillon publié — voir
-   plus bas).
-3. Déposez vos 3 images comme décrit ci-dessus. Pour changer un lien :
-   champ **Lien vers la collection** du bloc concerné. Rien n'est codé en
-   dur.
+2. Vérifiez que la collection `tous-les-accessoires` a bien pour modèle
+   `accessories-hub` (**Réglages de la collection → Modèle de thème**) —
+   c'est déjà le cas actuellement, pas d'action nécessaire.
+3. Pour changer un lien ou une image : ouvrez le bloc concerné dans
+   l'éditeur de thème, champs **Image** et **Lien vers la collection**.
+   Rien n'est codé en dur.
 
 ## Passer ce thème brouillon en ligne
 
@@ -74,12 +72,13 @@ Deux actions restent à faire **avec votre accord explicite**, vu leur
 impact sur le site en ligne :
 
 1. Publier le thème brouillon (**Thèmes → ⋯ → Publier**) — remplace le
-   thème actif.
-2. Assigner le modèle `accessoires-hub` à la collection
-   `tous-les-accessoires` (**Collection → Modèle de thème**).
+   thème actuellement actif (à ce jour : « Brouillon - Pages dédiées
+   VIG501 à VIG507 (Claude) »).
+2. Rien d'autre à faire côté modèle : la collection pointe déjà vers
+   `accessories-hub`, qui existera automatiquement dès la publication.
 
-Dites-le-moi quand vous voulez que je vous guide sur ces deux étapes, ou
-que je les fasse pour vous.
+Dites-le-moi quand vous voulez que je vous guide sur cette étape, ou
+que je la fasse pour vous.
 
 ## Badges de compatibilité (indépendant de cette page)
 
@@ -102,5 +101,5 @@ auriez besoin ailleurs sur le site :
 - `snippets/daewoo-identify-card.liquid`, `snippets/daewoo-range-card.liquid`
   — blocs de la version ci-dessus.
 
-Aucune des deux n'est plus utilisée par `collection.accessoires-hub.json`,
+Aucune des deux n'est plus utilisée par `collection.accessories-hub.json`,
 qui pointe maintenant vers la version à 3 visuels ci-dessus.
