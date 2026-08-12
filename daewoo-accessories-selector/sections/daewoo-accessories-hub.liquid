@@ -11,6 +11,9 @@
 {{ 'daewoo-accessories-hub.css' | asset_url | stylesheet_tag }}
 
 <div class="section daewoo-hub section--padding">
+  <p style="display:block !important; visibility:visible !important; opacity:1 !important; position:relative !important; z-index:99999 !important; background:#ffeb3b !important; color:#c00 !important; font-size:28px !important; font-weight:700 !important; padding:24px !important; margin:0 !important; border:4px solid #c00 !important;">
+    TEST DIAGNOSTIC — si vous voyez ce texte rouge sur fond jaune, dites-le-moi.
+  </p>
   <div class="page-width daewoo-hub__intro">
     {%- if section.settings.heading != blank -%}
       <h1 class="daewoo-hub__heading heading">{{ section.settings.heading }}</h1>
