@@ -24,7 +24,7 @@
     {%- liquid
       for block in section.blocks
         if block.type == 'card' and block.settings.enabled
-          render 'daewoo-hub-image-link', block: block, loading: 'lazy'
+          render 'daewoo-hub-image-link', block: block, loading: 'eager'
         endif
       endfor
     -%}

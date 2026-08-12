@@ -4,7 +4,8 @@
   top (the image already carries its own title and detail).
 
   @param {object} block - a 'card' block with image / image_alt / link settings
-  @param {string} [loading] - 'eager' or 'lazy' (default 'lazy')
+  @param {string} [loading] - 'eager' or 'lazy' (default 'eager' — these 3
+    images are the entire above-the-fold content of the page)
 
   @example
   {% render 'daewoo-hub-image-link', block: block %}
@@ -12,7 +13,7 @@
 
 {%- liquid
   assign s = block.settings
-  assign loading = loading | default: 'lazy'
+  assign loading = loading | default: 'eager'
   assign img_alt = s.image_alt | default: 'Accessoires compatibles' | strip_html
 -%}
 
