@@ -1,8 +1,33 @@
-<p style="font-size:48px;color:red;background:yellow;padding:40px;">HELLO WORLD TEST</p>
+<p style="font-size:48px;color:red;background:yellow;padding:40px;">STEP 2 TEST — schema r&eacute;el, corps statique</p>
 
 {% schema %}
 {
   "name": "Daewoo Reset test",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Trouvez les accessoires compatibles avec votre centrale" },
+    { "type": "textarea", "id": "subheading", "label": "Texte d'explication", "default": "Cliquez sur l'image correspondant à votre centrale d'alarme pour découvrir tous les accessoires compatibles." }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Visuel compatibilité",
+      "settings": [
+        { "type": "checkbox", "id": "enabled", "label": "Afficher ce visuel", "default": true },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" },
+        { "type": "url", "id": "link", "label": "Lien vers la collection" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Daewoo Reset test",
+      "blocks": [
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" }
+      ]
+    }
+  ]
 }
 {% endschema %}

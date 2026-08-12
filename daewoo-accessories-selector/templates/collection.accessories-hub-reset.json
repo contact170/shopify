@@ -2,6 +2,16 @@
   "sections": {
     "daewoo_hub_reset": {
       "type": "daewoo-hub-reset",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Collection_Accessoires_Elite_PA501Z.png",
+            "link": "/collections/gamme-elite-accessoires"
+          }
+        }
+      },
+      "block_order": ["card_1"],
       "settings": {}
     }
   },
