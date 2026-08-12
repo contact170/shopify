@@ -36,23 +36,30 @@ partagé les 3 URL — ils sont déjà reliés dans le template :
 ## Déjà déployé — thème brouillon
 
 Ces fichiers sont en ligne dans un thème **brouillon** dédié :
-**« Sélecteur accessoires (Claude) »** (id `200542421332`) — un thème
+**« Sélecteur accessoires v2 (Claude) »** (id `201278226772`) — un thème
 non publié, donc zéro impact sur le site en ligne tant qu'il n'est pas
 publié.
 
-**Piège corrigé le 12/08 :** la collection `tous-les-accessoires` a un
-modèle réellement assigné, `accessories-hub` (en anglais) — probablement
-choisi par inadvertance dans le sélecteur de modèle de l'éditeur. Notre
-fichier s'appelait `collection.accessoires-hub.json` (en français) : les
-deux noms ne correspondaient jamais, donc l'aperçu retombait toujours sur
-le modèle par défaut, silencieusement. Le fichier est maintenant nommé
-`templates/collection.accessories-hub.json` pour correspondre exactement
-au modèle réellement assigné — l'aperçu direct fonctionne désormais sans
-paramètre `?view=` ni sélection manuelle dans l'éditeur.
+**Historique des deux pièges rencontrés (12/08) :**
+
+1. La collection `tous-les-accessoires` a un modèle réellement assigné,
+   `accessories-hub` (en anglais) — probablement choisi par inadvertance
+   dans le sélecteur de modèle de l'éditeur. Notre fichier s'appelait
+   `collection.accessoires-hub.json` (en français) : les deux noms ne
+   correspondaient jamais. Corrigé en renommant le fichier en
+   `templates/collection.accessories-hub.json`.
+2. Le premier thème brouillon (id `200542421332`, maintenant abandonné)
+   avait été dupliqué il y a plusieurs semaines depuis un thème qui n'est
+   plus celui en ligne aujourd'hui — l'aperçu affichait une page
+   entièrement blanche, signe d'un problème global au brouillon
+   lui-même, indépendant de cette page. Corrigé en dupliquant un nouveau
+   brouillon depuis le thème **réellement publié aujourd'hui**
+   (« Brouillon - Pages dédiées VIG501 à VIG507 (Claude) ») et en y
+   redéployant les mêmes fichiers.
 
 Aperçu direct :
 ```
-https://daewoo-security.myshopify.com/admin/themes/200542421332/editor?previewPath=%2Fcollections%2Ftous-les-accessoires
+https://daewoo-security.myshopify.com/admin/themes/201278226772/editor?previewPath=%2Fcollections%2Ftous-les-accessoires
 ```
 
 ## Installation manuelle (si besoin de la refaire ailleurs)
