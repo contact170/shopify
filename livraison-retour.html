@@ -147,12 +147,13 @@
     font-size: 13px !important; font-weight: 600 !important; letter-spacing: 0 !important;
     text-transform: none !important; text-decoration: none !important;
     color: var(--lr-accent-dark) !important;
-    background: var(--lr-surface); border: 1px solid var(--lr-border);
+    background: var(--lr-surface) !important; background-image: none !important;
+    border: 1px solid var(--lr-border); box-shadow: none;
     padding: 8px 15px; border-radius: 100px; line-height: 1.2;
     transition: border-color .18s, color .18s, box-shadow .18s, transform .18s;
   }
   .lr-nav a::before, .lr-nav a::after { content: none !important; border: none !important; background: none !important; }
-  .lr-nav a:hover { border-color: var(--lr-accent-mid); color: var(--lr-accent) !important; text-decoration: none !important; box-shadow: 0 4px 14px rgba(26,79,171,.12); transform: translateY(-1px); }
+  .lr-nav a:hover { border-color: var(--lr-accent-mid); color: var(--lr-accent) !important; text-decoration: none !important; background: var(--lr-surface) !important; background-image: none !important; box-shadow: 0 4px 14px rgba(26,79,171,.12); transform: translateY(-1px); }
   .lr-nav a svg { width: 14px; height: 14px; stroke: var(--lr-accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   /* ---------- MAIN / SECTIONS ---------- */
@@ -291,16 +292,16 @@
   .lr-gar .g-label svg { width: 14px; height: 14px; stroke: var(--lr-accent-mid); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .lr-gar .g-val { font-size: 14px; color: var(--lr-text); line-height: 1.55; }
   .lr-gar .g-val small { font-size: 12.5px; color: var(--lr-text-muted); }
-  .lr-savlink { color: var(--lr-accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-  .lr-savlink:hover { color: var(--lr-accent-dark); }
+  .lr-savlink { color: var(--lr-accent) !important; font-weight: 600; text-decoration: underline !important; text-underline-offset: 3px; background: none !important; background-image: none !important; }
+  .lr-savlink:hover { color: var(--lr-accent-dark) !important; background-image: none !important; }
 
   /* ---------- FOOTER ---------- */
   .lr-footer {
     text-align: center; padding: 30px 20px 46px;
     font-size: 13px; color: var(--lr-text-muted); line-height: 1.7;
   }
-  .lr-footer a { color: var(--lr-accent); text-decoration: none; }
-  .lr-footer a:hover { text-decoration: underline; }
+  .lr-footer a { color: var(--lr-accent) !important; text-decoration: none !important; background: none !important; background-image: none !important; }
+  .lr-footer a:hover { text-decoration: underline !important; background-image: none !important; }
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 780px) {
