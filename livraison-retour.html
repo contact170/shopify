@@ -1,0 +1,506 @@
+<script>
+  (function() {
+    function hideInboxWidget() {
+      var selectors = [
+        '#chat-button',
+        '[id*="shopify-chat"]',
+        '[class*="shopify-chat"]',
+        'iframe[title*="Franck"]',
+        'iframe[title*="Chat"]',
+        'iframe[title*="Inbox"]',
+        '[id*="inbox-"]',
+        '[class*="inbox-button"]',
+        'div[data-shopify-chat]'
+      ];
+      selectors.forEach(function(sel) {
+        try {
+          var els = document.querySelectorAll(sel);
+          els.forEach(function(el) { el.style.display = 'none'; });
+        } catch(e) {}
+      });
+    }
+    hideInboxWidget();
+    var observer = new MutationObserver(hideInboxWidget);
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+
+  .lr-page {
+    --lr-bg: #eef1fb;
+    --lr-surface: #ffffff;
+    --lr-surface-alt: #f4f6fd;
+    --lr-accent: #1a4fab;
+    --lr-accent-dark: #0b1e4a;
+    --lr-accent-light: #dde4f7;
+    --lr-accent-mid: #3a66c4;
+    --lr-cyan: #2b9fd6;
+    --lr-text: #0b1e4a;
+    --lr-text-muted: #5a6a99;
+    --lr-border: #d5dcf1;
+    --lr-radius: 16px;
+    --lr-radius-sm: 11px;
+    --lr-shadow: 0 1px 2px rgba(11,30,74,.04), 0 8px 30px rgba(11,30,74,.06);
+    --lr-shadow-hover: 0 4px 12px rgba(26,79,171,.10), 0 18px 44px rgba(11,30,74,.10);
+
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background:
+      radial-gradient(1100px 480px at 50% -8%, #dfe7fb 0%, rgba(223,231,251,0) 60%),
+      var(--lr-bg);
+    color: var(--lr-text);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  .lr-page *, .lr-page *::before, .lr-page *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .lr-page a { color: inherit; }
+
+  /* ---------- HERO ---------- */
+  .lr-hero {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    padding: 66px 24px 118px;
+    background:
+      radial-gradient(760px 340px at 82% 8%, rgba(72,202,228,.55) 0%, rgba(72,202,228,0) 62%),
+      radial-gradient(680px 340px at 12% 92%, rgba(43,159,214,.45) 0%, rgba(43,159,214,0) 60%),
+      linear-gradient(140deg, #0a1a40 0%, #123b8f 42%, #1a4fab 66%, #2176ae 100%);
+    overflow: hidden;
+  }
+  .lr-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(650px 380px at 50% 30%, #000 0%, transparent 78%);
+            mask-image: radial-gradient(650px 380px at 50% 30%, #000 0%, transparent 78%);
+    pointer-events: none;
+  }
+  .lr-hero > * { position: relative; z-index: 1; }
+  .lr-hero .lr-label {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.22);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    color: #fff; padding: 6px 15px; border-radius: 100px; margin-bottom: 20px;
+  }
+  .lr-hero .lr-label::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: #6ff0c4; box-shadow: 0 0 0 4px rgba(111,240,196,.25);
+  }
+  .lr-hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(26px, 5.2vw, 44px);
+    font-weight: 800; line-height: 1.14; letter-spacing: -.01em;
+    max-width: 640px; margin: 0 auto;
+    text-shadow: 0 2px 24px rgba(4,12,34,.35);
+  }
+  .lr-hero p {
+    margin: 16px auto 0; font-size: clamp(15px, 2.2vw, 16.5px);
+    color: rgba(255,255,255,.9); max-width: 560px; line-height: 1.65;
+    text-shadow: 0 1px 10px rgba(4,12,34,.25);
+  }
+
+  /* ---------- HIGHLIGHTS (résumé des infos existantes) ---------- */
+  .lr-wrap { max-width: 940px; margin: 0 auto; padding: 0 20px; }
+  .lr-highlights {
+    position: relative; z-index: 3;
+    margin-top: -74px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .lr-hl {
+    background: var(--lr-surface);
+    border: 1px solid var(--lr-border);
+    border-radius: var(--lr-radius);
+    padding: 18px 16px 16px;
+    text-align: center;
+    box-shadow: var(--lr-shadow);
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+  .lr-hl:hover { transform: translateY(-3px); box-shadow: var(--lr-shadow-hover); }
+  .lr-hl-ic {
+    width: 40px; height: 40px; margin: 0 auto 11px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--lr-accent) 0%, var(--lr-cyan) 100%);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(26,79,171,.28);
+  }
+  .lr-hl-ic svg { width: 19px; height: 19px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .lr-hl .lr-hl-big { font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 700; color: var(--lr-text); line-height: 1.2; }
+  .lr-hl .lr-hl-sub { font-size: 12px; color: var(--lr-text-muted); margin-top: 4px; line-height: 1.45; }
+
+  /* ---------- QUICK NAV ---------- */
+  .lr-nav {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 9px;
+    margin: 34px auto 6px;
+  }
+  .lr-nav a {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    color: var(--lr-accent-dark);
+    background: var(--lr-surface); border: 1px solid var(--lr-border);
+    padding: 8px 15px; border-radius: 100px;
+    transition: border-color .18s, color .18s, box-shadow .18s, transform .18s;
+  }
+  .lr-nav a:hover { border-color: var(--lr-accent-mid); color: var(--lr-accent); box-shadow: 0 4px 14px rgba(26,79,171,.12); transform: translateY(-1px); }
+  .lr-nav a svg { width: 14px; height: 14px; stroke: var(--lr-accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- MAIN / SECTIONS ---------- */
+  .lr-main { display: flex; flex-direction: column; gap: 26px; padding: 30px 0 84px; }
+  .lr-card {
+    background: var(--lr-surface);
+    border-radius: var(--lr-radius);
+    border: 1px solid var(--lr-border);
+    box-shadow: var(--lr-shadow);
+    overflow: hidden;
+    scroll-margin-top: 24px;
+    animation: lrFade .5s ease both;
+  }
+  @keyframes lrFade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .lr-card-head {
+    padding: 22px 30px; display: flex; align-items: center; gap: 15px;
+    background: linear-gradient(180deg, var(--lr-surface-alt), var(--lr-surface));
+    border-bottom: 1px solid var(--lr-border);
+  }
+  .lr-card-ic {
+    width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--lr-accent) 0%, var(--lr-cyan) 100%);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(26,79,171,.26);
+  }
+  .lr-card-ic svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .lr-card-titles { min-width: 0; }
+  .lr-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--lr-accent-mid); margin-bottom: 3px; }
+  .lr-card-title { font-family: 'Poppins', sans-serif; font-size: 19px; font-weight: 700; color: var(--lr-text); line-height: 1.25; }
+
+  .lr-card-body { padding: 26px 30px; display: flex; flex-direction: column; gap: 20px; }
+  .lr-text { font-size: 15px; color: var(--lr-text-muted); line-height: 1.78; }
+  .lr-text strong { font-weight: 600; color: var(--lr-text); }
+
+  .lr-info {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: linear-gradient(180deg, #eaf0fc, var(--lr-accent-light));
+    border: 1px solid #cdd8f2; border-left: 3px solid var(--lr-accent);
+    border-radius: 0 12px 12px 0; padding: 14px 17px;
+    font-size: 14px; color: var(--lr-accent-dark); line-height: 1.7;
+  }
+  .lr-info svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; stroke: var(--lr-accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .lr-info.warn { background: linear-gradient(180deg,#fff9ec,#fff2d6); border-color: #f0dca6; border-left-color: #d48a10; color: #6b4c00; }
+  .lr-info.warn svg { stroke: #d48a10; }
+  .lr-info strong { font-weight: 600; }
+
+  /* ---------- SHIPPING GRID ---------- */
+  .lr-ship-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .lr-ship {
+    position: relative;
+    background: var(--lr-surface-alt); border: 1px solid var(--lr-border);
+    border-radius: var(--lr-radius-sm); padding: 16px 17px;
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .lr-ship:hover { border-color: var(--lr-accent-mid); box-shadow: var(--lr-shadow-hover); transform: translateY(-2px); }
+  .lr-ship .zone { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600; color: var(--lr-accent-mid); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 9px; }
+  .lr-ship .zone svg { width: 14px; height: 14px; stroke: var(--lr-accent-mid); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .lr-ship .transporter { font-size: 14.5px; font-weight: 600; color: var(--lr-text); margin-bottom: 8px; line-height: 1.4; }
+  .lr-ship .tarif { display: inline-block; font-size: 12.5px; color: var(--lr-text-muted); background: #fff; border: 1px solid var(--lr-border); padding: 3px 10px; border-radius: 100px; }
+  .lr-ship .tarif.free { color: #14713e; background: #e7f6ee; border-color: #bfe6cf; font-weight: 600; }
+
+  /* ---------- STEPS ---------- */
+  .lr-steps { display: flex; flex-direction: column; }
+  .lr-step { display: flex; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--lr-border); position: relative; }
+  .lr-step:first-child { padding-top: 4px; }
+  .lr-step:last-child { border-bottom: none; padding-bottom: 4px; }
+  .lr-step-num {
+    width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; margin-top: 1px;
+    background: linear-gradient(135deg, var(--lr-accent) 0%, var(--lr-cyan) 100%);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; font-family: 'Poppins', sans-serif;
+    box-shadow: 0 5px 13px rgba(26,79,171,.28);
+  }
+  .lr-step-body { min-width: 0; }
+  .lr-step-body strong { display: block; font-size: 15.5px; font-weight: 700; color: var(--lr-text); }
+  .lr-step-body p { font-size: 14px; color: var(--lr-text-muted); line-height: 1.7; margin-top: 7px; }
+  .lr-step-body .lr-sub { margin-top: 15px; }
+  .lr-address {
+    display: flex; gap: 9px; align-items: flex-start;
+    margin-top: 11px; font-size: 12.5px; color: var(--lr-text); line-height: 1.6;
+    background: var(--lr-accent-light); border: 1px solid #cdd8f2;
+    padding: 11px 14px; border-radius: 10px;
+  }
+  .lr-address svg { flex-shrink: 0; width: 15px; height: 15px; margin-top: 2px; stroke: var(--lr-accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- CTA ---------- */
+  .lr-cta {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 14px 26px; align-self: flex-start;
+    background: linear-gradient(135deg, var(--lr-accent) 0%, var(--lr-accent-dark) 100%);
+    color: #fff; border-radius: 11px;
+    font-size: 14.5px; font-weight: 600; text-decoration: none; line-height: 1.4;
+    box-shadow: 0 6px 18px rgba(26,79,171,.32);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .lr-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(11,30,74,.34); color: #fff; text-decoration: none; }
+  .lr-cta svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+  .lr-divider { height: 1px; background: var(--lr-border); }
+  .lr-block-label { font-size: 11px; font-weight: 700; color: var(--lr-accent-mid); text-transform: uppercase; letter-spacing: .08em; }
+
+  /* ---------- DECOTES ---------- */
+  .lr-decote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 11px; }
+  .lr-decote {
+    background: linear-gradient(180deg, #fef5f5, #fdeeee);
+    border: 1px solid #f2d9d9; border-radius: var(--lr-radius-sm); padding: 16px 17px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .lr-decote:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(176,48,48,.10); }
+  .lr-decote .pct { font-family: 'Poppins', sans-serif; font-size: 25px; font-weight: 800; color: #b03030; line-height: 1; margin-bottom: 7px; }
+  .lr-decote .dlabel { font-size: 12.5px; color: #7a4040; line-height: 1.5; }
+
+  /* ---------- NOTICES ---------- */
+  .lr-notices { display: flex; flex-direction: column; gap: 9px; }
+  .lr-notice {
+    display: flex; align-items: flex-start; gap: 11px;
+    font-size: 13.5px; color: var(--lr-text-muted); line-height: 1.6;
+    padding: 12px 15px; background: var(--lr-surface-alt);
+    border: 1px solid var(--lr-border); border-radius: 10px;
+  }
+  .lr-notice svg { flex-shrink: 0; width: 17px; height: 17px; margin-top: 1px; stroke: var(--lr-accent-mid); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- GARANTIE ---------- */
+  .lr-gar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+  .lr-gar {
+    background: var(--lr-surface-alt); border: 1px solid var(--lr-border);
+    border-radius: var(--lr-radius-sm); padding: 16px 18px;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .lr-gar:hover { border-color: var(--lr-accent-mid); transform: translateY(-2px); box-shadow: var(--lr-shadow-hover); }
+  .lr-gar .g-label { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: var(--lr-accent-mid); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 9px; }
+  .lr-gar .g-label svg { width: 14px; height: 14px; stroke: var(--lr-accent-mid); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .lr-gar .g-val { font-size: 14px; color: var(--lr-text); line-height: 1.55; }
+  .lr-gar .g-val small { font-size: 12.5px; color: var(--lr-text-muted); }
+  .lr-savlink { color: var(--lr-accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .lr-savlink:hover { color: var(--lr-accent-dark); }
+
+  /* ---------- FOOTER ---------- */
+  .lr-footer {
+    text-align: center; padding: 30px 20px 46px;
+    font-size: 13px; color: var(--lr-text-muted); line-height: 1.7;
+  }
+  .lr-footer a { color: var(--lr-accent); text-decoration: none; }
+  .lr-footer a:hover { text-decoration: underline; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 780px) {
+    .lr-highlights { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .lr-hero { padding: 46px 18px 104px; }
+    .lr-wrap { padding: 0 14px; }
+    .lr-highlights { margin-top: -70px; gap: 10px; }
+    .lr-hl { padding: 15px 11px 13px; }
+    .lr-hl .lr-hl-big { font-size: 14.5px; }
+    .lr-main { padding: 24px 0 64px; gap: 20px; }
+    .lr-card-head { padding: 17px 18px; gap: 12px; }
+    .lr-card-ic { width: 40px; height: 40px; }
+    .lr-card-title { font-size: 17px; }
+    .lr-card-body { padding: 18px; gap: 16px; }
+    .lr-ship-grid { grid-template-columns: 1fr 1fr; }
+    .lr-decote-grid { grid-template-columns: 1fr 1fr; }
+    .lr-gar-grid { grid-template-columns: 1fr; }
+    .lr-cta { width: 100%; justify-content: center; align-self: stretch; }
+  }
+  @media (max-width: 380px) {
+    .lr-ship-grid, .lr-decote-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="lr-page">
+  <header class="lr-hero">
+    <div class="lr-label">Livraison &amp; Retour</div>
+    <h1>Recevez votre commande<br>en toute sérénité</h1>
+    <p>Expédition rapide, suivi en temps réel, retour simplifié. Voici tout ce que vous devez savoir avant et après votre achat.</p>
+  </header>
+
+  <div class="lr-wrap">
+    <div class="lr-highlights">
+      <div class="lr-hl">
+        <div class="lr-hl-ic"><svg viewbox="0 0 24 24"><path d="M13 2 3 14h8l-1 8 10-12h-8z"></path></svg></div>
+        <div class="lr-hl-big">Sous 24h</div>
+        <div class="lr-hl-sub">Expédition avant midi</div>
+      </div>
+      <div class="lr-hl">
+        <div class="lr-hl-ic"><svg viewbox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"></rect><path d="M16 8h4l3 3v5h-7z"></path><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>
+        <div class="lr-hl-big">Dès 50 €</div>
+        <div class="lr-hl-sub">Livraison offerte</div>
+      </div>
+      <div class="lr-hl">
+        <div class="lr-hl-ic"><svg viewbox="0 0 24 24"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg></div>
+        <div class="lr-hl-big">14 jours</div>
+        <div class="lr-hl-sub">Pour changer d'avis</div>
+      </div>
+      <div class="lr-hl">
+        <div class="lr-hl-ic"><svg viewbox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg></div>
+        <div class="lr-hl-big">2 ans</div>
+        <div class="lr-hl-sub">Garantie incluse</div>
+      </div>
+    </div>
+
+    <nav class="lr-nav">
+      <a href="#lr-livraison"><svg viewbox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-4 0v2"></path></svg>Délais &amp; expédition</a>
+      <a href="#lr-retractation"><svg viewbox="0 0 24 24"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>Rétractation</a>
+      <a href="#lr-garantie"><svg viewbox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Garantie</a>
+    </nav>
+
+    <main class="lr-main">
+
+      <!-- SECTION 1 -->
+      <section class="lr-card" id="lr-livraison">
+        <div class="lr-card-head">
+          <div class="lr-card-ic"><svg viewbox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-4 0v2"></path></svg></div>
+          <div class="lr-card-titles">
+            <div class="lr-eyebrow">Avant l'achat</div>
+            <div class="lr-card-title">Délais &amp; expédition</div>
+          </div>
+        </div>
+        <div class="lr-card-body">
+          <p class="lr-text">Commandes préparées et expédiées <strong>sous 24h</strong> pour toute commande passée avant midi (hors week-end et jours fériés). Un email de confirmation avec numéro de suivi vous est envoyé dès l'expédition, et un SMS vous permet d'organiser votre livraison à votre convenance.</p>
+          <div class="lr-info">
+            <svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></svg>
+            <div><strong>Livraison express le lendemain :</strong> valable uniquement si la commande est passée et validée avant midi. Exemple — commande passée à 15h le lundi → livraison le mercredi. Une fois le colis expédié, l'option express n'est pas remboursable.</div>
+          </div>
+          <div class="lr-ship-grid">
+            <div class="lr-ship">
+              <div class="zone"><svg viewbox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>France métropolitaine</div>
+              <div class="transporter">DPD, Colissimo, Chronopost, Point Relais</div>
+              <div class="tarif free">Offerte dès 50 € (sauf Chronopost)</div>
+            </div>
+            <div class="lr-ship">
+              <div class="zone"><svg viewbox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>Pays d'Outre-Mer</div>
+              <div class="transporter">Colissimo</div>
+              <div class="tarif">Calculé au paiement</div>
+            </div>
+            <div class="lr-ship">
+              <div class="zone"><svg viewbox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>Europe (hors UK &amp; Suisse)</div>
+              <div class="transporter">Chronopost, DPD</div>
+              <div class="tarif">Calculé au paiement</div>
+            </div>
+            <div class="lr-ship">
+              <div class="zone"><svg viewbox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>Autres pays</div>
+              <div class="transporter">Colissimo</div>
+              <div class="tarif">Sur devis</div>
+            </div>
+          </div>
+          <div class="lr-info warn">
+            <svg viewbox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4m0 4h.01"></path></svg>
+            <div><strong>Livraisons en Suisse :</strong> des droits de douane peuvent être réclamés par le transporteur. La société Liz Invest ne peut en être tenue responsable.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2 -->
+      <section class="lr-card" id="lr-retractation">
+        <div class="lr-card-head">
+          <div class="lr-card-ic"><svg viewbox="0 0 24 24"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg></div>
+          <div class="lr-card-titles">
+            <div class="lr-eyebrow">Après l'achat</div>
+            <div class="lr-card-title">Droit de rétractation — 14 jours</div>
+          </div>
+        </div>
+        <div class="lr-card-body">
+          <p class="lr-text">Conformément aux articles L221-18 et suivants du code de la consommation, vous disposez de <strong>14 jours</strong> à compter de la réception pour changer d'avis, sans justification.</p>
+          <div class="lr-steps">
+            <div class="lr-step">
+              <div class="lr-step-num">1</div>
+              <div class="lr-step-body">
+                <strong>Déclarez votre rétractation</strong>
+                <p>Cliquez sur le bouton ci-dessous pour accéder à notre formulaire en ligne et initier votre retour en quelques clics.</p>
+              </div>
+            </div>
+            <div class="lr-step">
+              <div class="lr-step-num">2</div>
+              <div class="lr-step-body">
+                <strong>Renvoyez le produit</strong>
+                <p>Retournez le produit intact, dans son emballage d'origine, en Colissimo avec signature, dans les 14 jours suivant votre confirmation. Conservez précieusement votre preuve de dépôt. Les frais de retour sont à votre charge.</p>
+                <div class="lr-address">
+                  <svg viewbox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+                  <div>Liz Invest – Daewoo Security · 15 Allée James Watt — Immeuble 2000 Watt, 33700 Mérignac · Tél. 06 60 89 74 83</div>
+                </div>
+              </div>
+            </div>
+            <div class="lr-step">
+              <div class="lr-step-num">3</div>
+              <div class="lr-step-body">
+                <strong>Inspection &amp; remboursement</strong>
+                <p>Dès réception, notre équipe technique inspecte le produit. Le remboursement (hors frais de livraison initiaux) intervient sous 14 jours via le même moyen de paiement.</p>
+                <strong class="lr-sub">Ajustement des remises en cas de rétractation partielle</strong>
+                <p>Lorsque votre commande bénéficie d'une remise conditionnée au montant total (ex : remise par paliers via le configurateur), celle-ci est calculée sur la base des produits effectivement conservés. En cas de retour partiel, le montant total est recalculé. Si ce nouveau montant entraîne l'application d'un palier inférieur, la réduction initialement accordée est ajustée en conséquence. La différence pourra être déduite du remboursement.</p>
+              </div>
+            </div>
+          </div>
+          <a href="https://retractation.daewoo-security.fr/retractation" target="_blank" rel="noopener noreferrer" class="lr-cta">
+            <svg viewbox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            Exercer mon droit de rétractation
+          </a>
+          <div class="lr-divider"></div>
+          <div class="lr-block-label">Décotes appliquées en cas de retour incomplet</div>
+          <div class="lr-decote-grid">
+            <div class="lr-decote"><div class="pct">−50 %</div><div class="dlabel">Produit renvoyé en état invendable</div></div>
+            <div class="lr-decote"><div class="pct">−20 %</div><div class="dlabel">Emballage d'origine manquant</div></div>
+            <div class="lr-decote"><div class="pct">−10 %</div><div class="dlabel">Notice d'utilisation manquante</div></div>
+            <div class="lr-decote"><div class="pct">−10 %</div><div class="dlabel">Accessoire manquant (par pièce)</div></div>
+          </div>
+          <div class="lr-notices">
+            <div class="lr-notice"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4m0 4h.01"></path></svg>Toute réclamation effectuée hors délai ne sera pas acceptée.</div>
+            <div class="lr-notice"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4m0 4h.01"></path></svg>Les articles retournés abîmés, sales ou incomplets ne sont ni échangeables ni remboursables.</div>
+            <div class="lr-notice"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4m0 4h.01"></path></svg>Les cartes SIM activées auprès d'Afone ne peuvent être reprises ni remboursées, même si une période d'abonnement est encore disponible.</div>
+            <div class="lr-notice"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4m0 4h.01"></path></svg>Le droit de rétractation ne s'applique pas aux produits descellés, aux ventes en boutique, ni aux achats effectués par des professionnels.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3 -->
+      <section class="lr-card" id="lr-garantie">
+        <div class="lr-card-head">
+          <div class="lr-card-ic"><svg viewbox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+          <div class="lr-card-titles">
+            <div class="lr-eyebrow">Sérénité</div>
+            <div class="lr-card-title">Garantie</div>
+          </div>
+        </div>
+        <div class="lr-card-body">
+          <p class="lr-text">Un problème d'installation ou de configuration ? Contactez d'abord notre <a href="https://daewoo-security.fr/pages/sav" class="lr-savlink">service après-vente</a> — nos techniciens vous guident avant tout envoi en retour.</p>
+          <div class="lr-gar-grid">
+            <div class="lr-gar">
+              <div class="g-label"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Durée de garantie</div>
+              <div class="g-val">2 ans à compter de la livraison<br><small>(1 an pour les produits déstockage)</small></div>
+            </div>
+            <div class="lr-gar">
+              <div class="g-label"><svg viewbox="0 0 24 24"><path d="M9 12l2 2 4-4"></path><circle cx="12" cy="12" r="9"></circle></svg>Couverture</div>
+              <div class="g-val">Réparation, remplacement, avoir ou remboursement selon l'usage constaté</div>
+            </div>
+            <div class="lr-gar">
+              <div class="g-label"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M15 9l-6 6m0-6 6 6"></path></svg>Exclusions</div>
+              <div class="g-val">Dommages externes, utilisation non conforme, modification ou transformation du produit</div>
+            </div>
+            <div class="lr-gar">
+              <div class="g-label"><svg viewbox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-4 0v2"></path></svg>Frais de retour</div>
+              <div class="g-val">À la charge de l'acheteur</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="lr-footer">
+    © Daewoo Security — Liz Invest · 15 Allée James Watt — Immeuble 2000 Watt, 33700 Mérignac · <a href="mailto:contact@daewoo-security.fr">contact@daewoo-security.fr</a>
+  </footer>
+</div>

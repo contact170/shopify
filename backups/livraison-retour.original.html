@@ -1,0 +1,91 @@
+<!-- Sauvegarde du body ORIGINAL de la page /pages/livraison-retour (avant redesign natif).
+     Page ID Shopify : gid://shopify/Page/83888537753 · handle : livraison-retour
+     Récupéré le 2026-08-14. Restaurer ce contenu tel quel en cas de besoin. -->
+<script>
+  (function() {
+    function hideInboxWidget() {
+      var selectors = [
+        '#chat-button',
+        '[id*="shopify-chat"]',
+        '[class*="shopify-chat"]',
+        'iframe[title*="Franck"]',
+        'iframe[title*="Chat"]',
+        'iframe[title*="Inbox"]',
+        '[id*="inbox-"]',
+        '[class*="inbox-button"]',
+        'div[data-shopify-chat]'
+      ];
+      selectors.forEach(function(sel) {
+        try {
+          var els = document.querySelectorAll(sel);
+          els.forEach(function(el) { el.style.display = 'none'; });
+        } catch(e) {}
+      });
+    }
+    hideInboxWidget();
+    var observer = new MutationObserver(hideInboxWidget);
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+
+<!-- NOTE : le CSS original ciblait `body {}` globalement (risque de fuite de styles dans le thème).
+     Le contenu textuel intégral ci-dessous a été repris au mot près dans la nouvelle version scopée. -->
+
+<header>
+  <div class="label">Livraison &amp; Retour</div>
+  <h1>Recevez votre commande<br>en toute sérénité</h1>
+  <p>Expédition rapide, suivi en temps réel, retour simplifié. Voici tout ce que vous devez savoir avant et après votre achat.</p>
+</header>
+
+<main>
+  <section class="section-card">
+    <div class="section-title">Délais &amp; expédition</div>
+    <p>Commandes préparées et expédiées <strong>sous 24h</strong> pour toute commande passée avant midi (hors week-end et jours fériés). Un email de confirmation avec numéro de suivi vous est envoyé dès l'expédition, et un SMS vous permet d'organiser votre livraison à votre convenance.</p>
+    <p><strong>Livraison express le lendemain :</strong> valable uniquement si la commande est passée et validée avant midi. Exemple — commande passée à 15h le lundi → livraison le mercredi. Une fois le colis expédié, l'option express n'est pas remboursable.</p>
+    <ul>
+      <li>France métropolitaine — DPD, Colissimo, Chronopost, Point Relais — Offerte dès 50 € (sauf Chronopost)</li>
+      <li>Pays d'Outre-Mer — Colissimo — Calculé au paiement</li>
+      <li>Europe (hors UK &amp; Suisse) — Chronopost, DPD — Calculé au paiement</li>
+      <li>Autres pays — Colissimo — Sur devis</li>
+    </ul>
+    <p><strong>Livraisons en Suisse :</strong> des droits de douane peuvent être réclamés par le transporteur. La société Liz Invest ne peut en être tenue responsable.</p>
+  </section>
+
+  <section class="section-card">
+    <div class="section-title">Droit de rétractation — 14 jours</div>
+    <p>Conformément aux articles L221-18 et suivants du code de la consommation, vous disposez de <strong>14 jours</strong> à compter de la réception pour changer d'avis, sans justification.</p>
+    <p><strong>1. Déclarez votre rétractation</strong> — Cliquez sur le bouton ci-dessous pour accéder à notre formulaire en ligne et initier votre retour en quelques clics.</p>
+    <p><strong>2. Renvoyez le produit</strong> — Retournez le produit intact, dans son emballage d'origine, en Colissimo avec signature, dans les 14 jours suivant votre confirmation. Conservez précieusement votre preuve de dépôt. Les frais de retour sont à votre charge.<br>Liz Invest – Daewoo Security · 15 Allée James Watt — Immeuble 2000 Watt, 33700 Mérignac · Tél. 06 60 89 74 83</p>
+    <p><strong>3. Inspection &amp; remboursement</strong> — Dès réception, notre équipe technique inspecte le produit. Le remboursement (hors frais de livraison initiaux) intervient sous 14 jours via le même moyen de paiement.</p>
+    <p><strong>Ajustement des remises en cas de rétractation partielle</strong> — Lorsque votre commande bénéficie d'une remise conditionnée au montant total (ex : remise par paliers via le configurateur), celle-ci est calculée sur la base des produits effectivement conservés. En cas de retour partiel, le montant total est recalculé. Si ce nouveau montant entraîne l'application d'un palier inférieur, la réduction initialement accordée est ajustée en conséquence. La différence pourra être déduite du remboursement.</p>
+    <p><a href="https://retractation.daewoo-security.fr/retractation" target="_blank" rel="noopener noreferrer">Exercer mon droit de rétractation</a></p>
+    <p><strong>Décotes appliquées en cas de retour incomplet</strong></p>
+    <ul>
+      <li>−50 % — Produit renvoyé en état invendable</li>
+      <li>−20 % — Emballage d'origine manquant</li>
+      <li>−10 % — Notice d'utilisation manquante</li>
+      <li>−10 % — Accessoire manquant (par pièce)</li>
+    </ul>
+    <ul>
+      <li>Toute réclamation effectuée hors délai ne sera pas acceptée.</li>
+      <li>Les articles retournés abîmés, sales ou incomplets ne sont ni échangeables ni remboursables.</li>
+      <li>Les cartes SIM activées auprès d'Afone ne peuvent être reprises ni remboursées, même si une période d'abonnement est encore disponible.</li>
+      <li>Le droit de rétractation ne s'applique pas aux produits descellés, aux ventes en boutique, ni aux achats effectués par des professionnels.</li>
+    </ul>
+  </section>
+
+  <section class="section-card">
+    <div class="section-title">Garantie</div>
+    <p>Un problème d'installation ou de configuration ? Contactez d'abord notre <a href="https://daewoo-security.fr/pages/sav">service après-vente</a> — nos techniciens vous guident avant tout envoi en retour.</p>
+    <ul>
+      <li>Durée de garantie — 2 ans à compter de la livraison (1 an pour les produits déstockage)</li>
+      <li>Couverture — Réparation, remplacement, avoir ou remboursement selon l'usage constaté</li>
+      <li>Exclusions — Dommages externes, utilisation non conforme, modification ou transformation du produit</li>
+      <li>Frais de retour — À la charge de l'acheteur</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  © Daewoo Security — Liz Invest · 15 Allée James Watt — Immeuble 2000 Watt, 33700 Mérignac · contact@daewoo-security.fr
+</footer>
