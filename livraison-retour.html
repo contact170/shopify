@@ -238,16 +238,19 @@
 
   /* ---------- CTA ---------- */
   .lr-cta {
-    display: inline-flex; align-items: center; gap: 9px;
-    padding: 14px 26px; align-self: flex-start;
-    background: linear-gradient(135deg, var(--lr-accent) 0%, var(--lr-accent-dark) 100%);
-    color: #fff; border-radius: 11px;
-    font-size: 14.5px; font-weight: 600; text-decoration: none; line-height: 1.4;
-    box-shadow: 0 6px 18px rgba(26,79,171,.32);
-    transition: transform .18s, box-shadow .18s;
+    display: inline-flex !important; align-items: center !important; gap: 9px !important;
+    padding: 14px 26px !important; align-self: flex-start; width: fit-content !important;
+    background: linear-gradient(135deg, var(--lr-accent) 0%, var(--lr-accent-dark) 100%) !important;
+    color: #fff !important; border: none !important; border-radius: 11px !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 14.5px !important; font-weight: 600 !important; letter-spacing: 0 !important;
+    text-transform: none !important; text-decoration: none !important; line-height: 1.4 !important;
+    box-shadow: 0 6px 18px rgba(26,79,171,.32) !important;
+    transition: transform .18s, box-shadow .18s !important; cursor: pointer !important;
   }
-  .lr-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(11,30,74,.34); color: #fff; text-decoration: none; }
-  .lr-cta svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .lr-cta::before, .lr-cta::after { content: none !important; border: none !important; background: none !important; }
+  .lr-cta:hover { transform: translateY(-2px); background: linear-gradient(135deg, var(--lr-accent-dark) 0%, var(--lr-accent-dark) 100%) !important; box-shadow: 0 10px 26px rgba(11,30,74,.34) !important; color: #fff !important; text-decoration: none !important; }
+  .lr-cta svg { width: 16px !important; height: 16px !important; stroke: #fff !important; fill: none !important; stroke-width: 2 !important; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0 !important; }
 
   .lr-divider { height: 1px; background: var(--lr-border); }
   .lr-block-label { font-size: 11px; font-weight: 700; color: var(--lr-accent-mid); text-transform: uppercase; letter-spacing: .08em; }
