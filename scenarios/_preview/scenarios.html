@@ -240,6 +240,18 @@
   .btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.28)}
   .cta .halo{position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(90,157,255,.5),transparent 70%);filter:blur(10px)}
 
+  /* ============ BONNES PRATIQUES ============ */
+  .practices{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .pcard{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s,border-color .25s}
+  .pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--line-strong)}
+  .pcard .pic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;margin-bottom:16px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-deep));box-shadow:var(--shadow-sm)}
+  .pcard h3{font-size:19px;margin-bottom:8px;letter-spacing:-.02em}
+  .pcard p{font-size:14.5px;color:var(--ink-2)}
+  .pcard .kbd{margin-top:14px;display:inline-flex;gap:8px;flex-wrap:wrap;font-size:12px;font-weight:600}
+  .pcard .kbd span{padding:5px 10px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2)}
+  .pcard .kbd .bad{color:var(--armed);border-color:color-mix(in srgb,var(--armed) 34%,transparent);text-decoration:line-through;opacity:.85}
+  .pcard .kbd .good{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 34%,transparent)}
+  @media(max-width:760px){.practices{grid-template-columns:1fr}}
   footer{padding:40px 0 60px;color:var(--muted);font-size:13px;text-align:center}
   footer .theme{margin-top:14px}
   footer button{font-family:inherit;font-size:12.5px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
@@ -268,7 +280,7 @@
       <a href="#definition">Le principe</a>
       <a href="#centrale">Votre centrale</a>
       <a href="#bibliotheque">Scénarios</a>
-      <a href="#aide">Aide</a>
+      <a href="#aide">Bon à savoir</a>
     </nav>
   </div>
 </div>
@@ -285,7 +297,7 @@
         <a class="chip" href="#definition">Qu'est-ce qu'un scénario&nbsp;?</a>
         <a class="chip" href="#centrale">Choisir sa centrale</a>
         <a class="chip" href="#bibliotheque"><b>Bibliothèque</b> de scénarios</a>
-        <a class="chip" href="#aide">Besoin d'aide&nbsp;?</a>
+        <a class="chip" href="#aide">Bon à savoir</a>
       </div>
       <div class="compat">
         <span>Compatible&nbsp;:</span>
@@ -653,17 +665,32 @@
   </div>
 </section>
 
-<!-- ============ SUPPORT CTA ============ -->
+<!-- ============ BONNES PRATIQUES ============ -->
 <section class="block" id="aide">
   <div class="wrap">
-    <div class="cta reveal">
-      <div class="halo" aria-hidden="true"></div>
-      <span class="eyebrow" style="color:#a9c3ff">Un blocage&nbsp;?</span>
-      <h2>Nos techniciens créent le scénario avec vous</h2>
-      <p>Si un scénario ne se comporte pas comme prévu, envoyez-nous une courte vidéo&nbsp;: on vous répond avec la marche à suivre exacte pour votre centrale.</p>
-      <div class="btns">
-        <a class="btn primary" href="#">Envoyer une vidéo sur WhatsApp</a>
-        <a class="btn ghost" href="#">Formulaire de contact</a>
+    <div class="head reveal">
+      <span class="eyebrow">Bon à savoir</span>
+      <h2>Deux règles pour des scénarios fiables</h2>
+      <p>Gardez ces deux points en tête&nbsp;: ils évitent la grande majorité des scénarios qui « ne se déclenchent pas ».</p>
+    </div>
+    <div class="practices">
+      <div class="pcard reveal">
+        <span class="pic" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/></svg>
+        </span>
+        <h3>Une bonne connexion internet</h3>
+        <p>Un scénario ne fonctionne que si <b>tous les appareils concernés</b> (centrale, caméra, prise connectée…) ont une <b>bonne connexion internet</b>. En cas de coupure ou de signal faible sur l'un d'eux, le scénario <b>peut ne pas se déclencher</b>. Avant de compter dessus, vérifiez le Wi-Fi et l'état « en ligne » de chaque appareil dans l'application.</p>
+      </div>
+      <div class="pcard reveal">
+        <span class="pic" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="5" rx="2" stroke="currentColor" stroke-width="2"/><rect x="3" y="15" width="18" height="5" rx="2" stroke="currentColor" stroke-width="2"/></svg>
+        </span>
+        <h3>Un scénario simple à la fois</h3>
+        <p>Créez plutôt <b>plusieurs scénarios séparés</b> qu'un seul qui accumule les conditions. C'est <b>plus fiable</b>, plus simple à corriger, et vous repérez aussitôt celui qui pose problème. Évitez d'empiler trop de conditions dans un même scénario.</p>
+        <div class="kbd">
+          <span class="bad">1 scénario · 5 conditions</span>
+          <span class="good">5 scénarios · 1 condition</span>
+        </div>
       </div>
     </div>
   </div>
