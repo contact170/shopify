@@ -7,22 +7,27 @@ Fichiers de thème pour `/pages/a-propos`.
 | `sections/page-a-propos-daewoo.liquid` | Les 13 sections, CSS scopé sous `.dwsa`, JSON-LD à 5 nœuds, réglages personnalisateur |
 | `templates/page.a-propos.json` | Ne contient que cette section, avec images et produits réels par défaut |
 
-## Déploiement
+## État : en ligne depuis le 17/08/2026
 
-Thème de prévisualisation : **Refonte page À propos v2 (Claude)** — `gid://shopify/OnlineStoreTheme/201592996180`
-(dupliqué du thème publié le 17/08/2026 à 15:14). Le thème publié n'est pas modifié.
+Thème publié : **Refonte page À propos v2 (Claude)** — `gid://shopify/OnlineStoreTheme/201592996180`,
+dupliqué du thème publié précédent (`201408545108`) à 15:14 puis publié à 15:27.
 
-- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201592996180`
+- Page : `https://daewoo-security.fr/pages/a-propos`
 - Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201592996180/editor`
 
-La copie v1 (`201588212052`) est renommée `OBSOLETE - A propos v1` : elle datait de 15:14 moins une
-heure et le thème publié avait bougé entre-temps. À supprimer depuis l'admin — `themeDelete` est
-bloqué côté API pour des raisons de sécurité.
+Title et meta description appliqués sur les métachamps de la page (`global.title_tag`,
+`global.description_tag`) après publication :
 
-### Publication
+- `Daewoo Security | Alarmes connectées sans abonnement`
+- `Découvrez Daewoo Security, spécialiste des alarmes, caméras et systèmes de sécurité connectée sans abonnement. Équipe et siège basés à Mérignac.`
 
-Ne pas publier le thème de prévisualisation tel quel : c'est un instantané, et le publier
-écraserait tout ce qui aurait été fait sur le thème en ligne depuis sa création. Procédure :
+À nettoyer depuis l'admin : les copies `OBSOLETE - A propos v1` (`201588212052`) et l'ancien thème
+publié (`201408545108`) — `themeDelete` est bloqué côté API pour des raisons de sécurité.
+
+### Pour une prochaine mise en ligne
+
+Ne jamais publier un thème de prévisualisation ancien : c'est un instantané, et le publier
+écraserait tout ce qui a été fait sur le thème en ligne depuis sa création. Procédure :
 
 1. Dupliquer le thème **publié à cet instant** ;
 2. y réappliquer les deux fichiers de ce dossier ;
