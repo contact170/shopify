@@ -200,7 +200,7 @@
 <div class="doc">
 
   <header class="masthead">
-    <p class="kicker">Version 2 — après vos ajustements · rien n'est publié</p>
+    <p class="kicker">Version 3 — ajustements + compléments · rien n'est publié</p>
     <h1>Refonte de la page À propos<br>Daewoo Security</h1>
     <p class="sub">
       Vos 21 points d'ajustement sont appliqués. La page parle désormais de Daewoo Security,
@@ -210,7 +210,7 @@
     <div class="meta">
       <span><b>Page</b> /pages/a-propos</span>
       <span><b>Sections</b> 13</span>
-      <span><b>Aperçu visuel</b> <a href="https://claude.ai/code/artifact/8d042aa5-a053-4240-917d-250902894942">ouvrir la maquette v2</a></span>
+      <span><b>Aperçu visuel</b> <a href="https://claude.ai/code/artifact/8d042aa5-a053-4240-917d-250902894942">ouvrir la maquette v3</a></span>
     </div>
   </header>
 
@@ -245,16 +245,22 @@
       </table>
     </div>
     <div class="callout">
-      <h4>Deux points à trancher d'un mot</h4>
+      <h4>Compléments intégrés ensuite (v3)</h4>
       <p>
-        <strong>Orthographe « Élite ».</strong> Votre brief écrit « Elite », le catalogue écrit
-        « ÉLITE » / « Élite » (titres de collection et de produits). J'ai retenu <strong>Élite</strong>
-        pour rester cohérent avec le site ; dites-moi si vous préférez « Elite » sans accent.
+        <strong>Élite</strong> garde son accent, conformément au catalogue.
       </p>
       <p>
-        <strong>Histoire du groupe Daewoo.</strong> En appliquant le point 4, j'ai retiré la mention
-        « fondée en 1971 en Corée du Sud », aujourd'hui présente sur la page. Si vous souhaitez en
-        garder une trace, une phrase peut être ajoutée dans la bande n°10 — sinon elle disparaît.
+        <strong>Historique Daewoo</strong> : une incise est ajoutée en fin de bande n°10 —
+        « marque d'électronique et de technologies grand public fondée en 1971 en Corée du Sud ».
+        La mention historique subsiste donc, en une demi-phrase, sans redevenir un chapitre.
+      </p>
+      <p>
+        <strong>Application</strong> : les deux boutons de téléchargement sont posés avec les URLs
+        officielles (App Store et Google Play), et la réponse 5 de la FAQ précise la disponibilité.
+      </p>
+      <p>
+        <strong>Téléphone</strong> : <code>05 47 74 29 40</code> ajouté au bloc adresse (lien
+        <code>tel:</code>) et au <code>contactPoint</code> du JSON-LD.
       </p>
     </div>
   </section>
@@ -376,7 +382,16 @@
       <p class="role">H2 + H3</p><p>Daewoo Home Connect — L'application au cœur de l'écosystème Daewoo Security</p>
       <blockquote><p>Daewoo Home Connect permet de piloter à distance les équipements Daewoo Security compatibles, de recevoir les notifications du système et d'accéder aux principales fonctions de sécurité depuis un smartphone.</p></blockquote>
       <p class="role">Chaîne</p><p>Daewoo Security → Daewoo Home Connect → Alarmes, caméras et accessoires compatibles</p>
-      <p>Boutons App Store / Google Play en attente des URLs officielles. <span class="flag">à fournir</span></p>
+      <p class="role">Boutons de téléchargement</p>
+      <ul>
+        <li><strong>Télécharger sur l'App Store</strong> → <code>apps.apple.com/fr/app/daewoo-home-connect/id1491449350</code></li>
+        <li><strong>Disponible sur Google Play</strong> → <code>play.google.com/store/apps/details?id=com.NewDeal.Homeconnect&amp;hl=fr</code></li>
+      </ul>
+      <p>
+        Deux boutons anthracite avec logo, alignés horizontalement, empilés sur mobile.
+        L'esperluette de l'URL Google Play est échappée en <code>&amp;amp;</code> dans le
+        <code>href</code>, sinon le lien casse en HTML.
+      </p>
     </div>
 
     <div class="copy-block">
@@ -395,7 +410,7 @@
       <h3>9 · Une équipe basée à Mérignac</h3>
       <blockquote><p>Les équipes Daewoo Security sont basées à Mérignac, près de Bordeaux. Elles assurent notamment la gestion du site, le suivi des commandes, le service client et l'accompagnement technique autour des équipements Daewoo Security.</p></blockquote>
       <p class="role">Bloc adresse</p>
-      <p>Daewoo Security<br>15 allée James Watt<br>33700 Mérignac, France</p>
+      <p>Daewoo Security<br>15 allée James Watt<br>33700 Mérignac, France<br>05 47 74 29 40</p>
       <p class="role">ALT prévus</p>
       <p><code>Locaux Daewoo Security à Mérignac</code> · <code>Équipe Daewoo Security à Mérignac</code> · <code>Préparation des commandes Daewoo Security à Mérignac</code></p>
       <p>Liens : <em>Contacter Daewoo Security</em> · <em>Consulter l'aide en ligne et les manuels</em>.</p>
@@ -403,8 +418,8 @@
 
     <div class="copy-block">
       <h3>10 · Exploitation du site — bande discrète</h3>
-      <blockquote><p>Le site Daewoo-Security.fr est exploité par Liz Invest SAS, société basée à Mérignac, sous licence officielle de la marque Daewoo.</p></blockquote>
-      <p>Une seule phrase, sur une bande de 36 px de haut encadrée de deux filets. C'est la seule mention de la licence sur la page.</p>
+      <blockquote><p>Le site Daewoo-Security.fr est exploité par Liz Invest SAS, société basée à Mérignac, sous licence officielle de la marque Daewoo — marque d'électronique et de technologies grand public fondée en 1971 en Corée du Sud.</p></blockquote>
+      <p>Une seule phrase, sur une bande encadrée de deux filets, en 14 px gris. C'est la seule mention de la licence et du groupe Daewoo sur la page.</p>
     </div>
 
     <div class="copy-block">
@@ -537,11 +552,13 @@
       <code>/pages/daewoo-home-connect</code> reste non lié tant que la page est dépubliée.
     </p>
 
-    <h4>JSON-LD — 4 nœuds</h4>
+    <h4>JSON-LD — 5 nœuds</h4>
     <p>
       Aucun <code>parentOrganization</code>, aucun <code>subOrganization</code>, aucune
       modélisation de la licence. Le seul lien déclaré est <code>publisher</code> : Liz Invest SAS
-      édite le site.
+      édite le site. Un nœud <code>MobileApplication</code> est ajouté maintenant que les deux URLs
+      de store sont confirmées — c'est lui qui permet aux moteurs IA de relier l'écosystème
+      « Daewoo Security → Daewoo Home Connect → équipements ».
     </p>
 <pre><code>{
   "@context": "https://schema.org",
@@ -572,6 +589,7 @@
         "@type": "ContactPoint",
         "contactType": "customer support",
         "email": "contact@daewoo-security.fr",
+        "telephone": "+33547742940",
         "availableLanguage": ["fr"]
       },
       "areaServed": [
@@ -605,6 +623,17 @@
       }
     },
     {
+      "@type": "MobileApplication",
+      "@id": "https://daewoo-security.fr/#app",
+      "name": "Daewoo Home Connect",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "iOS, Android",
+      "installUrl": [
+        "https://apps.apple.com/fr/app/daewoo-home-connect/id1491449350",
+        "https://play.google.com/store/apps/details?id=com.NewDeal.Homeconnect&hl=fr"
+      ]
+    },
+    {
       "@type": "AboutPage",
       "@id": "https://daewoo-security.fr/pages/a-propos#webpage",
       "url": "https://daewoo-security.fr/pages/a-propos",
@@ -612,6 +641,7 @@
       "inLanguage": "fr-FR",
       "isPartOf": { "@id": "https://daewoo-security.fr/#website" },
       "about": { "@id": "https://daewoo-security.fr/#organization" },
+      "mentions": { "@id": "https://daewoo-security.fr/#app" },
       "mainEntity": {
         "@type": "FAQPage",
         "mainEntity": [ /* les 8 questions visibles sur la page */ ]
@@ -620,9 +650,13 @@
   ]
 }</code></pre>
     <p>
-      <code>telephone</code> volontairement omis : trois numéros différents circulent aujourd'hui
-      sur le site et dans Shopify. Indiquez-moi le numéro public unique et je l'ajoute.
-      <span class="flag">à fournir</span>
+      Le nœud <code>MobileApplication</code> se contente de <code>name</code>,
+      <code>operatingSystem</code> et <code>installUrl</code>, et il est relié à la page par
+      <code>mentions</code>. Aucun <code>publisher</code> n'y est déclaré : l'identifiant du paquet
+      Android est <code>com.NewDeal.Homeconnect</code>, ce qui laisse penser que l'application est
+      publiée par un tiers. Déclarer Daewoo Security comme éditeur de l'application serait donc une
+      affirmation non vérifiée — je m'en abstiens. Si vous confirmez qui publie l'application, la
+      propriété peut être ajoutée.
     </p>
 
     <h4>Ce qui rend la page lisible par une IA</h4>
@@ -641,9 +675,9 @@
   <section>
     <h2><span class="tag">E</span> Ce qu'il reste à fournir</h2>
     <p class="intro">
-      Les trois points bloquants de la v1 sont résolus : adresse, gamme Key, formulation de la
-      licence. Il reste quatre éléments non bloquants — la page peut être intégrée sans eux, les
-      blocs concernés restent simplement en attente.
+      Tous les points bloquants sont résolus : adresse, gamme Key, formulation de la licence,
+      URLs des stores, téléphone. Il reste deux éléments facultatifs — la page est intégrable
+      sans eux.
     </p>
     <div class="table-scroll">
       <table>
@@ -651,24 +685,30 @@
         <tbody>
           <tr>
             <td class="num">1</td>
-            <td><strong>URLs App Store et Google Play</strong></td>
-            <td>Section 7 : les deux boutons de téléchargement restent absents. Aucun lien de store n'existe dans le thème actuel, et <code>/pages/daewoo-home-connect</code> est dépubliée.</td>
+            <td><strong>Enseignes partenaires</strong></td>
+            <td>Section 11 : la carte secondaire reste générique. Une collection « Pack alarme market place » (37 produits) existe, mais aucune enseigne n'est nommée dans le thème. C'est le seul marqueur « à valider » encore visible dans la maquette.</td>
           </tr>
           <tr>
             <td class="num">2</td>
-            <td><strong>Enseignes partenaires</strong></td>
-            <td>Section 11 : la carte secondaire reste générique. Une collection « Pack alarme market place » (37 produits) existe, mais aucune enseigne n'est nommée dans le thème.</td>
-          </tr>
-          <tr>
-            <td class="num">3</td>
-            <td><strong>Numéro de téléphone public</strong></td>
-            <td>Absent du contenu et du JSON-LD. Trois numéros coexistent : +33 5 56 31 57 17 (mentions légales), 05 47 74 29 40 (Shopify), 06 60 89 74 83 (page retours).</td>
-          </tr>
-          <tr>
-            <td class="num">4</td>
             <td><strong>LinkedIn / TikTok officiels</strong></td>
             <td><code>sameAs</code> se limite à Facebook, Instagram et YouTube — les seuls renseignés dans les réglages du thème.</td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Éléments désormais figés</h4>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Donnée</th><th>Valeur retenue</th></tr></thead>
+        <tbody>
+          <tr><td>Nom d'entité</td><td>Daewoo Security</td></tr>
+          <tr><td>Adresse</td><td>15 allée James Watt, 33700 Mérignac</td></tr>
+          <tr><td>Téléphone</td><td>05 47 74 29 40 — <code>+33547742940</code> dans le JSON-LD</td></tr>
+          <tr><td>App Store</td><td><code>apps.apple.com/fr/app/daewoo-home-connect/id1491449350</code></td></tr>
+          <tr><td>Google Play</td><td><code>play.google.com/store/apps/details?id=com.NewDeal.Homeconnect</code></td></tr>
+          <tr><td>Gammes</td><td>Vigilia · Touch / Touch XL · Élite (avec accent)</td></tr>
+          <tr><td>Chiffre canonique</td><td>Plus de 60 000 foyers équipés</td></tr>
+          <tr><td>Marchés déclarés</td><td>France, Belgique</td></tr>
         </tbody>
       </table>
     </div>
