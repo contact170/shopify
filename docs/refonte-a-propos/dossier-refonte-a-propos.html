@@ -262,6 +262,11 @@
         <strong>Téléphone</strong> : <code>05 47 74 29 40</code> ajouté au bloc adresse (lien
         <code>tel:</code>) et au <code>contactPoint</code> du JSON-LD.
       </p>
+      <p>
+        <strong>Édition de l'application</strong> : vous confirmez publier Daewoo Home Connect sur
+        les deux stores. La page la nomme donc « application officielle de Daewoo Security » et le
+        JSON-LD porte <code>publisher</code> → <code>#organization</code>.
+      </p>
     </div>
   </section>
 
@@ -380,7 +385,7 @@
     <div class="copy-block">
       <h3>7 · Daewoo Home Connect</h3>
       <p class="role">H2 + H3</p><p>Daewoo Home Connect — L'application au cœur de l'écosystème Daewoo Security</p>
-      <blockquote><p>Daewoo Home Connect permet de piloter à distance les équipements Daewoo Security compatibles, de recevoir les notifications du système et d'accéder aux principales fonctions de sécurité depuis un smartphone.</p></blockquote>
+      <blockquote><p>Daewoo Home Connect est l'application officielle de Daewoo Security, publiée sur l'App Store et sur Google Play. Elle permet de piloter à distance les équipements Daewoo Security compatibles, de recevoir les notifications du système et d'accéder aux principales fonctions de sécurité depuis un smartphone.</p></blockquote>
       <p class="role">Chaîne</p><p>Daewoo Security → Daewoo Home Connect → Alarmes, caméras et accessoires compatibles</p>
       <p class="role">Boutons de téléchargement</p>
       <ul>
@@ -435,7 +440,7 @@
         <li><strong>Qui exploite Daewoo-Security.fr ?</strong> Liz Invest SAS, sous licence officielle de la marque Daewoo.</li>
         <li><strong>Où est basé Daewoo Security ?</strong> À Mérignac, en Gironde : 15 allée James Watt, 33700 Mérignac.</li>
         <li><strong>Les alarmes nécessitent-elles un abonnement ?</strong> Non, pas d'abonnement de télésurveillance obligatoire. Certaines options peuvent générer des coûts indépendants, comme la carte SIM des modèles 4G.</li>
-        <li><strong>Quelle application ?</strong> Daewoo Home Connect.</li>
+        <li><strong>Quelle application ?</strong> Daewoo Home Connect, l'application officielle de Daewoo Security, disponible sur l'App Store et sur Google Play.</li>
         <li><strong>Quelles sont les gammes ?</strong> Vigilia, Touch / Touch XL et Élite.</li>
         <li><strong>Et des caméras ?</strong> Oui : caméras intérieures et extérieures, avec différents modes d'alimentation et de connexion selon les modèles.</li>
         <li><strong>Où acheter ?</strong> Sur Daewoo-Security.fr ; le configurateur permet de composer un système adapté à son logement.</li>
@@ -631,7 +636,8 @@
       "installUrl": [
         "https://apps.apple.com/fr/app/daewoo-home-connect/id1491449350",
         "https://play.google.com/store/apps/details?id=com.NewDeal.Homeconnect&hl=fr"
-      ]
+      ],
+      "publisher": { "@id": "https://daewoo-security.fr/#organization" }
     },
     {
       "@type": "AboutPage",
@@ -650,13 +656,14 @@
   ]
 }</code></pre>
     <p>
-      Le nœud <code>MobileApplication</code> se contente de <code>name</code>,
-      <code>operatingSystem</code> et <code>installUrl</code>, et il est relié à la page par
-      <code>mentions</code>. Aucun <code>publisher</code> n'y est déclaré : l'identifiant du paquet
-      Android est <code>com.NewDeal.Homeconnect</code>, ce qui laisse penser que l'application est
-      publiée par un tiers. Déclarer Daewoo Security comme éditeur de l'application serait donc une
-      affirmation non vérifiée — je m'en abstiens. Si vous confirmez qui publie l'application, la
-      propriété peut être ajoutée.
+      Le nœud <code>MobileApplication</code> déclare <code>name</code>,
+      <code>operatingSystem</code>, les deux <code>installUrl</code> et
+      <code>publisher</code> → <code>#organization</code>, puisque vous confirmez publier
+      l'application sur les deux stores. C'est la relation la plus utile de tout le graphe : elle
+      rattache explicitement l'application à l'entité Daewoo Security, ce qu'aucun moteur ne pouvait
+      déduire de l'identifiant de paquet <code>com.NewDeal.Homeconnect</code>. Le contenu visible dit
+      la même chose — « l'application officielle de Daewoo Security » — pour que le balisage et la
+      page soient cohérents.
     </p>
 
     <h4>Ce qui rend la page lisible par une IA</h4>
