@@ -1,0 +1,953 @@
+<title>Refonte À propos — Dossier</title>
+<style>
+  :root {
+    --navy: #0b1e4a;
+    --blue: #1a4fab;
+    --cyan: #48cae4;
+    --paper: #ffffff;
+    --mist: #f6f7fb;
+    --line: #e3e7f2;
+    --ink: #0b1e4a;
+    --muted: #545e78;
+    --muted-soft: #7c85a0;
+    --flag: #b45309;
+    --flag-bg: #fdf5e6;
+    --ok: #15803d;
+    --ok-bg: #f0fdf4;
+    --display: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "DejaVu Sans Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--mist);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+  .doc {
+    max-width: 940px;
+    margin: 0 auto;
+    background: var(--paper);
+    padding: 0 0 96px;
+  }
+  .masthead {
+    background: var(--navy);
+    color: #fff;
+    padding: 56px 56px 48px;
+  }
+  .masthead p.kicker {
+    margin: 0 0 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .masthead h1 {
+    font-family: var(--display);
+    font-size: clamp(30px, 4.4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .masthead p.sub {
+    margin: 20px 0 0;
+    max-width: 60ch;
+    color: rgba(255,255,255,0.7);
+    font-size: 16px;
+  }
+  .masthead .meta {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 36px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+  }
+  .masthead .meta b { color: #fff; font-weight: 600; }
+  .masthead a { color: var(--cyan); }
+
+  section { padding: 52px 56px 0; }
+  h2 {
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  h2 .tag {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--blue);
+    background: rgba(26,79,171,0.08);
+    padding: 4px 10px;
+    border-radius: 100px;
+    flex: none;
+  }
+  h3 {
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 36px 0 10px;
+  }
+  h4 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+    margin: 26px 0 8px;
+  }
+  p { margin: 0 0 14px; color: var(--muted); }
+  p.intro { color: var(--ink); font-size: 16.5px; max-width: 66ch; }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; color: var(--muted); }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--blue); }
+  hr { border: none; border-top: 1px solid var(--line); margin: 48px 0 0; }
+
+  .table-scroll { overflow-x: auto; margin: 0 0 18px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 560px;
+  }
+  th, td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    color: var(--muted);
+  }
+  th {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+    border-bottom: 1px solid var(--ink);
+    white-space: nowrap;
+  }
+  td strong { color: var(--ink); }
+  tbody tr:hover td { background: var(--mist); }
+  td.num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--muted-soft);
+    width: 34px;
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--mist);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--navy);
+    word-break: break-word;
+  }
+  pre {
+    margin: 0 0 18px;
+    padding: 22px 24px;
+    background: var(--navy);
+    border-radius: 12px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #dbe4f7;
+  }
+  pre code { background: none; border: none; padding: 0; color: inherit; }
+
+  .flag, .ok {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .flag { background: var(--flag-bg); color: var(--flag); }
+  .ok { background: var(--ok-bg); color: var(--ok); }
+
+  .callout {
+    border-left: 3px solid var(--cyan);
+    background: var(--mist);
+    padding: 20px 24px;
+    border-radius: 0 10px 10px 0;
+    margin: 0 0 18px;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout h4 { margin-top: 0; }
+
+  .copy-block {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin: 0 0 16px;
+  }
+  .copy-block > h3 { margin-top: 0; }
+  .copy-block .role {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+    margin-bottom: 4px;
+  }
+  .copy-block blockquote {
+    margin: 10px 0 0;
+    padding-left: 16px;
+    border-left: 2px solid var(--line);
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .copy-block blockquote p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 720px) {
+    .masthead { padding: 40px 24px 34px; }
+    section { padding: 40px 24px 0; }
+    h2 { font-size: 22px; flex-direction: column; gap: 8px; }
+  }
+</style>
+
+<div class="doc">
+
+  <header class="masthead">
+    <p class="kicker">Étape 1 — proposition, rien n'est publié</p>
+    <h1>Refonte de la page À propos<br>Daewoo Security France</h1>
+    <p class="sub">
+      Architecture, contenus, design, SEO/GEO et points à valider avant intégration.
+      Toutes les données proviennent du thème exporté et de l'API Shopify de la boutique —
+      aucun chiffre, partenaire ou fonctionnalité n'a été inventé.
+    </p>
+    <div class="meta">
+      <span><b>Page</b> /pages/a-propos</span>
+      <span><b>Template</b> page.a-propos.json</span>
+      <span><b>Sections</b> 13</span>
+      <span><b>Aperçu visuel</b> <a href="https://claude.ai/code/artifact/8d042aa5-a053-4240-917d-250902894942">ouvrir la maquette</a></span>
+    </div>
+  </header>
+
+  <!-- ================= CONSTAT ================= -->
+  <section>
+    <h2><span class="tag">CONSTAT</span> Ce que fait la page actuelle</h2>
+    <p class="intro">
+      La page enchaîne sept blocs <code>image-with-text</code> / <code>rich-text</code> quasi
+      identiques. Le résultat est lisible pour un humain patient, mais très pauvre pour une machine.
+    </p>
+    <ul>
+      <li><strong>Aucun H1.</strong> La section <code>main-page</code> (qui porte le H1) est désactivée dans le template. Le premier titre est un H2 : « L'histoire de Daewoo ».</li>
+      <li><strong>La page parle d'abord du groupe Daewoo</strong> (Corée du Sud, 1971, 60 pays) et seulement ensuite de Daewoo Security. Un moteur IA en déduit la mauvaise entité.</li>
+      <li><strong>Aucune donnée d'identité structurée</strong> : ni Liz Invest SAS, ni Mérignac, ni Daewoo Home Connect, ni les gammes, ni le positionnement sans abonnement.</li>
+      <li><strong>Aucun JSON-LD</strong> sur la page (le thème n'en génère que sur produits, collections, articles et FAQ).</li>
+      <li><strong>Aucun maillage interne</strong> hors trois boutons identiques pointant tous vers le même comparateur.</li>
+      <li><strong>Textes génériques</strong> : « engagement envers l'excellence », « technologies les plus avancées », « solutions les plus efficaces du marché » — non vérifiables, sans valeur SEO ni GEO.</li>
+      <li><strong>Images sans ALT</strong> dans la bibliothèque Shopify, et parallaxe activée sur les six blocs.</li>
+    </ul>
+    <div class="callout">
+      <h4>Bonne nouvelle côté technique</h4>
+      <p>
+        Le header n'enveloppe le logo dans un H1 que sur la page d'accueil
+        (<code>request.page_type == 'index'</code>). Sur /pages/a-propos, le nouveau H1 sera
+        donc bien l'unique H1 de la page.
+      </p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ================= A. ARCHITECTURE ================= -->
+  <section>
+    <h2><span class="tag">A</span> Architecture</h2>
+    <p class="intro">13 sections, dans l'ordre demandé. Une seule balise H1, en tête de page.</p>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Section</th><th>Titre affiché</th><th>Niveau</th><th>Rôle</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td><strong>Hero</strong></td><td>Daewoo Security France</td><td>H1</td><td>Identifier l'entité en une lecture</td></tr>
+          <tr><td class="num">2</td><td><strong>Qui est Daewoo Security ?</strong></td><td>Qui est Daewoo Security ?</td><td>H2 + 3×H3</td><td>Définition de la marque</td></tr>
+          <tr><td class="num">3</td><td><strong>Fiche d'identité</strong></td><td>Daewoo Security en France</td><td>H2</td><td>Données factuelles, format clé/valeur</td></tr>
+          <tr><td class="num">4</td><td><strong>Lien avec la marque Daewoo</strong></td><td>Notre lien avec la marque Daewoo</td><td>H2 + H3</td><td>Cadre juridique, histoire en second plan</td></tr>
+          <tr><td class="num">5</td><td><strong>Solutions</strong></td><td>Une gamme complète pour protéger son domicile</td><td>H2 + 4×H3</td><td>Périmètre produit + maillage</td></tr>
+          <tr><td class="num">6</td><td><strong>Gammes</strong></td><td>Les systèmes d'alarme Daewoo Security</td><td>H2 + 3×H3 (+2)</td><td>Vigilia · Touch/Touch XL · Élite</td></tr>
+          <tr><td class="num">7</td><td><strong>Sans abonnement</strong></td><td>La sécurité sans abonnement</td><td>H2</td><td>Positionnement principal</td></tr>
+          <tr><td class="num">8</td><td><strong>Daewoo Home Connect</strong></td><td>Daewoo Home Connect</td><td>H2 + H3</td><td>Chaîne marque → app → équipements</td></tr>
+          <tr><td class="num">9</td><td><strong>Preuves</strong></td><td>Une marque déjà installée chez des dizaines de milliers de foyers</td><td>H2</td><td>Chiffres vérifiables uniquement</td></tr>
+          <tr><td class="num">10</td><td><strong>Équipe</strong></td><td>Une équipe basée à Mérignac</td><td>H2</td><td>Ancrage local (GEO)</td></tr>
+          <tr><td class="num">11</td><td><strong>Où acheter</strong></td><td>Où trouver les produits Daewoo Security ?</td><td>H2 + 2×H3</td><td>Relations de distribution</td></tr>
+          <tr><td class="num">12</td><td><strong>FAQ</strong></td><td>Daewoo Security en 8 questions</td><td>H2 + 8×H3</td><td>Réponses directes pour les IA</td></tr>
+          <tr><td class="num">13</td><td><strong>CTA final</strong></td><td>Trouvez le système Daewoo Security adapté à votre logement</td><td>H2</td><td>Configurateur + comparateur</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Contenus conservés</h4>
+    <ul>
+      <li>La licence officielle Daewoo — <em>formulation reprise du texte déjà en ligne</em>.</li>
+      <li>L'histoire du groupe Daewoo (1971, Corée du Sud) — déplacée en encart secondaire.</li>
+      <li>Le chiffre des 60 000 foyers/clients.</li>
+      <li>L'ancrage bordelais/mérignacais et le support technique en France.</li>
+      <li>Le positionnement sans abonnement + l'application Daewoo Home Connect.</li>
+      <li>Les visuels existants (lifestyle, produit Vigilia, photos d'équipe et de locaux).</li>
+    </ul>
+    <h4>Contenus remplacés</h4>
+    <ul>
+      <li>« Notre mission », « Notre engagement envers l'excellence », « Une vision tournée vers l'avenir » : trois sections de texte marketing non vérifiable, fusionnées et remplacées par la fiche d'identité et les gammes.</li>
+      <li>« L'histoire de Daewoo » comme entrée de page : devient un encart en section 4.</li>
+      <li>Les trois boutons identiques « Découvrir les alarmes » : remplacés par des ancres descriptives distinctes.</li>
+      <li>Le compteur animé plein écran : remplacé par une grille de chiffres clés sobre.</li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <!-- ================= B. CONTENUS ================= -->
+  <section>
+    <h2><span class="tag">B</span> Contenus</h2>
+    <p class="intro">
+      Texte définitif proposé pour chaque section. Les mentions <span class="flag">à valider</span>
+      signalent une donnée à confirmer avant publication (détail en partie E).
+    </p>
+
+    <div class="copy-block">
+      <h3>1 · Hero</h3>
+      <p class="role">Sur-titre</p><p>Site officiel en France</p>
+      <p class="role">H1</p>
+      <p><strong>Daewoo Security France</strong><br>Le spécialiste de l'alarme connectée sans abonnement</p>
+      <p class="role">Paragraphe</p>
+      <blockquote><p>Daewoo Security commercialise des systèmes d'alarme, caméras de surveillance et équipements de sécurité connectée conçus pour protéger maisons et appartements sans abonnement de télésurveillance obligatoire. Daewoo-Security.fr est exploité en France par la société Liz Invest SAS, basée à Mérignac.</p></blockquote>
+      <p class="role">CTA</p><p>Configurer mon alarme · Comparer les systèmes Daewoo Security</p>
+      <p class="role">Bandeau de réassurance</p>
+      <p>Depuis 2015 <span class="flag">à valider</span> · Support technique à Mérignac · Garantie 2 ans · Sans abonnement obligatoire</p>
+    </div>
+
+    <div class="copy-block">
+      <h3>2 · Qui est Daewoo Security ?</h3>
+      <p class="role">Chapô</p>
+      <blockquote><p>Daewoo Security est une marque spécialisée dans les systèmes de sécurité connectée pour particuliers : alarmes maison, détecteurs, sirènes, caméras de surveillance et accessoires.</p></blockquote>
+      <p class="role">Trois blocs courts</p>
+      <ul>
+        <li><strong>En France</strong> — Les produits Daewoo Security sont commercialisés notamment via Daewoo-Security.fr, site exploité par Liz Invest SAS.</li>
+        <li><strong>L'objectif</strong> — Proposer des systèmes de sécurité faciles à installer, évolutifs et pilotables à distance.</li>
+        <li><strong>Le principe</strong> — Des systèmes utilisables sans abonnement obligatoire de télésurveillance.</li>
+      </ul>
+      <p>Le pavé de trois paragraphes du brief est ainsi éclaté en trois unités lisibles, sans perte d'information.</p>
+    </div>
+
+    <div class="copy-block">
+      <h3>3 · Daewoo Security en France</h3>
+      <p class="role">Chapô</p><p>Les informations de référence sur l'entité et sur l'exploitation du site.</p>
+      <div class="table-scroll">
+        <table>
+          <tbody>
+            <tr><td><strong>Marque</strong></td><td>Daewoo Security</td></tr>
+            <tr><td><strong>Activité</strong></td><td>Alarmes et sécurité connectée — pour les particuliers</td></tr>
+            <tr><td><strong>Site officiel</strong></td><td>Daewoo-Security.fr</td></tr>
+            <tr><td><strong>Exploitant du site en France</strong></td><td>Liz Invest SAS</td></tr>
+            <tr><td><strong>Localisation</strong></td><td>Mérignac, Gironde, France</td></tr>
+            <tr><td><strong>Application</strong></td><td>Daewoo Home Connect</td></tr>
+            <tr><td><strong>Positionnement</strong></td><td>Sans abonnement obligatoire — aucun abonnement de télésurveillance imposé</td></tr>
+            <tr><td><strong>Marchés</strong></td><td>France, Suisse et plusieurs pays européens <span class="flag">à valider</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        « Marchés » est la seule ligne non factuellement figée : les marchés Shopify actifs sont
+        France, Suisse et un marché « International » couvrant AT, BE, DE, ES, IT, LU, MC, NL, PT
+        et les DOM-TOM. La page d'accueil, elle, dit « France et Belgique ». Il faut choisir la
+        formulation à retenir.
+      </p>
+    </div>
+
+    <div class="copy-block">
+      <h3>4 · Notre lien avec la marque Daewoo</h3>
+      <p class="role">Énoncé principal (mis en exergue)</p>
+      <blockquote><p>Daewoo-Security.fr exploite la marque Daewoo dans le domaine de la sécurité connectée dans le cadre d'un accord de licence officiel.</p></blockquote>
+      <p class="role">Paragraphe</p>
+      <blockquote><p>Liz Invest SAS assure l'exploitation du site en France : sélection des produits, commercialisation, service client et support technique. Liz Invest SAS est une société indépendante : elle n'est ni une filiale ni la société mère du groupe Daewoo. <span class="flag">à valider</span></p></blockquote>
+      <p class="role">Encart secondaire « Repère — la marque Daewoo »</p>
+      <blockquote><p>Fondée en 1971 en Corée du Sud, Daewoo est une marque historique de l'électronique et des technologies grand public, connue dans de nombreux pays. Son usage dans la sécurité connectée en France s'inscrit dans une extension de licence de la marque.</p></blockquote>
+      <p>
+        La phrase de négation explicite est volontaire : c'est elle qui empêche un moteur IA de
+        déduire un lien capitalistique. Elle doit être validée juridiquement avant publication.
+        La mention « présente dans plus de 60 pays » du texte actuel est retirée faute de source
+        vérifiable.
+      </p>
+    </div>
+
+    <div class="copy-block">
+      <h3>5 · Une gamme complète pour protéger son domicile</h3>
+      <ul>
+        <li><strong>Alarmes connectées</strong> — Systèmes d'alarme Wi-Fi, 4G et, selon les gammes, Zigbee, destinés aux maisons et appartements. → <em>Comparer les alarmes Daewoo Security</em></li>
+        <li><strong>Détection</strong> — Détecteurs d'ouverture, mouvement, vibration, fumée et autres capteurs compatibles selon les gammes. → <em>Voir les détecteurs compatibles</em></li>
+        <li><strong>Sirènes et accessoires</strong> — Sirènes intérieures et extérieures, télécommandes, badges, claviers et accessoires de sécurité. → <em>Voir les sirènes et accessoires</em></li>
+        <li><strong>Caméras de surveillance</strong> — Caméras intérieures et extérieures, avec différents modes d'alimentation et de connexion selon les modèles. → <em>Voir les caméras de surveillance</em></li>
+      </ul>
+    </div>
+
+    <div class="copy-block">
+      <h3>6 · Les systèmes d'alarme Daewoo Security</h3>
+      <p class="role">Chapô</p><p>Trois gammes actuelles, à choisir selon le logement et le niveau d'équipement souhaité.</p>
+      <ul>
+        <li><strong>Vigilia</strong> — Système d'alarme connecté à clavier, pensé pour une installation simple et évolutive. Wi-Fi avec batterie de secours · jusqu'à 90 accessoires · application incluse.</li>
+        <li><strong>Touch / Touch XL</strong> — Centrale à écran tactile couleur, pilotable depuis la centrale ou depuis un smartphone. Écran 4,3'' ou 7'' · Wi-Fi, 4G en option · batterie de secours.</li>
+        <li><strong>Élite</strong> — Centrale multiprotocole orientée connectivité avancée. RJ45, Wi-Fi et 4G · accessoires Zigbee 3.0 · batterie de secours 12 h.</li>
+      </ul>
+      <p class="role">Encart compatibilité (logique réelle du catalogue)</p>
+      <ul>
+        <li>Série 30x — Vigilia et Touch</li>
+        <li>Série 501 — Key et Élite</li>
+        <li>Série 502Z (Zigbee) — Élite</li>
+      </ul>
+      <div class="callout">
+        <h4>Écart avec le brief : la gamme Key</h4>
+        <p>
+          Le brief demande quatre gammes dont Key. Or le comparateur publié du site annonce
+          « Nos 3 gammes » (Vigilia, Touch, Élite), le <em>Starter Pack Key (SA501)</em> est
+          <strong>archivé</strong> dans le catalogue, et seuls les accessoires série 501 et
+          l'adaptateur secteur restent actifs. Key est donc présenté comme gamme historique
+          encore accessoirisée, avec un lien vers ses accessoires — présentation à confirmer ou à
+          corriger. Toutes les caractéristiques ci-dessus sont reprises du comparateur en ligne et
+          des fiches produits, sans ajout.
+        </p>
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <h3>7 · La sécurité sans abonnement</h3>
+      <p class="role">Énoncé</p>
+      <blockquote><p>Vous pilotez vous-même la sécurité de votre logement, sans abonnement mensuel obligatoire de télésurveillance.</p></blockquote>
+      <p class="role">Paragraphe</p>
+      <blockquote><p>Les systèmes Daewoo Security sont conçus pour permettre à l'utilisateur de piloter lui-même la sécurité de son domicile sans abonnement mensuel obligatoire de télésurveillance. Selon le système utilisé, les alertes, commandes et équipements compatibles peuvent être accessibles directement depuis l'application Daewoo Home Connect.</p></blockquote>
+      <p class="role">Nuance (obligatoire)</p>
+      <blockquote><p>Certaines options peuvent générer des coûts indépendants du système : carte SIM M2M pour les modèles GSM/4G, services tiers ou consommables.</p></blockquote>
+      <p>
+        Cette nuance n'est pas décorative : le catalogue vend des cartes SIM M2M Afone (1 mois, 1 an)
+        pour les modèles 4G. Sans elle, la promesse « sans abonnement » serait trop absolue.
+      </p>
+      <p class="role">CTA</p><p>Découvrir les alarmes sans abonnement</p>
+    </div>
+
+    <div class="copy-block">
+      <h3>8 · Daewoo Home Connect</h3>
+      <p class="role">H2 + H3</p><p>Daewoo Home Connect — L'application au cœur de l'écosystème Daewoo Security</p>
+      <p class="role">Paragraphe</p>
+      <blockquote><p>Daewoo Home Connect permet de piloter à distance les équipements Daewoo Security compatibles, de recevoir les notifications du système et d'accéder aux principales fonctions de sécurité depuis un smartphone.</p></blockquote>
+      <p class="role">Chaîne visuelle</p><p>Daewoo Security → Daewoo Home Connect → Alarmes, caméras et accessoires compatibles</p>
+      <p>
+        Aucun lien App Store ni Google Play n'existe dans le thème actuel, et la page
+        <code>/pages/daewoo-home-connect</code> est dépubliée. Les boutons de téléchargement
+        restent donc en attente des URLs officielles. <span class="flag">à valider</span>
+      </p>
+    </div>
+
+    <div class="copy-block">
+      <h3>9 · Chiffres clés</h3>
+      <ul>
+        <li><strong>60 000+</strong> — foyers équipés <span class="flag">formulation à valider</span></li>
+        <li><strong>2015</strong> — année de départ affichée sur le site <span class="flag">à valider</span></li>
+        <li><strong>2 ans</strong> — garantie sur les produits</li>
+        <li><strong>33700</strong> — service client et support technique basés à Mérignac</li>
+      </ul>
+      <p>CTA : <em>Lire les avis clients Daewoo Security</em>. La note « 4,6/5 · 900+ avis » affichée sur la page d'accueil n'est pas reprise ici tant que la source Judge.me n'est pas confirmée à date.</p>
+    </div>
+
+    <div class="copy-block">
+      <h3>10 · Une équipe basée à Mérignac</h3>
+      <blockquote><p>Les commandes, le service client et le support technique sont gérés depuis Mérignac, en Gironde. Nos techniciens connaissent l'ensemble des gammes et accompagnent l'installation et la configuration des systèmes.</p></blockquote>
+      <p class="role">Bloc adresse</p>
+      <p>Liz Invest SAS — Daewoo Security<br>15 allée James Watt, Immeuble 2000 Watt<br>33700 Mérignac, France <span class="flag">adresse à valider</span></p>
+      <p class="role">ALT prévus</p>
+      <p><code>Locaux Daewoo Security à Mérignac</code> · <code>Équipe Daewoo Security à Mérignac</code> · <code>Préparation des commandes Daewoo Security à Mérignac</code></p>
+      <p>Liens : <em>Contacter le support Daewoo Security</em> · <em>Consulter l'aide en ligne et les manuels</em>.</p>
+    </div>
+
+    <div class="copy-block">
+      <h3>11 · Où trouver les produits Daewoo Security ?</h3>
+      <blockquote><p>Les produits Daewoo Security sont disponibles sur Daewoo-Security.fr, site exploité par Liz Invest SAS. Les commandes sont préparées et expédiées depuis Mérignac.</p></blockquote>
+      <p>
+        Le catalogue contient une collection « Pack alarme market place » (37 produits), ce qui
+        indique une présence sur des marketplaces — mais aucune enseigne n'est nommée dans le
+        thème. Aucun nom ne sera écrit sans confirmation. <span class="flag">à valider</span>
+      </p>
+    </div>
+
+    <div class="copy-block">
+      <h3>12 · FAQ</h3>
+      <ol>
+        <li><strong>Qui est Daewoo Security ?</strong> Marque spécialisée dans les systèmes de sécurité connectée pour particuliers : alarmes maison, détecteurs, sirènes, caméras de surveillance et accessoires.</li>
+        <li><strong>Qui exploite Daewoo-Security.fr en France ?</strong> La société Liz Invest SAS.</li>
+        <li><strong>Où est basé Daewoo Security ?</strong> À Mérignac, en Gironde : service client, support technique et préparation des commandes.</li>
+        <li><strong>Quel est le lien avec la marque Daewoo ?</strong> Un accord de licence officiel pour le domaine de la sécurité connectée. Liz Invest SAS n'est ni une filiale ni la société mère du groupe Daewoo.</li>
+        <li><strong>Un abonnement est-il nécessaire ?</strong> Non, pas d'abonnement de télésurveillance obligatoire. Certaines options peuvent générer des coûts indépendants (carte SIM M2M des modèles GSM/4G).</li>
+        <li><strong>Quelle application ?</strong> Daewoo Home Connect.</li>
+        <li><strong>Quels produits ?</strong> Alarmes connectées (Vigilia, Touch et Touch XL, Élite), détecteurs, sirènes, caméras et accessoires.</li>
+        <li><strong>Où acheter ?</strong> Sur Daewoo-Security.fr ; le configurateur permet de composer un système adapté au logement.</li>
+      </ol>
+    </div>
+
+    <div class="copy-block">
+      <h3>13 · CTA final</h3>
+      <p>Trouvez le système Daewoo Security adapté à votre logement — <strong>Configurer mon alarme</strong> · <strong>Comparer les systèmes</strong></p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ================= C. DESIGN ================= -->
+  <section>
+    <h2><span class="tag">C</span> Design</h2>
+    <p class="intro">
+      Aucune nouvelle direction graphique : les tokens sont ceux du thème et des sections
+      <code>dws-</code> déjà en production sur la page d'accueil.
+    </p>
+
+    <h4>Système repris tel quel</h4>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Token</th><th>Valeur</th><th>Origine</th></tr></thead>
+        <tbody>
+          <tr><td>Anthracite / navy</td><td><code>#0b1e4a</code> · <code>#0c1e4a</code></td><td>settings_data (color_text, boutons) + hero d'accueil</td></tr>
+          <tr><td>Bleu Daewoo</td><td><code>#1a4fab</code></td><td>settings_data (color_price) + dégradé hero</td></tr>
+          <tr><td>Cyan d'accent</td><td><code>#48cae4</code></td><td>sections dws- de la page d'accueil — usage parcimonieux</td></tr>
+          <tr><td>Blanc / gris très clair</td><td><code>#ffffff</code> · <code>#f6f7fb</code></td><td>fond de thème <code>#f2f3ff</code>, légèrement désaturé</td></tr>
+          <tr><td>Filets</td><td><code>#e3e7f2</code></td><td>bordures de cartes du thème</td></tr>
+          <tr><td>Typographies</td><td>Poppins 600–800 (titres) · DM Sans 300–600 (texte)</td><td>déjà chargées par le thème et la page d'accueil</td></tr>
+          <tr><td>Rayons</td><td>16 px sections/cartes · 12 px blocs · 8 px boutons</td><td><code>rounded_card: round</code> + sections dws-</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Rythme des sections</h4>
+    <p>
+      Blanc → gris très clair → blanc, avec <strong>trois ancres anthracite</strong> pleine largeur
+      (sans abonnement, chiffres clés, CTA final) qui portent l'identité de marque sans alourdir la
+      page. Padding vertical 96 px desktop → 76 px tablette → 60 px mobile. Colonne de contenu
+      1160 px, réduite à 760 px pour le hero et la FAQ afin de tenir ~65 caractères par ligne.
+    </p>
+
+    <h4>Section par section</h4>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Section</th><th>Fond</th><th>Disposition</th><th>Détails</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1 Hero</strong></td><td>Blanc</td><td>Colonne centrée 760 px, puis visuel 21:9 pleine largeur, rayon 16 px</td><td>H1 en <code>clamp(38→66px)</code>, 800 ; deuxième ligne en bleu, poids 500. Deux CTA. Bandeau de 4 points de réassurance. Image en <code>fetchpriority="high"</code>, jamais lazy.</td></tr>
+          <tr><td><strong>2 Qui est</strong></td><td>Blanc</td><td>Chapô large + 3 colonnes</td><td>Chaque colonne coiffée d'un filet anthracite 2 px : structure lisible, zéro carte inutile.</td></tr>
+          <tr><td><strong>3 Fiche d'identité</strong></td><td>Gris très clair</td><td>Grille 4×2 de cellules blanches séparées par des filets 1 px</td><td><code>&lt;dl&gt;/&lt;dt&gt;/&lt;dd&gt;</code> : la structure elle-même porte le sens clé/valeur, ce que les moteurs IA lisent le mieux. Libellé 11 px capitales, valeur Poppins 17 px.</td></tr>
+          <tr><td><strong>4 Lien Daewoo</strong></td><td>Blanc</td><td>Deux colonnes 1,35fr / 1fr</td><td>Énoncé de licence en Poppins 26 px avec filet cyan à gauche. L'histoire du groupe passe dans une carte grise, texte 14 px : hiérarchie visuelle inversée par rapport à aujourd'hui.</td></tr>
+          <tr><td><strong>5 Solutions</strong></td><td>Gris très clair</td><td>4 cartes blanches, bordure 1 px, sans ombre</td><td>Icônes SVG inline 34 px, trait 1,5 px, bleu. Chaque carte finit par une ancre descriptive fléchée.</td></tr>
+          <tr><td><strong>6 Gammes</strong></td><td>Blanc</td><td>3 grandes cartes (visuel 4:3 + corps) puis encart compatibilité 2 colonnes</td><td>Vrais visuels produits du catalogue. Liste de 3 caractéristiques réelles par gamme, coche bleue.</td></tr>
+          <tr><td><strong>7 Sans abonnement</strong></td><td>Anthracite</td><td>Énoncé 34 px à gauche / texte + nuance + CTA à droite</td><td>Halo radial bleu discret en haut à droite, repris des sections dws-.</td></tr>
+          <tr><td><strong>8 Home Connect</strong></td><td>Blanc</td><td>Chaîne de 3 nœuds reliés par des flèches cyan</td><td>La chaîne encode une relation réelle (marque → app → équipements), elle n'est pas décorative. Verticale sur mobile.</td></tr>
+          <tr><td><strong>9 Chiffres clés</strong></td><td>Anthracite</td><td>4 colonnes, filet supérieur</td><td>Chiffres Poppins 800 <code>clamp(34→48px)</code>, <code>tabular-nums</code>, unité en cyan.</td></tr>
+          <tr><td><strong>10 Équipe</strong></td><td>Gris très clair</td><td>Texte + bloc adresse à gauche / mosaïque 3 photos à droite</td><td>Adresse en <code>&lt;address&gt;</code>. ALT explicites obligatoires.</td></tr>
+          <tr><td><strong>11 Où acheter</strong></td><td>Blanc</td><td>Carte anthracite principale + carte secondaire en pointillés</td><td>La hiérarchie dit visuellement que le site officiel est le canal principal.</td></tr>
+          <tr><td><strong>12 FAQ</strong></td><td>Gris très clair</td><td>Accordéon 760 px</td><td><code>&lt;details&gt;/&lt;summary&gt;</code> natif : zéro JavaScript, accessible au clavier, contenu toujours dans le DOM donc indexable. Première question ouverte.</td></tr>
+          <tr><td><strong>13 CTA final</strong></td><td>Anthracite</td><td>Centré, deux boutons</td><td>Aucun ornement.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Animations</h4>
+    <p>
+      Trois effets seulement, tous en CSS : <code>fadeUp</code> 0,5 s à l'affichage du hero (déjà
+      utilisé sur l'accueil), translation de 3 px des flèches de liens au survol, opacité des
+      boutons au survol. Tout est neutralisé sous <code>prefers-reduced-motion</code>.
+      La parallaxe des six blocs actuels est supprimée : c'est elle qui alourdit le scroll mobile.
+    </p>
+
+    <h4>Mobile</h4>
+    <ul>
+      <li>Toutes les grilles passent en une colonne ; les cartes s'empilent verticalement.</li>
+      <li>Boutons pleine largeur, hauteur de frappe ≥ 48 px.</li>
+      <li>H1 en <code>clamp(32→44px)</code> : lisible sans scroll dès l'ouverture.</li>
+      <li>Visuel hero recadré en 4:3 plutôt qu'en 21:9.</li>
+      <li>Aucun débordement horizontal : le seul élément large (tableau de compatibilité) devient une liste.</li>
+      <li>La maquette est pilotée par <em>container queries</em> : la bascule Desktop/Tablette/Mobile de l'aperçu reflowe réellement la page.</li>
+    </ul>
+
+    <h4>Accessibilité</h4>
+    <ul>
+      <li>Contrastes : blanc sur <code>#0b1e4a</code> ≈ 14:1 ; <code>#545e78</code> sur blanc ≈ 6,4:1 ; bleu <code>#1a4fab</code> sur blanc ≈ 6,7:1. Le cyan ne sert jamais à porter du texte sur fond clair.</li>
+      <li><code>:focus-visible</code> visible sur tous les liens et boutons.</li>
+      <li>Structure sémantique : <code>header</code>, <code>section</code>, <code>article</code>, <code>dl</code>, <code>address</code>, <code>details</code>.</li>
+      <li>Icônes décoratives en <code>aria-hidden="true"</code> ; ancres descriptives, aucun « En savoir plus ».</li>
+    </ul>
+
+    <h4>Performance</h4>
+    <ul>
+      <li>Une seule section Liquid, un seul bloc <code>&lt;style&gt;</code> scopé — pas de duplication de CSS, aucune librairie JS.</li>
+      <li>Images servies par le CDN Shopify en <code>image_url: width</code> + <code>srcset</code>, format WebP automatique.</li>
+      <li><code>width</code>/<code>height</code> déclarés partout et <code>aspect-ratio</code> en CSS : aucun CLS.</li>
+      <li><code>loading="lazy"</code> + <code>decoding="async"</code> sous la ligne de flottaison ; visuel hero en <code>fetchpriority="high"</code>.</li>
+      <li>Suppression de la parallaxe et du compteur animé : moins de JS exécuté qu'aujourd'hui.</li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <!-- ================= D. SEO / GEO ================= -->
+  <section>
+    <h2><span class="tag">D</span> SEO · GEO · IA</h2>
+
+    <h4>Balise title (52 caractères)</h4>
+    <p><code>Daewoo Security France | Alarmes sans abonnement</code></p>
+
+    <h4>Meta description (161 caractères)</h4>
+    <p>
+      <code>Daewoo Security France : alarmes et caméras connectées sans abonnement obligatoire.
+      Site officiel exploité par Liz Invest SAS à Mérignac. App Daewoo Home Connect.</code>
+    </p>
+    <p>
+      La proposition du brief fait 213 caractères et serait tronquée. La version ci-dessus garde
+      les cinq faits utiles : marque, produits, sans abonnement, exploitant + ville, application.
+    </p>
+
+    <h4>Hiérarchie des titres</h4>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Niveau</th><th>Contenu</th></tr></thead>
+        <tbody>
+          <tr><td><strong>H1</strong> (unique)</td><td>Daewoo Security France — Le spécialiste de l'alarme connectée sans abonnement</td></tr>
+          <tr><td><strong>H2</strong> ×12</td><td>Qui est Daewoo Security ? · Daewoo Security en France · Notre lien avec la marque Daewoo · Une gamme complète pour protéger son domicile · Les systèmes d'alarme Daewoo Security · La sécurité sans abonnement · Daewoo Home Connect · Une marque déjà installée chez des dizaines de milliers de foyers · Une équipe basée à Mérignac · Où trouver les produits Daewoo Security ? · Daewoo Security en 8 questions · Trouvez le système Daewoo Security adapté à votre logement</td></tr>
+          <tr><td><strong>H3</strong></td><td>En France · L'objectif · Le principe · L'application au cœur de l'écosystème Daewoo Security · les 4 familles de solutions · Vigilia · Touch / Touch XL · Élite · Gamme Key (SA501) · Compatibilité des accessoires · les 2 canaux de distribution · les 8 questions de la FAQ</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Aucune balise de titre n'est utilisée pour sa seule taille : les exergues visuelles sont des <code>&lt;p&gt;</code> stylés.</p>
+
+    <h4>Maillage interne — 14 liens, ancres descriptives</h4>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Ancre</th><th>Destination</th><th>Statut</th></tr></thead>
+        <tbody>
+          <tr><td>Configurer mon alarme (×2)</td><td><code>/pages/configurateur_2</code></td><td><span class="ok">publiée</span></td></tr>
+          <tr><td>Comparer les systèmes Daewoo Security (×3)</td><td><code>/pages/comparateur-vigilia-touch-elite</code></td><td><span class="ok">publiée</span></td></tr>
+          <tr><td>Découvrir l'alarme Vigilia</td><td><code>/collections/systeme-dalarme-vigilia</code></td><td><span class="ok">31 produits</span></td></tr>
+          <tr><td>Découvrir les alarmes Touch et Touch XL</td><td><code>/collections/systeme-dalarme-am301-am302</code></td><td><span class="ok">7 produits</span></td></tr>
+          <tr><td>Découvrir l'alarme Élite</td><td><code>/collections/systeme-dalarme-pa501z</code></td><td><span class="ok">6 produits</span></td></tr>
+          <tr><td>Voir les accessoires de la gamme Key</td><td><code>/collections/accessoires</code></td><td><span class="ok">21 produits</span></td></tr>
+          <tr><td>Voir les détecteurs compatibles / les sirènes et accessoires</td><td><code>/collections/tous-les-accessoires</code></td><td><span class="ok">52 produits</span></td></tr>
+          <tr><td>Voir les caméras de surveillance</td><td><code>/collections/cameras-de-surveillance</code></td><td><span class="ok">12 produits</span></td></tr>
+          <tr><td>Découvrir les alarmes sans abonnement · Voir les packs alarme disponibles</td><td><code>/pages/pack-alarmes</code></td><td><span class="ok">publiée</span></td></tr>
+          <tr><td>Lire les avis clients Daewoo Security</td><td><code>/pages/avis-clients-2</code></td><td><span class="ok">publiée</span></td></tr>
+          <tr><td>Contacter le support Daewoo Security</td><td><code>/pages/nous-contacter</code></td><td><span class="ok">publiée</span></td></tr>
+          <tr><td>Consulter l'aide en ligne et les manuels</td><td><code>/pages/assistance-1</code></td><td><span class="ok">publiée</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <h4>Deux liens volontairement absents</h4>
+      <p>
+        <code>/pages/daewoo-home-connect</code> et <code>/pages/configurateurs</code> existent mais
+        sont <strong>dépubliées</strong>. Le menu principal pointe pourtant encore vers
+        <code>/pages/configurateurs</code> : à corriger, hors périmètre de cette page.
+        Dès que la page Daewoo Home Connect est republiée, la section 8 pointera vers elle.
+      </p>
+    </div>
+
+    <h4>JSON-LD prévu</h4>
+    <p>
+      Un seul bloc <code>@graph</code>, injecté par la section, avec cinq nœuds reliés par
+      <code>@id</code>. <strong>Aucun <code>parentOrganization</code> ni <code>subOrganization</code></strong> :
+      le seul lien déclaré entre Liz Invest et la marque est <code>publisher</code> (édition du
+      site, conforme aux mentions légales) et <code>brand</code>.
+    </p>
+<pre><code>{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://daewoo-security.fr/#organization",
+      "name": "Daewoo Security France",
+      "alternateName": "Daewoo-Security.fr",
+      "url": "https://daewoo-security.fr/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cdn.shopify.com/.../daewoo-Correct_logo...png",
+        "width": 1056, "height": 192
+      },
+      "description": "Daewoo Security commercialise des systèmes d'alarme, caméras de
+        surveillance et équipements de sécurité connectée sans abonnement de
+        télésurveillance obligatoire.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "15 allée James Watt",     // à valider
+        "addressLocality": "Mérignac",
+        "postalCode": "33700",
+        "addressRegion": "Gironde",
+        "addressCountry": "FR"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "contact@daewoo-security.fr",
+        "availableLanguage": ["fr"]
+      },
+      "areaServed": [
+        { "@type": "Country", "name": "France" },
+        { "@type": "Country", "name": "Suisse" }   // + liste à valider
+      ],
+      "brand": { "@id": "https://daewoo-security.fr/#brand" },
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=100063456644012",
+        "https://www.instagram.com/daewoosecurity/",
+        "https://www.youtube.com/@daewoosecurity3029"
+      ]
+    },
+    {
+      "@type": "Brand",
+      "@id": "https://daewoo-security.fr/#brand",
+      "name": "Daewoo Security",
+      "logo": "https://cdn.shopify.com/.../daewoo-Correct_logo...png",
+      "description": "Marque de systèmes de sécurité connectée pour particuliers :
+        alarmes, détecteurs, sirènes et caméras de surveillance."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://daewoo-security.fr/#website",
+      "url": "https://daewoo-security.fr/",
+      "name": "Daewoo Security France",
+      "inLanguage": "fr-FR",
+      "publisher": { "@id": "https://daewoo-security.fr/#publisher" },
+      "about": { "@id": "https://daewoo-security.fr/#brand" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://daewoo-security.fr/#publisher",
+      "name": "Liz Invest SAS",
+      "legalName": "Liz Invest",
+      "address": { "@type": "PostalAddress",
+        "addressLocality": "Mérignac", "postalCode": "33700",
+        "addressCountry": "FR" },
+      "identifier": { "@type": "PropertyValue",
+        "name": "RCS Bordeaux", "value": "791022692" }
+    },
+    {
+      "@type": "AboutPage",
+      "@id": "https://daewoo-security.fr/pages/a-propos#webpage",
+      "url": "https://daewoo-security.fr/pages/a-propos",
+      "name": "Daewoo Security France | Alarmes sans abonnement",
+      "inLanguage": "fr-FR",
+      "isPartOf": { "@id": "https://daewoo-security.fr/#website" },
+      "about": { "@id": "https://daewoo-security.fr/#organization" },
+      "mainEntity": {
+        "@type": "FAQPage",
+        "mainEntity": [ /* les 8 questions visibles sur la page */ ]
+      }
+    }
+  ]
+}</code></pre>
+    <p>
+      Les données du <code>identifier</code> (RCS Bordeaux 791022692) proviennent des mentions
+      légales du site. Le <code>telephone</code> est volontairement omis : trois numéros différents
+      circulent aujourd'hui (voir partie E).
+    </p>
+
+    <h4>Ce qui rend la page lisible par une IA</h4>
+    <ul>
+      <li>Le premier bloc de texte contient les cinq faits d'identification : marque, produits, secteur, exploitant, ville.</li>
+      <li>La fiche d'identité est une liste de définitions clé/valeur, pas une prose.</li>
+      <li>La FAQ répond en une à deux phrases par question, avec les mêmes formulations que le corps de page — cohérence sémantique.</li>
+      <li>Chaque affirmation a une source dans le site : aucune donnée fabriquée à corriger plus tard.</li>
+      <li>Densité de mots-clés maîtrisée : « sans abonnement » apparaît 7 fois sur ~1 100 mots, toujours dans une phrase informative.</li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <!-- ================= E. VÉRIFICATIONS ================= -->
+  <section>
+    <h2><span class="tag">E</span> Vérifications avant intégration</h2>
+    <p class="intro">
+      Huit points bloquants ou semi-bloquants. Les trois premiers sont de vraies contradictions
+      dans les données actuelles du site.
+    </p>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>#</th><th>Point</th><th>Ce que dit le site aujourd'hui</th><th>Décision attendue</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="num">1</td>
+            <td><strong>Adresse</strong> <span class="flag">bloquant</span></td>
+            <td>
+              <strong>Trois adresses différentes.</strong><br>
+              Mentions légales : <em>6 rue Léon Morane, 33700 Mérignac</em> (siège social, RCS Bordeaux 791022692).<br>
+              Page retours SAV : <em>15 allée James Watt, Immeuble 2000 Watt, 33700 Mérignac</em>.<br>
+              Adresse de facturation Shopify : <em>6 Léon Maurane, 33700 Mérignac</em> (orthographe erronée).<br>
+              Une autre page indique encore une adresse de retour <em>6 rue Léon Morane</em>.
+            </td>
+            <td>
+              Confirmer que <em>15 allée James Watt</em> est bien l'adresse à afficher (cohérente avec
+              le Google Business Profile). Si le siège social reste au 6 rue Léon Morane, il faut
+              décider quelle adresse figure sur la page et dans le JSON-LD — mentions légales et
+              fiche Google doivent finir alignées.
+            </td>
+          </tr>
+          <tr>
+            <td class="num">2</td>
+            <td><strong>Gamme Key</strong> <span class="flag">bloquant</span></td>
+            <td>
+              Comparateur publié : « Nos 3 gammes » (Vigilia, Touch, Élite). <em>Starter Pack Key (SA501)</em>
+              archivé. Accessoires série 501 toujours actifs, compatibles Key et Élite.
+            </td>
+            <td>
+              Key est-elle encore commercialisée comme système, ou uniquement maintenue en
+              accessoires&nbsp;? Selon la réponse : 4<sup>e</sup> carte de gamme, ou encart
+              « gamme historique » (option retenue par défaut dans la maquette).
+            </td>
+          </tr>
+          <tr>
+            <td class="num">3</td>
+            <td><strong>Formulation de la licence</strong> <span class="flag">bloquant</span></td>
+            <td>
+              Texte en ligne : « Le site Daewoo-Security.fr est exploité sous licence officielle de la
+              marque Daewoo. » Aucune autre précision contractuelle sur le site.
+            </td>
+            <td>
+              Valider la phrase retenue, et surtout valider (ou retirer) la phrase de
+              désambiguïsation « Liz Invest SAS n'est ni une filiale ni la société mère du groupe
+              Daewoo ». C'est elle qui protège contre une mauvaise inférence des IA, mais elle doit
+              correspondre exactement au contrat.
+            </td>
+          </tr>
+          <tr>
+            <td class="num">4</td>
+            <td><strong>Chiffre des foyers</strong></td>
+            <td>
+              Trois formulations en circulation : « plus de 60.000 clients satisfaits et protégés »
+              (page À propos), « + 60.000 clients satisfaits » (footer), « 60k+ foyers protégés en
+              France et en Belgique » + « 95 % de nos clients nous recommandent » (accueil / footer).
+            </td>
+            <td>
+              Choisir <strong>une</strong> formulation canonique. Proposition : « Plus de 60 000 foyers
+              équipés ». Confirmer aussi si le chiffre reste à jour.
+            </td>
+          </tr>
+          <tr>
+            <td class="num">5</td>
+            <td><strong>Pays desservis</strong></td>
+            <td>
+              Marchés Shopify actifs : France, Suisse, et « International » = AT, BE, DE, ES, IT, LU,
+              MC, NL, PT, GF, GP, MQ, NC, PF, RE, YT. L'accueil dit « France et Belgique ». Les CGV
+              mentionnent des droits de douane pour la Suisse.
+            </td>
+            <td>
+              Valider la formule à afficher et la liste <code>areaServed</code> du JSON-LD.
+            </td>
+          </tr>
+          <tr>
+            <td class="num">6</td>
+            <td><strong>App Store / Google Play</strong></td>
+            <td>
+              Aucun lien de store dans tout le thème. La page <code>/pages/daewoo-home-connect</code>
+              existe mais est dépubliée.
+            </td>
+            <td>
+              Fournir les deux URLs officielles (et republier la page app si elle doit être liée).
+              Sans elles, la section 8 reste sans boutons de téléchargement.
+            </td>
+          </tr>
+          <tr>
+            <td class="num">7</td>
+            <td><strong>Réseaux sociaux</strong></td>
+            <td>
+              Confirmés dans les réglages du thème : Facebook (<code>profile.php?id=100063456644012</code>),
+              Instagram <code>@daewoosecurity</code>, YouTube <code>@daewoosecurity3029</code>.
+              LinkedIn et TikTok vides.
+            </td>
+            <td>
+              Confirmer ces trois URLs pour le <code>sameAs</code>, et indiquer s'il existe un
+              LinkedIn ou TikTok officiel à ajouter.
+            </td>
+          </tr>
+          <tr>
+            <td class="num">8</td>
+            <td><strong>Marketplaces, avis, ancienneté, téléphone</strong></td>
+            <td>
+              Collection « Pack alarme market place » (37 produits) mais aucune enseigne nommée.
+              Accueil : « 4,6/5 · 900+ avis » et « Depuis 2015 ». Trois numéros de téléphone
+              coexistent : +33 5 56 31 57 17 (mentions légales), 05 47 74 29 40 (Shopify),
+              06 60 89 74 83 (page retours).
+            </td>
+            <td>
+              Nommer les enseignes réellement actives ; confirmer la note et le nombre d'avis à
+              date ; confirmer « depuis 2015 » ; désigner le numéro public unique à publier.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Autres constats, hors périmètre de cette page</h4>
+    <ul>
+      <li>Le menu principal pointe vers <code>/pages/configurateurs</code> (dépubliée) et vers les collections <code>systemes-elite</code> et <code>offres-du-mois-1</code>, absentes du catalogue.</li>
+      <li>Le hero de la page d'accueil affiche encore « Offre jusqu'au 31 mai 2026 » et un compte à rebours expiré.</li>
+      <li>Les images de la bibliothèque utilisées sur À propos ont un attribut ALT vide côté Shopify ; la nouvelle page déclare les ALT dans son balisage, mais il serait utile de les corriger à la source.</li>
+      <li>Aucune de ces corrections ne sera faite sans demande explicite : le périmètre validé reste la seule page /pages/a-propos.</li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <!-- ================= INTÉGRATION ================= -->
+  <section>
+    <h2><span class="tag">ÉTAPE 2</span> Comment l'intégration se déroulera</h2>
+    <p class="intro">Rien de tout cela ne démarre avant votre validation.</p>
+    <ol>
+      <li>
+        <strong>Une seule nouvelle section</strong> <code>sections/page-a-propos-daewoo.liquid</code> :
+        balisage, CSS scopé, JSON-LD et réglages éditables dans le personnalisateur de thème.
+        Aucun fichier partagé n'est modifié — donc aucun risque pour les autres pages.
+      </li>
+      <li>
+        <strong>Le template <code>templates/page.a-propos.json</code></strong> est réécrit pour ne
+        contenir que cette section. Header, footer, barre d'annonces et mega-menus restent
+        intacts. Aucun autre template n'est touché.
+      </li>
+      <li>
+        <strong>Title et meta description</strong> mis à jour sur la page Shopify (métachamps
+        <code>global.title_tag</code> / <code>global.description_tag</code>).
+      </li>
+      <li>
+        <strong>Livraison sur un thème de préversion</strong> (duplicata du thème publié), pour que
+        vous validiez le rendu réel desktop / tablette / mobile avant toute publication. La mise
+        en ligne reste un geste que vous déclenchez.
+      </li>
+      <li>
+        <strong>Le code est aussi versionné</strong> sur la branche
+        <code>claude/daewoo-about-page-redesign-qdigpx</code> du dépôt.
+      </li>
+    </ol>
+    <div class="callout">
+      <h4>Un choix technique à faire</h4>
+      <p>
+        Le dépôt Git ne contient qu'une archive d'export du thème (18 mai 2026), pas les fichiers
+        du thème en clair. Deux options pour l'étape 2 : <strong>(a)</strong> j'écris directement
+        les fichiers sur un thème de préversion via l'API Shopify — le plus rapide et le plus sûr ;
+        <strong>(b)</strong> je livre les fichiers dans le dépôt et vous les poussez via Shopify CLI
+        ou l'intégration GitHub. L'option (a) est recommandée.
+      </p>
+    </div>
+  </section>
+
+</div>
