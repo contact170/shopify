@@ -1,9 +1,9 @@
-<title>Daewoo Security France</title>
+<title>Daewoo Security — À propos</title>
 <style>
   /* ===========================================================
-     APERÇU — page /pages/a-propos (refonte)
+     APERÇU v2 — page /pages/a-propos (refonte)
      Tokens reprises du thème Daewoo Security existant :
-     navy #0b1e4a · bleu #1a4fab · cyan #48cae4 · fond #f2f3ff
+     navy #0b1e4a · bleu #1a4fab · cyan #48cae4 (très parcimonieux)
      Typo production : Poppins (titres) + DM Sans (texte),
      déjà chargées par le thème. Ici : fallback système
      (les CDN de polices sont bloqués dans cet aperçu).
@@ -13,7 +13,6 @@
 
   :root {
     --navy: #0b1e4a;
-    --navy-soft: #13275c;
     --blue: #1a4fab;
     --cyan: #48cae4;
     --paper: #ffffff;
@@ -21,7 +20,7 @@
     --mist-deep: #eef0f8;
     --line: #e3e7f2;
     --ink: #0b1e4a;
-    --muted: #5a6480;
+    --muted: #545e78;
     --muted-soft: #7c85a0;
     --flag: #b45309;
     --flag-bg: #fef6e7;
@@ -49,8 +48,8 @@
   }
 
   img { max-width: 100%; display: block; }
-
   a { color: var(--blue); }
+  p { margin: 0; }
 
   :focus-visible {
     outline: 2px solid var(--blue);
@@ -119,7 +118,6 @@
   .frame[data-vp="tablet"] { max-width: 834px; }
   .frame[data-vp="mobile"] { max-width: 414px; }
 
-  /* Bandeaux "header / footer existants — non modifiés" */
   .theme-chrome {
     background: var(--mist);
     border-bottom: 1px dashed var(--line);
@@ -132,7 +130,6 @@
   }
   .theme-chrome--footer { border-bottom: none; border-top: 1px dashed var(--line); }
 
-  /* Marqueur "à valider" */
   .tbv {
     display: inline-block;
     vertical-align: middle;
@@ -149,7 +146,6 @@
     white-space: nowrap;
   }
 
-  /* Placeholders visuels */
   .ph {
     position: relative;
     display: flex;
@@ -158,7 +154,7 @@
     gap: 4px;
     padding: 16px;
     background:
-      linear-gradient(135deg, rgba(26,79,171,0.10) 0%, rgba(72,202,228,0.10) 100%),
+      linear-gradient(135deg, rgba(26,79,171,0.10) 0%, rgba(72,202,228,0.08) 100%),
       var(--mist);
     border: 1px solid var(--line);
     border-radius: var(--r-md);
@@ -185,7 +181,7 @@
   }
   .ph b { color: var(--navy); font-weight: 600; }
 
-  /* ---------- Grille et sections de la page ---------- */
+  /* ---------- Sections ---------- */
 
   .sec { padding: 96px var(--gutter); }
   .sec--mist { background: var(--mist); }
@@ -203,7 +199,7 @@
     width: 460px;
     height: 460px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(26,79,171,0.55) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(26,79,171,0.5) 0%, transparent 70%);
     pointer-events: none;
   }
   .wrap { max-width: var(--maxw); margin: 0 auto; position: relative; z-index: 1; }
@@ -212,7 +208,7 @@
   .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -222,13 +218,13 @@
   }
   .eyebrow::before {
     content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--cyan);
+    width: 18px;
+    height: 1px;
+    background: var(--blue);
     flex: none;
   }
-  .sec--navy .eyebrow { color: rgba(255,255,255,0.6); }
+  .sec--navy .eyebrow { color: rgba(255,255,255,0.55); }
+  .sec--navy .eyebrow::before { background: var(--cyan); }
 
   h1, h2, h3 {
     font-family: var(--display);
@@ -238,13 +234,13 @@
     text-wrap: balance;
     margin: 0;
   }
-  h1 { font-size: clamp(38px, 5.4cqw, 66px); font-weight: 800; }
+  h1 { font-size: clamp(46px, 7.4cqw, 92px); font-weight: 800; letter-spacing: -0.04em; }
   h2 { font-size: clamp(28px, 3.4cqw, 42px); }
   h3 { font-size: clamp(19px, 1.6cqw, 22px); letter-spacing: -0.015em; }
 
   .h1-sub {
     display: block;
-    margin-top: 14px;
+    margin-top: 18px;
     font-size: clamp(19px, 2.1cqw, 27px);
     font-weight: 500;
     letter-spacing: -0.015em;
@@ -261,31 +257,17 @@
   }
   .sec--navy .lead { color: rgba(255,255,255,0.7); }
 
-  p { margin: 0; }
-  .sec > .wrap > p + p { margin-top: 18px; }
+  .body-txt { font-size: 16px; line-height: 1.7; color: var(--muted); max-width: 64ch; }
 
-  .body-txt {
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--muted);
-    max-width: 64ch;
-  }
+  .note { font-size: 13.5px; line-height: 1.6; color: var(--muted-soft); max-width: 70ch; }
+  .sec--navy .note { color: rgba(255,255,255,0.42); }
 
-  .note {
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: var(--muted-soft);
-    max-width: 68ch;
-  }
-  .sec--navy .note { color: rgba(255,255,255,0.45); }
-
-  /* Boutons */
   .btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
   .btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 14px 26px;
+    padding: 15px 28px;
     border-radius: var(--r-sm);
     font-size: 14px;
     font-weight: 700;
@@ -322,8 +304,8 @@
   .link-arrow:hover { text-decoration: underline; }
   .link-arrow:hover::after { transform: translateX(3px); }
 
-  /* Hero */
-  .hero { padding: 88px var(--gutter) 0; text-align: center; }
+  /* 1 · Hero */
+  .hero { padding: 104px var(--gutter) 0; text-align: center; }
   .hero .lead { margin-inline: auto; text-align: left; }
   .hero .btns { justify-content: center; }
   .hero-strip {
@@ -331,7 +313,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px 28px;
-    margin-top: 40px;
+    margin-top: 44px;
     font-size: 13px;
     color: var(--muted-soft);
   }
@@ -340,26 +322,24 @@
     content: "";
     width: 5px; height: 5px;
     border-radius: 50%;
-    background: var(--cyan);
+    background: var(--blue);
+    opacity: 0.5;
   }
-  .hero-visual { margin-top: 56px; }
+  .hero-visual { margin-top: 60px; }
   .hero-visual .ph { aspect-ratio: 21 / 9; border-radius: var(--r-lg); }
 
-  /* Qui est Daewoo Security */
+  /* 2 · Qui est Daewoo Security */
   .who-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 28px;
     margin-top: 56px;
   }
-  .who-item {
-    padding-top: 22px;
-    border-top: 2px solid var(--navy);
-  }
+  .who-item { padding-top: 22px; border-top: 2px solid var(--navy); }
   .who-item h3 { font-size: 15px; font-weight: 700; letter-spacing: 0; }
   .who-item p { margin-top: 10px; font-size: 14.5px; color: var(--muted); line-height: 1.65; }
 
-  /* Fiche d'identité */
+  /* 3 · Repères */
   .id-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -387,56 +367,8 @@
     line-height: 1.35;
     color: var(--navy);
   }
-  .id-cell dd small {
-    display: block;
-    margin-top: 6px;
-    font-family: var(--body);
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--muted);
-    letter-spacing: 0;
-  }
 
-  /* Lien avec la marque Daewoo */
-  .licence-split {
-    display: grid;
-    grid-template-columns: 1.35fr 1fr;
-    gap: 56px;
-    align-items: start;
-    margin-top: 48px;
-  }
-  .licence-statement {
-    font-family: var(--display);
-    font-size: clamp(20px, 2cqw, 26px);
-    font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: -0.02em;
-    color: var(--navy);
-    padding-left: 26px;
-    border-left: 3px solid var(--cyan);
-  }
-  .licence-split .body-txt { margin-top: 26px; }
-  .heritage {
-    background: var(--mist);
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    padding: 28px;
-  }
-  .heritage h3 {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted-soft);
-  }
-  .heritage p {
-    margin-top: 14px;
-    font-size: 14px;
-    line-height: 1.65;
-    color: var(--muted);
-  }
-
-  /* Solutions — 4 cartes */
+  /* 4 · Solutions */
   .sol-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -462,7 +394,7 @@
     stroke-linejoin: round;
   }
 
-  /* Gammes — 3 grandes cartes */
+  /* 5 · Gammes */
   .range-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -480,39 +412,23 @@
   .range-card .ph { border: none; border-radius: 0; aspect-ratio: 4 / 3; }
   .range-body { padding: 28px 26px 30px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
   .range-body p { font-size: 14.5px; line-height: 1.65; color: var(--muted); }
-  .spec {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-  }
-  .spec li {
-    display: flex;
-    gap: 10px;
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
+  .spec { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .spec li { display: flex; gap: 10px; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
   .spec li::before { content: "✓"; color: var(--blue); font-weight: 700; flex: none; }
+  .legacy-note {
+    margin-top: 32px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
 
-  .compat {
-    margin-top: 28px;
+  /* 6 · Sans abonnement */
+  .noabo-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 56px;
     align-items: start;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    padding: 28px;
+    margin-top: 40px;
   }
-  .compat h3 { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-soft); font-weight: 700; }
-  .compat ul { margin: 12px 0 0; padding-left: 18px; font-size: 14px; color: var(--muted); line-height: 1.7; }
-
-  /* Sans abonnement */
   .noabo-statement {
     font-family: var(--display);
     font-size: clamp(24px, 2.6cqw, 34px);
@@ -522,21 +438,9 @@
     color: #fff;
     max-width: 26ch;
   }
-  .noabo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 56px;
-    align-items: start;
-    margin-top: 40px;
-  }
 
-  /* Home Connect */
-  .chain {
-    display: flex;
-    align-items: stretch;
-    gap: 14px;
-    margin-top: 48px;
-  }
+  /* 7 · Home Connect */
+  .chain { display: flex; align-items: stretch; gap: 14px; margin-top: 48px; }
   .chain-node {
     flex: 1;
     background: var(--paper);
@@ -560,12 +464,7 @@
     letter-spacing: -0.015em;
     color: var(--navy);
   }
-  .chain-arrow {
-    align-self: center;
-    color: var(--cyan);
-    font-size: 20px;
-    flex: none;
-  }
+  .chain-arrow { align-self: center; color: var(--blue); font-size: 20px; flex: none; }
   .stores { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
   .store-ph {
     display: inline-flex;
@@ -580,30 +479,36 @@
   }
   .store-ph b { font-family: var(--display); font-size: 14px; color: var(--navy); }
 
-  /* Preuves */
-  .proof-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    margin-top: 56px;
-  }
-  .proof {
-    padding: 26px 0 0;
-    border-top: 1px solid rgba(255,255,255,0.18);
-  }
-  .proof-num {
+  /* 8 · Chiffres */
+  .stat-hero { display: flex; flex-direction: column; gap: 10px; }
+  .stat-hero .figure {
     font-family: var(--display);
-    font-size: clamp(34px, 3.6cqw, 48px);
+    font-size: clamp(64px, 11cqw, 148px);
     font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.03em;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
     color: #fff;
     font-variant-numeric: tabular-nums;
   }
-  .proof-num em { font-style: normal; color: var(--cyan); }
-  .proof p { margin-top: 12px; font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.6); }
+  .stat-hero .figure em { font-style: normal; color: var(--cyan); }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .stat-item { padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.18); }
+  .stat-item strong {
+    display: block;
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: #fff;
+  }
+  .stat-item p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.55); }
 
-  /* Équipe */
+  /* 9 · Équipe */
   .team-split {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -617,7 +522,7 @@
   .addr {
     margin-top: 28px;
     padding: 22px 24px;
-    background: var(--mist);
+    background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--r-md);
     font-size: 14.5px;
@@ -628,7 +533,20 @@
   .addr strong { color: var(--navy); font-weight: 600; }
   .inline-links { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 28px; }
 
-  /* Où acheter */
+  /* 10 · Mention exploitation (bande discrète) */
+  .sec--slim { padding: 36px var(--gutter); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .slim-grid { display: flex; flex-wrap: wrap; gap: 8px 40px; align-items: baseline; }
+  .sec--slim h2 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+    flex: none;
+  }
+  .sec--slim p { font-size: 14px; color: var(--muted); max-width: 76ch; }
+
+  /* 11 · Où acheter */
   .buy-grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -636,25 +554,15 @@
     margin-top: 48px;
     align-items: start;
   }
-  .buy-main {
-    background: var(--navy);
-    color: #fff;
-    border-radius: var(--r-lg);
-    padding: 34px;
-  }
+  .buy-main { background: var(--navy); color: #fff; border-radius: var(--r-lg); padding: 34px; }
   .buy-main h3 { color: #fff; }
   .buy-main p { margin-top: 14px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.7); }
   .buy-main .link-arrow { color: var(--cyan); margin-top: 20px; }
-  .buy-side {
-    background: var(--paper);
-    border: 1px dashed var(--line);
-    border-radius: var(--r-lg);
-    padding: 30px;
-  }
+  .buy-side { background: var(--paper); border: 1px dashed var(--line); border-radius: var(--r-lg); padding: 30px; }
   .buy-side h3 { font-size: 15px; }
   .buy-side p { margin-top: 12px; font-size: 14px; color: var(--muted); line-height: 1.65; }
 
-  /* FAQ */
+  /* 12 · FAQ */
   .faq { margin-top: 48px; border-top: 1px solid var(--line); }
   .faq details { border-bottom: 1px solid var(--line); }
   .faq summary {
@@ -672,23 +580,11 @@
     list-style: none;
   }
   .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after {
-    content: "+";
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--blue);
-    flex: none;
-  }
+  .faq summary::after { content: "+"; font-size: 22px; font-weight: 400; color: var(--blue); flex: none; }
   .faq details[open] summary::after { content: "−"; }
-  .faq-answer {
-    padding: 0 0 26px;
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--muted);
-    max-width: 72ch;
-  }
+  .faq-answer { padding: 0 0 26px; font-size: 15px; line-height: 1.7; color: var(--muted); max-width: 72ch; }
 
-  /* CTA final */
+  /* 13 · CTA final */
   .cta-final { text-align: center; }
   .cta-final .btns { justify-content: center; margin-top: 40px; }
   .cta-final h2 { max-width: 22ch; margin-inline: auto; color: #fff; }
@@ -697,12 +593,11 @@
 
   @container page (max-width: 1000px) {
     .sec { padding: 76px 28px; }
-    .hero { padding: 68px 28px 0; }
+    .hero { padding: 80px 28px 0; }
+    .sec--slim { padding: 32px 28px; }
     .id-grid { grid-template-columns: repeat(2, 1fr); }
     .sol-grid { grid-template-columns: repeat(2, 1fr); }
     .range-grid { grid-template-columns: repeat(2, 1fr); }
-    .proof-grid { grid-template-columns: repeat(2, 1fr); }
-    .licence-split,
     .noabo-grid,
     .team-split,
     .buy-grid { grid-template-columns: 1fr; gap: 36px; }
@@ -711,15 +606,15 @@
 
   @container page (max-width: 680px) {
     .sec { padding: 60px 20px; }
-    .hero { padding: 52px 20px 0; }
-    h1 { font-size: clamp(32px, 9cqw, 44px); }
-    .h1-sub { font-size: 19px; }
+    .hero { padding: 56px 20px 0; }
+    .sec--slim { padding: 28px 20px; }
+    h1 { font-size: clamp(40px, 13cqw, 60px); }
+    .h1-sub { font-size: 19px; margin-top: 14px; }
     .who-grid,
     .id-grid,
     .sol-grid,
     .range-grid,
-    .proof-grid,
-    .compat,
+    .stat-grid,
     .team-photos { grid-template-columns: 1fr; }
     .team-photos .ph:first-child { grid-column: auto; }
     .chain { flex-direction: column; }
@@ -728,15 +623,16 @@
     .hero-strip { gap: 8px 18px; font-size: 12px; }
     .btns { flex-direction: column; align-items: stretch; }
     .btn { justify-content: center; }
-    .licence-statement { padding-left: 18px; font-size: 19px; }
     .noabo-statement { font-size: 24px; max-width: none; }
+    .stat-hero .figure { font-size: clamp(56px, 20cqw, 84px); }
     .faq summary { font-size: 16px; }
+    .slim-grid { gap: 10px; }
   }
 </style>
 
 <div class="preview-bar">
   <div>
-    <strong>Aperçu — étape 1</strong>
+    <strong>Aperçu v2 — étape 1</strong>
     <span class="pv-note">&nbsp;/pages/a-propos · rien n'est publié</span>
   </div>
   <div class="pv-switch" role="group" aria-label="Choisir la largeur d'aperçu">
@@ -754,26 +650,25 @@
     <!-- ===================== 1. HERO ===================== -->
     <header class="sec hero">
       <div class="wrap wrap--narrow">
-        <p class="eyebrow">Site officiel en France</p>
         <h1>
-          Daewoo Security France
-          <span class="h1-sub">Le spécialiste de l'alarme connectée sans abonnement</span>
+          Daewoo Security
+          <span class="h1-sub">Alarmes et sécurité connectée sans abonnement</span>
         </h1>
         <p class="lead">
-          Daewoo Security commercialise des systèmes d'alarme, caméras de surveillance et
-          équipements de sécurité connectée conçus pour protéger maisons et appartements
-          sans abonnement de télésurveillance obligatoire. Daewoo-Security.fr est exploité
-          en France par la société Liz&nbsp;Invest&nbsp;SAS, basée à Mérignac.
+          Daewoo Security propose des systèmes d'alarme, des caméras de surveillance et des
+          équipements de sécurité connectée destinés à protéger maisons et appartements, sans
+          abonnement de télésurveillance obligatoire. Le site Daewoo-Security.fr est exploité
+          par Liz Invest SAS, société basée à Mérignac.
         </p>
         <div class="btns">
           <a class="btn btn--primary" href="/pages/configurateur_2">Configurer mon alarme</a>
           <a class="btn btn--ghost" href="/pages/comparateur-vigilia-touch-elite">Comparer les systèmes Daewoo Security</a>
         </div>
         <div class="hero-strip">
-          <span>Depuis 2015 <span class="tbv">à valider</span></span>
-          <span>Support technique à Mérignac</span>
-          <span>Garantie 2 ans</span>
           <span>Sans abonnement obligatoire</span>
+          <span>Équipe à Mérignac</span>
+          <span>Garantie 2 ans</span>
+          <span>Application Daewoo Home Connect</span>
         </div>
       </div>
       <div class="wrap hero-visual">
@@ -797,82 +692,50 @@
         </p>
         <div class="who-grid">
           <div class="who-item">
-            <h3>En France</h3>
+            <h3>Ce que nous proposons</h3>
             <p>
-              Les produits Daewoo Security sont commercialisés notamment via
-              Daewoo-Security.fr, site exploité par Liz&nbsp;Invest&nbsp;SAS.
+              Des systèmes de sécurité faciles à installer, évolutifs et pilotables à distance
+              depuis un smartphone.
             </p>
           </div>
           <div class="who-item">
-            <h3>L'objectif</h3>
+            <h3>Notre principe</h3>
             <p>
-              Proposer des systèmes de sécurité faciles à installer, évolutifs et
-              pilotables à distance.
+              Des équipements utilisables sans abonnement de télésurveillance obligatoire :
+              vous restez maître de votre installation.
             </p>
           </div>
           <div class="who-item">
-            <h3>Le principe</h3>
+            <h3>Notre présence</h3>
             <p>
-              Des systèmes utilisables sans abonnement obligatoire de télésurveillance.
+              Daewoo Security accompagne principalement ses clients en France et dans plusieurs
+              pays européens.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ 3. DAEWOO SECURITY EN FRANCE ============ -->
+    <!-- ============ 3. QUELQUES REPÈRES ============ -->
     <section class="sec sec--mist">
       <div class="wrap">
-        <p class="eyebrow">Fiche d'identité</p>
-        <h2>Daewoo Security en France</h2>
-        <p class="lead">Les informations de référence sur l'entité et sur l'exploitation du site.</p>
+        <p class="eyebrow">Repères</p>
+        <h2>Daewoo Security en quelques repères</h2>
         <dl class="id-grid">
           <div class="id-cell"><dt>Marque</dt><dd>Daewoo Security</dd></div>
-          <div class="id-cell"><dt>Activité</dt><dd>Alarmes et sécurité connectée<small>Pour les particuliers</small></dd></div>
-          <div class="id-cell"><dt>Site officiel</dt><dd>Daewoo-Security.fr</dd></div>
-          <div class="id-cell"><dt>Exploitant du site en France</dt><dd>Liz Invest SAS</dd></div>
-          <div class="id-cell"><dt>Localisation</dt><dd>Mérignac, Gironde, France</dd></div>
+          <div class="id-cell"><dt>Activité</dt><dd>Alarmes et sécurité connectée</dd></div>
+          <div class="id-cell"><dt>Site</dt><dd>Daewoo-Security.fr</dd></div>
+          <div class="id-cell"><dt>Exploitant du site</dt><dd>Liz Invest SAS</dd></div>
+          <div class="id-cell"><dt>Siège et bureaux</dt><dd>15 allée James Watt, 33700 Mérignac</dd></div>
           <div class="id-cell"><dt>Application</dt><dd>Daewoo Home Connect</dd></div>
-          <div class="id-cell"><dt>Positionnement</dt><dd>Sans abonnement obligatoire<small>Aucun abonnement de télésurveillance imposé</small></dd></div>
-          <div class="id-cell"><dt>Marchés</dt><dd>France, Suisse et plusieurs pays européens<small>Selon les zones de livraison configurées</small><span class="tbv">à valider</span></dd></div>
+          <div class="id-cell"><dt>Gammes d'alarmes</dt><dd>Vigilia, Touch / Touch XL, Élite</dd></div>
+          <div class="id-cell"><dt>Positionnement</dt><dd>Sécurité connectée sans abonnement obligatoire</dd></div>
         </dl>
       </div>
     </section>
 
-    <!-- ======= 4. NOTRE LIEN AVEC LA MARQUE DAEWOO ======= -->
+    <!-- ============ 4. NOS SOLUTIONS DE SÉCURITÉ ============ -->
     <section class="sec">
-      <div class="wrap">
-        <p class="eyebrow">Relation contractuelle</p>
-        <h2>Notre lien avec la marque Daewoo</h2>
-        <div class="licence-split">
-          <div>
-            <p class="licence-statement">
-              Daewoo-Security.fr exploite la marque Daewoo dans le domaine de la sécurité
-              connectée dans le cadre d'un accord de licence officiel.
-              <span class="tbv">formulation à valider</span>
-            </p>
-            <p class="body-txt">
-              Liz Invest SAS assure l'exploitation du site en France : sélection des produits,
-              commercialisation, service client et support technique. Liz Invest SAS est une
-              société indépendante&nbsp;: elle n'est ni une filiale ni la société mère du groupe
-              Daewoo. <span class="tbv">à valider</span>
-            </p>
-          </div>
-          <div class="heritage">
-            <h3>Repère — la marque Daewoo</h3>
-            <p>
-              Fondée en 1971 en Corée du Sud, Daewoo est une marque historique de
-              l'électronique et des technologies grand public, connue dans de nombreux pays.
-              Son usage dans la sécurité connectée en France s'inscrit dans une extension de
-              licence de la marque.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 5. NOS SOLUTIONS DE SÉCURITÉ ============ -->
-    <section class="sec sec--mist">
       <div class="wrap">
         <p class="eyebrow">Nos solutions de sécurité</p>
         <h2>Une gamme complète pour protéger son domicile</h2>
@@ -905,12 +768,12 @@
       </div>
     </section>
 
-    <!-- ============ 6. LES GAMMES ============ -->
-    <section class="sec">
+    <!-- ============ 5. LES GAMMES ============ -->
+    <section class="sec sec--mist">
       <div class="wrap">
         <p class="eyebrow">Nos gammes</p>
         <h2>Les systèmes d'alarme Daewoo Security</h2>
-        <p class="lead">Trois gammes actuelles, à choisir selon le logement et le niveau d'équipement souhaité.</p>
+        <p class="lead">Trois gammes, à choisir selon le logement et le niveau d'équipement souhaité.</p>
 
         <div class="range-grid">
           <article class="range-card">
@@ -921,13 +784,13 @@
             </div>
             <div class="range-body">
               <h3>Vigilia</h3>
-              <p>Système d'alarme connecté à clavier, pensé pour une installation simple et évolutive.</p>
+              <p>Système d'alarme connecté conçu pour une installation simple et évolutive.</p>
               <ul class="spec">
                 <li>Wi-Fi avec batterie de secours</li>
                 <li>Jusqu'à 90 accessoires</li>
-                <li>Application incluse</li>
+                <li>Pilotage depuis l'application</li>
               </ul>
-              <a class="link-arrow" href="/collections/systeme-dalarme-vigilia">Découvrir l'alarme Vigilia</a>
+              <a class="link-arrow" href="/collections/systeme-dalarme-vigilia">Découvrir Vigilia</a>
             </div>
           </article>
 
@@ -939,13 +802,13 @@
             </div>
             <div class="range-body">
               <h3>Touch / Touch XL</h3>
-              <p>Centrale à écran tactile couleur, pilotable depuis la centrale ou depuis un smartphone.</p>
+              <p>Systèmes à écran tactile offrant un contrôle local et à distance.</p>
               <ul class="spec">
                 <li>Écran tactile 4,3'' ou 7''</li>
                 <li>Wi-Fi, 4G en option</li>
                 <li>Batterie de secours</li>
               </ul>
-              <a class="link-arrow" href="/collections/systeme-dalarme-am301-am302">Découvrir les alarmes Touch et Touch XL</a>
+              <a class="link-arrow" href="/collections/systeme-dalarme-am301-am302">Découvrir Touch et Touch XL</a>
             </div>
           </article>
 
@@ -953,46 +816,32 @@
             <div class="ph">
               <b>Visuel produit Élite</b>
               <code>Starter pack Élite PA501Z (configurateur-elite-daewoo)</code>
-              <span>ALT : « Centrale d'alarme Daewoo Security Élite PA501Z multiprotocole »</span>
+              <span>ALT : « Centrale d'alarme Daewoo Security Élite multiprotocole »</span>
             </div>
             <div class="range-body">
               <h3>Élite</h3>
-              <p>Centrale multiprotocole orientée connectivité avancée, avec accessoires Zigbee.</p>
+              <p>Solution connectée offrant notamment une connectivité avancée et des accessoires Zigbee compatibles.</p>
               <ul class="spec">
                 <li>RJ45, Wi-Fi et 4G</li>
                 <li>Accessoires Zigbee 3.0</li>
                 <li>Batterie de secours 12 h</li>
               </ul>
-              <a class="link-arrow" href="/collections/systeme-dalarme-pa501z">Découvrir l'alarme Élite</a>
+              <a class="link-arrow" href="/collections/systeme-dalarme-pa501z">Découvrir Élite</a>
             </div>
           </article>
         </div>
 
-        <div class="compat">
-          <div>
-            <h3>Gamme Key (SA501) <span class="tbv">à valider</span></h3>
-            <p class="note" style="margin-top:12px">
-              Système compact à clavier. Les accessoires de la série 501 restent référencés sur
-              le site. Le pack de démarrage Key n'est plus actif dans le catalogue et la gamme
-              n'apparaît plus dans le comparateur : à confirmer avant de la présenter comme une
-              gamme commercialisée.
-            </p>
-            <a class="link-arrow" href="/collections/accessoires" style="margin-top:14px">Voir les accessoires de la gamme Key</a>
-          </div>
-          <div>
-            <h3>Compatibilité des accessoires</h3>
-            <ul>
-              <li>Série 30x — Vigilia et Touch</li>
-              <li>Série 501 — Key et Élite</li>
-              <li>Série 502Z (Zigbee) — Élite</li>
-            </ul>
-            <a class="link-arrow" href="/pages/comparateur-vigilia-touch-elite" style="margin-top:14px">Comparer les systèmes Daewoo Security</a>
-          </div>
+        <div class="legacy-note">
+          <p class="note">
+            Certains accessoires de l'ancienne gamme Key restent disponibles afin d'assurer le
+            suivi des installations existantes. Une partie de ces accessoires est également
+            compatible avec la gamme Élite.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ============ 7. SANS ABONNEMENT ============ -->
+    <!-- ============ 6. SANS ABONNEMENT ============ -->
     <section class="sec sec--navy">
       <div class="wrap">
         <p class="eyebrow">Positionnement</p>
@@ -1005,24 +854,23 @@
           <div>
             <p class="lead" style="margin-top:0">
               Les systèmes Daewoo Security sont conçus pour permettre à l'utilisateur de piloter
-              lui-même la sécurité de son domicile sans abonnement mensuel obligatoire de
-              télésurveillance. Selon le système utilisé, les alertes, commandes et équipements
-              compatibles peuvent être accessibles directement depuis l'application
-              Daewoo Home Connect.
-            </p>
-            <p class="note" style="margin-top:20px">
-              Certaines options peuvent générer des coûts indépendants du système : carte SIM M2M
-              pour les modèles GSM/4G, services tiers ou consommables.
+              lui-même la sécurité de son logement sans abonnement mensuel obligatoire de
+              télésurveillance. Selon le système utilisé, les alertes, les commandes et les
+              équipements compatibles sont accessibles depuis l'application Daewoo Home Connect.
             </p>
             <div class="btns">
               <a class="btn btn--primary" href="/pages/pack-alarmes">Découvrir les alarmes sans abonnement</a>
             </div>
+            <p class="note" style="margin-top:28px">
+              Certaines options peuvent générer des coûts indépendants du système, comme la carte
+              SIM des modèles 4G ou des services complémentaires.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ 8. DAEWOO HOME CONNECT ============ -->
+    <!-- ============ 7. DAEWOO HOME CONNECT ============ -->
     <section class="sec">
       <div class="wrap">
         <p class="eyebrow">Application</p>
@@ -1044,34 +892,29 @@
           <span class="store-ph"><b>App Store</b>URL officielle à fournir <span class="tbv">à valider</span></span>
           <span class="store-ph"><b>Google Play</b>URL officielle à fournir <span class="tbv">à valider</span></span>
         </div>
-        <p class="note" style="margin-top:18px">
-          Aucun lien App Store / Google Play n'est présent dans le thème actuel : les boutons ne
-          seront intégrés qu'avec les URLs officielles confirmées.
-        </p>
       </div>
     </section>
 
-    <!-- ============ 9. PREUVES / CHIFFRES CLÉS ============ -->
+    <!-- ============ 8. CHIFFRES ============ -->
     <section class="sec sec--navy">
       <div class="wrap">
         <p class="eyebrow">Chiffres clés</p>
-        <h2 style="color:#fff">Une marque déjà installée chez des dizaines de milliers de foyers</h2>
-        <div class="proof-grid">
-          <div class="proof">
-            <div class="proof-num">60 000<em>+</em></div>
-            <p>Foyers équipés <span class="tbv">formulation à valider</span></p>
+        <div class="stat-hero">
+          <span class="figure">60 000<em>+</em></span>
+          <h2 style="color:#fff;font-size:clamp(22px,2.2cqw,30px)">Plus de 60 000 foyers équipés</h2>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <strong>3 gammes d'alarmes connectées</strong>
+            <p>Vigilia, Touch / Touch XL et Élite, avec leurs accessoires compatibles.</p>
           </div>
-          <div class="proof">
-            <div class="proof-num">2015</div>
-            <p>Année de départ affichée sur le site <span class="tbv">à valider</span></p>
+          <div class="stat-item">
+            <strong>Garantie 2 ans</strong>
+            <p>Sur les produits Daewoo Security commercialisés sur le site.</p>
           </div>
-          <div class="proof">
-            <div class="proof-num">2 <em>ans</em></div>
-            <p>Garantie sur les produits</p>
-          </div>
-          <div class="proof">
-            <div class="proof-num">33<em>700</em></div>
-            <p>Service client et support technique basés à Mérignac</p>
+          <div class="stat-item">
+            <strong>Équipe à Mérignac</strong>
+            <p>Gestion du site, suivi des commandes et accompagnement technique.</p>
           </div>
         </div>
         <div class="btns">
@@ -1080,7 +923,7 @@
       </div>
     </section>
 
-    <!-- ============ 10. ÉQUIPE À MÉRIGNAC ============ -->
+    <!-- ============ 9. ÉQUIPE À MÉRIGNAC ============ -->
     <section class="sec sec--mist">
       <div class="wrap">
         <p class="eyebrow">Notre implantation</p>
@@ -1088,33 +931,28 @@
         <div class="team-split">
           <div>
             <p class="body-txt">
-              Les commandes, le service client et le support technique sont gérés depuis
-              Mérignac, en Gironde. Nos techniciens connaissent l'ensemble des gammes et
-              accompagnent l'installation et la configuration des systèmes.
+              Les équipes Daewoo Security sont basées à Mérignac, près de Bordeaux. Elles
+              assurent notamment la gestion du site, le suivi des commandes, le service client
+              et l'accompagnement technique autour des équipements Daewoo Security.
             </p>
             <address class="addr">
-              <strong>Liz Invest SAS — Daewoo Security</strong><br>
-              15 allée James Watt, Immeuble 2000 Watt<br>
+              <strong>Daewoo Security</strong><br>
+              15 allée James Watt<br>
               33700 Mérignac, France
-              <span class="tbv">adresse à valider</span>
             </address>
-            <p class="note" style="margin-top:14px">
-              Les mentions légales du site indiquent encore une autre adresse (6 rue Léon Morane).
-              Une seule adresse doit figurer partout avant intégration.
-            </p>
             <div class="inline-links">
-              <a class="link-arrow" href="/pages/nous-contacter">Contacter le support Daewoo Security</a>
+              <a class="link-arrow" href="/pages/nous-contacter">Contacter Daewoo Security</a>
               <a class="link-arrow" href="/pages/assistance-1">Consulter l'aide en ligne et les manuels</a>
             </div>
           </div>
           <div class="team-photos">
             <div class="ph">
-              <b>Photo des locaux</b>
+              <b>Bureaux / locaux</b>
               <code>Design_sans_titre_-_2025-03-11T154651.307.webp (existant)</code>
               <span>ALT : « Locaux Daewoo Security à Mérignac »</span>
             </div>
             <div class="ph">
-              <b>Photo équipe</b>
+              <b>Équipe</b>
               <span>ALT : « Équipe Daewoo Security à Mérignac »</span>
             </div>
             <div class="ph">
@@ -1126,6 +964,17 @@
       </div>
     </section>
 
+    <!-- ============ 10. EXPLOITATION DU SITE (BANDE DISCRÈTE) ============ -->
+    <section class="sec sec--slim">
+      <div class="wrap slim-grid">
+        <h2>Exploitation du site</h2>
+        <p>
+          Le site Daewoo-Security.fr est exploité par Liz Invest SAS, société basée à Mérignac,
+          sous licence officielle de la marque Daewoo.
+        </p>
+      </div>
+    </section>
+
     <!-- ============ 11. OÙ ACHETER ============ -->
     <section class="sec">
       <div class="wrap">
@@ -1133,20 +982,18 @@
         <h2>Où trouver les produits Daewoo Security ?</h2>
         <div class="buy-grid">
           <div class="buy-main">
-            <h3>Daewoo-Security.fr — site officiel en France</h3>
+            <h3>Daewoo-Security.fr</h3>
             <p>
-              Les produits Daewoo Security sont disponibles sur Daewoo-Security.fr, site
-              exploité par Liz Invest SAS. Les commandes sont préparées et expédiées depuis
-              Mérignac.
+              L'ensemble des gammes, des accessoires et des caméras est disponible sur
+              Daewoo-Security.fr. Les commandes sont préparées et expédiées depuis Mérignac.
             </p>
             <a class="link-arrow" href="/pages/pack-alarmes">Voir les packs alarme disponibles</a>
           </div>
           <div class="buy-side">
             <h3>Marketplaces et distributeurs <span class="tbv">à valider</span></h3>
             <p>
-              Le catalogue comporte une sélection dédiée aux marketplaces. Les enseignes ne
-              seront citées nommément qu'après confirmation de la liste exacte des partenaires
-              actifs.
+              Les enseignes partenaires ne seront citées nommément qu'après confirmation de la
+              liste exacte des distributeurs actifs.
             </p>
           </div>
         </div>
@@ -1160,7 +1007,7 @@
         <h2>Daewoo Security en 8 questions</h2>
         <div class="faq">
           <details open>
-            <summary>Qui est Daewoo Security ?</summary>
+            <summary>Qu'est-ce que Daewoo Security ?</summary>
             <div class="faq-answer">
               Daewoo Security est une marque spécialisée dans les systèmes de sécurité connectée
               pour particuliers : alarmes maison, détecteurs, sirènes, caméras de surveillance et
@@ -1168,54 +1015,52 @@
             </div>
           </details>
           <details>
-            <summary>Qui exploite Daewoo-Security.fr en France ?</summary>
+            <summary>Qui exploite Daewoo-Security.fr ?</summary>
             <div class="faq-answer">
-              Le site Daewoo-Security.fr est exploité par la société Liz Invest SAS.
+              Le site Daewoo-Security.fr est exploité par Liz Invest SAS, sous licence officielle
+              de la marque Daewoo.
             </div>
           </details>
           <details>
             <summary>Où est basé Daewoo Security ?</summary>
             <div class="faq-answer">
-              L'équipe est basée à Mérignac, en Gironde. Le service client, le support technique
-              et la préparation des commandes y sont gérés. <span class="tbv">adresse à valider</span>
-            </div>
-          </details>
-          <details>
-            <summary>Quel est le lien entre Daewoo Security et la marque Daewoo ?</summary>
-            <div class="faq-answer">
-              Daewoo-Security.fr exploite la marque Daewoo dans le domaine de la sécurité connectée
-              dans le cadre d'un accord de licence officiel. Liz Invest SAS n'est ni une filiale ni
-              la société mère du groupe Daewoo. <span class="tbv">formulation à valider</span>
+              À Mérignac, en Gironde : 15 allée James Watt, 33700 Mérignac. Le site, les commandes,
+              le service client et l'accompagnement technique y sont gérés.
             </div>
           </details>
           <details>
             <summary>Les alarmes Daewoo Security nécessitent-elles un abonnement ?</summary>
             <div class="faq-answer">
-              Non : les systèmes fonctionnent sans abonnement de télésurveillance obligatoire.
-              Certaines options peuvent générer des coûts indépendants, comme la carte SIM M2M des
-              modèles GSM/4G.
+              Non. Les systèmes sont conçus pour fonctionner sans abonnement de télésurveillance
+              obligatoire. Certaines options peuvent générer des coûts indépendants, comme la carte
+              SIM des modèles 4G.
             </div>
           </details>
           <details>
             <summary>Quelle application utilise Daewoo Security ?</summary>
             <div class="faq-answer">
-              L'application Daewoo Home Connect permet de piloter les équipements compatibles et de
-              recevoir les notifications du système depuis un smartphone.
+              L'application Daewoo Home Connect, qui permet de piloter les équipements compatibles
+              et de recevoir les notifications du système depuis un smartphone.
             </div>
           </details>
           <details>
-            <summary>Quels produits commercialise Daewoo Security ?</summary>
+            <summary>Quelles sont les gammes d'alarmes Daewoo Security ?</summary>
             <div class="faq-answer">
-              Des systèmes d'alarme connectés (Vigilia, Touch et Touch XL, Élite), des détecteurs et
-              capteurs, des sirènes intérieures et extérieures, des caméras de surveillance et des
-              accessoires.
+              Vigilia, Touch / Touch XL et Élite.
             </div>
           </details>
           <details>
-            <summary>Où acheter une alarme Daewoo Security ?</summary>
+            <summary>Daewoo Security commercialise-t-il également des caméras ?</summary>
             <div class="faq-answer">
-              Sur Daewoo-Security.fr, site officiel de la marque en France. Le configurateur permet
-              de composer un système adapté à son logement.
+              Oui. La gamme comprend des caméras intérieures et extérieures, avec différents modes
+              d'alimentation et de connexion selon les modèles.
+            </div>
+          </details>
+          <details>
+            <summary>Où acheter les produits Daewoo Security ?</summary>
+            <div class="faq-answer">
+              Sur Daewoo-Security.fr. Le configurateur permet de composer un système adapté à son
+              logement.
             </div>
           </details>
         </div>
