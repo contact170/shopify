@@ -9,11 +9,32 @@ Fichiers de thème pour `/pages/a-propos`.
 
 ## Déploiement
 
-Thème de prévisualisation : **Refonte page À propos (Claude)** — `gid://shopify/OnlineStoreTheme/201588212052`
-(dupliqué depuis le thème publié le 17/08/2026). Le thème publié n'est pas modifié.
+Thème de prévisualisation : **Refonte page À propos v2 (Claude)** — `gid://shopify/OnlineStoreTheme/201592996180`
+(dupliqué du thème publié le 17/08/2026 à 15:14). Le thème publié n'est pas modifié.
 
-- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201588212052`
-- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201588212052/editor`
+- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201592996180`
+- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201592996180/editor`
+
+La copie v1 (`201588212052`) est renommée `OBSOLETE - A propos v1` : elle datait de 15:14 moins une
+heure et le thème publié avait bougé entre-temps. À supprimer depuis l'admin — `themeDelete` est
+bloqué côté API pour des raisons de sécurité.
+
+### Publication
+
+Ne pas publier le thème de prévisualisation tel quel : c'est un instantané, et le publier
+écraserait tout ce qui aurait été fait sur le thème en ligne depuis sa création. Procédure :
+
+1. Dupliquer le thème **publié à cet instant** ;
+2. y réappliquer les deux fichiers de ce dossier ;
+3. vérifier les checksums ;
+4. publier.
+
+Les checksums de référence (`md5sum` des fichiers de ce dossier) :
+
+| Fichier | Taille | md5 |
+| --- | --- | --- |
+| `sections/page-a-propos-daewoo.liquid` | 51 709 | `50c06beb0547691398f721b67fec8568` |
+| `templates/page.a-propos.json` | 922 | `c16b8cb4900adb720cc09ad03b3e6ccc` |
 
 ### Envoyer une mise à jour d'un fichier volumineux
 
