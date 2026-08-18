@@ -11,14 +11,19 @@ Fichiers de thème pour `/pages/a-propos`.
 
 En ligne depuis le 17/08/2026 : thème `201592996180`.
 
-**Passe SEO / GEO / Schema du 18/08/2026** déposée sur le thème de prévisualisation
-`A propos v4 - SEO + Schema (Claude)` — `gid://shopify/OnlineStoreTheme/201660629332`,
-dupliqué du thème publié `201634775380` (« Galerie photos VIG501-507 v2 »). En attente de
-publication. La copie v3 est renommée OBSOLETE : elle partait d'un thème qui n'était déjà plus
-le thème publié.
+Passe SEO / GEO / Schema publiée le 18/08/2026 (thème `201660629332`).
 
-- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201660629332`
-- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201660629332/editor`
+**Correctif du lien comparateur** déposé sur `A propos v5 - lien comparateur (Claude)` —
+`gid://shopify/OnlineStoreTheme/201663971668`, dupliqué du thème publié. En attente de
+publication.
+
+- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201663971668`
+- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201663971668/editor`
+
+Les 3 liens « comparateur » pointent désormais vers `/pages/comparateur-am301-sa501-pa501z`,
+la page liée par le menu principal, sur décision du client. `/pages/comparateur-vigilia-touch-elite`
+(créée le 08/08, contenu dans le corps de la fiche, jamais modifiée depuis) n'est plus liée
+depuis la page À propos.
 
 Fichiers modifiés dans cette passe :
 
@@ -69,7 +74,7 @@ Les checksums de référence (`md5sum` des fichiers de ce dossier) :
 
 | Fichier | Taille | md5 |
 | --- | --- | --- |
-| `sections/page-a-propos-daewoo.liquid` | 51 652 | `854b64504a058949a1957e942d289c9a` |
+| `sections/page-a-propos-daewoo.liquid` | 51 649 | `4776416c86a4c6857a0f24f67f24daa7` |
 | `snippets/social-meta-tags.liquid` | 2 655 | `17806c7e0ff99f7291da1373733f0382` |
 | `templates/page.a-propos.json` | 922 | `c16b8cb4900adb720cc09ad03b3e6ccc` |
 
