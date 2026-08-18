@@ -24,6 +24,7 @@
 {%- liquid
   assign variant = product.selected_or_first_available_variant
   assign form_id = 'PVForm-' | append: section.id
+  assign hero_img_id = 'PVHeroImg-' | append: section.id
 
   for v in product.variants
     if v.title contains 'GSM'
@@ -257,6 +258,21 @@
       width:100%;max-width:640px;margin:0 auto;border-radius:28px;
       background:var(--pv-bg-alt);
     }
+
+    /* ---- small photo carousel under the hero image ---- */
+    .pv-thumbs{
+      display:flex;justify-content:center;gap:10px;margin:18px auto 0;max-width:640px;
+      overflow-x:auto;padding:2px 2px 6px;-webkit-overflow-scrolling:touch;
+    }
+    .pv-thumbs__item{
+      flex-shrink:0;width:56px;height:56px;padding:0;border-radius:12px;overflow:hidden;
+      background:var(--pv-bg-alt);border:2px solid transparent;cursor:pointer;
+      opacity:.6;transition:opacity .15s ease,border-color .15s ease;
+    }
+    .pv-thumbs__item img{width:100%;height:100%;object-fit:cover;}
+    .pv-thumbs__item:hover{opacity:.9;}
+    .pv-thumbs__item.is-active{opacity:1;border-color:var(--pv-navy);}
+    .pv-thumbs__item:focus-visible{outline:2px solid var(--pv-navy);outline-offset:2px;}
 
     /* ---- buttons ---- */
     .pv-btn{
@@ -570,8 +586,24 @@
       </div>
       {%- if hero_image -%}
         <div class="pv-hero__media pv-reveal">
-          {{ hero_image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '600,900,1200', alt: product.title }}
+          {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
         </div>
+        {%- if gallery.size > 1 -%}
+          <div class="pv-thumbs" role="group" aria-label="Photos du produit">
+            {%- for img in gallery limit: 8 -%}
+              <button
+                type="button"
+                class="pv-thumbs__item{% if img.id == hero_image.id %} is-active{% endif %}"
+                data-pv-thumb
+                data-full="{{ img | image_url: width: 1200 }}"
+                data-full-srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1200 }} 1200w"
+                aria-label="Photo {{ forloop.index }} sur {{ gallery.size }}"
+              >
+                {{ img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       {%- endif -%}
     </div>
   </section>
@@ -1315,6 +1347,20 @@
           });
         }, { threshold: 0, rootMargin: '-64px 0px 0px 0px' });
         stickyIo.observe(heroCta);
+      }
+
+      /* Hero photo carousel: clicking a thumbnail swaps the main image */
+      var heroImg = document.getElementById('PVHeroImg-{{ section.id }}');
+      var thumbs = root.querySelectorAll('[data-pv-thumb]');
+      if (heroImg && thumbs.length) {
+        thumbs.forEach(function (thumb) {
+          thumb.addEventListener('click', function () {
+            heroImg.src = thumb.getAttribute('data-full');
+            heroImg.srcset = thumb.getAttribute('data-full-srcset');
+            thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+            thumb.classList.add('is-active');
+          });
+        });
       }
       /* Generic modal open/close (Alma installments + full reviews list),
          both plain dialog elements so Escape/backdrop dismissal and
