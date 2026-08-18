@@ -12,11 +12,13 @@ Fichiers de thème pour `/pages/a-propos`.
 En ligne depuis le 17/08/2026 : thème `201592996180`.
 
 **Passe SEO / GEO / Schema du 18/08/2026** déposée sur le thème de prévisualisation
-`A propos v3 - SEO + Schema (Claude)` — `gid://shopify/OnlineStoreTheme/201639133524`,
-dupliqué du thème publié. En attente de publication.
+`A propos v4 - SEO + Schema (Claude)` — `gid://shopify/OnlineStoreTheme/201660629332`,
+dupliqué du thème publié `201634775380` (« Galerie photos VIG501-507 v2 »). En attente de
+publication. La copie v3 est renommée OBSOLETE : elle partait d'un thème qui n'était déjà plus
+le thème publié.
 
-- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201639133524`
-- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201639133524/editor`
+- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201660629332`
+- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201660629332/editor`
 
 Fichiers modifiés dans cette passe :
 
@@ -54,10 +56,14 @@ d'une réécriture d'un snippet présent sur tout le site ne le justifiait pas.
 Ne jamais publier un thème de prévisualisation ancien : c'est un instantané, et le publier
 écraserait tout ce qui a été fait sur le thème en ligne depuis sa création. Procédure :
 
-1. Dupliquer le thème **publié à cet instant** ;
-2. y réappliquer les deux fichiers de ce dossier ;
-3. vérifier les checksums ;
-4. publier.
+1. Vérifier **quel thème porte le rôle MAIN à cet instant** — il change souvent sur cette
+   boutique, et ce n'est pas forcément celui de la veille ;
+2. le dupliquer ;
+3. **attendre `processing: false`** avant d'écrire : tant que la duplication tourne, elle
+   écrase les fichiers déposés ;
+4. y réappliquer les fichiers de ce dossier ;
+5. vérifier les checksums ;
+6. publier.
 
 Les checksums de référence (`md5sum` des fichiers de ce dossier) :
 
