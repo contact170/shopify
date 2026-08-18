@@ -69,7 +69,7 @@ Les checksums de référence (`md5sum` des fichiers de ce dossier) :
 
 | Fichier | Taille | md5 |
 | --- | --- | --- |
-| `sections/page-a-propos-daewoo.liquid` | 51 273 | `6d0199da2572d9702b9ed3217ce5311b` |
+| `sections/page-a-propos-daewoo.liquid` | 51 652 | `854b64504a058949a1957e942d289c9a` |
 | `snippets/social-meta-tags.liquid` | 2 655 | `17806c7e0ff99f7291da1373733f0382` |
 | `templates/page.a-propos.json` | 922 | `c16b8cb4900adb720cc09ad03b3e6ccc` |
 
@@ -98,3 +98,7 @@ Les petits fichiers passent très bien en `body: { type: TEXT }`.
   Leurs attributs ALT annoncent locaux / équipe / préparation des commandes — à vérifier et à
   remplacer dans le personnalisateur si le contenu des photos ne correspond pas.
 - **Bloc distributeurs** (section 11) : masqué tant que le réglage `resellers_text` est vide.
+- **Identifiants légaux dans le JSON-LD** : le node Liz Invest porte `vatID` FR45791022692 et
+  les `identifier` RCS Bordeaux / SIREN 791022692. Ces valeurs correspondent aux mentions
+  légales du site. La clé de contrôle 45 du numéro de TVA confirme arithmétiquement le SIREN
+  791022692 : `(12 + 3 × (791022692 mod 97)) mod 97 = 45`. Un SIREN 792022692 donnerait FR29.
