@@ -4,7 +4,7 @@ Fichiers de thème pour `/pages/a-propos`.
 
 | Fichier | Rôle |
 | --- | --- |
-| `sections/page-a-propos-daewoo.liquid` | Les 13 sections, CSS scopé sous `.dwsa`, JSON-LD à 5 nœuds, réglages personnalisateur |
+| `sections/page-a-propos-daewoo.liquid` | Les 13 sections, CSS scopé sous `.dwsa`, JSON-LD à 7 nodes, réglages personnalisateur |
 | `templates/page.a-propos.json` | Ne contient que cette section, avec images et produits réels par défaut |
 
 ## État
@@ -63,7 +63,8 @@ Les checksums de référence (`md5sum` des fichiers de ce dossier) :
 
 | Fichier | Taille | md5 |
 | --- | --- | --- |
-| `sections/page-a-propos-daewoo.liquid` | 51 709 | `50c06beb0547691398f721b67fec8568` |
+| `sections/page-a-propos-daewoo.liquid` | 51 273 | `6d0199da2572d9702b9ed3217ce5311b` |
+| `snippets/social-meta-tags.liquid` | 2 655 | `17806c7e0ff99f7291da1373733f0382` |
 | `templates/page.a-propos.json` | 922 | `c16b8cb4900adb720cc09ad03b3e6ccc` |
 
 ### Envoyer une mise à jour d'un fichier volumineux
@@ -83,16 +84,10 @@ Les petits fichiers passent très bien en `body: { type: TEXT }`.
 
 ## Points d'attention
 
-- **`layout/theme.liquid` ligne 70** injecte `loading='lazy'` dans tout `<img` du contenu de page.
-  Un attribut HTML dupliqué gardant sa première valeur, un `loading="eager"` y serait annulé.
-  Le visuel hero utilise donc une balise `<IMG>` en majuscules : le filtre `replace` de Liquid est
-  sensible à la casse, ce qui préserve la priorité de chargement de l'image LCP. Ne pas
-  « corriger » cette casse sans retirer l'injection du layout.
-- **Title et meta description** ne sont pas modifiés : ces champs sont des métachamps de la page
-  (`global.title_tag`, `global.description_tag`), partagés entre tous les thèmes. Les changer
-  affecterait immédiatement la page en ligne. À faire au moment de la publication :
-  - Title : `Daewoo Security | Alarmes connectées sans abonnement`
-  - Meta : `Découvrez Daewoo Security, spécialiste des alarmes, caméras et systèmes de sécurité connectée sans abonnement. Équipe et siège basés à Mérignac.`
+- **Ne pas remettre de retour à la ligne dans un `srcset`** (voir « Corrections notables »).
+- **Title et meta description** sont appliqués depuis le 17/08 sur les métachamps de la page
+  (`global.title_tag`, `global.description_tag`). Ces champs sont partagés entre tous les thèmes :
+  les modifier agit immédiatement sur la page en ligne, quel que soit le thème utilisé.
 - **Photos Mérignac** : les trois images par défaut sont celles déjà utilisées par l'ancienne page.
   Leurs attributs ALT annoncent locaux / équipe / préparation des commandes — à vérifier et à
   remplacer dans le personnalisateur si le contenu des photos ne correspond pas.
