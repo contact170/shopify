@@ -7,6 +7,9 @@
   « Page » (celle qui contient l'iframe du configurateur).
   Réglages de la section : marge haute 0, marge basse 0.
 
+  Même vocabulaire visuel que le reste du site : cartes blanches à coins 18 px
+  et bord 1,5 px, survol qui soulève, badge pilule, Poppins + DM Sans.
+
   Tout est dynamique : produits, photos, prix, remises et compteur viennent de
   la collection « offres-exclusives-copie ». Rien à mettre à jour à la main —
   il suffit d'ajouter ou de retirer un produit dans cette collection.
@@ -21,124 +24,125 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Poppins:wght@600;700;800&display=swap">
 
 <style>
   .cfg-scope-offres {
-    --nuit:       #0c1e4a;
-    --brume:      #f2f3ff;
-    --brume-trait:#d7dbf2;
-    --signal:     #0b61cd;
-    --alerte:     #e11d48;
-    --craie:      #ffffff;
-    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-    --sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --nuit:    #0b1e4a;
+    --azur:    #1a4fab;
+    --brume:   #f2f3ff;
+    --trait:   #dfe3f5;
+    --ardoise: #5b6485;
+    --alerte:  #e11d48;
+    --craie:   #ffffff;
+    --display: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --texte:   "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-    font-family: var(--sans);
+    font-family: var(--texte);
     color: var(--nuit);
     line-height: 1.55;
-    padding: 72px 0 24px;
+    font-size: 16px;
+    padding: 68px 0 24px;
   }
   .cfg-scope-offres *, .cfg-scope-offres *::before, .cfg-scope-offres *::after { box-sizing: border-box; }
+  .cfg-scope-offres p, .cfg-scope-offres h2, .cfg-scope-offres h3 { margin: 0; padding: 0; }
 
-  .cfg-offers__head { margin-bottom: 30px; }
-  .cfg-h2 {
-    font-size: clamp(26px, 3.4vw, 38px); font-weight: 800; letter-spacing: -.03em;
-    line-height: 1.1; margin: 0 0 10px; text-wrap: balance;
+  .cfg-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    border-radius: 100px; padding: 6px 15px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; width: fit-content;
+    background: #fff1f4; border: 1px solid #ffd7e0; color: var(--alerte);
   }
-  .cfg-offers__sub { max-width: 56ch; font-size: 15.5px; color: #465185; margin: 0; }
-
-  .cfg-live {
-    display: inline-flex; align-items: center; gap: 9px;
-    font-family: var(--mono); font-size: 11.5px; font-weight: 500;
-    letter-spacing: .14em; text-transform: uppercase; color: var(--alerte);
-    margin: 0 0 14px;
+  .cfg-pill__dot {
+    width: 6px; height: 6px; border-radius: 50%; flex: none; background: var(--alerte);
+    animation: cfg-battement 2.6s ease-out infinite;
   }
-  .cfg-live__led {
-    width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--alerte);
-    box-shadow: 0 0 0 0 rgba(225,29,72,.5);
-    animation: cfg-pulse-red 2.6s ease-out infinite;
-  }
-  @keyframes cfg-pulse-red {
+  @keyframes cfg-battement {
     0%   { box-shadow: 0 0 0 0 rgba(225,29,72,.5); }
     70%  { box-shadow: 0 0 0 7px rgba(225,29,72,0); }
     100% { box-shadow: 0 0 0 0 rgba(225,29,72,0); }
   }
 
-  /* rail à défilement horizontal — évite une grille qui casse à 10 produits */
+  .cfg-offres__tete { margin-bottom: 28px; }
+  .cfg-h2 {
+    font-family: var(--display); font-size: clamp(25px, 3.2vw, 38px);
+    font-weight: 700; letter-spacing: -.025em; line-height: 1.1;
+    margin: 14px 0 10px; text-wrap: balance;
+  }
+  .cfg-offres__sous { max-width: 58ch; font-size: 15.5px; color: var(--ardoise); }
+
+  /* rail à défilement horizontal — tient quel que soit le nombre d'offres */
   .cfg-rail {
-    display: grid; grid-auto-flow: column; grid-auto-columns: 268px; gap: 18px;
+    display: grid; grid-auto-flow: column; grid-auto-columns: 276px; gap: 20px;
     overflow-x: auto; scroll-snap-type: x mandatory;
-    padding: 4px 24px 22px; margin: 0 -24px;
-    scrollbar-width: thin; scrollbar-color: #b6bee4 transparent;
+    padding: 6px 24px 24px; margin: 0 -24px;
+    scrollbar-width: thin; scrollbar-color: #b8c4e6 transparent;
   }
   .cfg-rail::-webkit-scrollbar { height: 6px; }
-  .cfg-rail::-webkit-scrollbar-thumb { background: #b6bee4; border-radius: 3px; }
+  .cfg-rail::-webkit-scrollbar-thumb { background: #b8c4e6; border-radius: 3px; }
   .cfg-rail::-webkit-scrollbar-track { background: transparent; }
-  .cfg-rail:focus-visible { outline: 3px solid var(--signal); outline-offset: 4px; }
+  .cfg-rail:focus-visible { outline: 3px solid var(--azur); outline-offset: 4px; }
 
-  .cfg-card {
+  .cfg-carte {
     scroll-snap-align: start; background: var(--craie);
-    border: 1px solid var(--brume-trait); border-radius: 12px; overflow: hidden;
+    border: 1.5px solid #e5e7eb; border-radius: 18px; overflow: hidden;
     display: flex; flex-direction: column; text-decoration: none; color: inherit;
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   }
-  .cfg-card:hover {
-    transform: translateY(-4px); border-color: #9fb6e6;
-    box-shadow: 0 20px 38px -24px rgba(12, 30, 74, .6);
+  .cfg-carte:hover {
+    transform: translateY(-4px); border-color: #a9c2ec;
+    box-shadow: 0 16px 40px rgba(11, 30, 74, .12);
   }
-  .cfg-card:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+  .cfg-carte:focus-visible { outline: 3px solid var(--azur); outline-offset: 3px; }
 
-  .cfg-card__media {
-    position: relative; aspect-ratio: 1 / 1; background: var(--brume);
-    display: grid; place-items: center; border-bottom: 1px solid var(--brume-trait);
+  .cfg-carte__img {
+    position: relative; aspect-ratio: 4 / 3; background: #eaf0fb;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; flex-shrink: 0;
   }
-  .cfg-card__media img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .cfg-carte__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 
-  .cfg-cut {
-    position: absolute; top: 10px; left: 10px;
-    font-family: var(--mono); font-size: 12px; font-weight: 600;
-    letter-spacing: .04em; font-variant-numeric: tabular-nums;
-    background: var(--alerte); color: #fff; padding: 4px 8px; border-radius: 4px;
+  .cfg-remise {
+    position: absolute; top: 12px; right: 12px; z-index: 2;
+    background: var(--alerte); color: #fff;
+    font-size: 12px; font-weight: 700; letter-spacing: .02em;
+    padding: 5px 12px; border-radius: 20px; font-variant-numeric: tabular-nums;
   }
 
-  .cfg-card__body { padding: 15px 16px 17px; display: flex; flex-direction: column; flex: 1; gap: 10px; }
-  .cfg-card__fam {
-    font-family: var(--mono); font-size: 10.5px; font-weight: 500;
-    letter-spacing: .14em; text-transform: uppercase; color: #7b86b4; margin: 0;
+  .cfg-carte__corps { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; gap: 8px; }
+  .cfg-carte__gamme {
+    font-size: 11px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--azur);
   }
-  .cfg-card__title {
-    font-size: 14.5px; font-weight: 600; line-height: 1.35; margin: 0;
+  .cfg-carte__titre {
+    font-family: var(--display); font-size: 15px; font-weight: 600; line-height: 1.35;
+    color: var(--nuit);
     display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
-  .cfg-card__prices {
-    margin-top: auto; display: flex; align-items: baseline; gap: 9px;
-    font-variant-numeric: tabular-nums;
+  .cfg-carte__prix {
+    margin-top: auto; padding-top: 6px;
+    display: flex; align-items: baseline; gap: 10px; font-variant-numeric: tabular-nums;
   }
-  .cfg-card__now { font-size: 19px; font-weight: 700; letter-spacing: -.02em; }
-  .cfg-card__was { font-size: 13px; color: #8a93bd; text-decoration: line-through; }
-  .cfg-card__save {
-    font-family: var(--mono); font-size: 11.5px; letter-spacing: .02em;
-    color: var(--alerte); font-variant-numeric: tabular-nums; margin: 0;
-  }
+  .cfg-carte__actuel { font-family: var(--display); font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
+  .cfg-carte__barre { font-size: 13.5px; color: #97a0bd; text-decoration: line-through; }
+  .cfg-carte__eco { font-size: 12.5px; font-weight: 500; color: var(--alerte); font-variant-numeric: tabular-nums; }
 
-  .cfg-offers__foot { margin-top: 26px; }
+  .cfg-offres__pied { margin-top: 28px; }
   .cfg-btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 15px 26px; border-radius: 8px; border: 1px solid transparent;
-    font-family: var(--sans); font-size: 14.5px; font-weight: 600;
-    text-decoration: none; background: var(--nuit); color: #fff;
-    transition: background .16s ease;
+    padding: 15px 26px; border-radius: 100px; border: 1px solid transparent;
+    font-family: var(--texte); font-size: 14.5px; font-weight: 600;
+    text-decoration: none; background: var(--azur); color: #fff;
+    box-shadow: 0 8px 22px -10px rgba(26,79,171,.7);
+    transition: background .18s ease;
   }
-  .cfg-btn:hover { background: var(--signal); color: #fff; }
-  .cfg-btn:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+  .cfg-btn:hover { background: #16357e; color: #fff; }
+  .cfg-btn:focus-visible { outline: 3px solid var(--azur); outline-offset: 3px; }
 
-  @media (max-width: 860px) {
-    .cfg-scope-offres { padding-top: 56px; }
-    .cfg-rail { grid-auto-columns: 232px; }
-  }
-  @media (max-width: 520px) {
-    .cfg-rail { margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+  @media (max-width: 900px) { .cfg-scope-offres { padding-top: 54px; } }
+  @media (max-width: 620px) {
+    .cfg-rail { grid-auto-columns: 240px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .cfg-scope-offres * { animation: none !important; transition: none !important; }
@@ -147,15 +151,15 @@
 
 <div class="cfg-scope-offres">
 
-  <div class="cfg-offers__head">
-    <p class="cfg-live">
-      <span class="cfg-live__led"></span>
+  <div class="cfg-offres__tete">
+    <span class="cfg-pill">
+      <span class="cfg-pill__dot"></span>
       {{ offres.all_products_count }} offre{% if offres.all_products_count > 1 %}s{% endif %} en cours
-    </p>
+    </span>
     <h2 class="cfg-h2">Offres exclusives du moment.</h2>
-    <p class="cfg-offers__sub">
+    <p class="cfg-offres__sous">
       Des packs déjà constitués, remisés tant qu'il reste du stock.
-      Même garantie, toujours sans abonnement.
+      Même garantie 2 ans, toujours sans abonnement.
     </p>
   </div>
 
@@ -186,37 +190,37 @@
         {%- assign remise = ecart | times: 100.0 | divided_by: produit.compare_at_price_min | round -%}
       {%- endif -%}
 
-      <a class="cfg-card" href="{{ produit.url }}">
-        <div class="cfg-card__media">
+      <a class="cfg-carte" href="{{ produit.url }}">
+        <div class="cfg-carte__img">
           {%- if remise > 0 -%}
-            <span class="cfg-cut">&minus;{{ remise }}&nbsp;%</span>
+            <span class="cfg-remise">&minus;{{ remise }}&nbsp;%</span>
           {%- endif -%}
           {%- if produit.featured_image -%}
             {{ produit.featured_image | image_url: width: 600 | image_tag:
-                 loading: 'lazy', widths: '268, 400, 536, 600', sizes: '268px', alt: titre }}
+                 loading: 'lazy', widths: '276, 400, 552, 600', sizes: '276px', alt: titre }}
           {%- endif -%}
         </div>
 
-        <div class="cfg-card__body">
-          {%- if gamme != blank -%}<p class="cfg-card__fam">{{ gamme }}</p>{%- endif -%}
-          <h3 class="cfg-card__title">{{ titre }}</h3>
+        <div class="cfg-carte__corps">
+          {%- if gamme != blank -%}<p class="cfg-carte__gamme">{{ gamme }}</p>{%- endif -%}
+          <h3 class="cfg-carte__titre">{{ titre }}</h3>
 
-          <div class="cfg-card__prices">
-            <span class="cfg-card__now">{{ produit.price_min | money }}</span>
+          <div class="cfg-carte__prix">
+            <span class="cfg-carte__actuel">{{ produit.price_min | money }}</span>
             {%- if remise > 0 -%}
-              <span class="cfg-card__was">{{ produit.compare_at_price_min | money }}</span>
+              <span class="cfg-carte__barre">{{ produit.compare_at_price_min | money }}</span>
             {%- endif -%}
           </div>
 
           {%- if remise > 0 -%}
-            <p class="cfg-card__save">vous économisez {{ ecart | money }}</p>
+            <p class="cfg-carte__eco">Vous économisez {{ ecart | money }}</p>
           {%- endif -%}
         </div>
       </a>
     {%- endfor -%}
   </div>
 
-  <div class="cfg-offers__foot">
+  <div class="cfg-offres__pied">
     <a class="cfg-btn" href="{{ offres.url }}">
       Voir les {{ offres.all_products_count }} offres
     </a>

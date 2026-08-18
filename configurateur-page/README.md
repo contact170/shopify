@@ -14,32 +14,53 @@ La proposition ajoute trois choses, **sans toucher au configurateur lui-même** 
 
 | # | Bloc | Position | Fichier |
 |---|------|----------|---------|
-| 1 | Bandeau des 4 garanties | au-dessus de l'iframe | `01-bandeau-et-choix.liquid` |
+| 1 | Bandeau des garanties, pleine largeur | au-dessus de l'iframe | `01-bandeau-et-choix.liquid` |
 | 2 | Le choix : pack complet ou sur-mesure | au-dessus de l'iframe | `01-bandeau-et-choix.liquid` |
 | 3 | Rail « Offres exclusives du moment » | sous l'iframe | `02-offres-exclusives.liquid` |
 
 `preview.html` est la maquette complète, à ouvrir dans un navigateur.
 
-## Le parti pris
+## Le design vient du site, pas d'ailleurs
 
-Le vocabulaire visuel vient du sujet : un panneau de commande d'alarme. Chaque
-option est une **face de panneau** avec sa ligne d'état en écriture monospace et
-sa LED — le bloc *Pack complet* est plein (navy), le bloc *Configurateur* est
-clair et affiche « vous êtes ici », puisque c'est la page où le visiteur se
-trouve déjà. C'est le panneau qu'il ne connaît pas qui reçoit le poids visuel.
-
-Palette et typo reprises du thème en place, rien d'inventé :
+Tout est repris du design déjà en place sur la page d'accueil (hero, section
+« Nos 3 gammes », section À propos) et des réglages du thème :
 
 | Rôle | Valeur | Origine |
 |------|--------|---------|
-| Navy texte et panneau plein | `#0c1e4a` | `color_text` du thème |
+| Navy | `#0b1e4a` | dégradé du hero et fond de la section À propos |
+| Bleu primaire | `#1a4fab` | bouton et bord des cartes « gammes » — aussi `color_price` du thème |
+| Cyan d'accent | `#48cae4` | pastille des badges du site |
 | Lavande de fond | `#f2f3ff` | `color_background` du thème |
-| Bleu action et LED | `#0b61cd` | `color_keyboard_focus` du thème |
 | Rouge remises | `#e11d48` | `color_sale_price` du thème |
-| Titres et textes | Poppins | `type_header_font` du thème |
-| Données, prix, états | IBM Plex Mono | ajout — les chiffres alignés d'un clavier d'alarme |
+| Texte secondaire | `#5b6485` | sous-titres du hero |
+| Titres | Poppins 600/700 | typo d'affichage du site |
+| Textes | DM Sans 300–600 | typo de lecture du site |
+
+Composants réutilisés tels quels : le **badge pilule à pastille**, la **carte
+blanche** (coins 18 px, bord 1,5 px, survol qui soulève), le **dégradé navy →
+bleu avec halo cyan**, le **bandeau pleine largeur** en `100vw` que le site
+emploie déjà dans la section À propos.
+
+Le parti pris : le panneau **Pack complet** est le panneau plein, celui qui
+attire l'œil, alors que le panneau **Configurateur** est clair et porte la
+mention « vous êtes ici ». C'est volontaire — le visiteur est déjà sur le
+configurateur, l'information qu'il n'a pas, c'est le pack.
 
 Le rouge ne sert **qu'aux remises**, jamais à autre chose.
+
+## Les images
+
+Aucune image nouvelle à produire : la proposition utilise des visuels qui
+existent déjà dans vos fichiers Shopify.
+
+| Emplacement | Fichier Shopify |
+|-------------|-----------------|
+| Panneau *Pack complet* | `Image_Acceuil_Pack_Pret_a_poser_Daewoo.png` |
+| Panneau *Configurateur* | `Image_Acceuil_Configurateur_Daewoo.png` |
+| Cartes du rail | photo principale de chaque produit, tirée automatiquement |
+
+Pour changer l'un des deux visuels de panneau, il suffit de remplacer l'URL dans
+les variables `img_pack` / `img_config` en haut de `01-bandeau-et-choix.liquid`.
 
 ## Pose dans Shopify
 
@@ -71,13 +92,12 @@ Rien à maintenir à la main :
 Pour pointer vers d'autres collections, changer la ligne `assign` en haut de
 chaque fichier.
 
-## Points à trancher
+## Le seul point à vérifier
 
-- **Le cadeau.** Le bloc configurateur annonce « un cadeau ajouté à toute
-  commande passée par le configurateur ». C'est repris de l'ancien bandeau
-  promo du template, aujourd'hui désactivé. À confirmer que l'offre est toujours
-  active, sinon remplacer cette ligne.
-- **Livraison 48 h et garantie 2 ans** dans le bandeau : à valider, ces mentions
-  ne viennent pas des données du store.
-- **La ligne d'aide au choix** (moins de cinq ouvertures → pack) est une règle
-  plausible, pas une règle vérifiée. À ajuster selon la réalité produit.
+La collection `starters-packs` (4 produits, à partir de 139,90 €) doit être
+**publiée sur la boutique en ligne**, sinon le bouton « Voir les packs
+complets » mènera à une page introuvable. Je n'ai pas pu le vérifier depuis ici :
+l'API refuse la lecture des publications sans le droit `read_product_listings`.
+
+Si ce n'est pas la bonne collection de destination, remplacer `starters-packs`
+en haut de `01-bandeau-et-choix.liquid`.

@@ -1,474 +1,364 @@
 <title>Panneau Daewoo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Poppins:wght@600;700;800&display=swap">
 
 <style>
   /* ============================================================
-     PROPOSITION DE DESIGN — page /pages/configurateur_2
-     Palette et typo dérivées du thème Daewoo Security en place.
-     Préfixe .cfg- partout pour ne rien casser dans le thème.
+     DAEWOO SECURITY — /pages/configurateur_2
+     Palette, typo et composants repris du design en place sur le
+     site (hero d'accueil, section « Nos 3 gammes », section À propos).
+     Préfixe .cfg- partout pour ne rien percuter dans le thème.
      ============================================================ */
 
   :root {
-    --nuit:       #0c1e4a;  /* navy du thème — texte + panneau plein   */
-    --nuit-encre: #081533;  /* navy profond — base du dégradé panneau  */
-    --brume:      #f2f3ff;  /* lavande du thème — fond de page         */
-    --brume-trait:#d7dbf2;  /* filet lavande (neutre teinté, pas gris) */
-    --signal:     #0b61cd;  /* bleu action + LED                       */
-    --alerte:     #e11d48;  /* rouge — remises uniquement              */
-    --craie:      #ffffff;
+    --nuit:    #0b1e4a;   /* navy du hero et de la section À propos */
+    --azur:    #1a4fab;   /* bleu primaire du site                  */
+    --cyan:    #48cae4;   /* pastille d'accent du site              */
+    --brume:   #f2f3ff;   /* fond lavande du thème                  */
+    --trait:   #dfe3f5;   /* filet lavande                          */
+    --ardoise: #5b6485;   /* texte secondaire du site               */
+    --alerte:  #e11d48;   /* rouge soldes du thème                  */
+    --craie:   #ffffff;
 
-    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-    --sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --display: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --texte:   "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
   body {
     background: var(--brume);
     color: var(--nuit);
-    font-family: var(--sans);
+    font-family: var(--texte);
     font-size: 16px;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
 
-  .cfg-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .cfg-wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
-  /* ---------- note de maquette (n'existe pas sur le site) ---------- */
   .mockup-note {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: #5a6798;
-    border: 1px dashed var(--brume-trait);
-    border-radius: 6px;
-    padding: 10px 14px;
-    margin: 20px auto 0;
-    max-width: 1192px;
-    text-align: center;
-  }
-
-  /* ============================================================
-     1 — BANDEAU FIN : les 4 garanties, en écriture d'instrument
-     ============================================================ */
-  .cfg-bar {
-    background: var(--nuit);
-    color: #cdd6ee;
+    font-family: var(--texte);
+    font-size: 12.5px;
+    color: var(--ardoise);
+    border: 1px dashed var(--trait);
     border-radius: 10px;
-    margin-top: 28px;
-  }
-  .cfg-bar__inner {
-    padding: 11px 22px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px 28px;
-    font-family: var(--mono);
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-  }
-  .cfg-bar__item { display: flex; align-items: center; gap: 9px; white-space: nowrap; }
-  .cfg-bar__item::before {
-    content: "";
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--signal);
-    flex: none;
-  }
-
-  /* ============================================================
-     2 — LE CHOIX : deux faces de panneau de commande
-     ============================================================ */
-  .cfg-choice { padding: 40px 0 8px; }
-
-  .cfg-eyebrow {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: var(--signal);
-    margin: 0 0 18px;
-  }
-
-  .cfg-h1 {
-    font-size: clamp(30px, 4.4vw, 50px);
-    font-weight: 800;
-    letter-spacing: -.03em;
-    line-height: 1.06;
-    text-wrap: balance;
-    margin: 0 0 16px;
-  }
-
-  .cfg-lede {
-    max-width: 60ch;
-    font-size: 16.5px;
-    color: #465185;
-    margin: 0 0 40px;
-  }
-
-  .cfg-panels {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  .cfg-panel {
-    display: flex;
-    flex-direction: column;
-    border-radius: 14px;
-    padding: 26px 26px 24px;
-    position: relative;
-    overflow: hidden;
-    transition: transform .18s ease, box-shadow .18s ease;
-  }
-
-  /* — panneau A : plein. C'est l'info que le visiteur n'a pas. — */
-  .cfg-panel--pack {
-    background: linear-gradient(158deg, #16306e 0%, var(--nuit-encre) 100%);
-    color: #eef1fb;
-    box-shadow: 0 18px 44px -22px rgba(12, 30, 74, .8);
-  }
-  /* — panneau B : clair. C'est la page où il se trouve déjà. — */
-  .cfg-panel--conf {
-    background: var(--craie);
-    color: var(--nuit);
-    border: 1px solid var(--brume-trait);
-  }
-
-  .cfg-panel:hover { transform: translateY(-3px); }
-  .cfg-panel--pack:hover { box-shadow: 0 26px 54px -22px rgba(12, 30, 74, .9); }
-  .cfg-panel--conf:hover { box-shadow: 0 20px 40px -26px rgba(12, 30, 74, .55); }
-
-  /* la ligne d'état — signature de la page */
-  .cfg-state {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .13em;
-    text-transform: uppercase;
-    padding-bottom: 16px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid;
-  }
-  .cfg-panel--pack .cfg-state { color: #7fb2f5; border-color: rgba(255,255,255,.14); }
-  .cfg-panel--conf .cfg-state { color: #6572a5; border-color: var(--brume-trait); }
-
-  .cfg-led {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex: none;
-    background: var(--signal);
-    box-shadow: 0 0 0 0 rgba(11, 97, 205, .55);
-    animation: cfg-pulse 2.6s ease-out infinite;
-  }
-  .cfg-panel--conf .cfg-led { background: #9aa4cd; animation: none; }
-
-  @keyframes cfg-pulse {
-    0%   { box-shadow: 0 0 0 0 rgba(11, 97, 205, .55); }
-    70%  { box-shadow: 0 0 0 7px rgba(11, 97, 205, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(11, 97, 205, 0); }
-  }
-
-  .cfg-state__tag {
-    margin-left: auto;
-    font-size: 10px;
-    letter-spacing: .1em;
-    padding: 3px 8px;
-    border-radius: 3px;
-    background: var(--alerte);
-    color: #fff;
-  }
-  .cfg-panel--conf .cfg-state__tag { background: rgba(11,97,205,.1); color: var(--signal); }
-
-  .cfg-panel__title {
-    font-size: clamp(21px, 2.3vw, 27px);
-    font-weight: 700;
-    letter-spacing: -.02em;
-    line-height: 1.18;
-    margin: 0 0 6px;
-    text-wrap: balance;
-  }
-  .cfg-panel__sub {
-    font-size: 14.5px;
-    margin: 0 0 22px;
-  }
-  .cfg-panel--pack .cfg-panel__sub { color: #a9b7dc; }
-  .cfg-panel--conf .cfg-panel__sub { color: #5c6796; }
-
-  .cfg-specs { list-style: none; margin: 0 0 24px; padding: 0; }
-  .cfg-specs li {
-    display: grid;
-    grid-template-columns: 18px 1fr;
-    gap: 11px;
-    align-items: start;
-    padding: 11px 0;
-    font-size: 14.5px;
-    border-top: 1px solid;
-  }
-  .cfg-panel--pack .cfg-specs li { border-color: rgba(255,255,255,.1); }
-  .cfg-panel--conf .cfg-specs li { border-color: var(--brume-trait); }
-  .cfg-specs li:first-child { border-top: none; padding-top: 0; }
-
-  .cfg-specs svg { width: 18px; height: 18px; margin-top: 2px; flex: none; }
-  .cfg-panel--pack .cfg-specs svg { stroke: #7fb2f5; }
-  .cfg-panel--conf .cfg-specs svg { stroke: var(--signal); }
-
-  .cfg-panel__foot { margin-top: auto; }
-
-  .cfg-readout {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .04em;
-    font-variant-numeric: tabular-nums;
-    margin-bottom: 14px;
-  }
-  .cfg-panel--pack .cfg-readout { color: #a9b7dc; }
-  .cfg-panel--conf .cfg-readout { color: #6572a5; }
-  .cfg-readout b { font-weight: 600; font-size: 15px; }
-  .cfg-panel--pack .cfg-readout b { color: #fff; }
-  .cfg-panel--conf .cfg-readout b { color: var(--nuit); }
-
-  .cfg-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 15px 22px;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    font-family: var(--sans);
-    font-size: 14.5px;
-    font-weight: 600;
-    letter-spacing: .01em;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background .16s ease, color .16s ease, border-color .16s ease;
-  }
-  .cfg-btn:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
-
-  .cfg-btn--solid  { background: var(--craie); color: var(--nuit); }
-  .cfg-btn--solid:hover { background: #d5e3fb; }
-  .cfg-btn--navy   { background: var(--nuit); color: #fff; }
-  .cfg-btn--navy:hover { background: var(--signal); }
-
-  /* la ligne d'aide au choix — la vraie question, pas un slogan */
-  .cfg-hint {
-    margin-top: 22px;
-    padding: 16px 20px;
-    border-left: 3px solid var(--signal);
-    background: rgba(11, 97, 205, .05);
-    border-radius: 0 8px 8px 0;
-    font-size: 14.5px;
-    color: #465185;
-    max-width: 78ch;
-  }
-  .cfg-hint b { color: var(--nuit); font-weight: 600; }
-
-  /* ============================================================
-     3 — LE CONFIGURATEUR (existant, inchangé)
-     ============================================================ */
-  .cfg-anchor { padding-top: 56px; }
-  .cfg-anchor__label {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-family: var(--mono);
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: #6572a5;
-    margin-bottom: 16px;
-  }
-  .cfg-anchor__label::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--brume-trait);
-  }
-  .cfg-iframe-stub {
-    border: 1px dashed #b6bee4;
-    border-radius: 14px;
-    background: var(--craie);
-    min-height: 230px;
-    display: grid;
-    place-content: center;
+    padding: 12px 16px;
+    margin: 20px auto 0;
+    max-width: 1232px;
     text-align: center;
-    gap: 8px;
-    padding: 40px 24px;
   }
-  .cfg-iframe-stub__t {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: #6572a5;
-  }
-  .cfg-iframe-stub__s { font-size: 14px; color: #8a93bd; }
 
-  /* ============================================================
-     4 — OFFRES EXCLUSIVES : rail horizontal, données en mono
-     ============================================================ */
-  .cfg-offers { padding: 72px 0 80px; }
-
-  .cfg-offers__head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
+  /* ---------- badge pilule à pastille : composant du site ---------- */
+  .cfg-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    border-radius: 100px; padding: 6px 15px;
+    font-family: var(--texte);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    width: fit-content;
   }
-  .cfg-h2 {
-    font-size: clamp(26px, 3.4vw, 38px);
-    font-weight: 800;
-    letter-spacing: -.03em;
-    line-height: 1.1;
-    margin: 0 0 10px;
-    text-wrap: balance;
-  }
-  .cfg-offers__sub { max-width: 56ch; font-size: 15.5px; color: #465185; margin: 0; }
+  .cfg-pill__dot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
 
-  .cfg-live {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    font-family: var(--mono);
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: .14em;
-    text-transform: uppercase;
+  .cfg-pill--sombre {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    color: rgba(255,255,255,.72);
+  }
+  .cfg-pill--sombre .cfg-pill__dot { background: var(--cyan); }
+
+  .cfg-pill--clair {
+    background: #e6f1fb;
+    border: 1px solid #cfe2f6;
+    color: #185fa5;
+  }
+  .cfg-pill--clair .cfg-pill__dot { background: var(--azur); }
+
+  .cfg-pill--chaud {
+    background: #fff1f4;
+    border: 1px solid #ffd7e0;
     color: var(--alerte);
-    margin: 0 0 14px;
   }
-  .cfg-live .cfg-led { background: var(--alerte); box-shadow: 0 0 0 0 rgba(225,29,72,.5); animation: cfg-pulse-red 2.6s ease-out infinite; }
-  @keyframes cfg-pulse-red {
+  .cfg-pill--chaud .cfg-pill__dot {
+    background: var(--alerte);
+    animation: cfg-battement 2.6s ease-out infinite;
+  }
+  @keyframes cfg-battement {
     0%   { box-shadow: 0 0 0 0 rgba(225,29,72,.5); }
     70%  { box-shadow: 0 0 0 7px rgba(225,29,72,0); }
     100% { box-shadow: 0 0 0 0 rgba(225,29,72,0); }
   }
 
+  /* ============================================================
+     1 — BANDEAU : les garanties, pleine largeur, dégradé du site
+     ============================================================ */
+  .cfg-bandeau {
+    background: linear-gradient(135deg, var(--nuit) 0%, var(--azur) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .cfg-bandeau::before {
+    content: "";
+    position: absolute; top: -140px; right: -60px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(72,202,228,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cfg-bandeau__inner {
+    max-width: 1280px; margin: 0 auto; padding: 14px 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 34px;
+    position: relative; z-index: 1;
+  }
+  .cfg-bandeau__item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12.5px; font-weight: 500; letter-spacing: .04em;
+    color: rgba(255,255,255,.82); white-space: nowrap;
+  }
+  .cfg-bandeau__item::before {
+    content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--cyan); flex: none;
+  }
+
+  /* ============================================================
+     2 — LE CHOIX
+     ============================================================ */
+  .cfg-choix { padding: 52px 0 8px; }
+
+  .cfg-choix__intro { margin-bottom: 34px; }
+  .cfg-h1 {
+    font-family: var(--display);
+    font-size: clamp(30px, 4.2vw, 52px);
+    font-weight: 700; letter-spacing: -.025em; line-height: 1.06;
+    text-wrap: balance; margin: 16px 0 14px;
+  }
+  .cfg-h1 em { font-style: normal; color: var(--azur); }
+  .cfg-lede { max-width: 62ch; font-size: 17px; color: var(--ardoise); margin: 0; }
+
+  .cfg-panneaux {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px;
+    align-items: stretch;
+  }
+
+  .cfg-panneau {
+    display: grid; grid-template-columns: 210px minmax(0, 1fr);
+    border-radius: 18px; overflow: hidden; position: relative;
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+  .cfg-panneau:hover { transform: translateY(-4px); }
+
+  .cfg-panneau--pack {
+    background: linear-gradient(135deg, var(--nuit) 0%, #16357e 55%, var(--azur) 100%);
+    color: #eef2fb;
+    box-shadow: 0 18px 44px -24px rgba(11, 30, 74, .85);
+  }
+  .cfg-panneau--pack::after {
+    content: "";
+    position: absolute; bottom: -110px; right: -70px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(72,202,228,.16) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cfg-panneau--pack:hover { box-shadow: 0 28px 58px -24px rgba(11, 30, 74, .95); }
+
+  .cfg-panneau--config {
+    background: var(--craie);
+    color: var(--nuit);
+    border: 2px solid var(--azur);
+    box-shadow: 0 10px 32px -22px rgba(11, 30, 74, .5);
+  }
+  .cfg-panneau--config:hover { box-shadow: 0 24px 46px -26px rgba(11, 30, 74, .6); }
+
+  /* ---- la colonne image : ratio proche des visuels d'origine ---- */
+  .cfg-visuel { position: relative; overflow: hidden; background: #0a1836; }
+  .cfg-panneau--config .cfg-visuel { background: #dbe6f8; }
+  .cfg-visuel img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
+  }
+  /* dessin de repli, visible si la photo ne charge pas */
+  .cfg-visuel__repli {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    background: linear-gradient(160deg, #12295e 0%, #0a1836 100%);
+  }
+  .cfg-panneau--config .cfg-visuel__repli {
+    background: linear-gradient(160deg, #e8eefb 0%, #cfdcf4 100%);
+  }
+  .cfg-visuel__repli svg { width: 58%; height: auto; }
+  .cfg-panneau--pack   .cfg-visuel__repli svg { stroke: rgba(255,255,255,.5); }
+  .cfg-panneau--config .cfg-visuel__repli svg { stroke: rgba(26,79,171,.55); }
+  .cfg-visuel img { z-index: 1; }
+
+  .cfg-corps {
+    padding: 26px 26px 24px;
+    display: flex; flex-direction: column;
+    position: relative; z-index: 1;
+  }
+
+  .cfg-panneau__titre {
+    font-family: var(--display);
+    font-size: clamp(20px, 2.1vw, 26px);
+    font-weight: 700; letter-spacing: -.02em; line-height: 1.18;
+    margin: 16px 0 6px; text-wrap: balance;
+  }
+  .cfg-panneau__sous { font-size: 14.5px; margin: 0 0 20px; }
+  .cfg-panneau--pack   .cfg-panneau__sous { color: rgba(238,242,251,.66); }
+  .cfg-panneau--config .cfg-panneau__sous { color: var(--ardoise); }
+
+  .cfg-points { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 12px; }
+  .cfg-points li { display: grid; grid-template-columns: 22px 1fr; gap: 11px; align-items: start; font-size: 14.5px; }
+  .cfg-points span.coche {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex: none; margin-top: 1px;
+  }
+  .cfg-panneau--pack   .cfg-points span.coche { background: rgba(72,202,228,.16); color: var(--cyan); }
+  .cfg-panneau--config .cfg-points span.coche { background: #d8f3df; color: #1a8a3e; }
+
+  .cfg-pied { margin-top: auto; }
+  .cfg-chiffre { font-size: 13px; margin: 0 0 14px; }
+  .cfg-panneau--pack   .cfg-chiffre { color: rgba(238,242,251,.6); }
+  .cfg-panneau--config .cfg-chiffre { color: var(--ardoise); }
+  .cfg-chiffre b { font-family: var(--display); font-weight: 700; font-size: 17px; }
+  .cfg-panneau--pack   .cfg-chiffre b { color: #fff; }
+  .cfg-panneau--config .cfg-chiffre b { color: var(--nuit); }
+
+  .cfg-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 15px 24px; border-radius: 100px; border: 1px solid transparent;
+    font-family: var(--texte); font-size: 14.5px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+    transition: background .18s ease, color .18s ease, box-shadow .18s ease;
+  }
+  .cfg-btn:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+  .cfg-btn--blanc { background: var(--craie); color: var(--nuit); }
+  .cfg-btn--blanc:hover { background: #dbe6f8; }
+  .cfg-btn--azur  { background: var(--azur); color: #fff; box-shadow: 0 8px 22px -10px rgba(26,79,171,.7); }
+  .cfg-btn--azur:hover { background: #16357e; color: #fff; }
+
+  .cfg-aide {
+    margin-top: 24px; padding: 18px 22px;
+    background: var(--craie);
+    border: 1.5px solid var(--trait);
+    border-left: 4px solid var(--azur);
+    border-radius: 0 14px 14px 0;
+    font-size: 14.5px; color: var(--ardoise); max-width: 82ch;
+  }
+  .cfg-aide b { color: var(--nuit); font-weight: 600; }
+
+  /* ============================================================
+     3 — LE CONFIGURATEUR (existant, inchangé)
+     ============================================================ */
+  .cfg-ancre { padding-top: 52px; }
+  .cfg-ancre__label {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 12px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ardoise); margin-bottom: 16px;
+  }
+  .cfg-ancre__label::after { content: ""; flex: 1; height: 1px; background: var(--trait); }
+  .cfg-stub {
+    border: 1.5px dashed #b8c4e6; border-radius: 18px; background: var(--craie);
+    min-height: 220px; display: grid; place-content: center; text-align: center;
+    gap: 8px; padding: 40px 24px;
+  }
+  .cfg-stub__t { font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--nuit); margin: 0; }
+  .cfg-stub__s { font-size: 14px; color: var(--ardoise); margin: 0; }
+
+  /* ============================================================
+     4 — OFFRES EXCLUSIVES
+     ============================================================ */
+  .cfg-offres { padding: 68px 0 80px; }
+  .cfg-offres__tete { margin-bottom: 28px; }
+  .cfg-h2 {
+    font-family: var(--display);
+    font-size: clamp(25px, 3.2vw, 38px);
+    font-weight: 700; letter-spacing: -.025em; line-height: 1.1;
+    margin: 14px 0 10px; text-wrap: balance;
+  }
+  .cfg-offres__sous { max-width: 58ch; font-size: 15.5px; color: var(--ardoise); margin: 0; }
+
   .cfg-rail {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 268px;
-    gap: 18px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 4px 24px 22px;
-    margin: 0 -24px;
-    scrollbar-width: thin;
-    scrollbar-color: #b6bee4 transparent;
+    display: grid; grid-auto-flow: column; grid-auto-columns: 276px; gap: 20px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 6px 24px 24px; margin: 0 -24px;
+    scrollbar-width: thin; scrollbar-color: #b8c4e6 transparent;
   }
   .cfg-rail::-webkit-scrollbar { height: 6px; }
-  .cfg-rail::-webkit-scrollbar-thumb { background: #b6bee4; border-radius: 3px; }
+  .cfg-rail::-webkit-scrollbar-thumb { background: #b8c4e6; border-radius: 3px; }
   .cfg-rail::-webkit-scrollbar-track { background: transparent; }
+  .cfg-rail:focus-visible { outline: 3px solid var(--azur); outline-offset: 4px; }
 
-  .cfg-card {
-    scroll-snap-align: start;
-    background: var(--craie);
-    border: 1px solid var(--brume-trait);
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  .cfg-carte {
+    scroll-snap-align: start; background: var(--craie);
+    border: 1.5px solid #e5e7eb; border-radius: 18px; overflow: hidden;
+    display: flex; flex-direction: column; text-decoration: none; color: inherit;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   }
-  .cfg-card:hover {
-    transform: translateY(-4px);
-    border-color: #9fb6e6;
-    box-shadow: 0 20px 38px -24px rgba(12, 30, 74, .6);
+  .cfg-carte:hover {
+    transform: translateY(-4px); border-color: #a9c2ec;
+    box-shadow: 0 16px 40px rgba(11, 30, 74, .12);
   }
-  .cfg-card:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+  .cfg-carte:focus-visible { outline: 3px solid var(--azur); outline-offset: 3px; }
 
-  .cfg-card__media {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    background: var(--brume);
-    display: grid;
-    place-items: center;
-    border-bottom: 1px solid var(--brume-trait);
+  .cfg-carte__img {
+    position: relative; aspect-ratio: 4 / 3; background: #eaf0fb;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    flex-shrink: 0;
   }
-  .cfg-card__media img { width: 100%; height: 100%; object-fit: contain; }
-  .cfg-card__media svg { width: 62%; height: auto; }
+  .cfg-carte__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .cfg-carte__repli { position: absolute; inset: 0; display: grid; place-items: center; }
+  .cfg-carte__repli svg { width: 52%; height: auto; stroke: rgba(26,79,171,.45); }
+  .cfg-carte__img img { position: relative; z-index: 1; }
 
-  .cfg-cut {
-    position: absolute;
-    top: 10px; left: 10px;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .04em;
-    font-variant-numeric: tabular-nums;
-    background: var(--alerte);
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 4px;
-  }
-
-  .cfg-card__body { padding: 15px 16px 17px; display: flex; flex-direction: column; flex: 1; gap: 10px; }
-
-  .cfg-card__fam {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 500;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: #7b86b4;
-  }
-  .cfg-card__title {
-    font-size: 14.5px;
-    font-weight: 600;
-    line-height: 1.35;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .cfg-card__prices {
-    margin-top: auto;
-    display: flex;
-    align-items: baseline;
-    gap: 9px;
-    font-variant-numeric: tabular-nums;
-  }
-  .cfg-card__now { font-size: 19px; font-weight: 700; letter-spacing: -.02em; }
-  .cfg-card__was { font-size: 13px; color: #8a93bd; text-decoration: line-through; }
-  .cfg-card__save {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    letter-spacing: .02em;
-    color: var(--alerte);
+  .cfg-remise {
+    position: absolute; top: 12px; right: 12px; z-index: 2;
+    background: var(--alerte); color: #fff;
+    font-size: 12px; font-weight: 700; letter-spacing: .02em;
+    padding: 5px 12px; border-radius: 20px;
     font-variant-numeric: tabular-nums;
   }
 
-  .cfg-offers__foot { margin-top: 26px; }
-  .cfg-btn--inline { width: auto; }
+  .cfg-carte__corps { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; gap: 8px; }
+  .cfg-carte__gamme {
+    font-size: 11px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--azur); margin: 0;
+  }
+  .cfg-carte__titre {
+    font-family: var(--display); font-size: 15px; font-weight: 600; line-height: 1.35;
+    margin: 0; color: var(--nuit);
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .cfg-carte__prix {
+    margin-top: auto; padding-top: 6px;
+    display: flex; align-items: baseline; gap: 10px; font-variant-numeric: tabular-nums;
+  }
+  .cfg-carte__actuel { font-family: var(--display); font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
+  .cfg-carte__barre { font-size: 13.5px; color: #97a0bd; text-decoration: line-through; }
+  .cfg-carte__eco { font-size: 12.5px; font-weight: 500; color: var(--alerte); margin: 0; font-variant-numeric: tabular-nums; }
+
+  .cfg-offres__pied { margin-top: 28px; }
+  .cfg-btn--auto { width: auto; }
 
   /* ============================================================
      Responsive
      ============================================================ */
-  @media (max-width: 860px) {
-    .cfg-panels { grid-template-columns: 1fr; }
-    .cfg-choice { padding-top: 44px; }
-    .cfg-offers { padding: 56px 0 64px; }
-    .cfg-rail { grid-auto-columns: 232px; }
+  @media (max-width: 1080px) {
+    .cfg-panneau { grid-template-columns: 170px minmax(0, 1fr); }
   }
-  @media (max-width: 520px) {
+  @media (max-width: 900px) {
+    .cfg-panneaux { grid-template-columns: 1fr; }
+    .cfg-panneau { grid-template-columns: 200px minmax(0, 1fr); }
+    .cfg-choix { padding-top: 38px; }
+    .cfg-offres { padding: 54px 0 64px; }
+  }
+  @media (max-width: 620px) {
     .cfg-wrap { padding: 0 16px; }
-    .cfg-rail { margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
-    .cfg-bar__inner { justify-content: flex-start; gap: 8px 18px; font-size: 10.5px; }
+    .cfg-panneau { grid-template-columns: 1fr; }
+    .cfg-visuel { aspect-ratio: 5 / 4; }
+    .cfg-rail { grid-auto-columns: 240px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+    .cfg-bandeau__inner { justify-content: flex-start; gap: 8px 20px; }
+    .cfg-bandeau__item { font-size: 11.5px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -476,290 +366,289 @@
   }
 </style>
 
-<!-- visuels au trait : les vraies photos produit sont tirées du CDN Shopify en production -->
+<!-- dessins de repli : affichés uniquement si la photo Shopify ne charge pas -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <symbol id="dw-vigilia" viewBox="0 0 120 120">
-      <g fill="none" stroke="#0c1e4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="18" y="16" width="52" height="72" rx="7"/>
-        <rect x="26" y="24" width="36" height="16" rx="3"/>
-        <circle cx="32" cy="52" r="3.4"/><circle cx="44" cy="52" r="3.4"/><circle cx="56" cy="52" r="3.4"/>
-        <circle cx="32" cy="64" r="3.4"/><circle cx="44" cy="64" r="3.4"/><circle cx="56" cy="64" r="3.4"/>
-        <circle cx="32" cy="76" r="3.4"/><circle cx="44" cy="76" r="3.4"/><circle cx="56" cy="76" r="3.4"/>
-        <path d="M84 44h18a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H84z"/>
-        <path d="M84 40v30" /><circle cx="96" cy="55" r="4"/>
-        <path d="M78 96h32M86 96v8h16v-8"/>
+    <symbol id="dw-pack" viewBox="0 0 120 120">
+      <g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="24" y="30" width="72" height="54" rx="8"/>
+        <path d="M24 46h72"/>
+        <circle cx="34" cy="38" r="2.4"/><circle cx="43" cy="38" r="2.4"/>
+        <path d="M40 60h24M40 70h16"/>
+        <path d="M46 30V20a14 14 0 0 1 28 0v10"/>
+        <path d="M38 96h44"/>
       </g>
     </symbol>
-    <symbol id="dw-touch" viewBox="0 0 120 120">
-      <g fill="none" stroke="#0c1e4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="14" y="22" width="62" height="60" rx="8"/>
-        <rect x="22" y="30" width="46" height="38" rx="4"/>
-        <path d="M31 43h28M31 51h20M31 59h24"/>
-        <circle cx="45" cy="75" r="3"/>
-        <path d="M88 40h16a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H88z"/>
-        <path d="M88 36v32"/><circle cx="99" cy="52" r="4"/>
-        <path d="M96 68v14M86 96h20"/>
-        <path d="M30 96h34" stroke-dasharray="4 5"/>
+    <symbol id="dw-config" viewBox="0 0 120 120">
+      <g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="26" y="22" width="68" height="76" rx="9"/>
+        <path d="M38 42h44M38 56h30M38 70h36"/>
+        <circle cx="82" cy="70" r="7"/>
+        <path d="M82 63v-4M82 81v-4M89 70h4M71 70h4"/>
+        <path d="M38 86h20"/>
       </g>
     </symbol>
-    <symbol id="dw-elite" viewBox="0 0 120 120">
-      <g fill="none" stroke="#0c1e4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="12" y="26" width="58" height="54" rx="8"/>
-        <rect x="20" y="34" width="42" height="30" rx="4"/>
-        <path d="M28 45h26M28 54h16"/>
-        <path d="M41 26v-9M33 12a12 12 0 0 1 16 0"/>
-        <circle cx="41" cy="72" r="3.4"/>
-        <rect x="82" y="30" width="28" height="48" rx="6"/>
-        <path d="M90 42h12M90 51h12M90 60h7"/>
-        <circle cx="96" cy="71" r="2.6"/>
-        <path d="M26 96h26M70 96h24" stroke-dasharray="4 5"/>
+    <symbol id="dw-produit" viewBox="0 0 120 120">
+      <g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="20" y="34" width="46" height="52" rx="7"/>
+        <rect x="28" y="42" width="30" height="18" rx="3"/>
+        <circle cx="34" cy="72" r="3"/><circle cx="43" cy="72" r="3"/><circle cx="52" cy="72" r="3"/>
+        <path d="M80 48h16a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H80z"/>
+        <path d="M80 44v30"/><circle cx="91" cy="59" r="4"/>
       </g>
     </symbol>
   </defs>
 </svg>
 
-<p class="mockup-note">Maquette — visuels produit remplacés par des pictos au trait (le CDN Shopify n'est pas joignable depuis cet environnement). Le code Liquid livré tire les vraies photos, prix et remises en direct.</p>
+<p class="mockup-note">
+  Maquette. Les visuels sont ceux qui existent déjà dans vos fichiers Shopify.
+  S'ils n'apparaissent pas ici, c'est que le CDN Shopify est bloqué depuis cet aperçu :
+  ouvrez <code>preview.html</code> en local pour les voir, ils se chargeront normalement en production.
+</p>
 
 <!-- ============ 1 · BANDEAU ============ -->
-<div class="cfg-wrap">
-  <div class="cfg-bar">
-    <div class="cfg-bar__inner">
-      <span class="cfg-bar__item">Sans abonnement</span>
-      <span class="cfg-bar__item">Livraison offerte en 48 h</span>
-      <span class="cfg-bar__item">Garantie 2 ans</span>
-      <span class="cfg-bar__item">SAV en France</span>
-    </div>
+<div class="cfg-bandeau">
+  <div class="cfg-bandeau__inner">
+    <span class="cfg-bandeau__item">Sans abonnement</span>
+    <span class="cfg-bandeau__item">Expédition sous 24 h</span>
+    <span class="cfg-bandeau__item">Livraison en 2 à 3 jours</span>
+    <span class="cfg-bandeau__item">Garantie 2 ans</span>
   </div>
 </div>
 
 <!-- ============ 2 · LE CHOIX ============ -->
-<section class="cfg-choice">
+<section class="cfg-choix">
   <div class="cfg-wrap">
-    <p class="cfg-eyebrow">Trouver mon alarme</p>
-    <h1 class="cfg-h1">Deux façons d'équiper votre maison.</h1>
-    <p class="cfg-lede">
-      Prenez un pack déjà assemblé, ou composez votre système pièce par pièce.
-      Les deux mènent à la même protection, sans abonnement et sans engagement.
-    </p>
 
-    <div class="cfg-panels">
+    <div class="cfg-choix__intro">
+      <span class="cfg-pill cfg-pill--clair"><span class="cfg-pill__dot"></span>Trouver mon alarme</span>
+      <h1 class="cfg-h1">Deux façons d'équiper <em>votre maison</em>.</h1>
+      <p class="cfg-lede">
+        Prenez un pack déjà assemblé, ou composez votre système pièce par pièce.
+        Les deux mènent à la même protection, sans abonnement et sans engagement.
+      </p>
+    </div>
 
-      <!-- panneau A : l'information que le visiteur n'a pas encore -->
-      <div class="cfg-panel cfg-panel--pack">
-        <div class="cfg-state">
-          <span class="cfg-led"></span>
-          Pack complet
-          <span class="cfg-state__tag">Jusqu'à −35 %</span>
+    <div class="cfg-panneaux">
+
+      <!-- panneau A : l'option que le visiteur ne connaît pas encore -->
+      <div class="cfg-panneau cfg-panneau--pack">
+        <div class="cfg-visuel">
+          <div class="cfg-visuel__repli"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-pack"/></svg></div>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Image_Acceuil_Pack_Pret_a_poser_Daewoo.png?v=1786099030&width=600"
+               alt="Pack d'alarme Daewoo prêt à poser" loading="lazy">
         </div>
 
-        <h2 class="cfg-panel__title">On a déjà fait le tri.</h2>
-        <p class="cfg-panel__sub">Pour un logement standard, tout est décidé d'avance.</p>
+        <div class="cfg-corps">
+          <span class="cfg-pill cfg-pill--sombre"><span class="cfg-pill__dot"></span>Le plus rapide</span>
+          <h2 class="cfg-panneau__titre">On a déjà fait le tri.</h2>
+          <p class="cfg-panneau__sous">Pour un logement standard, tout est décidé d'avance.</p>
 
-        <ul class="cfg-specs">
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
-            <span>Centrale, détecteurs et sirène assemblés et testés ensemble</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
-            <span>Livré prêt à poser — rien à choisir, rien à compléter</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
-            <span>Moins cher que les mêmes produits pris à l'unité</span>
-          </li>
-        </ul>
+          <ul class="cfg-points">
+            <li><span class="coche">✓</span><span>Centrale, détecteurs et sirène assemblés et testés ensemble</span></li>
+            <li><span class="coche">✓</span><span>Livré prêt à poser — rien à choisir, rien à compléter</span></li>
+            <li><span class="coche">✓</span><span>Expédié sous 24 h, chez vous en 2 à 3 jours</span></li>
+          </ul>
 
-        <div class="cfg-panel__foot">
-          <p class="cfg-readout">à partir de <b>139,90 €</b> &nbsp;·&nbsp; 4 packs</p>
-          <a class="cfg-btn cfg-btn--solid" href="/collections/starters-packs">Voir les packs complets</a>
+          <div class="cfg-pied">
+            <p class="cfg-chiffre">à partir de <b>139,90 €</b> &nbsp;·&nbsp; 4 packs</p>
+            <a class="cfg-btn cfg-btn--blanc" href="/collections/starters-packs">Voir les packs complets</a>
+          </div>
         </div>
       </div>
 
-      <!-- panneau B : la page où il se trouve déjà -->
-      <div class="cfg-panel cfg-panel--conf">
-        <div class="cfg-state">
-          <span class="cfg-led"></span>
-          Vous êtes ici — configurateur
-          <span class="cfg-state__tag">Cadeau offert</span>
+      <!-- panneau B : la page où le visiteur se trouve déjà -->
+      <div class="cfg-panneau cfg-panneau--config">
+        <div class="cfg-visuel">
+          <div class="cfg-visuel__repli"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-config"/></svg></div>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Image_Acceuil_Configurateur_Daewoo.png?v=1786099030&width=600"
+               alt="Configurateur d'alarme Daewoo" loading="lazy">
         </div>
 
-        <h2 class="cfg-panel__title">Vous composez le vôtre.</h2>
-        <p class="cfg-panel__sub">Le système suit votre logement, pas l'inverse.</p>
+        <div class="cfg-corps">
+          <span class="cfg-pill cfg-pill--clair"><span class="cfg-pill__dot"></span>Vous êtes ici</span>
+          <h2 class="cfg-panneau__titre">Vous composez le vôtre.</h2>
+          <p class="cfg-panneau__sous">Le système suit votre logement, pas l'inverse.</p>
 
-        <ul class="cfg-specs">
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
-            <span>Quelques questions sur votre logement, deux minutes</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
-            <span>Le nombre de détecteurs suit vos portes et fenêtres</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
-            <span>Un cadeau ajouté à toute commande passée par le configurateur</span>
-          </li>
-        </ul>
+          <ul class="cfg-points">
+            <li><span class="coche">✓</span><span>Quelques questions sur votre logement, deux minutes</span></li>
+            <li><span class="coche">✓</span><span>Le nombre de détecteurs suit vos portes et fenêtres</span></li>
+            <li><span class="coche">✓</span><span>Vous ajoutez ou retirez chaque accessoire avant de valider</span></li>
+          </ul>
 
-        <div class="cfg-panel__foot">
-          <p class="cfg-readout">résultat immédiat &nbsp;·&nbsp; sans engagement</p>
-          <a class="cfg-btn cfg-btn--navy" href="#configurateur">Configurer mon alarme</a>
+          <div class="cfg-pied">
+            <p class="cfg-chiffre">gratuit &nbsp;·&nbsp; sans engagement</p>
+            <a class="cfg-btn cfg-btn--azur" href="#configurateur">Configurer mon alarme</a>
+          </div>
         </div>
       </div>
 
     </div>
 
-    <p class="cfg-hint">
-      <b>Vous hésitez ?</b> Appartement ou plain-pied avec moins de cinq ouvertures : le pack complet suffit.
+    <p class="cfg-aide">
+      <b>Vous hésitez&nbsp;?</b> Appartement ou plain-pied avec moins de cinq ouvertures : le pack complet suffit.
       Étage, dépendance, animaux ou grande surface : passez par le configurateur, il ajustera le nombre de détecteurs.
     </p>
   </div>
 </section>
 
 <!-- ============ 3 · LE CONFIGURATEUR (existant) ============ -->
-<section class="cfg-anchor" id="configurateur">
+<section class="cfg-ancre" id="configurateur">
   <div class="cfg-wrap">
-    <p class="cfg-anchor__label">Le configurateur</p>
-    <div class="cfg-iframe-stub">
-      <p class="cfg-iframe-stub__t">Configurateur existant — iframe Lovable</p>
-      <p class="cfg-iframe-stub__s">Inchangé. Rien n'est touché dans le corps de la page.</p>
+    <p class="cfg-ancre__label">Le configurateur</p>
+    <div class="cfg-stub">
+      <p class="cfg-stub__t">Configurateur existant — iframe Lovable</p>
+      <p class="cfg-stub__s">Inchangé. Rien n'est touché dans le corps de la page.</p>
     </div>
   </div>
 </section>
 
 <!-- ============ 4 · OFFRES EXCLUSIVES ============ -->
-<section class="cfg-offers">
+<section class="cfg-offres">
   <div class="cfg-wrap">
-    <div class="cfg-offers__head">
-      <div>
-        <p class="cfg-live"><span class="cfg-led"></span>10 offres en cours</p>
-        <h2 class="cfg-h2">Offres exclusives du moment.</h2>
-        <p class="cfg-offers__sub">
-          Des packs déjà constitués, remisés tant qu'il reste du stock. Même garantie, toujours sans abonnement.
-        </p>
-      </div>
+
+    <div class="cfg-offres__tete">
+      <span class="cfg-pill cfg-pill--chaud"><span class="cfg-pill__dot"></span>10 offres en cours</span>
+      <h2 class="cfg-h2">Offres exclusives du moment.</h2>
+      <p class="cfg-offres__sous">
+        Des packs déjà constitués, remisés tant qu'il reste du stock.
+        Même garantie 2 ans, toujours sans abonnement.
+      </p>
     </div>
 
     <div class="cfg-rail" tabindex="0" role="region" aria-label="Offres exclusives">
 
-      <a class="cfg-card" href="/products/offre-exclusive-pack-touch-compatible-animaux-sans-abonnement-2">
-        <div class="cfg-card__media">
-          <span class="cfg-cut">−35 %</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-touch"/></svg>
+      <a class="cfg-carte" href="/products/offre-exclusive-pack-touch-compatible-animaux-sans-abonnement-2">
+        <div class="cfg-carte__img">
+          <div class="cfg-carte__repli"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-produit"/></svg></div>
+          <span class="cfg-remise">−35 %</span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Packamazon_2.png?v=1774615249&width=600" alt="Daewoo Touch XL avec caméra extérieure et caméra intérieure" loading="lazy">
         </div>
-        <div class="cfg-card__body">
-          <p class="cfg-card__fam">Touch XL</p>
-          <h3 class="cfg-card__title">Daewoo Touch XL + caméra extérieure autonome + caméra intérieure</h3>
-          <div class="cfg-card__prices">
-            <span class="cfg-card__now">399,90 €</span>
-            <span class="cfg-card__was">619,60 €</span>
+        <div class="cfg-carte__corps">
+          <p class="cfg-carte__gamme">Touch XL</p>
+          <h3 class="cfg-carte__titre">Daewoo Touch XL + caméra extérieure autonome + caméra intérieure</h3>
+          <div class="cfg-carte__prix">
+            <span class="cfg-carte__actuel">399,90 €</span>
+            <span class="cfg-carte__barre">619,60 €</span>
           </div>
-          <p class="cfg-card__save">vous économisez 219,70 €</p>
+          <p class="cfg-carte__eco">Vous économisez 219,70 €</p>
         </div>
       </a>
 
-      <a class="cfg-card" href="/products/offre-exclusive-pack-touch-compatible-animaux-sans-abonnement">
-        <div class="cfg-card__media">
-          <span class="cfg-cut">−30 %</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-touch"/></svg>
+      <a class="cfg-carte" href="/products/offre-exclusive-pack-touch-compatible-animaux-sans-abonnement">
+        <div class="cfg-carte__img">
+          <div class="cfg-carte__repli"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-produit"/></svg></div>
+          <span class="cfg-remise">−30 %</span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/ChatGPTImage28mai2026_14_00_03.png?v=1779975615&width=600" alt="Pack Touch avec double caméra extérieure" loading="lazy">
         </div>
-        <div class="cfg-card__body">
-          <p class="cfg-card__fam">Touch</p>
-          <h3 class="cfg-card__title">Pack Touch — double caméra extérieure</h3>
-          <div class="cfg-card__prices">
-            <span class="cfg-card__now">499,90 €</span>
-            <span class="cfg-card__was">719,30 €</span>
+        <div class="cfg-carte__corps">
+          <p class="cfg-carte__gamme">Touch</p>
+          <h3 class="cfg-carte__titre">Pack Touch — double caméra extérieure</h3>
+          <div class="cfg-carte__prix">
+            <span class="cfg-carte__actuel">499,90 €</span>
+            <span class="cfg-carte__barre">719,30 €</span>
           </div>
-          <p class="cfg-card__save">vous économisez 219,40 €</p>
+          <p class="cfg-carte__eco">Vous économisez 219,40 €</p>
         </div>
       </a>
 
-      <a class="cfg-card" href="/products/offre-exclusive-pack-vigilia-compatible-animaux-wifi-ou-wifi-gsm-4g">
-        <div class="cfg-card__media">
-          <span class="cfg-cut">−29 %</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-vigilia"/></svg>
+      <a class="cfg-carte" href="/products/offre-exclusive-pack-vigilia-compatible-animaux-wifi-ou-wifi-gsm-4g">
+        <div class="cfg-carte__img">
+          <div class="cfg-carte__repli"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-produit"/></svg></div>
+          <span class="cfg-remise">−29 %</span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/VIG2601-001_2.png?v=1770975843&width=600" alt="Pack Vigilia avec deux caméras et sirène solaire" loading="lazy">
         </div>
-        <div class="cfg-card__body">
-          <p class="cfg-card__fam">Vigilia</p>
-          <h3 class="cfg-card__title">Pack Vigilia — 2 caméras et sirène solaire</h3>
-          <div class="cfg-card__prices">
-            <span class="cfg-card__now">359,90 €</span>
-            <span class="cfg-card__was">504,40 €</span>
+        <div class="cfg-carte__corps">
+          <p class="cfg-carte__gamme">Vigilia</p>
+          <h3 class="cfg-carte__titre">Pack Vigilia — 2 caméras et sirène solaire</h3>
+          <div class="cfg-carte__prix">
+            <span class="cfg-carte__actuel">359,90 €</span>
+            <span class="cfg-carte__barre">504,40 €</span>
           </div>
-          <p class="cfg-card__save">vous économisez 144,50 €</p>
+          <p class="cfg-carte__eco">Vous économisez 144,50 €</p>
         </div>
       </a>
 
-      <a class="cfg-card" href="/products/offre-exclusive-pack-elite-compatible-animaux-sans-abonnement-copie-1">
-        <div class="cfg-card__media">
-          <span class="cfg-cut">−30 %</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-elite"/></svg>
+      <a class="cfg-carte" href="/products/offre-exclusive-pack-elite-compatible-animaux-sans-abonnement-copie-1">
+        <div class="cfg-carte__img">
+          <div class="cfg-carte__repli"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-produit"/></svg></div>
+          <span class="cfg-remise">−30 %</span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/PA5012601-002_1.png?v=1770973675&width=600" alt="Pack Élite PA501Z avec caméra extérieure autonome W503" loading="lazy">
         </div>
-        <div class="cfg-card__body">
-          <p class="cfg-card__fam">Élite PA501Z</p>
-          <h3 class="cfg-card__title">Pack Élite PA501Z — 4G, Zigbee et caméra extérieure autonome W503</h3>
-          <div class="cfg-card__prices">
-            <span class="cfg-card__now">449,90 €</span>
-            <span class="cfg-card__was">639,50 €</span>
+        <div class="cfg-carte__corps">
+          <p class="cfg-carte__gamme">Élite PA501Z</p>
+          <h3 class="cfg-carte__titre">Pack Élite PA501Z — 4G, Zigbee et caméra extérieure autonome W503</h3>
+          <div class="cfg-carte__prix">
+            <span class="cfg-carte__actuel">449,90 €</span>
+            <span class="cfg-carte__barre">639,50 €</span>
           </div>
-          <p class="cfg-card__save">vous économisez 189,60 €</p>
+          <p class="cfg-carte__eco">Vous économisez 189,60 €</p>
         </div>
       </a>
 
-      <a class="cfg-card" href="/products/offre-exclusive-pack-vigilia-compatible-animaux-wifi-ou-wifi-gsm-4g-2">
-        <div class="cfg-card__media">
-          <span class="cfg-cut">−29 %</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-vigilia"/></svg>
+      <a class="cfg-carte" href="/products/offre-exclusive-pack-vigilia-compatible-animaux-wifi-ou-wifi-gsm-4g-2">
+        <div class="cfg-carte__img">
+          <div class="cfg-carte__repli"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-produit"/></svg></div>
+          <span class="cfg-remise">−29 %</span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/2_81511d8d-0ed4-44b8-8a9d-c6c8f8894ae1.png?v=1770645361&width=600" alt="Pack Vigilia compatible animaux WiFi ou 4G" loading="lazy">
         </div>
-        <div class="cfg-card__body">
-          <p class="cfg-card__fam">Vigilia</p>
-          <h3 class="cfg-card__title">Pack Vigilia — compatible animaux, WiFi ou WiFi GSM 4G</h3>
-          <div class="cfg-card__prices">
-            <span class="cfg-card__now">249,90 €</span>
-            <span class="cfg-card__was">349,60 €</span>
+        <div class="cfg-carte__corps">
+          <p class="cfg-carte__gamme">Vigilia</p>
+          <h3 class="cfg-carte__titre">Pack Vigilia — compatible animaux, WiFi ou WiFi GSM 4G</h3>
+          <div class="cfg-carte__prix">
+            <span class="cfg-carte__actuel">249,90 €</span>
+            <span class="cfg-carte__barre">349,60 €</span>
           </div>
-          <p class="cfg-card__save">vous économisez 99,70 €</p>
+          <p class="cfg-carte__eco">Vous économisez 99,70 €</p>
         </div>
       </a>
 
-      <a class="cfg-card" href="/products/offre-exclusive-pack-touch-compatible-animaux-sans-abonnement-1">
-        <div class="cfg-card__media">
-          <span class="cfg-cut">−25 %</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-touch"/></svg>
+      <a class="cfg-carte" href="/products/offre-exclusive-pack-touch-compatible-animaux-sans-abonnement-1">
+        <div class="cfg-carte__img">
+          <div class="cfg-carte__repli"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-produit"/></svg></div>
+          <span class="cfg-remise">−25 %</span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Packamazon_3.png?v=1774615710&width=600" alt="Pack Touch XL double caméra extérieure et caméra intérieure" loading="lazy">
         </div>
-        <div class="cfg-card__body">
-          <p class="cfg-card__fam">Touch XL</p>
-          <h3 class="cfg-card__title">Pack Touch XL — double caméra extérieure + caméra intérieure</h3>
-          <div class="cfg-card__prices">
-            <span class="cfg-card__now">809,90 €</span>
-            <span class="cfg-card__was">1 073,80 €</span>
+        <div class="cfg-carte__corps">
+          <p class="cfg-carte__gamme">Touch XL</p>
+          <h3 class="cfg-carte__titre">Pack Touch XL — double caméra extérieure + caméra intérieure</h3>
+          <div class="cfg-carte__prix">
+            <span class="cfg-carte__actuel">809,90 €</span>
+            <span class="cfg-carte__barre">1 073,80 €</span>
           </div>
-          <p class="cfg-card__save">vous économisez 263,90 €</p>
+          <p class="cfg-carte__eco">Vous économisez 263,90 €</p>
         </div>
       </a>
 
-      <a class="cfg-card" href="/products/offre-exclusive-pack-elite-compatible-animaux-sans-abonnement">
-        <div class="cfg-card__media">
-          <span class="cfg-cut">−25 %</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-elite"/></svg>
+      <a class="cfg-carte" href="/products/offre-exclusive-pack-elite-compatible-animaux-sans-abonnement">
+        <div class="cfg-carte__img">
+          <div class="cfg-carte__repli"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#dw-produit"/></svg></div>
+          <span class="cfg-remise">−25 %</span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/PA5012601-003_1.png?v=1770973567&width=600" alt="Pack Élite Daewoo" loading="lazy">
         </div>
-        <div class="cfg-card__body">
-          <p class="cfg-card__fam">Élite</p>
-          <h3 class="cfg-card__title">Pack Élite</h3>
-          <div class="cfg-card__prices">
-            <span class="cfg-card__now">593,90 €</span>
-            <span class="cfg-card__was">794,20 €</span>
+        <div class="cfg-carte__corps">
+          <p class="cfg-carte__gamme">Élite</p>
+          <h3 class="cfg-carte__titre">Pack Élite</h3>
+          <div class="cfg-carte__prix">
+            <span class="cfg-carte__actuel">593,90 €</span>
+            <span class="cfg-carte__barre">794,20 €</span>
           </div>
-          <p class="cfg-card__save">vous économisez 200,30 €</p>
+          <p class="cfg-carte__eco">Vous économisez 200,30 €</p>
         </div>
       </a>
 
     </div>
 
-    <div class="cfg-offers__foot">
-      <a class="cfg-btn cfg-btn--navy cfg-btn--inline" href="/collections/offres-exclusives-copie">Voir les 10 offres</a>
+    <div class="cfg-offres__pied">
+      <a class="cfg-btn cfg-btn--azur cfg-btn--auto" href="/collections/offres-exclusives-copie">Voir les 10 offres</a>
     </div>
   </div>
 </section>
+
+<script>
+  // Si une photo Shopify ne charge pas, on la retire pour laisser voir le dessin de repli
+  // (utile uniquement dans cet aperçu ; en production les images se chargent).
+  document.querySelectorAll('.cfg-visuel img, .cfg-carte__img img').forEach(function (img) {
+    img.addEventListener('error', function () { img.remove(); });
+  });
+</script>
