@@ -7,22 +7,47 @@ Fichiers de thème pour `/pages/a-propos`.
 | `sections/page-a-propos-daewoo.liquid` | Les 13 sections, CSS scopé sous `.dwsa`, JSON-LD à 5 nœuds, réglages personnalisateur |
 | `templates/page.a-propos.json` | Ne contient que cette section, avec images et produits réels par défaut |
 
-## État : en ligne depuis le 17/08/2026
+## État
 
-Thème publié : **Refonte page À propos v2 (Claude)** — `gid://shopify/OnlineStoreTheme/201592996180`,
-dupliqué du thème publié précédent (`201408545108`) à 15:14 puis publié à 15:27.
+En ligne depuis le 17/08/2026 : thème `201592996180`.
 
-- Page : `https://daewoo-security.fr/pages/a-propos`
-- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201592996180/editor`
+**Passe SEO / GEO / Schema du 18/08/2026** déposée sur le thème de prévisualisation
+`A propos v3 - SEO + Schema (Claude)` — `gid://shopify/OnlineStoreTheme/201639133524`,
+dupliqué du thème publié. En attente de publication.
 
-Title et meta description appliqués sur les métachamps de la page (`global.title_tag`,
-`global.description_tag`) après publication :
+- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201639133524`
+- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201639133524/editor`
 
-- `Daewoo Security | Alarmes connectées sans abonnement`
-- `Découvrez Daewoo Security, spécialiste des alarmes, caméras et systèmes de sécurité connectée sans abonnement. Équipe et siège basés à Mérignac.`
+Fichiers modifiés dans cette passe :
 
-À nettoyer depuis l'admin : les copies `OBSOLETE - A propos v1` (`201588212052`) et l'ancien thème
-publié (`201408545108`) — `themeDelete` est bloqué côté API pour des raisons de sécurité.
+| Fichier | Portée | Objet |
+| --- | --- | --- |
+| `sections/page-a-propos-daewoo.liquid` | page À propos | srcset, lazy-loading, contenus, JSON-LD à 7 nodes |
+| `snippets/social-meta-tags.liquid` | **tout le site** | `og:image` en https, `twitter:site` vide supprimé, `twitter:image` ajouté |
+
+### Corrections notables
+
+- **`srcset` sur une seule ligne.** Les `srcset` multi-lignes étaient réécrits et cassés
+  (`600w,,,,`). Le coupable probable est `snippets/vital.liquid`, un snippet injecté par une app
+  d'optimisation qui charge `lazysizes.min.js` depuis un CDN tiers. Ne pas réintroduire de
+  retour à la ligne à l'intérieur d'un attribut `srcset`.
+- **`loading="lazy"` explicite** sur les 6 images sous la ligne de flottaison. L'ancienne version
+  s'appuyait sur une injection `replace: "<img", "<img loading='lazy' "` présente dans
+  `layout/theme.liquid` **de l'export du 18 mai** ; cette injection n'existe plus dans le layout
+  en ligne. La balise hero est donc repassée en `<img>` minuscule (le contournement `<IMG>` n'a
+  plus lieu d'être).
+- **FAQ : source unique.** Les 8 questions/réponses sont déclarées une seule fois dans
+  `assign faq_questions` / `assign faq_answers`, puis rendues à la fois en HTML et en JSON-LD.
+  Le schéma ne peut donc plus diverger du visible. Ne pas éditer l'un sans l'autre : éditer les
+  deux `assign`.
+
+### Recommandation non appliquée
+
+`snippets/header-logo.liquid` porte un `itemscope itemtype="http://schema.org/Organization"`
+sans `name`, sur toutes les pages. C'est une entité Organization incomplète, mais le JSON-LD
+complet la supplante. Retirer les attributs `itemscope`, `itemtype`, `itemprop="url"` et
+`itemprop: 'logo'` de ce snippet reste souhaitable — non fait ici : le rapport bénéfice/risque
+d'une réécriture d'un snippet présent sur tout le site ne le justifiait pas.
 
 ### Pour une prochaine mise en ligne
 
