@@ -1,0 +1,277 @@
+{%- comment -%}
+  ============================================================================
+  DAEWOO SECURITY — page /pages/configurateur_2
+  BLOC 1 : bandeau garanties + choix « pack complet ou configurateur »
+
+  À placer dans une section « Liquid personnalisé », AU-DESSUS de la section
+  « Page » (celle qui contient l'iframe du configurateur).
+  Réglages de la section : marge haute 0, marge basse 0.
+
+  Données dynamiques : prix mini et nombre de packs tirés de la collection
+  « starters-packs ». Aucun chiffre à maintenir à la main.
+  ============================================================================
+{%- endcomment -%}
+
+{%- assign packs = collections['starters-packs'] -%}
+{%- assign packs_min = 0 -%}
+{%- for p in packs.products -%}
+  {%- if packs_min == 0 or p.price < packs_min -%}
+    {%- assign packs_min = p.price -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+  .cfg-scope {
+    --nuit:       #0c1e4a;
+    --nuit-encre: #081533;
+    --brume:      #f2f3ff;
+    --brume-trait:#d7dbf2;
+    --signal:     #0b61cd;
+    --alerte:     #e11d48;
+    --craie:      #ffffff;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    font-family: var(--sans);
+    color: var(--nuit);
+    line-height: 1.55;
+  }
+  .cfg-scope *, .cfg-scope *::before, .cfg-scope *::after { box-sizing: border-box; }
+
+  /* ---------- bandeau garanties ---------- */
+  .cfg-bar { background: var(--nuit); color: #cdd6ee; border-radius: 10px; margin-top: 28px; }
+  .cfg-bar__inner {
+    padding: 11px 22px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px;
+    font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+  .cfg-bar__item { display: flex; align-items: center; gap: 9px; white-space: nowrap; }
+  .cfg-bar__item::before {
+    content: ""; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--signal); flex: none;
+  }
+
+  /* ---------- le choix ---------- */
+  .cfg-choice { padding: 40px 0 8px; }
+  .cfg-eyebrow {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--signal);
+    margin: 0 0 18px;
+  }
+  .cfg-h1 {
+    font-size: clamp(30px, 4.4vw, 50px); font-weight: 800; letter-spacing: -.03em;
+    line-height: 1.06; text-wrap: balance; margin: 0 0 16px;
+  }
+  .cfg-lede { max-width: 60ch; font-size: 16.5px; color: #465185; margin: 0 0 40px; }
+
+  .cfg-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+
+  .cfg-panel {
+    display: flex; flex-direction: column; border-radius: 14px;
+    padding: 26px 26px 24px; position: relative; overflow: hidden;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .cfg-panel--pack {
+    background: linear-gradient(158deg, #16306e 0%, var(--nuit-encre) 100%);
+    color: #eef1fb; box-shadow: 0 18px 44px -22px rgba(12, 30, 74, .8);
+  }
+  .cfg-panel--conf { background: var(--craie); color: var(--nuit); border: 1px solid var(--brume-trait); }
+  .cfg-panel:hover { transform: translateY(-3px); }
+  .cfg-panel--pack:hover { box-shadow: 0 26px 54px -22px rgba(12, 30, 74, .9); }
+  .cfg-panel--conf:hover { box-shadow: 0 20px 40px -26px rgba(12, 30, 74, .55); }
+
+  .cfg-state {
+    display: flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    letter-spacing: .13em; text-transform: uppercase;
+    padding-bottom: 16px; margin-bottom: 20px; border-bottom: 1px solid;
+  }
+  .cfg-panel--pack .cfg-state { color: #7fb2f5; border-color: rgba(255,255,255,.14); }
+  .cfg-panel--conf .cfg-state { color: #6572a5; border-color: var(--brume-trait); }
+
+  .cfg-led {
+    width: 8px; height: 8px; border-radius: 50%; flex: none;
+    background: var(--signal); box-shadow: 0 0 0 0 rgba(11, 97, 205, .55);
+    animation: cfg-pulse 2.6s ease-out infinite;
+  }
+  .cfg-panel--conf .cfg-led { background: #9aa4cd; animation: none; }
+  @keyframes cfg-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(11, 97, 205, .55); }
+    70%  { box-shadow: 0 0 0 7px rgba(11, 97, 205, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(11, 97, 205, 0); }
+  }
+
+  .cfg-state__tag {
+    margin-left: auto; font-size: 10px; letter-spacing: .1em;
+    padding: 3px 8px; border-radius: 3px; background: var(--alerte); color: #fff;
+  }
+  .cfg-panel--conf .cfg-state__tag { background: rgba(11,97,205,.1); color: var(--signal); }
+
+  .cfg-panel__title {
+    font-size: clamp(21px, 2.3vw, 27px); font-weight: 700; letter-spacing: -.02em;
+    line-height: 1.18; margin: 0 0 6px; text-wrap: balance;
+  }
+  .cfg-panel__sub { font-size: 14.5px; margin: 0 0 22px; }
+  .cfg-panel--pack .cfg-panel__sub { color: #a9b7dc; }
+  .cfg-panel--conf .cfg-panel__sub { color: #5c6796; }
+
+  .cfg-specs { list-style: none; margin: 0 0 24px; padding: 0; }
+  .cfg-specs li {
+    display: grid; grid-template-columns: 18px 1fr; gap: 11px; align-items: start;
+    padding: 11px 0; font-size: 14.5px; border-top: 1px solid;
+  }
+  .cfg-panel--pack .cfg-specs li { border-color: rgba(255,255,255,.1); }
+  .cfg-panel--conf .cfg-specs li { border-color: var(--brume-trait); }
+  .cfg-specs li:first-child { border-top: none; padding-top: 0; }
+  .cfg-specs svg { width: 18px; height: 18px; margin-top: 2px; flex: none; fill: none; }
+  .cfg-panel--pack .cfg-specs svg { stroke: #7fb2f5; }
+  .cfg-panel--conf .cfg-specs svg { stroke: var(--signal); }
+
+  .cfg-panel__foot { margin-top: auto; }
+  .cfg-readout {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .04em;
+    font-variant-numeric: tabular-nums; margin-bottom: 14px;
+  }
+  .cfg-panel--pack .cfg-readout { color: #a9b7dc; }
+  .cfg-panel--conf .cfg-readout { color: #6572a5; }
+  .cfg-readout b { font-weight: 600; font-size: 15px; }
+  .cfg-panel--pack .cfg-readout b { color: #fff; }
+  .cfg-panel--conf .cfg-readout b { color: var(--nuit); }
+
+  .cfg-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 15px 22px; border-radius: 8px; border: 1px solid transparent;
+    font-family: var(--sans); font-size: 14.5px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+    transition: background .16s ease, color .16s ease;
+  }
+  .cfg-btn:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+  .cfg-btn--solid { background: var(--craie); color: var(--nuit); }
+  .cfg-btn--solid:hover { background: #d5e3fb; color: var(--nuit); }
+  .cfg-btn--navy { background: var(--nuit); color: #fff; }
+  .cfg-btn--navy:hover { background: var(--signal); color: #fff; }
+
+  .cfg-hint {
+    margin-top: 22px; padding: 16px 20px;
+    border-left: 3px solid var(--signal);
+    background: rgba(11, 97, 205, .05);
+    border-radius: 0 8px 8px 0;
+    font-size: 14.5px; color: #465185; max-width: 78ch;
+  }
+  .cfg-hint b { color: var(--nuit); font-weight: 600; }
+
+  @media (max-width: 860px) {
+    .cfg-panels { grid-template-columns: 1fr; }
+    .cfg-choice { padding-top: 32px; }
+  }
+  @media (max-width: 520px) {
+    .cfg-bar__inner { justify-content: flex-start; gap: 8px 18px; font-size: 10.5px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cfg-scope * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="cfg-scope">
+
+  <div class="cfg-bar">
+    <div class="cfg-bar__inner">
+      <span class="cfg-bar__item">Sans abonnement</span>
+      <span class="cfg-bar__item">Livraison offerte en 48 h</span>
+      <span class="cfg-bar__item">Garantie 2 ans</span>
+      <span class="cfg-bar__item">SAV en France</span>
+    </div>
+  </div>
+
+  <section class="cfg-choice">
+    <p class="cfg-eyebrow">Trouver mon alarme</p>
+    <h1 class="cfg-h1">Deux façons d'équiper votre maison.</h1>
+    <p class="cfg-lede">
+      Prenez un pack déjà assemblé, ou composez votre système pièce par pièce.
+      Les deux mènent à la même protection, sans abonnement et sans engagement.
+    </p>
+
+    <div class="cfg-panels">
+
+      {%- comment -%} Panneau A — l'option que le visiteur ne connaît pas encore {%- endcomment -%}
+      <div class="cfg-panel cfg-panel--pack">
+        <div class="cfg-state">
+          <span class="cfg-led"></span>
+          Pack complet
+          <span class="cfg-state__tag">Jusqu'à &minus;35&nbsp;%</span>
+        </div>
+
+        <h2 class="cfg-panel__title">On a déjà fait le tri.</h2>
+        <p class="cfg-panel__sub">Pour un logement standard, tout est décidé d'avance.</p>
+
+        <ul class="cfg-specs">
+          <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg><span>Centrale, détecteurs et sirène assemblés et testés ensemble</span></li>
+          <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg><span>Livré prêt à poser — rien à choisir, rien à compléter</span></li>
+          <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg><span>Moins cher que les mêmes produits pris à l'unité</span></li>
+        </ul>
+
+        <div class="cfg-panel__foot">
+          <p class="cfg-readout">
+            {%- if packs_min > 0 -%}à partir de <b>{{ packs_min | money }}</b>{%- endif -%}
+            {%- if packs.all_products_count > 0 %} &nbsp;·&nbsp; {{ packs.all_products_count }} pack{% if packs.all_products_count > 1 %}s{% endif %}{%- endif -%}
+          </p>
+          <a class="cfg-btn cfg-btn--solid" href="{{ collections['starters-packs'].url | default: '/collections/starters-packs' }}">
+            Voir les packs complets
+          </a>
+        </div>
+      </div>
+
+      {%- comment -%} Panneau B — la page où le visiteur se trouve déjà {%- endcomment -%}
+      <div class="cfg-panel cfg-panel--conf">
+        <div class="cfg-state">
+          <span class="cfg-led"></span>
+          Vous êtes ici — configurateur
+          <span class="cfg-state__tag">Cadeau offert</span>
+        </div>
+
+        <h2 class="cfg-panel__title">Vous composez le vôtre.</h2>
+        <p class="cfg-panel__sub">Le système suit votre logement, pas l'inverse.</p>
+
+        <ul class="cfg-specs">
+          <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg><span>Quelques questions sur votre logement, deux minutes</span></li>
+          <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg><span>Le nombre de détecteurs suit vos portes et fenêtres</span></li>
+          <li><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg><span>Un cadeau ajouté à toute commande passée par le configurateur</span></li>
+        </ul>
+
+        <div class="cfg-panel__foot">
+          <p class="cfg-readout">résultat immédiat &nbsp;·&nbsp; sans engagement</p>
+          <a class="cfg-btn cfg-btn--navy" href="#configurateur" data-cfg-goto>Configurer mon alarme</a>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="cfg-hint">
+      <b>Vous hésitez&nbsp;?</b> Appartement ou plain-pied avec moins de cinq ouvertures : le pack complet suffit.
+      Étage, dépendance, animaux ou grande surface : passez par le configurateur, il ajustera le nombre de détecteurs.
+    </p>
+  </section>
+
+</div>
+
+<script>
+  // Le bouton « Configurer mon alarme » descend jusqu'à l'iframe du configurateur,
+  // qui vit dans le corps de la page et n'a pas d'ancre propre.
+  (function () {
+    var btn = document.querySelector('[data-cfg-goto]');
+    if (!btn) return;
+    btn.addEventListener('click', function (e) {
+      var target = document.querySelector('.daewoo-configurator-wrapper')
+                || document.getElementById('daewooConfigurator');
+      if (!target) return; // sans cible, on laisse le lien faire son travail
+      e.preventDefault();
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+  })();
+</script>
