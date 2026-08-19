@@ -171,7 +171,7 @@
         "text_cQmQj9": {
           "type": "text",
           "settings": {
-            "text": "<p>Le premier contact avec le support technique se fait par le formulaire de contact. Décrivez votre problème en précisant la <strong>référence de votre produit</strong>, votre <strong>numéro de commande</strong> et ce que vous avez déjà essayé : nos techniciens vous répondent par e-mail. Si une démonstration est nécessaire, vous pourrez ensuite leur envoyer une photo ou une vidéo par WhatsApp.</p>",
+            "text": "<p>Le premier contact avec le support technique se fait par le formulaire de contact. Décrivez votre problème en précisant la <strong>référence de votre produit</strong>, votre <strong>numéro de commande</strong> et ce que vous avez déjà essayé : nos techniciens vous répondent par e-mail. Vous y trouverez aussi le lien WhatsApp pour leur envoyer une photo ou une vidéo si une démonstration est nécessaire.</p>",
             "text_font": "body",
             "text_size": "subtext-md",
             "text_max_size": 32,
@@ -193,24 +193,12 @@
             "button_external": false,
             "button_icon": true
           }
-        },
-        "button_HUfX4C": {
-          "type": "button",
-          "settings": {
-            "button_label": "Envoyer une vidéo sur WhatsApp",
-            "button_link": "https://wa.me/33660897483?text=Bonjour%0AJ'ai%20une%20question%20sur%20un%20produit%20Daewoo",
-            "button_style": "secondary",
-            "button_size": "md",
-            "button_external": true,
-            "button_icon": true
-          }
         }
       },
       "block_order": [
         "heading_LMDXPx",
         "text_cQmQj9",
-        "button_contact",
-        "button_HUfX4C"
+        "button_contact"
       ],
       "name": "Contact support",
       "settings": {

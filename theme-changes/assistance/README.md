@@ -27,8 +27,8 @@ thème (celle utilisée sur la collection Caméras), pour rester cohérent avec 
 La section native `rich-text` (`rich_text_x8yKyV`), auparavant désactivée, est réactivée
 en fin de page : « Votre problème n'est toujours pas résolu ? », explication de ce qu'il
 faut mettre dans la demande (référence produit, numéro de commande, ce qui a déjà été
-essayé), puis deux boutons — **Ouvrir le formulaire de contact**
-(`/pages/nous-contacter`) et **Envoyer une vidéo sur WhatsApp**.
+essayé), puis un bouton unique — **Ouvrir le formulaire de contact** (`/pages/nous-contacter`).
+Le contact WhatsApp est déjà intégré à cette page de contact, il n'est donc pas dupliqué ici.
 
 ## Hauteur des bandeaux
 
