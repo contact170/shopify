@@ -50,14 +50,13 @@ Les anciennes sections de la page sont conservées dans le template mais désact
 
 ## Déploiement
 
-Les fichiers ont été déposés sur un thème **non publié** dupliqué depuis le thème principal,
-pour prévisualisation avant mise en ligne.
+Les fichiers ont d'abord été déposés sur un thème dupliqué depuis le thème principal, pour
+prévisualisation. Ce thème a été **publié le 19/08/2026** : il est désormais le thème
+principal de la boutique.
 
-## Où prévisualiser
-
-- Thème (non publié) : **Assistance v2 - Franck IA + promos (Claude)** — `201716007252`
-- Aperçu : `https://daewoo-security.fr/pages/assistance-1?preview_theme_id=201716007252`
+- Thème en ligne : **Assistance v2 - Franck IA + promos (Claude)** — `201716007252`
+- Page : `https://daewoo-security.fr/pages/assistance-1`
 - Éditeur : `https://admin.shopify.com/store/daewoo-security/themes/201716007252/editor?previewPath=%2Fpages%2Fassistance-1`
 
-> Le rendu n'a pas pu être vérifié depuis la session (le proxy réseau bloque
-> `daewoo-security.fr` et `cdn.shopify.com`) : merci de contrôler l'aperçu avant publication.
+Le thème précédent, **A propos v5 - lien comparateur (Claude)**, reste disponible dans la
+bibliothèque de thèmes en cas de retour arrière.
