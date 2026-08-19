@@ -1,8 +1,15 @@
+{%- liquid
+  assign assistant_name = section.settings.name | default: 'Franck'
+-%}
+
 <style>
   #shopify-section-{{ section.id }} {
     --section-padding-top: {{ section.settings.padding_top }}px;
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
     --af-accent: {{ section.settings.accent_color }};
+    --af-accent-80: {{ section.settings.accent_color | color_modify: 'alpha', 0.8 }};
+    --af-accent-28: {{ section.settings.accent_color | color_modify: 'alpha', 0.28 }};
+    --af-accent-08: {{ section.settings.accent_color | color_modify: 'alpha', 0.08 }};
   }
 
   #shopify-section-{{ section.id }} .af-grid {
@@ -47,7 +54,7 @@
     font-size: 26px;
     font-weight: 700;
     letter-spacing: -0.02em;
-    box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--af-accent) 80%, transparent);
+    box-shadow: 0 10px 24px -12px var(--af-accent-80);
   }
 
   #shopify-section-{{ section.id }} .af-avatar img {
@@ -80,8 +87,8 @@
     text-transform: uppercase;
     padding: 5px 11px;
     border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--af-accent) 28%, transparent);
-    background: color-mix(in srgb, var(--af-accent) 8%, transparent);
+    border: 1px solid var(--af-accent-28);
+    background: var(--af-accent-08);
     color: var(--af-accent);
   }
 
@@ -370,7 +377,7 @@
           <div class="af-id">
             <div class="af-avatar">
               {%- if section.settings.avatar != blank -%}
-                {{ section.settings.avatar | image_url: width: 200 | image_tag: loading: 'lazy', alt: section.settings.name | escape }}
+                {{ section.settings.avatar | image_url: width: 200 | image_tag: loading: 'lazy', alt: assistant_name }}
               {%- else -%}
                 {{ section.settings.name | slice: 0 }}
               {%- endif -%}
@@ -412,7 +419,7 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
-                  <span>{{ clean_tip }}</span>
+                  <span>{{ clean_tip | escape }}</span>
                 </li>
               {%- endif -%}
             {%- endfor -%}
@@ -480,7 +487,7 @@
         <div class="af-chat__bar">
           <div class="af-chat__avatar">
             {%- if section.settings.avatar != blank -%}
-              {{ section.settings.avatar | image_url: width: 80 | image_tag: loading: 'lazy', alt: section.settings.name | escape }}
+              {{ section.settings.avatar | image_url: width: 80 | image_tag: loading: 'lazy', alt: assistant_name }}
             {%- else -%}
               {{ section.settings.name | slice: 0 }}
             {%- endif -%}
@@ -505,7 +512,6 @@
 {% schema %}
 {
   "name": "Assistance – Franck (IA)",
-  "tag": "section",
   "settings": [
     {
       "type": "header",

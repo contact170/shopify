@@ -3,6 +3,10 @@
     --section-padding-top: {{ section.settings.padding_top }}px;
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
     --ai-accent: {{ section.settings.accent_color }};
+    --ai-accent-30: {{ section.settings.accent_color | color_modify: 'alpha', 0.3 }};
+    --ai-accent-22: {{ section.settings.accent_color | color_modify: 'alpha', 0.22 }};
+    --ai-accent-07: {{ section.settings.accent_color | color_modify: 'alpha', 0.07 }};
+    --ai-accent-06: {{ section.settings.accent_color | color_modify: 'alpha', 0.06 }};
   }
 
   #shopify-section-{{ section.id }} .ai-wrap {
@@ -20,8 +24,8 @@
     letter-spacing: .16em;
     text-transform: uppercase;
     color: var(--ai-accent);
-    border: 1px solid color-mix(in srgb, var(--ai-accent) 30%, transparent);
-    background: color-mix(in srgb, var(--ai-accent) 7%, transparent);
+    border: 1px solid var(--ai-accent-30);
+    background: var(--ai-accent-07);
     padding: 7px 16px;
     border-radius: 999px;
     margin-bottom: 22px;
@@ -96,8 +100,8 @@
     margin-top: 24px;
     padding: 22px 26px;
     border-radius: 18px;
-    border: 1px solid color-mix(in srgb, var(--ai-accent) 22%, transparent);
-    background: color-mix(in srgb, var(--ai-accent) 6%, transparent);
+    border: 1px solid var(--ai-accent-22);
+    background: var(--ai-accent-06);
   }
 
   #shopify-section-{{ section.id }} .ai-callout svg {
@@ -184,7 +188,6 @@
 {% schema %}
 {
   "name": "Assistance – Introduction",
-  "tag": "section",
   "settings": [
     {
       "type": "text",
