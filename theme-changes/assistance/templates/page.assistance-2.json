@@ -25,7 +25,11 @@
           }
         }
       },
-      "block_order": ["step_1", "step_2", "step_3"],
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
       "settings": {
         "eyebrow": "Espace assistance",
         "heading": "Besoin d'aide ? Vous êtes au bon endroit.",
@@ -72,17 +76,24 @@
       "type": "camera-promo-banner",
       "settings": {
         "eyebrow": "Offre en cours",
-        "heading": "<strong>-50%</strong> sur votre 2ᵉ caméra extérieure W512MW",
-        "description": "<p>Caméra extérieure solaire, rotative et autonome : ni câble, ni abonnement. Équipez une seconde façade, la 2ᵉ caméra est à moitié prix — remise appliquée automatiquement dans le panier, sans code à saisir.</p>",
+        "heading": "<strong>-50%</strong> sur votre 2ᵉ caméra W512MW",
+        "description": "<p>Solaire, rotative, sans fil ni abonnement. La 2ᵉ caméra à moitié prix, remise appliquée automatiquement dans le panier.</p>",
         "button_label": "Découvrir l'offre",
         "button_link": "https://daewoo-security.fr/products/camera-w512mw-exterieure-rotative-1440p-avec-panneau-solaire",
         "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_15.png?v=1774428361",
         "accent_color": "#d4af7a",
-        "min_height": 340,
+        "min_height": 280,
         "padding_top": 24,
-        "padding_bottom": 24,
+        "padding_bottom": 12,
         "divider": false
-      }
+      },
+      "custom_css": [
+        ".pb-text {padding-top: 32px !important; padding-bottom: 32px !important;}",
+        ".pb-heading {font-size: clamp(1.5rem, 2.5vw, 2.1rem) !important; margin-bottom: 12px !important;}",
+        ".pb-desc {margin-bottom: 24px !important;}",
+        ".pb-tag {margin-bottom: 16px !important;}",
+        ".pb-media img {max-height: 280px !important;}"
+      ]
     },
     "main-page": {
       "type": "main-page",
@@ -106,17 +117,24 @@
       "type": "camera-promo-banner",
       "settings": {
         "eyebrow": "Bon plan accessoire",
-        "heading": "Le <strong>pack de 3 prises connectées</strong> à 49,90 €",
-        "description": "<p>Allumez, éteignez et programmez vos appareils à distance depuis votre smartphone. Le pack de 3 prises SP502F à 49,90 € au lieu de 69,90 €.</p>",
+        "heading": "Le <strong>pack de 3 prises connectées</strong> à 49,90&nbsp;€",
+        "description": "<p>Pilotez vos appareils à distance depuis votre smartphone. Trois prises SP502F pour 49,90&nbsp;€ au lieu de 69,90&nbsp;€.</p>",
         "button_label": "Voir le pack",
         "button_link": "https://daewoo-security.fr/products/prise-connectee-sp502f",
         "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_20.png?v=1756732585",
         "accent_color": "#d4af7a",
-        "min_height": 320,
-        "padding_top": 24,
-        "padding_bottom": 48,
+        "min_height": 280,
+        "padding_top": 12,
+        "padding_bottom": 24,
         "divider": false
-      }
+      },
+      "custom_css": [
+        ".pb-text {padding-top: 32px !important; padding-bottom: 32px !important;}",
+        ".pb-heading {font-size: clamp(1.5rem, 2.5vw, 2.1rem) !important; margin-bottom: 12px !important;}",
+        ".pb-desc {margin-bottom: 24px !important;}",
+        ".pb-tag {margin-bottom: 16px !important;}",
+        ".pb-media img {max-height: 280px !important;}"
+      ]
     },
     "custom_liquid_6dHA47": {
       "type": "custom-liquid",
@@ -143,7 +161,7 @@
         "heading_LMDXPx": {
           "type": "heading",
           "settings": {
-            "heading": "Besoin d’assistance ? Envoyer une vidéo à nos techniciens via whatsapp juste ici",
+            "heading": "Votre problème n'est toujours pas résolu ?",
             "heading_size": "title-md",
             "heading_tag": "h2",
             "highlighted_text": "none",
@@ -153,7 +171,7 @@
         "text_cQmQj9": {
           "type": "text",
           "settings": {
-            "text": "<p>Le premier contact avec le support technique doit se faire via le formulaire de contact</p>",
+            "text": "<p>Le premier contact avec le support technique se fait par le formulaire de contact. Décrivez votre problème en précisant la <strong>référence de votre produit</strong>, votre <strong>numéro de commande</strong> et ce que vous avez déjà essayé : nos techniciens vous répondent par e-mail. Si une démonstration est nécessaire, vous pourrez ensuite leur envoyer une photo ou une vidéo par WhatsApp.</p>",
             "text_font": "body",
             "text_size": "subtext-md",
             "text_max_size": 32,
@@ -165,21 +183,36 @@
             "highlighted_scribble": "circle"
           }
         },
-        "button_HUfX4C": {
+        "button_contact": {
           "type": "button",
           "settings": {
-            "button_label": "Envoyer une vidéo",
-            "button_link": "https://wa.me/33660897483?text=Bonjour%0AJ'ai%20une%20question%20sur%20un%20produit%20Daewoo",
+            "button_label": "Ouvrir le formulaire de contact",
+            "button_link": "https://daewoo-security.fr/pages/nous-contacter",
             "button_style": "primary",
             "button_size": "md",
             "button_external": false,
             "button_icon": true
           }
+        },
+        "button_HUfX4C": {
+          "type": "button",
+          "settings": {
+            "button_label": "Envoyer une vidéo sur WhatsApp",
+            "button_link": "https://wa.me/33660897483?text=Bonjour%0AJ'ai%20une%20question%20sur%20un%20produit%20Daewoo",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": true,
+            "button_icon": true
+          }
         }
       },
-      "block_order": ["heading_LMDXPx", "text_cQmQj9", "button_HUfX4C"],
-      "disabled": true,
-      "name": "t:sections.rich-text.name",
+      "block_order": [
+        "heading_LMDXPx",
+        "text_cQmQj9",
+        "button_contact",
+        "button_HUfX4C"
+      ],
+      "name": "Contact support",
       "settings": {
         "text_alignment": "center",
         "text_alignment_mobile": "center",
@@ -204,8 +237,8 @@
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 100,
+        "padding_top": 56,
+        "padding_bottom": 96,
         "divider": false,
         "narrow": true,
         "rounded": false
@@ -215,10 +248,10 @@
   "order": [
     "assistance_intro",
     "assistance_franck",
-    "promo_w512mw",
     "main-page",
+    "promo_w512mw",
     "promo_sp502f",
-    "custom_liquid_6dHA47",
-    "rich_text_x8yKyV"
+    "rich_text_x8yKyV",
+    "custom_liquid_6dHA47"
   ]
 }

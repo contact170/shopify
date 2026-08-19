@@ -9,7 +9,7 @@ template `page.assistance-2`).
 | --- | --- |
 | `sections/assistance-intro.liquid` | Nouvelle section « Assistance – Introduction » : message d'explication en haut de page, 3 étapes (Franck / base de connaissances / technicien) et encadré « munissez-vous de votre référence produit ». |
 | `sections/assistance-franck.liquid` | Nouvelle section « Assistance – Franck (IA) » : présentation retravaillée de Franck (badge **Assistant IA**, mention explicite qu'il ne s'agit pas d'un technicien humain), checklist « pour une réponse précise, indiquez-lui… », comparaison mauvais / bon exemple de question, bloc WhatsApp + QR Code, et fenêtre de chat Chatbase dans une carte. |
-| `templates/page.assistance-2.json` | Nouveau contenu du template : intro → Franck → bandeau promo W512MW → base de connaissances Gorgias → bandeau promo prise connectée. |
+| `templates/page.assistance-2.json` | Nouveau contenu du template : intro → Franck → base de connaissances Gorgias → bandeau W512MW → bandeau prise connectée → bloc « contactez le support ». |
 
 ## Bandeaux publicitaires
 
@@ -21,6 +21,24 @@ thème (celle utilisée sur la collection Caméras), pour rester cohérent avec 
    avec 50 % de réduction), d'où la mention « sans code à saisir ».
 2. **Pack de 3 prises connectées SP502F** — 49,90 € au lieu de 69,90 €
    (prix et prix barré réels de la variante `DASP502FP3`).
+
+## Bloc contact en bas de page
+
+La section native `rich-text` (`rich_text_x8yKyV`), auparavant désactivée, est réactivée
+en fin de page : « Votre problème n'est toujours pas résolu ? », explication de ce qu'il
+faut mettre dans la demande (référence produit, numéro de commande, ce qui a déjà été
+essayé), puis deux boutons — **Ouvrir le formulaire de contact**
+(`/pages/nous-contacter`) et **Envoyer une vidéo sur WhatsApp**.
+
+## Hauteur des bandeaux
+
+Les deux bandeaux réutilisent `camera-promo-banner`, partagée avec la collection Caméras :
+leur hauteur est réduite via les réglages de l'instance (`min_height: 280`) et un
+`custom_css` propre à chaque instance (padding vertical, taille du titre, hauteur d'image).
+La section elle-même n'est pas modifiée, la collection Caméras n'est donc pas impactée.
+
+Les prix des bandeaux utilisent des espaces insécables (`&nbsp;`) avant le `€` pour que
+le symbole ne parte pas à la ligne.
 
 ## Sections conservées
 
