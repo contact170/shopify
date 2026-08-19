@@ -1,0 +1,709 @@
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --af-accent: {{ section.settings.accent_color }};
+  }
+
+  #shopify-section-{{ section.id }} .af-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 34px;
+    align-items: start;
+  }
+
+  /* ---------- Colonne présentation ---------- */
+
+  #shopify-section-{{ section.id }} .af-card {
+    padding: 34px 32px;
+    border-radius: 24px;
+    border: 1px solid rgba(12, 30, 74, .10);
+    background: rgba(255, 255, 255, .78);
+    box-shadow: 0 24px 50px -34px rgba(12, 30, 74, .6);
+  }
+
+  #shopify-section-{{ section.id }} .af-card + .af-card {
+    margin-top: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .af-id {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .af-avatar {
+    flex: 0 0 auto;
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--af-accent);
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--af-accent) 80%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .af-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .af-name {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0 0 8px;
+  }
+
+  #shopify-section-{{ section.id }} .af-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  #shopify-section-{{ section.id }} .af-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--af-accent) 28%, transparent);
+    background: color-mix(in srgb, var(--af-accent) 8%, transparent);
+    color: var(--af-accent);
+  }
+
+  #shopify-section-{{ section.id }} .af-badge--live {
+    border-color: rgba(22, 163, 74, .3);
+    background: rgba(22, 163, 74, .08);
+    color: #15803d;
+  }
+
+  #shopify-section-{{ section.id }} .af-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  #shopify-section-{{ section.id }} .af-intro {
+    font-size: 16px;
+    line-height: 1.65;
+    opacity: .82;
+  }
+
+  #shopify-section-{{ section.id }} .af-intro p + p {
+    margin-top: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .af-sub {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: .55;
+    margin: 0 0 16px;
+  }
+
+  #shopify-section-{{ section.id }} .af-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .af-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  #shopify-section-{{ section.id }} .af-list svg {
+    flex: 0 0 auto;
+    width: 17px;
+    height: 17px;
+    margin-top: 3px;
+    color: var(--af-accent);
+  }
+
+  #shopify-section-{{ section.id }} .af-examples {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .af-example {
+    padding: 15px 17px;
+    border-radius: 14px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    border: 1px solid transparent;
+  }
+
+  #shopify-section-{{ section.id }} .af-example strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  #shopify-section-{{ section.id }} .af-example--bad {
+    background: rgba(225, 29, 72, .06);
+    border-color: rgba(225, 29, 72, .18);
+  }
+
+  #shopify-section-{{ section.id }} .af-example--bad strong {
+    color: #be123c;
+  }
+
+  #shopify-section-{{ section.id }} .af-example--good {
+    background: rgba(22, 163, 74, .07);
+    border-color: rgba(22, 163, 74, .2);
+  }
+
+  #shopify-section-{{ section.id }} .af-example--good strong {
+    color: #15803d;
+  }
+
+  #shopify-section-{{ section.id }} .af-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(12, 30, 74, .1);
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: .72;
+  }
+
+  #shopify-section-{{ section.id }} .af-note svg {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+  }
+
+  /* ---------- Bloc WhatsApp ---------- */
+
+  #shopify-section-{{ section.id }} .af-whatsapp {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .af-whatsapp__qr {
+    flex: 0 0 auto;
+    width: 132px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(12, 30, 74, .1);
+  }
+
+  #shopify-section-{{ section.id }} .af-whatsapp__qr img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  #shopify-section-{{ section.id }} .af-whatsapp__title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 7px;
+  }
+
+  #shopify-section-{{ section.id }} .af-whatsapp__text {
+    font-size: 14.5px;
+    line-height: 1.6;
+    opacity: .74;
+    margin: 0 0 14px;
+  }
+
+  #shopify-section-{{ section.id }} .af-wa-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #fff;
+    background: #25d366;
+    padding: 11px 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform .3s cubic-bezier(.16, 1, .3, 1), box-shadow .3s ease;
+    box-shadow: 0 10px 22px -12px rgba(37, 211, 102, .9);
+  }
+
+  #shopify-section-{{ section.id }} .af-wa-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -12px rgba(37, 211, 102, .95);
+  }
+
+  #shopify-section-{{ section.id }} .af-wa-link svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  /* ---------- Colonne chat ---------- */
+
+  #shopify-section-{{ section.id }} .af-chat {
+    position: sticky;
+    top: 24px;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(12, 30, 74, .12);
+    background: #fff;
+    box-shadow: 0 30px 60px -34px rgba(12, 30, 74, .65);
+  }
+
+  #shopify-section-{{ section.id }} .af-chat__bar {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(12, 30, 74, .08);
+    background: rgba(242, 243, 255, .8);
+  }
+
+  #shopify-section-{{ section.id }} .af-chat__avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--af-accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .af-chat__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .af-chat__label {
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  #shopify-section-{{ section.id }} .af-chat__status {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #15803d;
+  }
+
+  #shopify-section-{{ section.id }} .af-chat__status .af-dot {
+    background: #22c55e;
+  }
+
+  #shopify-section-{{ section.id }} .af-chat iframe {
+    display: block;
+    width: 100%;
+    height: {{ section.settings.chat_height }}px;
+    border: 0;
+  }
+
+  @media (max-width: 989px) {
+    #shopify-section-{{ section.id }} .af-grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+    #shopify-section-{{ section.id }} .af-chat {
+      position: static;
+    }
+    #shopify-section-{{ section.id }} .af-chat iframe {
+      height: {{ section.settings.chat_height_mobile }}px;
+    }
+  }
+
+  @media (max-width: 599px) {
+    #shopify-section-{{ section.id }} .af-card {
+      padding: 26px 22px;
+    }
+    #shopify-section-{{ section.id }} .af-whatsapp {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    #shopify-section-{{ section.id }} .af-whatsapp__qr {
+      width: 150px;
+      align-self: center;
+    }
+  }
+</style>
+
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}">
+  <div class="page-width relative">
+    <div class="af-grid">
+
+      <!-- Présentation de Franck -->
+      <div class="af-presentation">
+        <div class="af-card">
+          <div class="af-id">
+            <div class="af-avatar">
+              {%- if section.settings.avatar != blank -%}
+                {{ section.settings.avatar | image_url: width: 200 | image_tag: loading: 'lazy', alt: section.settings.name | escape }}
+              {%- else -%}
+                {{ section.settings.name | slice: 0 }}
+              {%- endif -%}
+            </div>
+            <div>
+              <p class="af-name">{{ section.settings.name | escape }}</p>
+              <div class="af-badges">
+                <span class="af-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px">
+                    <rect x="4" y="8" width="16" height="12" rx="3"></rect>
+                    <path d="M12 8V4"></path>
+                    <circle cx="12" cy="3" r="1"></circle>
+                    <path d="M9 13h.01"></path>
+                    <path d="M15 13h.01"></path>
+                  </svg>
+                  {{ section.settings.badge_ai | escape }}
+                </span>
+                <span class="af-badge af-badge--live"><span class="af-dot"></span>{{ section.settings.badge_availability | escape }}</span>
+              </div>
+            </div>
+          </div>
+
+          {%- if section.settings.intro != blank -%}
+            <div class="af-intro rte">{{ section.settings.intro }}</div>
+          {%- endif -%}
+        </div>
+
+        <div class="af-card">
+          {%- if section.settings.tips_title != blank -%}
+            <p class="af-sub">{{ section.settings.tips_title | escape }}</p>
+          {%- endif -%}
+
+          {%- assign tips = section.settings.tips | newline_to_br | split: '<br />' -%}
+          <ul class="af-list">
+            {%- for tip in tips -%}
+              {%- assign clean_tip = tip | strip -%}
+              {%- if clean_tip != blank -%}
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>{{ clean_tip }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+
+          {%- if section.settings.example_bad != blank or section.settings.example_good != blank -%}
+            <div class="af-examples">
+              {%- if section.settings.example_bad != blank -%}
+                <div class="af-example af-example--bad">
+                  <strong>{{ section.settings.example_bad_label | escape }}</strong>
+                  {{ section.settings.example_bad }}
+                </div>
+              {%- endif -%}
+              {%- if section.settings.example_good != blank -%}
+                <div class="af-example af-example--good">
+                  <strong>{{ section.settings.example_good_label | escape }}</strong>
+                  {{ section.settings.example_good }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.disclaimer != blank -%}
+            <div class="af-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4"></path>
+                <path d="M12 8h.01"></path>
+              </svg>
+              <div class="rte">{{ section.settings.disclaimer }}</div>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.whatsapp_qr != blank or section.settings.whatsapp_link != blank -%}
+          <div class="af-card af-whatsapp">
+            {%- if section.settings.whatsapp_qr != blank -%}
+              <div class="af-whatsapp__qr">
+                {{ section.settings.whatsapp_qr | image_url: width: 400 | image_tag: loading: 'lazy', alt: 'QR Code WhatsApp Daewoo Security' }}
+              </div>
+            {%- endif -%}
+            <div>
+              {%- if section.settings.whatsapp_title != blank -%}
+                <p class="af-whatsapp__title">{{ section.settings.whatsapp_title | escape }}</p>
+              {%- endif -%}
+              {%- if section.settings.whatsapp_text != blank -%}
+                <div class="af-whatsapp__text rte">{{ section.settings.whatsapp_text }}</div>
+              {%- endif -%}
+              {%- if section.settings.whatsapp_link != blank and section.settings.whatsapp_label != blank -%}
+                <a href="{{ section.settings.whatsapp_link }}" class="af-wa-link" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37s-1.04 1.02-1.04 2.48 1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"></path>
+                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.37c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.69 8.22-8.25 8.22z"></path>
+                  </svg>
+                  {{ section.settings.whatsapp_label | escape }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Fenêtre de chat -->
+      <div class="af-chat">
+        <div class="af-chat__bar">
+          <div class="af-chat__avatar">
+            {%- if section.settings.avatar != blank -%}
+              {{ section.settings.avatar | image_url: width: 80 | image_tag: loading: 'lazy', alt: section.settings.name | escape }}
+            {%- else -%}
+              {{ section.settings.name | slice: 0 }}
+            {%- endif -%}
+          </div>
+          <span class="af-chat__label">{{ section.settings.chat_label | escape }}</span>
+          <span class="af-chat__status"><span class="af-dot"></span>{{ section.settings.chat_status | escape }}</span>
+        </div>
+        {%- if section.settings.chat_url != blank -%}
+          <iframe
+            src="{{ section.settings.chat_url }}"
+            title="{{ section.settings.chat_label | escape }}"
+            loading="lazy"
+            allow="clipboard-write"
+          ></iframe>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Assistance – Franck (IA)",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Identité"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Nom de l'assistant",
+      "default": "Franck"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar",
+      "label": "Avatar (optionnel)"
+    },
+    {
+      "type": "text",
+      "id": "badge_ai",
+      "label": "Badge « IA »",
+      "default": "Assistant IA"
+    },
+    {
+      "type": "text",
+      "id": "badge_availability",
+      "label": "Badge disponibilité",
+      "default": "En ligne 24h/24"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Présentation",
+      "default": "<p><strong>Franck est un assistant conversationnel propulsé par l'intelligence artificielle</strong>, et non un technicien humain. Il connaît l'ensemble du catalogue Daewoo Security, les notices d'installation et les procédures de dépannage, et il vous répond immédiatement, à toute heure du jour et de la nuit.</p><p>Comme il ne voit ni votre installation ni votre matériel, c'est vous qui lui donnez les informations dont il a besoin : plus votre demande est précise, plus sa réponse sera juste.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Bien décrire son problème"
+    },
+    {
+      "type": "text",
+      "id": "tips_title",
+      "label": "Titre de la liste",
+      "default": "Pour une réponse précise, indiquez-lui :"
+    },
+    {
+      "type": "textarea",
+      "id": "tips",
+      "label": "Points à préciser (un par ligne)",
+      "default": "La référence exacte du produit concerné (ex. W512MW, SA501, WKE501, AM302)\nLa gamme ou la centrale sur laquelle il est installé (Key, Touch, Élite, Vigilia…)\nCe que vous cherchez à faire : installer, appairer, configurer, remplacer, régler\nLe symptôme précis : voyant, message d'erreur, bip, comportement de l'application\nCe que vous avez déjà essayé de votre côté"
+    },
+    {
+      "type": "text",
+      "id": "example_bad_label",
+      "label": "Étiquette « mauvais exemple »",
+      "default": "Trop vague"
+    },
+    {
+      "type": "richtext",
+      "id": "example_bad",
+      "label": "Mauvais exemple",
+      "default": "<p>« Mon alarme ne marche plus. »</p>"
+    },
+    {
+      "type": "text",
+      "id": "example_good_label",
+      "label": "Étiquette « bon exemple »",
+      "default": "Efficace"
+    },
+    {
+      "type": "richtext",
+      "id": "example_good",
+      "label": "Bon exemple",
+      "default": "<p>« Je n'arrive pas à appairer mon clavier WKE501 sur ma centrale KEY (SA501). Le clavier clignote en rouge après la saisie du code installateur, et j'ai déjà changé les piles. »</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer",
+      "label": "Mention",
+      "default": "<p>Franck s'appuie sur nos documentations et peut occasionnellement se tromper. Pour un cas complexe, une panne matérielle ou une demande de SAV, un technicien prend le relais : le premier contact se fait via le formulaire de contact, puis par WhatsApp si une vidéo est nécessaire.</p>"
+    },
+    {
+      "type": "header",
+      "content": "WhatsApp"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_title",
+      "label": "Titre",
+      "default": "Franck est aussi sur WhatsApp"
+    },
+    {
+      "type": "richtext",
+      "id": "whatsapp_text",
+      "label": "Texte",
+      "default": "<p>Scannez ce QR Code pour l'ajouter à vos contacts et lui poser vos questions directement depuis votre téléphone, photos et vidéos à l'appui.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "whatsapp_qr",
+      "label": "QR Code"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "Texte du bouton",
+      "default": "Ouvrir WhatsApp"
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_link",
+      "label": "Lien WhatsApp"
+    },
+    {
+      "type": "header",
+      "content": "Fenêtre de chat"
+    },
+    {
+      "type": "text",
+      "id": "chat_label",
+      "label": "Titre de la fenêtre",
+      "default": "Discuter avec Franck"
+    },
+    {
+      "type": "text",
+      "id": "chat_status",
+      "label": "Statut",
+      "default": "En ligne"
+    },
+    {
+      "type": "text",
+      "id": "chat_url",
+      "label": "URL de l'iframe du chatbot",
+      "default": "https://www.chatbase.co/chatbot-iframe/vumXGBnkhFZHSkCjLTAfy"
+    },
+    {
+      "type": "range",
+      "id": "chat_height",
+      "min": 480,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "label": "Hauteur du chat (bureau)",
+      "default": 720
+    },
+    {
+      "type": "range",
+      "id": "chat_height_mobile",
+      "min": 400,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "label": "Hauteur du chat (mobile)",
+      "default": 560
+    },
+    {
+      "type": "header",
+      "content": "Mise en page"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Couleur d'accent",
+      "default": "#0b61cd"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacement haut",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacement bas",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "Séparateur",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Assistance – Franck (IA)"
+    }
+  ],
+  "disabled_on": {
+    "templates": ["password"]
+  }
+}
+{% endschema %}
