@@ -13,12 +13,12 @@ En ligne depuis le 17/08/2026 : thème `201592996180`.
 
 Passe SEO / GEO / Schema publiée le 18/08/2026 (thème `201660629332`).
 
-**Correctif du lien comparateur** déposé sur `A propos v5 - lien comparateur (Claude)` —
-`gid://shopify/OnlineStoreTheme/201663971668`, dupliqué du thème publié. En attente de
-publication.
+**Passe GEO/AEO du 20/08/2026** déposée sur `A propos v6 - GEO/AEO (Claude)` —
+`gid://shopify/OnlineStoreTheme/201821356372`, dupliqué du thème publié
+`201716007252`. En attente de publication.
 
-- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201663971668`
-- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201663971668/editor`
+- Aperçu : `https://daewoo-security.fr/pages/a-propos?preview_theme_id=201821356372`
+- Personnalisateur : `https://admin.shopify.com/store/daewoo-security/themes/201821356372/editor`
 
 Les 3 liens « comparateur » pointent désormais vers `/pages/comparateur-am301-sa501-pa501z`,
 la page liée par le menu principal, sur décision du client. `/pages/comparateur-vigilia-touch-elite`
@@ -74,7 +74,7 @@ Les checksums de référence (`md5sum` des fichiers de ce dossier) :
 
 | Fichier | Taille | md5 |
 | --- | --- | --- |
-| `sections/page-a-propos-daewoo.liquid` | 51 649 | `4776416c86a4c6857a0f24f67f24daa7` |
+| `sections/page-a-propos-daewoo.liquid` | 54 443 | `2a53859f8c1b48aff81ee057c61584f4` |
 | `snippets/social-meta-tags.liquid` | 2 655 | `17806c7e0ff99f7291da1373733f0382` |
 | `templates/page.a-propos.json` | 922 | `c16b8cb4900adb720cc09ad03b3e6ccc` |
 
@@ -92,6 +92,25 @@ donne un transfert exact :
    au `md5sum` local
 
 Les petits fichiers passent très bien en `body: { type: TEXT }`.
+
+### ⚠️ La page a été supprimée et recréée le 20/08
+
+L'objet page a changé d'identifiant : `97466351829` (supprimé, l'API renvoie `null`) →
+`712153596244`. Le handle et donc l'URL sont conservés, mais **tous les métachamps attachés
+à l'ancien objet ont disparu**, dont `global.title_tag` et `global.description_tag` — d'où
+l'absence de `<meta name="description">` constatée le 20/08. Ils ont été reposés sur le
+nouvel identifiant.
+
+Si la page est de nouveau supprimée/recréée, il faudra **repositionner les champs SEO** :
+ils ne vivent pas dans le thème et aucune duplication de thème ne les restaure.
+
+### Le nom du fichier de section
+
+Le DOM expose `shopify-section-template--...__a_propos_daewoo`. `a_propos_daewoo` est la
+**clé de l'instance de section** dans `templates/page.a-propos.json`, pas un nom de fichier.
+Le fichier réel est `sections/page-a-propos-daewoo.liquid`. Un audit lisant le DOM conclut
+à tort à l'existence de `sections/a_propos_daewoo.liquid` — la créer produirait une section
+en double.
 
 ## Points d'attention
 

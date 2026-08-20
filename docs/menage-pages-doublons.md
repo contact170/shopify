@@ -119,6 +119,13 @@ Immeuble 2000 Watt, 33700 Mérignac, RCS Bordeaux 791 022 692, TVA FR45791022692
 
 ---
 
+## P6 — Suppression/recréation de pages
+
+La page « À propos » a été supprimée puis recréée le 20/08 (ancien id `97466351829`,
+nouveau `712153596244`). L'URL survit, mais les métachamps SEO de la page sont perdus et
+doivent être ressaisis. À garder en tête pendant le ménage : **dépublier n'est pas
+supprimer**, et supprimer une page fait perdre ses champs SEO en plus de son URL.
+
 ## Règles de sécurité pour demain
 
 1. **Jamais de suppression sans 301 préalable.**

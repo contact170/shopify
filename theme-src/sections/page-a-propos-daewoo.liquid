@@ -445,7 +445,7 @@
         <div class="dwsa-id-cell"><dt>Application</dt><dd>Daewoo Home Connect</dd></div>
         <div class="dwsa-id-cell"><dt>Principales gammes</dt><dd>Vigilia, Touch / Touch XL, Élite</dd></div>
         <div class="dwsa-id-cell"><dt>Positionnement</dt><dd>Sécurité connectée sans abonnement de télésurveillance obligatoire</dd></div>
-        <div class="dwsa-id-cell"><dt>Zone principale</dt><dd>France</dd></div>
+        <div class="dwsa-id-cell"><dt>Site exploité depuis</dt><dd>2020</dd></div>
         <div class="dwsa-id-cell"><dt>Marque Daewoo</dt><dd>Exploitée sous licence officielle</dd></div>
       </dl>
 
@@ -608,7 +608,13 @@
           <div class="dwsa-btns">
             <a class="dwsa-btn dwsa-btn--primary" href="/pages/pack-alarmes">Découvrir les alarmes sans abonnement</a>
           </div>
-          <p class="dwsa-note" style="margin-top:28px">
+          <p class="dwsa-body-txt" style="margin-top:24px">
+            À la différence des offres de télésurveillance, facturées sous forme d’abonnement
+            mensuel, les systèmes Daewoo Security fonctionnent en autonomie après l’achat du
+            matériel : l’utilisateur reçoit lui-même les alertes sur son smartphone, sans
+            engagement ni frais récurrents obligatoires.
+          </p>
+          <p class="dwsa-note" style="margin-top:20px">
             Certains services indépendants peuvent toutefois entraîner un coût : une carte SIM
             pour une connexion 4G, ou certaines options de stockage selon les modèles de caméras.
           </p>
@@ -661,6 +667,7 @@
       <p class="dwsa-eyebrow">Chiffres clés</p>
       <span class="dwsa-figure">60&nbsp;000<em>+</em></span>
       <h2>Plus de 60 000 foyers équipés</h2>
+      <p class="dwsa-lead">Depuis 2020, plus de 60 000 foyers ont été équipés d’un système Daewoo Security.</p>
       <div class="dwsa-stats">
         <div class="dwsa-stat">
           <strong>3 gammes d’alarmes connectées</strong>
@@ -668,7 +675,7 @@
         </div>
         <div class="dwsa-stat">
           <strong>Garantie 2 ans</strong>
-          <p>Sur les produits Daewoo Security commercialisés sur le site.</p>
+          <p>À compter de la date d’achat, sur les produits commercialisés sur le site.</p>
         </div>
         <div class="dwsa-stat">
           <strong>Équipe à Mérignac</strong>
@@ -752,9 +759,9 @@
   {%- comment -%} ============ 10 · Exploitation du site ============ {%- endcomment -%}
   <section class="dwsa-sec dwsa-sec--slim">
     <div class="dwsa-wrap dwsa-slim">
-      <h2>Exploitation du site</h2>
+      <h2>Qui exploite le site Daewoo-Security.fr ?</h2>
       <p>
-        Daewoo-Security.fr est exploité par Liz Invest SAS, société française basée à Mérignac,
+        Daewoo-Security.fr est exploité depuis 2020 par Liz Invest SAS, société française basée à Mérignac,
         sous licence officielle de la marque Daewoo — marque d’électronique et de technologies
         grand public fondée en 1971 en Corée du Sud.
         <a href="/policies/legal-notice">Consulter les mentions légales</a>.
@@ -830,6 +837,7 @@
       "@type": "Organization",
       "@id": "https://daewoo-security.fr/#organization",
       "name": "Daewoo Security",
+      "alternateName": "Daewoo-Security.fr",
       "url": "https://daewoo-security.fr/",
       {% if logo_url != blank %}"logo": {
         "@type": "ImageObject",
@@ -860,6 +868,24 @@
         { "@type": "Country", "name": "France" },
         { "@type": "Country", "name": "Belgique" }
       ],
+      "slogan": "La sécurité connectée sans abonnement",
+      "knowsAbout": [
+        "système d’alarme sans abonnement",
+        "alarme maison connectée",
+        "vidéosurveillance résidentielle",
+        "détecteur d’ouverture et de mouvement",
+        "domotique de sécurité"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Gammes Daewoo Security",
+        "itemListElement": [
+          { "@type": "OfferCatalog", "name": "Vigilia", "url": "https://daewoo-security.fr/collections/systeme-dalarme-vigilia" },
+          { "@type": "OfferCatalog", "name": "Touch / Touch XL", "url": "https://daewoo-security.fr/collections/systeme-dalarme-am301-am302" },
+          { "@type": "OfferCatalog", "name": "Élite", "url": "https://daewoo-security.fr/collections/systeme-dalarme-pa501z" },
+          { "@type": "OfferCatalog", "name": "Caméras de surveillance", "url": "https://daewoo-security.fr/collections/cameras-de-surveillance" }
+        ]
+      },
       "sameAs": [
         "https://www.facebook.com/profile.php?id=100063456644012",
         "https://www.instagram.com/daewoosecurity/",
@@ -912,9 +938,13 @@
       "name": "Daewoo Security | Alarmes connectées sans abonnement",
       "description": "Daewoo Security est une marque d’alarmes et de sécurité connectée sans abonnement. Le site Daewoo-Security.fr est exploité par Liz Invest SAS, à Mérignac.",
       "inLanguage": "fr-FR",
+      "datePublished": "{{ page.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+      "dateModified": "{{ section.settings.date_maj | default: '2026-08-20' }}",
       "isPartOf": { "@id": "https://daewoo-security.fr/#website" },
       "about": { "@id": "https://daewoo-security.fr/#organization" },
       "publisher": { "@id": "https://daewoo-security.fr/#organization" },
+      {%- if hero != blank %}"primaryImageOfPage": { "@id": "https://daewoo-security.fr/pages/a-propos#primaryimage" },
+      {% endif -%}
       "breadcrumb": { "@id": "https://daewoo-security.fr/pages/a-propos#breadcrumb" },
       "hasPart": { "@id": "https://daewoo-security.fr/pages/a-propos#faq" },
       "mentions": [
@@ -969,7 +999,16 @@
         }{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
       ]
+    }{%- if hero != blank -%},
+    {
+      "@type": "ImageObject",
+      "@id": "https://daewoo-security.fr/pages/a-propos#primaryimage",
+      "url": {{ hero | image_url: width: 1940 | json }},
+      "width": {{ hero.width }},
+      "height": {{ hero.height }},
+      "caption": "Système d’alarme connecté Daewoo Security installé dans un logement"
     }
+    {%- endif %}
   ]
 }
 </script>
@@ -1047,6 +1086,17 @@
       "type": "url",
       "id": "play_store_url",
       "label": "Lien Google Play"
+    },
+    {
+      "type": "header",
+      "content": "Données structurées"
+    },
+    {
+      "type": "text",
+      "id": "date_maj",
+      "label": "Date de dernière mise à jour (AAAA-MM-JJ)",
+      "default": "2026-08-20",
+      "info": "Alimente dateModified du JSON-LD. Le contenu vit dans le fichier de section, pas dans le corps de la page : cette date ne peut donc pas être déduite automatiquement, il faut la mettre à jour à chaque modification de fond."
     },
     {
       "type": "header",
