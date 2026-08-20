@@ -74,7 +74,7 @@ Les checksums de référence (`md5sum` des fichiers de ce dossier) :
 
 | Fichier | Taille | md5 |
 | --- | --- | --- |
-| `sections/page-a-propos-daewoo.liquid` | 54 443 | `2a53859f8c1b48aff81ee057c61584f4` |
+| `sections/page-a-propos-daewoo.liquid` | 54 504 | `7a29b91cd24eae5988e456401ef6b4d8` |
 | `snippets/social-meta-tags.liquid` | 2 655 | `17806c7e0ff99f7291da1373733f0382` |
 | `templates/page.a-propos.json` | 922 | `c16b8cb4900adb720cc09ad03b3e6ccc` |
 
@@ -122,6 +122,11 @@ en double.
   Leurs attributs ALT annoncent locaux / équipe / préparation des commandes — à vérifier et à
   remplacer dans le personnalisateur si le contenu des photos ne correspond pas.
 - **Bloc distributeurs** (section 11) : masqué tant que le réglage `resellers_text` est vide.
+- **Dates.** Liz Invest SAS est immatriculée depuis **2013** (`foundingDate` sur le nœud
+  `#liz-invest`) ; l'exploitation de Daewoo-Security.fr a démarré en **2020**
+  (`copyrightYear` sur le nœud `WebSite`, et « depuis 2020 » en texte visible). Ne pas
+  confondre les deux : mettre `foundingDate: 2020` sur Liz Invest serait faux et
+  contredirait le SIREN.
 - **Identifiants légaux dans le JSON-LD** : le node Liz Invest porte `vatID` FR45791022692 et
   les `identifier` RCS Bordeaux / SIREN 791022692. Ces valeurs correspondent aux mentions
   légales du site. La clé de contrôle 45 du numéro de TVA confirme arithmétiquement le SIREN
