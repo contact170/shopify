@@ -1,0 +1,32 @@
+{%- doc -%}
+  Rappelle les engagements de la boutique au moment de la décision d'achat.
+
+  Rendu sous le bouton de paiement, sur la page panier comme dans le tiroir —
+  le tiroir étant le panier principal de la boutique, c'est là qu'il compte le
+  plus. Volontairement sans lien : à cet endroit du parcours, envoyer le client
+  vers une autre page lui fait quitter son panier.
+
+  Le texte vit dans les traductions (`cart.general.reassurance.*`) et se modifie
+  donc depuis Contenu → Langues, sans toucher au code.
+
+  Couleurs en style inline : `cart.css` n'est chargé que par la page panier, le
+  tiroir ne dispose que de `theme.css`.
+
+  @example
+  {% render 'cart-reassurance' %}
+{%- enddoc -%}
+
+<ul class="cart-reassurance grid gap-2d5" role="list">
+  <li class="flex items-start gap-2d5 text-sm leading-tight" style="color: rgb(var(--color-foreground) / 0.8);">
+    {%- render 'icon', icon: 'package', size: 'sm', class: 'shrink-0' -%}
+    <span>{{ 'cart.general.reassurance.shipping' | t }}</span>
+  </li>
+  <li class="flex items-start gap-2d5 text-sm leading-tight" style="color: rgb(var(--color-foreground) / 0.8);">
+    {%- render 'icon', icon: 'check-circle', size: 'sm', class: 'shrink-0' -%}
+    <span>{{ 'cart.general.reassurance.warranty' | t }}</span>
+  </li>
+  <li class="flex items-start gap-2d5 text-sm leading-tight" style="color: rgb(var(--color-foreground) / 0.8);">
+    {%- render 'icon', icon: 'comment', size: 'sm', class: 'shrink-0' -%}
+    <span>{{ 'cart.general.reassurance.support' | t }}</span>
+  </li>
+</ul>
