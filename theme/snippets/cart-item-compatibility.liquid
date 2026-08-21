@@ -1,0 +1,47 @@
+{%- doc -%}
+  Affiche la gamme d'alarme avec laquelle une ligne de panier est compatible.
+
+  Deux sources, dans cet ordre :
+  1. le metaobjet `custom.compatibilite` du produit, qui porte un vocabulaire
+     contrôlé (Key, Élite, Vigilia & Touch, Vigilia/Vigilia +, Touch/Touch XL,
+     Toutes les gammes) ;
+  2. à défaut, le nom du fournisseur, mais uniquement lorsqu'il commence par
+     « Compatible » — c'est le seul cas où il porte une information de gamme.
+     Un fournisseur comme « Daewoo Security » n'en porte aucune.
+
+  N'affiche rien si aucune source n'est exploitable : sur une page panier, un
+  badge absent coûte moins cher qu'un badge faux.
+
+  Ce snippet AFFICHE la compatibilité, il ne la juge pas — d'où l'absence
+  volontaire de coche ou de vert, qui se lirait comme une validation. Le
+  metafield étant une référence unique, il ne peut pas exprimer « Key ET
+  Élite » : un article compatible avec les deux gammes n'est étiqueté que
+  « Élite ». Tout verdict automatique bâti sur cette donnée produirait de faux
+  avertissements.
+
+  Les couleurs sont en style inline car `cart.css` n'est chargé que par la page
+  panier : le tiroir, lui, ne dispose que de `theme.css`.
+
+  @param {object} item - La ligne de panier.
+
+  @example
+  {% render 'cart-item-compatibility', item: item %}
+{%- enddoc -%}
+
+{%- liquid
+  assign compat = item.product.metafields.custom.compatibilite.value.compatibilite.value
+
+  if compat == blank
+    assign vendor = item.product.vendor
+    if vendor contains 'Compatible'
+      assign compat = vendor | remove_first: 'Compatible' | split: '(' | first | strip
+    endif
+  endif
+-%}
+{%- if compat != blank -%}
+  <span class="block" style="margin-block-start: var(--sp-1d5);">
+    <span class="badge cart-item__compat inline-flex items-center font-medium leading-none" style="background-color: rgb(var(--color-foreground) / 0.06); color: rgb(var(--color-foreground) / 0.75);">
+      {{- 'cart.general.compatible_with' | t: gamme: compat -}}
+    </span>
+  </span>
+{%- endif -%}

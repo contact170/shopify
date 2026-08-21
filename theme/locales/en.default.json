@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "404": {
@@ -27,13 +36,15 @@
         "external": "Opens external website."
       },
       "go_to_item": "Go to item {{ index }}",
-      "drag": "Drag"
+      "drag": "Drag",
+      "back_to_top": "Back to top"
     },
     "meta": {
       "tags": "Tagged \"{{ tags }}\"",
       "page": "Page {{ page }}"
     },
     "pagination": {
+      "label": "Pagination",
       "page": "Page {{ number }}",
       "previous": "Previous",
       "next": "Next",
@@ -93,7 +104,11 @@
       "title": "Search",
       "title_results": "Search results",
       "placeholder": "Search for ...",
+      "placeholder_inline": "What are you looking for?",
       "clear": "Clear",
+      "go": "Go",
+      "voice_search": "Search by voice",
+      "voice_search_unavailable": "Voice search isn't available on this device",
       "suggestions": "Suggestions",
       "products": "Products",
       "collections": "Collections",
@@ -189,6 +204,8 @@
     "map": {
       "back": "Back",
       "view_details": "View details",
+      "view_location_label": "View {{ location }} on map",
+      "get_directions_label": "Get directions to {{ location }}",
       "address_error": "Error looking up that address",
       "address_no_results": "No results for that address",
       "address_query_limit_html": "You have exceeded the Google API usage limit. Consider upgrading to a <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium Plan</a>.",
@@ -231,7 +248,8 @@
       "step_error": "You can only add this item in increments of {{ step }}"
     },
     "comparison-table": {
-      "highlight_differences": "Highlight differences"
+      "highlight_differences": "Highlight differences",
+      "choose_product": "Choose a product"
     }
   },
   "blogs": {
@@ -239,7 +257,10 @@
       "written_by_html": "by {{ author }}",
       "filter": "Filter",
       "all_tags": "All",
-      "read_more": "Read more"
+      "read_more": "Read more",
+      "read_more_context": "about {{ title }}",
+      "comments_context": "on {{ title }}",
+      "view_posts_tagged": "Show articles tagged {{ tag }}"
     },
     "comments": {
       "title": "Leave a comment",
@@ -260,6 +281,7 @@
     "general": {
       "title": "Your cart",
       "remove": "Remove",
+      "compatible_with": "Compatible with {{ gamme }}",
       "note": "Order note",
       "subtotal": "Subtotal",
       "cart_error": "There was an error while updating your cart. Please try again.",
@@ -487,11 +509,15 @@
       "sold_out": "Sold Out",
       "unavailable": "Unavailable",
       "add_to_cart": "Add to cart",
+      "add_to_cart_label": "Add {{ title }} to cart",
       "choose_options": "Choose options",
-      "choose_product_options": "Choose options for {{ product_name }}",
+      "choose_product_options": "Choose options for {{ title }}",
       "view_product": "View product",
+      "view_product_label": "View product: {{ title }}",
       "pre_order": "Pre-order",
+      "pre_order_label": "Pre-order {{ title }}",
       "add_to_bundle": "Add to bundle",
+      "add_to_bundle_label": "Add {{ title }} to bundle",
       "shop_the_look": "Shop the Look",
       "vendor": "Vendor",
       "include_taxes": "Tax included.",
@@ -502,8 +528,11 @@
       "xr_button": "View in your space",
       "xr_button_label": "View in your space, loads item in augmented reality window",
       "read_more": "View full details",
+      "read_more_label": "View full details of {{ title }}",
       "quick_add": "Add",
-      "quick_view": "View"
+      "quick_add_label": "Quick add {{ title }} to cart",
+      "quick_view": "View",
+      "quick_view_label": "Quick view {{ title }}"
     },
     "price": {
       "regular_price": "Regular price",
@@ -608,7 +637,6 @@
       "send_on_label": "Send on (optional)"
     }
   },
-  "date_formats": {},
   "pagefly": {
     "products": {
       "product": {

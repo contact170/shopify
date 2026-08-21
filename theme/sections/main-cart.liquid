@@ -143,6 +143,7 @@
                                       <p class="text-xs text-opacity">{{ item.product.vendor }}</p>
                                     {%- endif -%}
                                     <a href="{{ item.url }}" class="cart__item-title reversed-link font-medium text-base leading-tight">{{ item.product.title | escape }}</a>
+                                    {%- render 'cart-item-compatibility', item: item -%}
                                   {%- else -%}
                                     <p class="font-medium text-base leading-tight">{{ item.product.title | escape }}</p>
                                   {%- endunless -%}

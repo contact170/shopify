@@ -20,7 +20,7 @@
   >
     <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="CartDrawer" aria-expanded="false"></overlay-element>
     <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
-      <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative">
+      <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative" tabindex="0">
         <ul class="drawer__tabs flex gap-10" is="tab-list">
           <li>
             <button class="drawer__tab relative" type="button" aria-controls="MiniCart-{{ section.id }}" aria-expanded="true">
@@ -51,7 +51,7 @@
             {%- if cart == empty -%}
               <div class="drawer__scrollable relative flex justify-center items-start grow shrink text-center">
                 <div class="drawer__empty grid gap-5 md:gap-8">
-                  <h2 class="drawer__empty-text heading leading-none tracking-tight">{{ 'cart.general.empty' | t }}</h2>
+                  <p class="drawer__empty-text h2 heading leading-none tracking-tight">{{ 'cart.general.empty' | t }}</p>
                   <div class="drawer__empty-message text-sm md:text-base leading-tight rte">
                     {{- section.settings.empty_cart_message -}}
                   </div>
@@ -68,13 +68,14 @@
                         <li>
                           <a class="flex items-center justify-between" href="{{ item.url }}">
                             <span class="flex items-center gap-3">
-                              {%- liquid
-                                if item.metafields.theme.icon.value != blank
-                                  echo item.metafields.theme.icon.value | image_url: width: item.metafields.theme.icon.value.width | image_tag: loading: 'lazy', widths: '80,96,160,192', is: 'lazy-image'
-                                endif
-    
-                                echo item.title
-                              -%}
+                              {%- if item.metafields.theme.icon.value != blank -%}
+                                {%- assign icon_alt = item.metafields.theme.icon.value.alt | default: item.title | escape -%}
+                                {%- assign max_width = item.metafields.theme.icon.value.width -%}
+                                {%- capture sizes -%}36px{%- endcapture -%}
+                                {%- capture widths -%}{{ 36 | times: 1.5 | at_most: max_width | round }}, {{ 36 | times: 2 | at_most: max_width }}, {{ 36 | times: 3 | at_most: max_width }}{%- endcapture -%}
+                                {{- item.metafields.theme.icon.value | image_url: width: max_width | image_tag: loading: 'lazy', sizes: sizes, widths: widths, alt: icon_alt, is: 'lazy-image' -}}
+                              {%- endif -%}
+                              {{- item.title -}}
                             </span>
                             {%- render 'icon', icon: 'arrow-right', size: 'sm', class: 'transform' -%}
                           </a>
@@ -135,19 +136,6 @@
               <cart-items class="block grow" data-section-id="{{ section.id }}">
                 <ul class="horizontal-products grid" role="list">
                   {%- for item in cart.items -%}
-
-{% assign skipItem = false %}
-{% for p in item.properties %}
-{% if p.first == "Box ID" %}
-{% assign skipItem = true %}
-{% break %}
-{% endif %}
-{% endfor %}
-{% if skipItem %}
-{%- continue -%}
-{% endif %}
-
-
                     {%- liquid
                       assign is_gift_wrap_item = false
                       if gift_wrap_variant != nil and item.id == gift_wrap_variant.id
@@ -158,7 +146,10 @@
                       <li id="CartDrawer-Item-{{ item.key }}" class="horizontal-product flex items-start gap-4 md:gap-6" data-variant-id="{{ item.variant_id }}" data-handle="{{ item.product.handle }}" data-quantity="{{ item.quantity }}" data-price="{{ item.original_price }}">
                         {%- if item.image -%}
                           <a class="horizontal-product__media media media--{{ settings.product_image_ratio }}{% unless settings.product_image_fill %} media--contain{% endunless %} relative overflow-hidden shrink-0" href="{{ item.url }}" tabindex="-1">
-                            {{- item.image | image_url: width: item.image.width | image_tag: loading: 'lazy', widths: '180,360,540', is: 'lazy-image' -}}
+                            {%- assign max_width = item.image.width -%}
+                            {%- capture sizes -%}96px{%- endcapture -%}
+                            {%- capture widths -%}{{ 96 | times: 1.5 | at_most: max_width | round }}, {{ 96 | times: 2 | at_most: max_width }}, {{ 96 | times: 3 | at_most: max_width }}{%- endcapture -%}
+                            {{- item.image | image_url: width: max_width | image_tag: loading: 'lazy', widths: widths, sizes: sizes, is: 'lazy-image' -}}
                           </a>
                         {%- endif -%}
                         <div class="horizontal-product__details grow flex flex-col justify-start align-self-center gap-1d5">
@@ -168,6 +159,7 @@
                                 <p class="text-xs text-opacity">{{ item.product.vendor }}</p>
                               {%- endif -%}
                               <a href="{{ item.url }}" class="horizontal-product__title reversed-link font-medium text-base leading-tight">{{ item.product.title | escape }}</a>
+                              {%- render 'cart-item-compatibility', item: item -%}
                             </div>
 
                             {%- if item.product.has_only_default_variant == false or item.properties.size != 0 or item.selling_plan_allocation != null -%}
@@ -233,23 +225,14 @@
                                 {%- endif -%}
 
                                 {%- if item.variant.available and item.unit_price_measurement -%}
-                                  <span class="sr-only">{{ 'products.price.unit_price' | t }}</span>
-                                  <span class="unit-price flex items-center">
-                                    {%- liquid
-                                      capture unit_price_base_unit
-                                        if item.variant.unit_price_measurement
-                                          if item.variant.unit_price_measurement.reference_value != 1
-                                            echo item.variant.unit_price_measurement.reference_value
-                                          endif
-                                          echo item.variant.unit_price_measurement.reference_unit
-                                        endif
-                                      endcapture
-                                    -%}
-                                    ({{ item.variant.unit_price | money }}
-                                    <span aria-hidden="true">/</span>
-                                    <span class="sr-only">&nbsp;{{ 'general.accessibility.unit_price_separator' | t }}&nbsp;</span>
-                                    {{ unit_price_base_unit }})
-                                  </span>
+                                  {%- liquid
+                                    if settings.currency_code_enabled
+                                      assign unit_price = item.unit_price | money_with_currency
+                                    else
+                                      assign unit_price = item.unit_price | money
+                                    endif
+                                  -%}
+                                  {%- render 'unit-price', price: unit_price, measurement: item.unit_price_measurement -%}
                                 {%- endif -%}
                               </div>
 
@@ -309,7 +292,8 @@
                                 </div>
                               {%- endif -%}
                               {%- if has_vol_pricing -%}
-                                {{ 'volume-pricing.css' | asset_url | stylesheet_tag }}
+                                <link rel="stylesheet" href="{{ 'volume-pricing.css' | asset_url }}" media="print" onload="this.media='all'">
+                                <noscript>{{ 'volume-pricing.css' | asset_url | stylesheet_tag }}</noscript>
                                 <volume-pricing class="volume-pricing grid gap-6">
                                   <span class="caption-large font-medium">{{ 'products.volume_pricing.title' | t }}</span>
                                   <ul class="list-unstyled">
@@ -354,7 +338,7 @@
                                   >
                                     <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="VolumePricing-{{ section.id }}-{{ item.key }}" aria-expanded="false"></overlay-element>
                                     <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
-                                      <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative">
+                                      <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative" tabindex="0">
                                         <span class="drawer__title heading title-md grid gap-4">
                                           {{ item.product.title | escape }}
                                           {%- unless item.product.has_only_default_variant -%}
