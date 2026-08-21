@@ -1,0 +1,739 @@
+{%- comment -%}
+  ============================================================================
+  Caractéristiques techniques officielles des alarmes Daewoo Security
+  ----------------------------------------------------------------------------
+  Page de référence unique, publique et non commerciale.
+  Objectif : servir de source officielle pour les clients, Google et les
+  assistants IA (ChatGPT, Perplexity, Gemini...).
+
+  POUR METTRE À JOUR UNE CARACTÉRISTIQUE :
+  toutes les données sont regroupées dans le bloc "DONNÉES" ci-dessous.
+  Format d'une ligne : "Libellé~Vigilia~Touch~Touch XL~Élite~source"
+  Codes source : M = manuel officiel | F = fiche produit | X = à confirmer
+
+  Ne pas oublier de mettre à jour la date dans les réglages de la section.
+  ============================================================================
+{%- endcomment -%}
+
+{%- assign SEP = '~' -%}
+
+{%- comment -%} ---------- DONNÉES : IDENTIFICATION ---------- {%- endcomment -%}
+{%- capture rows_identification -%}
+Référence de la centrale~Vigilia / Vigilia +~AM301~AM302~PA501Z~M
+Nom commercial~Vigilia~Touch~Touch XL~Élite~F
+Versions disponibles~Vigilia (Wi-Fi) · Vigilia + (Wi-Fi + GSM)~Version unique~Version unique~Version unique~F
+Type de pilotage~Clavier à code intégré + application~Écran tactile + application~Écran tactile + application~Application uniquement~M
+{%- endcapture -%}
+
+{%- comment -%} ---------- DONNÉES : INTERFACE ---------- {%- endcomment -%}
+{%- capture rows_interface -%}
+Écran~Aucun (clavier + voyant LED)~Tactile capacitif IPS 4,3 pouces~Tactile capacitif IPS 7 pouces~Aucun~M
+Clavier intégré~Oui~Via écran tactile~Via écran tactile~Non (clavier Zigbee WKE502Z en option)~M
+Badge RFID~Oui (lecteur intégré)~Via clavier WKE301 (option)~Via clavier WKE301 (option)~Via badge WRF501 (option)~F
+Bouton SOS~Oui~Oui~Oui~Oui~M
+Voyant LED d'état~Oui (multi-couleurs)~Oui (multi-couleurs)~Oui (multi-couleurs)~Oui (multi-couleurs)~M
+Protection anti-arrachement~Oui~Oui~Oui~Oui~M
+{%- endcapture -%}
+
+{%- comment -%} ---------- DONNÉES : CONNECTIVITÉ ---------- {%- endcomment -%}
+{%- capture rows_connectivite -%}
+Wi-Fi 2,4 GHz~Oui~Oui~Oui~Oui (802.11 b/g/n)~M
+Wi-Fi 5 GHz~Non~Non~Non~Non~M
+Ethernet RJ45~Non~Non~Non~Oui~M
+Emplacement carte SIM~Uniquement sur Vigilia +~Oui — Nano SIM~Oui — Nano SIM~Oui — Micro SIM~M
+Réseau mobile~GSM sur Vigilia + (SMS et appels)~GSM (SMS et appels)~GSM (SMS et appels)~4G LTE — bandes B1/B3/B5/B7/B8/B20/B28~M
+Carte SIM incluse~Non~Non~Non~Non~F
+Zigbee 3.0~Non~Non~Non~Oui (2,4 GHz)~M
+Bluetooth (installation)~Oui~Oui~Oui~Oui~M
+{%- endcapture -%}
+
+{%- comment -%} ---------- DONNÉES : RADIO ACCESSOIRES ---------- {%- endcomment -%}
+{%- capture rows_radio -%}
+Fréquence radio accessoires~433 MHz — protocole eV1527~433 MHz — protocole V1527~433 MHz — protocole V1527~315 / 433 / 868 MHz + Zigbee 3.0~M
+Portée radio en espace ouvert~100 mètres~Non documentée~Non documentée~100 mètres~X
+Puissance RF~Non documentée~Non documentée~Non documentée~10,4 mW (max. 25 mW)~M
+Amplificateur de portée~EXT301 (option)~EXT301 (option)~EXT301 (option)~Réseau maillé Zigbee~F
+{%- endcapture -%}
+
+{%- comment -%} ---------- DONNÉES : ALIMENTATION ---------- {%- endcomment -%}
+{%- capture rows_alimentation -%}
+Alimentation secteur~DC 5V — 1A~USB-C 5V — 1A~USB-C 5V — 2A~DC 12V — 1A~M
+Batterie de secours~Lithium 3,7V — 1500 mAh~Intégrée (capacité non documentée)~Intégrée (capacité non documentée)~Li-Ion — 5000 mAh~M
+Autonomie annoncée~Environ 4 heures~À confirmer~À confirmer~3 à 24 heures selon l'usage~X
+Consommation~Moins de 100 mA en veille~Non documentée~Non documentée~Jusqu'à 10 W~M
+{%- endcapture -%}
+
+{%- comment -%} ---------- DONNÉES : CAPACITÉS ---------- {%- endcomment -%}
+{%- capture rows_capacites -%}
+Capteurs maximum~Non documentée~160~160~200 appareils au total~M
+Télécommandes maximum~Non documentée~6~6~Inclus dans les 200 appareils~M
+Claviers additionnels maximum~Non documentée~6~6~Inclus dans les 200 appareils~M
+Sonnettes maximum~Non documentée~6~6~Inclus dans les 200 appareils~M
+Codes / utilisateurs~6 codes de 4 à 8 chiffres~Code utilisateur + code administrateur~Code utilisateur + code administrateur~Jusqu'à 20 utilisateurs~M
+Numéros d'urgence (mode GSM)~Selon version~Jusqu'à 6~Jusqu'à 5~Via l'application~M
+Historique des évènements~Via l'application~160 alarmes + 80 armements~160 alarmes + 80 armements~Via l'application~M
+{%- endcapture -%}
+
+{%- comment -%} ---------- DONNÉES : SIRÈNE & MODES ---------- {%- endcomment -%}
+{%- capture rows_sirene -%}
+Sirène intégrée~85 dB~Jusqu'à 95 dB~Jusqu'à 100 dB~85 dB~M
+Modes de surveillance~Absence · Maison · Désarmé~Absence · Maison · Désarmé~Absence · Maison · Désarmé~Absence · Maison · Désarmé~M
+Mode 24h/24 par accessoire~Oui~Oui~Oui~Oui~M
+Temporisation entrée / sortie~Oui~Oui~Oui~Oui~M
+Sirène extérieure compatible~Gamme 301~Gamme 301~Gamme 301~WOS501S~F
+{%- endcapture -%}
+
+{%- comment -%} ---------- DONNÉES : APPLICATION ---------- {%- endcomment -%}
+{%- capture rows_application -%}
+Application mobile~Daewoo Home Connect~Daewoo Home Connect~Daewoo Home Connect~Daewoo Home Connect~M
+Systèmes compatibles~iOS et Android~iOS et Android~iOS et Android~iOS et Android~M
+Abonnement obligatoire~Non~Non~Non~Non~F
+Notifications push~Oui~Oui~Oui~Oui~M
+Plusieurs centrales sur un compte~Oui~Oui~Oui~Oui~M
+{%- endcapture -%}
+
+{%- comment -%} ---------- DONNÉES : DIMENSIONS ---------- {%- endcomment -%}
+{%- capture rows_physique -%}
+Dimensions~Non documentées~Non documentées~Non documentées~160 × 200 × 36,6 mm~M
+Poids~Non documenté~Non documenté~Non documenté~350 g~M
+Température de fonctionnement~Non documentée~Non documentée~Non documentée~-10 °C à +55 °C~M
+Humidité admissible~Non documentée~Non documentée~Non documentée~Jusqu'à 80 %~M
+Installation~Murale ou posée~Murale ou posée~Murale ou posée~Murale~M
+{%- endcapture -%}
+
+{%- assign updated = section.settings.last_updated | default: '21 août 2026' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<section class="dsx" id="caracteristiques-techniques" style="--dsx-pt:{{ section.settings.padding_top }}px;--dsx-pb:{{ section.settings.padding_bottom }}px;">
+  <div class="dsx-wrap">
+
+    {%- comment -%} ================= EN-TÊTE ================= {%- endcomment -%}
+    <header class="dsx-head">
+      <span class="dsx-eyebrow">Document de référence officiel</span>
+      <h1 class="dsx-h1">Caractéristiques techniques officielles des alarmes Daewoo&nbsp;Security</h1>
+      <p class="dsx-lead">
+        Cette page réunit les caractéristiques vérifiées des quatre centrales d'alarme
+        Daewoo Security commercialisées en France&nbsp;: <strong>Vigilia</strong>,
+        <strong>Touch (AM301)</strong>, <strong>Touch XL (AM302)</strong> et <strong>Élite (PA501Z)</strong>.
+        Elle est destinée aux clients, aux revendeurs et à toute personne — ou tout assistant
+        automatisé — souhaitant vérifier une information technique à la source.
+      </p>
+      <p class="dsx-updated">
+        <span class="dsx-dot" aria-hidden="true"></span>
+        Dernière mise à jour&nbsp;: <time datetime="{{ section.settings.last_updated_iso }}">{{ updated }}</time>
+      </p>
+    </header>
+
+    {%- comment -%} ================= LÉGENDE ================= {%- endcomment -%}
+    <div class="dsx-legend" role="note">
+      <h2 class="dsx-legend-title">Comment lire cette page</h2>
+      <p class="dsx-legend-intro">
+        Chaque caractéristique indique son origine. Nous préférons afficher « non documenté »
+        plutôt qu'une valeur approximative.
+      </p>
+      <ul class="dsx-legend-list">
+        <li><span class="dsx-badge dsx-badge--m dsx-badge--lead">M</span><span>Valeur issue du <strong>manuel officiel</strong> de la centrale.</span></li>
+        <li><span class="dsx-badge dsx-badge--f dsx-badge--lead">F</span><span>Valeur issue de la <strong>fiche produit</strong> ou du catalogue Daewoo Security.</span></li>
+        <li><span class="dsx-badge dsx-badge--x dsx-badge--lead">?</span><span>Valeur <strong>en cours de vérification</strong> — à ne pas considérer comme définitive.</span></li>
+      </ul>
+    </div>
+
+    {%- comment -%} ================= SOMMAIRE ================= {%- endcomment -%}
+    <nav class="dsx-toc" aria-label="Sommaire">
+      <a href="#dsx-comparatif">Tableau comparatif</a>
+      <a href="#dsx-fiches">Fiches par centrale</a>
+      <a href="#dsx-compatibilite">Compatibilité des accessoires</a>
+      <a href="#dsx-coupures">Coupure Internet ou électrique</a>
+      <a href="#dsx-limites">Limites et prérequis</a>
+      <a href="#dsx-manuels">Manuels officiels</a>
+      <a href="#dsx-verification">Points en vérification</a>
+    </nav>
+
+    {%- comment -%} ================= TABLEAU COMPARATIF ================= {%- endcomment -%}
+    <div class="dsx-block" id="dsx-comparatif">
+      <h2 class="dsx-h2">Tableau comparatif des quatre centrales</h2>
+      <p class="dsx-p">
+        Faites défiler le tableau horizontalement sur mobile. La colonne des caractéristiques
+        reste visible.
+      </p>
+
+      <div class="dsx-table-scroll" tabindex="0" role="region" aria-label="Tableau comparatif des centrales Daewoo Security">
+        <table class="dsx-table">
+          <thead>
+            <tr>
+              <th scope="col" class="dsx-col-label">Caractéristique</th>
+              <th scope="col">Vigilia</th>
+              <th scope="col">Touch<span class="dsx-ref">AM301</span></th>
+              <th scope="col">Touch XL<span class="dsx-ref">AM302</span></th>
+              <th scope="col">Élite<span class="dsx-ref">PA501Z</span></th>
+            </tr>
+          </thead>
+
+          {%- assign groups = 'Identification|Interface et commandes|Connectivité|Radio et accessoires|Alimentation et autonomie|Capacités du système|Sirène et modes|Application mobile|Caractéristiques physiques' | split: '|' -%}
+
+          {%- for group in groups -%}
+            {%- case forloop.index -%}
+              {%- when 1 -%}{%- assign current_rows = rows_identification -%}
+              {%- when 2 -%}{%- assign current_rows = rows_interface -%}
+              {%- when 3 -%}{%- assign current_rows = rows_connectivite -%}
+              {%- when 4 -%}{%- assign current_rows = rows_radio -%}
+              {%- when 5 -%}{%- assign current_rows = rows_alimentation -%}
+              {%- when 6 -%}{%- assign current_rows = rows_capacites -%}
+              {%- when 7 -%}{%- assign current_rows = rows_sirene -%}
+              {%- when 8 -%}{%- assign current_rows = rows_application -%}
+              {%- when 9 -%}{%- assign current_rows = rows_physique -%}
+            {%- endcase -%}
+
+            <tbody>
+              <tr class="dsx-group">
+                <th scope="colgroup" colspan="5">{{ group }}</th>
+              </tr>
+
+              {%- assign lines = current_rows | strip | split: '
+' -%}
+              {%- for line in lines -%}
+                {%- assign cells = line | strip | split: SEP -%}
+                {%- if cells.size < 5 -%}{%- continue -%}{%- endif -%}
+                {%- assign src = cells[5] | strip -%}
+                <tr>
+                  <th scope="row" class="dsx-col-label">
+                    {{ cells[0] | strip }}
+                    {%- if src == 'M' -%}<span class="dsx-badge dsx-badge--m" title="Valeur issue du manuel officiel">M</span>
+                    {%- elsif src == 'F' -%}<span class="dsx-badge dsx-badge--f" title="Valeur issue de la fiche produit">F</span>
+                    {%- elsif src == 'X' -%}<span class="dsx-badge dsx-badge--x" title="Valeur en cours de vérification">?</span>
+                    {%- endif -%}
+                  </th>
+                  {%- for i in (1..4) -%}
+                    {%- assign val = cells[i] | strip -%}
+                    <td
+                      {%- if val == 'Oui' %} class="dsx-yes"{% elsif val == 'Non' %} class="dsx-no"{% elsif val contains 'Non documenté' or val == 'À confirmer' %} class="dsx-unknown"{% endif -%}
+                    >{{ val }}</td>
+                  {%- endfor -%}
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          {%- endfor -%}
+        </table>
+      </div>
+    </div>
+
+    {%- comment -%} ================= FICHES PAR CENTRALE ================= {%- endcomment -%}
+    <div class="dsx-block" id="dsx-fiches">
+      <h2 class="dsx-h2">Fiches détaillées par centrale</h2>
+
+      <div class="dsx-cards">
+        <article class="dsx-card">
+          <h3 class="dsx-card-title">Vigilia <span class="dsx-card-ref">Vigilia / Vigilia +</span></h3>
+          <p class="dsx-card-desc">Centrale à clavier intégré. L'alarme s'arme et se désarme par code ou badge RFID, sans smartphone.</p>
+          <dl class="dsx-dl">
+            <dt>Alimentation</dt><dd>DC 5V — 1A</dd>
+            <dt>Batterie</dt><dd>Lithium 3,7V — 1500 mAh</dd>
+            <dt>Radio</dt><dd>433 MHz — eV1527 — portée 100 m</dd>
+            <dt>Codes</dt><dd>6 codes de 4 à 8 chiffres</dd>
+            <dt>Codes par défaut</dt><dd>Utilisateur 1234 — Administrateur 9876</dd>
+            <dt>Connectivité</dt><dd>Wi-Fi 2,4 GHz — GSM sur Vigilia +</dd>
+            <dt>Sirène</dt><dd>85 dB</dd>
+          </dl>
+          <p class="dsx-note">Changez impérativement les codes par défaut à la première utilisation.</p>
+        </article>
+
+        <article class="dsx-card">
+          <h3 class="dsx-card-title">Touch <span class="dsx-card-ref">AM301</span></h3>
+          <p class="dsx-card-desc">Centrale à écran tactile 4,3 pouces. Pilotage depuis l'écran ou l'application.</p>
+          <dl class="dsx-dl">
+            <dt>Écran</dt><dd>Tactile capacitif IPS 4,3 pouces</dd>
+            <dt>Alimentation</dt><dd>USB-C 5V — 1A</dd>
+            <dt>Radio</dt><dd>433 MHz — V1527</dd>
+            <dt>Capacité</dt><dd>160 capteurs · 6 télécommandes · 6 sonnettes · 6 claviers</dd>
+            <dt>Carte SIM</dt><dd>Nano SIM — jusqu'à 6 numéros d'urgence</dd>
+            <dt>Historique</dt><dd>160 alarmes · 80 armements</dd>
+            <dt>Sirène</dt><dd>Jusqu'à 95 dB</dd>
+          </dl>
+          <p class="dsx-note">Pack livré avec 1 détecteur de mouvement, 2 contacteurs de porte et 2 télécommandes.</p>
+        </article>
+
+        <article class="dsx-card">
+          <h3 class="dsx-card-title">Touch XL <span class="dsx-card-ref">AM302</span></h3>
+          <p class="dsx-card-desc">Même plateforme que la Touch, avec le plus grand écran de la gamme.</p>
+          <dl class="dsx-dl">
+            <dt>Écran</dt><dd>Tactile capacitif IPS 7 pouces</dd>
+            <dt>Alimentation</dt><dd>USB-C 5V — 2A</dd>
+            <dt>Radio</dt><dd>433 MHz — V1527</dd>
+            <dt>Capacité</dt><dd>160 capteurs · 6 contrôleurs · 6 sonnettes · 6 claviers</dd>
+            <dt>Carte SIM</dt><dd>Nano SIM — jusqu'à 5 numéros d'urgence</dd>
+            <dt>Communication vocale</dt><dd>Microphone et haut-parleur (appels GSM)</dd>
+            <dt>Sirène</dt><dd>Jusqu'à 100 dB</dd>
+          </dl>
+          <p class="dsx-note">L'alimentation de la Touch XL exige 2A. N'utilisez pas le chargeur de l'AM301.</p>
+        </article>
+
+        <article class="dsx-card">
+          <h3 class="dsx-card-title">Élite <span class="dsx-card-ref">PA501Z</span></h3>
+          <p class="dsx-card-desc">Centrale sans écran, pilotée par l'application, avec triple connexion et Zigbee 3.0.</p>
+          <dl class="dsx-dl">
+            <dt>Connectivité</dt><dd>Ethernet RJ45 · Wi-Fi 802.11 b/g/n · 4G LTE</dd>
+            <dt>Bandes LTE</dt><dd>B1 / B3 / B5 / B7 / B8 / B20 / B28</dd>
+            <dt>Radio</dt><dd>315 / 433 / 868 MHz + Zigbee 3.0 — portée 100 m</dd>
+            <dt>Alimentation</dt><dd>DC 12V — 1A — jusqu'à 10 W</dd>
+            <dt>Batterie</dt><dd>Li-Ion 5000 mAh — 3 à 24 h selon l'usage</dd>
+            <dt>Capacité</dt><dd>200 appareils · 20 utilisateurs</dd>
+            <dt>Dimensions</dt><dd>160 × 200 × 36,6 mm — 350 g</dd>
+            <dt>Environnement</dt><dd>-10 °C à +55 °C — humidité ≤ 80 %</dd>
+          </dl>
+          <p class="dsx-note">La centrale Élite utilise une carte <strong>Micro SIM</strong>, et non une Nano SIM.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ================= COMPATIBILITÉ ================= {%- endcomment -%}
+    <div class="dsx-block" id="dsx-compatibilite">
+      <h2 class="dsx-h2">Compatibilité entre centrales et accessoires</h2>
+      <p class="dsx-p">
+        Les accessoires Daewoo Security se répartissent en trois familles radio distinctes.
+        <strong>Une famille n'est pas interchangeable avec une autre.</strong> C'est le point
+        de vigilance le plus important avant toute commande d'accessoire.
+      </p>
+
+      <div class="dsx-table-scroll" tabindex="0" role="region" aria-label="Compatibilité des familles d'accessoires">
+        <table class="dsx-table">
+          <thead>
+            <tr>
+              <th scope="col" class="dsx-col-label">Famille d'accessoires</th>
+              <th scope="col">Vigilia</th>
+              <th scope="col">Touch<span class="dsx-ref">AM301</span></th>
+              <th scope="col">Touch XL<span class="dsx-ref">AM302</span></th>
+              <th scope="col">Élite<span class="dsx-ref">PA501Z</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="dsx-col-label">
+                Gamme 301 / 305 — 433 MHz
+                <span class="dsx-hint">WPS301, WPS305, WDS301, WDV301, WDG301, WRC301, WKE301, WRF301, WSD301, WWF301, WMO301, BIR301, EXT301, SOS301</span>
+              </th>
+              <td class="dsx-yes">Oui</td>
+              <td class="dsx-yes">Oui</td>
+              <td class="dsx-yes">Oui</td>
+              <td class="dsx-no">Non</td>
+            </tr>
+            <tr>
+              <th scope="row" class="dsx-col-label">
+                Gamme 501 — radio
+                <span class="dsx-hint">WDS501, WVD501, WSD501, WMO501, WDG501, WRF501, WKE501, WOS501S</span>
+              </th>
+              <td class="dsx-no">Non</td>
+              <td class="dsx-no">Non</td>
+              <td class="dsx-no">Non</td>
+              <td class="dsx-partial">Oui, avec réserve</td>
+            </tr>
+            <tr>
+              <th scope="row" class="dsx-col-label">
+                Gamme 502Z — Zigbee 3.0
+                <span class="dsx-hint">WDS502Z, WVD502Z, WKE502Z</span>
+              </th>
+              <td class="dsx-no">Non</td>
+              <td class="dsx-no">Non</td>
+              <td class="dsx-no">Non</td>
+              <td class="dsx-yes">Oui</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="dsx-list">
+        <li><strong>Vigilia et Touch partagent la même famille d'accessoires</strong> (gamme 301 / 305, 433 MHz). Un accessoire acheté pour une Vigilia fonctionne sur une Touch et inversement.</li>
+        <li><strong>Les accessoires Vigilia et Touch ne fonctionnent pas sur les centrales Élite et Key.</strong> L'inverse est également vrai.</li>
+        <li><strong>« Oui, avec réserve » pour la gamme 501 sur Élite&nbsp;:</strong> ces accessoires radio sont reconnus par la centrale PA501Z, mais certaines fonctions peuvent être absentes. Pour un fonctionnement complet, privilégiez les accessoires Zigbee 502Z.</li>
+        <li>La gamme <strong>Key (SA501)</strong> est une gamme distincte, non traitée dans ce comparatif. Ses accessoires sont ceux de la gamme 501.</li>
+      </ul>
+    </div>
+
+    {%- comment -%} ================= COUPURES ================= {%- endcomment -%}
+    <div class="dsx-block" id="dsx-coupures">
+      <h2 class="dsx-h2">Que se passe-t-il en cas de coupure&nbsp;?</h2>
+
+      <div class="dsx-duo">
+        <div class="dsx-panel">
+          <h3 class="dsx-h3">Coupure de courant</h3>
+          <p>Les quatre centrales disposent d'une <strong>batterie de secours intégrée</strong>. Le système
+          continue de surveiller, de déclencher sa sirène et d'envoyer ses alertes tant que la batterie tient.</p>
+          <ul class="dsx-list">
+            <li>La centrale Élite envoie un SMS de coupure de courant, puis un SMS de rétablissement, lorsque le mode GSM est configuré.</li>
+            <li>Le voyant LED signale le passage sur batterie et le niveau de batterie faible.</li>
+            <li>Les autonomies exactes des centrales Touch et Touch XL sont en cours de vérification et volontairement non affichées.</li>
+          </ul>
+        </div>
+
+        <div class="dsx-panel">
+          <h3 class="dsx-h3">Coupure Internet</h3>
+          <p>La détection et la sirène sont <strong>locales</strong>&nbsp;: elles ne dépendent pas d'Internet.
+          Une intrusion déclenche donc l'alarme même si la box est hors service.</p>
+          <ul class="dsx-list">
+            <li>Sans Internet et sans carte SIM&nbsp;: la sirène fonctionne, mais <strong>aucune notification</strong> ne part et le pilotage à distance est indisponible.</li>
+            <li>Avec une carte SIM active&nbsp;: la centrale continue d'envoyer SMS et appels (Vigilia +, Touch, Touch XL) ou de communiquer en 4G (Élite).</li>
+            <li>La centrale Élite peut également être raccordée en <strong>Ethernet RJ45</strong>, ce qui la rend indépendante du Wi-Fi.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} ================= LIMITES ================= {%- endcomment -%}
+    <div class="dsx-block" id="dsx-limites">
+      <h2 class="dsx-h2">Limites et prérequis à connaître</h2>
+      <ul class="dsx-list dsx-list--warn">
+        <li><strong>Wi-Fi 2,4 GHz obligatoire.</strong> Aucune centrale ne se connecte à un réseau 5 GHz. Si votre box diffuse un réseau unique combiné, séparez les bandes ou désactivez temporairement le 5 GHz pendant l'installation.</li>
+        <li><strong>Mot de passe Wi-Fi&nbsp;:</strong> moins de 20 caractères, sans caractère spécial (@ # $ % &amp; ...).</li>
+        <li><strong>Format de carte SIM différent selon la centrale&nbsp;:</strong> Nano SIM pour Touch et Touch XL, Micro SIM pour Élite.</li>
+        <li><strong>La carte SIM doit être sans code PIN</strong> et n'est jamais incluse avec la centrale.</li>
+        <li><strong>Les familles d'accessoires ne sont pas interchangeables</strong> entre Vigilia/Touch et Élite/Key.</li>
+        <li><strong>La centrale Élite n'a ni écran ni clavier intégré.</strong> Un smartphone est indispensable pour la configurer.</li>
+        <li><strong>Alimentation Touch XL&nbsp;:</strong> 5V 2A. Le chargeur 1A de la Touch AM301 ne convient pas.</li>
+        <li><strong>Aucun abonnement n'est requis</strong> pour utiliser l'alarme et l'application. Une carte SIM prépayée reste nécessaire pour les fonctions GSM ou 4G.</li>
+      </ul>
+    </div>
+
+    {%- comment -%} ================= MANUELS ================= {%- endcomment -%}
+    <div class="dsx-block" id="dsx-manuels">
+      <h2 class="dsx-h2">Manuels officiels</h2>
+      <p class="dsx-p">Chaque valeur marquée <span class="dsx-badge dsx-badge--m">M</span> provient de l'un de ces manuels.</p>
+      <div class="dsx-links">
+        <a class="dsx-link-card" href="/pages/manuel-vigilia"><strong>Manuel Vigilia</strong><span>Installation, codes, accessoires</span></a>
+        <a class="dsx-link-card" href="/pages/manuel-am301"><strong>Manuel Touch — AM301</strong><span>Écran 4,3 pouces</span></a>
+        <a class="dsx-link-card" href="/pages/manuel-touch-xl-am302"><strong>Manuel Touch XL — AM302</strong><span>Écran 7 pouces</span></a>
+        <a class="dsx-link-card" href="/pages/manuel-elite"><strong>Manuel Élite — PA501Z</strong><span>Ethernet, Wi-Fi, 4G, Zigbee</span></a>
+      </div>
+    </div>
+
+    {%- comment -%} ================= VÉRIFICATION ================= {%- endcomment -%}
+    <div class="dsx-block" id="dsx-verification">
+      <h2 class="dsx-h2">Points en cours de vérification</h2>
+      <p class="dsx-p">
+        Par transparence, voici les caractéristiques pour lesquelles nos sources internes
+        ne concordent pas encore. Elles seront complétées après mesure ou confirmation du fabricant.
+      </p>
+      <ul class="dsx-list">
+        <li><strong>Autonomie réelle de la batterie des centrales Touch et Touch XL.</strong> Plusieurs valeurs circulent selon les documents. Aucune n'est affichée tant que la mesure n'est pas confirmée.</li>
+        <li><strong>Autonomie de la centrale Vigilia&nbsp;:</strong> environ 4 heures annoncées, à confirmer par mesure.</li>
+        <li><strong>Nombre maximal d'accessoires de la centrale Vigilia&nbsp;:</strong> non précisé dans le manuel officiel.</li>
+        <li><strong>Portée radio des centrales Touch et Touch XL&nbsp;:</strong> non documentée dans les manuels.</li>
+        <li><strong>Génération exacte du module mobile</strong> des centrales Vigilia + et Touch (GSM / 4G).</li>
+      </ul>
+      <p class="dsx-p dsx-p--small">
+        Une information vous semble inexacte&nbsp;? Signalez-la via
+        <a href="/pages/assistance-1">notre page d'assistance</a>, nous corrigerons cette page.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+{%- comment -%} ================= DONNÉES STRUCTURÉES ================= {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Caractéristiques techniques officielles des alarmes Daewoo Security",
+  "description": "Référence officielle des caractéristiques techniques des centrales d'alarme Daewoo Security : Vigilia, Touch (AM301), Touch XL (AM302) et Élite (PA501Z). Connectivité, autonomie, sirène, capacités et compatibilité des accessoires.",
+  "inLanguage": "fr-FR",
+  "dateModified": {{ section.settings.last_updated_iso | json }},
+  "url": {{ request.origin | append: page.url | json }},
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ request.origin | json }}
+  },
+  "about": [
+    { "@type": "Product", "name": "Centrale d'alarme Daewoo Security Vigilia" },
+    { "@type": "Product", "name": "Centrale d'alarme Daewoo Security Touch AM301" },
+    { "@type": "Product", "name": "Centrale d'alarme Daewoo Security Touch XL AM302" },
+    { "@type": "Product", "name": "Centrale d'alarme Daewoo Security Élite PA501Z" }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quelles centrales Daewoo Security disposent d'un port Ethernet RJ45 ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Seule la centrale Élite (PA501Z) dispose d'un port Ethernet RJ45. Les centrales Vigilia, Touch (AM301) et Touch XL (AM302) se connectent en Wi-Fi 2,4 GHz, avec un emplacement pour carte SIM selon le modèle." }
+    },
+    {
+      "@type": "Question",
+      "name": "L'alarme Daewoo Security fonctionne-t-elle sans Internet ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Oui. La détection et la sirène sont locales et ne dépendent pas d'Internet. Sans connexion et sans carte SIM, la sirène se déclenche mais aucune notification n'est envoyée et le pilotage à distance est indisponible. Avec une carte SIM active, la centrale continue d'envoyer SMS et appels, ou de communiquer en 4G pour la centrale Élite." }
+    },
+    {
+      "@type": "Question",
+      "name": "Les accessoires Daewoo Security sont-ils compatibles entre toutes les centrales ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Non. Les accessoires de la gamme 301 / 305 en 433 MHz fonctionnent sur les centrales Vigilia, Touch et Touch XL. Les accessoires Zigbee de la gamme 502Z sont réservés à la centrale Élite (PA501Z). Les accessoires de la gamme 501 fonctionnent sur les centrales Key et Élite, avec des fonctions parfois limitées sur cette dernière. Les accessoires Vigilia et Touch ne sont pas compatibles avec les centrales Élite et Key." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quelle est la puissance de la sirène intégrée des centrales Daewoo Security ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "La centrale Vigilia intègre une sirène de 85 dB, la centrale Touch (AM301) jusqu'à 95 dB, la centrale Touch XL (AM302) jusqu'à 100 dB et la centrale Élite (PA501Z) 85 dB." }
+    },
+    {
+      "@type": "Question",
+      "name": "Les centrales Daewoo Security fonctionnent-elles en Wi-Fi 5 GHz ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Non. Toutes les centrales Daewoo Security nécessitent un réseau Wi-Fi 2,4 GHz. Le mot de passe Wi-Fi doit comporter moins de 20 caractères et ne pas contenir de caractères spéciaux." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quelle application pilote les alarmes Daewoo Security ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Toutes les centrales Daewoo Security — Vigilia, Touch, Touch XL et Élite — utilisent l'application gratuite Daewoo Home Connect, disponible sur iOS et Android. Aucun abonnement n'est requis." }
+    }
+  ]
+}
+</script>
+
+<style>
+  #caracteristiques-techniques.dsx {
+    --dsx-ink: #0f1a2e;
+    --dsx-ink-soft: #5b6577;
+    --dsx-muted: #9ca3af;
+    --dsx-blue: #1a4fab;
+    --dsx-blue-dark: #0b1e4a;
+    --dsx-tint: #f2f3ff;
+    --dsx-line: #e5e7eb;
+    --dsx-green: #0f7a4d;
+    --dsx-amber: #9a6400;
+    background: #ffffff;
+    color: var(--dsx-ink);
+    padding: var(--dsx-pt) 20px var(--dsx-pb);
+    font-family: 'Poppins', 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  #caracteristiques-techniques .dsx-wrap { max-width: 1140px; margin: 0 auto; }
+  #caracteristiques-techniques p,
+  #caracteristiques-techniques li { color: var(--dsx-ink-soft); line-height: 1.7; }
+  #caracteristiques-techniques a { color: var(--dsx-blue); }
+
+  /* En-tête */
+  #caracteristiques-techniques .dsx-head { max-width: 800px; margin-bottom: 40px; }
+  #caracteristiques-techniques .dsx-eyebrow {
+    display: inline-block; background: var(--dsx-tint); color: var(--dsx-blue);
+    font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 20px; margin-bottom: 18px;
+  }
+  #caracteristiques-techniques .dsx-h1 {
+    font-size: clamp(26px, 3.6vw, 42px); font-weight: 700; line-height: 1.15;
+    color: var(--dsx-ink); margin: 0 0 16px;
+  }
+  #caracteristiques-techniques .dsx-lead { font-size: 16px; margin: 0 0 20px; }
+  #caracteristiques-techniques .dsx-updated {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500; color: var(--dsx-ink);
+    background: #fff; border: 1px solid var(--dsx-line); border-radius: 20px; padding: 7px 15px; margin: 0;
+  }
+  #caracteristiques-techniques .dsx-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 6px #4ade80;
+  }
+
+  /* Légende */
+  #caracteristiques-techniques .dsx-legend {
+    background: var(--dsx-tint); border-radius: 16px; padding: 24px 26px; margin-bottom: 36px;
+  }
+  #caracteristiques-techniques .dsx-legend-title { font-size: 15px; font-weight: 600; margin: 0 0 8px; color: var(--dsx-ink); }
+  #caracteristiques-techniques .dsx-legend-intro { font-size: 14px; margin: 0 0 14px; }
+  #caracteristiques-techniques .dsx-legend-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+  #caracteristiques-techniques .dsx-legend-list li { font-size: 14px; display: flex; align-items: baseline; gap: 10px; }
+
+  /* Badges de source */
+  #caracteristiques-techniques .dsx-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 18px; height: 18px; padding: 0 5px; margin-left: 6px;
+    border-radius: 5px; font-size: 10px; font-weight: 700; line-height: 1;
+    vertical-align: middle; flex-shrink: 0;
+  }
+  #caracteristiques-techniques .dsx-badge--lead { margin-left: 0; margin-right: 2px; }
+  #caracteristiques-techniques .dsx-badge--m { background: #dbeafe; color: #1a4fab; }
+  #caracteristiques-techniques .dsx-badge--f { background: #e5e7eb; color: #4b5563; }
+  #caracteristiques-techniques .dsx-badge--x { background: #fef3c7; color: var(--dsx-amber); }
+
+  /* Sommaire */
+  #caracteristiques-techniques .dsx-toc {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 48px;
+    padding-bottom: 28px; border-bottom: 1px solid var(--dsx-line);
+  }
+  #caracteristiques-techniques .dsx-toc a {
+    font-size: 13px; font-weight: 500; text-decoration: none; color: var(--dsx-ink);
+    border: 1px solid var(--dsx-line); border-radius: 8px; padding: 8px 14px; transition: all .2s;
+  }
+  #caracteristiques-techniques .dsx-toc a:hover { border-color: var(--dsx-blue); color: var(--dsx-blue); }
+
+  /* Blocs */
+  #caracteristiques-techniques .dsx-block { margin-bottom: 56px; scroll-margin-top: 90px; }
+  #caracteristiques-techniques .dsx-h2 {
+    font-size: clamp(21px, 2.6vw, 28px); font-weight: 700; color: var(--dsx-ink); margin: 0 0 12px;
+  }
+  #caracteristiques-techniques .dsx-h3 { font-size: 17px; font-weight: 600; color: var(--dsx-ink); margin: 0 0 10px; }
+  #caracteristiques-techniques .dsx-p { font-size: 15px; margin: 0 0 20px; max-width: 780px; }
+  #caracteristiques-techniques .dsx-p--small { font-size: 14px; }
+
+  /* Tableaux */
+  #caracteristiques-techniques .dsx-table-scroll {
+    overflow-x: auto; border: 1px solid var(--dsx-line); border-radius: 14px; background: #fff;
+    -webkit-overflow-scrolling: touch;
+  }
+  #caracteristiques-techniques .dsx-table-scroll:focus-visible { outline: 2px solid var(--dsx-blue); outline-offset: 2px; }
+  #caracteristiques-techniques .dsx-table {
+    width: 100%; border-collapse: collapse; font-size: 14px; min-width: 860px;
+  }
+  #caracteristiques-techniques .dsx-table thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--dsx-ink); color: #fff; text-align: left;
+    font-size: 13px; font-weight: 600; padding: 14px 16px; white-space: nowrap;
+  }
+  #caracteristiques-techniques .dsx-ref {
+    display: block; font-size: 11px; font-weight: 400; color: #9db4dd; margin-top: 2px;
+  }
+  #caracteristiques-techniques .dsx-group th {
+    background: var(--dsx-tint); color: var(--dsx-blue);
+    font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    padding: 10px 16px; text-align: left;
+  }
+  #caracteristiques-techniques .dsx-table td,
+  #caracteristiques-techniques .dsx-table tbody th {
+    padding: 12px 16px; border-top: 1px solid var(--dsx-line);
+    vertical-align: top; text-align: left; color: var(--dsx-ink-soft); font-weight: 400;
+  }
+  #caracteristiques-techniques .dsx-col-label {
+    color: var(--dsx-ink) !important; font-weight: 500 !important;
+    position: sticky; left: 0; background: #fff; z-index: 1; min-width: 220px;
+    box-shadow: 1px 0 0 var(--dsx-line);
+  }
+  #caracteristiques-techniques .dsx-group .dsx-col-label { background: var(--dsx-tint); }
+  #caracteristiques-techniques .dsx-hint {
+    display: block; font-size: 11px; font-weight: 400; color: var(--dsx-muted);
+    margin-top: 4px; line-height: 1.5; max-width: 260px;
+  }
+  #caracteristiques-techniques .dsx-table td.dsx-yes { color: var(--dsx-green); font-weight: 600; }
+  #caracteristiques-techniques .dsx-table td.dsx-no { color: #b91c1c; font-weight: 600; }
+  #caracteristiques-techniques .dsx-table td.dsx-partial { color: var(--dsx-amber); font-weight: 600; }
+  #caracteristiques-techniques .dsx-table td.dsx-unknown { color: var(--dsx-muted); font-style: italic; }
+
+  /* Fiches */
+  #caracteristiques-techniques .dsx-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px;
+  }
+  #caracteristiques-techniques .dsx-card {
+    border: 1px solid var(--dsx-line); border-radius: 14px; padding: 24px; background: #fff;
+    display: flex; flex-direction: column;
+  }
+  #caracteristiques-techniques .dsx-card-title {
+    font-size: 18px; font-weight: 700; color: var(--dsx-ink); margin: 0 0 6px;
+  }
+  #caracteristiques-techniques .dsx-card-ref {
+    display: block; font-size: 12px; font-weight: 500; color: var(--dsx-blue); margin-top: 2px;
+  }
+  #caracteristiques-techniques .dsx-card-desc { font-size: 14px; margin: 0 0 18px; }
+  #caracteristiques-techniques .dsx-dl { margin: 0 0 16px; font-size: 13px; }
+  #caracteristiques-techniques .dsx-dl dt {
+    font-weight: 600; color: var(--dsx-ink); margin-top: 10px;
+  }
+  #caracteristiques-techniques .dsx-dl dt:first-child { margin-top: 0; }
+  #caracteristiques-techniques .dsx-dl dd { margin: 2px 0 0; color: var(--dsx-ink-soft); }
+  #caracteristiques-techniques .dsx-note {
+    font-size: 12.5px; background: var(--dsx-tint); border-radius: 8px;
+    padding: 10px 12px; margin: auto 0 0; color: var(--dsx-ink);
+  }
+
+  /* Listes */
+  #caracteristiques-techniques .dsx-list { margin: 18px 0 0; padding-left: 20px; font-size: 15px; }
+  #caracteristiques-techniques .dsx-list li { margin-bottom: 10px; }
+  #caracteristiques-techniques .dsx-list--warn { list-style: none; padding-left: 0; }
+  #caracteristiques-techniques .dsx-list--warn li {
+    border-left: 3px solid var(--dsx-blue); padding: 2px 0 2px 16px; margin-bottom: 14px;
+  }
+
+  /* Panneaux */
+  #caracteristiques-techniques .dsx-duo {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;
+  }
+  #caracteristiques-techniques .dsx-panel {
+    border: 1px solid var(--dsx-line); border-radius: 14px; padding: 24px; font-size: 15px;
+  }
+  #caracteristiques-techniques .dsx-panel p { margin: 0; }
+  #caracteristiques-techniques .dsx-panel .dsx-list { font-size: 14px; }
+
+  /* Liens manuels */
+  #caracteristiques-techniques .dsx-links {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px;
+  }
+  #caracteristiques-techniques .dsx-link-card {
+    display: block; text-decoration: none; border: 1px solid var(--dsx-line);
+    border-radius: 12px; padding: 18px 20px; transition: border-color .2s;
+  }
+  #caracteristiques-techniques .dsx-link-card:hover { border-color: var(--dsx-blue); }
+  #caracteristiques-techniques .dsx-link-card strong { display: block; color: var(--dsx-ink); font-size: 15px; }
+  #caracteristiques-techniques .dsx-link-card span { display: block; color: var(--dsx-muted); font-size: 12.5px; margin-top: 3px; }
+
+  @media (max-width: 749px) {
+    #caracteristiques-techniques.dsx { padding-left: 16px; padding-right: 16px; }
+    #caracteristiques-techniques .dsx-col-label { min-width: 170px; }
+    #caracteristiques-techniques .dsx-table { min-width: 720px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Caractéristiques techniques",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Mise à jour"
+    },
+    {
+      "type": "text",
+      "id": "last_updated",
+      "label": "Date affichée sur la page",
+      "info": "Exemple : 21 août 2026. À modifier à chaque correction de caractéristique.",
+      "default": "21 août 2026"
+    },
+    {
+      "type": "text",
+      "id": "last_updated_iso",
+      "label": "Date au format ISO (données structurées)",
+      "info": "Format AAAA-MM-JJ. Utilisée par Google et les assistants IA.",
+      "default": "2026-08-21"
+    },
+    {
+      "type": "header",
+      "content": "Espacements"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge haute",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge basse",
+      "default": 96
+    }
+  ],
+  "presets": [
+    {
+      "name": "Caractéristiques techniques"
+    }
+  ]
+}
+{% endschema %}
