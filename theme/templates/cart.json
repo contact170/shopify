@@ -33,10 +33,10 @@
         "column_gPNdia": {
           "type": "column",
           "settings": {
-            "icon": "box",
+            "icon": "creadit_card",
             "custom_icon": "",
-            "heading": "Paiement en 3 fois sans frais",
-            "text": "<p>avec Alma</p>",
+            "heading": "Payez en 3× ou 4× sans frais",
+            "text": "<p>Avec Alma ou PayPal</p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -44,10 +44,10 @@
         "column_jBRAJa": {
           "type": "column",
           "settings": {
-            "icon": "users",
+            "icon": "shield",
             "custom_icon": "",
             "heading": "Satisfait ou remboursé",
-            "text": "<p>14 jours pour testez votre alarme chez vous</p>",
+            "text": "<p>14 jours pour tester votre alarme chez vous</p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -55,10 +55,10 @@
         "column_4K7DfW": {
           "type": "column",
           "settings": {
-            "icon": "shield",
+            "icon": "truck",
             "custom_icon": "",
-            "heading": "Paiement en 4 fois sans frais",
-            "text": "<p>Avec Paypal</p>",
+            "heading": "Livraison offerte dès 50 €",
+            "text": "<p>En France et en Belgique</p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -141,8 +141,8 @@
       "block_order": [
         "free_shipping",
         "subtotal",
-        "cart_note",
-        "buttons"
+        "buttons",
+        "cart_note"
       ],
       "settings": {
         "heading_size": "title-sm",
@@ -152,7 +152,13 @@
         "show_payment_icons": true,
         "show_shipping_calculator": false,
         "add_discount_code": true,
-        "padding_top": 0,
+        "empty_cart_message": "<p>Vous ne savez pas par où commencer ? Essayez par ici :</p>",
+        "empty_cart_collections": [
+          "domotique",
+          "cameras-de-surveillance",
+          "tous-les-accessoires"
+        ],
+        "padding_top": 40,
         "padding_bottom": 60,
         "divider": false,
         "full_width": false,
@@ -222,9 +228,9 @@
     }
   },
   "order": [
-    "1760605096e16aa032",
-    "multicolumn_with_icons_NezqPa",
     "main",
+    "multicolumn_with_icons_NezqPa",
+    "1760605096e16aa032",
     "176060471916e098dc",
     "recently-viewed"
   ]

@@ -285,3 +285,69 @@ table.no-headings td:last-child {
     --tw-translate-y: 0;
   }
 }
+
+/* Liens de collections affichés quand le panier est vide */
+
+.cart .empty-state__text {
+  color: rgb(var(--color-foreground)/ 0.7);
+}
+
+.cart .empty-state__collections a {
+  padding: var(--sp-3) var(--sp-5);
+  background-color: rgb(var(--color-foreground)/ 0.025);
+  transition: background-color var(--animation-primary);
+}
+
+[data-rounded-block=round] .cart .empty-state__collections a {
+  border-radius: var(--sp-3);
+}
+
+.cart .empty-state__collections img {
+  max-width: var(--sp-8d5);
+}
+
+@media screen and (pointer: fine) {
+  .cart .empty-state__collections .icon {
+    transition: transform var(--animation-primary);
+  }
+
+  .cart .empty-state__collections a:hover {
+    background-color: rgb(var(--color-foreground)/ 0.045);
+  }
+
+  .cart .empty-state__collections a:hover .icon {
+    --tw-translate-x: calc(var(--sp-1) * var(--transform-logical));
+  }
+}
+
+/* Boutons +/- de quantité : auparavant masqués sous 1024px, la largeur et le
+   retrait interne du champ doivent suivre pour que le chiffre ne passe pas dessous. */
+
+@media screen and (max-width: 1023px) {
+  .cart .cart-quantity {
+    width: var(--sp-18);
+  }
+
+  .cart .cart-quantity .quantity__input {
+    padding-inline-end: var(--sp-3);
+  }
+}
+
+/* Barre de paiement fixe en bas d'écran (mobile et tablette uniquement) */
+
+.cart__sticky-checkout {
+  padding-block: var(--sp-3);
+  padding-block-end: calc(var(--sp-3) + env(safe-area-inset-bottom, 0px));
+  background-color: rgb(var(--color-background));
+  border-block-start: 1px solid rgb(var(--color-border-light));
+}
+
+.cart__sticky-checkout .button {
+  max-width: 60%;
+}
+
+@media screen and (max-width: 1023px) {
+  .cart:not(.is-empty) {
+    padding-block-end: var(--sp-20);
+  }
+}
