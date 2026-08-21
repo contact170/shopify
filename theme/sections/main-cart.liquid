@@ -6,7 +6,7 @@
 </style>
 
 {{ 'cart.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'cart.js' | asset_url }}" defer></script>
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- if settings.gift_wrap_product != blank and settings.gift_wrap_product.available -%}
   <script src="{{ 'gift-wrapping.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
@@ -15,7 +15,8 @@
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
     <div class="title-wrapper{% if section.settings.heading_size == 'title-xl' %} title-wrapper-lg{% endif %} leading-none grid gap-4 md:flex {{ section.settings.heading_alignment }} md:justify-between">
       <{{ section.settings.heading_tag }} class="heading {{ section.settings.heading_size }}">
-        <split-words class="split-words js-invisible block" data-animate="fade-up-large">{{ 'cart.general.title' | t }}</split-words>
+        {%- assign heading_content = 'cart.general.title' | t -%}
+        {%- render 'heading-content', content: heading_content, style: 'none' -%}
       </{{ section.settings.heading_tag }}>
       <p>
         <a class="button button--secondary icon-with-text" href="{{ routes.all_products_collection_url }}" is="hover-link">
@@ -109,19 +110,6 @@
                 </thead>
                 <tbody>
                   {%- for item in cart.items -%}
-
-{% assign skipItem = false %}
-{% for p in item.properties %}
-{% if p.first == "Box ID" %}
-{% assign skipItem = true %}
-{% break %}
-{% endif %}
-{% endfor %}
-{% if skipItem %}
-{%- continue -%}
-{% endif %}
-
-
                     {%- liquid
                       assign is_gift_wrap_item = false
                       if gift_wrap_variant != nil and item.id == gift_wrap_variant.id
@@ -133,13 +121,16 @@
                         <td>
                           <div class="flex items-start md:items-center gap-4d5 md:gap-10">
                             {%- if item.image -%}
+                              {%- assign max_width = item.image.width -%}
+                              {%- capture sizes -%}128px{%- endcapture -%}
+                              {%- capture widths -%}{{ 128 | times: 1.5 | at_most: max_width | round }}, {{ 128 | times: 2 | at_most: max_width }}, {{ 128 | times: 3 | at_most: max_width }}{%- endcapture -%}
                               {%- unless is_gift_wrap_item -%}
                                 <a class="cart-item__media media relative overflow-hidden shrink-0" href="{{ item.url }}">
-                                  {{- item.image | image_url: width: item.image.width | image_tag: loading: 'lazy', widths: '180,360,540', is: 'lazy-image' -}}
+                                  {{- item.image | image_url: width: max_width | image_tag: loading: 'lazy', widths: widths, sizes: sizes, is: 'lazy-image' -}}
                                 </a>
                               {%- else -%}
                                 <figure class="cart-item__media media relative overflow-hidden shrink-0">
-                                  {{- item.image | image_url: width: item.image.width | image_tag: loading: 'lazy', widths: '180,360,540', is: 'lazy-image' -}}
+                                  {{- item.image | image_url: width: max_width | image_tag: loading: 'lazy', widths: widths, sizes: sizes, is: 'lazy-image' -}}
                                 </figure>
                               {%- endunless -%}
                             {%- endif -%}
@@ -204,7 +195,7 @@
                                     -%}
                                     {%- if item.original_price != item.final_price -%}
                                       <span class="sr-only">{{ 'products.price.regular_price' | t }}</span>
-                                      <span class="price__sale inline-flex items-center relative"><span class="bcpo-cart-item-price" data-key="{{item.key}}">{{ money_price }}</span></span>
+                                      <span class="price__sale inline-flex items-center relative">{{ money_price }}</span>
                                       <span class="sr-only">{{ 'products.price.sale_price' | t }}</span>
                                       <span class="price__regular whitespace-nowrap">
                                         {%- liquid
@@ -216,27 +207,18 @@
                                         -%}
                                       </span>
                                     {%- else -%}
-                                      <span class="price__regular whitespace-nowrap"><span class="bcpo-cart-item-price" data-key="{{item.key}}">{{ money_price }}</span></span>
+                                      <span class="price__regular whitespace-nowrap">{{ money_price }}</span>
                                     {%- endif -%}
                         
                                     {%- if item.variant.available and item.unit_price_measurement -%}
-                                      <span class="sr-only">{{ 'products.price.unit_price' | t }}</span>
-                                      <span class="unit-price flex items-center">
-                                        {%- liquid
-                                          capture unit_price_base_unit
-                                            if item.variant.unit_price_measurement
-                                              if item.variant.unit_price_measurement.reference_value != 1
-                                                echo item.variant.unit_price_measurement.reference_value
-                                              endif
-                                              echo item.variant.unit_price_measurement.reference_unit
-                                            endif
-                                          endcapture
-                                        -%}
-                                        ({{ item.variant.unit_price | money }}
-                                        <span aria-hidden="true">/</span>
-                                        <span class="sr-only">&nbsp;{{ 'general.accessibility.unit_price_separator' | t }}&nbsp;</span>
-                                        {{ unit_price_base_unit }})
-                                      </span>
+                                      {%- liquid
+                                        if settings.currency_code_enabled
+                                          assign unit_price = item.unit_price | money_with_currency
+                                        else
+                                          assign unit_price = item.unit_price | money
+                                        endif
+                                      -%}
+                                      {%- render 'unit-price', price: unit_price, measurement: item.unit_price_measurement -%}
                                     {%- endif -%}
                                   </div>
                         
@@ -298,7 +280,8 @@
                                 </div>
                               {%- endif -%}
                               {%- if has_vol_pricing -%}
-                                {{ 'volume-pricing.css' | asset_url | stylesheet_tag }}
+                                <link rel="stylesheet" href="{{ 'volume-pricing.css' | asset_url }}" media="print" onload="this.media='all'">
+                                <noscript>{{ 'volume-pricing.css' | asset_url | stylesheet_tag }}</noscript>
                                 <volume-pricing class="volume-pricing grid gap-6">
                                   <span class="caption-large font-medium">{{ 'products.volume_pricing.title' | t }}</span>
                                   <ul class="list-unstyled">
@@ -345,7 +328,7 @@
                                   >
                                     <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="VolumePricing-{{ section.id }}-{{ item.key }}" aria-expanded="false"></overlay-element>
                                     <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
-                                      <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative">
+                                      <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative" tabindex="0">
                                         <span class="drawer__title heading title-md grid gap-4">
                                           {{ item.product.title | escape }}
                                           {%- unless item.product.has_only_default_variant -%}
@@ -445,13 +428,13 @@
 
                         <td class="text-right hidden md:table-cell">
                           <span class="price text-base-xl">
-                            <span class="bcpo-cart-item-line-price" data-key="{{item.key}}">{%- liquid
+                            {%- liquid
                               if settings.currency_code_enabled
                                 echo item.final_line_price | money_with_currency
                               else
                                 echo item.final_line_price | money
                               endif
-                            -%}</span>
+                            -%}
                           </span>
                         </td>
                       </tr>
@@ -495,7 +478,7 @@
                   <details class="details" is="accordion-details">
                     <summary class="details__summary flex items-center justify-between gap-2 cursor-pointer">
                       <span class="text-base-2xl font-medium leading-none">{{ 'general.cart.shipping_calculator.caption' | t }}</span>
-                      <svg class="icon icon-chevron-down" viewBox="0 0 18 10" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg class="icon icon-chevron-down" viewBox="0 0 18 10" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M1 1L9 9L17 1"></path>
                       </svg>
                     </summary>
@@ -579,7 +562,7 @@
                           <span class="cart-discount__count flex items-center justify-center text-xs font-medium rounded-full">{{ discount_codes.size }}</span>
                         {%- endif -%}
                       </p>
-                      <svg class="icon icon-chevron-down" viewBox="0 0 18 10" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg class="icon icon-chevron-down" viewBox="0 0 18 10" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M1 1L9 9L17 1"></path>
                       </svg>
                     </summary>
@@ -649,8 +632,8 @@
                       {%- endif -%}
 
                       <div class="totals flex flex-wrap items-end justify-between gap-2">
-                        <h2 class="totals__subtotal font-medium text-base-xl md:text-2xl leading-none">{{ 'cart.general.subtotal' | t }}</h2>
-                        <p class="totals__subtotal-value font-bold text-2xl md:text-3xl leading-none"><span class="bcpo-cart-original-total">{{ cart.total_price | money_with_currency }}</span></p>
+                        <p class="totals__subtotal h2 font-medium text-base-xl md:text-2xl leading-none">{{ 'cart.general.subtotal' | t }}</p>
+                        <p class="totals__subtotal-value font-bold text-2xl md:text-3xl leading-none">{{ cart.total_price | money_with_currency }}</p>
                       </div>
 
                       <div class="tax-note text-opacity text-2sm rte">
@@ -868,7 +851,7 @@
         {%- endcomment -%}
         {%- assign checkout_blocks = section.blocks | where: 'type', 'buttons' -%}
         {%- if checkout_blocks.size > 0 -%}
-          <div class="cart__sticky-checkout fixed bottom-0 left-0 w-full z-2 lg:hidden">
+          <div class="cart__sticky-checkout fixed bottom-0 left-0 w-full">
             <div class="page-width flex items-center justify-between gap-4">
               <div class="grid gap-1d5">
                 <span class="text-xs text-opacity leading-none">{{ 'cart.general.subtotal' | t }}</span>
@@ -1226,5 +1209,3 @@
   ]
 }
 {% endschema %}
-
-<!-- bcpo done -->

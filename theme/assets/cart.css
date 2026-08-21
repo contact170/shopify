@@ -336,6 +336,7 @@ table.no-headings td:last-child {
 /* Barre de paiement fixe en bas d'écran (mobile et tablette uniquement) */
 
 .cart__sticky-checkout {
+  z-index: 2;
   padding-block: var(--sp-3);
   padding-block-end: calc(var(--sp-3) + env(safe-area-inset-bottom, 0px));
   background-color: rgb(var(--color-background));
@@ -349,5 +350,11 @@ table.no-headings td:last-child {
 @media screen and (max-width: 1023px) {
   .cart:not(.is-empty) {
     padding-block-end: var(--sp-20);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .cart__sticky-checkout {
+    display: none;
   }
 }
