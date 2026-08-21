@@ -6,63 +6,48 @@ propositions. Les décisions déjà prises sont marquées comme telles.
 
 ---
 
-## P1 — Doublons PageFly : le vrai problème
+## P1 — Doublons PageFly : RÉSOLU le 21/08/2026
 
-Le catalogue contient des **familles de pages publiées quasi identiques**, générées par
-PageFly. Chaque gabarit `pf-*` existe en une trentaine d'exemplaires publiés, numérotés
-en suffixe de `-9` à `-37`.
+Constat du 18/08 : une douzaine de gabarits `pf-*` existaient chacun en ~29 exemplaires
+publiés (`-9` à `-37`), soit de l'ordre de 350 à 400 pages dupliquées et indexables.
 
-Familles confirmées par requête API :
+**Vérification du 21/08 après mise à jour du thème : ces doublons ont disparu.**
+La boutique ne compte plus que **26 pages publiées au total** (`hasNextPage: false`).
+Aucune famille numérotée ne subsiste.
 
-| Gabarit | Famille | Copies publiées observées |
+### Ce qui reste : 5 pages encore servies par PageFly
+
+| Page | Gabarit | Réassignée le 21/08 à |
 | --- | --- | --- |
-| `pf-fafd78ec` | Assistance AM301 | `-9` à `-37` (29) |
-| `pf-1f5b15c1` | Assistance AM302 | `-9` à `-37` (29) |
-| `pf-f38cd714` | Assistance Maison connectée | `-9` à `-37` (29) |
-| `pf-32de21c8` | Assistance OCT 2023 | `oct-2032` à `oct-2042`+ |
+| Livraison & Retour | `pf-2d5d5021` | 09:32:38 |
+| RETOURS SAV | `pf-94ab49fb` | 09:32:41 |
+| QUESTIONS FRÉQUENTES | `pf-48b7c494` | 09:32:52 |
+| GUIDE | `pf-cc921caf` | 09:33:00 |
+| Formulaire Contact assistance | `pf-c72fce5a` | — |
 
-Familles repérées lors d'un inventaire antérieur, à recompter :
-`pf-a805143d` (Assistance PA501Z), `pf-194b31cc` (Assistance SA501),
-`pf-55a110eb` (Assistance caméras), `pf-b22bc537` (La sécurité n'attend pas),
-`pf-f10041b4` (Offre expirée), `pf-48b7c494` (Questions fréquentes),
-`pf-cc921caf` (Guide), `pf-13f1764b` (Notre offre),
-`pf-c72fce5a` (Formulaire contact assistance).
+### Pourquoi PageFly reprend la main sur une page refaite sans lui
 
-**Ordre de grandeur : une douzaine de familles × ~29 copies ≈ 350 à 400 pages publiées
-en double.** Chiffre à confirmer — l'inventaire n'a pas été mené jusqu'au bout.
+PageFly tient sa propre base des pages qu'il gère, chacune associée à un identifiant de
+page Shopify et à un gabarit `pf-xxxxx`. À chaque synchronisation — mise à jour de l'app,
+mise à jour ou publication de thème, publication depuis PageFly — l'app réécrit
+`template_suffix` sur ces pages via l'API Admin. Le contenu du corps de la fiche n'est pas
+touché : il est simplement **court-circuité**, puisque Shopify rend le gabarit PageFly au
+lieu du corps.
 
-C'est de très loin le premier poste : du contenu dupliqué massif, publié, donc
-indexable, qui dilue le budget de crawl et brouille la page canonique de chaque sujet.
+Signature caractéristique : plusieurs pages modifiées à quelques secondes d'intervalle
+(ici les 4 en 22 secondes), sans intervention humaine.
 
-### Méthode pour l'inventaire complet
+### Résolution durable
 
-```graphql
-query {
-  pages(first: 50, query: "published_status:published", sortKey: TITLE, after: "<cursor>") {
-    nodes { id handle title templateSuffix updatedAt }
-    pageInfo { hasNextPage endCursor }
-  }
-}
-```
-
-Paginer jusqu'à `hasNextPage: false`, puis grouper par `templateSuffix`.
-
-### À vérifier avant toute suppression
-
-1. **Laquelle de chaque famille est la bonne ?** Comparer les `updatedAt` et les contenus :
-   la copie la plus récente n'est pas forcément celle qui est liée.
-2. **Qui pointe vers elles ?** Menus, boutons de fiches produits, e-mails, campagnes,
-   QR codes sur les notices papier. Une page d'assistance produit est souvent imprimée
-   sur un manuel — supprimer sans redirection casserait le support client.
-3. **Sont-elles indexées ?** Vérifier dans Search Console avant/après.
-
-### Action proposée
-
-Pour chaque famille : garder **une** page, rediriger les autres en **301** vers elle,
-puis les dépublier. Ne pas supprimer avant d'avoir posé les redirections — une page
-supprimée sans 301 renvoie un 404 et perd tout signal.
-
----
+1. **Délier la page depuis PageFly**, pas depuis Shopify. Tant que le mappage existe côté
+   app, réassigner le gabarit dans Shopify ne tient que jusqu'à la prochaine synchro.
+   ⚠️ À la suppression, PageFly demande s'il faut aussi supprimer la page Shopify :
+   répondre non. Sauvegarder le HTML du corps de la fiche avant, par précaution.
+2. **Ensuite seulement**, remettre le gabarit voulu côté Shopify (ici : « Page par défaut »).
+   L'ordre compte.
+3. **Définitif** : une fois les 5 pages ci-dessus refaites, plus rien ne dépend de PageFly.
+   L'app peut être désinstallée, et le thème « PageFly Assets - DO NOT DELETE » (2020)
+   supprimé avec elle.
 
 ## P2 — Comparateurs : 3 pages, même intention
 
