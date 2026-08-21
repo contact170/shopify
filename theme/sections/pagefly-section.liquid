@@ -1,0 +1,278 @@
+
+{% if section.settings.section_id.size > 0 %}
+  <!-- PageFlyGlobalSection -->
+  {% render 'pagefly-main-js' %}
+  {% render 'pagefly-main-css' %}
+  {% include section.settings.section_id %}
+{% else %}
+  
+    {% if request.design_mode %}
+      <style>.pf-ph{font-size:14px!important;background:#fafafa;padding:20px;text-align:center;border:1px solid #f0f0f0;border-radius:4px;margin:15px}.pf-ph span{display:block;background:#e6f7ff;padding:8px 15px;border:1px solid #91d5ff}</style>
+      <div class="pf-ph">
+        <h3>PageFly Section</h3>
+        <span>No section selected. Please select your section from the list</span>
+      </div>
+    {% endif %}
+  
+{% endif %}
+
+{% schema %}
+{
+  "name": "PageFly Section",
+  "settings": [
+    {
+      "id": "section_id",
+      "type": "select",
+      "label": "Sections",
+      "options": [
+        {
+          "label": "Select section",
+          "value": ""
+        },
+        {
+          "label": "BF 2025 Page config",
+          "value": "pf-3a924f91"
+        },
+        {
+          "label": "BF 2025 page collection",
+          "value": "pf-9e3a924f"
+        },
+        {
+          "label": "Comparatif key, touch elite",
+          "value": "pf-a6d0111f"
+        },
+        {
+          "label": "Assistance qui fait la dif",
+          "value": "pf-77b3507a"
+        },
+        {
+          "label": "Pourquoi un configurateur",
+          "value": "pf-3ca683a8"
+        },
+        {
+          "label": "Accessoires",
+          "value": "pf-9df20157"
+        },
+        {
+          "label": "Nouvelle page collection alarmes",
+          "value": "pf-8c96a8e1"
+        },
+        {
+          "label": "SW101 description",
+          "value": "pf-b460fbfd"
+        },
+        {
+          "label": "CLIMPAC compatibilités",
+          "value": "pf-c305f682"
+        },
+        {
+          "label": "Daewoo Home Connect",
+          "value": "pf-1888485a"
+        },
+        {
+          "label": "SW101 Fonctionnalités",
+          "value": "pf-cd470b8d"
+        },
+        {
+          "label": "SW101 caractéristiques",
+          "value": "pf-fbfd4481"
+        },
+        {
+          "label": "Scénario + SW101",
+          "value": "pf-e1cdb9e5"
+        },
+        {
+          "label": "questions générales",
+          "value": "pf-13ffb909"
+        },
+        {
+          "label": "am301/302 et pa section home",
+          "value": "pf-58cee8ed"
+        },
+        {
+          "label": "Home page offres",
+          "value": "pf-cc8f9622"
+        },
+        {
+          "label": "Votre demande concerne une question technique ? ",
+          "value": "pf-07367471"
+        },
+        {
+          "label": "Comment soumettre votre video - avis 2",
+          "value": "pf-62019cc2"
+        },
+        {
+          "label": "Section avis 1 ",
+          "value": "pf-c8067650"
+        },
+        {
+          "label": "BIR301",
+          "value": "pf-adce55cd"
+        },
+        {
+          "label": "BIR301 installation",
+          "value": "pf-f26746f1"
+        },
+        {
+          "label": "Comparatif détaillé alarme",
+          "value": "pf-0897d25a"
+        },
+        {
+          "label": "Comparateur section gamme d'alarme",
+          "value": "pf-b8d2e540"
+        },
+        {
+          "label": "Alarme FAQ",
+          "value": "pf-36a5ef65"
+        },
+        {
+          "label": "Caméras FAQ",
+          "value": "pf-f7dfe355"
+        },
+        {
+          "label": "Assistance SA501/PA501Z",
+          "value": "pf-d24c9d3e"
+        },
+        {
+          "label": "test home page alarmes",
+          "value": "pf-8041c4a5"
+        },
+        {
+          "label": "Assistance AM301",
+          "value": "pf-35204710"
+        },
+        {
+          "label": "frequently",
+          "value": "pf-9bdfef6a"
+        },
+        {
+          "label": "Accordion description page produit",
+          "value": "pf-2d218785"
+        },
+        {
+          "label": "section alarmes home ",
+          "value": "pf-968e1630"
+        },
+        {
+          "label": "ip506 visuel caméra ",
+          "value": "pf-516d9d8d"
+        },
+        {
+          "label": "Ip506 vidéo explicative ",
+          "value": "pf-8689de2d"
+        },
+        {
+          "label": "IP506 encart avec vidéo",
+          "value": "pf-73c589dd"
+        },
+        {
+          "label": "HOME 1",
+          "value": "pf-f3f8f9b3"
+        },
+        {
+          "label": "COMMENT INSTALLER MON ÉQUIPEMENT AM302",
+          "value": "pf-9e5c624e"
+        },
+        {
+          "label": "Step chang. Cart. F502R",
+          "value": "pf-1afd3bef"
+        },
+        {
+          "label": "Step canon F502W",
+          "value": "pf-faa88ad6"
+        },
+        {
+          "label": "livraison & retour",
+          "value": "pf-bee88bd9"
+        },
+        {
+          "label": "Assistance Maison Co",
+          "value": "pf-460a6d54"
+        },
+        {
+          "label": "Assistance Questions Fréquentes",
+          "value": "pf-23381a92"
+        },
+        {
+          "label": "Assistance caméras",
+          "value": "pf-b1d9c53a"
+        },
+        {
+          "label": "Comparatif SA501 / AM301",
+          "value": "pf-debbe078"
+        },
+        {
+          "label": "Offre du mois - caméras",
+          "value": "pf-e48f0d7d"
+        },
+        {
+          "label": "Offre du mois - contenu du pack",
+          "value": "pf-33ed03d9"
+        },
+        {
+          "label": "Section",
+          "value": "pf-e5cf566d"
+        },
+        {
+          "label": "GUIDE",
+          "value": "pf-088be0d6"
+        },
+        {
+          "label": "DHC",
+          "value": "pf-8f2cee0d"
+        },
+        {
+          "label": "section produit",
+          "value": "pf-d350dca0"
+        },
+        {
+          "label": "Découvrir x3",
+          "value": "pf-46d96246"
+        },
+        {
+          "label": "1er bloc FAQ",
+          "value": "pf-d7b000cf"
+        },
+        {
+          "label": "S1 Questions fréquentes ",
+          "value": "pf-3cef7d07"
+        },
+        {
+          "label": "Vidéo assistance",
+          "value": "pf-bad22fe4"
+        },
+        {
+          "label": "bandeau reconditionné",
+          "value": "pf-4e865bd2"
+        },
+        {
+          "label": "Bouton 3x",
+          "value": "pf-475fd8cf"
+        },
+        {
+          "label": "collection apple",
+          "value": "pf-90cc8a30"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "Find and edit your section on the [section listing](https://daewoo-security.myshopify.com/admin/apps/pagefly/sections)"
+    },
+    {
+      "type": "paragraph",
+      "content": "To add block to a section, please use the App Block element on PageFly section editor."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PageFly Section"
+    }
+  ]
+}
+{% endschema %}
