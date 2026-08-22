@@ -82,6 +82,9 @@
   @media (max-width: 768px) {
     .dws-cta { padding: 20px 16px; }
     .dws-cta__inner { flex-direction: column; align-items: stretch; gap: 18px; padding: 24px 20px; }
+    /* En colonne, flex-basis s'applique à la HAUTEUR : sans ce reset le bloc
+       texte réserve 320px et s'étire, ce qui creuse un vide avant le bouton. */
+    .dws-cta__txt { flex: 0 0 auto; }
     .dws-cta__title { font-size: 19px !important; }
     .dws-cta__sub   { font-size: 14px !important; }
     .dws-cta__btn   { width: 100% !important; padding: 14px 18px !important; font-size: 14px !important; }
