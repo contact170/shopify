@@ -1,0 +1,89 @@
+
+<div class="dws-cta">
+  <div class="dws-cta__inner">
+    <div class="dws-cta__txt">
+      <p class="dws-cta__title">Toujours hésitant sur le bon système&nbsp;?</p>
+      <p class="dws-cta__sub">Quelques questions sur votre logement, et on vous propose le kit adapté.</p>
+    </div>
+    <a class="dws-cta__btn" href="https://daewoo-security.fr/pages/configurateur_2">
+      <span>Configurer mon alarme</span><span class="dws-cta__arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .dws-cta {
+    --navy: #0a1a3a;
+    --blue: #1552d6;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    padding: clamp(24px, 4vw, 40px) clamp(16px, 5vw, 72px);
+  }
+  .dws-cta * { box-sizing: border-box; }
+  .dws-cta *::before, .dws-cta *::after { content: none !important; }
+
+  .dws-cta__inner {
+    max-width: 1100px; margin: 0 auto;
+    background: var(--navy);
+    border-radius: 16px;
+    padding: clamp(24px, 3.5vw, 36px) clamp(20px, 4vw, 44px);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .dws-cta__txt { flex: 1 1 320px; min-width: 0; }
+
+  .dws-cta__title {
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+    font-size: clamp(19px, 2.2vw, 25px) !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    line-height: 1.25 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    margin: 0 0 8px !important;
+  }
+  .dws-cta__sub {
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    color: rgba(255,255,255,0.68) !important;
+    line-height: 1.55 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    margin: 0 !important;
+  }
+  .dws-cta__title::first-letter, .dws-cta__sub::first-letter {
+    font-size: inherit !important; font-weight: inherit !important;
+    float: none !important; line-height: inherit !important;
+  }
+
+  .dws-cta__btn {
+    flex: 0 0 auto;
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    gap: 10px !important;
+    padding: 15px 28px !important;
+    background: var(--blue) !important;
+    color: #ffffff !important;
+    border: 2px solid var(--blue) !important;
+    border-radius: 6px !important;
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+    font-size: 15px !important; font-weight: 600 !important;
+    letter-spacing: normal !important; text-transform: none !important;
+    text-decoration: none !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
+  }
+  .dws-cta__btn:hover {
+    background: #0f43b8 !important; border-color: #0f43b8 !important;
+    color: #ffffff !important; text-decoration: none !important;
+    transform: translateY(-1px);
+  }
+  .dws-cta__arrow { font-size: 17px; }
+
+  @media (max-width: 768px) {
+    .dws-cta { padding: 20px 16px; }
+    .dws-cta__inner { flex-direction: column; align-items: stretch; gap: 18px; padding: 24px 20px; }
+    .dws-cta__title { font-size: 19px !important; }
+    .dws-cta__sub   { font-size: 14px !important; }
+    .dws-cta__btn   { width: 100% !important; padding: 14px 18px !important; font-size: 14px !important; }
+  }
+</style>
