@@ -176,14 +176,17 @@
   @media (max-width: 768px) {
     .daewoo-banner__hero { flex-direction: column; min-height: unset; }
 
-    /* L'image devient un vrai bloc en haut */
+    /* L'image devient un vrai bloc en haut, au ratio natif :
+       aucun recadrage, tout le kit d'alarme reste visible */
     .daewoo-banner__bg {
       position: relative; inset: auto; order: 1;
-      width: 100%; height: 300px;
+      width: 100%; height: auto;
     }
     .daewoo-banner__bg-img {
-      height: 300px;
-      object-position: center;   /* ← ajuste (center / bottom) pour bien cadrer le produit */
+      width: 100%; height: auto;
+      aspect-ratio: 1672 / 941;   /* ratio natif de Image_Hero_2_1.webp */
+      object-fit: contain;
+      object-position: center;
     }
     /* Plus de voile : le texte n'est plus sur l'image */
     .daewoo-banner__scrim { display: none; }
