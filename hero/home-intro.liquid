@@ -1,0 +1,64 @@
+<div class="dws-intro">
+  <div class="dws-intro__inner">
+
+    <h2 class="dws-intro__title">Quel système pour votre logement&nbsp;?</h2>
+
+    <p class="dws-intro__text">
+      Un appartement n'a pas les mêmes besoins qu'une maison avec jardin.
+      Alarmes sans fil, caméras intérieures et extérieures, détecteurs d'ouverture, badges&nbsp;:
+      vous composez le kit adapté au vôtre, et vous l'agrandissez quand vous voulez.
+      Le matériel s'achète une fois — aucun abonnement, aucun engagement — et tout se pilote
+      depuis l'application gratuite Daewoo&nbsp;Home.
+    </p>
+
+  </div>
+</div>
+
+<style>
+  .dws-intro {
+    --navy:  #0a1a3a;
+    --muted: rgba(10,26,58,0.72);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    padding: clamp(36px, 5vw, 56px) clamp(20px, 5vw, 72px);
+  }
+  .dws-intro * { box-sizing: border-box; }
+  /* Le thème ajoute des pseudo-éléments décoratifs sur les titres : on les neutralise
+     comme dans la section hero, sinon une capitale ornée s'insère devant le H2. */
+  .dws-intro *::before, .dws-intro *::after { content: none !important; }
+
+  .dws-intro__inner { max-width: 820px; margin: 0 auto; text-align: center; }
+
+  .dws-intro__title {
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+    font-size: clamp(22px, 2.6vw, 30px) !important;
+    font-weight: 700 !important;
+    color: var(--navy) !important;
+    line-height: 1.25 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    font-style: normal !important;
+    margin: 0 0 14px !important;
+  }
+  .dws-intro__text {
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: var(--muted) !important;
+    line-height: 1.65 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    margin: 0 !important;
+  }
+  .dws-intro__title::first-letter, .dws-intro__text::first-letter {
+    font-size: inherit !important; font-weight: inherit !important;
+    float: none !important; line-height: inherit !important;
+  }
+
+  @media (max-width: 768px) {
+    .dws-intro { padding: 26px 20px 22px; }
+    .dws-intro__inner { text-align: left; }
+    .dws-intro__title { font-size: 21px !important; margin-bottom: 10px !important; }
+    .dws-intro__text  { font-size: 15px !important; line-height: 1.6 !important; }
+  }
+</style>
