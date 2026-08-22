@@ -809,13 +809,40 @@
                   </form>
                 {%- endif -%}
 
-                {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+                {%- comment -%}
+                  La rangée combine deux sources.
+
+                  1. La liste automatique de Shopify (shop.enabled_payment_types),
+                     filtrée par payment_icons_exclude. Shopify n'offre aucun
+                     réglage pour retirer un moyen de paiement de cette liste :
+                     le tri se fait donc ici, sur les identifiants de type
+                     (eps, bancontact, visa, master, paypal…).
+
+                  2. Les blocs « Icône de paiement », ajoutés à la suite. Ils
+                     existent pour Alma 4x et Alma 10x, qui ne figurent pas dans
+                     shop.enabled_payment_types : Alma est une passerelle tierce,
+                     Shopify n'en fournit pas le visuel.
+                {%- endcomment -%}
+                {%- if section.settings.show_payment_icons -%}
+                  {%- liquid
+                    assign excluded = section.settings.payment_icons_exclude | downcase | remove: ' ' | split: ','
+                    assign payment_blocks = section.blocks | where: 'type', 'payment_icon'
+                  -%}
                   <div class="cart-drawer__payment flex flex-wrap justify-center items-center gap-2">
-                    {%- liquid
-                      for type in shop.enabled_payment_types
-                        echo type | payment_type_svg_tag
-                      endfor
-                    -%}
+                    {%- for type in shop.enabled_payment_types -%}
+                      {%- unless excluded contains type -%}
+                        {{- type | payment_type_svg_tag -}}
+                      {%- endunless -%}
+                    {%- endfor -%}
+
+                    {%- for block in payment_blocks -%}
+                      {%- if block.settings.image != blank -%}
+                        <span class="inline-flex items-center" {{ block.shopify_attributes }}>
+                          {%- assign icon_alt = block.settings.image.alt | default: '' -%}
+                          {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', widths: '48,96,144', alt: icon_alt -}}
+                        </span>
+                      {%- endif -%}
+                    {%- endfor -%}
                   </div>
                 {%- endif -%}
               </div>
@@ -939,6 +966,14 @@
       "id": "show_payment_icons",
       "label": "t:sections.main-cart.settings.show_payment_icons.label",
       "default": true
+    },
+    {
+      "visible_if": "{{ section.settings.show_payment_icons == true }}",
+      "type": "text",
+      "id": "payment_icons_exclude",
+      "label": "Moyens de paiement à masquer",
+      "info": "Identifiants séparés par des virgules : eps, bancontact, ideal, maestro, visa, master, american_express, paypal, apple_pay, google_pay, shopify_pay.",
+      "default": "eps, bancontact"
     },
     {
       "type": "checkbox",
@@ -1068,6 +1103,21 @@
       "default": true
     }
   ],
+  "blocks": [
+    {
+      "type": "payment_icon",
+      "name": "Icône de paiement",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.global.settings.image.label",
+          "info": "Pour Alma 4x et Alma 10x, absents de la liste automatique de Shopify. Hauteur d'affichage : 24 px."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
   "enabled_on": {
     "groups": [
       "custom.overlay"
