@@ -8,7 +8,7 @@ modifications restent lisibles dans les diffs Git.
 
 | Fichier | Rôle |
 | --- | --- |
-| `theme_export__daewoo-security-fr-concept__18MAY2026-1100am.zip` | Export complet du thème (mis à jour avec les modifications ci-dessous) |
+| `theme_export__daewoo-security-fr-concept__18MAY2026-1100am.zip` | Export du thème daté du 18/05/2026 (mis à jour avec les modifications ci-dessous) |
 | `templates/page.cloud.json` | Gabarit de la page `/pages/cloud` |
 
 ## Refonte de la page Cloud (`templates/page.cloud.json`)
@@ -44,3 +44,16 @@ sont repris à l'identique de l'ancienne page.
 perte, le système écrasant automatiquement les vidéos les plus anciennes lorsque la
 carte est pleine. L'argument stockage oppose donc l'écrasement progressif sur carte SD
 aux 14 jours complets conservés en ligne.
+
+## Attention : le zip n'est pas le thème en ligne
+
+Vérification du 24/08/2026 : l'export zip date du 18/05/2026 et ne correspond plus au
+thème publié (« Theme final 24/08/2026 Pages Accessoires »). Le thème live compte
+718 fichiers contre 663 dans le zip, et plusieurs sections ont évolué depuis
+(`rich-text`, `image-with-text`, `faq`, `multicolumn-with-icons`, `settings_data.json`).
+
+Le gabarit `templates/page.cloud.json` de ce dépôt a été validé contre les versions
+**live** de ces sections : tous les réglages et blocs utilisés existent bien, et la
+palette employée (`#0c1e4a`, `#f2f3ff`, `#0b61cd`) est celle du thème en ligne.
+
+Pour les prochaines modifications, mieux vaut repartir d'un export frais du thème publié.
