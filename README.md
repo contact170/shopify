@@ -10,6 +10,9 @@ modifications restent lisibles dans les diffs Git.
 | --- | --- |
 | `theme_export__daewoo-security-fr-concept__18MAY2026-1100am.zip` | Export du thème daté du 18/05/2026 (mis à jour avec les modifications ci-dessous) |
 | `templates/page.cloud.json` | Gabarit de la page `/pages/cloud` |
+| `templates/page.avis-clients.json` | Gabarit de la page `/pages/avis-clients-2` |
+| `sections/reviews-summary.liquid` | Bandeau de synthèse des avis (temps réel) |
+| `sections/judgeme-appearance.liquid` | Harmonisation du widget d'avis Judge.me |
 
 ## Refonte de la page Cloud (`templates/page.cloud.json`)
 
@@ -57,3 +60,31 @@ Le gabarit `templates/page.cloud.json` de ce dépôt a été validé contre les 
 palette employée (`#0c1e4a`, `#f2f3ff`, `#0b61cd`) est celle du thème en ligne.
 
 Pour les prochaines modifications, mieux vaut repartir d'un export frais du thème publié.
+
+## Page Avis clients (`templates/page.avis-clients.json`)
+
+La page n'affichait que le widget Judge.me, sans titre ni synthèse. Elle comporte
+désormais :
+
+1. **Bandeau de synthèse** (`sections/reviews-summary.liquid`) — note moyenne, nombre
+   total d'avis et nombre d'avis positifs (4 et 5 étoiles), avec le pourcentage.
+2. Le **widget Judge.me** inchangé pour la liste des avis.
+3. Une **harmonisation visuelle** (`sections/judgeme-appearance.liquid`).
+4. Une conclusion avec liens vers les alarmes et les caméras.
+
+### D'où viennent les chiffres
+
+Judge.me alimente des métachamps de boutique lus à chaque affichage de la page :
+
+| Métachamp | Usage |
+| --- | --- |
+| `shop.metafields.judgeme.all_reviews_count` | Nombre total d'avis publiés |
+| `shop.metafields.judgeme.all_reviews_rating` | Note moyenne |
+| `shop.metafields.judgeme.all_reviews_header` | Histogramme — fréquence par étoile, d'où sont déduits les avis positifs (4★ + 5★) |
+
+Aucune valeur n'est écrite en dur : un nouvel avis publié est pris en compte
+automatiquement, dès que Judge.me a mis ses métachamps à jour. Si les métachamps sont
+absents, le bandeau ne s'affiche pas (aucun « 0 avis » possible).
+
+L'harmonisation cible les classes du widget (`.jdgm-rev`, `.jdgm-star`, …) : tout avis
+publié plus tard adopte exactement la même présentation, sans intervention.
