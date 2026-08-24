@@ -197,8 +197,16 @@
       }
     },
     "a_quoi_sert": {
-      "type": "rich-text",
+      "type": "image-with-text",
       "blocks": {
+        "subheading": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Concrètement",
+            "subheading_size": "subtitle-md",
+            "secondary_color": true
+          }
+        },
         "heading": {
           "type": "heading",
           "settings": {
@@ -223,42 +231,56 @@
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
+        },
+        "caption": {
+          "type": "text",
+          "settings": {
+            "text": "<p>L'application Daewoo Security : le direct et l'historique de vos caméras au même endroit, avec ou sans Cloud.</p>",
+            "text_font": "body",
+            "text_size": "subtext-sm",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
         }
       },
       "block_order": [
+        "subheading",
         "heading",
-        "txt"
+        "txt",
+        "caption"
       ],
       "name": "Cloud — À quoi ça sert",
       "settings": {
-        "text_alignment": "center",
-        "text_alignment_mobile": "center",
-        "heading": "",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_width": "small",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
+        "image": "shopify://shop_images/Application_Photo_Jardin.jpg",
+        "image_height": "adapt",
+        "image_width": "small",
+        "layout": "image_first",
+        "text_alignment": "left",
+        "content_position": "align-self-center",
+        "image_height_mobile": "adapt",
+        "text_alignment_mobile": "left",
         "color_text": "#0c1e4a",
         "color_background": "#ffffff",
         "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
         "color_highlight": "#0b61cd",
         "gradient_highlight": "",
         "color_button_text": "#ffffff",
         "color_button_background": "#0c1e4a",
         "color_button_gradient": "",
         "padding_top": 72,
-        "padding_bottom": 56,
+        "padding_bottom": 64,
         "divider": false,
-        "narrow": true,
-        "rounded": false
+        "full_width": false,
+        "rounded": false,
+        "enable_parallax": false,
+        "parallax_direction": "vertical"
       }
     },
     "benefices_cloud": {
@@ -270,7 +292,7 @@
             "icon": "time",
             "custom_icon": "",
             "heading": "Aucune vidéo perdue",
-            "text": "<p>Plus de mauvaise surprise le jour J : ni carte SD usée, ni carte pleine, ni fichier illisible.</p>",
+            "text": "<p>Une carte micro SD s'use avec le temps : elle peut tomber en panne ou devenir illisible au pire moment. La copie en ligne, elle, reste intacte.</p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -303,7 +325,7 @@
             "icon": "planet",
             "custom_icon": "",
             "heading": "14 jours d'historique, sans limite de volume",
-            "text": "<p>Contrairement à la carte SD, aucune limite de capacité : toutes les vidéos des 14 derniers jours sont conservées et téléchargeables à tout moment.</p>",
+            "text": "<p>Sur la carte SD, les vidéos les plus anciennes sont écrasées au fur et à mesure des nouveaux enregistrements. En ligne, l'intégralité des 14 derniers jours reste disponible et téléchargeable, sans limite de volume.</p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
