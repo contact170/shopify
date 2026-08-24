@@ -1,0 +1,201 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "reviews_banner": {
+      "type": "reviews-summary",
+      "name": "Avis — bandeau",
+      "settings": {
+        "subheading": "Avis vérifiés",
+        "heading": "Ce que nos clients pensent de Daewoo Security",
+        "heading_size": "title-lg tracking-heading",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h1",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "description": "<p>Chaque avis publié ci-dessous provient d'un client ayant réellement commandé sur notre site. Les chiffres de ce bandeau sont recalculés à chaque visite : ils intègrent le dernier avis reçu.</p>",
+        "label_average": "Note moyenne",
+        "label_total": "avis clients publiés",
+        "note_total": "Avis produits et avis boutique réunis",
+        "label_positive": "avis positifs",
+        "source_text": "<p>Avis collectés et vérifiés par Judge.me auprès d'acheteurs ayant commandé sur daewoo-security.fr.</p>",
+        "star_color": "",
+        "card_background": "#ffffff",
+        "color_text": "#0c1e4a",
+        "color_background": "#f2f3ff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "padding_top": 64,
+        "padding_bottom": 48,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "reviews_style": {
+      "type": "judgeme-appearance",
+      "name": "Avis — mise en forme",
+      "settings": {
+        "columns": 2,
+        "hide_widget_summary": true,
+        "clamp_body": true,
+        "clamp_lines": 8,
+        "star_color": "",
+        "card_background": "#ffffff"
+      }
+    },
+    "17569981466d6878f6": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_all_reviews_page_JNJE9A": {
+          "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_page/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_all_reviews_page_JNJE9A"
+      ],
+      "settings": {
+        "color_text": "#0c1e4a",
+        "color_background": "#f2f3ff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#0c1e4a",
+        "color_button_gradient": "",
+        "padding_top": 8,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "cta_avis": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Envie de rejoindre nos clients ?",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "txt": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Alarmes et caméras sans abonnement, expédiées depuis la France et accompagnées par notre équipe support.</p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "spacing": {
+          "type": "spacing",
+          "settings": {
+            "height": 16,
+            "height_mobile": 8
+          }
+        },
+        "btn_alarmes": {
+          "type": "button",
+          "settings": {
+            "button_label": "Découvrir nos alarmes",
+            "button_link": "/pages/nos-alarmes",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        },
+        "btn_cameras": {
+          "type": "button",
+          "settings": {
+            "button_label": "Voir les caméras",
+            "button_link": "/collections/cameras-de-surveillance",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "txt",
+        "spacing",
+        "btn_alarmes",
+        "btn_cameras"
+      ],
+      "name": "Avis — conclusion",
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_width": "small",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#0c1e4a",
+        "color_background": "#ffffff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#0c1e4a",
+        "color_button_gradient": "",
+        "padding_top": 64,
+        "padding_bottom": 88,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "main-page": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "heading_size": "title-sm",
+        "heading_alignment": "text-left",
+        "heading_tag": "h1",
+        "text_size": "text-base",
+        "padding_top": 72,
+        "padding_bottom": 120,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "reviews_banner",
+    "reviews_style",
+    "17569981466d6878f6",
+    "cta_avis",
+    "main-page"
+  ]
+}

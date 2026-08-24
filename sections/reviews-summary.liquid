@@ -1,0 +1,438 @@
+{%- comment -%}
+  Bandeau de synthèse des avis clients.
+
+  Les chiffres sont lus à chaque affichage de la page dans les métachamps de boutique
+  alimentés par Judge.me :
+    - shop.metafields.judgeme.all_reviews_count   -> nombre total d'avis publiés
+    - shop.metafields.judgeme.all_reviews_rating  -> note moyenne
+    - shop.metafields.judgeme.all_reviews_header  -> histogramme (fréquence par étoile)
+
+  Aucun chiffre n'est écrit en dur : un nouvel avis publié est pris en compte
+  automatiquement, sans intervention.
+{%- endcomment -%}
+
+{%- liquid
+  assign count_str = shop.metafields.judgeme.all_reviews_count.value | strip
+  assign rating_str = shop.metafields.judgeme.all_reviews_rating.value | strip
+  assign header_html = shop.metafields.judgeme.all_reviews_header.value
+
+  assign total = count_str | plus: 0
+  assign average = rating_str | plus: 0.0
+
+  comment
+    Fréquences par note, extraites de l'histogramme Judge.me
+    (format : data-rating='5' data-frequency='702' data-percentage='68').
+  endcomment
+  assign freq_5 = 0
+  assign freq_4 = 0
+  assign marker_5 = "data-rating='5' data-frequency='"
+  assign marker_4 = "data-rating='4' data-frequency='"
+  if header_html contains marker_5
+    assign freq_5 = header_html | split: marker_5 | last | split: "'" | first | plus: 0
+  endif
+  if header_html contains marker_4
+    assign freq_4 = header_html | split: marker_4 | last | split: "'" | first | plus: 0
+  endif
+  assign positive = freq_5 | plus: freq_4
+
+  assign positive_percent = 0
+  if total > 0 and positive > 0
+    assign positive_percent = positive | times: 100 | divided_by: total
+  endif
+
+  assign average_percent = average | times: 20
+  assign average_label = rating_str | replace: '.', ','
+
+  assign star_color = section.settings.star_color | default: settings.color_rating
+-%}
+
+{%- if total > 0 -%}
+  {%- comment -%} Espace fine insécable comme séparateur de milliers {%- endcomment -%}
+  {%- capture total_label -%}
+    {%- if total >= 1000 -%}
+      {{- total | divided_by: 1000 }}&#8239;{{ total | modulo: 1000 | plus: 1000 | append: '' | slice: 1, 3 -}}
+    {%- else -%}
+      {{- total -}}
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- capture positive_label -%}
+    {%- if positive >= 1000 -%}
+      {{- positive | divided_by: 1000 }}&#8239;{{ positive | modulo: 1000 | plus: 1000 | append: '' | slice: 1, 3 -}}
+    {%- else -%}
+      {{- positive -}}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  <style>
+    #shopify-section-{{ section.id }} {
+      --section-padding-top: {{ section.settings.padding_top }}px;
+      --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+      --dw-star: {{ star_color }};
+      {%- render 'section-variables', section: section -%}
+    }
+
+    #shopify-section-{{ section.id }} .dw-reviews {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .dw-card {
+      background: {{ section.settings.card_background | default: '#ffffff' }};
+      border: 1px solid rgb(var(--color-foreground, 12 30 74) / 0.1);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }} .dw-card--score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .dw-score {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      line-height: 1;
+    }
+
+    #shopify-section-{{ section.id }} .dw-score__value {
+      font-size: clamp(44px, 7vw, 64px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    #shopify-section-{{ section.id }} .dw-score__max {
+      font-size: 20px;
+      opacity: 0.5;
+    }
+
+    #shopify-section-{{ section.id }} .dw-stars {
+      position: relative;
+      display: inline-flex;
+      line-height: 0;
+    }
+
+    #shopify-section-{{ section.id }} .dw-stars__layer {
+      display: inline-flex;
+      gap: 3px;
+      white-space: nowrap;
+    }
+
+    #shopify-section-{{ section.id }} .dw-stars__layer svg {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+    }
+
+    #shopify-section-{{ section.id }} .dw-stars__layer--empty svg {
+      fill: rgb(var(--color-foreground, 12 30 74) / 0.15);
+    }
+
+    #shopify-section-{{ section.id }} .dw-stars__layer--full {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    #shopify-section-{{ section.id }} .dw-stars__layer--full svg {
+      fill: var(--dw-star);
+    }
+
+    #shopify-section-{{ section.id }} .dw-stat__value {
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--dw-star);
+    }
+
+    #shopify-section-{{ section.id }} .dw-stat__label {
+      margin-top: 8px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    #shopify-section-{{ section.id }} .dw-note {
+      margin-top: 6px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    #shopify-section-{{ section.id }} .dw-source {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 13px;
+      opacity: 0.65;
+    }
+
+    #shopify-section-{{ section.id }} .dw-source a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .dw-reviews {
+        grid-template-columns: 1.1fr 1fr 1fr;
+        gap: 20px;
+      }
+    }
+  </style>
+
+  {%- capture star_svg -%}<svg viewBox="0 0 20 19" aria-hidden="true" focusable="false"><path d="M10 0l2.61 6.13 6.64.54-5.04 4.35 1.53 6.48L10 14.05 4.26 17.5l1.53-6.48L.75 6.67l6.64-.54z"/></svg>{%- endcapture -%}
+  {%- capture star_row -%}{{ star_svg }}{{ star_svg }}{{ star_svg }}{{ star_svg }}{{ star_svg }}{%- endcapture -%}
+
+  <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+    <div class="page-width{% if section.settings.narrow %} page-width--narrow{% endif %} relative">
+      {%- render 'section-heading', section: section -%}
+
+      <div class="dw-reviews relative z-1">
+        <div class="dw-card dw-card--score">
+          <div class="dw-score">
+            <span class="dw-score__value">{{ average_label }}</span>
+            <span class="dw-score__max">/ 5</span>
+          </div>
+          <span class="dw-stars" role="img" aria-label="Note moyenne de {{ average_label }} sur 5">
+            <span class="dw-stars__layer dw-stars__layer--empty">{{ star_row }}</span>
+            <span class="dw-stars__layer dw-stars__layer--full" style="width: {{ average_percent }}%">{{ star_row }}</span>
+          </span>
+          <span class="dw-stat__label">{{ section.settings.label_average | default: 'Note moyenne' }}</span>
+        </div>
+
+        <div class="dw-card">
+          <div class="dw-stat__value">{{ total_label }}</div>
+          <div class="dw-stat__label">{{ section.settings.label_total | default: 'avis clients publiés' }}</div>
+          <div class="dw-note">{{ section.settings.note_total }}</div>
+        </div>
+
+        {%- if positive > 0 -%}
+          <div class="dw-card">
+            <div class="dw-stat__value">{{ positive_label }}</div>
+            <div class="dw-stat__label">{{ section.settings.label_positive | default: 'avis positifs' }}</div>
+            <div class="dw-note">
+              {%- if positive_percent > 0 -%}
+                {{ positive_percent }} % des avis sont notés 4 ou 5 étoiles
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.source_text != blank -%}
+        <p class="dw-source relative z-1">{{ section.settings.source_text }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Avis — bandeau",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Les chiffres (note moyenne, nombre d'avis, avis positifs) sont lus automatiquement dans les données Judge.me à chaque affichage de la page. Aucun chiffre à saisir : un nouvel avis publié est pris en compte tout seul."
+    },
+    {
+      "type": "header",
+      "content": "Titre"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sur-titre",
+      "default": "Avis vérifiés"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Ce que nos clients pensent de Daewoo Security"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "title-sm", "label": "Petit" },
+        { "value": "title-md", "label": "Moyen" },
+        { "value": "title-lg tracking-heading", "label": "Grand" },
+        { "value": "title-xl tracking-heading", "label": "Très grand" }
+      ],
+      "default": "title-lg tracking-heading",
+      "label": "Taille du titre"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alignement du titre",
+      "options": [
+        { "value": "text-left md:items-end md:flex-row", "label": "Gauche" },
+        { "value": "text-center md:items-center", "label": "Centré" },
+        { "value": "text-right md:items-end md:flex-row-reverse", "label": "Droite" }
+      ],
+      "default": "text-center md:items-center"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h1",
+      "label": "Balise du titre"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Texte d'introduction"
+    },
+    {
+      "type": "select",
+      "id": "highlighted_text",
+      "options": [
+        { "value": "none", "label": "Aucun" },
+        { "value": "text", "label": "Texte" },
+        { "value": "underline", "label": "Souligné" },
+        { "value": "scribble", "label": "Griffonnage" }
+      ],
+      "default": "none",
+      "label": "Surlignage du titre"
+    },
+    {
+      "type": "select",
+      "id": "highlighted_scribble",
+      "options": [
+        { "value": "circle", "label": "Cercle" },
+        { "value": "basic-underline", "label": "Souligné simple" },
+        { "value": "sketch-underline", "label": "Souligné croquis" }
+      ],
+      "default": "circle",
+      "label": "Style du griffonnage"
+    },
+    {
+      "type": "header",
+      "content": "Libellés"
+    },
+    {
+      "type": "text",
+      "id": "label_average",
+      "label": "Libellé — note moyenne",
+      "default": "Note moyenne"
+    },
+    {
+      "type": "text",
+      "id": "label_total",
+      "label": "Libellé — total",
+      "default": "avis clients publiés"
+    },
+    {
+      "type": "text",
+      "id": "note_total",
+      "label": "Précision sous le total",
+      "default": "Avis produits et avis boutique réunis"
+    },
+    {
+      "type": "text",
+      "id": "label_positive",
+      "label": "Libellé — avis positifs",
+      "default": "avis positifs"
+    },
+    {
+      "type": "richtext",
+      "id": "source_text",
+      "label": "Mention de source",
+      "default": "<p>Avis collectés et vérifiés par Judge.me auprès d'acheteurs ayant réellement commandé sur daewoo-security.fr.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Couleurs"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Couleur des étoiles et des chiffres"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Fond des cartes",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Texte"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Fond"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "Dégradé de fond"
+    },
+    {
+      "type": "color",
+      "id": "color_highlight",
+      "label": "Surlignage"
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge haute",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge basse",
+      "default": 48
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "Séparateur",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "narrow",
+      "label": "Largeur réduite",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded",
+      "label": "Coins arrondis",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avis — bandeau"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  }
+}
+{% endschema %}

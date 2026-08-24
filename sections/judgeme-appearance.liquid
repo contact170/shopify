@@ -1,0 +1,259 @@
+{%- comment -%}
+  Harmonisation visuelle du widget d'avis Judge.me.
+
+  Cette section n'affiche rien : elle applique une mise en forme homogène à tous les
+  avis affichés par le widget Judge.me présent sur la même page. Comme la mise en forme
+  cible les classes du widget, un avis publié demain s'affiche exactement comme les
+  avis existants, sans aucune intervention.
+{%- endcomment -%}
+
+{%- liquid
+  assign columns = section.settings.columns
+  assign star_color = section.settings.star_color | default: settings.color_rating
+  assign card_background = section.settings.card_background | default: '#ffffff'
+-%}
+
+<style>
+  .jdgm-widget {
+    --dw-jdgm-star: {{ star_color }};
+    --dw-jdgm-card: {{ card_background }};
+    --dw-jdgm-line: rgb(var(--color-foreground) / 0.1);
+  }
+
+  {%- if section.settings.hide_widget_summary -%}
+    /* Le résumé et les médailles du widget font doublon avec le bandeau de la page. */
+    .jdgm-all-reviews__header .jdgm-all-reviews__summary,
+    .jdgm-all-reviews__header .jdgm-medals-wrapper,
+    .jdgm-all-reviews__header .jdgm-verified-badge {
+      display: none !important;
+    }
+  {%- endif -%}
+
+  /* --- Filtre par note (histogramme) --- */
+  .jdgm-widget .jdgm-histogram {
+    max-width: 520px;
+    margin: 0 auto 28px;
+  }
+
+  .jdgm-widget .jdgm-histogram__bar {
+    background: rgb(var(--color-foreground) / 0.08) !important;
+    border-radius: 999px !important;
+    overflow: hidden;
+  }
+
+  .jdgm-widget .jdgm-histogram__bar-content {
+    background: var(--dw-jdgm-star) !important;
+    border-radius: 999px !important;
+  }
+
+  .jdgm-widget .jdgm-histogram__percentage,
+  .jdgm-widget .jdgm-histogram__frequency {
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  /* --- Grille d'avis : toutes les cartes au même format --- */
+  .dw-jdgm-grid {
+    display: grid !important;
+    grid-template-columns: repeat({{ columns }}, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  .jdgm-widget .jdgm-rev {
+    background: var(--dw-jdgm-card) !important;
+    border: 1px solid var(--dw-jdgm-line) !important;
+    border-radius: 16px !important;
+    padding: 22px !important;
+    margin: 0 !important;
+    height: 100%;
+  }
+
+  .jdgm-widget .jdgm-rev__header {
+    margin-bottom: 6px;
+  }
+
+  .jdgm-widget .jdgm-star {
+    color: var(--dw-jdgm-star) !important;
+  }
+
+  .jdgm-widget .jdgm-rev__icon {
+    background: rgb(var(--color-foreground) / 0.06) !important;
+    color: rgb(var(--color-foreground)) !important;
+    font-weight: 600;
+  }
+
+  .jdgm-widget .jdgm-rev__author {
+    font-weight: 600;
+  }
+
+  .jdgm-widget .jdgm-rev__timestamp,
+  .jdgm-widget .jdgm-rev__location,
+  .jdgm-widget .jdgm-rev__prod-info-wrapper {
+    font-size: 13px;
+    opacity: 0.6;
+  }
+
+  .jdgm-widget .jdgm-rev__buyer-badge-wrapper {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .jdgm-widget .jdgm-rev__title {
+    display: block;
+    margin: 10px 0 6px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .jdgm-widget .jdgm-rev__body {
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  {%- if section.settings.clamp_body -%}
+    /* Longueur de texte homogène : les avis très longs sont tronqués visuellement. */
+    .jdgm-widget .jdgm-rev__body {
+      display: -webkit-box;
+      -webkit-line-clamp: {{ section.settings.clamp_lines }};
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  {%- endif -%}
+
+  .jdgm-widget .jdgm-rev__pics img {
+    border-radius: 10px;
+  }
+
+  .jdgm-widget .jdgm-rev__reply {
+    background: rgb(var(--color-foreground) / 0.04) !important;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 14px;
+  }
+
+  /* --- Tri et pagination --- */
+  .jdgm-widget .jdgm-rev-widg__sort-wrapper select,
+  .jdgm-widget .jdgm-sort-dropdown {
+    border: 1px solid var(--dw-jdgm-line) !important;
+    border-radius: 999px !important;
+    padding: 8px 14px !important;
+  }
+
+  .jdgm-widget .jdgm-paginate__page {
+    border-radius: 999px !important;
+    min-width: 34px;
+    text-align: center;
+  }
+
+  .jdgm-widget .jdgm-paginate__page.jdgm-curt {
+    background: rgb(var(--color-foreground)) !important;
+    color: rgb(var(--color-background)) !important;
+  }
+
+  @media screen and (max-width: 989px) {
+    .dw-jdgm-grid {
+      grid-template-columns: repeat({% if columns == 1 %}1{% else %}2{% endif %}, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .dw-jdgm-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    // Applique la grille au conteneur réel des avis, quel que soit le balisage
+    // renvoyé par Judge.me, et la réapplique après un changement de page ou de filtre.
+    function tagContainer() {
+      var review = document.querySelector('.jdgm-rev');
+      if (!review || !review.parentElement) return false;
+      review.parentElement.classList.add('dw-jdgm-grid');
+      return true;
+    }
+
+    function boot() {
+      var widget = document.querySelector('.jdgm-all-reviews-widget') || document.querySelector('.jdgm-widget');
+      if (!widget) return false;
+      tagContainer();
+      try {
+        new MutationObserver(tagContainer).observe(widget, { childList: true, subtree: true });
+      } catch (e) {}
+      return true;
+    }
+
+    if (!boot()) {
+      var attempts = 0;
+      var timer = setInterval(function () {
+        if (boot() || ++attempts > 80) clearInterval(timer);
+      }, 250);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Avis — mise en forme",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Section invisible : elle harmonise l'affichage du widget d'avis Judge.me placé sur la même page. Tout nouvel avis publié adopte automatiquement la même présentation."
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2,
+      "label": "Nombre de colonnes (ordinateur)"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_widget_summary",
+      "label": "Masquer le résumé interne du widget",
+      "info": "À laisser coché si le bandeau de synthèse est présent sur la page, pour éviter d'afficher deux fois la note.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "clamp_body",
+      "label": "Limiter la hauteur des avis longs",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "clamp_lines",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "default": 8,
+      "label": "Nombre de lignes affichées",
+      "unit": "l"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Couleur des étoiles"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Fond des cartes d'avis",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avis — mise en forme"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  }
+}
+{% endschema %}
