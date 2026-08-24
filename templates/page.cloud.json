@@ -1,0 +1,657 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_cloud": {
+      "type": "rich-text",
+      "blocks": {
+        "eyebrow": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Option facultative</p>",
+            "text_font": "subtitle",
+            "text_size": "subtext-sm",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Le Cloud Daewoo : une option, jamais une obligation",
+            "heading_size": "title-xl tracking-heading",
+            "heading_tag": "h1",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "intro": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Nos alarmes et nos caméras fonctionnent <strong>sans abonnement</strong> : détection, sirène, alertes sur votre smartphone, pilotage à distance depuis l'application et enregistrement local sur carte micro SD sont inclus, sans frais mensuels.</p><p>Le Cloud est un service <strong>en supplément</strong>, à activer uniquement si vous souhaitez qu'une copie de vos vidéos soit également conservée en ligne, hors de portée d'un cambrioleur. Vous pouvez ne jamais y souscrire : rien ne sera bloqué sur votre matériel.</p>",
+            "text_font": "body",
+            "text_size": "subtext-lg",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "spacing": {
+          "type": "spacing",
+          "settings": {
+            "height": 16,
+            "height_mobile": 8
+          }
+        },
+        "btn_alarmes": {
+          "type": "button",
+          "settings": {
+            "button_label": "Nos alarmes sans abonnement",
+            "button_link": "/pages/nos-alarmes",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        },
+        "btn_cameras": {
+          "type": "button",
+          "settings": {
+            "button_label": "Voir les caméras",
+            "button_link": "/collections/cameras-de-surveillance",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow",
+        "heading",
+        "intro",
+        "spacing",
+        "btn_alarmes",
+        "btn_cameras"
+      ],
+      "name": "Cloud — Introduction",
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_width": "small",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#0c1e4a",
+        "color_background": "#ffffff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#0c1e4a",
+        "color_button_gradient": "",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "sans_abonnement": {
+      "type": "multicolumn-with-icons",
+      "blocks": {
+        "col_alarme": {
+          "type": "column",
+          "settings": {
+            "icon": "shield",
+            "custom_icon": "",
+            "heading": "Votre alarme, sans frais mensuels",
+            "text": "<p>Détection d'intrusion, sirène, mise en marche et arrêt à distance : votre système fonctionne de lui-même, sans abonnement ni carte SIM obligatoire.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "col_app": {
+          "type": "column",
+          "settings": {
+            "icon": "phone",
+            "custom_icon": "",
+            "heading": "L'application et les alertes",
+            "text": "<p>Notifications en temps réel, vidéo en direct et gestion de vos équipements depuis votre smartphone : inclus, sans surcoût, aussi longtemps que vous utilisez votre matériel.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "col_sd": {
+          "type": "column",
+          "settings": {
+            "icon": "check_mark",
+            "custom_icon": "",
+            "heading": "L'enregistrement sur carte micro SD",
+            "text": "<p>Vos caméras enregistrent en local sur leur carte micro SD. Le Cloud n'est jamais nécessaire pour filmer, revoir ou recevoir vos alertes.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "col_alarme",
+        "col_app",
+        "col_sd"
+      ],
+      "name": "Cloud — Sans abonnement",
+      "settings": {
+        "style": "with-border",
+        "columns": 3,
+        "text_alignment": "left",
+        "heading": "Ce qui reste 100 % sans abonnement",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "Pas de contradiction",
+        "description": "<p>Le Cloud ne conditionne rien. Voici ce dont vous profitez sans payer un centime de plus, que vous preniez l'option ou non.</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#0c1e4a",
+        "color_background": "#f2f3ff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#0c1e4a",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "a_quoi_sert": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Alors, à quoi sert le Cloud ?",
+            "heading_size": "title-lg tracking-heading",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "txt": {
+          "type": "text",
+          "settings": {
+            "text": "<p>La carte micro SD garde vos vidéos <strong>chez vous, dans la caméra</strong>. C'est très bien au quotidien, mais ce support reste exposé : une carte s'use, peut tomber en panne, être emportée avec la caméra ou effacée par un cambrioleur. Le jour où vous en avez vraiment besoin, les images peuvent avoir disparu avec le matériel.</p><p>Le Cloud ajoute une <strong>seconde copie, en ligne</strong> : chaque vidéo déclenchée par une détection part automatiquement sur nos serveurs et reste consultable pendant 14 jours depuis l'application, même si la caméra a été volée. C'est une assurance sur vos preuves — rien de plus, rien de moins.</p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "txt"
+      ],
+      "name": "Cloud — À quoi ça sert",
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_width": "small",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#0c1e4a",
+        "color_background": "#ffffff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#0c1e4a",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 56,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "benefices_cloud": {
+      "type": "multicolumn-with-icons",
+      "blocks": {
+        "b_usure": {
+          "type": "column",
+          "settings": {
+            "icon": "time",
+            "custom_icon": "",
+            "heading": "Aucune vidéo perdue",
+            "text": "<p>Plus de mauvaise surprise le jour J : ni carte SD usée, ni carte pleine, ni fichier illisible.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "b_vol": {
+          "type": "column",
+          "settings": {
+            "icon": "shield",
+            "custom_icon": "",
+            "heading": "Vos preuves à l'abri du vol",
+            "text": "<p>Même si la caméra ou sa carte SD disparaît pendant le cambriolage, les vidéos restent disponibles en ligne pour votre plainte et votre assurance.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "b_fuite": {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "custom_icon": "",
+            "heading": "Vos vidéos ne dépendent plus d'un support",
+            "text": "<p>Téléphone perdu ou caméra emportée : vos images restent dans votre compte, accessibles depuis un autre appareil.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "b_stockage": {
+          "type": "column",
+          "settings": {
+            "icon": "planet",
+            "custom_icon": "",
+            "heading": "14 jours d'historique, sans limite de volume",
+            "text": "<p>Contrairement à la carte SD, aucune limite de capacité : toutes les vidéos des 14 derniers jours sont conservées et téléchargeables à tout moment.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "b_usure",
+        "b_vol",
+        "b_fuite",
+        "b_stockage"
+      ],
+      "name": "Cloud — Bénéfices",
+      "settings": {
+        "style": "with-background",
+        "columns": 4,
+        "text_alignment": "left",
+        "heading": "Ce que le Cloud change concrètement",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "Les bénéfices",
+        "description": "<p>Quatre situations où la sauvegarde en ligne fait la différence.</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#0c1e4a",
+        "color_background": "#f2f3ff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#0c1e4a",
+        "color_button_gradient": "",
+        "padding_top": 64,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "formules_cloud": {
+      "type": "multicolumn-with-icons",
+      "blocks": {
+        "f_basic": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "custom_icon": "",
+            "heading": "Basic — 1 caméra",
+            "text": "<p><strong>4,49 € / mois</strong><br/>ou 44,90 € / an (2 mois offerts)</p><p>14 jours d'historique sur 1 caméra.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "f_extended": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "custom_icon": "",
+            "heading": "Extended — 2 caméras",
+            "text": "<p><strong>7,49 € / mois</strong><br/>ou 74,90 € / an (2 mois offerts)</p><p>14 jours d'historique sur 2 caméras.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "f_plus": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "custom_icon": "",
+            "heading": "Plus — jusqu'à 3 caméras",
+            "text": "<p><strong>9,99 € / mois</strong><br/>ou 99,90 € / an (2 mois offerts)</p><p>14 jours d'historique sur 3 caméras.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "f_pro": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "custom_icon": "",
+            "heading": "Pro — jusqu'à 5 caméras",
+            "text": "<p><strong>14,99 € / mois</strong><br/>ou 149,99 € / an (2 mois offerts)</p><p>14 jours d'historique sur 5 caméras.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "f_basic",
+        "f_extended",
+        "f_plus",
+        "f_pro"
+      ],
+      "name": "Cloud — Formules",
+      "settings": {
+        "style": "with-background",
+        "columns": 4,
+        "text_alignment": "left",
+        "heading": "Si vous choisissez le Cloud",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "Les formules",
+        "description": "<p>Une seule formule à choisir, selon le nombre de caméras à sauvegarder. Toutes incluent 14 jours d'historique. La souscription et la résiliation se font directement depuis l'application, caméra par caméra.</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#0c1e4a",
+        "color_background": "#ffffff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#0c1e4a",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 64,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "faq_yVqrYW": {
+      "type": "faq",
+      "blocks": {
+        "q_obligatoire": {
+          "type": "question",
+          "settings": {
+            "title": "Suis-je obligé de souscrire au Cloud ?",
+            "text": "<p>Non. Le Cloud est une option payante, totalement facultative. Votre alarme et vos caméras Daewoo fonctionnent sans abonnement : vous pouvez ne jamais y souscrire et utiliser votre matériel normalement, aussi longtemps que vous le souhaitez.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q_sans_cloud": {
+          "type": "question",
+          "settings": {
+            "title": "Que se passe-t-il si je ne l'active pas ?",
+            "text": "<p>Rien ne change. Vos caméras continuent d'enregistrer sur leur carte micro SD, vous recevez vos alertes et vous consultez vos vidéos dans l'application. Seule la copie en ligne n'est pas activée.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q_vs_sd": {
+          "type": "question",
+          "settings": {
+            "title": "Le Cloud remplace-t-il la carte micro SD ?",
+            "text": "<p>Non, il la complète. La carte SD conserve les vidéos dans la caméra ; le Cloud en garde une copie en ligne, à l'abri d'un vol, d'une panne de carte ou d'un effacement.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q_duree": {
+          "type": "question",
+          "settings": {
+            "title": "Combien de temps mes vidéos sont-elles conservées ?",
+            "text": "<p>14 jours, sans limite de volume. Au-delà, les vidéos les plus anciennes sont automatiquement supprimées pour laisser la place aux nouvelles. Vous pouvez télécharger à tout moment celles que vous souhaitez conserver.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q_souscrire": {
+          "type": "question",
+          "settings": {
+            "title": "Comment souscrire, changer de formule ou résilier ?",
+            "text": "<p>Tout se fait depuis l'application, sur la caméra concernée : vous choisissez un paiement mensuel ou annuel, et vous pouvez arrêter l'abonnement quand vous le souhaitez — il prend fin à l'échéance en cours.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q_multi": {
+          "type": "question",
+          "settings": {
+            "title": "J'ai déjà un abonnement et je veux passer à une offre multi-caméras",
+            "text": "<p><strong>Important :</strong> si vous êtes déjà engagé sur notre plateforme avec un abonnement Cloud, résiliez-le à la prochaine échéance, puis souscrivez la nouvelle formule multi-caméras depuis l'application.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "q_obligatoire",
+        "q_sans_cloud",
+        "q_vs_sd",
+        "q_duree",
+        "q_souscrire",
+        "q_multi"
+      ],
+      "name": "Cloud — FAQ",
+      "settings": {
+        "style": "with-border",
+        "heading": "Vos questions sur le Cloud",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#0c1e4a",
+        "color_background": "#f2f3ff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#0c1e4a",
+        "color_button_gradient": "",
+        "color_overlay": "#ffffff",
+        "overlay_opacity": 0,
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "cta_final": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Pas besoin du Cloud ? C'est très bien aussi.",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "txt": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Nos systèmes sont conçus pour vous protéger seuls, sans frais récurrents. Le Cloud reste disponible si un jour vous souhaitez mettre vos preuves à l'abri : il s'active en quelques secondes depuis l'application, sur une caméra comme sur cinq, et s'arrête tout aussi simplement.</p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "spacing": {
+          "type": "spacing",
+          "settings": {
+            "height": 16,
+            "height_mobile": 8
+          }
+        },
+        "btn_alarmes": {
+          "type": "button",
+          "settings": {
+            "button_label": "Découvrir nos alarmes sans abonnement",
+            "button_link": "/pages/nos-alarmes",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        },
+        "btn_assistance": {
+          "type": "button",
+          "settings": {
+            "button_label": "Une question ? Contactez-nous",
+            "button_link": "/pages/assistance",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "txt",
+        "spacing",
+        "btn_alarmes",
+        "btn_assistance"
+      ],
+      "name": "Cloud — Conclusion",
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_width": "small",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#0c1e4a",
+        "color_background": "#ffffff",
+        "gradient_background": "",
+        "color_highlight": "#0b61cd",
+        "gradient_highlight": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#0c1e4a",
+        "color_button_gradient": "",
+        "padding_top": 64,
+        "padding_bottom": 88,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "main-page": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "heading_size": "title-xl tracking-heading",
+        "heading_alignment": "text-left",
+        "heading_tag": "h1",
+        "text_size": "text-base",
+        "padding_top": 72,
+        "padding_bottom": 120,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "hero_cloud",
+    "sans_abonnement",
+    "a_quoi_sert",
+    "benefices_cloud",
+    "formules_cloud",
+    "faq_yVqrYW",
+    "cta_final",
+    "main-page"
+  ]
+}
