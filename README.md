@@ -29,7 +29,8 @@ Structure de la page :
 
 1. Introduction (`rich-text`) — H1 + chapô + boutons
 2. « Ce qui reste 100 % sans abonnement » (`multicolumn-with-icons`, 3 colonnes)
-3. « Alors, à quoi sert le Cloud ? » (`rich-text`)
+3. « Alors, à quoi sert le Cloud ? » (`image-with-text`, capture de l'application
+   en visionnage : `Application_Photo_Jardin.jpg`)
 4. « Ce que le Cloud change concrètement » (`multicolumn-with-icons`, 4 colonnes)
 5. « Si vous choisissez le Cloud » — les 4 formules et leurs tarifs (`multicolumn-with-icons`)
 6. FAQ (`faq`) — 6 questions, dont l'avertissement multi-caméras (auparavant répété
@@ -38,3 +39,8 @@ Structure de la page :
 
 Les tarifs, les durées de conservation (14 jours) et l'avertissement multi-caméras
 sont repris à l'identique de l'ancienne page.
+
+À noter : la page ne mentionne pas la saturation de la carte SD comme un risque de
+perte, le système écrasant automatiquement les vidéos les plus anciennes lorsque la
+carte est pleine. L'argument stockage oppose donc l'écrasement progressif sur carte SD
+aux 14 jours complets conservés en ligne.
