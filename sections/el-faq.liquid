@@ -1,0 +1,210 @@
+{% comment %} ── FAQ Élite — accordéon + données structurées ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .elf * { box-sizing:border-box; margin:0; padding:0; }
+  .elf { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#f1f3f2; color:#0d1520; padding:94px 24px 98px; }
+  .elf-inner { max-width:1120px; margin:0 auto; display:grid; grid-template-columns:.72fr 1.28fr; gap:60px; align-items:start; }
+  .elf-aside { position:sticky; top:100px; }
+  .elf-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5c6a75; margin-bottom:14px; }
+  .elf-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#12a0ad,rgba(18,160,173,0)); }
+  .elf-title { font-size:clamp(25px,3.2vw,36px); font-weight:600; letter-spacing:-.035em; line-height:1.14; margin-bottom:14px; }
+  .elf-sub { font-size:14.5px; color:#4b5a63; font-weight:300; line-height:1.68; margin-bottom:26px; }
+  .elf-help { background:#fff; border:1px solid #e2e7e6; border-radius:16px; padding:24px 24px 26px; }
+  .elf-ht { font-size:15.5px; font-weight:600; letter-spacing:-.02em; margin-bottom:6px; }
+  .elf-hs { font-size:13.2px; color:#4b5a63; font-weight:300; line-height:1.6; margin-bottom:18px; }
+  .elf-hb { display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:9px;
+    background:#0d1520; color:#fff; font-size:13.5px; font-weight:600; text-decoration:none; transition:transform .18s; }
+  .elf-hb:hover { transform:translateY(-2px); }
+  .elf-hb svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+
+  .elf-acc { border-top:1px solid #d9e0df; }
+  .elf-item { border-bottom:1px solid #d9e0df; }
+  .elf-q { display:flex; align-items:center; justify-content:space-between; gap:20px; cursor:pointer; list-style:none;
+    padding:21px 2px; font-size:16px; font-weight:500; letter-spacing:-.015em; line-height:1.4; color:#0d1520; }
+  .elf-q::-webkit-details-marker { display:none; }
+  .elf-q:hover { color:#0a6068; }
+  .elf-chev { width:18px; height:18px; flex:none; fill:none; stroke:#5c6a75; stroke-width:2.2;
+    stroke-linecap:round; stroke-linejoin:round; transition:transform .25s; }
+  .elf-item[open] .elf-chev { transform:rotate(180deg); stroke:#0a6068; }
+  .elf-item[open] .elf-q { color:#0a6068; }
+  .elf-a { padding:0 2px 24px; font-size:14.5px; color:#4b5a63; font-weight:300; line-height:1.72; max-width:660px; }
+  .elf-a p + p { margin-top:12px; }
+  .elf-a b { color:#0d1520; font-weight:600; }
+  .elf-a a { color:#0a6068; font-weight:500; text-decoration:none; border-bottom:1px solid rgba(10,96,104,.35); }
+  .elf-a ul { margin:12px 0 0 18px; } .elf-a li { margin-bottom:7px; }
+  .elf-tag { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    padding:3px 8px; border-radius:5px; margin-right:9px; vertical-align:middle;
+    background:rgba(18,160,173,.14); color:#0a6068; }
+
+  @media (max-width:900px) {
+    .elf-inner { grid-template-columns:1fr; gap:36px; }
+    .elf-aside { position:static; }
+    .elf { padding:72px 20px; }
+  }
+</style>
+
+<section class="elf">
+  <div class="elf-inner">
+    <aside class="elf-aside">
+      <span class="elf-eyebrow">Questions fréquentes</span>
+      <h2 class="elf-title">Ce qu'on nous demande avant de choisir l'Élite.</h2>
+      <p class="elf-sub">Une gamme sans écran, ça soulève toujours les mêmes questions. Voici les réponses, sans détour.</p>
+      <div class="elf-help">
+        <p class="elf-ht">Il vous en reste une&nbsp;?</p>
+        <p class="elf-hs">Écrivez-nous&nbsp;: notre assistant répond 7j/7 et l'équipe SAV, basée en France, prend le relais 5j/7.</p>
+        <a class="elf-hb" href="https://daewoo-security.fr/pages/nous-contacter">
+          Nous contacter
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </aside>
+
+    <div class="elf-acc">
+      <details class="elf-item" open>
+        <summary class="elf-q"><span><span class="elf-tag">Le + posé</span>Pourquoi la centrale Élite n'a-t-elle ni écran ni clavier&nbsp;?</span>
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>Parce qu'un écran allumé dans une entrée, c'est une indication&nbsp;: il montre où se trouve le cœur du système et s'il est armé. La centrale Élite est un <b>boîtier discret</b> que vous pouvez placer hors de vue — dans un placard, sur une étagère haute, derrière un meuble.</p>
+          <p>Toute la commande passe alors par l'application <b>Daewoo Home Connect</b>, ou par une télécommande, un badge ou un clavier déporté si vous préférez ne pas sortir votre téléphone.</p>
+          <p>Si vous voulez au contraire un écran tactile sur la centrale, regardez les gammes <a href="https://daewoo-security.fr/collections/systeme-dalarme-am301-am302">Touch / Touch XL</a>.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">Comment armer l'alarme si je n'ai pas mon téléphone&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>Trois moyens fonctionnent <b>sans aucun téléphone</b>&nbsp;:</p>
+          <ul>
+            <li>la <a href="https://daewoo-security.fr/products/telecommande-pour-alarme-daewoo">télécommande WRC501</a> (23,90 €), fournie dans les packs, avec son bouton SOS&nbsp;;</li>
+            <li>le <a href="https://daewoo-security.fr/products/badge-rfid-wrf501-pour-alarme-daewoo-sa501">badge RFID WRF501</a> (9,90 €), un par personne&nbsp;;</li>
+            <li>le <a href="https://daewoo-security.fr/products/clavier-sans-fil-zigbee-wke502z-compatible-avec-la-centrale-pa501z">clavier Zigbee WKE502Z</a> (59,90 €), à poser près de l'entrée pour un code à taper.</li>
+          </ul>
+          <p>La <b>temporisation d'entrée</b> vous laisse le temps de rentrer et de désarmer sans déclencher l'alerte.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">Que se passe-t-il si ma box Internet tombe&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>La centrale continue de détecter et de <b>déclencher la sirène localement</b>&nbsp;: la protection ne s'arrête pas.</p>
+          <p>Pour les alertes, tout dépend de la carte SIM. <b>Avec une carte SIM</b>, la centrale bascule automatiquement sur le réseau 4G et vous prévient par SMS et par appel téléphonique. <b>Sans carte SIM</b>, elle ne peut plus vous joindre tant que la connexion n'est pas revenue.</p>
+          <p>À noter&nbsp;: le relais 4G concerne les alertes de la centrale. <b>Vos caméras, elles, ont besoin du Wi-Fi</b> et ne sont pas consultables pendant la coupure.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">Et si le courant est coupé&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>La centrale bascule sur sa <b>batterie de secours intégrée</b> et reste armée pendant une dizaine d'heures. La détection et la sirène restent opérationnelles pendant toute cette durée.</p>
+          <p>Les détecteurs, eux, fonctionnent sur piles&nbsp;: une coupure de courant ne les affecte pas.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">Faut-il une carte SIM, et combien coûte-t-elle&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>Non, elle est <b>facultative</b>. Le module 4G est déjà dans la centrale&nbsp;; c'est la carte SIM qui l'active.</p>
+          <p>Sans elle, l'alarme fonctionne normalement en Wi-Fi ou en Ethernet. Avec elle, vous gardez les alertes même quand Internet est coupé. Nous proposons une <a href="https://daewoo-security.fr/products/carte-sim-m2m-afone-1-an-prepaye-pour-centrale-pa501z">carte SIM M2M prépayée d'un an à 85 €</a>&nbsp;: c'est le seul coût récurrent possible, et il reste optionnel.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">Zigbee ou Wi-Fi&nbsp;: quelle différence, et pourquoi ça compte&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>Le Wi-Fi relie la <b>centrale à Internet</b>. Le Zigbee relie la <b>centrale à vos détecteurs</b>. Ce sont deux réseaux distincts, et c'est précisément l'intérêt.</p>
+          <p>Zigbee est conçu pour de petits messages envoyés très vite avec très peu d'énergie&nbsp;: vos piles durent longtemps, votre Wi-Fi n'est pas encombré par vingt capteurs, et une saturation du réseau domestique ne met pas l'alarme hors service. La liaison est en plus <b>chiffrée et bidirectionnelle</b>, ce qui bloque le brouillage et signale un détecteur qui ne répond plus.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">J'ai déjà une centrale Key (SA501). Puis-je garder mes accessoires&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>Oui. La PA501Z est compatible avec les <b>accessoires de la gamme SA501</b>&nbsp;: détecteurs de mouvement, contacteurs, sirènes, télécommandes, badges. Vous remplacez la centrale et vous conservez vos équipements.</p>
+          <p>Les références en <b>Zigbee (WDS502Z, WVD502Z, WKE502Z)</b> sont en revanche spécifiques à l'Élite&nbsp;: elles ne fonctionnent pas sur une ancienne centrale Key.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">Pourquoi l'Élite n'est-elle pas compatible Alexa ni Google Home&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>C'est un <b>choix de conception</b>, pas une limite technique. Relier une alarme à un assistant vocal, c'est ouvrir une passerelle supplémentaire vers un service tiers — donc une surface d'attaque de plus, et des données qui circulent en dehors de votre installation.</p>
+          <p>La gamme Élite reste volontairement fermée. Si la commande vocale est importante pour vous, les gammes <a href="https://daewoo-security.fr/collections/systeme-dalarme-am301-am302">Touch</a> et <a href="https://daewoo-security.fr/collections/systeme-dalarme-vigilia">Vigilia</a> sont, elles, compatibles Alexa et Google Home.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">J'ai un animal&nbsp;: vais-je avoir des fausses alertes&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>Le <a href="https://daewoo-security.fr/products/detecteur-de-mouvement-pet-immune-wps501-pour-alarme-daewoo">détecteur de mouvement WPS501</a> fourni dans les packs est conçu pour <b>ignorer les animaux domestiques de petit gabarit</b>. Vous pouvez aussi le positionner en hauteur et l'orienter pour réduire encore le risque.</p>
+          <p>Et si vous préférez ne prendre aucun risque, le <b>mode Partiel (Maison)</b> désactive les détecteurs de mouvement intérieurs tout en gardant portes et fenêtres surveillées.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">Combien d'accessoires puis-je ajouter&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p><b>Jusqu'à 200 accessoires</b> sur une seule centrale&nbsp;: contacteurs, détecteurs de mouvement intérieurs et extérieurs, détecteurs de vibration, de fumée, de fuite d'eau, sirènes, claviers, télécommandes, badges.</p>
+          <p>Si la maison est grande ou les murs épais, l'<a href="https://daewoo-security.fr/products/amplificateur-dondes-zigbee-pour-centrale-pa501z">amplificateur d'ondes Zigbee EXT501</a> étend la portée du réseau. Les caméras et objets connectés se gèrent dans l'application et ne comptent pas dans ce total.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">Y a-t-il un abonnement&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p>Aucun. Vous achetez le matériel une fois. L'application, les notifications, l'historique, les scénarios et la vidéo en direct sont <b>gratuits à vie</b>, et rien n'est désactivé faute de mensualité.</p>
+          <p>Le seul coût récurrent possible est la carte SIM, si vous choisissez d'activer le relais 4G.</p>
+        </div>
+      </details>
+
+      <details class="elf-item">
+        <summary class="elf-q">Quelle garantie et quel service après-vente&nbsp;?
+          <svg class="elf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="elf-a">
+          <p><b>2 ans de garantie</b> sur toute la gamme, <b>14 jours pour changer d'avis</b> avec retour gratuit, et une <b>équipe SAV basée en France</b>. Un assistant en ligne prend vos demandes 7j/7&nbsp;; notre équipe répond 5j/7.</p>
+          <p>Tous les accessoires restent disponibles à l'unité&nbsp;: en cas de casse ou de perte, vous remplacez une pièce, pas tout le système.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+{% comment %} ── Données structurées SEO (FAQPage) ── {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Pourquoi la centrale d'alarme Élite PA501Z n'a-t-elle ni écran ni clavier ?","acceptedAnswer":{"@type":"Answer","text":"C'est un choix de conception : un écran allumé indique où se trouve le cœur du système et s'il est armé. La centrale Élite est un boîtier discret, que l'on peut placer hors de vue. Toute la commande passe par l'application Daewoo Home Connect, ou par une télécommande, un badge RFID ou un clavier Zigbee déporté."}},
+    {"@type":"Question","name":"Comment armer l'alarme Élite sans téléphone ?","acceptedAnswer":{"@type":"Answer","text":"Trois moyens fonctionnent sans téléphone : la télécommande WRC501 (23,90 €) avec bouton SOS, le badge RFID WRF501 (9,90 €) et le clavier Zigbee WKE502Z (59,90 €) à poser près de l'entrée. La temporisation d'entrée laisse le temps de désarmer en rentrant."}},
+    {"@type":"Question","name":"Que se passe-t-il si la box Internet tombe ?","acceptedAnswer":{"@type":"Answer","text":"La centrale continue de détecter et de déclencher la sirène localement. Avec une carte SIM, elle bascule automatiquement sur le réseau 4G et alerte par SMS et par appel téléphonique. Sans carte SIM, elle ne peut plus envoyer d'alerte tant que la connexion n'est pas revenue. Les caméras, elles, nécessitent le Wi-Fi et ne sont pas consultables pendant la coupure."}},
+    {"@type":"Question","name":"Que se passe-t-il en cas de coupure de courant ?","acceptedAnswer":{"@type":"Answer","text":"La centrale Élite bascule sur sa batterie de secours intégrée et reste armée pendant une dizaine d'heures. La détection et la sirène restent opérationnelles. Les détecteurs fonctionnent sur piles et ne sont pas affectés."}},
+    {"@type":"Question","name":"Faut-il une carte SIM pour la centrale Élite PA501Z ?","acceptedAnswer":{"@type":"Answer","text":"Non, elle est facultative. Le module 4G est intégré à la centrale ; la carte SIM sert à l'activer. Sans elle, l'alarme fonctionne en Wi-Fi ou en Ethernet. Une carte SIM M2M prépayée d'un an est proposée à 85 € : c'est le seul coût récurrent possible, et il reste optionnel."}},
+    {"@type":"Question","name":"Quelle différence entre le Zigbee et le Wi-Fi sur une alarme ?","acceptedAnswer":{"@type":"Answer","text":"Le Wi-Fi relie la centrale à Internet, le Zigbee relie la centrale aux détecteurs. Zigbee est conçu pour de petits messages envoyés vite avec peu d'énergie : les piles durent plus longtemps, le réseau Wi-Fi domestique n'est pas encombré, et la liaison chiffrée bidirectionnelle bloque le brouillage tout en signalant un détecteur qui ne répond plus."}},
+    {"@type":"Question","name":"Les accessoires SA501 de la gamme Key sont-ils compatibles avec la centrale Élite ?","acceptedAnswer":{"@type":"Answer","text":"Oui. La centrale Élite PA501Z est compatible avec les accessoires de la gamme SA501 : détecteurs de mouvement, contacteurs, sirènes, télécommandes et badges. Les références Zigbee (WDS502Z, WVD502Z, WKE502Z) sont en revanche spécifiques à la centrale Élite."}},
+    {"@type":"Question","name":"Pourquoi la centrale Élite n'est-elle pas compatible avec Alexa et Google Home ?","acceptedAnswer":{"@type":"Answer","text":"C'est un choix de conception lié à la sécurité et à la confidentialité : relier une alarme à un assistant vocal ouvre une passerelle supplémentaire vers un service tiers. La gamme Élite reste volontairement fermée. Les gammes Touch et Vigilia, elles, sont compatibles Alexa et Google Home."}},
+    {"@type":"Question","name":"L'alarme Élite est-elle compatible avec les animaux domestiques ?","acceptedAnswer":{"@type":"Answer","text":"Le détecteur de mouvement WPS501 fourni dans les packs est conçu pour ignorer les animaux domestiques de petit gabarit. Le mode Partiel (Maison) permet également de désactiver les détecteurs de mouvement intérieurs tout en gardant portes et fenêtres surveillées."}},
+    {"@type":"Question","name":"Combien d'accessoires peut-on ajouter à une centrale Élite ?","acceptedAnswer":{"@type":"Answer","text":"Jusqu'à 200 accessoires par centrale : contacteurs, détecteurs de mouvement intérieurs et extérieurs, détecteurs de vibration, de fumée, de fuite d'eau, sirènes, claviers, télécommandes et badges. L'amplificateur d'ondes Zigbee EXT501 étend la portée. Les caméras et objets connectés se gèrent dans l'application et ne comptent pas dans ce total."}},
+    {"@type":"Question","name":"L'alarme Élite nécessite-t-elle un abonnement ?","acceptedAnswer":{"@type":"Answer","text":"Non, aucun abonnement obligatoire. L'application Daewoo Home Connect, les notifications, l'historique, les scénarios et la vidéo en direct sont gratuits à vie. Le seul coût récurrent possible est la carte SIM, si vous choisissez d'activer le relais 4G."}},
+    {"@type":"Question","name":"Quelle est la garantie de l'alarme Daewoo Élite ?","acceptedAnswer":{"@type":"Answer","text":"La gamme Élite bénéficie de 2 ans de garantie, d'un droit de retour gratuit de 14 jours et d'un service après-vente basé en France. Un assistant en ligne prend les demandes 7j/7 et l'équipe répond 5j/7. Tous les accessoires restent disponibles à l'unité."}}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Élite — FAQ",
+  "settings": []
+}
+{% endschema %}

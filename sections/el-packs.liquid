@@ -1,0 +1,163 @@
+{% comment %} ── Packs Élite — 3 cartes de hauteur égale ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .elp * { box-sizing:border-box; margin:0; padding:0; }
+  .elp { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#f1f3f2; color:#0d1520; padding:92px 24px 98px; }
+  .elp-inner { max-width:1200px; margin:0 auto; }
+  .elp-head { text-align:center; max-width:640px; margin:0 auto 50px; }
+  .elp-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5c6a75; margin-bottom:16px; }
+  .elp-eyebrow::before,.elp-eyebrow::after { content:''; width:28px; height:1px; background:#c3d1cf; }
+  .elp-title { font-size:clamp(27px,3.6vw,42px); font-weight:600; letter-spacing:-.035em; line-height:1.1; margin-bottom:14px; }
+  .elp-sub { font-size:15.5px; color:#4b5a63; font-weight:300; line-height:1.65; }
+
+  .elp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:stretch; }
+  .elp-card { background:#fff; border:1px solid #e2e7e6; border-radius:20px; overflow:hidden;
+    display:flex; flex-direction:column; box-shadow:0 18px 44px -30px rgba(13,21,32,.30); position:relative; }
+  .elp-card--hero { border-color:#0d1520; box-shadow:0 26px 60px -30px rgba(13,21,32,.48); }
+  .elp-flag { position:absolute; top:0; left:0; right:0; height:4px; background:#12a0ad; }
+  .elp-card--hero .elp-flag { background:linear-gradient(90deg,#0a6068,#12a0ad); }
+  .elp-shot { background:#f1f3f2; border-bottom:1px solid #e9edec; padding:14px; }
+  .elp-shot img { width:100%; height:230px; object-fit:contain; display:block; }
+  .elp-body { padding:26px 26px 28px; display:flex; flex-direction:column; flex:1; }
+  .elp-badge { display:inline-block; align-self:flex-start; font-size:10px; font-weight:700; letter-spacing:.16em;
+    text-transform:uppercase; padding:5px 10px; border-radius:5px; margin-bottom:14px;
+    background:#eef1f0; color:#4b5a63; }
+  .elp-badge--hot { background:#0d1520; color:#fff; }
+  .elp-badge--max { background:rgba(18,160,173,.13); color:#0a6068; }
+  .elp-n { font-size:20px; font-weight:600; letter-spacing:-.025em; line-height:1.25; margin-bottom:6px; }
+  .elp-for { font-size:13.5px; color:#5c6a75; font-weight:300; line-height:1.5; margin-bottom:20px; }
+  .elp-ul { display:flex; flex-direction:column; gap:10px; margin-bottom:22px; flex:1; }
+  .elp-li { display:grid; grid-template-columns:auto 1fr; gap:11px; font-size:13.5px; color:#4b5a63;
+    font-weight:300; line-height:1.5; }
+  .elp-li b { display:inline-block; min-width:26px; font-weight:600; color:#0a6068; font-variant-numeric:tabular-nums; }
+  .elp-li span b { min-width:0; color:#0d1520; font-weight:500; }
+  .elp-price { padding-top:18px; border-top:1px solid #eef1f0; margin-bottom:16px; }
+  .elp-from { display:block; font-size:12px; color:#5c6a75; font-weight:300; margin-bottom:2px; }
+  .elp-amt { font-size:27px; font-weight:600; letter-spacing:-.03em; color:#0d1520; }
+  .elp-was { font-size:14px; color:#5c6a75; font-weight:300; text-decoration:line-through; margin-left:9px; }
+  .elp-save { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; padding:3px 8px;
+    border-radius:5px; background:rgba(18,160,173,.13); color:#0a6068; margin-left:9px; vertical-align:2px; }
+  .elp-buy { display:flex; align-items:center; justify-content:center; gap:9px; padding:14px 22px; border-radius:9px;
+    font-size:14px; font-weight:600; text-decoration:none; transition:transform .18s, border-color .18s; }
+  .elp-buy:hover { transform:translateY(-2px); }
+  .elp-buy--1 { background:#fff; color:#0d1520; border:1px solid #d9e0df; }
+  .elp-buy--1:hover { border-color:#0a6068; }
+  .elp-buy--2 { background:#0d1520; color:#fff; box-shadow:0 12px 28px -10px rgba(13,21,32,.5); }
+  .elp-buy svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .elp-foot { text-align:center; margin-top:30px; font-size:13.5px; color:#5c6a75; font-weight:300; }
+  .elp-foot a { color:#0a6068; font-weight:500; text-decoration:none; border-bottom:1px solid rgba(10,96,104,.35); }
+
+  @media (max-width:1000px) { .elp-grid { grid-template-columns:1fr; max-width:460px; margin:0 auto; } }
+  @media (max-width:600px) { .elp { padding:70px 20px 76px; } .elp-body { padding:24px 20px 26px; } }
+</style>
+
+<section class="elp" id="el-packs">
+  <div class="elp-inner">
+    <div class="elp-head">
+      <span class="elp-eyebrow">Packs prêts à poser</span>
+      <h2 class="elp-title">Trois packs, composés pour ne rien avoir à chercher.</h2>
+      <p class="elp-sub">Chaque pack part de la même centrale Élite PA501Z. Ce qui change, c'est le nombre de points protégés et la présence de caméras extérieures.</p>
+    </div>
+
+    <div class="elp-grid">
+      <!-- STARTER -->
+      <div class="elp-card">
+        <span class="elp-flag"></span>
+        <div class="elp-shot">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/360bc22c-c301-4e8c-91be-142bfc8834eb.jpg?v=1770108350" alt="Système d'alarme Élite : centrale PA501Z, contacteurs, détecteur de mouvement et télécommandes" loading="lazy" width="1600" height="1600">
+        </div>
+        <div class="elp-body">
+          <span class="elp-badge">Pour démarrer</span>
+          <h3 class="elp-n">Système d'alarme Élite</h3>
+          <p class="elp-for">Appartement ou maison&nbsp;: l'essentiel, tout piloté depuis l'application.</p>
+          <div class="elp-ul">
+            <p class="elp-li"><b>1×</b><span><b>Centrale Élite PA501Z</b> — Wi-Fi, Ethernet, 4G</span></p>
+            <p class="elp-li"><b>2×</b><span>Contacteurs d'ouverture Zigbee WDS502Z</span></p>
+            <p class="elp-li"><b>1×</b><span>Détecteur de mouvement WPS501, compatible animaux</span></p>
+            <p class="elp-li"><b>2×</b><span>Télécommandes WRC501 avec bouton SOS</span></p>
+          </div>
+          <div class="elp-price">
+            <span class="elp-from">À partir de</span>
+            <span class="elp-amt">299,90 €</span>
+          </div>
+          <a class="elp-buy elp-buy--1" href="https://daewoo-security.fr/products/starter-pack-elite-daewoo">
+            Voir le pack
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- OFFRE EXCLUSIVE -->
+      <div class="elp-card elp-card--hero">
+        <span class="elp-flag"></span>
+        <div class="elp-shot">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/PA5012601-003_1.png?v=1770973567" alt="Offre exclusive Pack ÉLITE : centrale PA501Z, contacteurs et détecteurs Zigbee, caméra solaire et sirène extérieure" loading="lazy" width="800" height="800">
+        </div>
+        <div class="elp-body">
+          <span class="elp-badge elp-badge--hot">Offre exclusive</span>
+          <h3 class="elp-n">Pack Élite</h3>
+          <p class="elp-for">Maison&nbsp;: intérieur couvert, dissuasion et vérification vidéo dehors.</p>
+          <div class="elp-ul">
+            <p class="elp-li"><b>1×</b><span><b>Centrale Élite PA501Z</b> — Wi-Fi, Ethernet, 4G</span></p>
+            <p class="elp-li"><b>4×</b><span>Contacteurs Zigbee WDS502Z</span></p>
+            <p class="elp-li"><b>3×</b><span>Détecteurs de vibration Zigbee WVD502Z</span></p>
+            <p class="elp-li"><b>1×</b><span>Détecteur de mouvement WPS501, compatible animaux</span></p>
+            <p class="elp-li"><b>1×</b><span><b>Caméra extérieure solaire W512</b>, sans câble</span></p>
+            <p class="elp-li"><b>1×</b><span>Sirène extérieure solaire WOS501S</span></p>
+            <p class="elp-li"><b>2×</b><span>Télécommandes WRC501 + 2 autocollants</span></p>
+          </div>
+          <div class="elp-price">
+            <span class="elp-from">Prix du pack</span>
+            <span class="elp-amt">593,90 €</span><span class="elp-was">794,20 €</span><span class="elp-save">−25 %</span>
+          </div>
+          <a class="elp-buy elp-buy--2" href="https://daewoo-security.fr/products/offre-exclusive-pack-elite-compatible-animaux-sans-abonnement">
+            Voir l'offre
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- DOUBLE CAMÉRA -->
+      <div class="elp-card">
+        <span class="elp-flag"></span>
+        <div class="elp-shot">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Offreexclusive_5.png?v=1770975531" alt="Offre exclusive Pack ÉLITE double caméra solaire W512MW avec caméra intérieure IP506P" loading="lazy" width="1600" height="1600">
+        </div>
+        <div class="elp-body">
+          <span class="elp-badge elp-badge--max">Le plus complet</span>
+          <h3 class="elp-n">Pack Élite double caméra</h3>
+          <p class="elp-for">Grande maison ou résidence secondaire&nbsp;: façade, jardin et intérieur sous contrôle.</p>
+          <div class="elp-ul">
+            <p class="elp-li"><b>1×</b><span><b>Centrale Élite PA501Z</b> — Wi-Fi, Ethernet, 4G</span></p>
+            <p class="elp-li"><b>4×</b><span>Contacteurs Zigbee WDS502Z</span></p>
+            <p class="elp-li"><b>4×</b><span>Détecteurs de vibration Zigbee WVD502Z</span></p>
+            <p class="elp-li"><b>1×</b><span>Détecteur de mouvement WPS501, compatible animaux</span></p>
+            <p class="elp-li"><b>2×</b><span><b>Caméras solaires W512MW</b> motorisées, sans câble</span></p>
+            <p class="elp-li"><b>1×</b><span>Caméra intérieure IP506P, mode vie privée</span></p>
+            <p class="elp-li"><b>1×</b><span>Sirène extérieure solaire WOS501S</span></p>
+            <p class="elp-li"><b>2×</b><span>Télécommandes WRC501 + 2 autocollants</span></p>
+          </div>
+          <div class="elp-price">
+            <span class="elp-from">Prix du pack</span>
+            <span class="elp-amt">809,90 €</span><span class="elp-was">1 068,90 €</span><span class="elp-save">−24 %</span>
+          </div>
+          <a class="elp-buy elp-buy--1" href="https://daewoo-security.fr/products/offre-exclusive-pack-elite-compatible-animaux-sans-abonnement-copie">
+            Voir l'offre
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p class="elp-foot">Vous préférez composer vous-même&nbsp;? La centrale seule est à 199,90 €, et le <a href="https://daewoo-security.fr/pages/configurateur_2">configurateur</a> assemble votre système en 2 minutes.</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Élite — Packs",
+  "settings": []
+}
+{% endschema %}

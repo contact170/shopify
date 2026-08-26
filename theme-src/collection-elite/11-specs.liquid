@@ -1,0 +1,109 @@
+{% comment %} ── Fiche technique Élite — blocs par thème ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .els * { box-sizing:border-box; margin:0; padding:0; }
+  .els { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0d1520; padding:92px 24px 96px; }
+  .els-inner { max-width:1160px; margin:0 auto; }
+  .els-head { max-width:620px; margin-bottom:44px; }
+  .els-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5c6a75; margin-bottom:14px; }
+  .els-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#12a0ad,rgba(18,160,173,0)); }
+  .els-title { font-size:clamp(26px,3.4vw,38px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:12px; }
+  .els-sub { font-size:15.5px; color:#4b5a63; font-weight:300; line-height:1.65; }
+
+  .els-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .els-b { border:1px solid #e2e7e6; border-radius:16px; padding:26px 24px 12px; background:#fff; }
+  .els-bt { display:flex; align-items:center; gap:10px; font-size:11px; font-weight:700; letter-spacing:.16em;
+    text-transform:uppercase; color:#0a6068; margin-bottom:16px; }
+  .els-bt svg { width:15px; height:15px; fill:none; stroke:#12a0ad; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .els-r { display:grid; grid-template-columns:1fr auto; gap:14px; align-items:baseline;
+    padding:12px 0; border-top:1px solid #eef1f0; }
+  .els-b .els-r:first-of-type { border-top:0; padding-top:0; }
+  .els-l { font-size:13.5px; color:#4b5a63; font-weight:300; line-height:1.5; }
+  .els-l small { display:block; font-size:12px; color:#5c6a75; margin-top:3px; line-height:1.45; }
+  .els-v { font-size:13px; font-weight:600; color:#0d1520; text-align:right; white-space:nowrap; }
+  .els-v.on { color:#0a6068; }
+  .els-v.off { color:#5c6a75; font-weight:400; }
+  .els-v.wrap { white-space:normal; max-width:150px; }
+
+  @media (max-width:1000px) { .els-grid { grid-template-columns:1fr 1fr; } }
+  @media (max-width:700px) {
+    .els-grid { grid-template-columns:1fr; }
+    .els-r { grid-template-columns:1fr; gap:4px; }
+    .els-v, .els-v.wrap { text-align:left; max-width:none; white-space:normal; }
+    .els { padding:72px 20px; }
+  }
+</style>
+
+<section class="els">
+  <div class="els-inner">
+    <div class="els-head">
+      <span class="els-eyebrow">Caractéristiques</span>
+      <h2 class="els-title">Fiche technique de la centrale Élite PA501Z</h2>
+      <p class="els-sub">Tout ce que le boîtier sait faire, sans avoir à ouvrir un manuel.</p>
+    </div>
+
+    <div class="els-grid">
+      <div class="els-b">
+        <p class="els-bt"><svg viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5.5 5.5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1.2"/><path d="M1.5 9a15 15 0 0 1 21 0"/></svg>Connectivité</p>
+        <div class="els-r"><span class="els-l">Wi-Fi</span><span class="els-v">2,4 GHz</span></div>
+        <div class="els-r"><span class="els-l">Ethernet</span><span class="els-v">Port RJ45</span></div>
+        <div class="els-r"><span class="els-l">Module GSM 4G<small>Intégré à la centrale</small></span><span class="els-v on">Inclus</span></div>
+        <div class="els-r"><span class="els-l">Carte SIM<small>Nécessaire pour activer le relais 4G</small></span><span class="els-v off">En option</span></div>
+        <div class="els-r"><span class="els-l">Bascule automatique entre réseaux</span><span class="els-v on">Oui</span></div>
+        <div class="els-r"><span class="els-l">Radio des accessoires</span><span class="els-v">Zigbee</span></div>
+        <div class="els-r"><span class="els-l">Alexa &amp; Google Home</span><span class="els-v off">Non compatible</span></div>
+      </div>
+
+      <div class="els-b">
+        <p class="els-bt"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="17" height="10" rx="2"/><line x1="22" y1="10.5" x2="22" y2="13.5"/></svg>Alimentation &amp; autonomie</p>
+        <div class="els-r"><span class="els-l">Alimentation principale<small>Bloc secteur fourni</small></span><span class="els-v">Secteur</span></div>
+        <div class="els-r"><span class="els-l">Batterie de secours intégrée</span><span class="els-v">≈ 10 h</span></div>
+        <div class="els-r"><span class="els-l">Autonomie des accessoires<small>Selon l'usage et l'exposition</small></span><span class="els-v wrap">12 à 24 mois</span></div>
+        <div class="els-r"><span class="els-l">Alerte de pile faible</span><span class="els-v on">Oui</span></div>
+        <div class="els-r"><span class="els-l">Fonctionnement sans Internet<small>Détection et sirène en local</small></span><span class="els-v on">Oui</span></div>
+      </div>
+
+      <div class="els-b">
+        <p class="els-bt"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Sécurité &amp; détection</p>
+        <div class="els-r"><span class="els-l">Sirène intégrée</span><span class="els-v">85 dB</span></div>
+        <div class="els-r"><span class="els-l">Détection d'arrachement</span><span class="els-v on">Oui</span></div>
+        <div class="els-r"><span class="els-l">Communication chiffrée</span><span class="els-v on">Oui</span></div>
+        <div class="els-r"><span class="els-l">Modes de surveillance</span><span class="els-v wrap">Total · Partiel · Désarmé</span></div>
+        <div class="els-r"><span class="els-l">Temporisation entrée / sortie</span><span class="els-v on">Réglable</span></div>
+        <div class="els-r"><span class="els-l">Fonction SOS</span><span class="els-v on">Oui</span></div>
+        <div class="els-r"><span class="els-l">Alertes<small>SMS et appel avec une carte SIM</small></span><span class="els-v wrap">Push, SMS, appel</span></div>
+      </div>
+
+      <div class="els-b">
+        <p class="els-bt"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="3"/><line x1="9.5" y1="18" x2="14.5" y2="18"/></svg>Commande &amp; pilotage</p>
+        <div class="els-r"><span class="els-l">Application<small>iOS et Android, gratuite</small></span><span class="els-v wrap">Daewoo Home Connect</span></div>
+        <div class="els-r"><span class="els-l">Écran ou clavier sur la centrale</span><span class="els-v off">Aucun</span></div>
+        <div class="els-r"><span class="els-l">Armement sans téléphone<small>Télécommande, badge RFID ou clavier Zigbee</small></span><span class="els-v on">Oui</span></div>
+        <div class="els-r"><span class="els-l">Scénarios personnalisés</span><span class="els-v on">Oui</span></div>
+        <div class="els-r"><span class="els-l">Partage d'accès multi-utilisateurs</span><span class="els-v on">Oui</span></div>
+        <div class="els-r"><span class="els-l">Pilotage depuis l'étranger</span><span class="els-v on">Oui</span></div>
+      </div>
+
+      <div class="els-b">
+        <p class="els-bt"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>Évolutivité</p>
+        <div class="els-r"><span class="els-l">Accessoires par centrale</span><span class="els-v">Jusqu'à 200</span></div>
+        <div class="els-r"><span class="els-l">Caméras &amp; objets connectés<small>Gérés dans l'application</small></span><span class="els-v">Illimité</span></div>
+        <div class="els-r"><span class="els-l">Accessoires gamme Key (SA501)</span><span class="els-v on">Compatibles</span></div>
+        <div class="els-r"><span class="els-l">Périphériques Zigbee tiers</span><span class="els-v on">Compatibles</span></div>
+        <div class="els-r"><span class="els-l">Amplificateur de portée EXT501</span><span class="els-v off">En option</span></div>
+      </div>
+
+      <div class="els-b">
+        <p class="els-bt"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Garantie &amp; service</p>
+        <div class="els-r"><span class="els-l">Garantie</span><span class="els-v">2 ans</span></div>
+        <div class="els-r"><span class="els-l">Retour</span><span class="els-v wrap">Gratuit, 14 jours</span></div>
+        <div class="els-r"><span class="els-l">Assistant en ligne</span><span class="els-v">7j/7</span></div>
+        <div class="els-r"><span class="els-l">Équipe SAV, basée en France</span><span class="els-v">5j/7</span></div>
+        <div class="els-r"><span class="els-l">Abonnement obligatoire</span><span class="els-v off">Aucun</span></div>
+        <div class="els-r"><span class="els-l">Prix de la centrale seule</span><span class="els-v">199,90 €</span></div>
+      </div>
+    </div>
+  </div>
+</section>

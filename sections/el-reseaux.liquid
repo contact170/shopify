@@ -1,0 +1,109 @@
+{% comment %} ── Triple connexion Wi-Fi / Ethernet / 4G — chaîne de secours ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .elr * { box-sizing:border-box; margin:0; padding:0; }
+  .elr { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#f1f3f2; color:#0d1520; padding:92px 24px 96px; }
+  .elr-inner { max-width:1160px; margin:0 auto; }
+  .elr-head { max-width:660px; margin-bottom:52px; }
+  .elr-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5c6a75; margin-bottom:16px; }
+  .elr-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#12a0ad,rgba(18,160,173,0)); }
+  .elr-title { font-size:clamp(27px,3.6vw,42px); font-weight:600; letter-spacing:-.035em; line-height:1.1; margin-bottom:16px; }
+  .elr-sub { font-size:16px; color:#4b5a63; font-weight:300; line-height:1.68; }
+  .elr-sub b { color:#0d1520; font-weight:500; }
+
+  .elr-chain { position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .elr-chain::before { content:''; position:absolute; top:46px; left:12%; right:12%; height:2px;
+    background:repeating-linear-gradient(90deg,#c3d1cf 0 8px,transparent 8px 16px); z-index:0; }
+  .elr-node { position:relative; z-index:2; background:#fff; border:1px solid #e2e7e6; border-radius:18px;
+    padding:28px 26px 30px; box-shadow:0 18px 44px -30px rgba(13,21,32,.32); display:flex; flex-direction:column; }
+  .elr-ico { width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center;
+    background:rgba(18,160,173,.11); margin-bottom:18px; }
+  .elr-ico svg { width:21px; height:21px; fill:none; stroke:#0a6068; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  .elr-rank { font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#0a6068; margin-bottom:8px; }
+  .elr-n { font-size:19px; font-weight:600; letter-spacing:-.025em; margin-bottom:8px; }
+  .elr-d { font-size:14px; color:#4b5a63; font-weight:300; line-height:1.6; margin-bottom:16px; flex:1; }
+  .elr-d b { color:#0d1520; font-weight:500; }
+  .elr-note { font-size:12.5px; font-weight:500; padding:8px 13px; border-radius:7px; display:inline-block;
+    background:#f1f3f2; color:#4b5a63; align-self:flex-start; }
+  .elr-note--opt { background:rgba(18,160,173,.11); color:#0a6068; }
+
+  .elr-band { margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .elr-cell { background:#0d1520; border-radius:18px; padding:28px 28px 30px; color:#fff; position:relative; overflow:hidden; }
+  .elr-cell::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(420px 220px at 88% 0%,rgba(18,160,173,.30),transparent 66%); }
+  .elr-cell > * { position:relative; z-index:2; }
+  .elr-cell--soft { background:#fff; border:1px solid #e2e7e6; color:#0d1520; }
+  .elr-cell--soft::before { display:none; }
+  .elr-ct { font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#12a0ad; margin-bottom:12px; }
+  .elr-cell--soft .elr-ct { color:#0a6068; }
+  .elr-ch { font-size:20px; font-weight:600; letter-spacing:-.025em; line-height:1.3; margin-bottom:8px; }
+  .elr-cd { font-size:14px; font-weight:300; line-height:1.62; color:#c2ced3; }
+  .elr-cell--soft .elr-cd { color:#4b5a63; }
+  .elr-cd b { font-weight:500; color:#fff; }
+  .elr-cell--soft .elr-cd b { color:#0d1520; }
+
+  @media (max-width:900px) {
+    .elr-chain { grid-template-columns:1fr; }
+    .elr-chain::before { display:none; }
+    .elr-band { grid-template-columns:1fr; }
+    .elr { padding:72px 20px; }
+  }
+</style>
+
+<section class="elr">
+  <div class="elr-inner">
+    <div class="elr-head">
+      <span class="elr-eyebrow">Continuité de service</span>
+      <h2 class="elr-title">Trois réseaux se relaient pour qu'elle reste joignable.</h2>
+      <p class="elr-sub">La plupart des alarmes connectées s'arrêtent de parler quand la box tombe. La centrale Élite, elle, <b>bascule automatiquement d'un réseau à l'autre</b> — vous n'avez rien à faire, rien à reconfigurer.</p>
+    </div>
+
+    <div class="elr-chain">
+      <div class="elr-node">
+        <div class="elr-ico"><svg viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5.5 5.5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1.2"/><path d="M1.5 9a15 15 0 0 1 21 0"/></svg></div>
+        <p class="elr-rank">Connexion principale</p>
+        <p class="elr-n">Wi-Fi 2,4 GHz</p>
+        <p class="elr-d">Le mode le plus simple&nbsp;: une prise secteur, votre réseau Wi-Fi, et la centrale est en ligne. <b>Aucun câble à tirer.</b></p>
+        <span class="elr-note">Inclus</span>
+      </div>
+
+      <div class="elr-node">
+        <div class="elr-ico"><svg viewBox="0 0 24 24"><rect x="2" y="14" width="6" height="7" rx="1.4"/><rect x="16" y="14" width="6" height="7" rx="1.4"/><rect x="9" y="3" width="6" height="7" rx="1.4"/><path d="M12 10v3M5 14v-1.5h14V14"/></svg></div>
+        <p class="elr-rank">Alternative filaire</p>
+        <p class="elr-n">Ethernet (RJ45)</p>
+        <p class="elr-d">Branchée directement sur la box, la centrale devient <b>insensible aux perturbations Wi-Fi</b>&nbsp;: c'est la liaison la plus fiable.</p>
+        <span class="elr-note">Inclus</span>
+      </div>
+
+      <div class="elr-node">
+        <div class="elr-ico"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.6"/><path d="M9.5 6h5"/><circle cx="12" cy="17" r="1.2"/></svg></div>
+        <p class="elr-rank">Secours mobile</p>
+        <p class="elr-n">GSM 4G</p>
+        <p class="elr-d">Internet coupé&nbsp;? La centrale passe sur le réseau mobile et vous alerte <b>par SMS et par appel téléphonique</b>.</p>
+        <span class="elr-note elr-note--opt">Carte SIM en option — 85 € / an</span>
+      </div>
+    </div>
+
+    <div class="elr-band">
+      <div class="elr-cell">
+        <p class="elr-ct">Et si le courant saute&nbsp;?</p>
+        <p class="elr-ch">Batterie de secours intégrée</p>
+        <p class="elr-cd">La centrale continue de fonctionner sur sa propre batterie pendant <b>une dizaine d'heures</b>. Le système reste armé, la détection reste active.</p>
+      </div>
+      <div class="elr-cell elr-cell--soft">
+        <p class="elr-ct">À savoir</p>
+        <p class="elr-ch">Les caméras, elles, ont besoin du Wi-Fi</p>
+        <p class="elr-cd">Le relais 4G concerne les alertes de la centrale. <b>Sans Internet, le flux vidéo de vos caméras n'est pas accessible</b> — la détection et la sirène, si.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Élite — Triple connexion",
+  "settings": []
+}
+{% endschema %}

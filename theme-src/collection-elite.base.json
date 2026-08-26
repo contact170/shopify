@@ -1,0 +1,639 @@
+{
+  "sections": {
+    "custom_liquid_rDimba": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\n\n<style>\n  .vg3-hero *,\n  .vg3-trust-bar * {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  .vg3-hero {\n    position: relative;\n    min-height: 400px;\n    display: flex;\n    align-items: center;\n    overflow: hidden;\n    font-family: 'Poppins', sans-serif;\n    border-radius: 16px 16px 0 0;\n  }\n\n  .vg3-hero-bg {\n    position: absolute;\n    inset: 0;\n  }\n\n  .vg3-hero-bg::after {\n    content: '';\n    position: absolute;\n    inset: 0;\n    background: linear-gradient(\n      95deg,\n      rgba(8,18,48,0.90) 0%,\n      rgba(8,18,48,0.55) 50%,\n      rgba(8,18,48,0.05) 100%\n    );\n  }\n\n  .vg3-hero-bg img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center right;\n    display: block;\n  }\n\n  .vg3-hero-content {\n    position: relative;\n    z-index: 2;\n    max-width: 1200px;\n    margin: 0 auto;\n    padding: 48px 56px;\n    width: 100%;\n  }\n\n  .vg3-title {\n    font-family: 'Poppins', sans-serif;\n    font-weight: 700;\n    font-size: clamp(26px, 3.5vw, 44px);\n    line-height: 1.08;\n    color: #fff;\n    margin-bottom: 12px;\n    max-width: 480px;\n    animation: vg3Up 0.5s ease both;\n  }\n\n  .vg3-title span { color: #5b9bd5; }\n\n  .vg3-sub {\n    font-family: 'Poppins', sans-serif;\n    font-size: 14px;\n    color: rgba(255,255,255,0.65);\n    line-height: 1.7;\n    max-width: 380px;\n    margin-bottom: 28px;\n    animation: vg3Up 0.5s 0.1s ease both;\n  }\n\n  .vg3-ctas {\n    display: flex;\n    gap: 12px;\n    flex-wrap: wrap;\n    animation: vg3Up 0.5s 0.2s ease both;\n  }\n\n  .vg3-btn-packs {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #1a4faa;\n    color: #fff;\n    font-family: 'Poppins', sans-serif;\n    font-size: 14px;\n    font-weight: 600;\n    padding: 12px 22px;\n    border-radius: 10px;\n    text-decoration: none;\n    transition: background 0.2s, transform 0.15s;\n  }\n  .vg3-btn-packs:hover {\n    background: #2260cc;\n    transform: translateY(-1px);\n    color: #fff;\n    text-decoration: none;\n  }\n  .vg3-btn-packs svg {\n    width: 15px; height: 15px;\n    stroke: currentColor; fill: none; stroke-width: 2;\n    transition: transform 0.2s;\n  }\n  .vg3-btn-packs:hover svg { transform: translateX(3px); }\n\n  .vg3-btn-config {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: transparent;\n    color: rgba(255,255,255,0.85);\n    font-family: 'Poppins', sans-serif;\n    font-size: 14px;\n    font-weight: 500;\n    padding: 11px 20px;\n    border-radius: 10px;\n    border: 1.5px solid rgba(255,255,255,0.3);\n    text-decoration: none;\n    transition: border-color 0.2s, color 0.2s, transform 0.15s;\n  }\n  .vg3-btn-config:hover {\n    border-color: rgba(255,255,255,0.7);\n    color: #fff;\n    transform: translateY(-1px);\n    text-decoration: none;\n  }\n  .vg3-btn-config svg {\n    width: 15px; height: 15px;\n    stroke: currentColor; fill: none; stroke-width: 2;\n  }\n\n  .vg3-trust-bar {\n    background: rgba(6,14,40,0.94);\n    border-top: 1px solid rgba(255,255,255,0.07);\n    font-family: 'Poppins', sans-serif;\n    border-radius: 0 0 16px 16px;\n  }\n\n  .vg3-trust-inner {\n    max-width: 1200px;\n    margin: 0 auto;\n    padding: 0 56px;\n    display: flex;\n    overflow-x: auto;\n    scrollbar-width: none;\n  }\n  .vg3-trust-inner::-webkit-scrollbar { display: none; }\n\n  .vg3-trust-item {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    padding: 16px 32px 16px 0;\n    margin-right: 32px;\n    border-right: 1px solid rgba(255,255,255,0.07);\n    white-space: nowrap;\n    flex-shrink: 0;\n  }\n  .vg3-trust-item:last-child { border-right: none; margin-right: 0; }\n\n  .vg3-trust-icon {\n    width: 28px; height: 28px;\n    display: flex; align-items: center; justify-content: center;\n    flex-shrink: 0;\n  }\n  .vg3-trust-icon svg {\n    width: 16px; height: 16px;\n    stroke: #5b9bd5; fill: none; stroke-width: 2;\n  }\n\n  .vg3-trust-label {\n    font-size: 12px; font-weight: 600;\n    color: #fff; display: block; line-height: 1.2;\n  }\n  .vg3-trust-sub {\n    font-size: 11px;\n    color: rgba(255,255,255,0.45);\n    display: block; line-height: 1.3;\n  }\n\n  @keyframes vg3Up {\n    from { opacity: 0; transform: translateY(14px); }\n    to   { opacity: 1; transform: translateY(0); }\n  }\n\n  @media (max-width: 640px) {\n    .vg3-hero { flex-direction: column; align-items: stretch; min-height: unset; border-radius: 12px 12px 0 0; }\n    .vg3-hero-bg { position: relative; width: 100%; height: 240px; }\n    .vg3-hero-bg img { object-position: center center; }\n    .vg3-hero-bg::after { background: linear-gradient(to bottom, rgba(8,18,48,0) 0%, rgba(8,18,48,0.5) 100%); }\n    .vg3-hero-content { background: #0a1628; padding: 28px 20px 32px; position: relative; }\n    .vg3-title { font-size: 22px; max-width: 100%; }\n    .vg3-sub { font-size: 13px; max-width: 100%; }\n    .vg3-ctas { flex-direction: column; gap: 10px; }\n    .vg3-btn-packs, .vg3-btn-config { width: 100%; justify-content: center; }\n    .vg3-trust-inner { padding: 0 20px; }\n    .vg3-trust-bar { border-radius: 0 0 12px 12px; }\n  }\n</style>\n\n<section class=\"vg3-hero\">\n  <div class=\"vg3-hero-bg\">\n    <img src=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Visuels_amazon_vendor_4.webp?v=1777541137\" alt=\"Alarme Centrale Elite\" loading=\"eager\">\n  </div>\n  <div class=\"vg3-hero-content\">\n    <h2 class=\"vg3-title\">Protégez votre maison<br>avec l'alarme <span>Centrale Élite</span></h2>\n    <p class=\"vg3-sub\">Installation en 30 minutes, sans perçage. Alertes en temps réel sur votre smartphone. Sans abonnement obligatoire.</p>\n    <div class=\"vg3-ctas\">\n      <a href=\"https://daewoo-security.fr/pages/pack-alarmes?_pos=1&_psq=pack&_ss=e&_v=1.0\" class=\"vg3-btn-packs\">\n        Voir les packs\n        <svg viewBox=\"0 0 24 24\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><polyline points=\"12 5 19 12 12 19\"/></svg>\n      </a>\n      <a href=\"https://daewoo-security.fr/pages/configurateur_2\" class=\"vg3-btn-config\">\n        <svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14\"/></svg>\n        Configurer mon système\n      </a>\n    </div>\n  </div>\n</section>\n\n<div class=\"vg3-trust-bar\">\n  <div class=\"vg3-trust-inner\">\n    <div class=\"vg3-trust-item\">\n      <div class=\"vg3-trust-icon\">\n        <svg viewBox=\"0 0 24 24\"><polyline points=\"22 12 18 12 15 21 9 3 6 12 2 12\"/></svg>\n      </div>\n      <div>\n        <span class=\"vg3-trust-label\">Installation 30 min</span>\n        <span class=\"vg3-trust-sub\">Sans câblage ni perçage</span>\n      </div>\n    </div>\n    <div class=\"vg3-trust-item\">\n      <div class=\"vg3-trust-icon\">\n        <svg viewBox=\"0 0 24 24\"><rect x=\"1\" y=\"4\" width=\"22\" height=\"16\" rx=\"2\"/><line x1=\"1\" y1=\"10\" x2=\"23\" y2=\"10\"/></svg>\n      </div>\n      <div>\n        <span class=\"vg3-trust-label\">Sans abonnement</span>\n        <span class=\"vg3-trust-sub\">Application gratuite incluse</span>\n      </div>\n    </div>\n    <div class=\"vg3-trust-item\">\n      <div class=\"vg3-trust-icon\">\n        <svg viewBox=\"0 0 24 24\"><path d=\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/></svg>\n      </div>\n      <div>\n        <span class=\"vg3-trust-label\">SAV basé en France</span>\n        <span class=\"vg3-trust-sub\">Support 7j/7</span>\n      </div>\n    </div>\n    <div class=\"vg3-trust-item\">\n      <div class=\"vg3-trust-icon\">\n        <svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg>\n      </div>\n      <div>\n        <span class=\"vg3-trust-label\">Garantie 2 ans</span>\n        <span class=\"vg3-trust-sub\">Retour gratuit 14 jours</span>\n      </div>\n    </div>\n  </div>\n</div>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "main-collection-banner": {
+      "type": "main-collection-banner",
+      "blocks": {
+        "breadcrumb": {
+          "type": "breadcrumb",
+          "settings": {
+            "show_collections_link": true
+          }
+        },
+        "title": {
+          "type": "title",
+          "disabled": true,
+          "settings": {
+            "title_size": "title-md"
+          }
+        },
+        "description_39qBgn": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false
+          }
+        }
+      },
+      "block_order": [
+        "breadcrumb",
+        "title",
+        "description_39qBgn"
+      ],
+      "disabled": true,
+      "settings": {
+        "transparent_header": true,
+        "show_image": false,
+        "image_height": "700px",
+        "content_position": "md:items-end md:justify-start",
+        "text_alignment": "left",
+        "image_height_mobile": "auto",
+        "content_position_mobile": "items-end justify-start",
+        "text_alignment_mobile": "left",
+        "color_text": "#ffffff",
+        "color_background": "",
+        "gradient_background": "",
+        "color_overlay": "#171717",
+        "overlay_opacity": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "full_width": true,
+        "rounded": false,
+        "enable_parallax": true,
+        "parallax_direction": "vertical"
+      }
+    },
+    "custom_liquid_4JkcDY": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<style>\n  .fd-banner {\n    font-family: sans-serif;\n    background: #FFFFFF;\n    overflow: hidden;\n    position: relative;\n    border-radius: 10px;\n    min-height: 80px;\n    display: flex;\n    align-items: stretch;\n    border: 1px solid #E8E8E8;\n    margin: 12px 0;\n  }\n  .fd-left-bar { width: 10px; background: #002395; flex-shrink: 0; }\n  .fd-right-bar { width: 10px; background: #ED2939; flex-shrink: 0; }\n  .fd-badge {\n    background: #002395;\n    color: #fff;\n    padding: 0 18px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    flex-shrink: 0;\n    min-width: 90px;\n    text-align: center;\n    gap: 3px;\n  }\n  .fd-badge .fd-flag { font-size: 26px; line-height: 1; }\n  .fd-badge span { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.9; }\n  .fd-main {\n    flex: 1;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    gap: 16px;\n    padding: 16px 24px;\n  }\n  .fd-left { display: flex; flex-direction: column; gap: 4px; }\n  .fd-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; color: #002395; text-transform: uppercase; margin: 0; }\n  .fd-headline { font-size: 28px; color: #111; letter-spacing: 0.03em; line-height: 1; margin: 0; display: flex; align-items: baseline; gap: 10px; }\n  .fd-headline .fd-percent { color: #ED2939; font-size: 40px; font-weight: 700; }\n  .fd-sub { font-size: 12px; color: #888; margin: 0; }\n  .fd-divider { width: 1px; background: #E8E8E8; align-self: stretch; margin: 12px 0; }\n  .fd-timer-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; padding: 0 8px; }\n  .fd-timer-label { font-size: 9px; font-weight: 600; letter-spacing: 0.2em; color: #aaa; text-transform: uppercase; }\n  .fd-timer { display: flex; gap: 4px; align-items: center; }\n  .fd-tick { display: flex; flex-direction: column; align-items: center; gap: 2px; }\n  .fd-tick-num { font-size: 20px; font-weight: 700; color: #002395; line-height: 1; background: #EEF2FF; border-radius: 4px; padding: 2px 6px; min-width: 34px; text-align: center; }\n  .fd-tick-label { font-size: 8px; color: #bbb; letter-spacing: 0.12em; text-transform: uppercase; }\n  .fd-sep { font-size: 18px; color: #ccc; line-height: 1; margin-bottom: 10px; }\n  .fd-btn {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #002395;\n    color: #fff !important;\n    font-size: 13px;\n    font-weight: 600;\n    letter-spacing: 0.04em;\n    text-decoration: none !important;\n    padding: 11px 20px;\n    border-radius: 6px;\n    border: none;\n    cursor: pointer;\n    flex-shrink: 0;\n    white-space: nowrap;\n    transition: background 0.15s, transform 0.1s;\n  }\n  .fd-btn:hover { background: #001a6e; transform: scale(1.02); }\n  .fd-btn svg { width: 14px; height: 14px; flex-shrink: 0; }\n  @keyframes fd-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }\n  .fd-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #ED2939; display: inline-block; animation: fd-pulse 1s ease-in-out infinite; margin-right: 5px; vertical-align: middle; }\n  .fd-tricolor-bar { height: 4px; background: linear-gradient(to right, #002395 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #ED2939 66.6%); position: absolute; top: 0; left: 0; right: 0; }\n  @media (max-width: 768px) {\n    .fd-timer-wrap, .fd-divider { display: none; }\n    .fd-main { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px; }\n    .fd-headline { font-size: 20px; }\n    .fd-headline .fd-percent { font-size: 28px; }\n    .fd-btn { width: 100%; justify-content: center; }\n  }\n</style>\n\n<div class=\"fd-banner\">\n  <div class=\"fd-tricolor-bar\"></div>\n  <div class=\"fd-left-bar\"></div>\n  <div class=\"fd-badge\">\n    <div class=\"fd-flag\">🇫🇷</div>\n    <span>French<br>Days</span>\n  </div>\n  <div class=\"fd-main\">\n    <div class=\"fd-left\">\n      <p class=\"fd-eyebrow\"><span class=\"fd-live-dot\"></span>Offre exclusive · Packs Alarmes</p>\n      <div class=\"fd-headline\">\n        <span class=\"fd-percent\">-5%</span>\n        <span>de remise supplémentaire</span>\n      </div>\n      <p class=\"fd-sub\">Sur tous les packs alarmes Daewoo Security — offre à durée limitée</p>\n    </div>\n    <div class=\"fd-divider\"></div>\n    <div class=\"fd-timer-wrap\">\n      <span class=\"fd-timer-label\">Temps restant</span>\n      <div class=\"fd-timer\">\n        <div class=\"fd-tick\">\n          <span class=\"fd-tick-num\" id=\"fd-h\">00</span>\n          <span class=\"fd-tick-label\">heures</span>\n        </div>\n        <span class=\"fd-sep\">:</span>\n        <div class=\"fd-tick\">\n          <span class=\"fd-tick-num\" id=\"fd-m\">00</span>\n          <span class=\"fd-tick-label\">min</span>\n        </div>\n        <span class=\"fd-sep\">:</span>\n        <div class=\"fd-tick\">\n          <span class=\"fd-tick-num\" id=\"fd-s\">00</span>\n          <span class=\"fd-tick-label\">sec</span>\n        </div>\n      </div>\n    </div>\n    <div class=\"fd-divider\"></div>\n    <a class=\"fd-btn\" href=\"https://daewoo-security.fr/pages/pack-alarmes?_pos=1&_psq=pack&_ss=e&_v=1.0\">\n      Voir les packs\n      <svg viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n        <path d=\"M1 7h12M8 2l5 5-5 5\" stroke=\"white\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n      </svg>\n    </a>\n  </div>\n  <div class=\"fd-right-bar\"></div>\n</div>\n\n<script>\n  (function() {\n    var endDate = new Date('2026-05-05T23:59:59');\n    function pad(n) { return String(n).padStart(2, '0'); }\n    function fdTick() {\n      var diff = endDate - new Date();\n      if (diff <= 0) {\n        document.getElementById('fd-h').textContent = '00';\n        document.getElementById('fd-m').textContent = '00';\n        document.getElementById('fd-s').textContent = '00';\n        return;\n      }\n      document.getElementById('fd-h').textContent = pad(Math.floor(diff / 3600000));\n      document.getElementById('fd-m').textContent = pad(Math.floor((diff % 3600000) / 60000));\n      document.getElementById('fd-s').textContent = pad(Math.floor((diff % 60000) / 1000));\n    }\n    fdTick();\n    setInterval(fdTick, 1000);\n  })();\n</script>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "main-collection": {
+      "type": "main-collection",
+      "blocks": {
+        "subcollections": {
+          "type": "subcollections",
+          "settings": {
+            "menu": "tous-les-accessoires",
+            "show_count": true
+          }
+        },
+        "promotion-1": {
+          "type": "promotion",
+          "settings": {
+            "position": 8,
+            "column_size": "1",
+            "row_size": "1",
+            "content_position": "md:items-center",
+            "text_alignment": "center",
+            "content_layout": "default",
+            "subheading": "",
+            "heading": "Example heading",
+            "heading_size": "title-xl tracking-heading",
+            "content": "<p>Share information about your brand with your customers.</p>",
+            "button_label": "Shop now",
+            "button_link": "",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true,
+            "content_position_mobile": "items-center",
+            "text_alignment_mobile": "center",
+            "direction": "left",
+            "speed": 20,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "color_text": "#ffffff",
+            "color_background": "#171717",
+            "gradient_background": "",
+            "color_highlight": "",
+            "gradient_highlight": "",
+            "color_button_text": "#171717",
+            "color_button_background": "#ffffff",
+            "color_button_gradient": "",
+            "color_overlay": "#171717",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "subcollections",
+        "promotion-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "products_per_page": 11,
+        "columns": 4,
+        "columns_mobile": "2",
+        "pagination": "paginated",
+        "enable_filtering": true,
+        "filter_type": "drawer",
+        "filter_collapsed": false,
+        "filter_color_swatches": true,
+        "enable_sorting": true,
+        "show_on_model": false,
+        "buttons_style": "secondary",
+        "padding_top": 40,
+        "padding_bottom": 100,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "custom_liquid_MFK3nh": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\n\n<style>\n  .pke-section * { box-sizing: border-box; margin: 0; padding: 0; }\n\n  .pke-section {\n    font-family: 'Poppins', sans-serif;\n    padding: 64px 48px;\n    background:;\n    overflow: hidden;\n  }\n\n  .pke-inner { max-width: 1100px; margin: 0 auto; }\n\n  .pke-header { text-align: center; margin-bottom: 48px; }\n\n  .pke-tag {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    background: #e6f1fb;\n    color: #1a4faa;\n    font-size: 12px;\n    font-weight: 600;\n    padding: 5px 14px;\n    border-radius: 20px;\n    margin-bottom: 14px;\n    letter-spacing: 0.06em;\n    text-transform: uppercase;\n  }\n\n  .pke-title {\n    font-size: clamp(24px, 3.5vw, 36px);\n    font-weight: 700;\n    color: #0f1a2e;\n    line-height: 1.15;\n    margin-bottom: 12px;\n  }\n\n  .pke-title span { color: #1a4faa; }\n\n  .pke-subtitle {\n    font-size: 15px;\n    color: #6b7280;\n    max-width: 520px;\n    margin: 0 auto;\n    line-height: 1.6;\n  }\n\n  .pke-grid {\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 20px;\n    margin-bottom: 40px;\n    align-items: stretch;\n  }\n\n  .pke-card {\n    border-radius: 16px;\n    border: 1.5px solid #e5e7eb;\n    overflow: hidden;\n    position: relative;\n    transition: transform 0.2s, box-shadow 0.2s;\n    background: #fff;\n    display: flex;\n    flex-direction: column;\n  }\n\n  .pke-card:hover {\n    transform: translateY(-4px);\n    box-shadow: 0 12px 32px rgba(26,79,170,0.1);\n  }\n\n  .pke-card.featured {\n    border-color: #1a4faa;\n    border-width: 2px;\n  }\n\n  .pke-card-badge {\n    position: absolute;\n    top: 12px;\n    right: 12px;\n    background: #1a4faa;\n    color: #fff;\n    font-size: 11px;\n    font-weight: 600;\n    padding: 3px 12px;\n    border-radius: 20px;\n    white-space: nowrap;\n    z-index: 2;\n  }\n\n  .pke-card-img-wrap {\n    width: 100%;\n    aspect-ratio: 1 / 1;\n    overflow: hidden;\n    background: #f5f6fa;\n    flex-shrink: 0;\n  }\n\n  .pke-card-img-wrap img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n    display: block;\n  }\n\n  .pke-card-body {\n    padding: 24px;\n    display: flex;\n    flex-direction: column;\n    flex: 1;\n  }\n\n  .pke-card-ref {\n    font-size: 11px;\n    font-weight: 600;\n    color: #9ca3af;\n    letter-spacing: 0.08em;\n    text-transform: uppercase;\n    margin-bottom: 4px;\n  }\n\n  .pke-card-title {\n    font-size: 16px;\n    font-weight: 700;\n    color: #0f1a2e;\n    margin-bottom: 4px;\n    line-height: 1.3;\n  }\n\n  .pke-card-desc {\n    font-size: 12px;\n    color: #9ca3af;\n    margin-bottom: 14px;\n  }\n\n  .pke-price {\n    font-size: 22px;\n    font-weight: 700;\n    color: #1a4faa;\n    margin-bottom: 16px;\n  }\n\n  .pke-price span {\n    font-size: 13px;\n    font-weight: 400;\n    color: #9ca3af;\n    text-decoration: line-through;\n    margin-left: 6px;\n  }\n\n  .pke-divider {\n    height: 1px;\n    background: #f0f0f0;\n    margin-bottom: 16px;\n  }\n\n  .pke-features {\n    display: flex;\n    flex-direction: column;\n    gap: 9px;\n    margin-bottom: 24px;\n    flex: 1;\n  }\n\n  .pke-feature {\n    display: flex;\n    align-items: flex-start;\n    gap: 9px;\n    font-size: 12px;\n    color: #374151;\n    line-height: 1.45;\n  }\n\n  .pke-feature-dot {\n    width: 17px;\n    height: 17px;\n    border-radius: 50%;\n    background: #e6f1fb;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-shrink: 0;\n    margin-top: 1px;\n  }\n\n  .pke-feature-dot svg {\n    width: 9px;\n    height: 9px;\n    stroke: #1a4faa;\n    fill: none;\n    stroke-width: 2.5;\n  }\n\n  .pke-card-btn {\n    display: block;\n    text-align: center;\n    padding: 11px 20px;\n    border-radius: 10px;\n    font-size: 13px;\n    font-weight: 600;\n    text-decoration: none;\n    transition: background 0.2s, transform 0.15s;\n    margin-top: auto;\n  }\n\n  .pke-card-btn:hover { transform: translateY(-1px); text-decoration: none; }\n\n  .pke-card-btn.outline {\n    background: #f5f6fa;\n    color: #1a4faa;\n    border: 1.5px solid #d1dff5;\n  }\n\n  .pke-card-btn.outline:hover { background: #e6f1fb; color: #1a4faa; }\n\n  .pke-card-btn.solid {\n    background: #1a4faa;\n    color: #fff;\n    border: none;\n  }\n\n  .pke-card-btn.solid:hover { background: #2260cc; color: #fff; }\n\n  .pke-cta {\n    background: linear-gradient(135deg, #1a3a6b 0%, #2d6ab4 100%);\n    border-radius: 16px;\n    padding: 32px 40px;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    gap: 24px;\n    flex-wrap: wrap;\n  }\n\n  .pke-cta-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; }\n  .pke-cta-sub { font-size: 13px; color: rgba(255,255,255,0.65); }\n\n  .pke-cta-btn {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #fff;\n    color: #1a4faa;\n    font-family: 'Poppins', sans-serif;\n    font-size: 14px;\n    font-weight: 700;\n    padding: 13px 26px;\n    border-radius: 10px;\n    text-decoration: none;\n    transition: background 0.2s, transform 0.15s;\n    white-space: nowrap;\n  }\n\n  .pke-cta-btn:hover { background: #e6f1fb; color: #1a4faa; transform: translateY(-1px); text-decoration: none; }\n\n  .pke-cta-btn svg {\n    width: 16px; height: 16px;\n    stroke: currentColor; fill: none; stroke-width: 2;\n    transition: transform 0.2s;\n  }\n\n  .pke-cta-btn:hover svg { transform: translateX(3px); }\n\n  @media (max-width: 768px) {\n    .pke-section { padding: 48px 0; }\n    .pke-header { padding: 0 24px; }\n    .pke-cta-wrap { padding: 0 24px; }\n\n    .pke-grid {\n      display: flex;\n      flex-wrap: nowrap;\n      overflow-x: auto;\n      scroll-snap-type: x mandatory;\n      -webkit-overflow-scrolling: touch;\n      gap: 16px;\n      padding: 8px 24px 16px;\n      margin-bottom: 32px;\n      scrollbar-width: none;\n      align-items: stretch;\n    }\n\n    .pke-grid::-webkit-scrollbar { display: none; }\n\n    .pke-card {\n      flex: 0 0 78vw;\n      max-width: 320px;\n      scroll-snap-align: start;\n    }\n\n    .pke-cta { flex-direction: column; text-align: center; }\n  }\n</style>\n\n<div class=\"pke-section\">\n  <div class=\"pke-inner\">\n\n    <div class=\"pke-header\">\n      <div class=\"pke-tag\">Nos packs alarme</div>\n      <h2 class=\"pke-title\">Tout ce qu'il faut pour<br>protéger votre maison</h2>\n      <p class=\"pke-subtitle\">Chaque pack Élite est composé par nos experts pour couvrir votre logement sans avoir à chercher quoi acheter.</p>\n    </div>\n\n    <div class=\"pke-grid\">\n\n      <!-- Pack Starter Élite -->\n      <div class=\"pke-card\">\n        <div class=\"pke-card-img-wrap\">\n          <img src=\"https://daewoo-security.fr/cdn/shop/files/360bc22c-c301-4e8c-91be-142bfc8834eb.jpg?v=1770108350&width=1600\" alt=\"Starter Pack Élite\">\n        </div>\n        <div class=\"pke-card-body\">\n          <p class=\"pke-card-ref\">Starter</p>\n          <p class=\"pke-card-title\">Starter Pack Élite</p>\n          <p class=\"pke-card-desc\">Appartement / Maison — l'essentiel pour démarrer</p>\n          <p class=\"pke-price\">À partir de 299,90 €</p>\n          <div class=\"pke-divider\"></div>\n          <div class=\"pke-features\">\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Centrale PA501Z — Wi-Fi, Ethernet, 4G, batterie 12h\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              2× Contacteurs d'ouverture Zigbee WDS502Z\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              1× Détecteur de mouvement WPS501 (Pet Immune &lt; 12 kg)\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              2× Télécommandes WRC501 — armement / SOS\n            </div>\n          </div>\n          <a href=\"https://daewoo-security.fr/products/starter-pack-elite-daewoo?_pos=5&_sid=852862392&_ss=r\" class=\"pke-card-btn outline\">Voir le pack →</a>\n        </div>\n      </div>\n\n      <!-- Pack PA570 -->\n      <div class=\"pke-card featured\">\n        <div class=\"pke-card-badge\">Le plus populaire</div>\n        <div class=\"pke-card-img-wrap\">\n          <img src=\"https://daewoo-security.fr/cdn/shop/files/7f961535073e4e3389fea95aeb37de44.png?v=1771508734&width=1000\" alt=\"Pack Élite PA570\">\n        </div>\n        <div class=\"pke-card-body\">\n          <p class=\"pke-card-ref\">PA570</p>\n          <p class=\"pke-card-title\">Pack Élite Zenguard PA570</p>\n          <p class=\"pke-card-desc\">Maison / Pavillon — 2 caméras + sirène solaire + 13 accessoires</p>\n          <p class=\"pke-price\">À partir de 499,90 €</p>\n          <div class=\"pke-divider\"></div>\n          <div class=\"pke-features\">\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Centrale PA501Z — Zigbee 3.0, Wi-Fi + 4G, batterie 12h\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Caméra extérieure autonome W503 + caméra intérieure IP506P 360°\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Sirène extérieure solaire WOS501S — 100% sans fil\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              5× Contacteurs WDS502Z + 4× Détecteurs vibration WVD502Z\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              1× Détecteur mouvement WPS501 + 2× Télécommandes WRC501\n            </div>\n          </div>\n          <a href=\"https://daewoo-security.fr/products/daewoo-pack-alarme-maison-sans-fil-elite-zenguard-centrale-pa501z-kit-comprenant-13-accessoires-1-camera-autonome-exterieure-1-interieure\" class=\"pke-card-btn solid\">Voir le pack →</a>\n        </div>\n      </div>\n\n      <!-- Pack PA574 -->\n      <div class=\"pke-card\">\n        <div class=\"pke-card-img-wrap\">\n          <img src=\"https://daewoo-security.fr/cdn/shop/files/Tranquilite_PA574.png?v=1774536732&width=1000\" alt=\"Pack Élite PA574\">\n        </div>\n        <div class=\"pke-card-body\">\n          <p class=\"pke-card-ref\">PA574</p>\n          <p class=\"pke-card-title\">Pack Élite Tranquillité PA574</p>\n          <p class=\"pke-card-desc\">Grande maison / Villa — protection XXL 20 accessoires</p>\n          <p class=\"pke-price\">À partir de 739,90 €</p>\n          <div class=\"pke-divider\"></div>\n          <div class=\"pke-features\">\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Centrale PA501Z — RJ45 + Wi-Fi + 4G, batterie 12h\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              2× Caméras motorisées solaires W512MW pilotables à distance\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              14× Capteurs Zigbee — 8 ouvertures + 6 vibrations\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              2× Détecteurs mouvement WPS501 + caméra IP506P mode vie privée\n            </div>\n            <div class=\"pke-feature\">\n              <div class=\"pke-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              App Daewoo Home Connect — alarme + 3 caméras + domotique\n            </div>\n          </div>\n          <a href=\"https://daewoo-security.fr/products/daewoo-pack-alarme-maison-sans-fil-elite-tranquillite-centrale-pa501z-kit-xxl-20-accessoires-2-cameras-solaires-motorisees\" class=\"pke-card-btn outline\">Voir le pack →</a>\n        </div>\n      </div>\n\n    </div>\n\n    <!-- CTA -->\n    <div class=\"pke-cta-wrap\">\n      <div class=\"pke-cta\">\n        <div>\n          <p class=\"pke-cta-title\">Pas sûr du pack idéal pour votre logement ?</p>\n          <p class=\"pke-cta-sub\">Répondez à 7 questions — notre configurateur compose le pack parfait pour vous.</p>\n        </div>\n        <a href=\"https://daewoo-security.fr/pages/configurateur_2\" class=\"pke-cta-btn\">\n          Trouver mon pack\n          <svg viewBox=\"0 0 24 24\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><polyline points=\"12 5 19 12 12 19\"/></svg>\n        </a>\n      </div>\n    </div>\n\n  </div>\n</div>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "custom_liquid_t3y4Gq": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\n\n<style>\n  .inst-section * { box-sizing: border-box; margin: 0; padding: 0; }\n\n  .inst-section {\n    background: linear-gradient(135deg, #1a3a6b 0%, #1e5298 50%, #2d6ab4 100%);\n    font-family: 'Poppins', sans-serif;\n    overflow: hidden;\n    position: relative;\n    min-height: 420px;\n    display: flex;\n    align-items: stretch;\n  }\n\n  .inst-left {\n    flex: 1;\n    min-width: 260px;\n    padding: 56px 48px;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n  }\n\n  .inst-tag {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    background: rgba(255,255,255,0.12);\n    border: 1px solid rgba(255,255,255,0.22);\n    color: #fff;\n    font-size: 12px;\n    font-weight: 600;\n    padding: 5px 14px;\n    border-radius: 20px;\n    margin-bottom: 20px;\n    letter-spacing: 0.06em;\n    text-transform: uppercase;\n    width: fit-content;\n  }\n\n  .inst-tag::before {\n    content: '';\n    width: 6px;\n    height: 6px;\n    background: #4ade80;\n    border-radius: 50%;\n    box-shadow: 0 0 6px #4ade80;\n    display: inline-block;\n    animation: instPulse 2s infinite;\n  }\n\n  @keyframes instPulse {\n    0%, 100% { opacity: 1; }\n    50%       { opacity: 0.4; }\n  }\n\n  .inst-title {\n    font-size: clamp(22px, 3vw, 32px);\n    font-weight: 700;\n    color: #fff;\n    margin-bottom: 36px;\n    line-height: 1.2;\n  }\n\n  .inst-steps {\n    display: flex;\n    flex-direction: column;\n    gap: 24px;\n  }\n\n  .inst-step {\n    display: flex;\n    gap: 16px;\n    align-items: flex-start;\n  }\n\n  .inst-num {\n    background: rgba(255,255,255,0.15);\n    border: 2px solid rgba(255,255,255,0.35);\n    color: #fff;\n    border-radius: 50%;\n    width: 32px;\n    height: 32px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 13px;\n    font-weight: 700;\n    flex-shrink: 0;\n    margin-top: 1px;\n  }\n\n  .inst-step-title {\n    font-size: 15px;\n    font-weight: 600;\n    color: #fff;\n    margin-bottom: 4px;\n  }\n\n  .inst-step-desc {\n    font-size: 13px;\n    color: rgba(255,255,255,0.65);\n    line-height: 1.55;\n  }\n\n  .inst-right {\n    flex: 0 0 45%;\n    position: relative;\n    overflow: hidden;\n  }\n\n  .inst-right img {\n    position: absolute;\n    inset: 0;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n    display: block;\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);\n    mask-image: linear-gradient(to right, transparent 0%, black 20%);\n  }\n\n  @media (max-width: 768px) {\n    .inst-section { flex-direction: column; }\n    .inst-left { padding: 40px 24px; }\n    .inst-right {\n      flex: 0 0 280px;\n      width: 100%;\n    }\n    .inst-right img {\n      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%);\n      mask-image: linear-gradient(to bottom, transparent 0%, black 20%);\n    }\n  }\n</style>\n\n<div class=\"inst-section\">\n\n  <div class=\"inst-left\">\n    <div class=\"inst-tag\">Installation facile</div>\n    <h2 class=\"inst-title\">Installée en 30 minutes,<br>même sans bricolage</h2>\n    <div class=\"inst-steps\">\n\n      <div class=\"inst-step\">\n        <div class=\"inst-num\">1</div>\n        <div>\n          <p class=\"inst-step-title\">Déballez et positionnez</p>\n          <p class=\"inst-step-desc\">Placez les capteurs aux endroits stratégiques</p>\n        </div>\n      </div>\n\n      <div class=\"inst-step\">\n        <div class=\"inst-num\">2</div>\n        <div>\n          <p class=\"inst-step-title\">Associez à l'application</p>\n          <p class=\"inst-step-desc\">Scannez le QR code, tout se configure automatiquement</p>\n        </div>\n      </div>\n\n      <div class=\"inst-step\">\n        <div class=\"inst-num\">3</div>\n        <div>\n          <p class=\"inst-step-title\">Activez et dormez tranquille</p>\n          <p class=\"inst-step-desc\">Votre maison est protégée dès la première nuit</p>\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"inst-right\">\n    <img src=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/strongcentrale-dalarmestrong-pa501z-907530.webp?v=1777558205\" alt=\"Centrale Touch installation\">\n  </div>\n\n</div>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "custom_liquid_aYq3gY": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<style>\n\n  .ds-banner {\n\n    --ds-primary: #0b5fff;\n\n    --ds-primary-dark: #0a47c2;\n\n    --ds-trust-from: #0b5fff;\n\n    --ds-trust-to: #00b894;\n\n    --ds-bg: #f5f8ff;\n\n    --ds-card: #ffffff;\n\n    --ds-text: #0f172a;\n\n    --ds-muted: #475569;\n\n    --ds-border: #e2e8f0;\n\n    --ds-warning: #f59e0b;\n\n \n\n    position: relative;\n\n    overflow: hidden;\n\n    border-radius: 28px;\n\n    background:\n\n      radial-gradient(1200px 400px at 0% 0%, rgba(11, 95, 255, 0.10), transparent 60%),\n\n      radial-gradient(900px 400px at 100% 100%, rgba(0, 184, 148, 0.10), transparent 60%),\n\n      var(--ds-bg);\n\n    border: 1px solid var(--ds-border);\n\n    padding: 40px 28px;\n\n    margin: 24px auto;\n\n    max-width: 1180px;\n\n    font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;\n\n    color: var(--ds-text);\n\n    box-sizing: border-box;\n\n  }\n\n  .ds-banner * { box-sizing: border-box; }\n\n  .ds-banner-grid {\n\n    display: grid;\n\n    grid-template-columns: 1fr;\n\n    gap: 32px;\n\n    align-items: center;\n\n  }\n\n  @media (min-width: 860px) {\n\n    .ds-banner { padding: 56px 48px; }\n\n    .ds-banner-grid { grid-template-columns: 1.15fr 1fr; gap: 48px; }\n\n  }\n\n  .ds-chip {\n\n    display: inline-flex;\n\n    align-items: center;\n\n    gap: 8px;\n\n    padding: 6px 14px;\n\n    border-radius: 999px;\n\n    background: #ffffff;\n\n    border: 1px solid rgba(11, 95, 255, 0.20);\n\n    color: var(--ds-primary);\n\n    font-size: 12px;\n\n    font-weight: 700;\n\n    letter-spacing: 0.02em;\n\n    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);\n\n  }\n\n  .ds-chip-dot {\n\n    width: 8px; height: 8px; border-radius: 50%;\n\n    background: linear-gradient(135deg, var(--ds-trust-from), var(--ds-trust-to));\n\n  }\n\n  .ds-title {\n\n    margin: 18px 0 0;\n\n    font-size: clamp(28px, 4vw, 44px);\n\n    line-height: 1.05;\n\n    font-weight: 800;\n\n    letter-spacing: -0.02em;\n\n  }\n\n  .ds-title .ds-gradient {\n\n    background: linear-gradient(135deg, var(--ds-trust-from), var(--ds-trust-to));\n\n    -webkit-background-clip: text;\n\n    background-clip: text;\n\n    color: transparent;\n\n  }\n\n  .ds-subtitle {\n\n    margin: 16px 0 0;\n\n    font-size: 17px;\n\n    line-height: 1.55;\n\n    color: var(--ds-muted);\n\n    max-width: 580px;\n\n  }\n\n  .ds-cta-row {\n\n    margin-top: 28px;\n\n    display: flex;\n\n    flex-wrap: wrap;\n\n    gap: 12px;\n\n  }\n\n  .ds-btn-primary {\n\n    display: inline-flex;\n\n    align-items: center;\n\n    justify-content: center;\n\n    gap: 10px;\n\n    padding: 16px 26px;\n\n    border-radius: 16px;\n\n    background: linear-gradient(135deg, var(--ds-trust-from), var(--ds-trust-to));\n\n    color: #ffffff !important;\n\n    font-size: 16px;\n\n    font-weight: 700;\n\n    text-decoration: none !important;\n\n    box-shadow: 0 14px 30px rgba(11, 95, 255, 0.28);\n\n    transition: transform 0.2s ease, box-shadow 0.2s ease;\n\n    border: 0;\n\n    cursor: pointer;\n\n  }\n\n  .ds-btn-primary:hover {\n\n    transform: translateY(-2px);\n\n    box-shadow: 0 18px 36px rgba(11, 95, 255, 0.36);\n\n  }\n\n  .ds-btn-primary svg { transition: transform 0.2s ease; }\n\n  .ds-btn-primary:hover svg { transform: translateX(4px); }\n\n  .ds-trust-row {\n\n    margin-top: 22px;\n\n    display: flex;\n\n    flex-wrap: wrap;\n\n    gap: 22px;\n\n    color: var(--ds-muted);\n\n    font-size: 14px;\n\n  }\n\n  .ds-trust-row strong { color: var(--ds-text); }\n\n  .ds-trust-item { display: inline-flex; align-items: center; gap: 8px; }\n\n  .ds-icon-primary { color: var(--ds-primary); }\n\n  .ds-icon-warning { color: var(--ds-warning); fill: var(--ds-warning); }\n\n \n\n  /* Mock card */\n\n  .ds-mock-wrap {\n\n    position: relative;\n\n    width: 100%;\n\n    max-width: 440px;\n\n    margin: 0 auto;\n\n  }\n\n  .ds-mock-glow {\n\n    position: absolute;\n\n    inset: -22px;\n\n    border-radius: 36px;\n\n    background: linear-gradient(135deg, var(--ds-trust-from), var(--ds-trust-to));\n\n    opacity: 0.18;\n\n    filter: blur(40px);\n\n    z-index: 0;\n\n  }\n\n  .ds-mock {\n\n    position: relative;\n\n    z-index: 1;\n\n    background: var(--ds-card);\n\n    border: 1px solid var(--ds-border);\n\n    border-radius: 24px;\n\n    padding: 22px;\n\n    box-shadow: 0 30px 60px -20px rgba(15, 23, 42, 0.18);\n\n  }\n\n  .ds-mock-head {\n\n    display: flex; justify-content: space-between; align-items: center;\n\n    font-size: 12px; font-weight: 700; color: var(--ds-muted);\n\n  }\n\n  .ds-mock-head .ds-step-pct { color: var(--ds-primary); }\n\n  .ds-progress {\n\n    margin-top: 10px;\n\n    width: 100%; height: 6px; border-radius: 999px; overflow: hidden;\n\n    background: #eef2f8;\n\n  }\n\n  .ds-progress-fill {\n\n    width: 14%; height: 100%;\n\n    background: linear-gradient(135deg, var(--ds-trust-from), var(--ds-trust-to));\n\n  }\n\n  .ds-mock-question {\n\n    margin-top: 22px;\n\n    font-size: 18px; font-weight: 700; color: var(--ds-text);\n\n  }\n\n  .ds-mock-options { margin-top: 14px; display: grid; gap: 10px; }\n\n  .ds-mock-opt {\n\n    display: flex; justify-content: space-between; align-items: center;\n\n    padding: 12px 14px;\n\n    border-radius: 14px;\n\n    border: 1px solid var(--ds-border);\n\n    background: var(--ds-card);\n\n    font-size: 14px; font-weight: 600; color: var(--ds-text);\n\n  }\n\n  .ds-mock-opt.is-active {\n\n    border-color: var(--ds-primary);\n\n    background: rgba(11, 95, 255, 0.06);\n\n    box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.18);\n\n  }\n\n  .ds-mock-tip {\n\n    margin-top: 18px;\n\n    padding: 12px 14px;\n\n    border-radius: 12px;\n\n    background: #f1f5fb;\n\n    color: var(--ds-muted);\n\n    font-size: 12px;\n\n  }\n\n</style>\n\n \n\n<section class=\"ds-banner\" aria-label=\"Configurateur d'alarme Daewoo Security\">\n\n  <div class=\"ds-banner-grid\">\n\n    <div>\n\n      <span class=\"ds-chip\">\n\n        <span class=\"ds-chip-dot\" aria-hidden=\"true\"></span>\n\n        Configurateur intelligent · 2 minutes\n\n      </span>\n\n \n\n      <h2 class=\"ds-title\">\n\n        Trouvez l'alarme\n\n        <span class=\"ds-gradient\">parfaite pour votre logement</span>\n\n        en 7 questions.\n\n      </h2>\n\n \n\n      <p class=\"ds-subtitle\">\n\n        Sans abonnement. Sans engagement. Sans risque de vous tromper.\n\n        Notre assistant compose le pack idéal et applique automatiquement votre remise.\n\n      </p>\n\n \n\n      <div class=\"ds-cta-row\">\n\n        <a class=\"ds-btn-primary\"\n\n           href=https://daewoo-security.fr/pages/configurateur_2>\n\n          Démarrer le configurateur\n\n          <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\"\n\n               stroke=\"currentColor\" stroke-width=\"2.4\"\n\n               stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">\n\n            <line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/>\n\n            <polyline points=\"12 5 19 12 12 19\"/>\n\n          </svg>\n\n        </a>\n\n      </div>\n\n \n\n      <div class=\"ds-trust-row\">\n\n        <span class=\"ds-trust-item\">\n\n          <svg class=\"ds-icon-primary\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\"\n\n               fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"\n\n               stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">\n\n            <path d=\"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\"/>\n\n            <circle cx=\"9\" cy=\"7\" r=\"4\"/>\n\n            <path d=\"M23 21v-2a4 4 0 0 0-3-3.87\"/>\n\n            <path d=\"M16 3.13a4 4 0 0 1 0 7.75\"/>\n\n          </svg>\n\n          <span><strong>60 000+</strong> foyers protégés</span>\n\n        </span>\n\n        <span class=\"ds-trust-item\">\n\n          <svg class=\"ds-icon-warning\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\"\n\n               stroke=\"currentColor\" stroke-width=\"1.5\"\n\n               stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">\n\n            <polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"/>\n\n          </svg>\n\n          <span><strong>4.7/5</strong> sur les avis vérifiés</span>\n\n        </span>\n\n        <span class=\"ds-trust-item\">\n\n          <svg class=\"ds-icon-primary\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\"\n\n               fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"\n\n               stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">\n\n            <path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"/>\n\n          </svg>\n\n          <span><strong>Garantie 2 ans</strong> · Livraison 48h</span>\n\n        </span>\n\n      </div>\n\n    </div>\n\n \n\n    <div class=\"ds-mock-wrap\" aria-hidden=\"true\">\n\n      <div class=\"ds-mock-glow\"></div>\n\n      <div class=\"ds-mock\">\n\n        <div class=\"ds-mock-head\">\n\n          <span>Étape 1 sur 7</span>\n\n          <span class=\"ds-step-pct\">14%</span>\n\n        </div>\n\n        <div class=\"ds-progress\"><div class=\"ds-progress-fill\"></div></div>\n\n        <div class=\"ds-mock-question\">\n\n          Quel type de logement souhaitez-vous protéger ?\n\n        </div>\n\n        <div class=\"ds-mock-options\">\n\n          <div class=\"ds-mock-opt\">Appartement</div>\n\n          <div class=\"ds-mock-opt is-active\">\n\n            Maison\n\n            <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\"\n\n                 stroke=\"#0b5fff\" stroke-width=\"2.4\"\n\n                 stroke-linecap=\"round\" stroke-linejoin=\"round\">\n\n              <path d=\"M22 11.08V12a10 10 0 1 1-5.93-9.14\"/>\n\n              <polyline points=\"22 4 12 14.01 9 11.01\"/>\n\n            </svg>\n\n          </div>\n\n          <div class=\"ds-mock-opt\">Villa / grande propriété</div>\n\n        </div>\n\n        <div class=\"ds-mock-tip\">\n\n          💡 7 questions simples, réponse instantanée à chaque étape\n\n        </div>\n\n      </div>\n\n    </div>\n\n  </div>\n\n</section>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "custom_liquid_ETnkHn": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\n\n<style>\n  .wv-section * { box-sizing: border-box; margin: 0; padding: 0; }\n\n  .wv-section {\n    background:;\n    padding: 48px 24px;\n    font-family: 'Poppins', sans-serif;\n  }\n\n  .wv-title {\n    text-align: center;\n    font-size: clamp(20px, 3vw, 26px);\n    font-weight: 600;\n    color: #0f1a2e;\n    margin-bottom: 36px;\n  }\n\n  .wv-grid {\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 16px;\n    max-width: 1100px;\n    margin: 0 auto;\n  }\n\n  .wv-card {\n    background: #fff;\n    border-radius: 14px;\n    padding: 28px 20px;\n    text-align: center;\n  }\n\n  .wv-card-icon {\n    font-size: 32px;\n    margin-bottom: 14px;\n    display: block;\n  }\n\n  .wv-card-label {\n    font-size: 14px;\n    font-weight: 600;\n    color: #0f1a2e;\n    margin-bottom: 6px;\n    line-height: 1.3;\n  }\n\n  .wv-card-desc {\n    font-size: 12px;\n    color: #6b7280;\n    line-height: 1.55;\n  }\n\n  .wv-card-desc strong {\n    color: #0f1a2e;\n    font-weight: 600;\n  }\n\n  @media (max-width: 640px) {\n    .wv-grid { grid-template-columns: 1fr; }\n  }\n</style>\n\n<div class=\"wv-section\">\n  <h2 class=\"wv-title\">Pourquoi choisir la Centrale Élite ?</h2>\n  <div class=\"wv-grid\">\n\n    <div class=\"wv-card\">\n      <span class=\"wv-card-icon\">📡</span>\n      <p class=\"wv-card-label\">Communication Zigbee longue portée</p>\n      <p class=\"wv-card-desc\">Technologie <strong>Zigbee</strong> fiable et sécurisée, conçue pour les systèmes de sécurité.</p>\n    </div>\n\n    <div class=\"wv-card\">\n      <span class=\"wv-card-icon\">📱</span>\n      <p class=\"wv-card-label\">App Daewoo Home Connect</p>\n      <p class=\"wv-card-desc\">Gérez votre système à distance, alertes en temps réel et accès aux caméras.</p>\n    </div>\n\n    <div class=\"wv-card\">\n      <span class=\"wv-card-icon\">💳</span>\n      <p class=\"wv-card-label\">Sans abonnement</p>\n      <p class=\"wv-card-desc\">Vous payez le matériel, rien de plus.</p>\n    </div>\n\n    <div class=\"wv-card\">\n      <span class=\"wv-card-icon\">🔌</span>\n      <p class=\"wv-card-label\">Installation simple</p>\n      <p class=\"wv-card-desc\">Une prise secteur, une connexion Wi-Fi 2.4 GHz et c'est opérationnel.</p>\n    </div>\n\n    <div class=\"wv-card\">\n      <span class=\"wv-card-icon\">🏠</span>\n      <p class=\"wv-card-label\">Idéale maison connectée</p>\n      <p class=\"wv-card-desc\">Zigbee assure une communication stable pour la sécurité et la domotique.</p>\n    </div>\n\n    <div class=\"wv-card\">\n      <span class=\"wv-card-icon\">🔧</span>\n      <p class=\"wv-card-label\">Système évolutif</p>\n      <p class=\"wv-card-desc\">Compatible détecteurs, caméras, sirènes, détecteurs de fumée… pour une protection sur mesure.</p>\n    </div>\n\n  </div>\n</div>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "image_with_text_4AH9rC": {
+      "type": "image-with-text",
+      "blocks": {
+        "image_ynxrNQ": {
+          "type": "image",
+          "settings": {
+            "image_width": "custom",
+            "image_max_width": 50,
+            "image_max_width_mobile": 50
+          }
+        },
+        "heading_R6NX84": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Temporisation d’entrée et de sortie</strong>",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_pW43NG": {
+          "type": "text",
+          "settings": {
+            "text": "<p>La temporisation permet de <strong>retarder le déclenchement de l’alarme</strong> lorsque vous entrez ou sortez de votre domicile.<br/><br/>Elle vous laisse le temps d’<strong>activer ou de désactiver le système</strong> sans déclencher d’alerte, par exemple en rentrant chez vous.</p><p>Sur la gamme <strong>Elite</strong>, la temporisation est <strong>globale</strong> : le délai défini s’applique à l’ensemble des accessoires concernés (contacteurs de porte, détecteurs de mouvement, etc.)</p><p>Une solution pratique pour un usage quotidien, sans déclenchements intempestifs.</p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "image_ynxrNQ",
+        "heading_R6NX84",
+        "text_pW43NG"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/on_3.png",
+        "image_height": "600px",
+        "image_width": "medium",
+        "layout": "text_first",
+        "text_alignment": "left",
+        "content_position": "align-self-center",
+        "image_height_mobile": "400px",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "#fafafa",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false,
+        "enable_parallax": false,
+        "parallax_direction": "vertical"
+      }
+    },
+    "faq_gtMVaJ": {
+      "type": "faq",
+      "blocks": {
+        "question_NDW7jY": {
+          "type": "question",
+          "settings": {
+            "title": "Connectivité",
+            "text": "<h6><strong>Connexion</strong></h6><p>Wi-Fi 2.4 GHz / RJ45</p><h6><strong>Connexion GSM</strong></h6><p>(carte SIM – en option)</p><h6><strong>Notification en temps réel via application mobile</strong></h6><p>Recevez les notifications de déclenchement immédiatement sur votre téléphone et egalement par SMS en cas de panne de Wifi.</p><h6><strong>Compatibilité assistants vocaux</strong></h6><p>Non compatible avec Google Home et Alexa</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_cwWQHi": {
+          "type": "question",
+          "settings": {
+            "title": "Alimentation & Autonomie",
+            "text": "<h6><strong>Batterie de secours intégrée</strong></h6><p>Centrale Élite : 12 heures</p><h6><strong>Fonctionnalité GSM 4G</strong></h6><p>Fonctionnement même en cas de coupure de WiFi (Nécessite une carte Sim). En cas de panne de Wifi, la centrale va basculer sur le réseau mobile et contrairement a la gamme Touch ou Vigilia, l'application reste accessible meme si la centrale n'est plus connectée au Wifi.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_8C7dYj": {
+          "type": "question",
+          "settings": {
+            "title": "Commande & pilotage",
+            "text": "<h6><strong>Contrôle à distance</strong></h6><p>via l’application Daewoo Home Connect</p><h6><strong>Notifications push ou SMS</strong></h6><p>en cas d’alerte (Nécessite une carte Sim)</p><h6><strong>Activation/désactivation à distance</strong></h6><h6><strong>Création de scénarios personnalisés </strong>( sur l'application directement en quelques minutes )</h6>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_6rDEn3": {
+          "type": "question",
+          "settings": {
+            "title": "Évolutivité & compatibilité",
+            "text": "<h6><strong>Système évolutif</strong></h6><p>Ajoutez jusqu’à 200 accessoires par centrale Compatibilité avec tous les accessoires</p><p>Détecteurs, claviers, télécommandes, badges, sirènes, etc. (Suivre les compatibilités Vigilia/Touch et Elite)<br/>Caméras et Maison Connectée : Compatible toutes gammes</p><p><strong>Passerelle Zigbee intégrée</strong></p><p>La techonlogie Zigbee va vous apporter une sécurité accrue au niveau de la communication entre l'accessoire et la centrale mais également une ouverture vers la domotique.</p><h6><strong>Système 100 % personnalisable</strong></h6><p>Selon vos besoins - Achetez que ce qui est nécessaire et complétez au fur et à mesure</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_V7JYhQ": {
+          "type": "question",
+          "settings": {
+            "title": "Sécurité & détection",
+            "text": "<h6><strong>Sirène intégrée</strong></h6><p>Élite = 85 dB</p><h6><strong>Détection d’arrachement</strong></h6><p>(centrale arrachée = alerte)</p><h6><strong>Communication cryptée entre centrale et accessoires</strong></h6><h6><strong>Modes de surveillance</strong></h6><p><br/>Total, Partiel ( Maison ), Désarmée</p><p>Fonction SOS en cas d’agression au domicile</p><h6><strong>Programmation de scénarios et délais personnalisés</strong></h6><p>Programmation de scénarios et Temporisation ( Pour entrée ou sortir du domicile )</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "question_NDW7jY",
+        "question_cwWQHi",
+        "question_8C7dYj",
+        "question_6rDEn3",
+        "question_V7JYhQ"
+      ],
+      "name": "t:sections.faq.name",
+      "settings": {
+        "style": "with-border",
+        "heading": "Détails produit",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "#f2f3ff",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "color_overlay": "#ffffff",
+        "overlay_opacity": 4,
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "image_with_text_Fhj8Um": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_dNWmFb": {
+          "type": "heading",
+          "settings": {
+            "heading": "Ils ont choisi Daewoo Security",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_GHpzhj": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Jean et Marie, 48 et 46 ans, ont protégé leur maison à la campagne avec le système <strong>Touch XL</strong>.<br/><br/>Découvrez <strong>leur configuration sur mesure</strong>, les détecteurs extérieurs installés et le coût global de leur solution.</p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "button_fJeJ7H": {
+          "type": "button",
+          "settings": {
+            "button_label": "Voir leur configuration",
+            "button_link": "shopify://pages/ils-ont-choisi-daewoo-security",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_dNWmFb",
+        "text_GHpzhj",
+        "button_fJeJ7H"
+      ],
+      "name": "t:sections.image-with-text.name",
+      "settings": {
+        "image": "shopify://shop_images/Capture_d_ecran_le_2025-10-30_a_13.45.18.png",
+        "image_height": "650px",
+        "image_width": "medium",
+        "layout": "image_first",
+        "text_alignment": "left",
+        "content_position": "align-self-center",
+        "image_height_mobile": "auto",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false,
+        "enable_parallax": true,
+        "parallax_direction": "vertical"
+      }
+    },
+    "17537033312cec849b": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_gXyCBK": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_gXyCBK"
+      ],
+      "settings": {
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 0,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "faq_qNU8cD": {
+      "type": "faq",
+      "blocks": {
+        "question_i8GX4U": {
+          "type": "question",
+          "settings": {
+            "title": "Est-ce que les alarmes Daewoo Security nécessitent un abonnement ?",
+            "text": "<p>Non, <strong>toutes nos alarmes fonctionnent sans abonnement</strong>. Vous êtes alerté en cas d’intrusion directement sur votre smartphone, sans frais mensuels.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_DwJNke": {
+          "type": "question",
+          "settings": {
+            "title": "Est-ce que je peux installer le système moi-même ?",
+            "text": "<p>Oui, l’installation est <strong>simple, rapide et sans travaux</strong>. Tous les éléments sont sans fil et préconfigurés. Un guide est fourni, et notre support est disponible pour vous accompagner si besoin.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_f9FkdG": {
+          "type": "question",
+          "settings": {
+            "title": "Est-ce que je peux contrôler l’alarme depuis mon téléphone ?",
+            "text": "<p>Oui, toutes nos centrales sont <strong>connectées à l’application Daewoo Home Connect</strong> (iOS / Android). Vous pouvez armer/désarmer à distance, recevoir des notifications en temps réel, consulter l’historique, et plus encore.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_LhNKq6": {
+          "type": "question",
+          "settings": {
+            "title": "Dois-je avoir le Wi-Fi pour que ça fonctionne ?",
+            "text": "<p>La plupart de nos systèmes fonctionnent <strong>via le Wi-Fi</strong>. Certains modèles (selon la gamme) disposent aussi d’une <strong>connexion GSM avec carte SIM</strong> en option, pour rester connectés même en cas de coupure Internet.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_8TAECA": {
+          "type": "question",
+          "settings": {
+            "title": "Quelle est l’autonomie des accessoires ?",
+            "text": "<p>Nos accessoires (détecteurs, contacteurs, télécommandes…) fonctionnent sur piles, avec une autonomie moyenne de <strong>12 à 24 mois</strong>. Vous recevez une alerte en cas de batterie faible.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_hwQnGU": {
+          "type": "question",
+          "settings": {
+            "title": "Est-ce que je peux personnaliser mon système ?",
+            "text": "<p>Oui, vous pouvez <strong>ajouter à tout moment de nouveaux accessoires</strong> : caméras, sirènes, badges, capteurs de mouvement, etc. Le système est <strong>100 % évolutif</strong> selon vos besoins.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_FiALGH": {
+          "type": "question",
+          "settings": {
+            "title": "Puis-je utiliser mon alarme à l’étranger ?",
+            "text": "<p>Oui, vous pouvez recevoir les alertes et contrôler votre alarme depuis <strong>n’importe où dans le monde</strong>, tant que vous avez accès à Internet.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "contact_mdixeA": {
+          "type": "contact",
+          "settings": {
+            "heading": "Vous n’avez pas trouvé votre réponse ?",
+            "text": "<p>N'hésitez pas à nous contacter</p>",
+            "show_phone": false,
+            "avatar_height": 60,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "question_i8GX4U",
+        "question_DwJNke",
+        "question_f9FkdG",
+        "question_LhNKq6",
+        "question_8TAECA",
+        "question_hwQnGU",
+        "question_FiALGH",
+        "contact_mdixeA"
+      ],
+      "settings": {
+        "style": "with-background",
+        "heading": "FAQ",
+        "heading_size": "title-lg tracking-heading",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#ffffff",
+        "color_background": "#0c1e4a",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "#0c1e4a",
+        "color_button_background": "#ffffff",
+        "color_button_gradient": "",
+        "color_overlay": "#ffffff",
+        "overlay_opacity": 4,
+        "padding_top": 84,
+        "padding_bottom": 84,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_rDimba",
+    "main-collection-banner",
+    "custom_liquid_4JkcDY",
+    "main-collection",
+    "custom_liquid_MFK3nh",
+    "custom_liquid_t3y4Gq",
+    "custom_liquid_aYq3gY",
+    "custom_liquid_ETnkHn",
+    "image_with_text_4AH9rC",
+    "faq_gtMVaJ",
+    "image_with_text_Fhj8Um",
+    "17537033312cec849b",
+    "faq_qNU8cD"
+  ]
+}

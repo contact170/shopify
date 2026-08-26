@@ -1,0 +1,60 @@
+{% comment %} ── Bandeau de conversion final ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .elq * { box-sizing:border-box; margin:0; padding:0; }
+  .elq { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0d1520; padding:86px 24px 92px; position:relative; overflow:hidden;
+    text-align:center; border-top:1px solid #eef1f0; }
+  .elq::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(700px 340px at 50% 0%,rgba(18,160,173,.10),transparent 62%); }
+  .elq-inner { position:relative; z-index:2; max-width:720px; margin:0 auto; }
+  .elq-tag { display:inline-flex; align-items:center; gap:9px; font-size:11px; font-weight:600; letter-spacing:.16em;
+    text-transform:uppercase; padding:8px 16px; border-radius:99px; background:#fff; border:1px solid #e2e7e6;
+    color:#4b5a63; margin-bottom:22px; box-shadow:0 2px 8px rgba(13,21,32,.05); }
+  .elq-tag svg { width:14px; height:14px; fill:none; stroke:#12a0ad; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  .elq-title { font-size:clamp(27px,3.6vw,42px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:16px; }
+  .elq-sub { font-size:16px; color:#4b5a63; font-weight:300; line-height:1.65; margin-bottom:32px; max-width:600px; margin-left:auto; margin-right:auto; }
+  .elq-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:28px; }
+  .elq-b { display:inline-flex; align-items:center; gap:9px; padding:15px 26px; border-radius:9px;
+    font-size:14.5px; font-weight:600; text-decoration:none; transition:transform .18s, border-color .18s; }
+  .elq-b:hover { transform:translateY(-2px); }
+  .elq-b svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .elq-b--1 { background:#0d1520; color:#fff; box-shadow:0 12px 30px -10px rgba(13,21,32,.45); }
+  .elq-b--2 { background:#fff; color:#0d1520; border:1px solid #d9e0df; }
+  .elq-b--2:hover { border-color:#0a6068; }
+  .elq-mini { display:flex; gap:22px; justify-content:center; flex-wrap:wrap; font-size:12.5px; color:#5c6a75; font-weight:300; }
+  .elq-mini span { display:inline-flex; align-items:center; gap:7px; }
+  .elq-mini svg { width:13px; height:13px; fill:none; stroke:#12a0ad; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  @media (max-width:600px) { .elq { padding:68px 20px; } }
+</style>
+
+<section class="elq">
+  <div class="elq-inner">
+    <span class="elq-tag"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Sans abonnement · Sans engagement</span>
+    <h2 class="elq-title">Une alarme qu'on ne voit pas,<br>et qu'on n'entend qu'au bon moment.</h2>
+    <p class="elq-sub">Choisissez un pack prêt à poser, ou laissez le configurateur composer votre système Élite en 2 minutes. Expédition rapide, retour gratuit sous 14 jours.</p>
+    <div class="elq-btns">
+      <a class="elq-b elq-b--1" href="#el-packs">
+        Voir les packs Élite
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a class="elq-b elq-b--2" href="https://daewoo-security.fr/pages/configurateur_2">
+        Configurer mon système
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+    <div class="elq-mini">
+      <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Garantie 2 ans</span>
+      <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>SAV en France, assistant 7j/7</span>
+      <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Retour gratuit 14 jours</span>
+      <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Application incluse à vie</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Élite — CTA final",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,115 @@
+{% comment %} ── Passerelle Zigbee intégrée — schéma en étoile ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .elz * { box-sizing:border-box; margin:0; padding:0; }
+  .elz { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0d1520; padding:94px 24px; position:relative; overflow:hidden; }
+  .elz::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(700px 420px at 22% 50%,rgba(18,160,173,.08),transparent 64%); }
+  .elz-inner { position:relative; z-index:2; max-width:1140px; margin:0 auto;
+    display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center; }
+  .elz-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5c6a75; margin-bottom:16px; }
+  .elz-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#12a0ad,rgba(18,160,173,0)); }
+  .elz-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.1; margin-bottom:16px; }
+  .elz-sub { font-size:15.5px; color:#4b5a63; font-weight:300; line-height:1.68; margin-bottom:34px; max-width:500px; }
+  .elz-sub b { color:#0d1520; font-weight:500; }
+
+  .elz-list { display:flex; flex-direction:column; gap:2px; }
+  .elz-row { display:grid; grid-template-columns:auto 1fr; gap:16px; padding:17px 0; border-top:1px solid #e9edec; }
+  .elz-row:last-child { border-bottom:1px solid #e9edec; }
+  .elz-row svg { width:19px; height:19px; margin-top:2px; fill:none; stroke:#0a6068; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .elz-rt { font-size:15px; font-weight:600; letter-spacing:-.015em; margin-bottom:4px; }
+  .elz-rd { font-size:13.8px; color:#4b5a63; font-weight:300; line-height:1.58; }
+  .elz-rd b { color:#0d1520; font-weight:500; }
+
+  .elz-visual { display:flex; align-items:center; justify-content:center; }
+  .elz-card { width:100%; max-width:460px; background:#0d1520; border-radius:24px; padding:34px 30px 30px;
+    box-shadow:0 36px 78px -34px rgba(13,21,32,.55); position:relative; overflow:hidden; }
+  .elz-card::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(460px 300px at 50% 12%,rgba(18,160,173,.28),transparent 68%); }
+  .elz-card > * { position:relative; z-index:2; }
+  .elz-cl { font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#12a0ad; text-align:center; margin-bottom:6px; }
+  .elz-cs { font-size:13px; font-weight:300; color:#a8b6bd; text-align:center; line-height:1.55; margin-bottom:20px; }
+  .elz-svg { display:block; width:100%; height:auto; }
+  .elz-legend { margin-top:20px; padding-top:18px; border-top:1px solid rgba(255,255,255,.14);
+    display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+  .elz-lg { font-size:11.5px; color:#a8b6bd; font-weight:300; display:inline-flex; align-items:center; gap:7px; }
+  .elz-lg i { width:8px; height:8px; border-radius:50%; flex:none; display:inline-block; }
+
+  @media (max-width:960px) { .elz-inner { grid-template-columns:1fr; gap:44px; } .elz { padding:72px 20px; } }
+</style>
+
+<section class="elz">
+  <div class="elz-inner">
+    <div>
+      <span class="elz-eyebrow">Passerelle Zigbee intégrée</span>
+      <h2 class="elz-title">Une radio pensée pour la sécurité, pas pour la vidéo.</h2>
+      <p class="elz-sub">Les détecteurs de la gamme Élite ne passent pas par votre Wi-Fi&nbsp;: ils parlent à la centrale en <b>Zigbee</b>, un protocole radio conçu pour de petits messages, envoyés vite, avec très peu d'énergie. Résultat&nbsp;: des piles qui durent et un réseau qui ne sature pas.</p>
+
+      <div class="elz-list">
+        <div class="elz-row">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11.5 13.5 15.5 9"/></svg>
+          <div>
+            <p class="elz-rt">Liaison chiffrée et bidirectionnelle</p>
+            <p class="elz-rd">La centrale et chaque accessoire se répondent et vérifient l'échange. <b>Le brouillage et l'interception sont bloqués</b>, et un détecteur qui ne répond plus est signalé.</p>
+          </div>
+        </div>
+        <div class="elz-row">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.8 2.8M16.2 16.2 19 19M19 5l-2.8 2.8M7.8 16.2 5 19"/></svg>
+          <div>
+            <p class="elz-rt">Jusqu'à 200 accessoires sur une seule centrale</p>
+            <p class="elz-rd">Détecteurs, contacteurs, sirènes, claviers, télécommandes, badges. Si la maison est grande, <b>l'amplificateur d'ondes Zigbee EXT501</b> étend la portée.</p>
+          </div>
+        </div>
+        <div class="elz-row">
+          <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
+          <div>
+            <p class="elz-rt">Compatible avec la maison connectée</p>
+            <p class="elz-rd">La passerelle accepte aussi des <b>périphériques Zigbee d'autres marques</b> et déclenche des scénarios&nbsp;: fermer les volets à l'armement, allumer une lumière sur détection.</p>
+          </div>
+        </div>
+        <div class="elz-row">
+          <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><polyline points="21 3 21 9 15 9"/></svg>
+          <div>
+            <p class="elz-rt">Vous avez déjà une centrale Key (SA501)&nbsp;?</p>
+            <p class="elz-rd">La PA501Z reprend <b>les accessoires de la gamme SA501</b>. Vous remplacez la centrale et vous gardez vos détecteurs, sans tout racheter.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="elz-visual">
+      <div class="elz-card">
+        <p class="elz-cl">Réseau Zigbee</p>
+        <p class="elz-cs">Une centrale au centre, chaque accessoire relié en direct.</p>
+        <svg class="elz-svg" viewBox="0 0 360 300" role="img" aria-label="Schéma : la centrale Élite au centre, reliée en Zigbee aux détecteurs, contacteurs, sirène, clavier et télécommande">
+          <g stroke="#2a5f66" stroke-width="1.6" stroke-dasharray="4 5" fill="none">
+            <line x1="180" y1="150" x2="66"  y2="66"/>
+            <line x1="180" y1="150" x2="294" y2="66"/>
+            <line x1="180" y1="150" x2="40"  y2="180"/>
+            <line x1="180" y1="150" x2="320" y2="180"/>
+            <line x1="180" y1="150" x2="96"  y2="252"/>
+            <line x1="180" y1="150" x2="264" y2="252"/>
+          </g>
+          <circle cx="180" cy="150" r="46" fill="rgba(18,160,173,.16)"/>
+          <circle cx="180" cy="150" r="32" fill="#12a0ad"/>
+          <text x="180" y="147" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="11" font-weight="600" fill="#04252a">Élite</text>
+          <text x="180" y="160" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="9" fill="#04252a">PA501Z</text>
+          <g font-family="Poppins,Arial,sans-serif" font-size="9.5" fill="#cfdadd" text-anchor="middle">
+            <circle cx="66"  cy="66"  r="20" fill="#16232f" stroke="#2a5f66" stroke-width="1.4"/><text x="66"  y="69">Porte</text>
+            <circle cx="294" cy="66"  r="20" fill="#16232f" stroke="#2a5f66" stroke-width="1.4"/><text x="294" y="69">Mouv.</text>
+            <circle cx="40"  cy="180" r="20" fill="#16232f" stroke="#2a5f66" stroke-width="1.4"/><text x="40"  y="183">Vibrat.</text>
+            <circle cx="320" cy="180" r="20" fill="#16232f" stroke="#2a5f66" stroke-width="1.4"/><text x="320" y="183">Sirène</text>
+            <circle cx="96"  cy="252" r="20" fill="#16232f" stroke="#2a5f66" stroke-width="1.4"/><text x="96"  y="255">Clavier</text>
+            <circle cx="264" cy="252" r="20" fill="#16232f" stroke="#2a5f66" stroke-width="1.4"/><text x="264" y="255">Badge</text>
+          </g>
+        </svg>
+        <div class="elz-legend">
+          <span class="elz-lg"><i style="background:#12a0ad"></i>Centrale Élite</span>
+          <span class="elz-lg"><i style="background:#16232f;box-shadow:0 0 0 1px #2a5f66"></i>Accessoires Zigbee</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

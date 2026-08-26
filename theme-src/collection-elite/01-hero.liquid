@@ -1,0 +1,109 @@
+{% comment %} ── Gamme Élite — Hero + bandeau de confiance ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .elh * { box-sizing:border-box; margin:0; padding:0; }
+  .elh { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0d1520; padding:84px 24px 90px; position:relative; overflow:hidden; }
+  .elh::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(820px 460px at 78% 26%,rgba(18,160,173,.11),transparent 62%),
+               radial-gradient(600px 380px at 6% 86%,rgba(13,21,32,.05),transparent 60%); }
+  .elh-inner { position:relative; z-index:2; max-width:1180px; margin:0 auto;
+    display:grid; grid-template-columns:1.06fr .94fr; gap:60px; align-items:center; }
+
+  .elh-eyebrow { display:inline-flex; align-items:center; gap:9px; font-size:11px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; padding:8px 15px; border-radius:6px;
+    background:rgba(18,160,173,.10); color:#0a6068; margin-bottom:22px; }
+  .elh-title { font-size:clamp(30px,4.2vw,50px); font-weight:600; letter-spacing:-.035em; line-height:1.07; margin-bottom:18px; }
+  .elh-title em { font-style:normal; color:#0a6068; }
+  .elh-sub { font-size:16.5px; color:#4b5a63; font-weight:300; line-height:1.68; max-width:530px; margin-bottom:30px; }
+  .elh-sub b { color:#0d1520; font-weight:500; }
+
+  .elh-btns { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:38px; }
+  .elh-b { display:inline-flex; align-items:center; gap:9px; padding:15px 26px; border-radius:8px;
+    font-size:14.5px; font-weight:600; text-decoration:none; transition:transform .18s, border-color .18s; }
+  .elh-b:hover { transform:translateY(-2px); }
+  .elh-b svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .elh-b--1 { background:#0d1520; color:#fff; box-shadow:0 12px 30px -10px rgba(13,21,32,.45); }
+  .elh-b--2 { background:#fff; color:#0d1520; border:1px solid #d9e0df; }
+  .elh-b--2:hover { border-color:#0a6068; }
+
+  .elh-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#e2e7e6;
+    border:1px solid #e2e7e6; border-radius:12px; overflow:hidden; max-width:560px; }
+  .elh-stat { background:#fff; padding:18px 16px; }
+  .elh-stat b { display:block; font-size:20px; font-weight:600; letter-spacing:-.03em; color:#0a6068; margin-bottom:3px; }
+  .elh-stat span { font-size:11.5px; color:#5c6a75; font-weight:300; line-height:1.4; display:block; }
+
+  .elh-visual { position:relative; }
+  .elh-frame { border-radius:22px; overflow:hidden; border:1px solid #e2e7e6; background:#f1f3f2;
+    box-shadow:0 36px 78px -36px rgba(13,21,32,.42); }
+  .elh-frame img { width:100%; height:auto; display:block; }
+  .elh-tag { position:absolute; left:-16px; bottom:26px; display:inline-flex; align-items:center; gap:9px;
+    padding:11px 18px; border-radius:99px; background:#0d1520; color:#fff;
+    box-shadow:0 14px 34px -14px rgba(13,21,32,.6); font-size:12.5px; font-weight:500; }
+  .elh-tag svg { width:15px; height:15px; fill:none; stroke:#12a0ad; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* bandeau de confiance */
+  .elt { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#0d1520; padding:0 24px; }
+  .elt * { box-sizing:border-box; margin:0; padding:0; }
+  .elt-inner { max-width:1180px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr);
+    gap:1px; background:rgba(255,255,255,.12); }
+  .elt-c { background:#0d1520; padding:22px 20px; display:flex; align-items:flex-start; gap:12px; }
+  .elt-c svg { width:17px; height:17px; flex:none; margin-top:2px; fill:none; stroke:#12a0ad; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .elt-c b { display:block; font-size:13.5px; font-weight:500; color:#fff; margin-bottom:3px; }
+  .elt-c span { font-size:12px; color:#a8b6bd; font-weight:300; line-height:1.45; display:block; }
+
+  @media (max-width:960px) {
+    .elh-inner { grid-template-columns:1fr; gap:40px; }
+    .elh-visual { order:-1; max-width:460px; }
+    .elh-tag { left:14px; }
+    .elt-inner { grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:560px) {
+    .elh { padding:64px 20px 70px; }
+    .elh-stats { grid-template-columns:repeat(2,1fr); }
+    .elt-inner { grid-template-columns:1fr; }
+  }
+</style>
+
+<section class="elh">
+  <div class="elh-inner">
+    <div>
+      <span class="elh-eyebrow">Gamme Élite · Centrale PA501Z</span>
+      <h1 class="elh-title">La centrale<br>qu'on n'a <em>pas besoin de voir</em>.</h1>
+      <p class="elh-sub">Ni écran, ni clavier sur le boîtier&nbsp;: la centrale Élite se pose où vous voulez — même hors de vue — et <b>tout se pilote depuis l'application</b>. Wi-Fi, Ethernet et 4G se relaient pour qu'elle reste joignable, et sa passerelle Zigbee intégrée accepte jusqu'à 200 accessoires.</p>
+      <div class="elh-btns">
+        <a class="elh-b elh-b--1" href="#el-packs">
+          Voir les packs
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a class="elh-b elh-b--2" href="https://daewoo-security.fr/products/strong-centrale-dalarme-strong-elite">
+          La centrale seule — 199,90 €
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+      <div class="elh-stats">
+        <div class="elh-stat"><b>3</b><span>réseaux&nbsp;: Wi-Fi, Ethernet, 4G</span></div>
+        <div class="elh-stat"><b>200</b><span>accessoires maximum</span></div>
+        <div class="elh-stat"><b>Zigbee</b><span>passerelle intégrée</span></div>
+        <div class="elh-stat"><b>0 €</b><span>d'abonnement, à vie</span></div>
+      </div>
+    </div>
+
+    <div class="elh-visual">
+      <div class="elh-frame">
+        <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/strongcentrale-dalarmestrong-pa501z-311321.jpg?v=1770975531" alt="Centrale d'alarme Daewoo Élite PA501Z, boîtier sans écran ni clavier" width="1080" height="1080" fetchpriority="high">
+      </div>
+      <span class="elh-tag"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>PA501Z · 199,90 € la centrale</span>
+    </div>
+  </div>
+</section>
+
+<section class="elt">
+  <div class="elt-inner">
+    <div class="elt-c"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><b>Installée en 30 minutes</b><span>Sans câblage, sans perçage obligatoire</span></div></div>
+    <div class="elt-c"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2.5"/><line x1="2" y1="10.5" x2="22" y2="10.5"/></svg><div><b>Sans abonnement</b><span>Application et notifications gratuites à vie</span></div></div>
+    <div class="elt-c"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><b>SAV basé en France</b><span>Assistant 7j/7, équipe 5j/7</span></div></div>
+    <div class="elt-c"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><div><b>Garantie 2 ans</b><span>Retour gratuit sous 14 jours</span></div></div>
+  </div>
+</section>

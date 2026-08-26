@@ -1,0 +1,109 @@
+{% comment %} ── Pilotage : tout dans l'application, et les alternatives sans téléphone ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .elw * { box-sizing:border-box; margin:0; padding:0; }
+  .elw { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#f1f3f2; color:#0d1520; padding:92px 24px 96px; }
+  .elw-inner { max-width:1160px; margin:0 auto; }
+  .elw-head { max-width:640px; margin-bottom:46px; }
+  .elw-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5c6a75; margin-bottom:16px; }
+  .elw-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#12a0ad,rgba(18,160,173,0)); }
+  .elw-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.1; margin-bottom:16px; }
+  .elw-sub { font-size:15.5px; color:#4b5a63; font-weight:300; line-height:1.68; }
+  .elw-sub b { color:#0d1520; font-weight:500; }
+
+  .elw-split { display:grid; grid-template-columns:1.12fr .88fr; gap:22px; align-items:stretch; }
+  .elw-panel { background:#fff; border:1px solid #e2e7e6; border-radius:20px; padding:34px 32px 36px;
+    box-shadow:0 18px 44px -30px rgba(13,21,32,.28); }
+  .elw-pt { font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#0a6068; margin-bottom:14px; }
+  .elw-ph { font-size:21px; font-weight:600; letter-spacing:-.025em; line-height:1.28; margin-bottom:10px; }
+  .elw-pd { font-size:14.5px; color:#4b5a63; font-weight:300; line-height:1.62; margin-bottom:24px; }
+
+  .elw-ul { display:grid; grid-template-columns:1fr 1fr; gap:13px 22px; }
+  .elw-li { display:flex; gap:11px; align-items:flex-start; font-size:14px; color:#4b5a63; font-weight:300; line-height:1.5; }
+  .elw-li svg { width:15px; height:15px; flex:none; margin-top:3px; fill:none; stroke:#12a0ad; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  .elw-li b { color:#0d1520; font-weight:500; }
+
+  .elw-stores { display:flex; gap:10px; flex-wrap:wrap; margin-top:26px; }
+  .elw-store { display:inline-flex; align-items:center; gap:8px; padding:11px 16px; border-radius:8px;
+    background:#0d1520; color:#fff; font-size:12.5px; font-weight:500; text-decoration:none; transition:opacity .18s; }
+  .elw-store:hover { opacity:.86; }
+  .elw-store svg { width:15px; height:15px; fill:currentColor; }
+
+  .elw-alt { background:#0d1520; color:#fff; border-radius:20px; padding:34px 30px 36px; position:relative; overflow:hidden; }
+  .elw-alt::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(420px 260px at 84% 0%,rgba(18,160,173,.28),transparent 66%); }
+  .elw-alt > * { position:relative; z-index:2; }
+  .elw-alt .elw-pt { color:#12a0ad; }
+  .elw-alt .elw-pd { color:#c2ced3; }
+  .elw-acc { display:flex; flex-direction:column; gap:2px; }
+  .elw-row { display:grid; grid-template-columns:1fr auto; gap:14px; align-items:baseline;
+    padding:15px 0; border-top:1px solid rgba(255,255,255,.14); }
+  .elw-row:last-child { border-bottom:1px solid rgba(255,255,255,.14); }
+  .elw-rn { font-size:14.5px; font-weight:500; color:#fff; }
+  .elw-rd { font-size:12.8px; color:#a8b6bd; font-weight:300; line-height:1.5; margin-top:3px; }
+  .elw-rp { font-size:13px; font-weight:600; color:#12a0ad; white-space:nowrap; }
+  .elw-alt-note { font-size:12.5px; color:#a8b6bd; font-weight:300; line-height:1.6; margin-top:20px; }
+
+  @media (max-width:960px) { .elw-split { grid-template-columns:1fr; } .elw-ul { grid-template-columns:1fr; } .elw { padding:72px 20px; } }
+</style>
+
+<section class="elw">
+  <div class="elw-inner">
+    <div class="elw-head">
+      <span class="elw-eyebrow">Daewoo Home Connect</span>
+      <h2 class="elw-title">Toute la commande tient dans l'application.</h2>
+      <p class="elw-sub">C'est le parti pris de la gamme Élite&nbsp;: puisque la centrale n'a ni écran ni clavier, <b>l'application est le poste de commande</b>. Elle est gratuite, sans compte payant ni fonction réservée à un abonnement.</p>
+    </div>
+
+    <div class="elw-split">
+      <div class="elw-panel">
+        <p class="elw-pt">Depuis votre téléphone</p>
+        <h3 class="elw-ph">Armer, vérifier, comprendre — où que vous soyez</h3>
+        <p class="elw-pd">L'alarme, les caméras et vos objets connectés Daewoo sont réunis au même endroit, en France comme à l'étranger, dès que vous avez du réseau.</p>
+        <div class="elw-ul">
+          <div class="elw-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Armer et désarmer <b>à distance</b></span></div>
+          <div class="elw-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Notifications push en temps réel</span></div>
+          <div class="elw-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>SMS et appel téléphonique</b> avec une carte SIM</span></div>
+          <div class="elw-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Historique complet des événements</span></div>
+          <div class="elw-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Vidéo en direct de vos caméras</span></div>
+          <div class="elw-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Scénarios volets, lumières, prises</span></div>
+          <div class="elw-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Partage d'accès à toute la famille</span></div>
+          <div class="elw-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Alerte de <b>pile faible</b> sur chaque accessoire</span></div>
+        </div>
+        <div class="elw-stores">
+          <a class="elw-store" href="https://apps.apple.com/fr/app/daewoo-home-connect/id1491449350" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8c-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.6 2.3 2.8 2.2 1.1 0 1.6-.7 2.9-.7s1.7.7 2.9.7 2-1.1 2.7-2.2c.9-1.2 1.2-2.4 1.2-2.5 0 0-2.3-.9-2.3-3.6zM14.2 5.3c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.6 1.4-.6.7-1.1 1.7-.9 2.7 1 .1 2-.5 2.6-1.2z"/></svg>
+            App Store
+          </a>
+          <a class="elw-store" href="https://play.google.com/store/apps/details?id=com.NewDeal.Homeconnect&hl=fr" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M3.6 2.3c-.3.3-.5.8-.5 1.4v16.6c0 .6.2 1.1.5 1.4l.1.1 9.3-9.3v-.2L3.6 2.3zM16.2 15.6l-3.2-3.1v-.2l3.2-3.2.1.1 3.7 2.1c1.1.6 1.1 1.6 0 2.2l-3.8 2.1zM16.3 15.5 13 12.3 3.6 21.7c.4.4 1 .4 1.7 0l11-6.2M16.3 8.5 5.3 2.3c-.7-.4-1.3-.4-1.7 0L13 11.7l3.3-3.2z"/></svg>
+            Google Play
+          </a>
+        </div>
+      </div>
+
+      <div class="elw-alt">
+        <p class="elw-pt">Sans téléphone à la main</p>
+        <h3 class="elw-ph">Trois façons d'armer sans sortir l'application</h3>
+        <p class="elw-pd">Le téléphone n'est jamais une obligation. Ces accessoires s'ajoutent à la centrale en quelques secondes.</p>
+        <div class="elw-acc">
+          <div class="elw-row">
+            <div><p class="elw-rn">Télécommande WRC501</p><p class="elw-rd">Armer, désarmer, et un bouton SOS. Fournie dans les packs.</p></div>
+            <span class="elw-rp">23,90 €</span>
+          </div>
+          <div class="elw-row">
+            <div><p class="elw-rn">Badge RFID WRF501</p><p class="elw-rd">Un badge par personne, à présenter au clavier.</p></div>
+            <span class="elw-rp">9,90 €</span>
+          </div>
+          <div class="elw-row">
+            <div><p class="elw-rn">Clavier Zigbee WKE502Z</p><p class="elw-rd">Le clavier à code déporté, à poser près de l'entrée.</p></div>
+            <span class="elw-rp">59,90 €</span>
+          </div>
+        </div>
+        <p class="elw-alt-note">La <b style="color:#fff;font-weight:500">temporisation d'entrée et de sortie</b> vous laisse le temps de rentrer et de désarmer sans déclencher l'alerte, et de sortir après avoir armé.</p>
+      </div>
+    </div>
+  </div>
+</section>

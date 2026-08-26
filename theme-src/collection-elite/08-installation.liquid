@@ -1,0 +1,101 @@
+{% comment %} ── Installation — stepper vertical + pré-requis ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .eli * { box-sizing:border-box; margin:0; padding:0; }
+  .eli { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#f1f3f2; color:#0d1520; padding:92px 24px 96px; }
+  .eli-inner { max-width:1120px; margin:0 auto;
+    display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:start; }
+  .eli-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5c6a75; margin-bottom:16px; }
+  .eli-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#12a0ad,rgba(18,160,173,0)); }
+  .eli-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.1; margin-bottom:14px; }
+  .eli-sub { font-size:15.5px; color:#4b5a63; font-weight:300; line-height:1.68; margin-bottom:40px; max-width:520px; }
+  .eli-sub b { color:#0d1520; font-weight:500; }
+
+  .eli-steps { position:relative; padding-left:8px; }
+  .eli-step { display:grid; grid-template-columns:auto 1fr; gap:22px; position:relative; padding-bottom:30px; }
+  .eli-step:last-child { padding-bottom:0; }
+  .eli-step::before { content:''; position:absolute; left:21px; top:46px; bottom:2px; width:2px;
+    background:repeating-linear-gradient(180deg,#c3d1cf 0 6px,transparent 6px 12px); }
+  .eli-step:last-child::before { display:none; }
+  .eli-n { width:44px; height:44px; border-radius:14px; background:#0d1520; color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:600; position:relative; z-index:2; }
+  .eli-st { font-size:17px; font-weight:600; letter-spacing:-.02em; margin-bottom:7px; padding-top:9px; }
+  .eli-sd { font-size:14.2px; color:#4b5a63; font-weight:300; line-height:1.62; }
+  .eli-sd b { color:#0d1520; font-weight:500; }
+
+  .eli-aside { background:#fff; border:1px solid #e2e7e6; border-radius:20px; padding:30px 28px 32px;
+    box-shadow:0 18px 44px -30px rgba(13,21,32,.28); }
+  .eli-at { font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#0a6068; margin-bottom:16px; }
+  .eli-need { display:flex; flex-direction:column; gap:12px; margin-bottom:24px; }
+  .eli-nd { display:flex; gap:11px; align-items:flex-start; font-size:14px; color:#4b5a63; font-weight:300; line-height:1.5; }
+  .eli-nd svg { width:15px; height:15px; flex:none; margin-top:3px; fill:none; stroke:#12a0ad; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  .eli-nd b { color:#0d1520; font-weight:500; }
+  .eli-opt { padding:16px 18px; border-radius:12px; background:#f1f3f2; font-size:13px; color:#4b5a63;
+    font-weight:300; line-height:1.58; margin-bottom:22px; }
+  .eli-opt b { color:#0d1520; font-weight:500; }
+  .eli-links { display:flex; flex-direction:column; gap:10px; }
+  .eli-link { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 16px;
+    border:1px solid #e2e7e6; border-radius:10px; font-size:13.5px; font-weight:500; color:#0d1520;
+    text-decoration:none; transition:border-color .18s, transform .18s; }
+  .eli-link:hover { border-color:#0a6068; transform:translateY(-1px); }
+  .eli-link svg { width:15px; height:15px; flex:none; fill:none; stroke:#0a6068; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+
+  @media (max-width:960px) { .eli-inner { grid-template-columns:1fr; gap:40px; } .eli { padding:72px 20px; } }
+</style>
+
+<section class="eli">
+  <div class="eli-inner">
+    <div>
+      <span class="eli-eyebrow">Installation</span>
+      <h2 class="eli-title">Une prise, une application,<br>trente minutes.</h2>
+      <p class="eli-sub">Aucun technicien, aucun contrat de pose. La centrale n'a pas d'écran à configurer&nbsp;: <b>tout se paramètre depuis le téléphone</b>, accessoire par accessoire.</p>
+
+      <div class="eli-steps">
+        <div class="eli-step">
+          <span class="eli-n">1</span>
+          <div>
+            <p class="eli-st">Branchez la centrale</p>
+            <p class="eli-sd">Une prise secteur suffit. Reliez-la à votre <b>Wi-Fi 2,4 GHz</b>, ou directement à la box avec un câble Ethernet si vous voulez la liaison la plus stable.</p>
+          </div>
+        </div>
+        <div class="eli-step">
+          <span class="eli-n">2</span>
+          <div>
+            <p class="eli-st">Associez depuis l'application</p>
+            <p class="eli-sd">Créez votre compte Daewoo Home Connect, ajoutez la centrale, puis <b>chaque accessoire en quelques secondes</b>. L'application vous guide à chaque étape.</p>
+          </div>
+        </div>
+        <div class="eli-step">
+          <span class="eli-n">3</span>
+          <div>
+            <p class="eli-st">Posez les détecteurs et armez</p>
+            <p class="eli-sd">Contacteurs sur les portes et fenêtres, détecteur de mouvement dans le couloir de passage. <b>Adhésif fourni</b> ou vis, au choix. Réglez la temporisation, armez&nbsp;: c'est terminé.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="eli-aside">
+      <p class="eli-at">Ce qu'il faut prévoir</p>
+      <div class="eli-need">
+        <div class="eli-nd"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Une <b>prise secteur</b> libre, à portée du logement à protéger</span></div>
+        <div class="eli-nd"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Un réseau <b>Wi-Fi 2,4 GHz</b> — ou un port libre sur la box</span></div>
+        <div class="eli-nd"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Un smartphone <b>iOS ou Android</b></span></div>
+        <div class="eli-nd"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Environ <b>30 minutes</b> pour un pack de départ</span></div>
+      </div>
+      <p class="eli-opt"><b>En option&nbsp;:</b> une carte SIM M2M si vous voulez activer le relais 4G et recevoir SMS et appels en cas de coupure Internet.</p>
+      <div class="eli-links">
+        <a class="eli-link" href="https://daewoo-security.fr/pages/manuel-elite">
+          Manuel de la centrale Élite
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a class="eli-link" href="https://daewoo-security.fr/pages/installation-elite">
+          Guide d'installation pas à pas
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
