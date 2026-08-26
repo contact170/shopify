@@ -40,8 +40,8 @@ tenir 4,5:1 sur la bande `#f1f3f2`).
 1. **Hero** — « La centrale qu'on n'a pas besoin de voir », 4 chiffres clés, CTA packs + centrale seule.
 2. **Bandeau de confiance** (fond sombre) — installation 30 min, sans abonnement, SAV France, garantie.
 3. **Triple connexion** — Wi-Fi / Ethernet / 4G en chaîne de secours, + batterie de secours et rappel « les caméras ont besoin du Wi-Fi ».
-4. **Zigbee** — 4 arguments + **schéma SVG** de la centrale et de ses accessoires (aucune image externe).
-5. **Packs** — 3 cartes de hauteur égale : Starter 299,90 € / **Offre exclusive 593,90 €** (mise en avant) / Double caméra 809,90 €.
+4. **Zigbee** — la passerelle Zigbee et son périmètre réel + **schéma SVG deux réseaux** (Zigbee d'un côté, radio Daewoo de l'autre), aucune image externe.
+5. **Packs** — 3 cartes de hauteur égale : **Kit de départ à partir de 299,90 €** / **Offre exclusive 593,90 €** (mise en avant) / Double caméra 809,90 €.
 6. **Anatomie** — bandeau photo + 6 tuiles (ni écran ni clavier, sirène, batterie, arrachement, 4 liaisons, modes + SOS).
 7. **Pilotage app** — ce que fait l'application + carte sombre « armer sans téléphone » (télécommande, badge, clavier).
 8. **Confidentialité** — pas d'Alexa ni Google Home, par choix ; renvoi vers Touch / Vigilia et le comparateur.
@@ -60,7 +60,7 @@ consultable dans `theme-src/collection-elite.base.json` et dans le thème publi�
 ## Données utilisées
 
 - Centrale **PA501Z** à 199,90 € (SKU DAPA501Z), 4,52/5 sur 152 avis
-- Wi-Fi 2,4 GHz, Ethernet RJ45, **module GSM 4G intégré** (carte SIM en option)
+- Wi-Fi 2,4 GHz, Ethernet RJ45, **module GSM 4G+ intégré** (carte SIM en option)
 - Passerelle **Zigbee** intégrée, jusqu'à **200 accessoires**
 - Batterie de secours intégrée, sirène intégrée, détection d'arrachement
 - Modes Total / Partiel (Maison) / Désarmé, temporisation, fonction SOS
@@ -83,6 +83,23 @@ consultable dans `theme-src/collection-elite.base.json` et dans le thème publi�
   sont les produits actifs.
 - **Remise configurateur de 25 %** : reprise de la page Touch, le configurateur
   étant le même outil. À confirmer si elle diffère pour l'Élite.
+- **GSM 4G+ — comportement exact** (corrigé par le client) : en cas de coupure
+  Wi-Fi la centrale bascule sur les données mobiles, **ce que ne font ni la
+  Vigilia ni la Touch**, et **l'application reste active**. On continue donc
+  d'armer et de désarmer à distance, et on reçoit des SMS d'alerte. On ne pilote
+  **pas** l'alarme par SMS — l'application suffit. Ne pas écrire « 4G » seul :
+  toujours **4G+**. La mention « appel téléphonique » a été retirée de la page
+  (elle figure encore sur la fiche produit) — à trancher.
+- **Périmètre du Zigbee** (corrigé par le client) : seules **trois références**
+  communiquent en Zigbee — **WDS502Z, WVD502Z, WKE502Z**. Tous les autres
+  accessoires passent par la radio Daewoo. L'**amplificateur EXT501 n'étend donc
+  la portée que de ces trois références**.
+- **Accessoires tiers** : Zigbee 3.0 et Tuya, **compatibilité non garantie**.
+  Toujours accompagner la mention de cet avertissement.
+- **Ne pas écrire que la PA501Z reprend les accessoires de la gamme Key (SA501)**
+  ni proposer de remplacer une ancienne centrale SA501 en gardant ses détecteurs.
+  Cette affirmation a été retirée de toute la page (Zigbee, accessoires, fiche
+  technique, FAQ et JSON-LD).
 - **La section témoignage parle du système Touch XL** — c'est le contenu existant,
   repris tel quel. À adapter si vous voulez un témoignage Élite.
 - **Disponibilité du support** : assistant en ligne 7j/7, équipe 5j/7. Ne jamais
