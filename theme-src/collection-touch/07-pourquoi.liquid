@@ -1,0 +1,80 @@
+{% comment %} ── Pourquoi la gamme Touch — grille bento ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .tcw * { box-sizing:border-box; margin:0; padding:0; }
+  .tcw { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#eef1f7; padding:92px 24px; }
+  .tcw-inner { max-width:1160px; margin:0 auto; }
+  .tcw-eyebrow { font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#5b6b86; margin-bottom:14px; }
+  .tcw-title { font-size:clamp(26px,3.4vw,40px); font-weight:600; color:#0b1220; letter-spacing:-.03em; line-height:1.12; margin-bottom:44px; max-width:620px; }
+  .tcw-grid { display:grid; grid-template-columns:repeat(6,1fr); grid-auto-rows:minmax(0,auto); gap:18px; }
+  .tcw-c { background:#fff; border:1px solid #dfe5ef; border-radius:18px; padding:30px 28px; position:relative; overflow:hidden; }
+  .tcw-c--wide { grid-column:span 4; } .tcw-c--third { grid-column:span 2; } .tcw-c--half { grid-column:span 3; }
+  .tcw-ico { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+    background:rgba(47,123,255,.09); margin-bottom:18px; }
+  .tcw-ico svg { width:19px; height:19px; fill:none; stroke:#2f7bff; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  .tcw-c--dark { background:#0b1220; border-color:#0b1220; color:#e8eefb; }
+  .tcw-c--dark .tcw-ico { background:rgba(245,181,68,.14); }
+  .tcw-c--dark .tcw-ico svg { stroke:#f5b544; }
+  .tcw-h { font-size:17.5px; font-weight:600; color:#0b1220; letter-spacing:-.02em; line-height:1.3; margin-bottom:8px; }
+  .tcw-c--dark .tcw-h { color:#fff; }
+  .tcw-p { font-size:14.2px; color:#5b6b86; font-weight:300; line-height:1.6; }
+  .tcw-c--dark .tcw-p { color:#a9b8d2; }
+  .tcw-big { font-size:44px; font-weight:600; letter-spacing:-.04em; color:#0b1220; line-height:1; margin-bottom:10px; }
+  .tcw-c--dark .tcw-big { color:#ffcd72; }
+  @media (max-width:1000px) { .tcw-grid { grid-template-columns:repeat(4,1fr); }
+    .tcw-c--wide,.tcw-c--half { grid-column:span 2; } .tcw-c--third { grid-column:span 2; } }
+  @media (max-width:680px) { .tcw-grid { grid-template-columns:1fr; }
+    .tcw-c--wide,.tcw-c--half,.tcw-c--third { grid-column:span 1; } .tcw { padding:72px 20px; } }
+</style>
+
+<section class="tcw">
+  <div class="tcw-inner">
+    <p class="tcw-eyebrow">Pourquoi la gamme Touch</p>
+    <h2 class="tcw-title">Ce qui fait la différence, une fois le carton ouvert.</h2>
+
+    <div class="tcw-grid">
+      <div class="tcw-c tcw-c--wide">
+        <div class="tcw-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="7" y1="8" x2="17" y2="8"/></svg></div>
+        <h3 class="tcw-h">Un écran, pas un menu caché</h3>
+        <p class="tcw-p">L'état du système, les zones ouvertes, l'historique&nbsp;: tout est lisible directement sur la centrale. Vous ne dépendez pas d'un téléphone pour comprendre ce qui se passe chez vous.</p>
+      </div>
+
+      <div class="tcw-c tcw-c--third">
+        <div class="tcw-ico"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2.5"/><line x1="2" y1="10.5" x2="22" y2="10.5"/></svg></div>
+        <h3 class="tcw-h">Zéro abonnement</h3>
+        <p class="tcw-p">Vous payez le matériel une fois. L'application, les notifications et les mises à jour restent gratuites.</p>
+      </div>
+
+      <div class="tcw-c tcw-c--third tcw-c--dark">
+        <div class="tcw-big">90</div>
+        <h3 class="tcw-h">accessoires par centrale</h3>
+        <p class="tcw-p">Détecteurs, sirènes, claviers, barrières infrarouge, télécommandes — plus les caméras et prises connectées, en illimité via l'app.</p>
+      </div>
+
+      <div class="tcw-c tcw-c--third">
+        <div class="tcw-ico"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="17" height="10" rx="2"/><line x1="22" y1="10.5" x2="22" y2="13.5"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="9" y1="10" x2="9" y2="14"/></svg></div>
+        <h3 class="tcw-h">Batterie de secours</h3>
+        <p class="tcw-p">4 h sur la Touch, 20 h sur la Touch XL. Une coupure de courant ne désarme pas votre maison.</p>
+      </div>
+
+      <div class="tcw-c tcw-c--third">
+        <div class="tcw-ico"><svg viewBox="0 0 24 24"><path d="M2 7h13a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3H2z"/><line x1="18" y1="12" x2="22" y2="12"/></svg></div>
+        <h3 class="tcw-h">GSM 4G en option</h3>
+        <p class="tcw-p">Avec une carte SIM, la centrale envoie des SMS même si votre box Internet est coupée.</p>
+      </div>
+
+      <div class="tcw-c tcw-c--half">
+        <div class="tcw-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11.5 13.5 15.5 9"/></svg></div>
+        <h3 class="tcw-h">Une gamme, pas un produit isolé</h3>
+        <p class="tcw-p">Les accessoires AM30x sont partagés avec la gamme Vigilia. Vous n'êtes jamais enfermé dans un catalogue fermé, et un accessoire acheté aujourd'hui reste utilisable demain.</p>
+      </div>
+
+      <div class="tcw-c tcw-c--half">
+        <div class="tcw-ico"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3 class="tcw-h">Une marque, un SAV, en France</h3>
+        <p class="tcw-p">Support 7j/7, garantie 2 ans, pièces et accessoires disponibles à l'unité. Vous parlez à quelqu'un qui connaît votre installation.</p>
+      </div>
+    </div>
+  </div>
+</section>

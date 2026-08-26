@@ -1,0 +1,205 @@
+{% comment %} ── FAQ générale Touch / Touch XL — accordéon sombre + données structurées ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .tcf * { box-sizing:border-box; margin:0; padding:0; }
+  .tcf { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#05080f; color:#eaf0fb; padding:96px 24px; position:relative; overflow:hidden; }
+  .tcf::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(760px 400px at 50% 0%,rgba(77,163,255,.14),transparent 62%); }
+  .tcf-inner { position:relative; z-index:2; max-width:880px; margin:0 auto; }
+  .tcf-head { text-align:center; margin-bottom:50px; }
+  .tcf-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#9fb6da; margin-bottom:18px; }
+  .tcf-eyebrow::before,.tcf-eyebrow::after { content:''; width:28px; height:1px; background:rgba(255,255,255,.22); }
+  .tcf-title { font-size:clamp(26px,3.4vw,40px); font-weight:600; letter-spacing:-.03em; line-height:1.12; margin-bottom:14px; }
+  .tcf-sub { font-size:15.5px; color:#a0b0cb; font-weight:300; line-height:1.6; max-width:560px; margin:0 auto; }
+  .tcf-sub a { color:#7cbcff; text-decoration:none; border-bottom:1px solid rgba(124,188,255,.35); }
+
+  .tcf-item { border:1px solid rgba(255,255,255,.10); border-radius:14px; margin-bottom:10px;
+    background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012)); overflow:hidden;
+    transition:border-color .2s; }
+  .tcf-item[open] { border-color:rgba(77,163,255,.38); }
+  .tcf-q { display:flex; align-items:center; justify-content:space-between; gap:20px; cursor:pointer; list-style:none;
+    padding:20px 24px; font-size:15.8px; font-weight:500; letter-spacing:-.015em; line-height:1.4; color:#eaf0fb; }
+  .tcf-q::-webkit-details-marker { display:none; }
+  .tcf-q:hover { color:#9fcaff; }
+  .tcf-chev { width:18px; height:18px; flex:none; fill:none; stroke:#8fa1bd; stroke-width:2.2;
+    stroke-linecap:round; stroke-linejoin:round; transition:transform .25s; }
+  .tcf-item[open] .tcf-chev { transform:rotate(180deg); stroke:#4da3ff; }
+  .tcf-a { padding:0 24px 24px; font-size:14.5px; color:#a9b8d2; font-weight:300; line-height:1.7; }
+  .tcf-a p + p { margin-top:12px; }
+  .tcf-a b, .tcf-a strong { color:#eaf0fb; font-weight:600; }
+  .tcf-a a { color:#7cbcff; text-decoration:none; border-bottom:1px solid rgba(124,188,255,.35); }
+  .tcf-a ul { margin:12px 0 0 18px; } .tcf-a li { margin-bottom:7px; }
+  .tcf-tag { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    padding:3px 8px; border-radius:5px; margin-right:9px; vertical-align:middle;
+    background:rgba(245,181,68,.14); color:#ffcd72; }
+
+  .tcf-help { margin-top:34px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+    padding:24px 28px; border-radius:16px; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.03); }
+  .tcf-help-t { font-size:16px; font-weight:600; margin-bottom:4px; }
+  .tcf-help-s { font-size:13.5px; color:#93a5c2; font-weight:300; }
+  .tcf-help-b { display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:9px;
+    background:linear-gradient(120deg,#2f7bff,#4da3ff); color:#fff; font-size:13.5px; font-weight:600;
+    text-decoration:none; transition:transform .18s; }
+  .tcf-help-b:hover { transform:translateY(-2px); }
+  @media (max-width:600px) { .tcf { padding:72px 20px; } .tcf-q { padding:18px 18px; font-size:15px; } .tcf-a { padding:0 18px 20px; } }
+</style>
+
+<section class="tcf">
+  <div class="tcf-inner">
+    <div class="tcf-head">
+      <span class="tcf-eyebrow">Questions fréquentes</span>
+      <h2 class="tcf-title">Tout ce qu'il faut savoir<br>avant de choisir votre Touch.</h2>
+      <p class="tcf-sub">Les questions que nos clients nous posent le plus souvent. Il en reste une&nbsp;? Notre <a href="https://daewoo-security.fr/pages/assistance-1">page Assistance</a> et notre équipe sont là 7j/7.</p>
+    </div>
+
+    <details class="tcf-item" open>
+      <summary class="tcf-q"><span><span class="tcf-tag">Le + posé</span>Quelle est la vraie différence entre la Touch et la Touch XL&nbsp;?</span>
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p>Trois points, et trois seulement&nbsp;:</p>
+        <ul>
+          <li><b>L'écran</b>&nbsp;: 4,3'' sur la Touch (AM301), 7'' sur la Touch XL (AM302).</li>
+          <li><b>La sirène intégrée</b>&nbsp;: 95 dB sur la Touch, 100 dB sur la Touch XL.</li>
+          <li><b>La batterie de secours</b>&nbsp;: environ 4 heures d'autonomie sur la Touch, environ 20 heures sur la Touch XL.</li>
+        </ul>
+        <p>Pour tout le reste — Wi-Fi 2,4 GHz, option GSM 4G, clavier et lecteur RFID intégrés, 90 accessoires maximum, modes Total / Partiel / Désarmé, application Daewoo Home Connect, compatibilité Alexa et Google Home — <b>les deux centrales sont strictement identiques</b>.</p>
+        <p>En pratique&nbsp;: prenez la <b>Touch</b> si vous pilotez surtout depuis votre téléphone et que l'installation reste modeste. Prenez la <b>Touch XL</b> si la centrale est le poste de commande de toute la famille, si le logement est grand, ou si vous voulez le maximum d'autonomie en cas de coupure de courant.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">Puis-je commencer avec la Touch et passer à la Touch XL plus tard&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p>Oui, et sans rien perdre. <b>Tous les accessoires de la gamme AM30x</b> (détecteurs, contacteurs, télécommandes, badges, claviers, sirènes extérieures, barrières infrarouge) sont compatibles avec les deux centrales. Il suffit de les réappairer sur la nouvelle centrale, ce qui prend quelques secondes par accessoire.</p>
+        <p>Vos caméras et vos objets connectés Daewoo, eux, restent dans l'application&nbsp;: rien à refaire de ce côté-là.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">Est-ce que je peux installer le système moi-même&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p>Oui. Tout a été conçu pour une installation sans technicien&nbsp;: la centrale se branche sur une prise secteur, les détecteurs se posent en adhésif (fourni) ou se vissent, et l'appairage se fait depuis l'écran tactile ou l'application. <b>Comptez environ 30 minutes</b> pour un pack de départ, notice en français incluse.</p>
+        <p>Si vous bloquez, notre assistance téléphonique est disponible 7j/7 et le <a href="https://daewoo-security.fr/pages/manuel-am301">manuel AM301</a> est consultable en ligne.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">Y a-t-il un abonnement obligatoire&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p>Non, aucun. Vous achetez le matériel une fois, et c'est tout. L'application Daewoo Home Connect, les notifications push, les scénarios et les mises à jour sont <b>gratuits à vie</b>, sans option payante déguisée.</p>
+        <p>Le seul coût récurrent possible est <b>facultatif</b>&nbsp;: si vous choisissez d'activer la fonction GSM 4G, il vous faut une carte SIM M2M (à partir de 72 € pour un an, non fournie) pour recevoir des SMS en cas de coupure Internet.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">Que se passe-t-il en cas de coupure de courant ou d'Internet&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p><b>Coupure de courant&nbsp;:</b> la batterie de secours intégrée prend le relais — environ 4 heures sur la Touch, environ 20 heures sur la Touch XL. Le système reste armé et la sirène reste opérationnelle pendant toute cette durée.</p>
+        <p><b>Coupure Internet&nbsp;:</b> la centrale continue de détecter et de déclencher la sirène localement. En revanche, sans carte SIM, elle ne peut plus vous envoyer de notification. <b>Avec une carte SIM installée</b>, elle bascule sur le réseau GSM 4G et vous alerte par SMS.</p>
+        <p>À noter&nbsp;: dans tous les cas, <b>sans Wi-Fi ou sans électricité, les caméras ne sont pas accessibles</b> — elles dépendent de votre box.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">L'alarme peut-elle se déclencher avant l'effraction&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p>Oui. Les <b>contacteurs 2-en-1 WDV301</b> détectent aussi les vibrations&nbsp;: l'alerte peut donc partir <b>dès la tentative</b>, avant même que la porte ou la fenêtre ne s'ouvre. C'est souvent ce qui fait renoncer un cambrioleur.</p>
+        <p>Pour une détection encore plus en amont, vous pouvez ajouter un <a href="https://daewoo-security.fr/products/detecteur-de-mouvement-exterieur-wmo301">détecteur de mouvement extérieur WMO301</a> ou des <a href="https://daewoo-security.fr/products/daewoo-barrieres-infrarouge-pour-alarme-am301-am302">barrières infrarouge BIR301</a>, qui surveillent l'approche du logement.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">Mes enfants ou mes parents peuvent-ils l'utiliser sans smartphone&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p>C'est justement l'intérêt de l'écran tactile. Trois moyens fonctionnent <b>sans aucun téléphone</b>&nbsp;: le <b>badge RFID</b> que l'on pose sur la centrale, le <b>code</b> tapé sur le clavier intégré, et la <b>télécommande WRC301</b>.</p>
+        <p>Vous pouvez en plus régler une <b>temporisation d'entrée</b> pour laisser le temps de rentrer et de désarmer sans stress. Sur la Touch XL, le grand écran rend le geste encore plus évident pour un enfant ou une personne âgée.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">Puis-je armer l'alarme la nuit, pendant que je dors&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p>Oui, c'est le <b>mode Partiel (Maison)</b>. Vous choisissez à l'avance quels accessoires restent actifs&nbsp;: typiquement les contacteurs de portes et de fenêtres restent en veille, tandis que les <b>détecteurs de mouvement intérieurs se désactivent</b>.</p>
+        <p>Résultat&nbsp;: vous circulez librement chez vous, sans fausse alerte, tout en gardant les accès surveillés.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">J'ai un animal&nbsp;: vais-je avoir des fausses alertes&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p>Le <b>détecteur de mouvement WPS305</b> livré dans les packs est conçu pour ignorer les animaux domestiques de petit gabarit. Vous pouvez également l'orienter et le positionner en hauteur pour réduire encore le risque.</p>
+        <p>Et si vous préférez ne prendre aucun risque, le <b>mode Partiel</b> permet de désactiver totalement les détecteurs de mouvement tout en gardant portes et fenêtres surveillées.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">Combien d'accessoires puis-je ajouter&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p><b>Jusqu'à 90 accessoires par centrale</b>, sur la Touch comme sur la Touch XL&nbsp;: détecteurs d'ouverture et de vibration, détecteurs de mouvement intérieurs et extérieurs, détecteurs de fumée et de fuite d'eau, sirènes extérieures, claviers déportés, télécommandes, badges, barrières infrarouge…</p>
+        <p>Les <b>caméras et les objets connectés</b> (prises, interrupteurs) ne comptent pas dans ce total&nbsp;: ils se gèrent directement dans l'application, sans limite de nombre.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">Mes caméras et mes données sont-elles privées&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p>Oui. <b>Vous êtes le seul à avoir accès à vos caméras</b>&nbsp;: personne d'autre, y compris Daewoo Security, ne consulte vos flux. Vous décidez à qui vous partagez l'accès depuis l'application, et vous pouvez le retirer à tout moment.</p>
+        <p>La liaison radio entre la centrale et les accessoires est par ailleurs <b>chiffrée</b>, et la centrale déclenche une alerte si quelqu'un tente de l'arracher.</p>
+      </div>
+    </details>
+
+    <details class="tcf-item">
+      <summary class="tcf-q">Quelle garantie et quel service après-vente&nbsp;?
+        <svg class="tcf-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="tcf-a">
+        <p><b>2 ans de garantie</b> sur l'ensemble de la gamme, <b>14 jours pour changer d'avis</b> avec retour gratuit, et une <b>équipe SAV basée en France</b>, joignable 7j/7.</p>
+        <p>Tous les accessoires restent disponibles à l'unité&nbsp;: en cas de casse ou de perte, vous remplacez une pièce, pas tout le système.</p>
+      </div>
+    </details>
+
+    <div class="tcf-help">
+      <div>
+        <p class="tcf-help-t">Vous n'avez pas trouvé votre réponse&nbsp;?</p>
+        <p class="tcf-help-s">Notre équipe répond 7j/7, par téléphone, par chat ou par e-mail.</p>
+      </div>
+      <a class="tcf-help-b" href="https://daewoo-security.fr/pages/assistance-1">
+        Contacter l'assistance
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% comment %} ── Données structurées SEO (FAQPage) ── {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Quelle est la différence entre la centrale Touch AM301 et la Touch XL AM302 ?","acceptedAnswer":{"@type":"Answer","text":"Trois différences seulement : l'écran tactile (4,3 pouces sur la Touch AM301, 7 pouces sur la Touch XL AM302), la sirène intégrée (95 dB contre 100 dB) et la batterie de secours (environ 4 heures contre environ 20 heures). Pour tout le reste - Wi-Fi 2,4 GHz, option GSM 4G, clavier et lecteur RFID intégrés, jusqu'à 90 accessoires, modes Total, Partiel et Désarmé, application Daewoo Home Connect, compatibilité Alexa et Google Home - les deux centrales sont identiques."}},
+    {"@type":"Question","name":"Peut-on commencer avec la Touch et passer à la Touch XL plus tard ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Tous les accessoires de la gamme AM30x (détecteurs, contacteurs, télécommandes, badges, claviers, sirènes extérieures, barrières infrarouge) sont compatibles avec les deux centrales. Il suffit de les réappairer sur la nouvelle centrale. Les caméras et objets connectés restent gérés dans l'application, sans manipulation supplémentaire."}},
+    {"@type":"Question","name":"Peut-on installer l'alarme Touch soi-même ?","acceptedAnswer":{"@type":"Answer","text":"Oui, sans technicien. La centrale se branche sur une prise secteur, les détecteurs se posent en adhésif fourni ou se vissent, et l'appairage se fait depuis l'écran tactile ou l'application Daewoo Home Connect. Comptez environ 30 minutes pour un pack de départ, notice en français incluse."}},
+    {"@type":"Question","name":"L'alarme Daewoo Touch nécessite-t-elle un abonnement ?","acceptedAnswer":{"@type":"Answer","text":"Non, aucun abonnement obligatoire. L'application Daewoo Home Connect, les notifications push, les scénarios et les mises à jour sont gratuits à vie. Seule la fonction GSM 4G, facultative, nécessite une carte SIM M2M (à partir de 72 euros par an, non fournie) pour recevoir des SMS en cas de coupure Internet."}},
+    {"@type":"Question","name":"Que se passe-t-il en cas de coupure de courant ou d'Internet ?","acceptedAnswer":{"@type":"Answer","text":"En cas de coupure de courant, la batterie de secours intégrée prend le relais : environ 4 heures sur la Touch, environ 20 heures sur la Touch XL. En cas de coupure Internet, la centrale continue de détecter et de déclencher la sirène localement ; avec une carte SIM installée, elle bascule sur le réseau GSM 4G et envoie des alertes SMS. Sans Wi-Fi ni électricité, les caméras ne sont pas accessibles."}},
+    {"@type":"Question","name":"L'alarme peut-elle se déclencher avant l'effraction ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Les contacteurs 2-en-1 WDV301 détectent aussi les vibrations, ce qui permet de déclencher l'alerte dès la tentative d'intrusion, avant l'ouverture de la porte ou de la fenêtre. Un détecteur de mouvement extérieur WMO301 ou des barrières infrarouge BIR301 permettent de détecter encore plus en amont."}},
+    {"@type":"Question","name":"Peut-on utiliser l'alarme Touch sans smartphone ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Trois moyens fonctionnent sans téléphone : le badge RFID posé sur la centrale, le code tapé sur le clavier intégré et la télécommande WRC301. Une temporisation d'entrée peut être réglée pour laisser le temps de désarmer en rentrant."}},
+    {"@type":"Question","name":"Peut-on armer l'alarme la nuit pendant qu'on dort ?","acceptedAnswer":{"@type":"Answer","text":"Oui, grâce au mode Partiel (Maison). Les contacteurs de portes et fenêtres restent actifs tandis que les détecteurs de mouvement intérieurs se désactivent, ce qui permet de circuler librement chez soi sans fausse alerte."}},
+    {"@type":"Question","name":"L'alarme Touch est-elle compatible avec les animaux domestiques ?","acceptedAnswer":{"@type":"Answer","text":"Le détecteur de mouvement WPS305 fourni dans les packs est conçu pour ignorer les animaux domestiques de petit gabarit. Le mode Partiel permet également de désactiver totalement les détecteurs de mouvement tout en gardant portes et fenêtres surveillées."}},
+    {"@type":"Question","name":"Combien d'accessoires peut-on ajouter à une centrale Touch ?","acceptedAnswer":{"@type":"Answer","text":"Jusqu'à 90 accessoires par centrale, aussi bien sur la Touch que sur la Touch XL : détecteurs d'ouverture et de vibration, détecteurs de mouvement, détecteurs de fumée et de fuite d'eau, sirènes extérieures, claviers déportés, télécommandes, badges et barrières infrarouge. Les caméras et objets connectés ne comptent pas dans ce total et sont illimités."}},
+    {"@type":"Question","name":"Mes caméras et mes données sont-elles privées ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Vous êtes le seul à avoir accès à vos caméras et vous décidez à qui partager cet accès depuis l'application. La liaison radio entre la centrale et les accessoires est chiffrée, et la centrale déclenche une alerte en cas de tentative d'arrachement."}},
+    {"@type":"Question","name":"Quelle est la garantie de l'alarme Daewoo Touch ?","acceptedAnswer":{"@type":"Answer","text":"La gamme Touch bénéficie de 2 ans de garantie, d'un droit de retour gratuit de 14 jours et d'un service après-vente basé en France joignable 7j/7. Tous les accessoires restent disponibles à l'unité."}}
+  ]
+}
+</script>

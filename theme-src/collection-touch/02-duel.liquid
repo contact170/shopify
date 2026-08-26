@@ -1,0 +1,185 @@
+{% comment %} ── Touch vs Touch XL : confrontation des 2 centrales + tableau comparatif ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .tcd * { box-sizing:border-box; margin:0; padding:0; }
+  .tcd { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#05080f; color:#eaf0fb; padding:96px 24px 0; position:relative; overflow:hidden; }
+  .tcd::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:1px; height:100%; background:linear-gradient(180deg,transparent,rgba(255,255,255,.10) 18%,rgba(255,255,255,.10) 72%,transparent); }
+  .tcd-inner { position:relative; z-index:2; max-width:1200px; margin:0 auto; }
+  .tcd-head { text-align:center; margin-bottom:56px; }
+  .tcd-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#9fb6da; margin-bottom:18px; }
+  .tcd-eyebrow::before,.tcd-eyebrow::after { content:''; width:30px; height:1px; background:rgba(255,255,255,.22); }
+  .tcd-title { font-size:clamp(28px,3.8vw,44px); font-weight:600; line-height:1.1; letter-spacing:-.03em; margin-bottom:16px; }
+  .tcd-sub { font-size:16px; color:#a0b0cb; font-weight:300; max-width:600px; margin:0 auto; line-height:1.6; }
+
+  /* ── les 2 panneaux ── */
+  .tcd-versus { display:grid; grid-template-columns:1fr auto 1fr; gap:0; align-items:stretch; }
+  .tcd-card { padding:38px 34px 40px; border:1px solid rgba(255,255,255,.10); position:relative; overflow:hidden;
+    background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012)); }
+  .tcd-card--l { border-radius:20px 0 0 20px; border-right:0; }
+  .tcd-card--r { border-radius:0 20px 20px 0; border-left:0; }
+  .tcd-card::after { content:''; position:absolute; inset:0; pointer-events:none; }
+  .tcd-card--l::after { background:radial-gradient(420px 260px at 50% 0%,rgba(77,163,255,.20),transparent 70%); }
+  .tcd-card--r::after { background:radial-gradient(420px 260px at 50% 0%,rgba(245,181,68,.18),transparent 70%); }
+  .tcd-card > * { position:relative; z-index:2; }
+  .tcd-ref { display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+    padding:5px 11px; border-radius:5px; margin-bottom:16px; }
+  .tcd-card--l .tcd-ref { color:#8ec6ff; background:rgba(77,163,255,.15); border:1px solid rgba(77,163,255,.32); }
+  .tcd-card--r .tcd-ref { color:#ffd27e; background:rgba(245,181,68,.14); border:1px solid rgba(245,181,68,.32); }
+  .tcd-name { font-size:30px; font-weight:600; letter-spacing:-.025em; line-height:1.15; margin-bottom:8px; }
+  .tcd-for { font-size:14px; color:#9db0cd; font-weight:300; margin-bottom:24px; }
+  .tcd-shot { border-radius:15px; overflow:hidden; background:#0b1220; border:1px solid rgba(255,255,255,.08); margin-bottom:26px; }
+  .tcd-shot img { width:100%; height:270px; object-fit:cover; display:block; }
+  .tcd-screen { display:flex; align-items:baseline; gap:9px; margin-bottom:22px; padding-bottom:22px; border-bottom:1px solid rgba(255,255,255,.09); }
+  .tcd-screen b { font-size:42px; font-weight:600; letter-spacing:-.04em; line-height:1; }
+  .tcd-card--l .tcd-screen b { color:#7cbcff; } .tcd-card--r .tcd-screen b { color:#ffcd72; }
+  .tcd-screen span { font-size:13px; color:#93a5c2; font-weight:300; }
+  .tcd-keys { display:flex; flex-direction:column; gap:13px; margin-bottom:28px; }
+  .tcd-key { display:flex; gap:11px; align-items:flex-start; font-size:14px; color:#cbd7ea; font-weight:300; line-height:1.45; }
+  .tcd-key b { font-weight:600; color:#eaf0fb; }
+  .tcd-key svg { width:16px; height:16px; flex:none; margin-top:3px; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+  .tcd-card--l .tcd-key svg { stroke:#4da3ff; } .tcd-card--r .tcd-key svg { stroke:#f5b544; }
+  .tcd-foot { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .tcd-price { font-size:13px; color:#93a5c2; font-weight:300; }
+  .tcd-price b { display:block; font-size:26px; font-weight:600; color:#fff; letter-spacing:-.02em; }
+  .tcd-buy { display:inline-flex; align-items:center; gap:8px; padding:13px 22px; border-radius:9px;
+    font-size:13.5px; font-weight:600; text-decoration:none; transition:transform .18s, box-shadow .18s; }
+  .tcd-buy:hover { transform:translateY(-2px); }
+  .tcd-card--l .tcd-buy { background:linear-gradient(120deg,#2f7bff,#4da3ff); color:#fff; box-shadow:0 10px 26px rgba(47,123,255,.32); }
+  .tcd-card--r .tcd-buy { background:linear-gradient(120deg,#e8a02c,#f5b544); color:#25190a; box-shadow:0 10px 26px rgba(245,181,68,.28); }
+
+  .tcd-vs { display:flex; align-items:center; justify-content:center; padding:0 6px; }
+  .tcd-vs span { width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:#05080f; border:1px solid rgba(255,255,255,.16); font-size:12px; font-weight:700;
+    letter-spacing:.1em; color:#9fb6da; }
+
+  /* ── tableau comparatif ── */
+  .tct { background:#eef1f7; padding:92px 24px; font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; }
+  .tct * { box-sizing:border-box; margin:0; padding:0; }
+  .tct-inner { max-width:1000px; margin:0 auto; }
+  .tct-eyebrow { font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#5b6b86; margin-bottom:14px; }
+  .tct-title { font-size:clamp(25px,3.2vw,36px); font-weight:600; color:#0b1220; letter-spacing:-.03em; line-height:1.15; margin-bottom:12px; }
+  .tct-sub { font-size:15.5px; color:#5b6b86; font-weight:300; line-height:1.6; margin-bottom:38px; max-width:620px; }
+  .tct-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:16px; border:1px solid #dbe1ec; background:#fff; }
+  .tct-table { width:100%; border-collapse:collapse; min-width:640px; }
+  .tct-table th, .tct-table td { padding:17px 20px; text-align:left; border-bottom:1px solid #eceff5; font-size:14.5px; }
+  .tct-table thead th { position:sticky; top:0; background:#fff; padding-top:24px; padding-bottom:20px; border-bottom:2px solid #e4e9f2; }
+  .tct-th-label { font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#8493ad; }
+  .tct-th-model { display:block; font-size:17px; font-weight:600; color:#0b1220; letter-spacing:-.02em; margin-top:5px; }
+  .tct-th-model small { display:block; font-size:12px; font-weight:400; color:#7b8aa4; margin-top:3px; letter-spacing:0; }
+  .tct-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+  .tct-dot--b { background:#2f7bff; } .tct-dot--g { background:#e8a02c; }
+  .tct-table tbody th { font-weight:500; color:#3b4a63; width:34%; background:#fafbfd; }
+  .tct-table td { color:#0b1220; font-weight:500; }
+  .tct-table tr:last-child th, .tct-table tr:last-child td { border-bottom:0; }
+  .tct-win { display:inline-flex; align-items:center; gap:7px; }
+  .tct-win svg { width:15px; height:15px; fill:none; stroke:#0f9d63; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  .tct-no { color:#98a5ba; font-weight:400; }
+  .tct-badge { display:inline-block; font-size:10.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    padding:3px 8px; border-radius:5px; margin-left:8px; background:rgba(232,160,44,.14); color:#a56d10; }
+  .tct-hint { font-size:12.5px; color:#7b8aa4; font-weight:300; margin-top:16px; }
+
+  @media (max-width:900px) {
+    .tcd-versus { grid-template-columns:1fr; }
+    .tcd-card--l { border-radius:20px 20px 0 0; border-right:1px solid rgba(255,255,255,.10); border-bottom:0; }
+    .tcd-card--r { border-radius:0 0 20px 20px; border-left:1px solid rgba(255,255,255,.10); }
+    .tcd-vs { padding:0; margin:-28px 0; z-index:5; position:relative; }
+    .tcd::before { display:none; }
+    .tcd { padding:72px 20px 0; }
+    .tct { padding:72px 20px; }
+  }
+</style>
+
+<section class="tcd" id="tc-duel">
+  <div class="tcd-inner">
+    <div class="tcd-head">
+      <span class="tcd-eyebrow">Touch ou Touch XL</span>
+      <h2 class="tcd-title">Deux centrales.<br>Une seule différence qui compte&nbsp;: l'écran.</h2>
+      <p class="tcd-sub">Même technologie, mêmes accessoires, même application. Ce qui change, c'est la taille de l'écran, la puissance de la sirène et l'autonomie de la batterie de secours.</p>
+    </div>
+
+    <div class="tcd-versus">
+      <!-- TOUCH AM301 -->
+      <div class="tcd-card tcd-card--l">
+        <span class="tcd-ref">AM301 · Touch</span>
+        <h3 class="tcd-name">Centrale Touch</h3>
+        <p class="tcd-for">Appartement, maison de plain-pied, résidence secondaire</p>
+        <div class="tcd-shot">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/8734bc42-ff99-47e9-97d1-34e38b0a4397.jpg?v=1770108612" alt="Centrale d'alarme Daewoo Touch AM301 écran tactile 4,3 pouces" loading="lazy" width="700" height="540">
+        </div>
+        <div class="tcd-screen"><b>4,3''</b><span>écran tactile couleur</span></div>
+        <div class="tcd-keys">
+          <div class="tcd-key"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Sirène intégrée <b>95 dB</b></span></div>
+          <div class="tcd-key"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Batterie de secours <b>≈ 4 heures</b></span></div>
+          <div class="tcd-key"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Wi-Fi 2,4 GHz + <b>GSM 4G en option</b></span></div>
+          <div class="tcd-key"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Format compact, <b>discret dans l'entrée</b></span></div>
+        </div>
+        <div class="tcd-foot">
+          <span class="tcd-price">Pack de départ<b>199,90 €</b></span>
+          <a class="tcd-buy" href="https://daewoo-security.fr/products/alarme-daewoo-wifi-gsm-4g-starter-pack-am301?variant=51276200051028">Choisir la Touch →</a>
+        </div>
+      </div>
+
+      <div class="tcd-vs"><span>VS</span></div>
+
+      <!-- TOUCH XL AM302 -->
+      <div class="tcd-card tcd-card--r">
+        <span class="tcd-ref">AM302 · Touch XL</span>
+        <h3 class="tcd-name">Centrale Touch XL</h3>
+        <p class="tcd-for">Grande maison, pavillon sur plusieurs niveaux, villa</p>
+        <div class="tcd-shot">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/a294d81e-81d9-4c35-b5a6-9a58f34e5402.jpg?v=1770108612" alt="Centrale d'alarme Daewoo Touch XL AM302 écran tactile 7 pouces" loading="lazy" width="700" height="540">
+        </div>
+        <div class="tcd-screen"><b>7''</b><span>écran tactile couleur</span></div>
+        <div class="tcd-keys">
+          <div class="tcd-key"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Sirène intégrée <b>100 dB</b></span></div>
+          <div class="tcd-key"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Batterie de secours <b>≈ 20 heures</b></span></div>
+          <div class="tcd-key"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Wi-Fi 2,4 GHz + <b>GSM 4G en option</b></span></div>
+          <div class="tcd-key"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Grand écran&nbsp;: <b>lecture immédiate des zones</b></span></div>
+        </div>
+        <div class="tcd-foot">
+          <span class="tcd-price">Pack de départ<b>299,90 €</b></span>
+          <a class="tcd-buy" href="https://daewoo-security.fr/products/alarme-daewoo-wifi-gsm-4g-starter-pack-am301?variant=51276200083796">Choisir la Touch XL →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tct">
+  <div class="tct-inner">
+    <p class="tct-eyebrow">Comparatif détaillé</p>
+    <h2 class="tct-title">Ligne par ligne, ce qui sépare la Touch de la Touch XL</h2>
+    <p class="tct-sub">Les deux centrales partagent la même plateforme radio, la même application et les mêmes accessoires. Voici les seuls points sur lesquels elles diffèrent réellement — et tout ce qu'elles ont en commun.</p>
+
+    <div class="tct-scroll">
+      <table class="tct-table">
+        <thead>
+          <tr>
+            <th><span class="tct-th-label">Caractéristique</span></th>
+            <th><span class="tct-th-label"><span class="tct-dot tct-dot--b"></span>AM301</span><span class="tct-th-model">Touch<small>À partir de 199,90 €</small></span></th>
+            <th><span class="tct-th-label"><span class="tct-dot tct-dot--g"></span>AM302</span><span class="tct-th-model">Touch XL<small>À partir de 299,90 €</small></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>Écran tactile couleur</th><td>4,3 pouces</td><td>7 pouces <span class="tct-badge">+2,7'' de diagonale</span></td></tr>
+          <tr><th>Sirène intégrée</th><td>95 dB</td><td>100 dB</td></tr>
+          <tr><th>Batterie de secours</th><td>≈ 4 heures</td><td>≈ 20 heures</td></tr>
+          <tr><th>Connexion Wi-Fi 2,4 GHz</th><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Inclus</span></td><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Inclus</span></td></tr>
+          <tr><th>GSM 4G (carte SIM en option)</th><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Disponible</span></td><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Disponible</span></td></tr>
+          <tr><th>Alertes SMS en cas de coupure Internet</th><td>Avec carte SIM</td><td>Avec carte SIM</td></tr>
+          <tr><th>Clavier &amp; lecteur de badges RFID intégrés</th><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Oui</span></td><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Oui</span></td></tr>
+          <tr><th>Nombre d'accessoires maximum</th><td>Jusqu'à 90</td><td>Jusqu'à 90</td></tr>
+          <tr><th>Caméras &amp; objets connectés</th><td>Illimité (via l'app)</td><td>Illimité (via l'app)</td></tr>
+          <tr><th>Modes Total / Partiel / Désarmé</th><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Oui</span></td><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Oui</span></td></tr>
+          <tr><th>Détection d'arrachement</th><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Oui</span></td><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Oui</span></td></tr>
+          <tr><th>Alexa &amp; Google Home</th><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Compatible</span></td><td><span class="tct-win"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Compatible</span></td></tr>
+          <tr><th>Abonnement obligatoire</th><td class="tct-no">Aucun</td><td class="tct-no">Aucun</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tct-hint">↔ Faites glisser le tableau horizontalement sur mobile. Prix indiqués pour les packs de départ, hors promotions en cours.</p>
+  </div>
+</section>
