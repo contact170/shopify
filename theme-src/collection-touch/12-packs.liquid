@@ -1,4 +1,4 @@
-{% comment %} ── Packs Touch / Touch XL — cartes escalier avec indicateur de couverture ── {% endcomment %}
+{% comment %} ── Packs Touch / Touch XL — 3 cartes de hauteur égale, offre au centre ── {% endcomment %}
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   .tck * { box-sizing:border-box; margin:0; padding:0; }
@@ -9,17 +9,20 @@
   .tck-eyebrow { font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#5a6982; margin-bottom:14px; }
   .tck-title { font-size:clamp(26px,3.4vw,40px); font-weight:600; color:#0b1220; letter-spacing:-.03em; line-height:1.12; }
   .tck-note { font-size:14px; color:#4a5a75; font-weight:300; line-height:1.6; max-width:340px; }
-  .tck-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; align-items:start; }
-  .tck-card { grid-column:span 1; border:1px solid #dfe5ef; border-radius:20px; overflow:hidden; background:#fff;
-    display:flex; flex-direction:column; transition:transform .2s, box-shadow .2s, border-color .2s; }
+
+  /* 3 colonnes égales, cartes étirées à la même hauteur */
+  .tck-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:stretch; }
+  .tck-card { display:flex; flex-direction:column; height:100%;
+    border:1px solid #dfe5ef; border-radius:20px; overflow:hidden; background:#fff;
+    transition:transform .2s, box-shadow .2s, border-color .2s; }
   .tck-card:hover { transform:translateY(-5px); box-shadow:0 22px 50px -24px rgba(11,18,32,.35); border-color:#b9c7dd; }
-  .tck-card--hero { grid-column:span 2; }
+  .tck-card--hero { border-color:#c9860f; box-shadow:0 18px 44px -26px rgba(201,134,15,.45); }
+  .tck-card--hero:hover { border-color:#c9860f; }
   .tck-media { position:relative; background:linear-gradient(160deg,#f2f6fd,#fbfcfe); border-bottom:1px solid #eef1f7; padding:26px; }
-  .tck-card--hero .tck-media { padding:34px; }
-  .tck-media img { width:100%; height:190px; object-fit:contain; display:block; }
-  .tck-card--hero .tck-media img { height:250px; }
+  .tck-card--hero .tck-media { background:linear-gradient(160deg,#fdf6e9,#fffdf9); border-bottom-color:#f4e6c9; }
+  .tck-media img { width:100%; height:200px; object-fit:contain; display:block; }
   .tck-badge { position:absolute; top:16px; right:16px; font-size:10px; font-weight:700; letter-spacing:.13em;
-    text-transform:uppercase; padding:6px 11px; border-radius:6px; background:#0b1220; color:#fff; }
+    text-transform:uppercase; padding:6px 11px; border-radius:6px; background:#8f5d0c; color:#fff; }
   .tck-model { position:absolute; top:16px; left:16px; display:inline-flex; align-items:center; gap:7px;
     font-size:10.5px; font-weight:700; letter-spacing:.11em; text-transform:uppercase; padding:6px 11px; border-radius:6px; }
   .tck-model.b { background:rgba(47,123,255,.10); color:#1c5fd0; border:1px solid rgba(47,123,255,.28); }
@@ -27,8 +30,7 @@
   .tck-body { padding:26px 26px 28px; display:flex; flex-direction:column; flex:1; }
   .tck-ref { font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#626f86; margin-bottom:8px; }
   .tck-name { font-size:19px; font-weight:600; color:#0b1220; letter-spacing:-.025em; line-height:1.25; margin-bottom:6px; }
-  .tck-card--hero .tck-name { font-size:23px; }
-  .tck-for { font-size:13.5px; color:#5a6982; font-weight:300; margin-bottom:18px; }
+  .tck-for { font-size:13.5px; color:#5a6982; font-weight:300; line-height:1.5; margin-bottom:18px; min-height:40px; }
   .tck-cov { margin-bottom:18px; }
   .tck-cov-l { display:flex; justify-content:space-between; font-size:11px; font-weight:600; letter-spacing:.08em;
     text-transform:uppercase; color:#626f86; margin-bottom:7px; }
@@ -43,7 +45,7 @@
   .tck-price s { font-size:14px; font-weight:400; color:#626f86; margin-left:9px; }
   .tck-price small { display:block; font-size:12px; font-weight:400; color:#626f86; letter-spacing:0; margin-bottom:3px; }
   .tck-btn { display:block; text-align:center; padding:14px 20px; border-radius:10px; font-size:13.5px;
-    font-weight:600; text-decoration:none; transition:transform .18s, background .18s; }
+    font-weight:600; text-decoration:none; transition:transform .18s, background .18s; margin-top:auto; }
   .tck-btn:hover { transform:translateY(-2px); }
   .tck-btn.solid { background:#0b1220; color:#fff; }
   .tck-btn.outline { background:#fff; color:#0b1220; border:1px solid #dfe5ef; }
@@ -56,8 +58,8 @@
     text-decoration:none; transition:transform .18s; }
   .tck-cta-b:hover { transform:translateY(-2px); }
   .tck-cta-b svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
-  @media (max-width:1000px) { .tck-grid { grid-template-columns:repeat(2,1fr); } .tck-card--hero { grid-column:span 2; } }
-  @media (max-width:680px) { .tck-grid { grid-template-columns:1fr; } .tck-card--hero { grid-column:span 1; } .tck { padding:72px 20px; } }
+  @media (max-width:1000px) { .tck-grid { grid-template-columns:1fr; } .tck-for { min-height:0; } }
+  @media (max-width:680px) { .tck { padding:72px 20px; } }
 </style>
 
 <section class="tck">
@@ -71,81 +73,82 @@
     </div>
 
     <div class="tck-grid">
-      <!-- Starter -->
+      <!-- AM340 -->
       <div class="tck-card">
         <div class="tck-media">
-          <span class="tck-model b">Touch ou XL</span>
-          <img src="https://daewoo-security.fr/cdn/shop/files/a294d81e-81d9-4c35-b5a6-9a58f34e5402.jpg?v=1770108612&width=1600" alt="Starter Pack Touch AM301" loading="lazy">
-        </div>
-        <div class="tck-body">
-          <p class="tck-ref">Starter · AM301 / AM302</p>
-          <p class="tck-name">Starter Pack Touch</p>
-          <p class="tck-for">Appartement ou maison de plain-pied</p>
-          <div class="tck-cov">
-            <div class="tck-cov-l"><span>Couverture</span><span>Essentiel</span></div>
-            <div class="tck-cov-bar"><div class="tck-cov-fill" style="width:35%"></div></div>
-          </div>
-          <div class="tck-ul">
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Centrale Touch (4,3'') ou Touch XL (7'') au choix</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>2× contacteurs ouverture + vibration</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>1× détecteur de mouvement (compatible animaux)</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>2× télécommandes WRC305</span></div>
-          </div>
-          <p class="tck-price"><small>À partir de</small>199,90 €</p>
-          <a class="tck-btn outline" href="https://daewoo-security.fr/products/alarme-daewoo-wifi-gsm-4g-starter-pack-am301">Voir le pack →</a>
-        </div>
-      </div>
-
-      <!-- AM340 : mis en avant -->
-      <div class="tck-card tck-card--hero">
-        <div class="tck-media">
           <span class="tck-model b">Centrale Touch 4,3''</span>
-          <span class="tck-badge">Le plus choisi</span>
-          <img src="https://daewoo-security.fr/cdn/shop/files/AM340.png?v=1773165734&width=1400" alt="Pack alarme Daewoo Touch AM340 avec caméra et sirène extérieure" loading="lazy">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/AM340_b8451b0e-b979-433c-b656-55213c9670f0.png?v=1779969124" alt="Pack alarme Daewoo Touch AM340 avec caméra motorisée et sirène extérieure" loading="lazy">
         </div>
         <div class="tck-body">
           <p class="tck-ref">AM340</p>
           <p class="tck-name">Pack Touch AM340</p>
-          <p class="tck-for">Maison ou pavillon — centrale, caméra motorisée et sirène extérieure</p>
+          <p class="tck-for">Maison ou pavillon — levée de doute vidéo et dissuasion en façade</p>
           <div class="tck-cov">
             <div class="tck-cov-l"><span>Couverture</span><span>Complète</span></div>
-            <div class="tck-cov-bar"><div class="tck-cov-fill" style="width:75%"></div></div>
+            <div class="tck-cov-bar"><div class="tck-cov-fill" style="width:65%"></div></div>
           </div>
           <div class="tck-ul">
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Centrale AM301 Touch — Wi-Fi, sirène 90 dB, batterie 4 h</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Caméra motorisée IP506P — Full HD, suivi automatique</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Sirène extérieure WOS305 — son puissant + flash</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>4× contacteurs 2-en-1 WDV301</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>2× détecteurs de mouvement WPS305 + 2× télécommandes</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Centrale AM301 Touch — écran 4,3'', guide vocal, batterie 4 h</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Caméra intérieure motorisée IP506P — Full HD, mode vie privée</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Sirène extérieure WOS305 — flash rouge + son puissant</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>4× contacteurs 2-en-1 WDV301 + 2× détecteurs WPS305</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>2× télécommandes WRC305 avec bouton SOS</span></div>
           </div>
-          <p class="tck-price"><small>Prix du pack</small>349,90 € <s>619,60 €</s></p>
-          <a class="tck-btn solid" href="https://daewoo-security.fr/products/alarme-maison-wifi-gsm-sans-fil-touch-am340-sans-abonnement-kit-complet-avec-camera-full-hd-controle-smartphone">Voir le pack AM340 →</a>
+          <p class="tck-price"><small>Prix du pack</small>349,90 €</p>
+          <a class="tck-btn outline" href="https://daewoo-security.fr/products/alarme-maison-wifi-gsm-sans-fil-touch-am340-sans-abonnement-kit-complet-avec-camera-full-hd-controle-smartphone">Voir le pack AM340 →</a>
         </div>
       </div>
 
-      <!-- AM351 -->
+      <!-- OFFRE EXCLUSIVE : mise en avant, au centre -->
+      <div class="tck-card tck-card--hero">
+        <div class="tck-media">
+          <span class="tck-model b">Centrale Touch 4,3''</span>
+          <span class="tck-badge">Offre exclusive</span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/ChatGPTImage28mai2026_14_00_03.png?v=1779975615" alt="Pack Touch offre exclusive avec double caméra extérieure autonome" loading="lazy">
+        </div>
+        <div class="tck-body">
+          <p class="tck-ref">Offre exclusive</p>
+          <p class="tck-name">Pack Touch — Double caméra extérieure</p>
+          <p class="tck-for">Intérieur et extérieur couverts, avec sirène solaire autonome</p>
+          <div class="tck-cov">
+            <div class="tck-cov-l"><span>Couverture</span><span>Renforcée</span></div>
+            <div class="tck-cov-bar"><div class="tck-cov-fill" style="width:85%"></div></div>
+          </div>
+          <div class="tck-ul">
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Centrale AM301 Touch — sirène et batterie intégrées</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>2× caméras extérieures autonomes W503 — 100 % sans fil</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Caméra intérieure IP506P + sirène solaire WOS305S</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>4× contacteurs 2-en-1 WDV301 + 1× détecteur compatible animaux</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>2× télécommandes WRC305 + autocollants dissuasifs</span></div>
+          </div>
+          <p class="tck-price"><small>Prix du pack</small>499,90 € <s>719,30 €</s></p>
+          <a class="tck-btn solid" href="https://daewoo-security.fr/products/offre-exclusive-pack-touch-compatible-animaux-sans-abonnement">Profiter de l'offre →</a>
+        </div>
+      </div>
+
+      <!-- AM353 -->
       <div class="tck-card tck-card--xl">
         <div class="tck-media">
           <span class="tck-model g">Centrale Touch XL 7''</span>
-          <img src="https://daewoo-security.fr/cdn/shop/files/am351_2.png?v=1773168360&width=1400" alt="Pack alarme Daewoo Touch XL AM351 avec 2 caméras" loading="lazy">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/AM353_1.png?v=1773167623" alt="Pack alarme Daewoo Touch XL AM353 avec 2 caméras et 17 accessoires" loading="lazy">
         </div>
         <div class="tck-body">
-          <p class="tck-ref">AM351</p>
-          <p class="tck-name">Pack Touch XL AM351</p>
-          <p class="tck-for">Grande maison ou villa</p>
+          <p class="tck-ref">AM353</p>
+          <p class="tck-name">Pack Touch XL AM353</p>
+          <p class="tck-for">Grande maison — 17 accessoires, détection intérieure et périmétrique</p>
           <div class="tck-cov">
             <div class="tck-cov-l"><span>Couverture</span><span>Maximale</span></div>
             <div class="tck-cov-bar"><div class="tck-cov-fill" style="width:100%"></div></div>
           </div>
           <div class="tck-ul">
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Centrale AM302 XL — écran 7'', batterie 20 h, Wi-Fi + 4G</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Caméra extérieure EP506 355° + caméra intérieure IP506P</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Sirène extérieure WOS305 + détecteur de vibration WVD301</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>5× contacteurs + 2× détecteurs de mouvement</span></div>
-            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>2× télécommandes + autocollants dissuasifs</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Centrale AM302 Touch XL — écran 7'', batterie 20 h, Wi-Fi + 4G</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Caméra extérieure solaire W512MW + caméra intérieure motorisée</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Sirène solaire extérieure, autonome et sans câblage</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>5× contacteurs 2-en-1, 2× magnétiques, 3× détecteurs de vibration</span></div>
+            <div class="tck-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>4× détecteurs de mouvement + 2× télécommandes</span></div>
           </div>
-          <p class="tck-price"><small>À partir de</small>529,90 €</p>
-          <a class="tck-btn outline" href="https://daewoo-security.fr/products/alarme-maison-sans-fil-avec-ecran-tactile-7-am351-livree-avec-2-cameras-full-hd-et-12-accessoires-sans-abonnement-application-gratuite">Voir le pack AM351 →</a>
+          <p class="tck-price"><small>Prix du pack</small>699,90 €</p>
+          <a class="tck-btn outline" href="https://daewoo-security.fr/products/alarme-maison-sans-fil-avec-ecran-tactile-7-am353-1-camera-exterieure-autonome-et-1-interieure-et-17-accessoires-sans-abonnement">Voir le pack AM353 →</a>
         </div>
       </div>
     </div>

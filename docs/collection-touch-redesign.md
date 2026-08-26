@@ -53,14 +53,14 @@ le ratio, sinon les tuiles colorées ressortent en faux positifs.
 3. **Duel Touch vs Touch XL** — deux panneaux côte à côte séparés par un « VS », chacun avec sa couleur, sa taille d'écran en grand, ses 4 points clés, son prix et son lien vers la bonne variante produit.
 4. **Comparatif détaillé** — tableau de 13 lignes : ce qui diffère (écran, sirène, batterie) et tout ce qui est identique.
 5. **Laquelle choisir ?** — deux colonnes « Choisissez la Touch si… » / « Choisissez la Touch XL si… » + rappel que les accessoires sont communs aux deux centrales.
-6. **Packs** — Starter, AM340 (mis en avant), AM351, avec badge du modèle de centrale et jauge de couverture.
+6. **Packs** — trois cartes de hauteur égale : AM340 à gauche, l'**Offre exclusive Pack Touch double caméra** (499,90 €) mise en avant au centre, AM353 à droite. Chaque carte porte le badge du modèle de centrale et une jauge de couverture.
 7. **Carrousel UGC Moast** *(section existante conservée)*.
 8. **Anatomie de la centrale** — rail numéroté 01→06 + bande de 4 chiffres clés.
 9. **Double pilotage** — écran de la centrale vs application Daewoo Home Connect, en écran partagé clair / sombre.
 10. **Une journée avec la Touch** — frise horaire 07:45 → 23:10.
 11. **Pourquoi la gamme Touch** — grille bento asymétrique (remplace les cartes à emoji).
 12. **Installation** — 3 étapes horizontales + rappels pratiques et lien vers le manuel AM301.
-13. **Évolutivité** — rail horizontal de 8 accessoires compatibles avec prix, vers la collection « Compatible gamme Vigilia / Touch ».
+13. **Évolutivité** — grille de 8 accessoires compatibles (4 × 2, aucun défilement horizontal), vers la collection « Compatible gamme Vigilia / Touch ».
 14. **Bandeau configurateur** *(contenu d'origine, converti en section `tc-configurateur`)*.
 15. **Ils ont choisi Daewoo Security** *(section existante conservée)*.
 16. **Avis Judge.me** *(section existante conservée)*.
@@ -101,6 +101,17 @@ Corrigés après relecture du client — à ne pas réintroduire :
   affichées, quantité d'informations visibles d'un coup d'œil, autonomie.
 - Aucun état de système inventé dans les visuels (pas de « système armé »,
   pas de nombre d'accessoires connectés fictif).
+- **Disponibilité du support** : l'assistant en ligne répond 7j/7, l'équipe 5j/7.
+  Ne jamais écrire que l'équipe est joignable au téléphone 7j/7.
+- **Visuels des deux centrales** : utiliser les images des variantes du produit
+  `alarme-daewoo-wifi-gsm-4g-starter-pack-am301` (`AM301_Starter_Pack.webp` et
+  `AM302_TouchXL_Starter_Pack.jpg`), pas les anciens visuels.
+
+### À corriger hors de cette page
+
+La fiche produit du **pack AM353** annonce une sirène de **90 dB pour la Touch XL**,
+alors que la valeur retenue est 95 dB. La fiche du produit AM301/AM302 et l'ancienne
+page portent encore 95 / 100 dB.
 
 ## Modifier la page
 

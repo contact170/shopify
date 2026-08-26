@@ -1,40 +1,43 @@
-{% comment %} ── Évolutivité : accessoires compatibles AM30x ── {% endcomment %}
+{% comment %} ── Évolutivité : accessoires compatibles AM30x, en grille ── {% endcomment %}
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   .tce * { box-sizing:border-box; margin:0; padding:0; }
   .tce { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
-    background:#eef2f8; color:#0b1220; padding:92px 0; position:relative; overflow:hidden; }
+    background:#eef2f8; color:#0b1220; padding:92px 24px; position:relative; overflow:hidden; }
   .tce::before { content:''; position:absolute; inset:0; pointer-events:none;
     background:radial-gradient(800px 420px at 78% 20%,rgba(232,160,44,.10),transparent 62%); }
-  .tce-inner { position:relative; z-index:2; max-width:1160px; margin:0 auto; padding:0 24px; }
-  .tce-head { display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:end; margin-bottom:44px; }
+  .tce-inner { position:relative; z-index:2; max-width:1160px; margin:0 auto; }
+  .tce-head { display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:end; margin-bottom:36px; }
   .tce-eyebrow { font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#5a6982; margin-bottom:14px; }
   .tce-title { font-size:clamp(26px,3.4vw,40px); font-weight:600; color:#0b1220; letter-spacing:-.03em; line-height:1.12; }
   .tce-title em { font-style:normal; color:#8f5d0c; }
   .tce-sub { font-size:15px; color:#4a5a75; font-weight:300; line-height:1.7; }
   .tce-sub b { color:#0b1220; font-weight:500; }
-  .tce-rail { display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory;
-    padding:4px 24px 20px max(24px, calc((100% - 1160px) / 2 + 24px));
-    -webkit-overflow-scrolling:touch; scrollbar-width:thin; }
-  .tce-rail::-webkit-scrollbar { height:5px; }
-  .tce-rail::-webkit-scrollbar-thumb { background:#c6d0e0; border-radius:99px; }
-  .tce-item { scroll-snap-align:start; flex:0 0 216px; border:1px solid #dfe5ef; border-radius:16px;
-    background:#fff; overflow:hidden; box-shadow:0 10px 28px -20px rgba(11,18,32,.35);
-    text-decoration:none; color:inherit; transition:transform .2s, border-color .2s, box-shadow .2s; display:block; }
-  .tce-item:hover { transform:translateY(-4px); border-color:#b9c7dd; box-shadow:0 18px 38px -22px rgba(11,18,32,.42); }
-  .tce-item-img { height:150px; background:#f7f9fc; border-bottom:1px solid #eef1f7; display:flex; align-items:center; justify-content:center; padding:14px; }
-  .tce-item-img img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
-  .tce-item-b { padding:16px 17px 19px; }
-  .tce-ref { font-size:10.5px; font-weight:700; letter-spacing:.14em; color:#1c5fd0; display:block; margin-bottom:6px; }
-  .tce-nm { font-size:14px; font-weight:600; color:#0b1220; letter-spacing:-.015em; line-height:1.35; margin-bottom:6px; }
-  .tce-pr { font-size:13px; color:#5a6982; font-weight:300; }
-  .tce-foot { max-width:1160px; margin:0 auto; padding:24px 24px 0; display:flex; gap:16px; align-items:center; flex-wrap:wrap; position:relative; z-index:2; }
+
+  /* grille de vignettes compactes : tout tient à l'écran, aucun défilement */
+  .tce-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .tce-item { display:flex; align-items:center; gap:14px; padding:12px 16px 12px 12px;
+    background:#fff; border:1px solid #dfe5ef; border-radius:14px;
+    text-decoration:none; color:inherit; transition:transform .18s, border-color .18s, box-shadow .18s; }
+  .tce-item:hover { transform:translateY(-3px); border-color:#b9c7dd; box-shadow:0 14px 30px -20px rgba(11,18,32,.40); }
+  .tce-thumb { flex:none; width:64px; height:64px; border-radius:10px; background:#f4f7fc; border:1px solid #eef1f7;
+    display:flex; align-items:center; justify-content:center; padding:7px; overflow:hidden; }
+  .tce-thumb img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
+  .tce-txt { min-width:0; }
+  .tce-ref { font-size:10px; font-weight:700; letter-spacing:.14em; color:#1c5fd0; display:block; margin-bottom:3px; }
+  .tce-nm { display:block; font-size:13.5px; font-weight:600; color:#0b1220; letter-spacing:-.015em; line-height:1.3; margin-bottom:3px; }
+  .tce-pr { display:block; font-size:12.5px; color:#5a6982; font-weight:300; }
+
+  .tce-foot { margin-top:28px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
   .tce-btn { display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:10px;
     background:#0b1220; border:1px solid #0b1220; color:#fff;
     font-size:14px; font-weight:600; text-decoration:none; transition:opacity .18s, transform .18s; }
   .tce-btn:hover { opacity:.88; transform:translateY(-2px); }
   .tce-hint { font-size:13px; color:#5a6982; font-weight:300; }
-  @media (max-width:900px) { .tce-head { grid-template-columns:1fr; gap:20px; } .tce { padding:72px 0; } }
+
+  @media (max-width:1000px) { .tce-grid { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:900px) { .tce-head { grid-template-columns:1fr; gap:20px; } .tce { padding:72px 20px; } }
+  @media (max-width:560px) { .tce-grid { grid-template-columns:1fr; } }
 </style>
 
 <section class="tce">
@@ -46,48 +49,48 @@
       </div>
       <p class="tce-sub">Un pack de départ couvre l'essentiel. Ensuite, vous ajoutez ce qui manque, à l'unité, sans reconfigurer le système&nbsp;: <b>jusqu'à 90 accessoires par centrale</b>, plus les caméras et prises connectées en illimité. Les mêmes accessoires fonctionnent sur la Touch et sur la Touch XL.</p>
     </div>
-  </div>
 
-  <div class="tce-rail">
-    <a class="tce-item" href="https://daewoo-security.fr/products/contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302">
-      <div class="tce-item-img"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WDV301Final2-min.png?v=1747823021" alt="Contacteur d'ouverture et vibration WDV301" loading="lazy"></div>
-      <div class="tce-item-b"><span class="tce-ref">WDV301</span><p class="tce-nm">Contacteur ouverture + vibration</p><p class="tce-pr">39,90 €</p></div>
-    </a>
-    <a class="tce-item" href="https://daewoo-security.fr/products/detecteur-de-mouvement-exterieur-wmo301">
-      <div class="tce-item-img"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_25_0a09f10a-cf4e-43ff-ba3d-f05a97ba314c.png?v=1756734623" alt="Détecteur de mouvement extérieur WMO301" loading="lazy"></div>
-      <div class="tce-item-b"><span class="tce-ref">WMO301</span><p class="tce-nm">Détecteur de mouvement extérieur</p><p class="tce-pr">79,90 €</p></div>
-    </a>
-    <a class="tce-item" href="https://daewoo-security.fr/products/daewoo-barrieres-infrarouge-pour-alarme-am301-am302">
-      <div class="tce-item-img"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_24_0144937c-33bd-4969-96f3-d986d20dfebe.png?v=1756734406" alt="Barrières infrarouge BIR301" loading="lazy"></div>
-      <div class="tce-item-b"><span class="tce-ref">BIR301</span><p class="tce-nm">Barrières infrarouge extérieures</p><p class="tce-pr">89,90 €</p></div>
-    </a>
-    <a class="tce-item" href="https://daewoo-security.fr/products/sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire">
-      <div class="tce-item-img"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/ChatGPTImage1sept.2025_12_16_05.png?v=1756721812" alt="Sirène extérieure solaire WOS305S" loading="lazy"></div>
-      <div class="tce-item-b"><span class="tce-ref">WOS305S</span><p class="tce-nm">Sirène extérieure solaire</p><p class="tce-pr">129,90 €</p></div>
-    </a>
-    <a class="tce-item" href="https://daewoo-security.fr/products/clavier-wke301-avec-2-badges-rfid">
-      <div class="tce-item-img"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/clavier-additionel-wke301-avec-2-badges-rfid-pour-alarme-daewoo-am301-962636.png?v=1676987571" alt="Clavier sans fil WKE301 avec badges RFID" loading="lazy"></div>
-      <div class="tce-item-b"><span class="tce-ref">WKE301</span><p class="tce-nm">Clavier déporté + 2 badges RFID</p><p class="tce-pr">49,90 €</p></div>
-    </a>
-    <a class="tce-item" href="https://daewoo-security.fr/products/detecteur-de-fumee-wsd301">
-      <div class="tce-item-img"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/detecteur-de-fumee-wsd301-pour-alarme-daewoo-am301-275128.jpg?v=1676987571" alt="Détecteur de fumée connecté WSD301" loading="lazy"></div>
-      <div class="tce-item-b"><span class="tce-ref">WSD301</span><p class="tce-nm">Détecteur de fumée connecté</p><p class="tce-pr">39,90 €</p></div>
-    </a>
-    <a class="tce-item" href="https://daewoo-security.fr/products/detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302">
-      <div class="tce-item-img"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/AnyConv.com__WWF301-3.webp?v=1714986421" alt="Détecteur de fuite d'eau WWF301" loading="lazy"></div>
-      <div class="tce-item-b"><span class="tce-ref">WWF301</span><p class="tce-nm">Détecteur de fuite d'eau</p><p class="tce-pr">39,90 €</p></div>
-    </a>
-    <a class="tce-item" href="https://daewoo-security.fr/products/amplificateur-de-signal-radio-compatible-avec-la-gamme-am301">
-      <div class="tce-item-img"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/amplificateur-de-signal-radio-compatible-avec-la-gamme-am301-840357.webp?v=1706873682" alt="Amplificateur de signal radio EXT301" loading="lazy"></div>
-      <div class="tce-item-b"><span class="tce-ref">EXT301</span><p class="tce-nm">Amplificateur de signal radio</p><p class="tce-pr">99,90 €</p></div>
-    </a>
-  </div>
+    <div class="tce-grid">
+      <a class="tce-item" href="https://daewoo-security.fr/products/contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302">
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WDV301Final2-min.png?v=1747823021" alt="Contacteur d'ouverture et vibration WDV301" loading="lazy"></span>
+        <span class="tce-txt"><span class="tce-ref">WDV301</span><span class="tce-nm">Contacteur ouverture + vibration</span><span class="tce-pr">39,90 €</span></span>
+      </a>
+      <a class="tce-item" href="https://daewoo-security.fr/products/detecteur-de-mouvement-exterieur-wmo301">
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_25_0a09f10a-cf4e-43ff-ba3d-f05a97ba314c.png?v=1756734623" alt="Détecteur de mouvement extérieur WMO301" loading="lazy"></span>
+        <span class="tce-txt"><span class="tce-ref">WMO301</span><span class="tce-nm">Détecteur de mouvement extérieur</span><span class="tce-pr">79,90 €</span></span>
+      </a>
+      <a class="tce-item" href="https://daewoo-security.fr/products/daewoo-barrieres-infrarouge-pour-alarme-am301-am302">
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_24_0144937c-33bd-4969-96f3-d986d20dfebe.png?v=1756734406" alt="Barrières infrarouge BIR301" loading="lazy"></span>
+        <span class="tce-txt"><span class="tce-ref">BIR301</span><span class="tce-nm">Barrières infrarouge extérieures</span><span class="tce-pr">89,90 €</span></span>
+      </a>
+      <a class="tce-item" href="https://daewoo-security.fr/products/sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire">
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/ChatGPTImage1sept.2025_12_16_05.png?v=1756721812" alt="Sirène extérieure solaire WOS305S" loading="lazy"></span>
+        <span class="tce-txt"><span class="tce-ref">WOS305S</span><span class="tce-nm">Sirène extérieure solaire</span><span class="tce-pr">129,90 €</span></span>
+      </a>
+      <a class="tce-item" href="https://daewoo-security.fr/products/clavier-wke301-avec-2-badges-rfid">
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/clavier-additionel-wke301-avec-2-badges-rfid-pour-alarme-daewoo-am301-962636.png?v=1676987571" alt="Clavier déporté WKE301 avec badges RFID" loading="lazy"></span>
+        <span class="tce-txt"><span class="tce-ref">WKE301</span><span class="tce-nm">Clavier déporté + 2 badges RFID</span><span class="tce-pr">49,90 €</span></span>
+      </a>
+      <a class="tce-item" href="https://daewoo-security.fr/products/detecteur-de-fumee-wsd301">
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/detecteur-de-fumee-wsd301-pour-alarme-daewoo-am301-275128.jpg?v=1676987571" alt="Détecteur de fumée connecté WSD301" loading="lazy"></span>
+        <span class="tce-txt"><span class="tce-ref">WSD301</span><span class="tce-nm">Détecteur de fumée connecté</span><span class="tce-pr">39,90 €</span></span>
+      </a>
+      <a class="tce-item" href="https://daewoo-security.fr/products/detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302">
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/AnyConv.com__WWF301-3.webp?v=1714986421" alt="Détecteur de fuite d'eau WWF301" loading="lazy"></span>
+        <span class="tce-txt"><span class="tce-ref">WWF301</span><span class="tce-nm">Détecteur de fuite d'eau</span><span class="tce-pr">39,90 €</span></span>
+      </a>
+      <a class="tce-item" href="https://daewoo-security.fr/products/amplificateur-de-signal-radio-compatible-avec-la-gamme-am301">
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/amplificateur-de-signal-radio-compatible-avec-la-gamme-am301-840357.webp?v=1706873682" alt="Amplificateur de signal radio EXT301" loading="lazy"></span>
+        <span class="tce-txt"><span class="tce-ref">EXT301</span><span class="tce-nm">Amplificateur de signal radio</span><span class="tce-pr">99,90 €</span></span>
+      </a>
+    </div>
 
-  <div class="tce-foot">
-    <a class="tce-btn" href="https://daewoo-security.fr/collections/compatible-gamme-vigilia-touch">
-      Voir tous les accessoires compatibles
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-    </a>
-    <span class="tce-hint">↔ Faites défiler la sélection · Compatible Touch, Touch XL et gamme Vigilia</span>
+    <div class="tce-foot">
+      <a class="tce-btn" href="https://daewoo-security.fr/collections/compatible-gamme-vigilia-touch">
+        Voir tous les accessoires compatibles
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <span class="tce-hint">Compatible Touch, Touch XL et gamme Vigilia</span>
+    </div>
   </div>
 </section>
