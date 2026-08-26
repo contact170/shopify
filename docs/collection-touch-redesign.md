@@ -55,17 +55,17 @@ le ratio, sinon les tuiles colorées ressortent en faux positifs.
 5. **Laquelle choisir ?** — deux colonnes « Choisissez la Touch si… » / « Choisissez la Touch XL si… » + rappel que les accessoires sont communs aux deux centrales.
 6. **Packs** — trois cartes de hauteur égale : AM340 à gauche, l'**Offre exclusive Pack Touch double caméra** (499,90 €) mise en avant au centre, AM353 à droite. Chaque carte porte le badge du modèle de centrale et une jauge de couverture.
 7. **Carrousel UGC Moast** *(section existante conservée)*.
-8. **Anatomie de la centrale** — rail numéroté 01→06 + bande de 4 chiffres clés.
+8. **Anatomie de la centrale** — rail numéroté 01→06 + bande de 4 chiffres clés, face à l'infographie « Pourquoi choisir la centrale Touch / Touch XL ? » (`Avantages_Daewoo_646b122c…webp`, 1254 × 1254).
 9. **Double pilotage** — écran de la centrale vs application Daewoo Home Connect, en écran partagé clair / sombre.
 10. **Une journée avec la Touch** — frise horaire 07:45 → 23:10.
 11. **Pourquoi la gamme Touch** — grille bento asymétrique (remplace les cartes à emoji).
-12. **Installation** — 3 étapes horizontales + rappels pratiques et lien vers le manuel AM301.
+12. **Installation** — 3 étapes horizontales + rappels pratiques et liens vers les deux manuels (Touch AM301 et Touch XL AM302).
 13. **Évolutivité** — grille de 8 accessoires compatibles (4 × 2, aucun défilement horizontal), vers la collection « Compatible gamme Vigilia / Touch ».
-14. **Bandeau configurateur** *(contenu d'origine, converti en section `tc-configurateur`)*.
+14. **Configurateur** — refait dans le design clair de la page : parcours en 3 étapes à gauche, médaillon **« jusqu'à −25 % »** et carte « ce que fait le configurateur » à droite. Remplace le bandeau bleu d'origine et son faux écran « Étape 1 sur 7 ».
 15. **Ils ont choisi Daewoo Security** *(section existante conservée)*.
 16. **Avis Judge.me** *(section existante conservée)*.
 17. **Détails produit** — accordéon deux colonnes ; chaque ligne indique la valeur Touch, la valeur Touch XL, ou « sur les deux ».
-18. **FAQ** — 12 questions réécrites, accordéon sombre, la première portant sur la différence entre les deux centrales. Balisage `FAQPage` (JSON-LD) associé.
+18. **FAQ** — 12 questions réécrites, accordéon clair, la première portant sur la différence entre les deux centrales. Balisage `FAQPage` (JSON-LD) associé.
 19. **CTA final**.
 
 Les sections d'origine remplacées par la refonte, ainsi que les sections héritées déjà
@@ -82,7 +82,7 @@ Toutes les caractéristiques proviennent du contenu déjà publié sur la boutiq
 - Écran : 4,3'' (Touch) / 7'' (Touch XL)
 - Sirène intégrée : 90 dB / 95 dB
 - Batterie de secours : ≈ 4 h / ≈ 20 h
-- Wi-Fi 2,4 GHz, GSM 4G avec carte SIM en option, Alexa & Google Home
+- Wi-Fi 2,4 GHz, **module GSM 4G intégré à la centrale** (seule la carte SIM est en option), Alexa & Google Home
 - Jusqu'à 90 accessoires par centrale, caméras et objets connectés illimités
 - Prix packs de départ : 199,90 € / 299,90 €
 
@@ -106,6 +106,15 @@ Corrigés après relecture du client — à ne pas réintroduire :
 - **Visuels des deux centrales** : utiliser les images des variantes du produit
   `alarme-daewoo-wifi-gsm-4g-starter-pack-am301` (`AM301_Starter_Pack.webp` et
   `AM302_TouchXL_Starter_Pack.jpg`), pas les anciens visuels.
+- **GSM 4G : le module est intégré à la centrale, sur les deux modèles.** Seule la
+  carte SIM (M2M) est en option et non fournie ; c'est elle qui active les alertes SMS
+  en cas de coupure Internet. Ne jamais écrire « GSM 4G en option ».
+- **Les caméras ne fonctionnent qu'en Wi-Fi** : le relais GSM ne les couvre pas.
+  À rappeler partout où l'on parle de coupure Internet.
+- **Manuels** : les deux liens vont toujours ensemble —
+  `/pages/manuel-am301` (Touch) et `/pages/manuel-touch-xl-am302` (Touch XL).
+- **Remise configurateur** : le client peut obtenir **jusqu'à 25 % de remise** sur
+  sa configuration ; c'est l'argument principal de la section `tc-configurateur`.
 
 ### À corriger hors de cette page
 
