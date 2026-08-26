@@ -94,79 +94,9 @@
       "type": "tc-configurateur",
       "settings": {}
     },
-    "image_with_text_Fhj8Um": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_dNWmFb": {
-          "type": "heading",
-          "settings": {
-            "heading": "Ils ont choisi Daewoo Security",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text_GHpzhj": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Jean et Marie, 48 et 46 ans, ont protégé leur maison à la campagne avec le système <strong>Touch XL</strong>.<br/><br/>Découvrez <strong>leur configuration sur mesure</strong>, les détecteurs extérieurs installés et le coût global de leur solution.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "button_fJeJ7H": {
-          "type": "button",
-          "settings": {
-            "button_label": "Voir leur configuration",
-            "button_link": "shopify://pages/ils-ont-choisi-daewoo-security",
-            "button_style": "primary",
-            "button_size": "md",
-            "button_external": false,
-            "button_icon": true
-          }
-        }
-      },
-      "block_order": [
-        "heading_dNWmFb",
-        "text_GHpzhj",
-        "button_fJeJ7H"
-      ],
-      "name": "t:sections.image-with-text.name",
-      "settings": {
-        "image": "shopify://shop_images/Capture_d_ecran_le_2025-10-30_a_13.45.18.png",
-        "image_height": "650px",
-        "image_width": "medium",
-        "layout": "image_first",
-        "text_alignment": "left",
-        "content_position": "align-self-center",
-        "image_height_mobile": "auto",
-        "text_alignment_mobile": "left",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_background_2": "",
-        "gradient_background_2": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false,
-        "enable_parallax": true,
-        "parallax_direction": "vertical"
-      }
+    "tc-temoignage": {
+      "type": "tc-temoignage",
+      "settings": {}
     },
     "17537033312cec849b": {
       "type": "apps",
@@ -372,7 +302,7 @@
     "tc-installation",
     "tc-evolutivite",
     "tc-configurateur",
-    "image_with_text_Fhj8Um",
+    "tc-temoignage",
     "17537033312cec849b",
     "tc-specs",
     "tc-faq",

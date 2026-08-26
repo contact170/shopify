@@ -62,10 +62,10 @@ le ratio, sinon les tuiles colorées ressortent en faux positifs.
 12. **Installation** — 3 étapes horizontales + rappels pratiques et liens vers les deux manuels (Touch AM301 et Touch XL AM302).
 13. **Évolutivité** — grille de 8 accessoires compatibles (4 × 2, aucun défilement horizontal), vers la collection « Compatible gamme Vigilia / Touch ».
 14. **Configurateur** — refait dans le design clair de la page : parcours en 3 étapes à gauche, médaillon **« jusqu'à −25 % »** et carte « ce que fait le configurateur » à droite. Remplace le bandeau bleu d'origine et son faux écran « Étape 1 sur 7 ».
-15. **Ils ont choisi Daewoo Security** *(section existante conservée)*.
+15. **Témoignage — Ils ont choisi Daewoo Security** — refait en section `tc-temoignage` : photo cadrée avec pastille « Jean & Marie · Système Touch XL », titre, deux paragraphes, trois puces de contexte et bouton vers leur page. Remplace la section de thème `image-with-text`, dont la typographie et la mise en page ne suivaient pas le reste de la page.
 16. **Avis Judge.me** *(section existante conservée)*.
 17. **Détails produit** — accordéon deux colonnes ; chaque ligne indique la valeur Touch, la valeur Touch XL, ou « sur les deux ».
-18. **FAQ** — 12 questions réécrites, accordéon clair, la première portant sur la différence entre les deux centrales. Balisage `FAQPage` (JSON-LD) associé.
+18. **FAQ** — 12 questions réécrites, accordéon clair, la première portant sur la différence entre les deux centrales. Balisage `FAQPage` (JSON-LD) associé. Le bloc de fin « Vous n'avez pas trouvé votre réponse ? » pointe vers le formulaire de contact (`/pages/nous-contacter`).
 19. **CTA final**.
 
 Les sections d'origine remplacées par la refonte, ainsi que les sections héritées déjà
@@ -115,6 +115,9 @@ Corrigés après relecture du client — à ne pas réintroduire :
   `/pages/manuel-am301` (Touch) et `/pages/manuel-touch-xl-am302` (Touch XL).
 - **Remise configurateur** : le client peut obtenir **jusqu'à 25 % de remise** sur
   sa configuration ; c'est l'argument principal de la section `tc-configurateur`.
+- **Contact** : le CTA de fin de FAQ va vers le formulaire `/pages/nous-contacter`.
+  La page Assistance (`/pages/assistance-1`) reste citée en introduction de la FAQ,
+  comme ressource en libre-service.
 
 ### À corriger hors de cette page
 

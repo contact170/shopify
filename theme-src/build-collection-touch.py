@@ -32,6 +32,7 @@ SECTIONS = [
     ('11-faq.liquid',          'tc-faq',          'Touch — FAQ'),
     ('13-cta.liquid',          'tc-cta',          'Touch — CTA final'),
     ('14-configurateur.liquid', 'tc-configurateur','Touch — Configurateur'),
+    ('15-temoignage.liquid',    'tc-temoignage',   'Touch — Témoignage'),
 ]
 
 # Ordre d'affichage de la page, puis les sections héritées laissées désactivées.
@@ -40,7 +41,7 @@ ORDER = [
     '1778166532d7ba2ea9',        # carrousel UGC Moast
     'tc-anatomie', 'tc-pilotage', 'tc-journee', 'tc-pourquoi', 'tc-installation', 'tc-evolutivite',
     'tc-configurateur',          # bandeau configurateur
-    'image_with_text_Fhj8Um',    # Ils ont choisi Daewoo Security
+    'tc-temoignage',             # Ils ont choisi Daewoo Security
     '17537033312cec849b',        # avis Judge.me
     'tc-specs', 'tc-faq', 'tc-cta',
     # --- sections standard de collection, conservées désactivées ---
@@ -50,6 +51,7 @@ ORDER = [
 # Sections d'origine devenues inutilisées, retirées du template. Elles restent
 # consultables dans theme-src/collection-touch.base.json et dans le thème publié.
 DROPPED = [
+    'image_with_text_Fhj8Um',
     'custom_liquid_cWkFzx',
     'custom_liquid_LmmcWi', 'custom_liquid_ztNiqY', 'custom_liquid_ThwXGh', 'custom_liquid_UHgzRF',
     'faq_h7K6fC', 'faq_8TYcdM',
