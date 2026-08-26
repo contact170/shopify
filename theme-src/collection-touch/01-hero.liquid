@@ -1,84 +1,75 @@
-{% comment %} ── Gamme Touch / Touch XL — Hero "backlit" + bandeau de confiance ── {% endcomment %}
+{% comment %} ── Gamme Touch / Touch XL — Hero clair + bandeau de confiance ── {% endcomment %}
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  .tc-scope { --tc-ink:#05080f; --tc-ink2:#0a1120; --tc-surf:#111c30; --tc-line:rgba(255,255,255,.10);
-    --tc-txt:#eaf0fb; --tc-mut:#93a2bd; --tc-blue:#4da3ff; --tc-gold:#f5b544; }
   .tc-hero * { box-sizing:border-box; margin:0; padding:0; }
-  .tc-hero { position:relative; overflow:hidden; background:#05080f; color:#eaf0fb;
+  .tc-hero { position:relative; overflow:hidden; background:#fff; color:#0b1220;
     font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
-    padding:96px 24px 104px; }
-  .tc-hero::before { content:''; position:absolute; inset:0;
+    padding:88px 24px 96px; }
+  .tc-hero::before { content:''; position:absolute; inset:0; pointer-events:none;
     background:
-      radial-gradient(900px 480px at 78% 30%, rgba(77,163,255,.22), transparent 62%),
-      radial-gradient(700px 420px at 12% 82%, rgba(245,181,68,.12), transparent 60%);
-    pointer-events:none; }
-  .tc-hero::after { content:''; position:absolute; inset:0; opacity:.35; pointer-events:none;
-    background-image:linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
-                     linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
-    background-size:64px 64px;
-    -webkit-mask-image:radial-gradient(circle at 50% 40%, #000 0%, transparent 78%);
-            mask-image:radial-gradient(circle at 50% 40%, #000 0%, transparent 78%); }
+      radial-gradient(880px 460px at 82% 22%, rgba(47,123,255,.10), transparent 62%),
+      radial-gradient(680px 400px at 8% 88%, rgba(232,160,44,.09), transparent 60%); }
   .tc-hero-inner { position:relative; z-index:2; max-width:1200px; margin:0 auto;
     display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center; }
   .tc-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
-    letter-spacing:.20em; text-transform:uppercase; color:#9fb6da; margin-bottom:22px; }
-  .tc-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,var(--tc-blue),transparent); }
-  .tc-h1 { font-size:clamp(34px,4.6vw,58px); font-weight:600; line-height:1.05; letter-spacing:-.03em; margin-bottom:20px; }
-  .tc-h1 em { font-style:normal; background:linear-gradient(100deg,#4da3ff 0%,#8fd0ff 45%,#f5b544 100%);
+    letter-spacing:.20em; text-transform:uppercase; color:#5a6982; margin-bottom:22px; }
+  .tc-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#2f7bff,rgba(47,123,255,0)); }
+  .tc-h1 { font-size:clamp(34px,4.6vw,58px); font-weight:600; line-height:1.05; letter-spacing:-.03em;
+    color:#0b1220; margin-bottom:20px; }
+  .tc-h1 em { font-style:normal; background:linear-gradient(100deg,#1c5fd0 0%,#2f7bff 45%,#d9931f 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .tc-lead { font-size:16.5px; line-height:1.65; color:#a9b8d2; max-width:520px; margin-bottom:30px; font-weight:300; }
+  .tc-lead { font-size:16.5px; line-height:1.65; color:#4a5a75; max-width:520px; margin-bottom:30px; font-weight:300; }
   .tc-models { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:32px; }
-  .tc-chip { display:inline-flex; align-items:baseline; gap:8px; padding:9px 16px; border-radius:8px;
-    background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); font-size:13px; font-weight:500; }
-  .tc-chip b { font-weight:600; letter-spacing:.04em; }
-  .tc-chip.is-blue b { color:#7cbcff; } .tc-chip.is-gold b { color:#ffcd72; }
-  .tc-chip span { font-size:12px; color:#8fa1bd; font-weight:300; }
+  .tc-chip { display:inline-flex; align-items:baseline; gap:8px; padding:9px 16px; border-radius:9px;
+    background:#fff; border:1px solid #dfe5ef; font-size:13px; font-weight:500;
+    box-shadow:0 2px 8px rgba(11,18,32,.05); }
+  .tc-chip b { font-weight:700; letter-spacing:.04em; }
+  .tc-chip.is-blue { border-color:rgba(47,123,255,.32); } .tc-chip.is-blue b { color:#1c5fd0; }
+  .tc-chip.is-gold { border-color:rgba(232,160,44,.38); } .tc-chip.is-gold b { color:#8f5d0c; }
+  .tc-chip span { font-size:12px; color:#5a6982; font-weight:300; }
   .tc-ctas { display:flex; gap:12px; flex-wrap:wrap; }
-  .tc-btn { display:inline-flex; align-items:center; gap:9px; padding:15px 26px; border-radius:10px;
+  .tc-btn { display:inline-flex; align-items:center; gap:9px; padding:15px 26px; border-radius:11px;
     font-size:14.5px; font-weight:600; text-decoration:none; transition:transform .18s, box-shadow .18s, background .18s; }
   .tc-btn svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
-  .tc-btn--main { background:linear-gradient(120deg,#2f7bff,#4da3ff); color:#fff; box-shadow:0 12px 30px rgba(47,123,255,.34); }
-  .tc-btn--main:hover { transform:translateY(-2px); box-shadow:0 18px 40px rgba(47,123,255,.44); }
-  .tc-btn--ghost { background:rgba(255,255,255,.06); color:#eaf0fb; border:1px solid rgba(255,255,255,.16); }
-  .tc-btn--ghost:hover { background:rgba(255,255,255,.11); transform:translateY(-2px); }
+  .tc-btn--main { background:#0b1220; color:#fff; box-shadow:0 10px 26px rgba(11,18,32,.20); }
+  .tc-btn--main:hover { transform:translateY(-2px); box-shadow:0 16px 34px rgba(11,18,32,.26); }
+  .tc-btn--ghost { background:#fff; color:#0b1220; border:1px solid #dfe5ef; }
+  .tc-btn--ghost:hover { border-color:#b9c7dd; transform:translateY(-2px); }
   .tc-hero-visual { position:relative; }
-  .tc-hero-visual img { width:100%; height:auto; display:block; border-radius:20px;
-    box-shadow:0 40px 90px rgba(0,0,0,.55); }
-  .tc-glow { position:absolute; inset:-8% -6%; border-radius:50%; z-index:-1; filter:blur(70px);
-    background:radial-gradient(circle,rgba(77,163,255,.38),transparent 66%); }
-  .tc-float { position:absolute; left:-26px; bottom:34px; display:flex; align-items:center; gap:12px;
-    padding:13px 18px; border-radius:13px; background:rgba(11,18,32,.82); border:1px solid rgba(255,255,255,.13);
-    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 18px 40px rgba(0,0,0,.45); }
-  .tc-float-dot { width:9px; height:9px; border-radius:50%; background:#3ddc97; box-shadow:0 0 0 5px rgba(61,220,151,.16); }
-  .tc-float-t { font-size:13px; font-weight:600; display:block; }
-  .tc-float-s { font-size:11.5px; color:#8fa1bd; font-weight:300; }
+  .tc-hero-visual img { width:100%; height:auto; display:block; border-radius:22px;
+    border:1px solid #e6ebf3; box-shadow:0 30px 70px -24px rgba(11,18,32,.28); }
+  .tc-float { position:absolute; left:-24px; bottom:30px; display:flex; align-items:center; gap:12px;
+    padding:13px 18px; border-radius:14px; background:#fff; border:1px solid #e6ebf3;
+    box-shadow:0 16px 36px -12px rgba(11,18,32,.22); }
+  .tc-float-dot { width:9px; height:9px; border-radius:50%; background:#0f9d63; box-shadow:0 0 0 5px rgba(15,157,99,.14); }
+  .tc-float-t { font-size:13px; font-weight:600; color:#0b1220; display:block; }
+  .tc-float-s { font-size:11.5px; color:#626f86; font-weight:300; }
 
   /* bandeau de confiance : ligne fine, pas de cartes */
-  .tc-trust { position:relative; z-index:2; background:#080e1a; border-top:1px solid rgba(255,255,255,.08);
-    border-bottom:1px solid rgba(255,255,255,.08);
+  .tc-trust { position:relative; z-index:2; background:#fff; border-top:1px solid #e6ebf3; border-bottom:1px solid #e6ebf3;
     font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; }
   .tc-trust-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); }
-  .tc-trust-cell { padding:26px 24px; border-left:1px solid rgba(255,255,255,.07); display:flex; gap:13px; align-items:flex-start; }
+  .tc-trust-cell { padding:26px 24px; border-left:1px solid #eef1f7; display:flex; gap:13px; align-items:flex-start; }
   .tc-trust-cell:first-child { border-left:0; }
-  .tc-trust-cell svg { width:19px; height:19px; flex:none; margin-top:2px; fill:none; stroke:#4da3ff; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
-  .tc-trust-t { display:block; font-size:13.5px; font-weight:600; color:#eaf0fb; letter-spacing:-.01em; }
-  .tc-trust-s { display:block; font-size:12px; color:#8093b3; font-weight:300; margin-top:2px; }
+  .tc-trust-cell svg { width:19px; height:19px; flex:none; margin-top:2px; fill:none; stroke:#2f7bff; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  .tc-trust-t { display:block; font-size:13.5px; font-weight:600; color:#0b1220; letter-spacing:-.01em; }
+  .tc-trust-s { display:block; font-size:12px; color:#626f86; font-weight:300; margin-top:2px; }
 
   @media (max-width:1000px) {
     .tc-hero-inner { grid-template-columns:1fr; gap:40px; }
-    .tc-hero { padding:72px 20px 80px; }
+    .tc-hero { padding:64px 20px 72px; }
     .tc-trust-inner { grid-template-columns:repeat(2,1fr); }
     .tc-trust-cell:nth-child(3) { border-left:0; }
-    .tc-trust-cell:nth-child(-n+2) { border-bottom:1px solid rgba(255,255,255,.07); }
+    .tc-trust-cell:nth-child(-n+2) { border-bottom:1px solid #eef1f7; }
   }
   @media (max-width:560px) {
     .tc-float { left:12px; bottom:12px; }
     .tc-trust-inner { grid-template-columns:1fr; }
-    .tc-trust-cell { border-left:0; border-bottom:1px solid rgba(255,255,255,.07); padding:20px; }
+    .tc-trust-cell { border-left:0; border-bottom:1px solid #eef1f7; padding:20px; }
   }
 </style>
 
-<section class="tc-hero tc-scope">
+<section class="tc-hero">
   <div class="tc-hero-inner">
     <div>
       <span class="tc-eyebrow">Gamme Touch · AM301 &amp; AM302</span>
@@ -100,7 +91,6 @@
       </div>
     </div>
     <div class="tc-hero-visual">
-      <div class="tc-glow"></div>
       <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/ChatGPT_Image_30_avr._2026_11_20_36.png?v=1777540859" alt="Centrale d'alarme Daewoo Touch à écran tactile" loading="eager" width="900" height="700">
       <div class="tc-float">
         <span class="tc-float-dot"></span>
@@ -113,7 +103,7 @@
   </div>
 </section>
 
-<div class="tc-trust tc-scope">
+<div class="tc-trust">
   <div class="tc-trust-inner">
     <div class="tc-trust-cell">
       <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>

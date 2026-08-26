@@ -3,35 +3,35 @@
 <style>
   .tca * { box-sizing:border-box; margin:0; padding:0; }
   .tca { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
-    background:#05080f; color:#eaf0fb; padding:96px 24px; position:relative; overflow:hidden; }
+    background:#fff; color:#0b1220; padding:96px 24px; position:relative; overflow:hidden; }
   .tca::before { content:''; position:absolute; inset:0; pointer-events:none;
-    background:radial-gradient(760px 480px at 82% 46%,rgba(77,163,255,.16),transparent 66%); }
+    background:radial-gradient(720px 460px at 84% 44%,rgba(47,123,255,.08),transparent 66%); }
   .tca-inner { position:relative; z-index:2; max-width:1160px; margin:0 auto;
     display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; }
   .tca-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
-    letter-spacing:.2em; text-transform:uppercase; color:#9fb6da; margin-bottom:18px; }
-  .tca-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#4da3ff,transparent); }
-  .tca-title { font-size:clamp(27px,3.4vw,40px); font-weight:600; letter-spacing:-.03em; line-height:1.12; margin-bottom:14px; }
-  .tca-sub { font-size:15.5px; color:#a0b0cb; font-weight:300; line-height:1.65; margin-bottom:40px; max-width:470px; }
+    letter-spacing:.2em; text-transform:uppercase; color:#5a6982; margin-bottom:18px; }
+  .tca-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#2f7bff,rgba(47,123,255,0)); }
+  .tca-title { font-size:clamp(27px,3.4vw,40px); font-weight:600; color:#0b1220; letter-spacing:-.03em; line-height:1.12; margin-bottom:14px; }
+  .tca-sub { font-size:15.5px; color:#4a5a75; font-weight:300; line-height:1.65; margin-bottom:40px; max-width:470px; }
   .tca-rail { position:relative; padding-left:2px; }
   .tca-row { display:grid; grid-template-columns:auto 1fr; gap:20px; padding:20px 0;
-    border-top:1px solid rgba(255,255,255,.09); }
-  .tca-row:last-child { border-bottom:1px solid rgba(255,255,255,.09); }
-  .tca-num { font-size:12px; font-weight:600; letter-spacing:.1em; color:#4da3ff; padding-top:3px; font-variant-numeric:tabular-nums; }
-  .tca-rt { font-size:15.5px; font-weight:600; letter-spacing:-.015em; margin-bottom:5px; }
-  .tca-rd { font-size:13.8px; color:#93a5c2; font-weight:300; line-height:1.55; }
+    border-top:1px solid #e6ebf3; }
+  .tca-row:last-child { border-bottom:1px solid #e6ebf3; }
+  .tca-num { font-size:12px; font-weight:700; letter-spacing:.1em; color:#1c5fd0; padding-top:3px; font-variant-numeric:tabular-nums; }
+  .tca-rt { font-size:15.5px; font-weight:600; color:#0b1220; letter-spacing:-.015em; margin-bottom:5px; }
+  .tca-rd { font-size:13.8px; color:#4a5a75; font-weight:300; line-height:1.55; }
   .tca-visual { position:relative; }
-  .tca-frame { border-radius:22px; overflow:hidden; border:1px solid rgba(255,255,255,.12);
-    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.01)); padding:14px;
-    box-shadow:0 40px 90px rgba(0,0,0,.55); }
-  .tca-frame img { width:100%; height:auto; display:block; border-radius:14px; }
+  .tca-frame { border-radius:24px; overflow:hidden; border:1px solid #e6ebf3;
+    background:linear-gradient(170deg,#f4f7fc,#fff); padding:16px;
+    box-shadow:0 30px 70px -30px rgba(11,18,32,.32); }
+  .tca-frame img { width:100%; height:auto; display:block; border-radius:15px; }
   .tca-stats { max-width:1160px; margin:64px auto 0; position:relative; z-index:2;
-    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,.09);
-    border:1px solid rgba(255,255,255,.09); border-radius:16px; overflow:hidden; }
-  .tca-stat { background:#070c17; padding:26px 22px; }
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#dfe5ef;
+    border:1px solid #dfe5ef; border-radius:16px; overflow:hidden; }
+  .tca-stat { background:#fff; padding:26px 22px; }
   .tca-stat b { display:block; font-size:26px; font-weight:600; letter-spacing:-.03em; margin-bottom:5px; }
-  .tca-stat--b b { color:#7cbcff; } .tca-stat--g b { color:#ffcd72; }
-  .tca-stat span { font-size:12.5px; color:#8fa1bd; font-weight:300; line-height:1.45; display:block; }
+  .tca-stat--b b { color:#1c5fd0; } .tca-stat--g b { color:#8f5d0c; }
+  .tca-stat span { font-size:12.5px; color:#5a6982; font-weight:300; line-height:1.45; display:block; }
   @media (max-width:960px) {
     .tca-inner { grid-template-columns:1fr; gap:44px; }
     .tca-visual { order:-1; }

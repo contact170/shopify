@@ -13,18 +13,38 @@ de copier-coller entre les deux gammes.
 ## Parti pris visuel
 
 La page Vigilia utilise un système clair de type Apple (fond `#f5f5f7`, pastilles bleues,
-cartes blanches arrondies, grilles régulières). La page Touch adopte un système distinct :
+cartes blanches arrondies, grilles régulières). La page Touch reste claire elle aussi,
+mais s'en distingue sur tout le reste :
 
 | | Vigilia | Touch (cette page) |
 |---|---|---|
-| Base | clair, `#f5f5f7` | sombre « backlit », `#05080f` / `#0b1220`, alterné avec du clair `#eef1f7` |
-| Accent | bleu unique `#0071e3` | **une couleur par modèle** : bleu `#4da3ff` = Touch, ambre `#f5b544` = Touch XL |
+| Base | `#f5f5f7` (gris chaud) | blanc `#ffffff` alterné avec un gris froid `#eef2f8` |
+| Accent | bleu unique `#0071e3` | **une couleur par modèle** : bleu `#1c5fd0` = Touch, ambre `#8f5d0c` = Touch XL |
 | Libellés | pastilles arrondies en casse normale | eyebrows en capitales espacées, filets fins |
 | Structures | grilles régulières 3 colonnes | duel côte à côte, tableau, rail numéroté, frise horaire, bento asymétrique, rail horizontal |
 | Typo | pile système | Poppins (déjà utilisée sur la page) |
 
-Le code couleur par modèle est repris partout (duel, tableau, verdict, packs, fiches
-techniques) : c'est le fil conducteur qui rend la différence Touch / Touch XL lisible.
+Le code couleur par modèle est repris partout (duel, tableau, aide au choix, packs, fiche
+technique) : c'est le fil conducteur qui rend la différence Touch / Touch XL lisible. Ce sont
+surtout les structures, pas la palette, qui séparent les deux pages.
+
+### Palette et contraste
+
+| Rôle | Valeur | Contraste minimum |
+|---|---|---|
+| Titres | `#0b1220` | 16,7:1 sur la bande papier |
+| Texte courant | `#4a5a75` | 6,2:1 |
+| Texte secondaire | `#5a6982` | 5,0:1 |
+| Mentions discrètes | `#626f86` | 4,5:1 |
+| Bleu Touch (texte) | `#1c5fd0` | 5,8:1 |
+| Ambre Touch XL (texte) | `#8f5d0c` | 5,6:1 |
+
+Tous les textes passent le seuil AA (4,5:1), y compris les libellés de 11 à 12,5 px, sur
+fond blanc comme sur la bande `#eef2f8`. Le fond bleu nuit de la première version a été
+retiré partout ; il ne reste que sur les boutons, en blanc sur `#0b1220` (18,7:1).
+
+Un contrôle automatisé est fourni : il aplatit les fonds semi-transparents avant de calculer
+le ratio, sinon les tuiles colorées ressortent en faux positifs.
 
 ## Structure de la page
 
