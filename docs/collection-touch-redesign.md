@@ -80,11 +80,27 @@ Toutes les caractéristiques proviennent du contenu déjà publié sur la boutiq
 (fiche produit AM301/AM302, ancienne FAQ « Détails produit », catalogue accessoires) :
 
 - Écran : 4,3'' (Touch) / 7'' (Touch XL)
-- Sirène intégrée : 95 dB / 100 dB
+- Sirène intégrée : 90 dB / 95 dB
 - Batterie de secours : ≈ 4 h / ≈ 20 h
 - Wi-Fi 2,4 GHz, GSM 4G avec carte SIM en option, Alexa & Google Home
 - Jusqu'à 90 accessoires par centrale, caméras et objets connectés illimités
 - Prix packs de départ : 199,90 € / 299,90 €
+
+### Points de vigilance factuels
+
+Corrigés après relecture du client — à ne pas réintroduire :
+
+- **Pas de clavier physique ni de lecteur RFID sur la centrale.** Le pavé numérique
+  s'affiche sur la dalle tactile, comme sur un téléphone. Les badges RFID existent
+  uniquement en ajoutant le clavier déporté WKE301.
+- **Sirène : 90 dB sur l'AM301, 95 dB sur l'AM302.** (L'ancienne FAQ de la boutique
+  indiquait 95 / 100 dB, valeurs erronées.)
+- **Le pack de départ AM301 contient 2 télécommandes WRC305**, pas WRC301.
+- **Le choix entre les deux centrales se joue sur le confort d'utilisation**, pas sur
+  la taille du logement : lisibilité de l'écran à distance, taille des touches
+  affichées, quantité d'informations visibles d'un coup d'œil, autonomie.
+- Aucun état de système inventé dans les visuels (pas de « système armé »,
+  pas de nombre d'accessoires connectés fictif).
 
 ## Modifier la page
 
