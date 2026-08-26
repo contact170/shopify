@@ -41,14 +41,18 @@ techniques) : c'est le fil conducteur qui rend la différence Touch / Touch XL l
 11. **Pourquoi la gamme Touch** — grille bento asymétrique (remplace les cartes à emoji).
 12. **Installation** — 3 étapes horizontales + rappels pratiques et lien vers le manuel AM301.
 13. **Évolutivité** — rail horizontal de 8 accessoires compatibles avec prix, vers la collection « Compatible gamme Vigilia / Touch ».
-14. **Bandeau configurateur** *(section existante conservée)*.
+14. **Bandeau configurateur** *(contenu d'origine, converti en section `tc-configurateur`)*.
 15. **Ils ont choisi Daewoo Security** *(section existante conservée)*.
 16. **Avis Judge.me** *(section existante conservée)*.
 17. **Détails produit** — accordéon deux colonnes ; chaque ligne indique la valeur Touch, la valeur Touch XL, ou « sur les deux ».
 18. **FAQ** — 12 questions réécrites, accordéon sombre, la première portant sur la différence entre les deux centrales. Balisage `FAQPage` (JSON-LD) associé.
 19. **CTA final**.
 
-Les anciennes sections inutilisées du template restent présentes mais désactivées.
+Les sections d'origine remplacées par la refonte, ainsi que les sections héritées déjà
+désactivées (portfolio, collage, multicolumn, scrolling banner…), ont été retirées du
+template. Leur contenu reste consultable dans `theme-src/collection-touch.base.json`
+et dans le thème publié, qui n'est pas modifié. Les sections standard
+`main-collection-banner` et `main-collection` sont conservées, désactivées.
 
 ## Données utilisées
 
@@ -71,6 +75,22 @@ un fichier par section. Après modification :
 python3 theme-src/build-collection-touch.py
 ```
 
-Le script régénère `templates/collection.collection-touch.json` à partir de
-`theme-src/collection-touch.base.json` (l'état du template en ligne, qui porte les
-sections conservées telles quelles) et des fichiers `.liquid`.
+Le script produit deux choses :
+
+1. `sections/tc-*.liquid` — les fichiers de section du thème (le HTML/CSS de la source,
+   suivi d'un bloc `{% schema %}` généré) ;
+2. `templates/collection.collection-touch.json` — le template, assemblé à partir de
+   `theme-src/collection-touch.base.json` (l'état du template en ligne avant refonte,
+   qui porte les sections conservées telles quelles) et de l'ordre défini dans le script.
+
+Le template ne contient plus de HTML : tout le code vit dans `sections/`, ce qui le rend
+lisible et évite de dupliquer du CSS dans le JSON.
+
+## Aperçu
+
+Déployé sur le thème non publié **« Page Touch AM301/AM302 - refonte (Claude) »**
+(id `202175971668`) :
+
+<https://daewoo-security.fr/collections/systeme-dalarme-am301-am302?preview_theme_id=202175971668>
+
+Le thème publié n'est pas modifié.

@@ -1,0 +1,88 @@
+{% comment %} ── Laquelle choisir ? Aide à la décision Touch / Touch XL ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .tcv * { box-sizing:border-box; margin:0; padding:0; }
+  .tcv { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#eef1f7; padding:0 24px 96px; }
+  .tcv-inner { max-width:1000px; margin:0 auto; }
+  .tcv-head { display:flex; align-items:flex-end; justify-content:space-between; gap:28px; flex-wrap:wrap; margin-bottom:34px; }
+  .tcv-title { font-size:clamp(24px,3vw,34px); font-weight:600; color:#0b1220; letter-spacing:-.03em; line-height:1.15; }
+  .tcv-title span { color:#5b6b86; font-weight:300; }
+  .tcv-help { font-size:13px; color:#5b6b86; font-weight:300; }
+  .tcv-help a { color:#2f7bff; font-weight:500; text-decoration:none; border-bottom:1px solid rgba(47,123,255,.35); }
+  .tcv-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .tcv-col { background:#fff; border:1px solid #dbe1ec; border-radius:18px; padding:32px 30px 30px; position:relative; overflow:hidden; }
+  .tcv-col::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+  .tcv-col--b::before { background:linear-gradient(90deg,#2f7bff,#8fd0ff); }
+  .tcv-col--g::before { background:linear-gradient(90deg,#e8a02c,#ffd27e); }
+  .tcv-tag { display:inline-flex; align-items:center; gap:8px; font-size:10.5px; font-weight:700; letter-spacing:.16em;
+    text-transform:uppercase; padding:6px 12px; border-radius:6px; margin-bottom:18px; }
+  .tcv-col--b .tcv-tag { color:#1c5fd0; background:rgba(47,123,255,.10); }
+  .tcv-col--g .tcv-tag { color:#a56d10; background:rgba(232,160,44,.13); }
+  .tcv-h { font-size:21px; font-weight:600; color:#0b1220; letter-spacing:-.025em; line-height:1.25; margin-bottom:20px; }
+  .tcv-list { display:flex; flex-direction:column; gap:14px; margin-bottom:26px; }
+  .tcv-item { display:flex; gap:12px; align-items:flex-start; font-size:14.5px; color:#3b4a63; font-weight:300; line-height:1.5; }
+  .tcv-item b { font-weight:600; color:#0b1220; }
+  .tcv-item i { flex:none; width:22px; height:22px; border-radius:7px; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .tcv-col--b .tcv-item i { background:rgba(47,123,255,.10); }
+  .tcv-col--g .tcv-item i { background:rgba(232,160,44,.13); }
+  .tcv-item svg { width:13px; height:13px; fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+  .tcv-col--b .tcv-item svg { stroke:#2f7bff; } .tcv-col--g .tcv-item svg { stroke:#d9931f; }
+  .tcv-cta { display:inline-flex; align-items:center; gap:8px; padding:13px 22px; border-radius:9px; font-size:13.5px;
+    font-weight:600; text-decoration:none; transition:transform .18s; }
+  .tcv-cta:hover { transform:translateY(-2px); }
+  .tcv-col--b .tcv-cta { background:#0b1220; color:#fff; }
+  .tcv-col--g .tcv-cta { background:#0b1220; color:#fff; }
+  .tcv-note { margin-top:26px; display:flex; gap:14px; align-items:flex-start; padding:20px 24px; border-radius:14px;
+    background:#0b1220; color:#c4d0e4; font-size:14px; font-weight:300; line-height:1.6; }
+  .tcv-note svg { width:19px; height:19px; flex:none; margin-top:2px; fill:none; stroke:#f5b544; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .tcv-note b { color:#fff; font-weight:600; }
+  @media (max-width:820px) { .tcv-grid { grid-template-columns:1fr; } .tcv { padding:0 20px 72px; } }
+</style>
+
+<section class="tcv">
+  <div class="tcv-inner">
+    <div class="tcv-head">
+      <h2 class="tcv-title">Alors, Touch ou Touch XL&nbsp;? <span>Voici comment trancher.</span></h2>
+      <p class="tcv-help">Encore hésitant ? <a href="https://daewoo-security.fr/pages/configurateur_2">Laissez le configurateur décider</a></p>
+    </div>
+
+    <div class="tcv-grid">
+      <div class="tcv-col tcv-col--b">
+        <span class="tcv-tag">Choisissez la Touch</span>
+        <h3 class="tcv-h">Si vous pilotez surtout depuis votre téléphone</h3>
+        <div class="tcv-list">
+          <div class="tcv-item"><i><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></i><span>Vous protégez un <b>appartement</b> ou une maison de plain-pied</span></div>
+          <div class="tcv-item"><i><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></i><span>Vous voulez une centrale <b>compacte et discrète</b> dans l'entrée</span></div>
+          <div class="tcv-item"><i><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></i><span>Votre installation compte <b>moins d'une quinzaine de zones</b></span></div>
+          <div class="tcv-item"><i><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></i><span>Vous cherchez le <b>meilleur rapport prix / équipement</b> de la gamme</span></div>
+        </div>
+        <a class="tcv-cta" href="https://daewoo-security.fr/products/alarme-daewoo-wifi-gsm-4g-starter-pack-am301?variant=51276200051028">Voir la Touch — 199,90 € →</a>
+      </div>
+
+      <div class="tcv-col tcv-col--g">
+        <span class="tcv-tag">Choisissez la Touch XL</span>
+        <h3 class="tcv-h">Si la centrale est le vrai poste de commande du logement</h3>
+        <div class="tcv-list">
+          <div class="tcv-item"><i><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></i><span>Vous protégez une <b>grande maison</b> ou plusieurs niveaux</span></div>
+          <div class="tcv-item"><i><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></i><span>Plusieurs personnes s'en servent&nbsp;: <b>enfants, parents, aide à domicile</b></span></div>
+          <div class="tcv-item"><i><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></i><span>Vous voulez <b>20 h d'autonomie</b> en cas de coupure de courant</span></div>
+          <div class="tcv-item"><i><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></i><span>Vous prévoyez <b>beaucoup de zones</b> et voulez les lire d'un coup d'œil</span></div>
+        </div>
+        <a class="tcv-cta" href="https://daewoo-security.fr/products/alarme-daewoo-wifi-gsm-4g-starter-pack-am301?variant=51276200083796">Voir la Touch XL — 299,90 € →</a>
+      </div>
+    </div>
+
+    <div class="tcv-note">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span><b>Bon à savoir&nbsp;:</b> quel que soit votre choix, <b>tous les accessoires de la gamme AM30x sont compatibles avec les deux centrales</b>. Vous pouvez démarrer avec la Touch et passer à la Touch XL plus tard sans racheter un seul détecteur.</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Touch — Quel modèle ?",
+  "settings": []
+}
+{% endschema %}

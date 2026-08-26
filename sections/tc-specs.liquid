@@ -1,0 +1,140 @@
+{% comment %} ── Détails produit Touch / Touch XL — accordéon 2 colonnes ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .tcs * { box-sizing:border-box; margin:0; padding:0; }
+  .tcs { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; padding:92px 24px; }
+  .tcs-inner { max-width:1120px; margin:0 auto; display:grid; grid-template-columns:.72fr 1.28fr; gap:64px; align-items:start; }
+  .tcs-aside { position:sticky; top:100px; }
+  .tcs-eyebrow { font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#5b6b86; margin-bottom:14px; }
+  .tcs-title { font-size:clamp(25px,3vw,36px); font-weight:600; color:#0b1220; letter-spacing:-.03em; line-height:1.14; margin-bottom:16px; }
+  .tcs-sub { font-size:14.5px; color:#5b6b86; font-weight:300; line-height:1.65; margin-bottom:24px; }
+  .tcs-legend { display:flex; flex-direction:column; gap:9px; padding:18px 20px; border-radius:14px; background:#f4f6fa; border:1px solid #e2e7f0; }
+  .tcs-leg { display:flex; align-items:center; gap:10px; font-size:13px; color:#3b4a63; font-weight:400; }
+  .tcs-leg i { width:9px; height:9px; border-radius:50%; flex:none; }
+  .tcs-leg i.b { background:#2f7bff; } .tcs-leg i.g { background:#e8a02c; }
+
+  .tcs-acc { border-top:1px solid #e2e7f0; }
+  .tcs-item { border-bottom:1px solid #e2e7f0; }
+  .tcs-q { display:flex; align-items:center; justify-content:space-between; gap:20px; cursor:pointer;
+    list-style:none; padding:22px 4px; font-size:16.5px; font-weight:600; color:#0b1220; letter-spacing:-.02em; }
+  .tcs-q::-webkit-details-marker { display:none; }
+  .tcs-q:hover { color:#2f7bff; }
+  .tcs-chev { width:18px; height:18px; flex:none; fill:none; stroke:#8493ad; stroke-width:2.2;
+    stroke-linecap:round; stroke-linejoin:round; transition:transform .25s; }
+  .tcs-item[open] .tcs-chev { transform:rotate(180deg); stroke:#2f7bff; }
+  .tcs-a { padding:0 4px 26px; }
+  .tcs-row { display:grid; grid-template-columns:1fr auto auto; gap:14px; align-items:baseline;
+    padding:12px 0; border-top:1px dashed #e6ebf3; }
+  .tcs-row:first-child { border-top:0; padding-top:0; }
+  .tcs-lab { font-size:14px; color:#3b4a63; font-weight:400; line-height:1.5; }
+  .tcs-lab small { display:block; font-size:12.5px; color:#8493ad; font-weight:300; margin-top:3px; }
+  .tcs-val { font-size:13px; font-weight:600; padding:5px 11px; border-radius:7px; white-space:nowrap; }
+  .tcs-val.b { color:#1c5fd0; background:rgba(47,123,255,.10); }
+  .tcs-val.g { color:#a56d10; background:rgba(232,160,44,.13); }
+  .tcs-val.both { color:#0f7a52; background:rgba(15,157,99,.11); grid-column:2 / span 2; justify-self:end; }
+  .tcs-p { font-size:14px; color:#5b6b86; font-weight:300; line-height:1.65; margin-top:14px; }
+  .tcs-p b { color:#0b1220; font-weight:500; }
+  @media (max-width:900px) {
+    .tcs-inner { grid-template-columns:1fr; gap:36px; }
+    .tcs-aside { position:static; }
+    .tcs-row { grid-template-columns:1fr; gap:6px; }
+    .tcs-val { justify-self:start; } .tcs-val.both { grid-column:1; justify-self:start; }
+    .tcs { padding:72px 20px; }
+  }
+</style>
+
+<section class="tcs">
+  <div class="tcs-inner">
+    <aside class="tcs-aside">
+      <p class="tcs-eyebrow">Caractéristiques</p>
+      <h2 class="tcs-title">Détails produit</h2>
+      <p class="tcs-sub">Les fiches techniques complètes des deux centrales, poste par poste. Quand une valeur diffère, elle est indiquée pour chaque modèle.</p>
+      <div class="tcs-legend">
+        <span class="tcs-leg"><i class="b"></i>Valeur spécifique à la <strong>Touch (AM301)</strong></span>
+        <span class="tcs-leg"><i class="g"></i>Valeur spécifique à la <strong>Touch XL (AM302)</strong></span>
+        <span class="tcs-leg"><i style="background:#0f9d63"></i>Identique sur les deux centrales</span>
+      </div>
+    </aside>
+
+    <div class="tcs-acc">
+      <details class="tcs-item" open>
+        <summary class="tcs-q">Écran &amp; interface
+          <svg class="tcs-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="tcs-a">
+          <div class="tcs-row"><span class="tcs-lab">Écran tactile couleur</span><span class="tcs-val b">4,3''</span><span class="tcs-val g">7''</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Clavier de code intégré</span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Lecteur de badges RFID intégré</span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Affichage des zones ouvertes et de l'historique</span><span class="tcs-val both">Sur les deux</span></div>
+          <p class="tcs-p">L'écran de la Touch XL affiche davantage de zones simultanément&nbsp;: c'est le critère décisif si votre installation dépasse une quinzaine d'accessoires.</p>
+        </div>
+      </details>
+
+      <details class="tcs-item">
+        <summary class="tcs-q">Connectivité
+          <svg class="tcs-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="tcs-a">
+          <div class="tcs-row"><span class="tcs-lab">Connexion Wi-Fi<small>Réseau 2,4 GHz uniquement</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Connexion GSM 4G<small>Carte SIM en option, non fournie</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Notifications push en temps réel<small>Via l'application Daewoo Home Connect</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Alertes SMS<small>Nécessite une carte SIM</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Assistants vocaux Google Home / Alexa</span><span class="tcs-val both">Sur les deux</span></div>
+        </div>
+      </details>
+
+      <details class="tcs-item">
+        <summary class="tcs-q">Alimentation &amp; autonomie
+          <svg class="tcs-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="tcs-a">
+          <div class="tcs-row"><span class="tcs-lab">Batterie de secours intégrée</span><span class="tcs-val b">≈ 4 h</span><span class="tcs-val g">≈ 20 h</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Alimentation principale<small>Bloc secteur fourni, aucune installation électrique</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Fonctionnement en cas de coupure Wi-Fi<small>Avec carte SIM installée</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <p class="tcs-p">Sans carte SIM et sans Internet, la centrale continue de <b>détecter et de déclencher la sirène localement</b>, mais n'envoie plus de notification.</p>
+        </div>
+      </details>
+
+      <details class="tcs-item">
+        <summary class="tcs-q">Sécurité &amp; détection
+          <svg class="tcs-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="tcs-a">
+          <div class="tcs-row"><span class="tcs-lab">Sirène intégrée</span><span class="tcs-val b">95 dB</span><span class="tcs-val g">100 dB</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Détection d'arrachement<small>Centrale décrochée = alerte immédiate</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Communication chiffrée centrale ↔ accessoires</span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Modes de surveillance<small>Total, Partiel (Maison), Désarmé</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Fonction SOS<small>En cas d'agression au domicile</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Temporisation d'entrée et de sortie</span><span class="tcs-val both">Sur les deux</span></div>
+        </div>
+      </details>
+
+      <details class="tcs-item">
+        <summary class="tcs-q">Commande &amp; pilotage
+          <svg class="tcs-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="tcs-a">
+          <div class="tcs-row"><span class="tcs-lab">Depuis l'écran de la centrale</span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Depuis l'application Daewoo Home Connect<small>iOS et Android, gratuite</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Par badge RFID ou télécommande</span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Création de scénarios personnalisés</span><span class="tcs-val both">Sur les deux</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Partage d'accès entre plusieurs utilisateurs</span><span class="tcs-val both">Sur les deux</span></div>
+        </div>
+      </details>
+
+      <details class="tcs-item">
+        <summary class="tcs-q">Évolutivité &amp; compatibilité
+          <svg class="tcs-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <div class="tcs-a">
+          <div class="tcs-row"><span class="tcs-lab">Accessoires maximum par centrale</span><span class="tcs-val both">Jusqu'à 90</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Caméras et objets connectés<small>Gérés dans l'application, sans limite de nombre</small></span><span class="tcs-val both">Illimité</span></div>
+          <div class="tcs-row"><span class="tcs-lab">Accessoires compatibles<small>Détecteurs, claviers, télécommandes, badges, sirènes — gammes Touch et Vigilia (AM30x)</small></span><span class="tcs-val both">Sur les deux</span></div>
+          <p class="tcs-p">Le système est <b>100 % personnalisable</b>&nbsp;: achetez ce dont vous avez besoin maintenant, complétez au fil du temps sans rien remplacer.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Touch — Fiche technique",
+  "settings": []
+}
+{% endschema %}

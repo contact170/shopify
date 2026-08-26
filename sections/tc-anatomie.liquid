@@ -1,0 +1,79 @@
+{% comment %} ── Anatomie de la centrale Touch — rail numéroté ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .tca * { box-sizing:border-box; margin:0; padding:0; }
+  .tca { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#05080f; color:#eaf0fb; padding:96px 24px; position:relative; overflow:hidden; }
+  .tca::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(760px 480px at 82% 46%,rgba(77,163,255,.16),transparent 66%); }
+  .tca-inner { position:relative; z-index:2; max-width:1160px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; }
+  .tca-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#9fb6da; margin-bottom:18px; }
+  .tca-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#4da3ff,transparent); }
+  .tca-title { font-size:clamp(27px,3.4vw,40px); font-weight:600; letter-spacing:-.03em; line-height:1.12; margin-bottom:14px; }
+  .tca-sub { font-size:15.5px; color:#a0b0cb; font-weight:300; line-height:1.65; margin-bottom:40px; max-width:470px; }
+  .tca-rail { position:relative; padding-left:2px; }
+  .tca-row { display:grid; grid-template-columns:auto 1fr; gap:20px; padding:20px 0;
+    border-top:1px solid rgba(255,255,255,.09); }
+  .tca-row:last-child { border-bottom:1px solid rgba(255,255,255,.09); }
+  .tca-num { font-size:12px; font-weight:600; letter-spacing:.1em; color:#4da3ff; padding-top:3px; font-variant-numeric:tabular-nums; }
+  .tca-rt { font-size:15.5px; font-weight:600; letter-spacing:-.015em; margin-bottom:5px; }
+  .tca-rd { font-size:13.8px; color:#93a5c2; font-weight:300; line-height:1.55; }
+  .tca-visual { position:relative; }
+  .tca-frame { border-radius:22px; overflow:hidden; border:1px solid rgba(255,255,255,.12);
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.01)); padding:14px;
+    box-shadow:0 40px 90px rgba(0,0,0,.55); }
+  .tca-frame img { width:100%; height:auto; display:block; border-radius:14px; }
+  .tca-stats { max-width:1160px; margin:64px auto 0; position:relative; z-index:2;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.09); border-radius:16px; overflow:hidden; }
+  .tca-stat { background:#070c17; padding:26px 22px; }
+  .tca-stat b { display:block; font-size:26px; font-weight:600; letter-spacing:-.03em; margin-bottom:5px; }
+  .tca-stat--b b { color:#7cbcff; } .tca-stat--g b { color:#ffcd72; }
+  .tca-stat span { font-size:12.5px; color:#8fa1bd; font-weight:300; line-height:1.45; display:block; }
+  @media (max-width:960px) {
+    .tca-inner { grid-template-columns:1fr; gap:44px; }
+    .tca-visual { order:-1; }
+    .tca-stats { grid-template-columns:repeat(2,1fr); }
+    .tca { padding:72px 20px; }
+  }
+  @media (max-width:520px) { .tca-stats { grid-template-columns:1fr; } }
+</style>
+
+<section class="tca">
+  <div class="tca-inner">
+    <div>
+      <span class="tca-eyebrow">La centrale en détail</span>
+      <h2 class="tca-title">Tout est déjà dans la centrale.</h2>
+      <p class="tca-sub">Pas de boîtier supplémentaire, pas de clavier à ajouter, pas de sirène à installer pour démarrer. La Touch réunit dans un seul produit ce que d'autres marques vendent en trois.</p>
+      <div class="tca-rail">
+        <div class="tca-row"><span class="tca-num">01</span><div><p class="tca-rt">Écran tactile couleur</p><p class="tca-rd">4,3'' sur la Touch, 7'' sur la Touch XL. L'état du système, les zones ouvertes et l'historique s'affichent directement, sans passer par le téléphone.</p></div></div>
+        <div class="tca-row"><span class="tca-num">02</span><div><p class="tca-rt">Clavier &amp; lecteur RFID intégrés</p><p class="tca-rd">Un code ou un simple badge posé sur la centrale suffit à désarmer — pratique pour les enfants ou un proche sans smartphone.</p></div></div>
+        <div class="tca-row"><span class="tca-num">03</span><div><p class="tca-rt">Sirène intégrée 95 / 100 dB</p><p class="tca-rd">La dissuasion se déclenche immédiatement à l'intérieur du logement, avant même l'ajout d'une sirène extérieure.</p></div></div>
+        <div class="tca-row"><span class="tca-num">04</span><div><p class="tca-rt">Batterie de secours</p><p class="tca-rd">4 h d'autonomie sur la Touch, 20 h sur la Touch XL&nbsp;: le système reste armé pendant une coupure de courant.</p></div></div>
+        <div class="tca-row"><span class="tca-num">05</span><div><p class="tca-rt">Wi-Fi 2,4 GHz + GSM 4G en option</p><p class="tca-rd">Avec une carte SIM, la centrale continue d'envoyer des alertes SMS même si votre box Internet tombe.</p></div></div>
+        <div class="tca-row"><span class="tca-num">06</span><div><p class="tca-rt">Détection d'arrachement</p><p class="tca-rd">Toute tentative de décrocher la centrale déclenche l'alerte. La liaison radio avec les accessoires est chiffrée.</p></div></div>
+      </div>
+    </div>
+    <div class="tca-visual">
+      <div class="tca-frame">
+        <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Touch_e31e5742-619e-4dd3-86a8-bf9898bdd8de.png?v=1770108612" alt="Détail de la centrale d'alarme Daewoo Touch : écran tactile, clavier et lecteur RFID" loading="lazy" width="900" height="900">
+      </div>
+    </div>
+  </div>
+
+  <div class="tca-stats">
+    <div class="tca-stat tca-stat--b"><b>90</b><span>accessoires maximum par centrale</span></div>
+    <div class="tca-stat tca-stat--b"><b>3</b><span>modes&nbsp;: Total, Partiel (Maison), Désarmé</span></div>
+    <div class="tca-stat tca-stat--g"><b>0 €</b><span>d'abonnement, à vie</span></div>
+    <div class="tca-stat tca-stat--g"><b>2 ans</b><span>de garantie, SAV en France</span></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Touch — Anatomie",
+  "settings": []
+}
+{% endschema %}
