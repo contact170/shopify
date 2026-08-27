@@ -1,4 +1,4 @@
-{% comment %} ── Passerelle Zigbee intégrée + radio Daewoo — schéma deux réseaux ── {% endcomment %}
+{% comment %} ── Passerelle Zigbee intégrée + radio 433 / 868 MHz — schéma deux réseaux ── {% endcomment %}
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   .elz * { box-sizing:border-box; margin:0; padding:0; }
@@ -53,15 +53,15 @@
         <div class="elz-row">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.8 2.8M16.2 16.2 19 19M19 5l-2.8 2.8M7.8 16.2 5 19"/></svg>
           <div>
-            <p class="elz-rt">Trois références en Zigbee, le reste en radio Daewoo</p>
-            <p class="elz-rd">Seuls les <b>WDS502Z, WVD502Z et WKE502Z</b> passent par le Zigbee. Les détecteurs de mouvement, sirènes, télécommandes, badges, détecteurs de fumée et de fuite d'eau utilisent la radio Daewoo de la centrale.</p>
+            <p class="elz-rt">Trois références en Zigbee, le reste en 433 / 868 MHz</p>
+            <p class="elz-rd">Seuls les <b>WDS502Z, WVD502Z et WKE502Z</b> passent par le Zigbee. Les détecteurs de mouvement, sirènes, télécommandes, badges, détecteurs de fumée et de fuite d'eau utilisent la <b>fréquence radio 433 ou 868 MHz</b>.</p>
           </div>
         </div>
         <div class="elz-row">
           <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11.5 13.5 15.5 9"/></svg>
           <div>
             <p class="elz-rt">Liaison chiffrée et bidirectionnelle</p>
-            <p class="elz-rd">La centrale et chaque accessoire se répondent et vérifient l'échange. <b>Le brouillage et l'interception sont bloqués</b>, et un détecteur qui ne répond plus est signalé.</p>
+            <p class="elz-rd">La centrale et chaque accessoire se répondent et vérifient l'échange. <b>Le brouillage et l'interception sont bloqués</b>&nbsp;: un ordre ne part pas dans le vide, il est confirmé.</p>
           </div>
         </div>
         <div class="elz-row">
@@ -85,10 +85,10 @@
     <div class="elz-visual">
       <div class="elz-card">
         <p class="elz-cl">Deux réseaux, une centrale</p>
-        <p class="elz-cs">La passerelle Zigbee d'un côté, la radio Daewoo de l'autre.</p>
-        <svg class="elz-svg" viewBox="0 0 360 320" role="img" aria-label="Schéma : la centrale Élite relie en Zigbee le contacteur WDS502Z, le détecteur de vibration WVD502Z et le clavier WKE502Z, et en radio Daewoo les détecteurs de mouvement, sirènes et télécommandes">
+        <p class="elz-cs">La passerelle Zigbee d'un côté, le 433 / 868 MHz de l'autre.</p>
+        <svg class="elz-svg" viewBox="0 0 360 320" role="img" aria-label="Schéma : la centrale Élite relie en Zigbee le contacteur WDS502Z, le détecteur de vibration WVD502Z et le clavier WKE502Z, et en radio 433 ou 868 MHz les détecteurs de mouvement, sirènes et télécommandes">
           <text x="66" y="24" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="10" font-weight="600" fill="#12a0ad" letter-spacing="1.2">ZIGBEE</text>
-          <text x="294" y="24" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="10" font-weight="600" fill="#8f9ba4" letter-spacing="1.2">RADIO DAEWOO</text>
+          <text x="294" y="24" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="10" font-weight="600" fill="#8f9ba4" letter-spacing="1.2">433 / 868 MHz</text>
 
           <g stroke="#12a0ad" stroke-width="1.6" stroke-dasharray="4 5" fill="none">
             <line x1="180" y1="170" x2="66" y2="72"/>
@@ -118,7 +118,7 @@
         </svg>
         <div class="elz-legend">
           <span class="elz-lg"><i style="background:#12a0ad"></i>Zigbee (références 502Z)</span>
-          <span class="elz-lg"><i style="background:#5b6b76"></i>Radio Daewoo</span>
+          <span class="elz-lg"><i style="background:#5b6b76"></i>Radio 433 / 868 MHz</span>
         </div>
       </div>
     </div>

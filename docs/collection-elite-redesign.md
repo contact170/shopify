@@ -41,11 +41,11 @@ tenir 4,5:1 sur la bande `#f1f3f2`).
 2. **Bandeau de confiance** (fond sombre) — installation 30 min, sans abonnement, SAV France, garantie.
 3. **Triple connexion** — Wi-Fi / Ethernet / 4G en chaîne de secours, + batterie de secours et rappel « les caméras ont besoin du Wi-Fi ».
 4. **Zigbee** — la passerelle Zigbee et son périmètre réel + **schéma SVG deux réseaux** (Zigbee d'un côté, radio Daewoo de l'autre), aucune image externe.
-5. **Packs** — 3 cartes de hauteur égale : **Kit de départ à partir de 299,90 €** / **Offre exclusive 593,90 €** (mise en avant) / Double caméra 809,90 €.
-6. **Anatomie** — bandeau photo + 6 tuiles (ni écran ni clavier, sirène, batterie, arrachement, 4 liaisons, modes + SOS).
+5. **Packs** — 3 cartes de hauteur égale : **Kit de départ à partir de 299,90 €** / **Offre exclusive 593,90 €** (mise en avant) / **Pack Tranquillité+ 739,90 €**.
+6. **Anatomie** — bandeau photo + 6 tuiles (ni écran ni clavier, sirène, batterie, arrachement, 4 liaisons, modes + SOS de la télécommande WRC501).
 7. **Pilotage app** — ce que fait l'application + carte sombre « armer sans téléphone » (télécommande, badge, clavier).
 8. **Confidentialité** — pas d'Alexa ni Google Home, par choix ; renvoi vers Touch / Vigilia et le comparateur.
-9. **Installation** — stepper vertical 3 étapes + pré-requis + liens manuel et guide d'installation.
+9. **Installation** — stepper vertical 3 étapes + pré-requis + lien vers le manuel complet PA501Z (PDF).
 10. **Accessoires** — grille de 12 références compatibles, 4 colonnes, **sans défilement horizontal**.
 11. **Configurateur** — bandeau sombre horizontal avec **« jusqu'à −25 % »**.
 12. **Témoignage** — section partagée `tc-temoignage`.
@@ -78,9 +78,12 @@ consultable dans `theme-src/collection-elite.base.json` et dans le thème publi�
 - **Nombre d'accessoires : 200** d'après la fiche de la centrale. Les descriptions
   des deux packs « Offre exclusive » annoncent « jusqu'à 100 accessoires
   supplémentaires ». La page retient 200.
-- **Les anciens packs de la page (PA570 Zenguard, PA574 Tranquillité) n'existent
-  plus** : les produits correspondants sont archivés. Les trois packs affichés
-  sont les produits actifs.
+- **Le pack PA570 Zenguard de l'ancienne page n'existe plus** : le produit est
+  archivé. Les trois packs affichés sont des produits actifs — le troisième est
+  le **Pack Tranquillité+ (PA574) à 739,90 €**, mis en avant à la demande du
+  client à la place du pack « double caméra » à 809,90 €. Ce produit n'a **pas de
+  prix barré** en base : la carte n'affiche donc ni prix de référence ni badge de
+  remise.
 - **Remise configurateur de 25 %** : reprise de la page Touch, le configurateur
   étant le même outil. À confirmer si elle diffère pour l'Élite.
 - **GSM 4G+ — comportement exact** (corrigé par le client) : en cas de coupure
@@ -92,14 +95,25 @@ consultable dans `theme-src/collection-elite.base.json` et dans le thème publi�
   (elle figure encore sur la fiche produit) — à trancher.
 - **Périmètre du Zigbee** (corrigé par le client) : seules **trois références**
   communiquent en Zigbee — **WDS502Z, WVD502Z, WKE502Z**. Tous les autres
-  accessoires passent par la radio Daewoo. L'**amplificateur EXT501 n'étend donc
-  la portée que de ces trois références**.
+  accessoires passent par la **fréquence radio 433 ou 868 MHz**. L'**amplificateur
+  EXT501 n'étend donc la portée que de ces trois références**.
 - **Accessoires tiers** : Zigbee 3.0 et Tuya, **compatibilité non garantie**.
   Toujours accompagner la mention de cet avertissement.
 - **Ne pas écrire que la PA501Z reprend les accessoires de la gamme Key (SA501)**
   ni proposer de remplacer une ancienne centrale SA501 en gardant ses détecteurs.
   Cette affirmation a été retirée de toute la page (Zigbee, accessoires, fiche
   technique, FAQ et JSON-LD).
+- **Ne pas écrire qu'un détecteur qui ne répond plus est signalé.** La liaison
+  bidirectionnelle Zigbee est bien chiffrée et confirmée, mais la supervision
+  d'un accessoire muet n'est pas une fonction à annoncer.
+- **Caméras et coupure Internet** : le flux vidéo n'est pas accessible sans
+  Internet, **même avec une carte SIM insérée dans la centrale**. Le relais 4G+
+  ne sert qu'à la centrale et à l'application, jamais à la vidéo.
+- **Le bouton SOS est celui de la télécommande WRC501** (appui 3 secondes), pas
+  une touche du boîtier de la centrale — celle-ci n'a ni écran ni clavier.
+- **Manuel** : lien direct vers le PDF
+  `Manuel_Complet_PA501Z_12_12_23_compressed.pdf` hébergé sur le CDN Shopify.
+  Le « guide d'installation pas à pas » a été retiré.
 - **La section témoignage parle du système Touch XL** — c'est le contenu existant,
   repris tel quel. À adapter si vous voulez un témoignage Élite.
 - **Disponibilité du support** : assistant en ligne 7j/7, équipe 5j/7. Ne jamais
