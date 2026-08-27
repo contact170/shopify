@@ -1,0 +1,161 @@
+{% comment %} ── Les 3 gammes côte à côte — cartes produit ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .cpg * { box-sizing:border-box; margin:0; padding:0; }
+  .cpg { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#f4f6f8; color:#0b1220; padding:90px 24px 96px; }
+  .cpg-inner { max-width:1180px; margin:0 auto; }
+  .cpg-head { max-width:620px; margin:0 auto 46px; text-align:center; }
+  .cpg-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:15px; }
+  .cpg-eyebrow::before,.cpg-eyebrow::after { content:''; width:26px; height:1px; background:#ccd5df; }
+  .cpg-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:13px; }
+  .cpg-sub { font-size:15.5px; color:#4a5663; font-weight:300; line-height:1.68; }
+
+  .cpg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:stretch; }
+  .cpg-card { background:#fff; border:1px solid #e3e8ee; border-radius:20px; overflow:hidden;
+    display:flex; flex-direction:column; box-shadow:0 20px 48px -32px rgba(11,18,32,.3); position:relative; }
+  .cpg-flag { position:absolute; top:0; left:0; right:0; height:4px; }
+  .cpg-shot { background:#f4f6f8; border-bottom:1px solid #eef1f5; padding:14px; }
+  .cpg-shot img { width:100%; height:224px; object-fit:contain; display:block; }
+  .cpg-body { padding:26px 26px 28px; display:flex; flex-direction:column; flex:1; }
+  .cpg-rank { display:inline-block; align-self:flex-start; font-size:10px; font-weight:700; letter-spacing:.16em;
+    text-transform:uppercase; padding:5px 10px; border-radius:5px; margin-bottom:14px; }
+  .cpg-n { font-size:22px; font-weight:600; letter-spacing:-.03em; line-height:1.2; margin-bottom:5px; }
+  .cpg-ref { font-size:12px; font-weight:500; color:#5d6a7a; letter-spacing:.02em; margin-bottom:14px; }
+  .cpg-pos { font-size:13.8px; color:#4a5663; font-weight:300; line-height:1.58; margin-bottom:20px;
+    padding-bottom:20px; border-bottom:1px solid #eef1f5; }
+  .cpg-ul { display:flex; flex-direction:column; gap:11px; margin-bottom:22px; flex:1; }
+  .cpg-li { display:grid; grid-template-columns:auto 1fr; gap:11px; font-size:13.4px; color:#4a5663;
+    font-weight:300; line-height:1.5; }
+  .cpg-li svg { width:15px; height:15px; margin-top:3px; fill:none; stroke-width:2.7; stroke-linecap:round; stroke-linejoin:round; }
+  .cpg-li b { color:#0b1220; font-weight:500; }
+  .cpg-no { color:#6b7788; }
+  .cpg-price { padding-top:18px; border-top:1px solid #eef1f5; margin-bottom:15px; }
+  .cpg-from { display:block; font-size:12px; color:#5d6a7a; font-weight:300; margin-bottom:1px; }
+  .cpg-amt { font-size:27px; font-weight:600; letter-spacing:-.03em; }
+  .cpg-btns { display:flex; flex-direction:column; gap:9px; }
+  .cpg-b { display:flex; align-items:center; justify-content:center; gap:9px; padding:13px 20px; border-radius:9px;
+    font-size:13.6px; font-weight:600; text-decoration:none; transition:transform .18s, border-color .18s; }
+  .cpg-b:hover { transform:translateY(-2px); }
+  .cpg-b--1 { color:#fff; }
+  .cpg-b--2 { background:#fff; color:#0b1220; border:1px solid #dde3ea; }
+  .cpg-b svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+
+  .cpg--v .cpg-flag { background:#e0912b; } .cpg--v .cpg-rank { background:rgba(224,145,43,.14); color:#8a4d00; }
+  .cpg--v .cpg-li svg { stroke:#a35a00; } .cpg--v .cpg-b--1 { background:#a35a00; } .cpg--v .cpg-b--2:hover { border-color:#a35a00; }
+  .cpg--t .cpg-flag { background:#2f6fe0; } .cpg--t .cpg-rank { background:rgba(47,111,224,.13); color:#1f5fd0; }
+  .cpg--t .cpg-li svg { stroke:#1f5fd0; } .cpg--t .cpg-b--1 { background:#1f5fd0; } .cpg--t .cpg-b--2:hover { border-color:#1f5fd0; }
+  .cpg--e .cpg-flag { background:linear-gradient(90deg,#0a6068,#12a0ad); } .cpg--e .cpg-rank { background:rgba(18,160,173,.14); color:#0a6068; }
+  .cpg--e .cpg-li svg { stroke:#0a6068; } .cpg--e .cpg-b--1 { background:#0a6068; } .cpg--e .cpg-b--2:hover { border-color:#0a6068; }
+  .cpg-li svg.cpg-x { stroke:#6b7788 !important; }
+
+  @media (max-width:1000px) { .cpg-grid { grid-template-columns:1fr; max-width:470px; margin:0 auto; } }
+  @media (max-width:600px) { .cpg { padding:70px 20px 76px; } .cpg-body { padding:24px 20px 26px; } }
+</style>
+
+<section class="cpg">
+  <div class="cpg-inner">
+    <div class="cpg-head">
+      <span class="cpg-eyebrow">Les trois gammes</span>
+      <h2 class="cpg-title">Ce que vous obtenez, gamme par gamme.</h2>
+      <p class="cpg-sub">Chaque gamme part d'un kit prêt à poser. Vous pouvez ensuite ajouter des accessoires à l'unité, sans jamais remplacer la centrale.</p>
+    </div>
+
+    <div class="cpg-grid">
+      <!-- VIGILIA -->
+      <div class="cpg-card cpg--v">
+        <span class="cpg-flag"></span>
+        <div class="cpg-shot">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/958b5e1e-36cd-47db-93da-efc4b7f2d77c.jpg?v=1770108516" alt="Kit de départ Vigilia : centrale à clavier tactile, caméra intérieure, contacteurs et télécommande" loading="lazy" width="1600" height="1600">
+        </div>
+        <div class="cpg-body">
+          <span class="cpg-rank">L'essentiel</span>
+          <h3 class="cpg-n">Vigilia</h3>
+          <p class="cpg-ref">Centrale à clavier tactile · gamme AM30x</p>
+          <p class="cpg-pos">Pour un appartement ou une petite maison. C'est la seule des trois dont le kit de départ contient déjà une caméra intérieure.</p>
+          <div class="cpg-ul">
+            <p class="cpg-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Clavier tactile</b> intégré à la centrale</span></p>
+            <p class="cpg-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Caméra intérieure IP506P</b> incluse dans le kit</span></p>
+            <p class="cpg-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Compatible <b>Alexa et Google Home</b></span></p>
+            <p class="cpg-li"><svg class="cpg-x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cpg-no">Pas d'Ethernet, pas de passerelle Zigbee</span></p>
+          </div>
+          <div class="cpg-price">
+            <span class="cpg-from">Kit de départ, à partir de</span>
+            <span class="cpg-amt">139,90 €</span>
+          </div>
+          <div class="cpg-btns">
+            <a class="cpg-b cpg-b--1" href="https://daewoo-security.fr/products/daewoo-vigilia-starter-pack">Voir le kit Vigilia
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a class="cpg-b cpg-b--2" href="https://daewoo-security.fr/collections/systeme-dalarme-vigilia">La gamme complète</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOUCH -->
+      <div class="cpg-card cpg--t">
+        <span class="cpg-flag"></span>
+        <div class="cpg-shot">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/AM302_TouchXL_Starter_Pack.jpg?v=1787740224" alt="Kit de départ Touch XL : centrale à écran tactile 7 pouces, contacteurs, détecteur de mouvement et télécommandes" loading="lazy" width="1600" height="1600">
+        </div>
+        <div class="cpg-body">
+          <span class="cpg-rank">Le plus intuitif</span>
+          <h3 class="cpg-n">Touch &amp; Touch XL</h3>
+          <p class="cpg-ref">Centrales AM301 (4,3&quot;) et AM302 (7&quot;)</p>
+          <p class="cpg-pos">Pour une maison principale ou secondaire. L'écran affiche les zones ouvertes et l'historique, et sert de clavier de code.</p>
+          <div class="cpg-ul">
+            <p class="cpg-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Écran tactile couleur</b> — 4,3&quot; ou 7&quot;</span></p>
+            <p class="cpg-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Module <b>GSM 4G intégré</b> sur les deux modèles</span></p>
+            <p class="cpg-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Compatible <b>Alexa et Google Home</b></span></p>
+            <p class="cpg-li"><svg class="cpg-x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cpg-no">Pas d'Ethernet, pas de passerelle Zigbee</span></p>
+          </div>
+          <div class="cpg-price">
+            <span class="cpg-from">Kit de départ, à partir de</span>
+            <span class="cpg-amt">199,90 €</span>
+          </div>
+          <div class="cpg-btns">
+            <a class="cpg-b cpg-b--1" href="https://daewoo-security.fr/products/alarme-daewoo-wifi-gsm-4g-starter-pack-am301">Voir le kit Touch
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a class="cpg-b cpg-b--2" href="https://daewoo-security.fr/collections/systeme-dalarme-am301-am302">La gamme complète</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÉLITE -->
+      <div class="cpg-card cpg--e">
+        <span class="cpg-flag"></span>
+        <div class="cpg-shot">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/360bc22c-c301-4e8c-91be-142bfc8834eb.jpg?v=1770108350" alt="Kit de départ Élite : centrale PA501Z, contacteurs Zigbee, détecteur de mouvement et télécommandes" loading="lazy" width="1600" height="1600">
+        </div>
+        <div class="cpg-body">
+          <span class="cpg-rank">La plus connectée</span>
+          <h3 class="cpg-n">Élite</h3>
+          <p class="cpg-ref">Centrale PA501Z · sans écran</p>
+          <p class="cpg-pos">Pour une grande maison, une résidence secondaire ou une maison connectée. Le boîtier se cache&nbsp;: tout passe par l'application.</p>
+          <div class="cpg-ul">
+            <p class="cpg-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Wi-Fi, Ethernet et 4G+</b> qui se relaient</span></p>
+            <p class="cpg-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Passerelle Zigbee</b> intégrée · jusqu'à 200 accessoires</span></p>
+            <p class="cpg-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Batterie de secours de <b>12 heures</b></span></p>
+            <p class="cpg-li"><svg class="cpg-x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cpg-no">Ni écran, ni Alexa, ni Google Home</span></p>
+          </div>
+          <div class="cpg-price">
+            <span class="cpg-from">Kit de départ, à partir de</span>
+            <span class="cpg-amt">299,90 €</span>
+          </div>
+          <div class="cpg-btns">
+            <a class="cpg-b cpg-b--1" href="https://daewoo-security.fr/products/starter-pack-elite-daewoo">Voir le kit Élite
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a class="cpg-b cpg-b--2" href="https://daewoo-security.fr/collections/systeme-dalarme-pa501z">La gamme complète</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparatif — Gammes",
+  "settings": []
+}
+{% endschema %}

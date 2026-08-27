@@ -1,0 +1,56 @@
+{% comment %} ── CTA final du comparatif ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .cpc * { box-sizing:border-box; margin:0; padding:0; }
+  .cpc { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#0b1220; color:#fff; padding:88px 24px 92px; position:relative; overflow:hidden; }
+  .cpc::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(720px 380px at 50% 0%,rgba(18,160,173,.22),transparent 66%),
+               radial-gradient(620px 320px at 12% 100%,rgba(196,124,26,.16),transparent 62%); }
+  .cpc-inner { position:relative; z-index:2; max-width:920px; margin:0 auto; text-align:center; }
+  .cpc-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#9fb0c4; margin-bottom:18px; }
+  .cpc-eyebrow::before,.cpc-eyebrow::after { content:''; width:26px; height:1px; background:rgba(255,255,255,.25); }
+  .cpc-title { font-size:clamp(27px,3.8vw,44px); font-weight:600; letter-spacing:-.038em; line-height:1.1; margin-bottom:16px; }
+  .cpc-sub { font-size:16px; font-weight:300; line-height:1.7; color:#c3cedd; max-width:600px; margin:0 auto 34px; }
+  .cpc-sub b { color:#fff; font-weight:500; }
+  .cpc-btns { display:flex; gap:13px; justify-content:center; flex-wrap:wrap; margin-bottom:34px; }
+  .cpc-b { display:inline-flex; align-items:center; gap:10px; padding:16px 30px; border-radius:10px;
+    font-size:14.5px; font-weight:600; text-decoration:none; transition:transform .18s, border-color .18s; }
+  .cpc-b:hover { transform:translateY(-2px); }
+  .cpc-b--1 { background:#fff; color:#0b1220; }
+  .cpc-b--2 { border:1px solid rgba(255,255,255,.28); color:#fff; }
+  .cpc-b--2:hover { border-color:rgba(255,255,255,.6); }
+  .cpc-b svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .cpc-mini { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; font-size:13px; color:#a9b8c9; font-weight:300; }
+  .cpc-mini span { display:inline-flex; align-items:center; gap:8px; }
+  .cpc-mini svg { width:14px; height:14px; fill:none; stroke:#7fd3dc; stroke-width:2.8; stroke-linecap:round; stroke-linejoin:round; }
+  @media (max-width:600px) { .cpc { padding:70px 20px 76px; } .cpc-b { width:100%; justify-content:center; } }
+</style>
+
+<section class="cpc">
+  <div class="cpc-inner">
+    <span class="cpc-eyebrow">Toujours hésitant&nbsp;?</span>
+    <h2 class="cpc-title">Laissez-nous composer votre système.</h2>
+    <p class="cpc-sub">Sept questions sur votre logement et vos habitudes, et le configurateur choisit la gamme, la centrale et le nombre de détecteurs — avec <b>jusqu'à 25&nbsp;% de remise</b> sur l'ensemble. Vous restez libre d'ajuster avant de valider.</p>
+    <div class="cpc-btns">
+      <a class="cpc-b cpc-b--1" href="https://daewoo-security.fr/pages/configurateur_2">Configurer mon système
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="cpc-b cpc-b--2" href="https://daewoo-security.fr/pages/nous-contacter">Poser une question
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+    <div class="cpc-mini">
+      <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Sans abonnement</span>
+      <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Garantie 2 ans</span>
+      <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Retour gratuit</span>
+      <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>SAV en France</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparatif — CTA",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,261 @@
+{% comment %} ── Tableau comparatif Vigilia / Touch / Élite ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .cpt * { box-sizing:border-box; margin:0; padding:0; }
+  .cpt { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0b1220; padding:92px 24px 96px; }
+  .cpt-inner { max-width:1180px; margin:0 auto; }
+  .cpt-head0 { max-width:640px; margin:0 auto 40px; text-align:center; }
+  .cpt-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:15px; }
+  .cpt-eyebrow::before,.cpt-eyebrow::after { content:''; width:26px; height:1px; background:#d3dae2; }
+  .cpt-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:13px; }
+  .cpt-sub { font-size:15.5px; color:#4a5663; font-weight:300; line-height:1.68; }
+
+  .cpt-legend { display:flex; justify-content:center; gap:22px; flex-wrap:wrap; margin-bottom:26px; }
+  .cpt-lg { display:inline-flex; align-items:center; gap:8px; font-size:12.5px; color:#4a5663; font-weight:300; }
+  .cpt-lg i { width:10px; height:10px; border-radius:99px; flex:none; }
+  .cpt-lg u { text-decoration:none; width:16px; height:16px; border-radius:5px; background:rgba(18,160,173,.15);
+    display:inline-flex; align-items:center; justify-content:center; }
+  .cpt-lg u svg { width:10px; height:10px; fill:none; stroke:#0a6068; stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* ── En-tête collante ── */
+  .cpt-tbl { border:1px solid #e3e8ee; border-radius:18px; overflow:hidden; background:#fff; }
+  .cpt-hd { display:grid; grid-template-columns:1.3fr repeat(3,1fr); position:sticky; top:0; z-index:6;
+    background:#fff; border-bottom:1px solid #e3e8ee; box-shadow:0 6px 18px -14px rgba(11,18,32,.4); }
+  .cpt-hc { padding:18px 20px; border-left:1px solid #eef1f5; text-align:center; }
+  .cpt-hc:first-child { border-left:0; text-align:left; display:flex; align-items:center; }
+  .cpt-hl { font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#5d6a7a; }
+  .cpt-hn { font-size:16px; font-weight:600; letter-spacing:-.025em; display:flex; align-items:center;
+    justify-content:center; gap:8px; }
+  .cpt-hn i { width:9px; height:9px; border-radius:99px; flex:none; }
+  .cpt-hp { font-size:12px; font-weight:300; color:#5d6a7a; margin-top:3px; }
+
+  /* ── Groupes et lignes ── */
+  .cpt-gt { grid-column:1/-1; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:#0b1220; background:#f4f6f8; padding:13px 20px; border-top:1px solid #e3e8ee; }
+  .cpt-r { display:grid; grid-template-columns:1.3fr repeat(3,1fr); border-top:1px solid #eef1f5; }
+  .cpt-l { padding:16px 20px; font-size:13.6px; font-weight:500; color:#0b1220; line-height:1.45;
+    display:flex; flex-direction:column; align-items:flex-start; justify-content:center; }
+  .cpt-l small { display:block; font-size:12px; font-weight:300; color:#5d6a7a; margin-top:3px; line-height:1.42; }
+  .cpt-c { padding:16px 20px; font-size:13.3px; font-weight:300; color:#4a5663; line-height:1.55;
+    border-left:1px solid #eef1f5; text-align:center; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:7px; }
+  .cpt-c b { color:#0b1220; font-weight:600; }
+  .cpt-v { display:block; }
+  .cpt-note { display:block; font-size:12px; color:#5d6a7a; margin-top:4px; line-height:1.4; }
+  .cpt-c.is-no { color:#6b7788; }
+  .cpt-c.is-best { background:rgba(18,160,173,.07); }
+  .cpt-c.is-best::after { content:''; }
+  .cpt-ok, .cpt-ko { width:19px; height:19px; fill:none; stroke-width:2.9; stroke-linecap:round; stroke-linejoin:round; }
+  .cpt-ok { stroke:#0f8a5f; } .cpt-ko { stroke:#8794a3; }
+  .cpt-star { display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase; color:#0a6068; background:rgba(18,160,173,.15);
+    padding:3px 8px; border-radius:5px; }
+  .cpt-same { grid-column:2/-1; padding:16px 20px; border-left:1px solid #eef1f5; text-align:center;
+    font-size:13.3px; font-weight:300; color:#4a5663; line-height:1.55; background:#fbfcfd;
+    display:flex; align-items:center; justify-content:center; gap:9px; }
+  .cpt-same b { color:#0b1220; font-weight:500; }
+  .cpt-same svg { width:16px; height:16px; flex:none; fill:none; stroke:#0f8a5f; stroke-width:2.9; stroke-linecap:round; stroke-linejoin:round; }
+  .cpt-tag { display:none; }
+
+  /* ── Bandeau « commun aux trois » ── */
+  .cpt-common { margin-top:26px; background:#0b1220; border-radius:18px; padding:30px 30px 32px; color:#fff; }
+  .cpt-ct { font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#7fd3dc; margin-bottom:16px; }
+  .cpt-cg { display:grid; grid-template-columns:repeat(3,1fr); gap:16px 26px; }
+  .cpt-ci { display:grid; grid-template-columns:auto 1fr; gap:11px; font-size:13.5px; font-weight:300; color:#c3cedd; line-height:1.5; }
+  .cpt-ci svg { width:16px; height:16px; margin-top:3px; fill:none; stroke:#7fd3dc; stroke-width:2.8; stroke-linecap:round; stroke-linejoin:round; }
+  .cpt-ci b { color:#fff; font-weight:500; }
+  .cpt-foot { margin-top:18px; font-size:12.5px; color:#5d6a7a; font-weight:300; line-height:1.6; text-align:center; }
+
+  @media (max-width:900px) {
+    .cpt-hd { display:none; }
+    .cpt-r { grid-template-columns:1fr; }
+    .cpt-l { padding:18px 18px 4px; font-size:14.5px; font-weight:600; }
+    .cpt-c, .cpt-same { border-left:0; text-align:left; align-items:flex-start; justify-content:flex-start;
+      flex-direction:column; padding:9px 18px; }
+    .cpt-r > .cpt-c:last-child { padding-bottom:18px; }
+    .cpt-same { grid-column:1; padding:9px 18px 18px; flex-direction:row; align-items:flex-start; }
+    .cpt-tag { display:inline-flex; align-items:center; gap:7px; font-size:10.5px; font-weight:700;
+      letter-spacing:.12em; text-transform:uppercase; color:#5d6a7a; margin-bottom:2px; }
+    .cpt-tag i { width:8px; height:8px; border-radius:99px; flex:none; }
+    .cpt-cg { grid-template-columns:1fr; }
+  }
+  @media (max-width:600px) { .cpt { padding:70px 20px 76px; } .cpt-common { padding:26px 22px 28px; } }
+</style>
+
+<section class="cpt">
+  <div class="cpt-inner">
+    <div class="cpt-head0">
+      <span class="cpt-eyebrow">Le tableau</span>
+      <h2 class="cpt-title">Tout ce qui change, poste par poste.</h2>
+      <p class="cpt-sub">Quand une caractéristique est identique sur les trois gammes, elle est indiquée une seule fois — inutile de comparer ce qui ne diffère pas.</p>
+    </div>
+
+    <div class="cpt-legend">
+      <span class="cpt-lg"><i style="background:#e0912b"></i>Vigilia</span>
+      <span class="cpt-lg"><i style="background:#2f6fe0"></i>Touch &amp; Touch XL</span>
+      <span class="cpt-lg"><i style="background:#12a0ad"></i>Élite</span>
+      <span class="cpt-lg"><u><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></u>Seule gamme à le faire</span>
+    </div>
+
+    <div class="cpt-tbl">
+      <div class="cpt-hd">
+        <div class="cpt-hc"><span class="cpt-hl">Caractéristique</span></div>
+        <div class="cpt-hc"><p class="cpt-hn"><i style="background:#e0912b"></i>Vigilia</p><p class="cpt-hp">dès 139,90 €</p></div>
+        <div class="cpt-hc"><p class="cpt-hn"><i style="background:#2f6fe0"></i>Touch</p><p class="cpt-hp">dès 199,90 €</p></div>
+        <div class="cpt-hc"><p class="cpt-hn"><i style="background:#12a0ad"></i>Élite</p><p class="cpt-hp">dès 299,90 €</p></div>
+      </div>
+
+      <!-- ══ POUR QUI ══ -->
+      <p class="cpt-gt">Pour qui</p>
+      <div class="cpt-r">
+        <div class="cpt-l">Logement conseillé</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v">Appartement ou petite maison</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v">Maison principale ou secondaire</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v">Grande maison, résidence secondaire, maison connectée</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Ce qui la définit</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v"><b>Le prix d'entrée</b> et une caméra déjà incluse</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v"><b>L'écran tactile</b> sur la centrale</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v"><b>La continuité de service</b> et la domotique</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Kit de départ</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v"><b>139,90 €</b></span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v"><b>199,90 €</b></span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v"><b>299,90 €</b></span></div>
+      </div>
+
+      <!-- ══ ÉCRAN & COMMANDE ══ -->
+      <p class="cpt-gt">Écran &amp; commande</p>
+      <div class="cpt-r">
+        <div class="cpt-l">Sur la centrale</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v"><b>Clavier tactile</b></span></div>
+        <div class="cpt-c is-best"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v"><b>Écran tactile couleur</b><span class="cpt-note">4,3&quot; sur la Touch · 7&quot; sur la Touch XL</span></span></div>
+        <div class="cpt-c is-no"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><svg class="cpt-ko" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cpt-v">Aucun — choix de discrétion</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Armer sans son téléphone</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v">Clavier de la centrale, télécommande, badge RFID</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v">Code à l'écran, télécommande, badge via le clavier WKE301</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v">Télécommande, badge RFID, clavier WKE502Z en option</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Alexa &amp; Google Home</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><svg class="cpt-ok" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="cpt-v">Compatible</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><svg class="cpt-ok" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="cpt-v">Compatible</span></div>
+        <div class="cpt-c is-no"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><svg class="cpt-ko" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cpt-v">Non compatible</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Pilotage à distance</div>
+        <div class="cpt-same"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Application <b>Daewoo Home Connect</b>, iOS et Android, gratuite — sur les trois gammes</span></div>
+      </div>
+
+      <!-- ══ CONNEXION ══ -->
+      <p class="cpt-gt">Connexion</p>
+      <div class="cpt-r">
+        <div class="cpt-l">Wi-Fi</div>
+        <div class="cpt-same"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Réseau <b>2,4 GHz</b> — sur les trois gammes</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Ethernet (RJ45)</div>
+        <div class="cpt-c is-no"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><svg class="cpt-ko" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cpt-v">Non</span></div>
+        <div class="cpt-c is-no"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><svg class="cpt-ko" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cpt-v">Non</span></div>
+        <div class="cpt-c is-best"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-star"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:3.4"><polyline points="20 6 9 17 4 12"/></svg>Seule à l'avoir</span><span class="cpt-v">Port RJ45 intégré</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Module mobile</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v">GSM selon le modèle — la Vigilia Wi-Fi n'en a pas</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v">GSM 4G intégré sur les deux centrales</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v"><b>4G+</b> intégré</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Carte SIM</div>
+        <div class="cpt-same"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Toujours en option</b>, jamais fournie — c'est elle qui active le relais mobile. Carte M2M prépayée d'un an à 85 €</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Si Internet est coupé<small>Le point qui sépare vraiment les trois gammes</small></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v">Avec une SIM sur le modèle GSM&nbsp;: <b>alertes SMS</b>. Sinon, détection et sirène en local uniquement</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v">Avec une SIM&nbsp;: <b>alertes SMS</b> et pilotage par SMS. L'application, elle, n'est plus joignable</span></div>
+        <div class="cpt-c is-best"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-star"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:3.4"><polyline points="20 6 9 17 4 12"/></svg>Seule à le faire</span><span class="cpt-v">Avec une SIM&nbsp;: <b>l'application reste active en 4G+</b> — vous armez et désarmez à distance, et vous recevez les SMS</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Les caméras pendant la coupure</div>
+        <div class="cpt-same"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span><b>Non consultables</b> sur les trois gammes&nbsp;: le flux vidéo passe par le Wi-Fi, même avec une carte SIM dans la centrale</span></div>
+      </div>
+
+      <!-- ══ ACCESSOIRES ══ -->
+      <p class="cpt-gt">Accessoires &amp; évolutivité</p>
+      <div class="cpt-r">
+        <div class="cpt-l">Liaison avec les accessoires</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v">Radio 433 MHz</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v">Radio 433 MHz</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v"><b>Zigbee</b> pour les WDS502Z, WVD502Z et WKE502Z · radio 433 / 868 MHz pour tous les autres</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Accessoires maximum</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v">Jusqu'à <b>60</b></span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v">Jusqu'à <b>90</b></span></div>
+        <div class="cpt-c is-best"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v">Jusqu'à <b>200</b></span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Accessoires compatibles</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v">Gammes Vigilia et Touch</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v">Gammes Touch et Vigilia</span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v">Gamme Élite</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Passerelle domotique Zigbee</div>
+        <div class="cpt-c is-no"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><svg class="cpt-ko" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cpt-v">Non</span></div>
+        <div class="cpt-c is-no"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><svg class="cpt-ko" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cpt-v">Non</span></div>
+        <div class="cpt-c is-best"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-star"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:3.4"><polyline points="20 6 9 17 4 12"/></svg>Seule à l'avoir</span><span class="cpt-v">Intégrée — accepte du Zigbee 3.0 et Tuya, sans garantie de compatibilité selon les marques</span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Caméras et objets connectés</div>
+        <div class="cpt-same"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Sans limite de nombre</b> et gérés dans la même application — sur les trois gammes</span></div>
+      </div>
+
+      <!-- ══ ALARME & AUTONOMIE ══ -->
+      <p class="cpt-gt">Alarme &amp; autonomie</p>
+      <div class="cpt-r">
+        <div class="cpt-l">Sirène intégrée à la centrale</div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v"><b>85 dB</b></span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v"><b>90 dB</b><span class="cpt-note">95 dB sur la Touch XL</span></span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v"><b>85 dB</b></span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Batterie de secours<small>Autonomie en cas de coupure de courant</small></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#e0912b"></i>Vigilia</span><span class="cpt-v">≈ <b>4 h</b></span></div>
+        <div class="cpt-c"><span class="cpt-tag"><i style="background:#2f6fe0"></i>Touch</span><span class="cpt-v">≈ <b>4 h</b><span class="cpt-note">≈ 20 h sur la Touch XL</span></span></div>
+        <div class="cpt-c is-best"><span class="cpt-tag"><i style="background:#12a0ad"></i>Élite</span><span class="cpt-v"><b>12 h</b></span></div>
+      </div>
+      <div class="cpt-r">
+        <div class="cpt-l">Installation</div>
+        <div class="cpt-same"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Environ <b>30 minutes</b>, sans perçage et sans technicien — une prise secteur suffit</span></div>
+      </div>
+    </div>
+
+    <div class="cpt-common">
+      <p class="cpt-ct">Identique sur les trois gammes</p>
+      <div class="cpt-cg">
+        <p class="cpt-ci"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Aucun abonnement</b> — vous achetez le matériel une fois</span></p>
+        <p class="cpt-ci"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>2 ans de garantie</b> et retour gratuit</span></p>
+        <p class="cpt-ci"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>SAV basé en France</b>, assistant en ligne 7j/7</span></p>
+        <p class="cpt-ci"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Application <b>gratuite à vie</b>, iOS et Android</span></p>
+        <p class="cpt-ci"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Détection et sirène qui <b>fonctionnent sans Internet</b></span></p>
+        <p class="cpt-ci"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Accessoires <b>vendus à l'unité</b>, système évolutif</span></p>
+      </div>
+    </div>
+
+    <p class="cpt-foot">Les valeurs indiquées sont celles des centrales. Le contenu exact de chaque kit est détaillé sur la fiche du pack correspondant.</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparatif — Tableau",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,117 @@
+{% comment %} ── Le choix en 30 secondes — orienteur par situation ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .cpo * { box-sizing:border-box; margin:0; padding:0; }
+  .cpo { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0b1220; padding:90px 24px 94px; }
+  .cpo-inner { max-width:1160px; margin:0 auto; }
+  .cpo-head { max-width:640px; margin:0 auto 46px; text-align:center; }
+  .cpo-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:15px; }
+  .cpo-eyebrow::before,.cpo-eyebrow::after { content:''; width:26px; height:1px; background:#d3dae2; }
+  .cpo-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:13px; }
+  .cpo-sub { font-size:15.5px; color:#4a5663; font-weight:300; line-height:1.68; }
+
+  .cpo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .cpo-card { border:1px solid #e3e8ee; border-radius:19px; padding:0; overflow:hidden; background:#fff;
+    display:flex; flex-direction:column; box-shadow:0 18px 44px -32px rgba(11,18,32,.3); }
+  .cpo-top { padding:26px 26px 22px; border-bottom:1px solid #eef1f5;
+    display:flex; align-items:center; min-height:122px; }
+  .cpo-q { display:flex; gap:12px; align-items:flex-start; }
+  .cpo-q svg { width:19px; height:19px; flex:none; margin-top:3px; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .cpo-qt { font-size:16.5px; font-weight:500; letter-spacing:-.02em; line-height:1.42; }
+  .cpo-body { padding:24px 26px 26px; display:flex; flex-direction:column; flex:1; }
+  .cpo-lbl { font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin-bottom:8px; }
+  .cpo-name { font-size:21px; font-weight:600; letter-spacing:-.03em; margin-bottom:10px; }
+  .cpo-why { font-size:13.8px; color:#4a5663; font-weight:300; line-height:1.6; margin-bottom:18px; flex:1; }
+  .cpo-why b { color:#0b1220; font-weight:500; }
+  .cpo-go { display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; text-decoration:none;
+    align-self:flex-start; padding-bottom:2px; border-bottom:1.5px solid currentColor; transition:gap .18s; }
+  .cpo-go:hover { gap:13px; }
+  .cpo-go svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2.3; stroke-linecap:round; stroke-linejoin:round; }
+
+  .cpo--v .cpo-q svg { stroke:#a35a00; } .cpo--v .cpo-lbl,.cpo--v .cpo-go { color:#a35a00; } .cpo--v .cpo-top { background:rgba(224,145,43,.07); }
+  .cpo--t .cpo-q svg { stroke:#1f5fd0; } .cpo--t .cpo-lbl,.cpo--t .cpo-go { color:#1f5fd0; } .cpo--t .cpo-top { background:rgba(47,111,224,.07); }
+  .cpo--e .cpo-q svg { stroke:#0a6068; } .cpo--e .cpo-lbl,.cpo--e .cpo-go { color:#0a6068; } .cpo--e .cpo-top { background:rgba(18,160,173,.08); }
+
+  .cpo-else { margin-top:24px; display:flex; align-items:center; justify-content:space-between; gap:22px; flex-wrap:wrap;
+    background:#f4f6f8; border:1px solid #e3e8ee; border-radius:17px; padding:24px 28px; }
+  .cpo-et { font-size:16px; font-weight:500; letter-spacing:-.02em; margin-bottom:3px; }
+  .cpo-ed { font-size:13.5px; color:#4a5663; font-weight:300; line-height:1.55; }
+  .cpo-eb { display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:9px; background:#0b1220;
+    color:#fff; font-size:13.8px; font-weight:600; text-decoration:none; white-space:nowrap; transition:transform .18s; }
+  .cpo-eb:hover { transform:translateY(-2px); }
+  .cpo-eb svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+
+  @media (max-width:980px) { .cpo-grid { grid-template-columns:1fr; max-width:480px; margin:0 auto; } }
+  @media (max-width:600px) { .cpo { padding:70px 20px 74px; } .cpo-else { padding:22px 20px; } }
+</style>
+
+<section class="cpo">
+  <div class="cpo-inner">
+    <div class="cpo-head">
+      <span class="cpo-eyebrow">Le choix en 30 secondes</span>
+      <h2 class="cpo-title">Reconnaissez-vous dans une de ces phrases.</h2>
+      <p class="cpo-sub">Neuf clients sur dix se retrouvent dans l'une des trois. Si c'est votre cas, vous pouvez vous arrêter là — le tableau détaillé est juste en dessous pour vérifier.</p>
+    </div>
+
+    <div class="cpo-grid">
+      <div class="cpo-card cpo--v">
+        <div class="cpo-top">
+          <div class="cpo-q">
+            <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
+            <p class="cpo-qt">«&nbsp;Je veux protéger un appartement, simplement, sans me compliquer la vie.&nbsp;»</p>
+          </div>
+        </div>
+        <div class="cpo-body">
+          <p class="cpo-lbl">Notre réponse</p>
+          <p class="cpo-name">La Vigilia</p>
+          <p class="cpo-why">Un <b>clavier tactile directement sur la centrale</b>, une caméra intérieure déjà incluse dans le kit, et le prix d'entrée le plus bas des trois. Tout se pose en une demi-heure, sans perçage.</p>
+          <a class="cpo-go" href="https://daewoo-security.fr/collections/systeme-dalarme-vigilia">Découvrir la Vigilia
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+
+      <div class="cpo-card cpo--t">
+        <div class="cpo-top">
+          <div class="cpo-q">
+            <svg viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="13" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="17" x2="12" y2="20"/></svg>
+            <p class="cpo-qt">«&nbsp;Je veux voir l'état de ma maison et l'armer sans sortir mon téléphone.&nbsp;»</p>
+          </div>
+        </div>
+        <div class="cpo-body">
+          <p class="cpo-lbl">Notre réponse</p>
+          <p class="cpo-name">La Touch ou la Touch XL</p>
+          <p class="cpo-why">Un <b>écran tactile couleur</b> sur la centrale — 4,3&nbsp;pouces sur la Touch, 7&nbsp;pouces sur la XL. Zones ouvertes, historique, code d'accès&nbsp;: tout est lisible d'un coup d'œil, sans application.</p>
+          <a class="cpo-go" href="https://daewoo-security.fr/collections/systeme-dalarme-am301-am302">Découvrir la Touch
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+
+      <div class="cpo-card cpo--e">
+        <div class="cpo-top">
+          <div class="cpo-q">
+            <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.6"/><path d="M9.5 6h5"/><circle cx="12" cy="17" r="1.1"/></svg>
+            <p class="cpo-qt">«&nbsp;Je veux qu'elle continue de me prévenir même si ma box Internet tombe.&nbsp;»</p>
+          </div>
+        </div>
+        <div class="cpo-body">
+          <p class="cpo-lbl">Notre réponse</p>
+          <p class="cpo-name">L'Élite</p>
+          <p class="cpo-why">C'est la seule des trois qui, <b>avec une carte SIM, garde l'application active en 4G+</b>&nbsp;: vous continuez d'armer et de désarmer à distance pendant la coupure. Elle ajoute aussi l'Ethernet et une passerelle Zigbee.</p>
+          <a class="cpo-go" href="https://daewoo-security.fr/collections/systeme-dalarme-pa501z">Découvrir l'Élite
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpo-else">
+      <div>
+        <p class="cpo-et">Aucune des trois ne vous parle&nbsp;?</p>
+        <p class="cpo-ed">Le configurateur pose sept questions sur votre logement et compose le système à votre place — avec jusqu'à 25&nbsp;% de remise.</p>
+      </div>
+      <a class="cpo-eb" href="https://daewoo-security.fr/pages/configurateur_2">Configurer mon système
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </div>
+</section>
