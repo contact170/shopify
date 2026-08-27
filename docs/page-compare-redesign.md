@@ -83,6 +83,11 @@ de sa pastille de couleur. Aucun défilement horizontal.
 
 ## Points de vigilance factuels
 
+- **La Vigilia a un clavier à touches mécaniques, pas un clavier tactile**
+  (corrigé par le client). La page Vigilia écrit pourtant « clavier tactile »
+  dans son bloc packs — à corriger côté page produit. Sur le comparatif, le
+  « tactile » est réservé à l'écran de la Touch, ce qui rend l'opposition plus
+  nette : touches mécaniques / écran tactile / aucun écran.
 - **Nombre d'accessoires Vigilia : 60 ou 90 ?** La FAQ « Détails produit » de la
   page Vigilia annonce **60**, le bloc « Pourquoi choisir la gamme Vigilia »
   annonce **90**, et l'ancien comparatif annonçait **60**. Le tableau retient
