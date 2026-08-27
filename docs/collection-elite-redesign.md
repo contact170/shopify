@@ -70,9 +70,11 @@ consultable dans `theme-src/collection-elite.base.json` et dans le thème publi�
 
 ### Points de vigilance factuels
 
-- **Batterie de secours : la fiche produit annonce 10 h, l'ancienne FAQ 12 h.**
-  La page retient **≈ 10 h** dans la fiche technique et dit « une dizaine d'heures »
-  ailleurs. À trancher côté produit.
+- **Batterie de secours : 12 h partout** (tranché par le client). La valeur
+  apparaît dans la fiche technique, le bandeau « Et si le courant saute ? » et la
+  FAQ (réponse visible et JSON-LD). Ne plus écrire « 10 h » ni « une dizaine
+  d'heures ». **La fiche produit de la centrale PA501Z annonce encore 10 h** —
+  elle est hors périmètre de cette page et reste à aligner côté produit.
 - **Sirène intégrée : 85 dB**, valeur reprise de l'ancienne FAQ de la page.
   Non confirmée par la fiche produit — à valider.
 - **Nombre d'accessoires : 200** d'après la fiche de la centrale. Les descriptions
