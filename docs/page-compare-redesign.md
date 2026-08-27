@@ -27,7 +27,7 @@ pages Touch et Élite.
 
 ## Structure
 
-1. **Intro** (`cp-intro`) — fond sombre, les trois gammes et leur prix d'entrée.
+1. **Intro** (`cp-intro`) — fond clair, les trois gammes et leur prix d'entrée.
 2. **Le choix en 30 secondes** (`cp-orienteur`) — trois situations formulées à la
    première personne, chacune renvoyant vers une gamme. Le raccourci pour le
    client qui ne veut pas lire le tableau.
@@ -55,6 +55,15 @@ destination :
 
 La couleur n'est jamais le seul porteur d'information : chaque colonne est aussi
 nommée, et en mobile chaque valeur porte l'étiquette de sa gamme.
+
+## Lisibilité
+
+Toute la page est en fond clair. Les trois bandeaux qui étaient d'abord sur fond
+sombre — l'intro, le pavé « Identique sur les trois gammes » sous le tableau et
+le CTA final — ont été repris en clair : texte `#0b1220` ou `#43505e` sur blanc
+ou `#f4f6f8`, et graisse **400 au minimum** pour le corps de texte (au lieu de
+300). Les rapports de contraste vont de 5,1:1 pour les libellés secondaires à
+8,2:1 pour le corps de texte.
 
 ## Mobile
 

@@ -3,32 +3,34 @@
 <style>
   .cpi * { box-sizing:border-box; margin:0; padding:0; }
   .cpi { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
-    background:#0b1220; color:#fff; padding:86px 24px 92px; position:relative; overflow:hidden; }
+    background:#fff; color:#0b1220; padding:86px 24px 92px; position:relative; overflow:hidden; }
   .cpi::before { content:''; position:absolute; inset:0; pointer-events:none;
-    background:radial-gradient(680px 340px at 14% 0%,rgba(196,124,26,.22),transparent 62%),
-               radial-gradient(680px 340px at 50% 110%,rgba(47,111,224,.22),transparent 62%),
-               radial-gradient(680px 340px at 88% 0%,rgba(18,160,173,.22),transparent 62%); }
+    background:radial-gradient(720px 360px at 12% -10%,rgba(224,145,43,.13),transparent 62%),
+               radial-gradient(720px 360px at 88% -10%,rgba(18,160,173,.13),transparent 62%),
+               radial-gradient(680px 340px at 50% 118%,rgba(47,111,224,.10),transparent 62%); }
   .cpi-inner { position:relative; z-index:2; max-width:1080px; margin:0 auto; text-align:center; }
   .cpi-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
-    letter-spacing:.2em; text-transform:uppercase; color:#9fb0c4; margin-bottom:20px; }
-  .cpi-eyebrow::before,.cpi-eyebrow::after { content:''; width:28px; height:1px; background:rgba(255,255,255,.25); }
-  .cpi-title { font-size:clamp(30px,4.4vw,52px); font-weight:600; letter-spacing:-.04em; line-height:1.08; margin-bottom:20px; }
-  .cpi-sub { font-size:16.5px; font-weight:300; line-height:1.7; color:#c3cedd; max-width:640px; margin:0 auto 40px; }
-  .cpi-sub b { color:#fff; font-weight:500; }
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:20px; }
+  .cpi-eyebrow::before,.cpi-eyebrow::after { content:''; width:28px; height:1px; background:#c9d2dc; }
+  .cpi-title { font-size:clamp(30px,4.4vw,52px); font-weight:600; letter-spacing:-.04em; line-height:1.08;
+    margin-bottom:20px; color:#0b1220; }
+  .cpi-sub { font-size:16.5px; font-weight:400; line-height:1.7; color:#43505e; max-width:660px; margin:0 auto 40px; }
+  .cpi-sub b { color:#0b1220; font-weight:600; }
 
-  .cpi-rail { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:820px; margin:0 auto 34px; }
-  .cpi-c { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.13); border-radius:15px;
-    padding:20px 18px 22px; text-align:left; }
-  .cpi-dot { display:inline-block; width:9px; height:9px; border-radius:99px; margin-bottom:12px; }
-  .cpi-n { font-size:16.5px; font-weight:600; letter-spacing:-.02em; margin-bottom:3px; }
-  .cpi-d { font-size:12.8px; font-weight:300; color:#a9b8c9; line-height:1.5; margin-bottom:12px; min-height:38px; }
-  .cpi-p { font-size:12px; font-weight:300; color:#8d9db0; }
-  .cpi-p b { display:block; font-size:19px; font-weight:600; color:#fff; letter-spacing:-.02em; margin-top:2px; }
+  .cpi-rail { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:880px; margin:0 auto 34px; }
+  .cpi-c { position:relative; background:#fff; border:1px solid #e3e8ee; border-radius:16px;
+    padding:22px 20px 24px; text-align:left; box-shadow:0 16px 40px -32px rgba(11,18,32,.42); overflow:hidden; }
+  .cpi-c::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+  .cpi-c--v::before { background:#e0912b; } .cpi-c--t::before { background:#2f6fe0; } .cpi-c--e::before { background:#12a0ad; }
+  .cpi-n { font-size:17px; font-weight:600; letter-spacing:-.02em; margin-bottom:6px; color:#0b1220; }
+  .cpi-d { font-size:13.4px; font-weight:400; color:#43505e; line-height:1.55; margin-bottom:16px; min-height:42px; }
+  .cpi-p { font-size:12px; font-weight:400; color:#5d6a7a; padding-top:14px; border-top:1px solid #eef1f5; }
+  .cpi-p b { display:block; font-size:21px; font-weight:600; color:#0b1220; letter-spacing:-.025em; margin-top:2px; }
 
-  .cpi-note { display:inline-flex; align-items:center; gap:9px; font-size:13px; font-weight:300; color:#a9b8c9;
-    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:99px; padding:10px 20px; }
-  .cpi-note svg { width:15px; height:15px; flex:none; fill:none; stroke:#7fd3dc; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
-  .cpi-note b { color:#fff; font-weight:500; }
+  .cpi-note { display:inline-flex; align-items:center; gap:9px; font-size:13.5px; font-weight:400; color:#43505e;
+    background:#f4f6f8; border:1px solid #e3e8ee; border-radius:99px; padding:11px 22px; }
+  .cpi-note svg { width:16px; height:16px; flex:none; fill:none; stroke:#0f8a5f; stroke-width:2.9; stroke-linecap:round; stroke-linejoin:round; }
+  .cpi-note b { color:#0b1220; font-weight:600; }
 
   @media (max-width:820px) { .cpi-rail { grid-template-columns:1fr; max-width:420px; } .cpi-d { min-height:0; } }
   @media (max-width:600px) { .cpi { padding:68px 20px 74px; } }
@@ -41,29 +43,26 @@
     <p class="cpi-sub">Vigilia, Touch et Élite protègent toutes votre logement de la même façon&nbsp;: détection, sirène, alertes sur le téléphone, <b>sans abonnement</b>. Ce qui les sépare tient en trois points — et c'est exactement ce que compare cette page.</p>
 
     <div class="cpi-rail">
-      <div class="cpi-c">
-        <span class="cpi-dot" style="background:#e0912b"></span>
+      <div class="cpi-c cpi-c--v">
         <p class="cpi-n">Vigilia</p>
         <p class="cpi-d">Un clavier tactile sur la centrale. L'essentiel, tout de suite.</p>
         <p class="cpi-p">Kit de départ<b>139,90 €</b></p>
       </div>
-      <div class="cpi-c">
-        <span class="cpi-dot" style="background:#5b9bff"></span>
+      <div class="cpi-c cpi-c--t">
         <p class="cpi-n">Touch &amp; Touch XL</p>
         <p class="cpi-d">Un écran tactile couleur pour tout piloter du bout du doigt.</p>
         <p class="cpi-p">Kit de départ<b>199,90 €</b></p>
       </div>
-      <div class="cpi-c">
-        <span class="cpi-dot" style="background:#3ec3d0"></span>
+      <div class="cpi-c cpi-c--e">
         <p class="cpi-n">Élite</p>
-        <p class="cpi-d">Aucun écran, mais elle reste joignable quand la box tombe.</p>
+        <p class="cpi-d">Aucun écran, mais elle reste joignable quand Internet est coupé.</p>
         <p class="cpi-p">Kit de départ<b>299,90 €</b></p>
       </div>
     </div>
 
     <span class="cpi-note">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="11"/><circle cx="12" cy="8" r=".7"/></svg>
-      Les trois gammes sont <b>sans abonnement</b> et <b>garanties 2 ans</b>.
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>Les trois gammes sont <b>sans abonnement</b> et <b>garanties 2 ans</b>.</span>
     </span>
   </div>
 </section>
