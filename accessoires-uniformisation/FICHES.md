@@ -21,6 +21,7 @@ Thème d'aperçu : « Fiche accessoire uniformisee v2 (Claude) » — `202545004
 | WKE301 | Clavier sans fil + 2 badges | `acc-premium` | Sans sortir le téléphone. |
 | WRF301 | Pack de 2 badges RFID | `acc-premium-sd` | Pas de code à retenir. |
 | WRC305 | Télécommande à clapet | `acc-premium-sd` | Dans la poche, sans appui accidentel. |
+| EXT301 | Amplificateur de signal | `ext301` | Quand la centrale n'entend plus l'accessoire. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -330,3 +331,38 @@ Repéré pendant le balayage, non corrigé faute de certitude :
 
 À noter aussi : un produit **« Détecteur de fumée WSD301 — GRATUIT »**
 (WSD301CGRATUIT) coexiste avec le WSD301 standard, avec ses propres textes.
+
+## EXT301 : gabarit dédié absent, comme cam-spw502
+
+`templates/product.ext301.json` **n'existe sur aucun thème**, alors que le
+produit porte le suffixe `ext301`. La fiche retombe donc sur le gabarit produit
+par défaut en production. Deuxième cas après `cam-spw502` : les deux méritent
+d'être corrigés côté thème en ligne.
+
+Le gabarit a été créé sur le thème v2 avec la mise en page premium. Le suffixe
+du produit n'a pas été modifié : la page en production reste exactement ce
+qu'elle est aujourd'hui.
+
+## EXT301 : corrections de contenu
+
+- **Nom du produit** : la description, les balises SEO et le métaobjet
+  « À quoi ça sert » appelaient le produit **« AM30X »** — qui est le nom de la
+  famille de centrales, pas la référence de l'amplificateur. Remplacé par
+  EXT301 partout.
+- **Vigilia absent** : la description disait « exclusivement compatible avec
+  TOUCH (AM301) et TOUCH XL (AM302) », alors que le métachamp `connectivite`,
+  le titre, la collection et l'un des visuels annoncent Vigilia. La description
+  était l'unique source discordante ; Vigilia rétabli.
+- **Type de produit vide** : renseigné en « Amplificateur de signal », sans quoi
+  le h1 se serait réduit à « Daewoo EXT301 ».
+- **Aucune FAQ** n'existait. Huit questions rédigées, centrées sur le placement
+  à mi-distance — l'erreur d'installation qui rend le produit inutile.
+- La liste des accessoires relayés, reprise du fabricant, cite la
+  **télécommande WRC301**, désormais en brouillon. Mention rendue générique dans
+  la description ; la liste d'origine subsiste dans `note_compatibilite`, à
+  actualiser si le fabricant confirme la prise en charge des références 305.
+
+Le contenu de la boîte annonçait le générique « Accessoire / Adhésive de
+fixation / Manuel ». Remplacé par l'amplificateur, le câble USB vers micro-USB
+de 90 cm et le manuel — **aucune source ne mentionne de kit de fixation**, il
+n'a donc pas été inventé alors que la fiche évoque une pose murale.
