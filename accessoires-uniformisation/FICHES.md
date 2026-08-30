@@ -466,3 +466,19 @@ bouton 17 → 18 px, chapô jusqu'à 22 px. Interlignes ajustés en conséquence
 
 Les cinq fichiers ont été vérifiés par empreinte MD5 après envoi : le thème est
 identique au miroir du dépôt.
+
+## Second cran
+
+Toujours un peu juste au premier passage. Deuxième palier appliqué :
+
+**Image** : galerie 430 → **540 px**, vignettes 60 → **72 px**, avec plus d'air
+entre elles. Depuis le point de départ, la photo principale a gagné 59 %.
+
+**Textes**, +1 px de plus sur l'ensemble : description 17 → 18 px, réponses de
+FAQ 17 → 18, fiche technique 16 → 17, contenu de la boîte 16 → 17, conseil de
+quantité 15 → 16, chapô jusqu'à 24 px, prix 23 → 25, bouton 18 → 19, titres de
+FAQ 18 → 19. Le sélecteur de quantité passe de 38 à 42 px de haut pour rester
+proportionné au bouton d'achat, et les rembourrages suivent — un texte plus
+gros dans un contenant inchangé finit par étouffer.
+
+Cinq fichiers, vérifiés par empreinte MD5 après envoi.
