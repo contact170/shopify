@@ -15,13 +15,13 @@ Thème d'aperçu : « Fiche accessoire uniformisee v2 (Claude) » — `202545004
 | WWF301 | Détecteur de fuite d'eau | `acc-premium` | Les premières gouttes suffisent. |
 | WOS305S | Sirène extérieure solaire | `acc-premium-sd` | 110 dB, alimentés par le soleil. |
 | WOS305 | Sirène extérieure | `acc-premium-sd` | 110 dB, et un cri si on la décroche. |
-| SPWOS305 | Panneau solaire pour WOS305 | `acc-premium` (cam-spw502) | La WOS305, sans jamais la rebrancher. |
+| SPWOS305 | Panneau solaire pour WOS305 | `acc-premium-sd` | La WOS305, sans jamais la rebrancher. |
 | WIS305 | Sirène intérieure 100 dB | `acc-premium` | Impossible de savoir d'où ça vient. |
 | SOS301 | Bracelet SOS d'urgence | `acc-premium` | Un seul appui. Même alarme éteinte. |
 | WKE301 | Clavier sans fil + 2 badges | `acc-premium` | Sans sortir le téléphone. |
 | WRF301 | Pack de 2 badges RFID | `acc-premium-sd` | Pas de code à retenir. |
 | WRC305 | Télécommande à clapet | `acc-premium-sd` | Dans la poche, sans appui accidentel. |
-| EXT301 | Amplificateur de signal | `ext301` | Quand la centrale n'entend plus l'accessoire. |
+| EXT301 | Amplificateur de signal | `acc-premium` | Quand la centrale n'entend plus l'accessoire. |
 | AM302S | Centrale Touch XL seule | `centrale-seule-touchxl` | Sept pouces. Deux cents accessoires. |
 | AM301S | Centrale Touch seule | `centrale-seule-touch` | Le cœur du système, vendu seul. |
 
@@ -482,3 +482,60 @@ proportionné au bouton d'achat, et les rembourrages suivent — un texte plus
 gros dans un contenant inchangé finit par étouffer.
 
 Cinq fichiers, vérifiés par empreinte MD5 après envoi.
+
+## État final et mise en ligne
+
+**Thème à publier : « Fiche accessoire uniformisee v2 (Claude) » — `202545004884`.**
+
+### Vérifications faites avant publication
+
+**Le thème n'a pas divergé.** Onze fichiers de référence comparés entre le thème
+en ligne et le duplicata — `config/settings_data.json`, `settings_schema.json`,
+`layout/theme.liquid`, `snippets/product-card.liquid`, les trois groupes de
+sections (en-tête, pied, superposition) et les gabarits `index`, `product`,
+`collection`, `cart` : **empreintes MD5 identiques**. Rien n'a été touché sur le
+thème en ligne depuis la duplication, publier ne perdra donc aucun réglage.
+
+**Les 15 fichiers `acc-*`** du thème correspondent au caractère près au miroir
+de ce dépôt.
+
+**Les 19 fiches** n'utilisent plus que quatre gabarits — `acc-premium`,
+`acc-premium-sd`, `centrale-seule-touch`, `centrale-seule-touchxl` — tous
+identiques entre eux (`b1e96322…`) et tous présents sur le thème en ligne avec
+leur contenu classique.
+
+### Un débordement évité de justesse
+
+Les gabarits `cam-spw502` et `ext301` avaient reçu la mise en page premium pour
+servir le SPWOS305 et l'EXT301. Or ils sont partagés avec **quatre autres
+produits** : le panneau solaire de caméra SPW502 et trois fiches
+« Configurateur ». Publier en l'état leur aurait imposé une page premium vide,
+alors qu'elles s'affichent aujourd'hui avec le gabarit produit par défaut.
+
+Corrigé : les deux gabarits sont redevenus des copies conformes de
+`templates/product.json` (même empreinte, `891590bd…`), et le SPWOS305 et
+l'EXT301 ont été bascules sur `acc-premium-sd` et `acc-premium`. Les quatre
+produits tiers retrouvent exactement leur comportement actuel.
+
+### Ce que la publication corrige au passage
+
+`templates/product.ext301.json` et `templates/product.cam-spw502.json`
+n'existent pas sur le thème en ligne : le SPWOS305, l'EXT301, le SPW502 et les
+fiches configurateur associées retombent aujourd'hui sur le gabarit par défaut.
+Après publication, les fichiers existent et ces pages cessent de dépendre d'un
+repli.
+
+### Reste à traiter dans la gamme Touch / Vigilia
+
+Produits **actifs** non encore passés au modèle :
+
+- **SIM1MOIS** et **DASIM1AN** — les deux cartes SIM (gabarits `carte-sim` et
+  `carte-sim-1-an`, communs à d'autres gammes).
+- **DAADAWOS301S** — adaptateur secteur pour sirène WOS301S. À noter : la
+  **WOS301S elle-même est archivée**, cet accessoire n'a donc plus de produit
+  principal actif.
+
+Sans objet car archivés ou en brouillon : WDS301, WOS301, WOS301S, WPS301
+(archivés), WRC301, SIM1VIG, WSD301CGRATUIT (brouillons). Les alertes
+précédentes sur les mentions de Vigilia manquantes du WDS301 et du WOS301
+tombent donc d'elles-mêmes.
