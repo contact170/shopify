@@ -16,6 +16,7 @@ Thème d'aperçu : « Fiche accessoire uniformisee v1 (Claude) » — `202527113
 | WOS305 | Sirène extérieure | `accessoires-sans-details` | 110 dB, et un cri si on la décroche. |
 | SPWOS305 | Panneau solaire pour WOS305 | `cam-spw502` | La WOS305, sans jamais la rebrancher. |
 | WIS305 | Sirène intérieure 100 dB | `accessoires` | Impossible de savoir d'où ça vient. |
+| SOS301 | Bracelet SOS d'urgence | `accessoires` | Un seul appui. Même alarme éteinte. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -159,3 +160,35 @@ récurrente sur un produit alimenté en USB.
 Réponse de FAQ nettoyée au passage : elle contenait une note de rédaction entre
 parenthèses (« La durée d'autonomie sur batterie seule n'est pas précisée dans
 la fiche. »), visible côté client.
+
+## SOS301 — données manquantes
+
+Deux informations absentes de toutes les sources, et volontairement non
+inventées :
+
+- **La pile.** Aucun document n'indique son type, ni si elle est remplaçable
+  par l'utilisateur. Sur un bracelet porté en permanence par une personne âgée,
+  c'est une question d'achat évidente. `alimentation_autonomie` s'en tient donc
+  à la consommation (< 3 µA en veille, ≤ 15 mA en alerte).
+- **L'étanchéité.** Rien non plus. Or un bracelet qu'on ne peut pas garder sous
+  la douche perd une grande partie de son intérêt : la salle de bain est le lieu
+  de chute le plus fréquent. À préciser dès que l'information est disponible.
+
+`contenu_du_pack` reste vide pour la même raison.
+
+## Descriptions polluées par du balisage colle
+
+Deux motifs distincts repérés dans le catalogue, tous deux issus de
+copier-coller depuis une interface de chat :
+
+- **WIS305, SOS301** : balisage complet d'interface (`<div>` imbriquées,
+  classes `font-claude-response-body`, attributs `aria-*`). Lourd et illisible
+  pour les moteurs. Corrigé sur ces deux fiches.
+- **WRC501 et probablement d'autres** : attributs `data-start` / `data-end` sur
+  chaque balise. Moins grave — la structure `h2`/`h3`/`p` reste correcte — mais
+  c'est du bruit inutile dans le HTML.
+
+Le filtre `body:*...*` de l'API de recherche produits ne fonctionne pas : il
+renvoie tout le catalogue sans filtrer (vérifié avec un motif témoin
+inexistant). Un balayage fiable demande de parcourir les descriptions une à une
+ou via une opération en masse. Non fait à ce stade.
