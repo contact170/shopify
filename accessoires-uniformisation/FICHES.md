@@ -1,22 +1,23 @@
 # Fiches accessoires passées au modèle premium
 
-Thème d'aperçu : « Fiche accessoire uniformisee v1 (Claude) » — `202527113556`
+Thème d'aperçu : « Fiche accessoire uniformisee v2 (Claude) » — `202545004884`
+(le v1, `202527113556`, est obsolète — voir « Gabarits dédiés » plus bas)
 
 | Réf. | Produit | Template | Titre de page |
 |---|---|---|---|
-| WDV301 | Contacteur d'ouverture / vibration 2-en-1 | `accessoires-sans-details` | Deux détections. Un seul capteur. |
-| WVD301 | Détecteur de vibration | `accessoires` | Le choc suffit. |
-| WDG301 | Contacteur de porte de garage | `accessoires` | Le garage aussi est une porte d'entrée. |
-| WPS305 | Détecteur de mouvement animaux | `accessoires` | Il voit l'intrus, pas le chat. |
-| WMO301 | Détecteur de mouvement extérieur | `accessoires` | La détection commence avant la porte. |
-| WSD301 | Détecteur de fumée connecté | `accessoires` | 85 dB dans la maison. Une alerte dans votre poche. |
-| BIR301 | Barrières infrarouge | `accessoires-sans-details` | Franchir le faisceau suffit. |
-| WWF301 | Détecteur de fuite d'eau | `accessoires` | Les premières gouttes suffisent. |
-| WOS305S | Sirène extérieure solaire | `accessoires-sans-details` | 110 dB, alimentés par le soleil. |
-| WOS305 | Sirène extérieure | `accessoires-sans-details` | 110 dB, et un cri si on la décroche. |
-| SPWOS305 | Panneau solaire pour WOS305 | `cam-spw502` | La WOS305, sans jamais la rebrancher. |
-| WIS305 | Sirène intérieure 100 dB | `accessoires` | Impossible de savoir d'où ça vient. |
-| SOS301 | Bracelet SOS d'urgence | `accessoires` | Un seul appui. Même alarme éteinte. |
+| WDV301 | Contacteur d'ouverture / vibration 2-en-1 | `acc-premium-sd` | Deux détections. Un seul capteur. |
+| WVD301 | Détecteur de vibration | `acc-premium` | Le choc suffit. |
+| WDG301 | Contacteur de porte de garage | `acc-premium` | Le garage aussi est une porte d'entrée. |
+| WPS305 | Détecteur de mouvement animaux | `acc-premium` | Il voit l'intrus, pas le chat. |
+| WMO301 | Détecteur de mouvement extérieur | `acc-premium` | La détection commence avant la porte. |
+| WSD301 | Détecteur de fumée connecté | `acc-premium` | 85 dB dans la maison. Une alerte dans votre poche. |
+| BIR301 | Barrières infrarouge | `acc-premium-sd` | Franchir le faisceau suffit. |
+| WWF301 | Détecteur de fuite d'eau | `acc-premium` | Les premières gouttes suffisent. |
+| WOS305S | Sirène extérieure solaire | `acc-premium-sd` | 110 dB, alimentés par le soleil. |
+| WOS305 | Sirène extérieure | `acc-premium-sd` | 110 dB, et un cri si on la décroche. |
+| SPWOS305 | Panneau solaire pour WOS305 | `acc-premium` (cam-spw502) | La WOS305, sans jamais la rebrancher. |
+| WIS305 | Sirène intérieure 100 dB | `acc-premium` | Impossible de savoir d'où ça vient. |
+| SOS301 | Bracelet SOS d'urgence | `acc-premium` | Un seul appui. Même alarme éteinte. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -192,3 +193,45 @@ Le filtre `body:*...*` de l'API de recherche produits ne fonctionne pas : il
 renvoie tout le catalogue sans filtrer (vérifié avec un motif témoin
 inexistant). Un balayage fiable demande de parcourir les descriptions une à une
 ou via une opération en masse. Non fait à ce stade.
+
+## Gabarits dédiés : pourquoi le thème v1 a été abandonné
+
+Le premier thème d'aperçu réécrivait directement `product.accessoires.json` et
+`product.accessoires-sans-details.json`. Or ces deux gabarits ne sont pas
+réservés à la gamme Touch/Vigilia : **plus de 50 produits** les portent, dont
+toute la gamme Key, toute la gamme Élite, les caméras, les cartes SIM, les
+autocollants et des packs d'alarme complets. Tous héritaient donc du design
+premium, en version appauvrie faute de métachamps.
+
+Le `templateSuffix` étant une propriété du **produit** et non du thème, on ne
+pouvait pas simplement créer un suffixe dédié : le thème en ligne, dépourvu du
+fichier, serait retombé sur le gabarit produit par défaut et aurait cassé les
+pages en production.
+
+Architecture retenue :
+
+1. Sur le thème **en ligne**, deux copies conformes des gabarits actuels :
+   `product.acc-premium.json` (copie de `accessoires`) et
+   `product.acc-premium-sd.json` (copie de `accessoires-sans-details`).
+   Vérifiées identiques à la source au caractère près.
+2. Le thème en ligne est **dupliqué** en « Fiche accessoire uniformisee v2 ».
+3. Sur ce duplicata, les deux gabarits `acc-premium*` reçoivent la mise en page
+   premium, et les 14 fichiers `acc-*` sont réinstallés.
+4. Les 13 fiches traitées passent sur le suffixe correspondant à leur ancien
+   gabarit, pour que la page en production reste rigoureusement identique.
+
+Résultat : en production rien ne change, et sur l'aperçu seules les fiches
+traitées adoptent le nouveau design. Le reste du catalogue s'y affiche
+exactement comme sur le site.
+
+## cam-spw502 : gabarit absent du thème en ligne
+
+`templates/product.cam-spw502.json` n'existe pas sur le thème publié, alors que
+le panneau SPWOS305 et le panneau SPW502 réclament ce suffixe. Ces deux fiches
+retombent donc aujourd'hui sur le gabarit produit par défaut en production.
+Anomalie préexistante, à corriger séparément.
+
+En attendant, le gabarit a été créé sur le thème v2 avec la mise en page
+premium, pour que le SPWOS305 garde sa fiche. Conséquence : le SPW502, panneau
+solaire de caméra hors gamme Touch/Vigilia, hérite lui aussi du design premium
+sur l'aperçu. C'est le seul produit dans ce cas.
