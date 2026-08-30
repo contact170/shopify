@@ -122,8 +122,17 @@ de caméras (SPW502, SPW502P2, SPW502P3). Une version premium de ce template a
 été créée sur le brouillon ; les autres panneaux en héritent et afficheront
 moins de sections tant que leurs métachamps ne sont pas renseignés.
 
-## Écart relevé
+## Longueur du câble du panneau solaire
 
-La longueur du câble du panneau solaire diffère selon la source : le métachamp
-de la **WOS305S** indique 280 cm, la description du **SPWOS305** « environ
-2 mètres ». Chaque fiche reprend sa propre source, à trancher.
+Les sources divergeaient : 280 cm côté WOS305S, « environ 2 mètres » côté
+SPWOS305. Valeur retenue partout : **environ 2 m**.
+
+## Carrousel vidéo Moast
+
+Le bloc d'application Moast était présent dans les anciens templates, à
+l'intérieur de la zone d'achat. Il est rétabli sur les trois templates premium,
+sous forme de section `apps` placée juste après la zone d'achat, en pleine
+largeur — les vidéos verticales y respirent mieux que dans une colonne étroite.
+
+Le bloc reste en mode dynamique : Moast sert les vidéos correspondant au produit
+depuis son propre service, rien n'est stocké côté Shopify.
