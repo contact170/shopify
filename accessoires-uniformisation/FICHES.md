@@ -83,14 +83,22 @@ cette collection.
 
 ## WWF301 — éléments manquants
 
-Deux sections de la fiche resteront masquées tant que les données n'existent pas :
-
-- **FAQ produit** : le métachamp `custom.faq` n'est pas renseigné (aucun métaobjet
-  `faq_produit` pour cette référence). C'est le seul des huit produits traités
-  dans ce cas.
-- **Lien vers le manuel** : `custom.manuel_produit` est vide.
+- **FAQ produit** : elle n'existait pas. Un métaobjet `faq_produit` a été rédigé
+  à partir des données du produit (7 questions). À relire avant publication :
+  le contenu est déduit des métachamps, il n'a pas été validé par le SAV.
+- **Lien vers le manuel** : `custom.manuel_produit` est vide, la ligne de
+  téléchargement ne s'affiche donc pas. La section Installation ne montre le lien
+  que si le métachamp est renseigné — aucune correction nécessaire.
 
 Le titre du produit annonçait « Compatible Touch (AM301/AM302) » sans Vigilia,
 alors que la description et le métachamp de compatibilité l'incluent. Aligné sur
 la convention de la gamme : « | Compatible Touch/Vigilia (AM30x) ». L'URL du
 produit est inchangée.
+
+## Manuels non fournis en version papier
+
+Le guide d'installation du **BIR301** n'est pas livré dans la boîte. Le contenu
+de la boîte et la description l'indiquent explicitement et renvoient vers le PDF
+téléchargeable depuis la page. À vérifier sur les autres références : le contenu
+de la boîte annonce « 1 manuel d'utilisation » sur toutes, ce qui vient du texte
+générique d'origine.
