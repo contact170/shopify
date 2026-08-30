@@ -15,6 +15,7 @@ Thème d'aperçu : « Fiche accessoire uniformisee v1 (Claude) » — `202527113
 | WOS305S | Sirène extérieure solaire | `accessoires-sans-details` | 110 dB, alimentés par le soleil. |
 | WOS305 | Sirène extérieure | `accessoires-sans-details` | 110 dB, et un cri si on la décroche. |
 | SPWOS305 | Panneau solaire pour WOS305 | `cam-spw502` | La WOS305, sans jamais la rebrancher. |
+| WIS305 | Sirène intérieure 100 dB | `accessoires` | Impossible de savoir d'où ça vient. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -136,3 +137,25 @@ largeur — les vidéos verticales y respirent mieux que dans une colonne étroi
 
 Le bloc reste en mode dynamique : Moast sert les vidéos correspondant au produit
 depuis son propre service, rien n'est stocké côté Shopify.
+
+## WIS305 — description d'origine polluée
+
+La description du produit contenait le balisage HTML complet d'une interface de
+chat (div imbriquées, classes utilitaires, attributs `aria-*`) collé tel quel.
+Une centaine de balises pour une dizaine de paragraphes utiles : lourd à charger
+et illisible pour les moteurs. Réécrite en HTML propre (`<p>`, `<h2>`, `<ul>`),
+avec la compatibilité Touch / Vigilia qui manquait entièrement et un lien
+interne vers la sirène extérieure WOS305.
+
+À vérifier : d'autres fiches du catalogue peuvent avoir la même pollution.
+
+## WIS305 — contenu de la boîte inconnu
+
+`contenu_du_pack` n'est pas renseigné et n'a pas été inventé : rien dans les
+sources ne dit si le câble USB Type-C et l'adaptateur secteur sont livrés avec
+la sirène. La section « Dans la boîte » reste masquée tant que l'information
+n'est pas confirmée.
+
+Réponse de FAQ nettoyée au passage : elle contenait une note de rédaction entre
+parenthèses (« La durée d'autonomie sur batterie seule n'est pas précisée dans
+la fiche. »), visible côté client.
