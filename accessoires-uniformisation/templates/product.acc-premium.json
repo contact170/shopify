@@ -204,6 +204,12 @@
         "full_width": false,
         "rounded": false
       }
+    },
+    "barre": {
+      "type": "acc-barre",
+      "settings": {
+        "libelle_bouton": "Ajouter au panier"
+      }
     }
   },
   "order": [
@@ -220,6 +226,7 @@
     "avis_widget",
     "faq",
     "recommandations",
-    "recently-viewed"
+    "recently-viewed",
+    "barre"
   ]
 }

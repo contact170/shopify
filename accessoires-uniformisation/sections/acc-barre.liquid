@@ -1,0 +1,69 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- assign v = product.selected_or_first_available_variant -%}
+{%- assign nom = product.title | split: '|' | first | strip -%}
+<style>
+  .accp-barre{position:fixed;left:0;right:0;bottom:0;z-index:60;
+    background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--accp-filet);
+    transform:translateY(115%);transition:transform .28s cubic-bezier(.4,0,.2,1)}
+  .accp-barre.est-visible{transform:none}
+  .accp-barre__in{max-width:1040px;margin:0 auto;padding:12px var(--accp-marge);
+    display:flex;align-items:center;gap:16px}
+  .accp-barre__img{flex:0 0 48px;width:48px;height:48px;border-radius:11px;background:var(--accp-gris);padding:5px}
+  .accp-barre__img img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+  .accp-barre__txt{flex:1 1 auto;min-width:0}
+  .accp-barre__nom{margin:0;font-size:16px;font-weight:600;line-height:1.2;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .accp-barre__prix{margin:2px 0 0;font-size:15px;color:var(--accp-doux);font-variant-numeric:tabular-nums}
+  .accp-barre form{margin:0}
+  .accp-barre .accp-bouton{font-size:17px;padding:13px 30px}
+  .accp-barre .accp-qte button{width:38px;height:38px;font-size:19px}
+  .accp-barre .accp-qte output{min-width:32px;font-size:16px}
+  @media(max-width:720px){
+    .accp-barre__img,.accp-barre__prix{display:none}
+    .accp-barre__in{gap:10px;padding:10px var(--accp-marge)}
+    .accp-barre .accp-bouton{flex:1 1 auto;padding:13px 18px}
+  }
+  @media(max-width:430px){.accp-barre__txt{display:none}}
+</style>
+
+<div class="accp">
+  <div class="accp-barre" data-accp-barre>
+    <div class="accp-barre__in">
+      {%- if product.featured_image -%}
+        <div class="accp-barre__img">
+          <img src="{{ product.featured_image | image_url: width: 140 }}" alt="{{ product.featured_image.alt | escape }}" width="140" height="140" loading="lazy">
+        </div>
+      {%- endif -%}
+      <div class="accp-barre__txt">
+        <p class="accp-barre__nom">{{ nom }}</p>
+        <p class="accp-barre__prix">{{ v.price | money }}</p>
+      </div>
+      {%- form 'product', product, id: 'accp-form-barre', novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" value="{{ v.id }}">
+        <input type="hidden" name="quantity" value="1" data-accp-champ>
+        <div class="accp-ligne">
+          <div class="accp-qte" data-accp-qte>
+            <button type="button" data-accp-moins aria-label="Diminuer la quantit&eacute;">&minus;</button>
+            <output data-accp-valeur aria-live="polite">1</output>
+            <button type="button" data-accp-plus aria-label="Augmenter la quantit&eacute;">+</button>
+          </div>
+          <button type="submit" class="accp-bouton" {% unless v.available %}disabled{% endunless %}>
+            {%- if v.available -%}{{ section.settings.libelle_bouton }}{%- else -%}Rupture de stock{%- endif -%}
+          </button>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Accessoire — barre achat",
+  "settings": [
+    { "type": "paragraph", "content": "Barre d'achat fixe en bas d'ecran. Elle apparait des que la zone d'achat du haut de page n'est plus visible, et se retire quand on y revient." },
+    { "type": "text", "id": "libelle_bouton", "label": "Libelle du bouton", "default": "Ajouter au panier" }
+  ],
+  "presets": [ { "name": "Accessoire — barre achat" } ]
+}
+{% endschema %}

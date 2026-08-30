@@ -34,6 +34,21 @@
       });
     });
 
+    /* --- barre d'achat fixe --- */
+    var barre = document.querySelector('[data-accp-barre]');
+    var zoneHaut = document.querySelector('.accp-achat');
+    if (barre && zoneHaut) {
+      if (!('IntersectionObserver' in window)) {
+        barre.classList.add('est-visible');
+      } else {
+        new IntersectionObserver(function (entrees) {
+          var e = entrees[0];
+          barre.classList.toggle('est-visible',
+            !e.isIntersecting && e.boundingClientRect.top < 0);
+        }, { threshold: 0 }).observe(zoneHaut);
+      }
+    }
+
     /* --- quantite --- */
     var zone = document.querySelector('[data-accp-prix-unite]');
     if (!zone) return;
