@@ -23,7 +23,7 @@ Thème d'aperçu : « Fiche accessoire uniformisee v2 (Claude) » — `202545004
 | WRC305 | Télécommande à clapet | `acc-premium-sd` | Dans la poche, sans appui accidentel. |
 | EXT301 | Amplificateur de signal | `ext301` | Quand la centrale n'entend plus l'accessoire. |
 | AM302S | Centrale Touch XL seule | `centrale-seule-touchxl` | Sept pouces. Deux cents accessoires. |
-| AM301S | Centrale Touch seule | `pack-touch-2` ⚠️ | Le cœur du système, vendu seul. |
+| AM301S | Centrale Touch seule | `centrale-seule-touch` | Le cœur du système, vendu seul. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -385,18 +385,20 @@ L'écart entre les deux modèles est traité frontalement, dans les deux sens :
 écran de 4,3 vs 7 pouces, et 90 vs 200 accessoires. La capacité de 200 ne sert
 à rien dans un appartement ; la fiche le dit.
 
-### AM301S : gabarit partagé, bascule impossible
+### AM301S : gabarit dédié créé
 
 `pack-touch-2` est utilisé par **16 produits** : packs Touch et Touch XL, offres
 Black Friday et Noël, packs AM340 à AM343 et AM350 à AM353, offres exclusives.
-Y appliquer la mise en page premium contaminerait toutes ces fiches — c'est
-exactement l'erreur commise au départ avec `product.accessoires.json`.
+Y appliquer la mise en page premium aurait contaminé toutes ces fiches — la
+même erreur qu'au départ avec `product.accessoires.json`.
 
-La fiche AM301S est donc complète côté données, mais **elle ne s'affiche pas
-encore avec le nouveau design**. Il faut un gabarit qui lui soit propre.
+Résolu : le client a créé `product.centrale-seule-touch.json` sur le thème en
+ligne, copie conforme de `pack-touch-2` (**même empreinte MD5**, `30e5bc94…`).
+L'AM301S a été basculée sur ce suffixe, et le gabarit premium installé sous ce
+nom sur le thème v2. Les 16 produits de `pack-touch-2` ne bougent pas.
 
-Pour l'AM302S, `centrale-seule-touchxl` n'est utilisé que par elle : le gabarit
-premium a été créé sur le thème v2, la fiche est visible.
+Pour l'AM302S, `centrale-seule-touchxl` n'était utilisé que par elle : rien à
+créer côté thème en ligne.
 
 ### Balises SEO absentes
 
