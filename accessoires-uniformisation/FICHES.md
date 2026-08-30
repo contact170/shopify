@@ -9,6 +9,7 @@ Thème d'aperçu : « Fiche accessoire uniformisee v1 (Claude) » — `202527113
 | WDG301 | Contacteur de porte de garage | `accessoires` | Le garage aussi est une porte d'entrée. |
 | WPS305 | Détecteur de mouvement animaux | `accessoires` | Il voit l'intrus, pas le chat. |
 | WMO301 | Détecteur de mouvement extérieur | `accessoires` | La détection commence avant la porte. |
+| WSD301 | Détecteur de fumée connecté | `accessoires` | 85 dB dans la maison. Une alerte dans votre poche. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -30,5 +31,20 @@ de fausses détections. L'avertissement figure à trois endroits de la fiche —
 description (« Où l'installer »), volet « Sécurité et détection », et ligne
 « Pose » de la fiche technique.
 
-Point à vérifier sur les autres détecteurs infrarouges de la gamme (WPS305,
-WPS501, WMO501) : la consigne vaut pour tous, elle n'est pas toujours présente.
+La consigne ne concerne que les détecteurs d'extérieur : le WPS305 est un
+modèle d'intérieur. Reste à vérifier sur le WMO501.
+
+## WSD301 — données manquantes
+
+Aucune information d'alimentation, d'autonomie ni de certification n'existe
+dans les métachamps du produit. Le métachamp « Alimentation / Autonomie »
+contenait en réalité un argument commercial (« Sécurité permanente… ») ;
+il a été remplacé par les informations de pose, qui correspondent au titre du
+volet. À compléter :
+
+- type de pile et autonomie ;
+- norme de certification (EN 14604 ou équivalent) ;
+- dimensions.
+
+Le contenu de la boîte annonce « 1 kit de fixation » : à confirmer (adhésif ou
+visserie), et à préciser si les piles sont fournies.
