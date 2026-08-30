@@ -1,0 +1,85 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+<style>
+  .accp-cartes{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:18px;margin-top:clamp(20px,3vw,30px)}
+  .accp-carte{display:block;text-decoration:none;color:inherit}
+  .accp-carte__img{background:var(--accp-gris);border-radius:16px;padding:12px;margin-bottom:12px}
+  .accp-carte__img img{width:100%;aspect-ratio:1/1;object-fit:contain;mix-blend-mode:multiply}
+  .accp-carte__type{font-family:var(--accp-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accp-doux);margin:0 0 5px}
+  .accp-carte__titre{font-size:15px;font-weight:600;letter-spacing:-.015em;line-height:1.25;margin:0 0 4px}
+  .accp-carte__prix{font-size:14px;color:var(--accp-doux);margin:0;font-variant-numeric:tabular-nums}
+  .accp-carte:hover .accp-carte__titre{text-decoration:underline}
+</style>
+
+{%- liquid
+  comment
+    On affiche les accessoires de la meme gamme que le produit courant : la
+    collection « Compatible ... » a laquelle il appartient. Sans elle, la
+    section reste masquee plutot que d'afficher une gamme etrangere.
+  endcomment
+  assign source_handle = ''
+  for c in product.collections
+    assign t = c.title | downcase
+    if t contains 'compatible'
+      assign source_handle = c.handle
+      break
+    endif
+  endfor
+  if source_handle == blank
+    assign source_handle = section.settings.collection_repli
+  endif
+  assign source = collections[source_handle]
+  assign exclus = section.settings.exclusions | replace: ' ', '' | replace: '\n', ',' | split: ','
+-%}
+
+{%- if source.products_count > 1 -%}
+  {%- assign n = 0 -%}
+  {%- capture cartes -%}
+    {%- for p in source.products -%}
+      {%- if n >= section.settings.nombre -%}{%- break -%}{%- endif -%}
+      {%- if p.handle == product.handle -%}{%- continue -%}{%- endif -%}
+      {%- if p.title contains 'Configurateur' -%}{%- continue -%}{%- endif -%}
+      {%- if exclus contains p.handle -%}{%- continue -%}{%- endif -%}
+      {%- assign nom = p.title | split: '|' | first | strip -%}
+      {%- assign n = n | plus: 1 -%}
+      <a class="accp-carte" href="{{ p.url }}">
+        <div class="accp-carte__img">
+          {%- if p.featured_image -%}
+            <img src="{{ p.featured_image | image_url: width: 420 }}" alt="{{ p.featured_image.alt | escape }}" width="420" height="420" loading="lazy">
+          {%- endif -%}
+        </div>
+        {%- if p.type != blank -%}<p class="accp-carte__type">{{ p.type }}</p>{%- endif -%}
+        <p class="accp-carte__titre">{{ nom }}</p>
+        <p class="accp-carte__prix">{{ p.price | money }}</p>
+      </a>
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {%- if cartes != blank -%}
+    <div class="accp">
+      <section class="accp-bande accp-bande--serree" style="padding-bottom:12px">
+        <div class="accp-wrap">
+          {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+          {%- if section.settings.titre != blank -%}
+            <h2 style="margin-top:12px;font-size:clamp(21px,2.5vw,29px)">{{ section.settings.titre }}</h2>
+          {%- endif -%}
+          <div class="accp-cartes">{{ cartes }}</div>
+        </div>
+      </section>
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — complements",
+  "settings": [
+    { "type": "paragraph", "content": "Affiche les autres accessoires de la meme gamme, depuis la collection « Compatible ... » du produit. Si le produit n'appartient a aucune collection de ce type, la section reste masquee." },
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Meme gamme" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Completez votre systeme." },
+    { "type": "range", "id": "nombre", "min": 2, "max": 8, "step": 1, "label": "Nombre de produits", "default": 4 },
+    { "type": "text", "id": "collection_repli", "label": "Collection de repli (handle)", "info": "Utilisee seulement si le produit n'a pas de collection « Compatible ... ». Laisser vide pour masquer la section." },
+    { "type": "textarea", "id": "exclusions", "label": "Produits exclus (handles separes par des virgules)", "default": "centrale-am302, centrale-touch-am301-avec-ecran-tactile-4-3" }
+  ],
+  "presets": [ { "name": "Accessoire — complements" } ]
+}
+{% endschema %}

@@ -11,17 +11,18 @@
     <div class="accp-wrap accp-etroit">
       <p class="accp-ref">{{ section.settings.surtitre }}</p>
       {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+
       {%- if b != blank -%}
-      <dl class="accp-specs">
-        {%- if b.nom_du_produit != blank -%}<div class="accp-spec"><dt>{{ b.nom_du_produit }}</dt><dd>{{ b.description_1 }}</dd></div>{%- endif -%}
-        {%- if b.titres_2 != blank -%}<div class="accp-spec"><dt>{{ b.titres_2 }}</dt><dd>{{ b.description_2 }}</dd></div>{%- endif -%}
-        {%- if b.titre_3 != blank -%}<div class="accp-spec"><dt>{{ b.titre_3 }}</dt><dd>{{ b.description_3 }}</dd></div>{%- endif -%}
-        {%- if b.titre_4 != blank -%}<div class="accp-spec"><dt>{{ b.titre_4 }}</dt><dd>{{ b.description_4 }}</dd></div>{%- endif -%}
-        {%- if b.titre_5 != blank -%}<div class="accp-spec"><dt>{{ b.titre_5 }}</dt><dd>{{ b.description_5 }}</dd></div>{%- endif -%}
-        {%- if b.titre_6 != blank -%}<div class="accp-spec"><dt>{{ b.titre_6 }}</dt><dd>{{ b.description_6 }}</dd></div>{%- endif -%}
-        {%- if b.titre_7 != blank -%}<div class="accp-spec"><dt>{{ b.titre_7 }}</dt><dd>{{ b.description_7 }}</dd></div>{%- endif -%}
-        {%- if b.titre_8 != blank -%}<div class="accp-spec"><dt>{{ b.titre_8 }}</dt><dd>{{ b.description_8 }}</dd></div>{%- endif -%}
-      </dl>
+        <dl class="accp-specs">
+          {%- if b.nom_du_produit != blank -%}<div class="accp-spec"><dt>{{ b.nom_du_produit }}</dt><dd>{{ b.description_1 }}</dd></div>{%- endif -%}
+          {%- if b.titres_2 != blank -%}<div class="accp-spec"><dt>{{ b.titres_2 }}</dt><dd>{{ b.description_2 }}</dd></div>{%- endif -%}
+          {%- if b.titre_3 != blank -%}<div class="accp-spec"><dt>{{ b.titre_3 }}</dt><dd>{{ b.description_3 }}</dd></div>{%- endif -%}
+          {%- if b.titre_4 != blank -%}<div class="accp-spec"><dt>{{ b.titre_4 }}</dt><dd>{{ b.description_4 }}</dd></div>{%- endif -%}
+          {%- if b.titre_5 != blank -%}<div class="accp-spec"><dt>{{ b.titre_5 }}</dt><dd>{{ b.description_5 }}</dd></div>{%- endif -%}
+          {%- if b.titre_6 != blank -%}<div class="accp-spec"><dt>{{ b.titre_6 }}</dt><dd>{{ b.description_6 }}</dd></div>{%- endif -%}
+          {%- if b.titre_7 != blank -%}<div class="accp-spec"><dt>{{ b.titre_7 }}</dt><dd>{{ b.description_7 }}</dd></div>{%- endif -%}
+          {%- if b.titre_8 != blank -%}<div class="accp-spec"><dt>{{ b.titre_8 }}</dt><dd>{{ b.description_8 }}</dd></div>{%- endif -%}
+        </dl>
       {%- endif -%}
 
       {%- if d1 != blank or d2 != blank or d3 != blank -%}

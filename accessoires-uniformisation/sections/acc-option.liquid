@@ -1,0 +1,55 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- assign opt = product.metafields.custom.option_associee.value -%}
+{%- if opt != blank and opt.available -%}
+  {%- assign ov = opt.selected_or_first_available_variant -%}
+  {%- assign onom = opt.title | split: '|' | first | strip -%}
+  <style>
+    #shopify-section-{{ section.id }}{background:linear-gradient(180deg,#fff 0%,#fff 100%);padding:0 var(--accp-marge) {{ section.settings.marge_basse }}px}
+    .accp-option{display:flex;align-items:center;gap:14px;width:100%;max-width:470px;margin:0 auto;
+      padding:12px 14px;border:1px solid var(--accp-filet);border-radius:16px;background:#fff;text-align:left}
+    .accp-option__img{flex:0 0 56px;width:56px;height:56px;border-radius:10px;background:var(--accp-gris);padding:6px}
+    .accp-option__img img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+    .accp-option__txt{flex:1 1 auto;min-width:0}
+    .accp-option__label{font-family:var(--accp-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accp-doux);margin:0 0 3px}
+    .accp-option__nom{font-size:14px;font-weight:600;line-height:1.25;margin:0}
+    .accp-option__nom a{text-decoration:none;color:inherit}
+    .accp-option__nom a:hover{text-decoration:underline}
+    .accp-option__prix{font-size:13px;color:var(--accp-doux);margin:2px 0 0;font-variant-numeric:tabular-nums}
+    .accp-option__btn{flex:0 0 auto;border:0;cursor:pointer;background:var(--accp-gris);color:var(--accp-encre);
+      font:inherit;font-weight:500;font-size:14px;padding:9px 18px;border-radius:980px;transition:background .15s}
+    .accp-option__btn:hover{background:#e6e8ec}
+    @media (max-width:430px){.accp-option{flex-wrap:wrap}.accp-option__btn{width:100%}}
+  </style>
+  <div class="accp">
+    <div class="accp-option">
+      <div class="accp-option__img">
+        {%- if opt.featured_image -%}
+          <img src="{{ opt.featured_image | image_url: width: 160 }}" alt="{{ opt.featured_image.alt | escape }}" width="160" height="160" loading="lazy">
+        {%- endif -%}
+      </div>
+      <div class="accp-option__txt">
+        <p class="accp-option__label">{{ section.settings.label }}</p>
+        <p class="accp-option__nom"><a href="{{ opt.url }}">{{ onom }}</a></p>
+        <p class="accp-option__prix">{{ ov.price | money }}</p>
+      </div>
+      {%- form 'product', opt, id: 'accp-option-form' -%}
+        <input type="hidden" name="id" value="{{ ov.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="accp-option__btn">{{ section.settings.bouton }}</button>
+      {%- endform -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — option",
+  "settings": [
+    { "type": "paragraph", "content": "Affiche le produit du metachamp « Option associee » sous la zone d'achat. Masque si le metachamp est vide ou le produit indisponible." },
+    { "type": "text", "id": "label", "label": "Intitule", "default": "En option" },
+    { "type": "text", "id": "bouton", "label": "Bouton", "default": "Ajouter" },
+    { "type": "range", "id": "marge_basse", "min": 0, "max": 96, "step": 4, "unit": "px", "label": "Marge basse", "default": 40 }
+  ],
+  "presets": [ { "name": "Accessoire — option" } ]
+}
+{% endschema %}

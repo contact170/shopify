@@ -1,0 +1,35 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+<style>
+  .accp-texte{margin-top:22px}
+  .accp-texte > *:first-child{margin-top:0}
+  .accp-texte h2{font-size:clamp(21px,2.7vw,29px);font-weight:600;letter-spacing:-.025em;line-height:1.2;margin:36px 0 12px}
+  .accp-texte h3{font-size:clamp(17px,2vw,21px);font-weight:600;letter-spacing:-.02em;line-height:1.25;margin:28px 0 8px}
+  .accp-texte h4{font-size:17px;font-weight:600;margin:24px 0 8px}
+  .accp-texte p{margin:0 0 14px;font-size:16px;line-height:1.65;color:var(--accp-doux)}
+  .accp-texte strong{color:var(--accp-encre);font-weight:600}
+  .accp-texte ul,.accp-texte ol{margin:0 0 16px;padding-left:22px;color:var(--accp-doux);font-size:16px;line-height:1.65}
+  .accp-texte li{margin-bottom:7px}
+  .accp-texte li > p{margin:0}
+  .accp-texte a{color:var(--accp-bleu)}
+  .accp-texte img{border-radius:14px;margin:18px 0}
+</style>
+{%- if product.description != blank -%}
+<div class="accp">
+  <section class="accp-bande accp-bande--serree">
+    <div class="accp-wrap accp-etroit">
+      {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+      <div class="accp-texte rte">{{ product.description }}</div>
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — description",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "En detail" }
+  ],
+  "presets": [ { "name": "Accessoire — description" } ]
+}
+{% endschema %}
