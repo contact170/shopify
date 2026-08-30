@@ -409,3 +409,22 @@ désormais renseignées, et les titres produit reformulés pour porter la mentio
 
 Aucune n'avait de FAQ : huit questions rédigées pour chacune, centrées sur les
 deux questions qui décident — ce qu'il y a dans la boîte, et 4,3 ou 7 pouces.
+
+## Centrales : contenu de la boîte et catégorie
+
+**Contenu de la boîte, confirmé pour les deux** : centrale, câble USB,
+adaptateur secteur, kit de fixation murale et visserie. Renseigné dans
+`contenu_du_pack` et dans la description. L'AM302S annonçait auparavant la
+seule centrale, ce qui sous-vendait le produit.
+
+**Catégorie : décision de ne rien changer.** Les deux centrales restent taguées
+« Accessoires » et rangées dans « Tous les accessoires ». C'est délibéré : elles
+ne sont pas destinées à être vendues seules à un nouveau client, mais à dépanner
+quelqu'un dont la centrale est en panne. Leur place est donc bien dans la
+logique accessoire.
+
+Corollaire à conserver : elles restent dans la liste d'exclusions du bandeau
+« Complétez votre système » (`acc-complements`, réglage `exclusions`). Sans
+cela, une fiche détecteur à 30 € proposerait une centrale à 119,90 € ou
+219,90 € comme complément, ce qui n'a pas de sens pour un client qui possède
+déjà la sienne.
