@@ -1,750 +1,63 @@
 {
   "sections": {
-    "main-product": {
-      "type": "main-product",
-      "blocks": {
-        "vendor": {
-          "type": "liquid",
-          "settings": {
-            "liquid": "{%- assign acc_type = product.type -%}\n{%- if acc_type == blank -%}{%- assign acc_type = product.metafields.custom.categorie_de_produit.value.categorie_de_produit -%}{%- endif -%}\n{%- assign acc_ref = product.selected_or_first_available_variant.sku -%}\n{%- assign acc_compat = product.metafields.custom.compatibilite.value.compatibilite -%}\n<style>\n.acc-id{font-family:'Poppins',sans-serif;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:0}\n.acc-id__type{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#1a4fab;background:#eaf0fb;padding:5px 12px;border-radius:6px}\n.acc-id__item{font-size:13px;color:#5b6472}\n.acc-id__item strong{color:#111827;font-weight:600}\n</style>\n{%- if acc_type != blank or acc_ref != blank or acc_compat != blank -%}\n<div class=\"acc-id\">\n{%- if acc_type != blank -%}<span class=\"acc-id__type\">{{ acc_type }}</span>{%- endif -%}\n{%- if acc_ref != blank -%}<span class=\"acc-id__item\">Réf. <strong>{{ acc_ref }}</strong></span>{%- endif -%}\n{%- if acc_compat != blank -%}<span class=\"acc-id__item\">Compatible <strong>{{ acc_compat }}</strong></span>{%- endif -%}\n</div>\n{%- else -%}\n<div class=\"acc-id\"><span class=\"acc-id__item\">{{ product.vendor }}</span></div>\n{%- endif -%}"
-          }
-        },
-        "title": {
-          "type": "title",
-          "settings": {
-            "title_size": "product-title-sm",
-            "title_size_mobile": "product-title-sm",
-            "show_price": true,
-            "show_rating": true
-          }
-        },
-        "liquid_aPAptH": {
-          "type": "liquid",
-          "settings": {
-            "liquid": "{% assign aqcs = product.metafields.custom.a_quoi_ca_sert.value %}\n\n{% if aqcs != blank %}\n<style>\n  .badges-wrap * { box-sizing: border-box; margin: 0; padding: 0; }\n  .badges-wrap {\n    font-family: 'Poppins', sans-serif;\n    padding: 0 0 0px;\n    display: flex;\n    flex-wrap: wrap;\n    gap: 8px;\n  }\n  .badge-item {\n    background: #1a4fab;\n    color: #fff;\n    font-size: 13px;\n    font-weight: 500;\n    padding: 7px 16px;\n    border-radius: 20px;\n    display: inline-block;\n  }\n</style>\n\n<div class=\"badges-wrap\">\n  {% if aqcs.titre_1 != blank %}\n    <span class=\"badge-item\">{{ aqcs.titre_1 }}</span>\n  {% endif %}\n  {% if aqcs.titre_2 != blank %}\n    <span class=\"badge-item\">{{ aqcs.titre_2 }}</span>\n  {% endif %}\n  {% if aqcs.titre_3 != blank %}\n    <span class=\"badge-item\">{{ aqcs.titre_3 }}</span>\n  {% endif %}\n</div>\n\n{% endif %}"
-          }
-        },
-        "price_iMr7Rj": {
-          "type": "price",
-          "settings": {
-            "show_taxes_notice": false
-          }
-        },
-        "countdown_XnJReJ": {
-          "type": "countdown",
-          "settings": {
-            "heading": "Vite !",
-            "subheading": "Fin de la promo dans :",
-            "color_text": "#e11d48",
-            "color_background": "#ffffff",
-            "gradient_background": ""
-          }
-        },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "show_variant_labels": true,
-            "picker_type": "button",
-            "enable_color_swatches": true,
-            "color_swatch_type": "variant",
-            "size_chart": ""
-          }
-        },
-        "moast_carousel_QHtaja": {
-          "type": "shopify://apps/moast/blocks/carousel/1ac7547b-5443-446c-868c-7fab4566ee16",
-          "settings": {
-            "dynamic": true,
-            "feed": "",
-            "feed_usage": "back_up",
-            "header": "",
-            "slide_type": "stories",
-            "product_cards": "none",
-            "autoplay_mode": "none",
-            "autoscroll_duration": 0,
-            "slide_size": "250",
-            "aspect_ratio": "vertical",
-            "border": 0,
-            "border_color": "linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)",
-            "slide_rounding": "20",
-            "slide_spacing": 16,
-            "padding_top": 40,
-            "pagination": "below",
-            "alignment": "center",
-            "click_action": "fullscreen",
-            "float_location": "bottom_right",
-            "float_size": "medium",
-            "show_captions": false,
-            "custom_css": ""
-          }
-        },
-        "collapsible_tab_6pgQUR": {
-          "type": "collapsible_tab",
-          "settings": {
-            "opened": false,
-            "style": "with-border",
-            "icon": "none",
-            "heading": "Description",
-            "content": "{{ product.description }}",
-            "page": "",
-            "liquid": "",
-            "text_size": "text-sm"
-          }
-        },
-        "product_bundle_yeFYVX": {
-          "type": "product_bundle",
-          "settings": {
-            "opened": true,
-            "clickable": false,
-            "icon": "none",
-            "iwidth": "custom",
-            "icon_width": 20,
-            "heading": "Souvent acheté avec",
-            "products": "{{ product.metafields[\"shopify--discovery--product_recommendation\"].complementary_products.value }}",
-            "metafield": ""
-          }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_quantity_selector": false,
-            "show_price": true,
-            "show_dynamic_checkout": false,
-            "show_gift_card_recipient": true,
-            "enable_back_in_stock": true,
-            "show_back_in_stock_name": true,
-            "show_back_in_stock_phone": true
-          }
-        },
-        "alma_widget_alma_widget_block_xLfeQW": {
-          "type": "shopify://apps/alma-widget/blocks/alma_widget_block/4f38fc15-ea4e-44b3-96e0-0c0f2daa413f",
-          "settings": {
-            "display_widget_not_eligible": true,
-            "widget_position": "flex-start",
-            "update_quantity_in_widget": true,
-            "widget_monochrome": true
-          }
-        },
-        "help_desk_RxGNb4": {
-          "type": "help_desk",
-          "settings": {
-            "help_label": "Besoin d'aide ?",
-            "help_type": "drawer",
-            "help_page": "",
-            "help_page_external": false
-          }
-        },
-        "liquid_UpQUUM": {
-          "type": "liquid",
-          "settings": {
-            "liquid": "{%- assign manuel = product.metafields.custom.manuel_produit -%}\n{%- if manuel != blank -%}\n<a href=\"{{ manuel }}\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;font-size:13px;color:#5b6472;text-decoration:underline\">Télécharger le manuel d'utilisation (PDF)</a>\n{%- endif -%}"
-          }
-        },
-        "pickup_availability": {
-          "type": "pickup_availability",
-          "settings": {}
-        },
-        "share": {
-          "type": "share",
-          "disabled": true,
-          "settings": {
-            "share_label": "Partager",
-            "show_help_desk": true,
-            "help_label": "Besoin d'aide ?",
-            "help_type": "drawer",
-            "help_page": "",
-            "help_page_external": false
-          }
-        },
-        "buy_box_selling_points_8hWXJC": {
-          "type": "shopify://apps/buy-box/blocks/selling-points/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "settings": {
-            "sellingPoint_1_text": "Sans abonnement",
-            "sellingPoint_2_text": "Installation simple et autonome",
-            "sellingPoint_3_text": "Evolutif, complétez votre système au fur et à mesure",
-            "sellingPoint_4_text": "",
-            "sellingPoint_5_text": "",
-            "icon": "checkmark",
-            "icon_color": "#037e05",
-            "text_color": "#212121",
-            "icon_size": 16,
-            "text_size": 14,
-            "alignment": "start",
-            "row_spacing": 8,
-            "margin_top": 5,
-            "margin_bottom": 5,
-            "max-width": "44rem"
-          }
-        },
-        "complementary": {
-          "type": "complementary",
-          "disabled": true,
-          "settings": {
-            "heading": "Souvent acheté avec",
-            "product_limit": 4,
-            "show_vendor": false,
-            "show_price": true
-          }
-        },
-        "text-2": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "icon": "headphone",
-            "iwidth": "custom",
-            "icon_width": 20,
-            "text": "Essai sans risque de 90 jours",
-            "text_size": "text-sm"
-          }
-        },
-        "sticky_buy_button": {
-          "type": "sticky_buy_button",
-          "settings": {}
-        },
-        "icon_list_kTGr4M": {
-          "type": "icon_list",
-          "settings": {
-            "heading": "Caractéristiques produit",
-            "enable_carousel": false,
-            "show_below_media": false
-          }
-        }
-      },
-      "block_order": [
-        "vendor",
-        "title",
-        "liquid_aPAptH",
-        "price_iMr7Rj",
-        "countdown_XnJReJ",
-        "variant_picker",
-        "moast_carousel_QHtaja",
-        "collapsible_tab_6pgQUR",
-        "product_bundle_yeFYVX",
-        "buy_buttons",
-        "alma_widget_alma_widget_block_xLfeQW",
-        "help_desk_RxGNb4",
-        "liquid_UpQUUM",
-        "pickup_availability",
-        "share",
-        "buy_box_selling_points_8hWXJC",
-        "complementary",
-        "text-2",
-        "sticky_buy_button",
-        "icon_list_kTGr4M"
-      ],
+    "hero": {
+      "type": "acc-hero",
       "settings": {
-        "enable_sticky_info": true,
-        "media_size": 50,
-        "gallery_layout": "columns",
-        "thumbnail_position": "beside",
-        "image_ratio": "adapt_first",
-        "image_zoom": "lightbox",
-        "hide_variants": true,
-        "enable_video_autoplay": true,
-        "enable_video_looping": true,
-        "mobile_layout": "full_width",
-        "image_ratio_mobile": "adapt_first",
-        "mobile_thumbnail": true,
-        "padding_top": 0,
-        "padding_bottom": 84,
-        "divider": false,
-        "full_width": true,
-        "rounded": false
+        "libelle_bouton": "Ajouter au panier",
+        "mention_prix": "l'unité",
+        "quantite_max": 20,
+        "paiement": "Paiement en 3 ou 4 fois avec Alma · Livraison sous 24 à 48 h",
+        "atout_1": "Sans abonnement",
+        "atout_2": "Pose sans perçage",
+        "atout_3": "Retour sous 14 jours"
       }
     },
-    "portfolio_zdia6R": {
-      "type": "portfolio",
-      "blocks": {
-        "profile_Fb8qMx": {
-          "type": "profile",
-          "settings": {
-            "image": "shopify://shop_images/IMAGE_LIFESTYLE_7.png",
-            "image_mobile": "shopify://shop_images/IMAGE_LIFESTYLE_7_7cc6bffc-42f3-4f26-b767-420d490d320c.png",
-            "heading": "{{ product.metafields.custom.a_quoi_ca_sert.value.titre_1.value }}",
-            "text": "<p>{{ product.metafields.custom.a_quoi_ca_sert.value.description | metafield_tag }}</p>",
-            "color_text": "#ffffff",
-            "color_background": "#171717"
-          }
-        },
-        "profile_WttXPi": {
-          "type": "profile",
-          "settings": {
-            "image": "shopify://shop_images/IMAGE_LIFESTYLE_8.png",
-            "image_mobile": "shopify://shop_images/IMAGE_LIFESTYLE_8_540b152d-97d1-4871-8d58-670f80a77ae8.png",
-            "heading": "{{ product.metafields.custom.a_quoi_ca_sert.value.titre_2.value }}",
-            "text": "<p>{{ product.metafields.custom.a_quoi_ca_sert.value.description_2 | metafield_tag }}</p>",
-            "color_text": "#ffffff",
-            "color_background": "#171717"
-          }
-        },
-        "profile_PGJpxR": {
-          "type": "profile",
-          "settings": {
-            "image": "shopify://shop_images/IMAGE_LIFESTYLE_9.png",
-            "image_mobile": "shopify://shop_images/IMAGE_LIFESTYLE_9_631fce43-2dc1-4437-b2ec-8095f2b8f8a1.png",
-            "heading": "{{ product.metafields.custom.a_quoi_ca_sert.value.titre_3.value }}",
-            "text": "<p>{{ product.metafields.custom.a_quoi_ca_sert.value.description_3 | metafield_tag }}</p>",
-            "color_text": "#ffffff",
-            "color_background": "#171717"
-          }
-        }
-      },
-      "block_order": [
-        "profile_Fb8qMx",
-        "profile_WttXPi",
-        "profile_PGJpxR"
-      ],
-      "name": "t:sections.portfolio.name",
+    "role": {
+      "type": "acc-chrono",
       "settings": {
-        "columns": 3,
-        "carousel_on_desktop": false,
-        "layout": "default",
-        "image_ratio": "portrait",
-        "image_ratio_mobile": "portrait",
-        "columns_mobile": "1",
-        "swipe_on_mobile": true,
-        "heading": "Son rôle dans votre sécurité",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center justify-center",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
+        "titre": "Son rôle dans votre sécurité.",
+        "intro": "Un contacteur classique attend que la fenêtre s'ouvre. Ce détecteur réagit dès la première secousse.",
+        "repere_1": "01",
+        "repere_2": "02",
+        "repere_3": "03"
       }
     },
-    "video_with_text_h8LPwN": {
-      "type": "video-with-text",
-      "blocks": {
-        "heading_qcRxqn": {
-          "type": "heading",
-          "settings": {
-            "heading": "Installation simple",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text_RnjMxk": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Cette vidéo vous montre comment installer et configurer ce produit en quelques minutes.<br/><br/>Suivez les étapes expliquées pour une installation rapide et une utilisation optimale, sans connaissances techniques particulières.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "button_JdqA86": {
-          "type": "button",
-          "settings": {
-            "button_label": "Voir la chaîne Youtube",
-            "button_link": "https://www.youtube.com/@daewoosecurity3029",
-            "button_style": "primary",
-            "button_size": "md",
-            "button_external": false,
-            "button_icon": true
-          }
-        }
-      },
-      "block_order": [
-        "heading_qcRxqn",
-        "text_RnjMxk",
-        "button_JdqA86"
-      ],
-      "name": "t:sections.video-with-text.name",
+    "pose": {
+      "type": "acc-installation",
       "settings": {
-        "video": "{{ product.metafields.custom.video_installation.value }}",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "cover_image": "shopify://shop_images/Sans_titre_600_x_300_px_1.png",
-        "description": "",
-        "enable_video_autoplay": true,
-        "enable_video_looping": true,
-        "image_height": "adapt",
-        "video_width": "medium",
-        "layout": "video_first",
-        "text_alignment": "left",
-        "content_position": "align-self-center",
-        "video_url_mobile": "",
-        "image_height_mobile": "auto",
-        "text_alignment_mobile": "center",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_background_2": "",
-        "gradient_background_2": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false,
-        "enable_parallax": false,
-        "parallax_direction": "vertical"
+        "surtitre": "Installation",
+        "titre": "Adhésif fourni. Rien à percer.",
+        "texte": "Basculez l'interrupteur sur ON, associez l'accessoire dans l'application Daewoo Home Connect, puis collez-le en place. Compter deux minutes."
       }
     },
-    "help-drawer": {
-      "type": "help-drawer",
-      "blocks": {
-        "content-4": {
-          "type": "content",
-          "settings": {
-            "icon": "phone",
-            "heading": "Besoin d’un conseil ?",
-            "text": "<p>Une question sur un produit ? </p><p>Écrivez-nous à<em><strong> contact@daewoo-security.fr</strong></em> ou utilisez notre chat : un conseiller vous répondra rapidement.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle",
-            "color_text": "#4d7c0f",
-            "color_background": "#f7fee7",
-            "gradient_background": "",
-            "color_highlight": "#ffddbf",
-            "gradient_highlight": ""
-          }
-        },
-        "content-1": {
-          "type": "content",
-          "settings": {
-            "icon": "return",
-            "heading": "Retour & rétractation faciles",
-            "text": "<p>Vous disposez de 14 jours pour changer d’avis. En cas de souci, notre service client vous guide dans le retour ou l’échange de votre produit.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle",
-            "color_text": "#b45309",
-            "color_background": "#fffbeb",
-            "gradient_background": "",
-            "color_highlight": "#ffddbf",
-            "gradient_highlight": ""
-          }
-        },
-        "content-2": {
-          "type": "content",
-          "settings": {
-            "icon": "headphone",
-            "heading": "Service après-vente",
-            "text": "<p>Notre équipe basée en France répond rapidement à toutes vos demandes. Pour les contacter rendez-vous sur la page assistance</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle",
-            "color_text": "#0369a1",
-            "color_background": "#f0f9ff",
-            "gradient_background": "",
-            "color_highlight": "#ffddbf",
-            "gradient_highlight": ""
-          }
-        }
-      },
-      "block_order": [
-        "content-4",
-        "content-1",
-        "content-2"
-      ],
+    "compat": {
+      "type": "acc-compat",
       "settings": {
-        "heading": "Besoin d'aide ?",
-        "description": "<p>Pour toutes questions, n'hésitez pas à nous contacter. Nous vous répondrons dans les plus brefs délais.</p>"
+        "surtitre": "Compatibilité"
       }
     },
-    "product-details": {
-      "type": "product-details",
-      "blocks": {
-        "tab_securite": {
-          "type": "collapsible_tab",
-          "settings": {
-            "icon": "none",
-            "iwidth": "custom",
-            "icon_width": 24,
-            "heading": "Sécurité & détection",
-            "content": "{{ product.metafields.custom.securite_detection | metafield_tag }}",
-            "metafields": "",
-            "text_size": "text-base"
-          }
-        },
-        "tab_connectivite": {
-          "type": "collapsible_tab",
-          "settings": {
-            "icon": "none",
-            "iwidth": "custom",
-            "icon_width": 24,
-            "heading": "Connectivité & compatibilité",
-            "content": "{{ product.metafields.custom.connectivite | metafield_tag }}",
-            "metafields": "",
-            "text_size": "text-base"
-          }
-        },
-        "tab_alimentation": {
-          "type": "collapsible_tab",
-          "settings": {
-            "icon": "none",
-            "iwidth": "custom",
-            "icon_width": 24,
-            "heading": "Alimentation & autonomie",
-            "content": "{{ product.metafields.custom.alimentation_autonomie | metafield_tag }}",
-            "metafields": "",
-            "text_size": "text-base"
-          }
-        },
-        "tab_caracteristiques": {
-          "type": "collapsible_tab",
-          "settings": {
-            "icon": "none",
-            "iwidth": "custom",
-            "icon_width": 24,
-            "heading": "Caractéristiques générales",
-            "content": "{{ product.metafields.custom.caracteristiques_generales | metafield_tag }}",
-            "metafields": "",
-            "text_size": "text-base"
-          }
-        },
-        "tab_contenu": {
-          "type": "collapsible_tab",
-          "settings": {
-            "icon": "none",
-            "iwidth": "custom",
-            "icon_width": 24,
-            "heading": "Contenu de la boîte",
-            "content": "{{ product.metafields.custom.contenu_du_pack | metafield_tag }}",
-            "metafields": "",
-            "text_size": "text-base"
-          }
-        },
-        "specification_iapzpX": {
-          "type": "specification",
-          "repeater": "{{ product.metafields.custom.icon_inclus_dans_le_pack.value }}",
-          "settings": {
-            "icon": "{{ block.repeater.icon_inclus_dans_le_pack.value }}",
-            "heading": "{{ block.repeater.titre_de_l_icon.value }}",
-            "text_size": "text-sm"
-          }
-        }
-      },
-      "block_order": [
-        "tab_securite",
-        "tab_connectivite",
-        "tab_alimentation",
-        "tab_caracteristiques",
-        "tab_contenu",
-        "specification_iapzpX"
-      ],
-      "settings": {
-        "style": "with-background",
-        "open_first_row": true,
-        "specifications_heading": "Inclus dans la boîte",
-        "heading": "Détails produit",
-        "heading_size": "title-md",
-        "heading_alignment": "text-left md:items-end md:flex-row",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 28,
-        "padding_bottom": 28,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
-    "fiche_technique": {
+    "technique": {
       "type": "acc-fiche-technique",
       "settings": {
-        "heading": "Fiche technique",
-        "padding_top": 8,
-        "padding_bottom": 56
+        "surtitre": "Fiche technique",
+        "titre": "Les chiffres."
       }
     },
-    "faq_produit": {
-      "type": "acc-faq-produit",
+    "boite": {
+      "type": "acc-boite",
       "settings": {
-        "heading": "Questions fréquentes",
-        "padding_top": 56,
-        "padding_bottom": 0
+        "surtitre": "Dans la boîte",
+        "titre": "Tout est fourni."
       }
     },
-    "faq": {
-      "type": "faq",
-      "blocks": {
-        "question-1": {
-          "type": "question",
-          "settings": {
-            "title": "Est-ce que cet accessoire est compatible avec mon système d’alarme Daewoo ?",
-            "text": "<p>Tous nos accessoires sont compatibles avec une ou plusieurs gammes d’alarmes Daewoo Security (TOUCH, VIGILIA, ELITE).</p><p>La compatibilité exacte est indiquée dans la fiche produit. Si vous avez un doute, n’hésitez pas à nous contacter avec la référence de votre centrale.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "question-2": {
-          "type": "question",
-          "settings": {
-            "title": "Est-ce que l’accessoire fonctionne avec l’application Daewoo Home Connect ?",
-            "text": "<p>Tous les accessoires sont disponibles et directement paramétrables dans l’application Daewoo Home Connect.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "question-3": {
-          "type": "question",
-          "settings": {
-            "title": "Comment l’installer ?",
-            "text": "<p>Tous nos accessoires sont conçus pour une installation simple et rapide. Selon le type d’accessoire, la fixation peut se faire par adhésif double-face fourni ou par vis. Chaque produit est accompagné d’un guide d’installation détaillé pour vous accompagner pas à pas. </p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "question-5": {
-          "type": "question",
-          "settings": {
-            "title": "Est-il possible d’ajouter plusieurs fois le même accessoire ?",
-            "text": "<p>Oui, votre système d’alarme peut être personnalisé librement : vous pouvez ajouter plusieurs détecteurs de mouvement, contacteurs de porte, télécommandes ou badges RFID sans limitation, tant que vous restez dans les capacités de la centrale</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "question_wK6jUj": {
-          "type": "question",
-          "settings": {
-            "title": "Que se passe-t-il en cas de détection ?",
-            "text": "<p>En cas de détection (vibration, mouvement, ouverture…), l’accessoire envoie un signal à la centrale.<br/><br/>Selon votre configuration, cela peut déclencher l’alarme, envoyer une notification sur votre smartphone ou simplement enregistrer l’événement dans le journal d’activité.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "question_ErYcck": {
-          "type": "question",
-          "settings": {
-            "title": "Puis-je désinstaller ou réinitialiser un accessoire ?",
-            "text": "<p>Oui, chaque accessoire peut être supprimé ou réinitialisé depuis l’application ou en accédant à l’interface de la centrale.<br/><br/>La procédure est expliquée dans le guide de votre système.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "question_JT7LEy": {
-          "type": "question",
-          "settings": {
-            "title": "En combien de temps vais-je le recevoir ?",
-            "text": "<p>La livraison est <strong>rapide et gratuite dès 50 € d’achat</strong>, sous <strong>24 à 48h ouvrées</strong>.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "contact": {
-          "type": "contact",
-          "settings": {
-            "heading": "Vous n’avez pas trouvé votre réponse ?",
-            "text": "<p>N'hésitez pas à nous contacter</p>",
-            "show_phone": false,
-            "avatar_height": 60,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "question-1",
-        "question-2",
-        "question-3",
-        "question-5",
-        "question_wK6jUj",
-        "question_ErYcck",
-        "question_JT7LEy",
-        "contact"
-      ],
+    "avis": {
+      "type": "acc-avis",
       "settings": {
-        "style": "with-background",
-        "heading": "Questions fréquentes sur les accessoires Daewoo",
-        "heading_size": "title-lg tracking-heading",
-        "heading_alignment": "text-left md:items-end md:flex-row",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "#ffffff",
-        "color_background": "#0c1e4a",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "#0c1e4a",
-        "color_button_background": "#ffffff",
-        "color_button_gradient": "",
-        "color_overlay": "#ffffff",
-        "overlay_opacity": 4,
-        "padding_top": 84,
-        "padding_bottom": 84,
-        "divider": false,
-        "narrow": false,
-        "rounded": false
+        "surtitre": "Avis clients",
+        "titre": "Avis clients"
       }
     },
-    "175368815752fc56da": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_featured_carousel_LG3Rgx": {
-          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "maxwidth": 1080
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_featured_carousel_LG3Rgx"
-      ],
-      "settings": {
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
-    "apps_cdfNe7": {
+    "avis_widget": {
       "type": "apps",
       "blocks": {
         "judge_me_reviews_review_widget_reL3tE": {
@@ -769,11 +82,18 @@
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 72,
+        "padding_top": 0,
         "padding_bottom": 72,
         "divider": false,
         "full_width": false,
         "rounded": false
+      }
+    },
+    "faq": {
+      "type": "acc-faq-produit",
+      "settings": {
+        "surtitre": "Questions fréquentes",
+        "titre": "Avant de commander."
       }
     },
     "recently-viewed": {
@@ -800,7 +120,7 @@
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 72,
+        "padding_top": 0,
         "padding_bottom": 72,
         "divider": false,
         "full_width": false,
@@ -809,16 +129,15 @@
     }
   },
   "order": [
-    "main-product",
-    "portfolio_zdia6R",
-    "video_with_text_h8LPwN",
-    "help-drawer",
-    "product-details",
-    "fiche_technique",
-    "faq_produit",
+    "hero",
+    "role",
+    "pose",
+    "compat",
+    "technique",
+    "boite",
+    "avis",
+    "avis_widget",
     "faq",
-    "175368815752fc56da",
-    "apps_cdfNe7",
     "recently-viewed"
   ]
 }

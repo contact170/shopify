@@ -1,0 +1,26 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- assign compat = product.metafields.custom.compatibilite.value.compatibilite -%}
+{%- assign note = product.metafields.custom.note_compatibilite.value -%}
+{%- if compat != blank -%}
+<div class="accp">
+  <section class="accp-bande accp-compat">
+    <div class="accp-wrap">
+      <p class="accp-ref">{{ section.settings.surtitre }}</p>
+      <p class="accp-gammes">{{ compat }}</p>
+      {%- if note != blank -%}
+        <p class="accp-exclu">{{ note | newline_to_br }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — compat.",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Compatibilite" }
+  ],
+  "presets": [ { "name": "Accessoire — compat." } ]
+}
+{% endschema %}

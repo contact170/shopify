@@ -1,57 +1,60 @@
-# Uniformisation des fiches accessoires
-
-Premier jalon : fiche **WDV301** (contacteur d'ouverture / vibration 2-en-1),
-prise comme modèle pour l'ensemble des pages accessoires.
+# Fiches accessoires — modèle premium
 
 Thème d'aperçu (non publié) : **« Fiche accessoire uniformisee v1 (Claude) »**
 `gid://shopify/OnlineStoreTheme/202527113556`
 
-Le thème publié n'est pas modifié : tout est visible en prévisualisation avant
-publication.
+Le thème publié n'est pas modifié.
 
-## Structure cible d'une fiche accessoire
+## Principe
 
-1. **Bloc identité** en haut de la buy box : type d'accessoire, référence (SKU),
-   compatibilité. Piloté par les données produit, donc identique sur toutes les fiches.
-2. Badges « à quoi ça sert » (métaobjet `a_quoi_ca_sert`).
-3. Lien « Télécharger le manuel d'utilisation (PDF) » (métachamp `manuel_produit`).
-4. Section **Son rôle dans votre sécurité** (3 visuels + métaobjet `a_quoi_ca_sert`).
-5. Section **Installation simple** (vidéo du métachamp `video_installation`).
-6. **Détails produit** — onglets branchés sur des métachamps réels :
-   Sécurité & détection · Connectivité & compatibilité · Alimentation & autonomie ·
-   Caractéristiques générales · Contenu de la boîte · icônes « Inclus dans la boîte ».
-7. **Fiche technique** — tableau clé/valeur (métaobjet `bandeau_caracteristiques`).
-8. **FAQ produit** — questions propres au produit (métaobjet `faq_produit`) + balisage
-   `FAQPage` (JSON-LD).
-9. FAQ générique accessoires, avis Judge.me, produits récemment consultés.
+La fiche accessoire est entièrement reconstruite : mise en page aérée, grande
+typographie, photographie produit isolée, tableaux en filets fins. Chaque
+section est pilotée par les données du produit et **disparaît si le métachamp
+correspondant est vide** — une fiche non renseignée n'affiche jamais de bloc vide.
 
-Toutes les nouvelles sections sont conditionnées à la présence du métachamp :
-une fiche non encore renseignée n'affiche simplement pas la section.
+## Sections de la page (dans l'ordre)
 
-## Fichiers
+| Section | Fichier | Source des données |
+|---|---|---|
+| En-tête, galerie, achat | `sections/acc-hero.liquid` | `custom.titre_page`, `custom.accroche`, `product.type`, SKU, `custom.compatibilite`, `custom.conseil_quantite`, images produit, note Judge.me |
+| Son rôle (bande sombre animée) | `sections/acc-chrono.liquid` | `custom.a_quoi_ca_sert` |
+| Installation + manuel | `sections/acc-installation.liquid` | `custom.video_installation`, `custom.manuel_produit` |
+| Compatibilité | `sections/acc-compat.liquid` | `custom.compatibilite`, `custom.note_compatibilite` |
+| Fiche technique | `sections/acc-fiche-technique.liquid` | `custom.bandeau_caracteristiques` |
+| Dans la boîte | `sections/acc-boite.liquid` | `custom.contenu_du_pack` |
+| Note clients | `sections/acc-avis.liquid` | `reviews.rating`, `reviews.rating_count` |
+| Avis Judge.me | section `apps` | widget Judge.me |
+| FAQ produit + JSON-LD FAQPage | `sections/acc-faq-produit.liquid` | `custom.faq` (métaobjet `faq_produit`) |
 
-| Fichier | Rôle |
-|---|---|
-| `templates/product.accessoires-sans-details.json` | Template accessoire uniformisé |
-| `sections/acc-fiche-technique.liquid` | Tableau « Fiche technique » |
-| `sections/acc-faq-produit.liquid` | FAQ propre au produit + JSON-LD FAQPage |
-| `snippets/acc-faq-item.liquid` | Rendu d'une question/réponse |
+Styles et scripts communs : `assets/acc-premium.css`, `assets/acc-premium.js`.
 
-## Corrections apportées au template
+## Zone d'achat
 
-- Les onglets « Image & vidéo » et « Dimensions » pointaient vers des métachamps
-  vides : ils s'affichaient vides sur toutes les fiches. Remplacés par des onglets
-  utiles, et le contenu n'est plus enveloppé dans `<p></p>` afin qu'un onglet sans
-  donnée disparaisse au lieu de s'afficher vide.
-- Le métachamp `custom.securite_detection` était renseigné mais affiché nulle part :
-  une définition de métachamp a été créée et l'onglet correspondant ajouté.
-- Suppression, dans ce template uniquement, des sections **désactivées** (invisibles)
-  héritées des pages caméras / abonnement cloud. Le thème publié les conserve.
+- Sélecteur de quantité, total calculé dès 2 pièces.
+- Conseil de quantité issu de `custom.conseil_quantite` (ex. baie vitrée à deux
+  vantaux = deux détecteurs).
+- L'en-tête accepte des blocs d'application : y déposer le widget **Alma** ou le
+  badge **Judge.me** depuis l'éditeur de thème.
+- Le balisage `Product` (prix, stock, note) est réémis par `acc-hero`.
+
+## Métachamps créés pour ce modèle
+
+`custom.titre_page`, `custom.accroche`, `custom.conseil_quantite`,
+`custom.note_compatibilite`, `custom.securite_detection` (définition),
+plus le métaobjet `bandeau_caracteristiques` du WDV301.
+
+## Limites connues
+
+- L'ajout au panier passe par un envoi de formulaire classique : il ouvre la
+  page panier au lieu du tiroir latéral du thème. À rebrancher sur le composant
+  du thème si vous gardez ce modèle.
+- Le rendu n'a pas pu être vérifié depuis l'environnement de développement
+  (accès sortant vers la boutique bloqué) : à contrôler dans l'aperçu.
 
 ## Reste à faire pour généraliser
 
-- Renseigner par accessoire : `bandeau_caracteristiques`, `faq` (métaobjet `faq_produit`),
-  `securite_detection`, `caracteristiques_generales`, `contenu_du_pack`, `manuel_produit`,
-  `video_installation`, ainsi que le type de produit Shopify et le SKU.
-- Reporter la même structure sur les templates `product.accessoires.json` et
-  `product.accesoires-sans-videos.json`.
+Renseigner par accessoire : `titre_page`, `accroche`, `conseil_quantite`,
+`note_compatibilite`, `bandeau_caracteristiques`, `faq`, `contenu_du_pack`,
+`video_installation`, `manuel_produit`, le type de produit et le SKU.
+Puis appliquer le même modèle aux templates `product.accessoires.json` et
+`product.accesoires-sans-videos.json`.

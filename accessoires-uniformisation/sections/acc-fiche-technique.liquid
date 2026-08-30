@@ -1,39 +1,33 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
 {%- assign b = product.metafields.custom.bandeau_caracteristiques.value -%}
 {%- if b != blank -%}
-  <style>
-    #shopify-section-{{ section.id }} .acc-spec { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; }
-    .acc-spec__title { font-size: 24px; font-weight: 600; margin: 0 0 20px; }
-    .acc-spec__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
-    .acc-spec__row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 13px 0; border-bottom: 1px solid #e6e8ec; }
-    .acc-spec__k { font-size: 14px; color: #5b6472; }
-    .acc-spec__v { font-size: 14px; color: #111827; font-weight: 600; text-align: right; }
-    @media (max-width: 749px) { .acc-spec__grid { grid-template-columns: 1fr; } }
-  </style>
-  <div class="page-width">
-    <div class="acc-spec">
-      <h2 class="acc-spec__title">{{ section.settings.heading }}</h2>
-      <div class="acc-spec__grid">
-      {%- if b.nom_du_produit != blank -%}<div class="acc-spec__row"><span class="acc-spec__k">{{ b.nom_du_produit }}</span><span class="acc-spec__v">{{ b.description_1 }}</span></div>{%- endif -%}
-      {%- if b.titres_2 != blank -%}<div class="acc-spec__row"><span class="acc-spec__k">{{ b.titres_2 }}</span><span class="acc-spec__v">{{ b.description_2 }}</span></div>{%- endif -%}
-      {%- if b.titre_3 != blank -%}<div class="acc-spec__row"><span class="acc-spec__k">{{ b.titre_3 }}</span><span class="acc-spec__v">{{ b.description_3 }}</span></div>{%- endif -%}
-      {%- if b.titre_4 != blank -%}<div class="acc-spec__row"><span class="acc-spec__k">{{ b.titre_4 }}</span><span class="acc-spec__v">{{ b.description_4 }}</span></div>{%- endif -%}
-      {%- if b.titre_5 != blank -%}<div class="acc-spec__row"><span class="acc-spec__k">{{ b.titre_5 }}</span><span class="acc-spec__v">{{ b.description_5 }}</span></div>{%- endif -%}
-      {%- if b.titre_6 != blank -%}<div class="acc-spec__row"><span class="acc-spec__k">{{ b.titre_6 }}</span><span class="acc-spec__v">{{ b.description_6 }}</span></div>{%- endif -%}
-      {%- if b.titre_7 != blank -%}<div class="acc-spec__row"><span class="acc-spec__k">{{ b.titre_7 }}</span><span class="acc-spec__v">{{ b.description_7 }}</span></div>{%- endif -%}
-      {%- if b.titre_8 != blank -%}<div class="acc-spec__row"><span class="acc-spec__k">{{ b.titre_8 }}</span><span class="acc-spec__v">{{ b.description_8 }}</span></div>{%- endif -%}
-      </div>
+<div class="accp">
+  <section class="accp-bande accp-bande--gris">
+    <div class="accp-wrap accp-etroit">
+      <p class="accp-ref">{{ section.settings.surtitre }}</p>
+      {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+      <dl class="accp-specs">
+        {%- if b.nom_du_produit != blank -%}<div class="accp-spec"><dt>{{ b.nom_du_produit }}</dt><dd>{{ b.description_1 }}</dd></div>{%- endif -%}
+        {%- if b.titres_2 != blank -%}<div class="accp-spec"><dt>{{ b.titres_2 }}</dt><dd>{{ b.description_2 }}</dd></div>{%- endif -%}
+        {%- if b.titre_3 != blank -%}<div class="accp-spec"><dt>{{ b.titre_3 }}</dt><dd>{{ b.description_3 }}</dd></div>{%- endif -%}
+        {%- if b.titre_4 != blank -%}<div class="accp-spec"><dt>{{ b.titre_4 }}</dt><dd>{{ b.description_4 }}</dd></div>{%- endif -%}
+        {%- if b.titre_5 != blank -%}<div class="accp-spec"><dt>{{ b.titre_5 }}</dt><dd>{{ b.description_5 }}</dd></div>{%- endif -%}
+        {%- if b.titre_6 != blank -%}<div class="accp-spec"><dt>{{ b.titre_6 }}</dt><dd>{{ b.description_6 }}</dd></div>{%- endif -%}
+        {%- if b.titre_7 != blank -%}<div class="accp-spec"><dt>{{ b.titre_7 }}</dt><dd>{{ b.description_7 }}</dd></div>{%- endif -%}
+        {%- if b.titre_8 != blank -%}<div class="accp-spec"><dt>{{ b.titre_8 }}</dt><dd>{{ b.description_8 }}</dd></div>{%- endif -%}
+      </dl>
     </div>
-  </div>
+  </section>
+</div>
 {%- endif -%}
 
 {% schema %}
 {
-  "name": "Fiche technique acc.",
+  "name": "Accessoire — technique",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Titre", "default": "Fiche technique" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Marge haute", "default": 8 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Marge basse", "default": 56 }
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Fiche technique" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Les chiffres." }
   ],
-  "presets": [ { "name": "Fiche technique acc." } ]
+  "presets": [ { "name": "Accessoire — technique" } ]
 }
 {% endschema %}

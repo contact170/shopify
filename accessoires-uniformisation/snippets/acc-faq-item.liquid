@@ -1,11 +1,6 @@
 {%- if q != blank -%}
-<div class="accordion">
-  <details class="details" is="accordion-details">
-    <summary class="details__summary flex items-center justify-between gap-2 cursor-pointer">
-      <span class="text-base lg:text-lg xl:text-xl font-medium leading-tight">{{ q }}</span>
-      {%- render 'icon', icon: 'plus-2', size: 'xs', class: 'shrink-0' -%}
-    </summary>
-    <div class="details__content text-base rte"><p>{{ a | newline_to_br }}</p></div>
-  </details>
-</div>
+<details{% if ouvert %} open{% endif %}>
+  <summary>{{ q }}</summary>
+  <p class="accp-rep">{{ a | newline_to_br }}</p>
+</details>
 {%- endif -%}

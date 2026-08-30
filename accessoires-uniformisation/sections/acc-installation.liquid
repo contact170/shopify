@@ -1,0 +1,38 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- assign v = product.metafields.custom.video_installation.value -%}
+{%- assign manuel = product.metafields.custom.manuel_produit -%}
+{%- if v != blank or manuel != blank -%}
+<div class="accp">
+  <section class="accp-bande accp-bande--gris">
+    <div class="accp-wrap">
+      <div class="accp-etroit">
+        <p class="accp-ref">{{ section.settings.surtitre }}</p>
+        {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.texte != blank -%}
+          <p class="accp-chapo" style="margin-top:18px">{{ section.settings.texte }}</p>
+        {%- endif -%}
+        {%- if manuel != blank -%}
+          <p style="margin-top:22px"><a class="accp-lien" href="{{ manuel }}" target="_blank" rel="noopener">T&eacute;l&eacute;charger le manuel (PDF)</a></p>
+        {%- endif -%}
+      </div>
+      {%- if v != blank -%}
+        <div class="accp-video">
+          {{ v | video_tag: controls: true, image_size: '1200x' }}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — pose",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Installation" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Adhesif fourni. Rien a percer." },
+    { "type": "textarea", "id": "texte", "label": "Texte" }
+  ],
+  "presets": [ { "name": "Accessoire — pose" } ]
+}
+{% endschema %}

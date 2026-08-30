@@ -1,0 +1,56 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- assign a = product.metafields.custom.a_quoi_ca_sert.value -%}
+{%- if a != blank -%}
+<div class="accp">
+  <section class="accp-bande accp-bande--nuit">
+    <div class="accp-wrap">
+      <div class="accp-etroit">
+        {%- if section.settings.titre != blank -%}<h2>{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p class="accp-chapo" style="margin-top:18px">{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </div>
+      <div class="accp-chrono">
+        <div class="accp-vitre"><span class="accp-onde"></span></div>
+        <div class="accp-etapes">
+          {%- if a.titre_1 != blank -%}
+            <div class="accp-etape">
+              <p class="accp-t">{{ section.settings.repere_1 }}</p>
+              <h3>{{ a.titre_1 }}</h3>
+              <p>{{ a.description | newline_to_br }}</p>
+            </div>
+          {%- endif -%}
+          {%- if a.titre_2 != blank -%}
+            <div class="accp-etape">
+              <p class="accp-t">{{ section.settings.repere_2 }}</p>
+              <h3>{{ a.titre_2 }}</h3>
+              <p>{{ a.description_2 | newline_to_br }}</p>
+            </div>
+          {%- endif -%}
+          {%- if a.titre_3 != blank -%}
+            <div class="accp-etape">
+              <p class="accp-t">{{ section.settings.repere_3 }}</p>
+              <h3>{{ a.titre_3 }}</h3>
+              <p>{{ a.description_3 | newline_to_br }}</p>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — role",
+  "settings": [
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Son role dans votre securite." },
+    { "type": "textarea", "id": "intro", "label": "Introduction" },
+    { "type": "text", "id": "repere_1", "label": "Repere 1", "default": "01" },
+    { "type": "text", "id": "repere_2", "label": "Repere 2", "default": "02" },
+    { "type": "text", "id": "repere_3", "label": "Repere 3", "default": "03" }
+  ],
+  "presets": [ { "name": "Accessoire — role" } ]
+}
+{% endschema %}

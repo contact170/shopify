@@ -1,0 +1,146 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'acc-premium.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+
+  assign titre = product.metafields.custom.titre_page.value
+  if titre == blank
+    assign titre = product.title | split: '|' | first | strip
+  endif
+
+  assign accroche = product.metafields.custom.accroche.value
+  assign compat = product.metafields.custom.compatibilite.value.compatibilite
+  assign type_acc = product.type
+  if type_acc == blank
+    assign type_acc = product.metafields.custom.categorie_de_produit.value.categorie_de_produit
+  endif
+
+  assign note = product.metafields.reviews.rating.value.rating
+  assign nb_avis = product.metafields.reviews.rating_count.value
+  assign conseil = product.metafields.custom.conseil_quantite.value
+-%}
+
+<div class="accp">
+  <section class="accp-hero">
+    <div class="accp-wrap">
+
+      <p class="accp-ref">
+        {%- if type_acc != blank -%}{{ type_acc }}{%- endif -%}
+        {%- if v.sku != blank -%} &middot; R&eacute;f. {{ v.sku }}{%- endif -%}
+        {%- if compat != blank -%} &middot; Compatible {{ compat }}{%- endif -%}
+      </p>
+
+      <h1>{{ titre }}</h1>
+      {%- if accroche != blank -%}
+        <p class="accp-chapo">{{ accroche | newline_to_br }}</p>
+      {%- endif -%}
+
+      {%- if note != blank and nb_avis > 0 -%}
+        {%- assign largeur = note | times: 20 -%}
+        <a class="accp-note-clients" href="#avis-clients">
+          <span class="accp-etoiles" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:{{ largeur }}%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span>
+          <span>{{ note | replace: ".", "," }} sur 5 &middot; {{ nb_avis }} avis</span>
+        </a>
+      {%- endif -%}
+
+      {%- if product.images.size > 0 -%}
+        <div class="accp-galerie" data-accp-galerie>
+          <div class="accp-scene">
+            <img data-accp-scene
+                 src="{{ product.featured_image | image_url: width: 900 }}"
+                 alt="{{ product.featured_image.alt | escape }}"
+                 width="900" height="900" fetchpriority="high">
+          </div>
+          {%- if product.images.size > 1 -%}
+            <div class="accp-vignettes" role="group" aria-label="Photos du produit">
+              {%- for img in product.images limit: 6 -%}
+                <button type="button" class="accp-vignette" data-accp-vignette
+                        {% if forloop.first %}aria-current="true"{% endif %}
+                        data-src="{{ img | image_url: width: 900 }}"
+                        data-alt="{{ img.alt | escape }}">
+                  <img src="{{ img | image_url: width: 160 }}" alt="{{ img.alt | escape }}" width="160" height="160" loading="lazy">
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="accp-achat"
+           data-accp-prix-unite="{{ v.price }}"
+           data-accp-devise=" &euro;"
+           data-accp-max="{{ section.settings.quantite_max }}">
+
+        <p class="accp-prix">{{ v.price | money }}
+          {%- if section.settings.mention_prix != blank %} <small>&middot; {{ section.settings.mention_prix }}</small>{% endif -%}
+        </p>
+
+        {%- if conseil != blank -%}
+          {%- assign morceaux = conseil | split: '. ' -%}
+          <p class="accp-conseil"><b>{{ morceaux[0] }}.</b>{{ conseil | remove_first: morceaux[0] | remove_first: '.' }}</p>
+        {%- endif -%}
+
+        {%- form 'product', product, id: 'accp-form', novalidate: 'novalidate' -%}
+          <input type="hidden" name="id" value="{{ v.id }}">
+          <input type="hidden" name="quantity" value="1" data-accp-champ>
+          <div class="accp-ligne">
+            <div class="accp-qte" data-accp-qte>
+              <button type="button" data-accp-moins aria-label="Diminuer la quantit&eacute;">&minus;</button>
+              <output data-accp-valeur aria-live="polite">1</output>
+              <button type="button" data-accp-plus aria-label="Augmenter la quantit&eacute;">+</button>
+            </div>
+            <button type="submit" class="accp-bouton" {% unless v.available %}disabled{% endunless %}>
+              {%- if v.available -%}{{ section.settings.libelle_bouton }}{%- else -%}Rupture de stock{%- endif -%}
+            </button>
+          </div>
+        {%- endform -%}
+
+        <p class="accp-total" data-accp-total></p>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="accp-appblocks">
+            {%- for block in section.blocks -%}
+              {%- if block.type == '@app' -%}{% render block %}{%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.paiement != blank -%}
+          <p class="accp-paiement">{{ section.settings.paiement }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.atout_1 != blank or section.settings.atout_2 != blank or section.settings.atout_3 != blank -%}
+          <ul class="accp-arguments">
+            {%- if section.settings.atout_1 != blank -%}<li>{{ section.settings.atout_1 }}</li>{%- endif -%}
+            {%- if section.settings.atout_2 != blank -%}<li>{{ section.settings.atout_2 }}</li>{%- endif -%}
+            {%- if section.settings.atout_3 != blank -%}<li>{{ section.settings.atout_3 }}</li>{%- endif -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<script type="application/ld+json">
+  {{- product | structured_data -}}
+</script>
+
+{% schema %}
+{
+  "name": "Accessoire — en-tete",
+  "settings": [
+    { "type": "text", "id": "libelle_bouton", "label": "Libelle du bouton", "default": "Ajouter au panier" },
+    { "type": "text", "id": "mention_prix", "label": "Mention a cote du prix", "default": "l'unite" },
+    { "type": "range", "id": "quantite_max", "min": 1, "max": 50, "step": 1, "label": "Quantite maximum", "default": 20 },
+    { "type": "text", "id": "paiement", "label": "Ligne paiement / livraison", "default": "Paiement en 3 ou 4 fois avec Alma" },
+    { "type": "header", "content": "Atouts" },
+    { "type": "text", "id": "atout_1", "label": "Atout 1", "default": "Sans abonnement" },
+    { "type": "text", "id": "atout_2", "label": "Atout 2", "default": "Pose sans percage" },
+    { "type": "text", "id": "atout_3", "label": "Atout 3", "default": "Retour sous 14 jours" }
+  ],
+  "blocks": [ { "type": "@app" } ],
+  "presets": [ { "name": "Accessoire — en-tete" } ]
+}
+{% endschema %}

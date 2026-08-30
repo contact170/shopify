@@ -1,0 +1,36 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- assign contenu = product.metafields.custom.contenu_du_pack.value -%}
+{%- if contenu != blank -%}
+  {%- assign lignes = contenu | newline_to_br | split: '<br />' -%}
+<div class="accp">
+  <section class="accp-bande accp-bande--serree">
+    <div class="accp-wrap">
+      <div class="accp-etroit">
+        <p class="accp-ref">{{ section.settings.surtitre }}</p>
+        {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+      </div>
+      <ul class="accp-boite">
+        {%- assign i = 0 -%}
+        {%- for ligne in lignes -%}
+          {%- assign texte = ligne | strip | remove_first: '•' | remove_first: '-' | strip -%}
+          {%- if texte != blank -%}
+            {%- assign i = i | plus: 1 -%}
+            <li><span class="accp-n">{{ i | prepend: '0' | slice: -2, 2 }}</span>{{ texte }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — boite",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Dans la boite" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Tout est fourni." }
+  ],
+  "presets": [ { "name": "Accessoire — boite" } ]
+}
+{% endschema %}
