@@ -22,6 +22,8 @@ Thème d'aperçu : « Fiche accessoire uniformisee v2 (Claude) » — `202545004
 | WRF301 | Pack de 2 badges RFID | `acc-premium-sd` | Pas de code à retenir. |
 | WRC305 | Télécommande à clapet | `acc-premium-sd` | Dans la poche, sans appui accidentel. |
 | EXT301 | Amplificateur de signal | `ext301` | Quand la centrale n'entend plus l'accessoire. |
+| AM302S | Centrale Touch XL seule | `centrale-seule-touchxl` | Sept pouces. Deux cents accessoires. |
+| AM301S | Centrale Touch seule | `pack-touch-2` ⚠️ | Le cœur du système, vendu seul. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -366,3 +368,42 @@ Le contenu de la boîte annonçait le générique « Accessoire / Adhésive de
 fixation / Manuel ». Remplacé par l'amplificateur, le câble USB vers micro-USB
 de 90 cm et le manuel — **aucune source ne mentionne de kit de fixation**, il
 n'a donc pas été inventé alors que la fiche évoque une pose murale.
+
+## Les deux centrales vendues seules
+
+Premières fiches qui ne sont pas des accessoires. Le modèle s'y applique
+pourtant sans réserve : l'acheteur d'une centrale seule sait déjà ce qu'il
+veut — il remplace, il équipe un second site, ou il monte son installation
+pièce par pièce. Il s'agit de l'aiguiller, pas de le convaincre.
+
+`conseil_quantite`, sous le prix, sert ici d'avertissement d'achat :
+**la centrale est vendue seule, sans détecteur ni sirène**, et un pack revient
+moins cher pour une première installation. C'est l'information qui évite une
+commande décevante et un retour.
+
+L'écart entre les deux modèles est traité frontalement, dans les deux sens :
+écran de 4,3 vs 7 pouces, et 90 vs 200 accessoires. La capacité de 200 ne sert
+à rien dans un appartement ; la fiche le dit.
+
+### AM301S : gabarit partagé, bascule impossible
+
+`pack-touch-2` est utilisé par **16 produits** : packs Touch et Touch XL, offres
+Black Friday et Noël, packs AM340 à AM343 et AM350 à AM353, offres exclusives.
+Y appliquer la mise en page premium contaminerait toutes ces fiches — c'est
+exactement l'erreur commise au départ avec `product.accessoires.json`.
+
+La fiche AM301S est donc complète côté données, mais **elle ne s'affiche pas
+encore avec le nouveau design**. Il faut un gabarit qui lui soit propre.
+
+Pour l'AM302S, `centrale-seule-touchxl` n'est utilisé que par elle : le gabarit
+premium a été créé sur le thème v2, la fiche est visible.
+
+### Balises SEO absentes
+
+Les deux centrales avaient une **balise titre nulle**. L'AM302S n'avait ni titre
+ni méta-description — une fiche à 219,90 € invisible en recherche. Les deux sont
+désormais renseignées, et les titres produit reformulés pour porter la mention
+« seule », qui est le point de confusion de ces deux pages.
+
+Aucune n'avait de FAQ : huit questions rédigées pour chacune, centrées sur les
+deux questions qui décident — ce qu'il y a dans la boîte, et 4,3 ou 7 pouces.
