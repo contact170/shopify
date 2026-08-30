@@ -428,3 +428,41 @@ Corollaire à conserver : elles restent dans la liste d'exclusions du bandeau
 cela, une fiche détecteur à 30 € proposerait une centrale à 119,90 € ou
 219,90 € comme complément, ce qui n'a pas de sens pour un client qui possède
 déjà la sienne.
+
+## Réglages typographiques et image principale
+
+Trois demandes traitées d'un coup sur les fichiers partagés — donc sur les
+**19 fiches** à la fois.
+
+**La police n'était pas la même selon l'appareil.** C'était un vrai défaut, pas
+une impression. Les tokens définissaient :
+
+    --accp-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "SF Pro Text", "Inter Tight", "Segoe UI", Roboto, sans-serif
+
+Sur Mac et iPhone, `-apple-system` l'emportait et la page s'affichait en
+**San Francisco**. Sur Windows et Android, ces polices n'existent pas et le
+navigateur retombait sur **Inter Tight**, chargée depuis Google Fonts. Deux
+typographies distinctes pour un même design.
+
+Corrigé en plaçant `"Inter Tight"` en tête : tout le monde voit la même chose,
+les polices système ne servant plus que de secours si Google Fonts ne répond
+pas.
+
+Second foyer d'incohérence : le bloc description est rendu dans un conteneur
+`.rte`, la classe de texte enrichi du thème, qui impose sa propre police. La
+section `acc-description` la neutralise désormais explicitement.
+
+Restent en police du thème, et c'est normal : les widgets Judge.me, Alma et
+Moast, qui ne sont pas sous notre contrôle.
+
+**Image principale** : `max-width` de la galerie portée de 340 à 430 px,
+vignettes de 54 à 60 px.
+
+**Textes** : environ +1 px sur les tailles courantes — corps de description
+16 → 17 px, réponses de FAQ 16 → 17 px, lignes de fiche technique 15 → 16 px,
+contenu de la boîte 15 → 16 px, conseil de quantité 14 → 15 px, prix 21 → 23 px,
+bouton 17 → 18 px, chapô jusqu'à 22 px. Interlignes ajustés en conséquence.
+
+Les cinq fichiers ont été vérifiés par empreinte MD5 après envoi : le thème est
+identique au miroir du dépôt.
