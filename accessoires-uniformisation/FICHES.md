@@ -51,6 +51,9 @@ La pile CR123A est fournie avec le produit. Restent à confirmer : les dimension
 Le produit n'avait aucune balise titre SEO (`seo.title` vide) : Google reprenait
 le titre brut du produit. Une balise a été rédigée.
 
-Ses caractéristiques (portée de 10 m, IP66, dimensions, piles ER15505H,
-autonomie de 2 ans, anti-démontage) étaient présentes dans les métachamps mais
-peu visibles sur la page ; elles remontent dans la fiche technique.
+Ses caractéristiques (portée de 10 m, IP66, dimensions 33 x 3,5 cm, 4 piles
+ER15505H 3,6 V incluses, autonomie de 2 ans, anti-démontage) étaient présentes
+dans les métachamps mais peu visibles sur la page ; elles remontent dans la
+fiche technique.
+
+Piles fournies, comme celle du WSD301 : indiqué dans le contenu de la boîte.
