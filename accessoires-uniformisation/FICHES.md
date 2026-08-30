@@ -57,3 +57,25 @@ dans les métachamps mais peu visibles sur la page ; elles remontent dans la
 fiche technique.
 
 Piles fournies, comme celle du WSD301 : indiqué dans le contenu de la boîte.
+
+## Bandeau « Complétez votre système »
+
+Les recommandations automatiques de Shopify piochaient dans tout le catalogue et
+remontaient des centrales d'alarme. Elles sont remplacées par
+`sections/acc-complements.liquid`, qui affiche les autres produits de la
+collection **« Compatible … »** à laquelle appartient le produit courant — donc
+toujours la même gamme. Sans collection de ce type, la section reste masquée
+plutôt que d'afficher une gamme étrangère.
+
+La section écarte aussi les doublons « Configurateur | … » et accepte une liste
+de handles à exclure.
+
+### Donnée à corriger
+
+Les centrales **Touch AM301** (`centrale-touch-am301-avec-ecran-tactile-4-3`) et
+**Touch XL AM302** (`centrale-am302`) portent le métachamp
+`custom.categorie_de_produit` = « Accessoires ». Elles entrent donc dans la
+collection « Compatible gamme Vigilia / Touch », qui sert de source au bandeau.
+Elles sont écartées par la liste d'exclusions, mais la vraie correction est de
+changer leur catégorie — à valider, car cela les retirerait aussi de la page de
+cette collection.
