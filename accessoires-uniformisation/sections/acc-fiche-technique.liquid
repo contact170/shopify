@@ -1,11 +1,17 @@
 {{ 'acc-premium.css' | asset_url | stylesheet_tag }}
-{%- assign b = product.metafields.custom.bandeau_caracteristiques.value -%}
-{%- if b != blank -%}
+{%- liquid
+  assign b = product.metafields.custom.bandeau_caracteristiques.value
+  assign d1 = product.metafields.custom.securite_detection.value
+  assign d2 = product.metafields.custom.connectivite.value
+  assign d3 = product.metafields.custom.alimentation_autonomie.value
+-%}
+{%- if b != blank or d1 != blank or d2 != blank or d3 != blank -%}
 <div class="accp">
   <section class="accp-bande accp-bande--gris">
     <div class="accp-wrap accp-etroit">
       <p class="accp-ref">{{ section.settings.surtitre }}</p>
       {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+      {%- if b != blank -%}
       <dl class="accp-specs">
         {%- if b.nom_du_produit != blank -%}<div class="accp-spec"><dt>{{ b.nom_du_produit }}</dt><dd>{{ b.description_1 }}</dd></div>{%- endif -%}
         {%- if b.titres_2 != blank -%}<div class="accp-spec"><dt>{{ b.titres_2 }}</dt><dd>{{ b.description_2 }}</dd></div>{%- endif -%}
@@ -16,6 +22,21 @@
         {%- if b.titre_7 != blank -%}<div class="accp-spec"><dt>{{ b.titre_7 }}</dt><dd>{{ b.description_7 }}</dd></div>{%- endif -%}
         {%- if b.titre_8 != blank -%}<div class="accp-spec"><dt>{{ b.titre_8 }}</dt><dd>{{ b.description_8 }}</dd></div>{%- endif -%}
       </dl>
+      {%- endif -%}
+
+      {%- if d1 != blank or d2 != blank or d3 != blank -%}
+        <div class="accp-faq" style="margin-top:{% if b != blank %}34{% else %}20{% endif %}px">
+          {%- if d1 != blank -%}
+            <details><summary>{{ section.settings.titre_1 }}</summary><p class="accp-rep">{{ d1 | newline_to_br }}</p></details>
+          {%- endif -%}
+          {%- if d2 != blank -%}
+            <details><summary>{{ section.settings.titre_2 }}</summary><p class="accp-rep">{{ d2 | newline_to_br }}</p></details>
+          {%- endif -%}
+          {%- if d3 != blank -%}
+            <details><summary>{{ section.settings.titre_3 }}</summary><p class="accp-rep">{{ d3 | newline_to_br }}</p></details>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   </section>
 </div>
@@ -26,7 +47,11 @@
   "name": "Accessoire — technique",
   "settings": [
     { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Fiche technique" },
-    { "type": "text", "id": "titre", "label": "Titre", "default": "Les chiffres." }
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Les chiffres." },
+    { "type": "header", "content": "Details deroulants" },
+    { "type": "text", "id": "titre_1", "label": "Titre securite", "default": "Securite et detection" },
+    { "type": "text", "id": "titre_2", "label": "Titre connectivite", "default": "Connectivite" },
+    { "type": "text", "id": "titre_3", "label": "Titre alimentation", "default": "Alimentation et pose" }
   ],
   "presets": [ { "name": "Accessoire — technique" } ]
 }
