@@ -291,13 +291,20 @@ Reste actif en revanche : **« Configurateur | Télécommande WRC301 »**
 Tant qu'il est actif, la référence abandonnée reste proposée dans le parcours du
 configurateur. À passer en brouillon également, ou à remplacer par la WRC305.
 
-## WRC305 : 868 MHz, à confirmer
+## WRC305 : 868 MHz corrigé en 433 MHz
 
-Le métachamp `connectivite` annonçait une liaison **868 MHz**, alors que les
-autres accessoires de la même gamme communiquent en **433 MHz** (WKE301, WIS305,
-SOS301, tous compatibles avec les mêmes centrales). La valeur d'origine a été
-reprise telle quelle, mais l'écart mérite vérification : si c'est une erreur,
-elle est reprise dans le bandeau de caractéristiques et la FAQ.
+Erreur confirmée par le client : les centrales Touch et Vigilia ne gèrent pas
+le 868 MHz. La valeur figurait à deux endroits, tous deux corrigés :
+
+- fiche **WRC305** : métachamps `connectivite`, `securite_detection`,
+  `note_compatibilite`, bandeau de caractéristiques et description ;
+- fiche **« Configurateur | Télécommande WRC301 »** (WRC301C), où le même
+  « RF868 MHz » traînait dans `connectivite`.
+
+Balayage effectué sur les 29 produits de la collection « Compatible gamme
+Vigilia / Touch » (métachamps `connectivite`, `securite_detection`,
+`evolutivite_compatibilite`) : **aucune autre occurrence de 868 MHz**. Le reste
+de la gamme annonce bien 433 MHz, ou 433,92 MHz pour le WVD301.
 
 La portée annoncée, **20 m**, est également faible pour une télécommande —
 cohérente avec un porte-clés, mais à confirmer.
@@ -309,3 +316,17 @@ description d'origine.
 
 Type de produit corrigé : il valait « Pour armer/désarmer votre alarme », ce qui
 aurait donné le titre « Daewoo Pour armer/désarmer votre alarme WRC305 ».
+
+## Mentions de Vigilia encore manquantes
+
+Repéré pendant le balayage, non corrigé faute de certitude :
+
+- **WDS301** (contacteur de porte) : `connectivite` annonce « les centrales
+  Daewoo TOUCH (AM301 / AM302) », sans Vigilia — alors que le produit est dans
+  la collection Vigilia / Touch.
+- **WOS301** (sirène filaire) : « Compatible uniquement avec les centrales TOUCH
+  et TOUCH XL ». S'agissant d'une sirène filaire, la restriction est peut-être
+  réelle. À confirmer avant de modifier.
+
+À noter aussi : un produit **« Détecteur de fumée WSD301 — GRATUIT »**
+(WSD301CGRATUIT) coexiste avec le WSD301 standard, avec ses propres textes.
