@@ -161,20 +161,20 @@ Réponse de FAQ nettoyée au passage : elle contenait une note de rédaction ent
 parenthèses (« La durée d'autonomie sur batterie seule n'est pas précisée dans
 la fiche. »), visible côté client.
 
-## SOS301 — données manquantes
+## SOS301 — pile et étanchéité
 
-Deux informations absentes de toutes les sources, et volontairement non
-inventées :
+**Pile : réglé.** Alcaline 27A 12 V, fournie — vendue partout sous les
+références A27 ou MN27. Remplaçable par le client, sans outil. C'est un argument
+et non un détail technique : pas de batterie propriétaire, pas de socle de
+recharge à penser à utiliser, rien à renvoyer en atelier. Traité comme tel dans
+la description, la fiche technique, la FAQ et le contenu de la boîte.
 
-- **La pile.** Aucun document n'indique son type, ni si elle est remplaçable
-  par l'utilisateur. Sur un bracelet porté en permanence par une personne âgée,
-  c'est une question d'achat évidente. `alimentation_autonomie` s'en tient donc
-  à la consommation (< 3 µA en veille, ≤ 15 mA en alerte).
-- **L'étanchéité.** Rien non plus. Or un bracelet qu'on ne peut pas garder sous
-  la douche perd une grande partie de son intérêt : la salle de bain est le lieu
-  de chute le plus fréquent. À préciser dès que l'information est disponible.
-
-`contenu_du_pack` reste vide pour la même raison.
+**Étanchéité : toujours inconnue.** Rien n'est affirmé sur la page tant que
+l'information n'est pas disponible. C'est pourtant le point le plus important
+qui reste ouvert sur cette fiche : la salle de bain est le lieu de chute le plus
+fréquent, et un bracelet qu'on retire pour se doucher n'est pas porté au moment
+où il servirait. Dès que la donnée arrive, elle mérite d'être mise en avant
+dans le bandeau de caractéristiques.
 
 ## Descriptions polluées par du balisage colle
 
