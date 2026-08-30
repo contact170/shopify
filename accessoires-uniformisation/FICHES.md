@@ -34,17 +34,14 @@ description (« Où l'installer »), volet « Sécurité et détection », et li
 La consigne ne concerne que les détecteurs d'extérieur : le WPS305 est un
 modèle d'intérieur. Reste à vérifier sur le WMO501.
 
-## WSD301 — données manquantes
+## WSD301 — données complétées
 
-Aucune information d'alimentation, d'autonomie ni de certification n'existe
-dans les métachamps du produit. Le métachamp « Alimentation / Autonomie »
-contenait en réalité un argument commercial (« Sécurité permanente… ») ;
-il a été remplacé par les informations de pose, qui correspondent au titre du
-volet. À compléter :
+Le métachamp « Alimentation / Autonomie » contenait un argument commercial
+(« Sécurité permanente… ») au lieu des données attendues. Complété depuis :
 
-- type de pile et autonomie ;
-- norme de certification (EN 14604 ou équivalent) ;
-- dimensions.
+- alimentation : 1 pile CR123A longue autonomie (durée volontairement non chiffrée) ;
+- certification : EN 14604 ;
+- pose : visserie et kit de fixation inclus.
 
-Le contenu de la boîte annonce « 1 kit de fixation » : à confirmer (adhésif ou
-visserie), et à préciser si les piles sont fournies.
+Reste à confirmer : les dimensions, et si la pile est bien livrée avec le
+produit (elle figure dans le contenu de la boîte).
