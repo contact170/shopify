@@ -2,7 +2,8 @@
 <script src="{{ 'acc-premium.js' | asset_url }}" defer></script>
 
 <style>
-  .accp-sous-titre{font-size:clamp(18px,2.3vw,27px);font-weight:600;letter-spacing:-.022em;line-height:1.15;margin:12px 0 0}
+  .accp-hero h1{font-size:clamp(29px,4.4vw,49px);margin:0}
+  .accp-sous-titre{font-size:clamp(18px,2.3vw,26px);font-weight:600;letter-spacing:-.022em;line-height:1.15;margin:12px 0 0}
   .accp-badge{display:inline-flex;align-items:center;gap:7px;margin-top:18px;padding:8px 17px;
     border-radius:980px;border:1px solid var(--accp-filet);background:#fff;font-size:14px;color:var(--accp-doux)}
   .accp-badge b{color:var(--accp-encre);font-weight:600}
@@ -12,22 +13,31 @@
   assign v = product.selected_or_first_available_variant
 
   assign nom_court = product.title | split: '|' | first | strip
-  assign identite = nom_court
+
+  assign type_acc = product.type
+  if type_acc == blank
+    assign type_acc = product.metafields.custom.categorie_de_produit.value.categorie_de_produit
+  endif
+
+  assign identite = section.settings.marque
+  if type_acc != blank
+    assign identite = identite | append: ' ' | append: type_acc
+  endif
   if v.sku != blank
-    assign identite = section.settings.marque | append: ' ' | append: v.sku | strip
+    assign identite = identite | append: ' ' | append: v.sku
+  endif
+  assign identite = identite | strip
+  if type_acc == blank and v.sku == blank
+    assign identite = nom_court
   endif
 
   assign sous = product.metafields.custom.titre_page.value
-  if sous == blank and v.sku != blank
+  if sous == blank
     assign sous = nom_court
   endif
 
   assign accroche = product.metafields.custom.accroche.value
   assign compat = product.metafields.custom.compatibilite.value.compatibilite
-  assign type_acc = product.type
-  if type_acc == blank
-    assign type_acc = product.metafields.custom.categorie_de_produit.value.categorie_de_produit
-  endif
 
   assign note = product.metafields.reviews.rating.value.rating
   assign nb_avis = product.metafields.reviews.rating_count.value
@@ -38,10 +48,8 @@
   <section class="accp-hero">
     <div class="accp-wrap">
 
-      {%- if type_acc != blank -%}<p class="accp-ref">{{ type_acc }}</p>{%- endif -%}
-
       <h1>{{ identite }}</h1>
-      {%- if sous != blank -%}<p class="accp-sous-titre">{{ sous }}</p>{%- endif -%}
+      {%- if sous != blank and sous != identite -%}<p class="accp-sous-titre">{{ sous }}</p>{%- endif -%}
       {%- if accroche != blank -%}
         <p class="accp-chapo" style="margin-top:14px">{{ accroche | newline_to_br }}</p>
       {%- endif -%}
@@ -145,14 +153,14 @@
 {
   "name": "Accessoire — en-tete",
   "settings": [
-    { "type": "text", "id": "marque", "label": "Marque affichee avant la reference", "default": "Daewoo" },
+    { "type": "text", "id": "marque", "label": "Marque affichee avant le nom", "default": "Daewoo" },
     { "type": "text", "id": "libelle_bouton", "label": "Libelle du bouton", "default": "Ajouter au panier" },
     { "type": "text", "id": "mention_prix", "label": "Mention a cote du prix", "default": "l'unite" },
     { "type": "range", "id": "quantite_max", "min": 1, "max": 50, "step": 1, "label": "Quantite maximum", "default": 20 },
     { "type": "text", "id": "paiement", "label": "Ligne paiement / livraison", "default": "Paiement en 3 ou 4 fois avec Alma" },
     { "type": "header", "content": "Atouts" },
     { "type": "text", "id": "atout_1", "label": "Atout 1", "default": "Sans abonnement" },
-    { "type": "text", "id": "atout_2", "label": "Atout 2", "default": "Pose sans percage" },
+    { "type": "text", "id": "atout_2", "label": "Atout 2", "default": "Installation autonome" },
     { "type": "text", "id": "atout_3", "label": "Atout 3", "default": "Retour sous 14 jours" }
   ],
   "blocks": [ { "type": "@app" } ],
