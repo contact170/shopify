@@ -11,6 +11,7 @@ Thème d'aperçu : « Fiche accessoire uniformisee v1 (Claude) » — `202527113
 | WMO301 | Détecteur de mouvement extérieur | `accessoires` | La détection commence avant la porte. |
 | WSD301 | Détecteur de fumée connecté | `accessoires` | 85 dB dans la maison. Une alerte dans votre poche. |
 | BIR301 | Barrières infrarouge | `accessoires-sans-details` | Franchir le faisceau suffit. |
+| WWF301 | Détecteur de fuite d'eau | `accessoires` | Les premières gouttes suffisent. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -79,3 +80,17 @@ collection « Compatible gamme Vigilia / Touch », qui sert de source au bandeau
 Elles sont écartées par la liste d'exclusions, mais la vraie correction est de
 changer leur catégorie — à valider, car cela les retirerait aussi de la page de
 cette collection.
+
+## WWF301 — éléments manquants
+
+Deux sections de la fiche resteront masquées tant que les données n'existent pas :
+
+- **FAQ produit** : le métachamp `custom.faq` n'est pas renseigné (aucun métaobjet
+  `faq_produit` pour cette référence). C'est le seul des huit produits traités
+  dans ce cas.
+- **Lien vers le manuel** : `custom.manuel_produit` est vide.
+
+Le titre du produit annonçait « Compatible Touch (AM301/AM302) » sans Vigilia,
+alors que la description et le métachamp de compatibilité l'incluent. Aligné sur
+la convention de la gamme : « | Compatible Touch/Vigilia (AM30x) ». L'URL du
+produit est inchangée.
