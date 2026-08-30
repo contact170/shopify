@@ -149,12 +149,12 @@ interne vers la sirène extérieure WOS305.
 
 À vérifier : d'autres fiches du catalogue peuvent avoir la même pollution.
 
-## WIS305 — contenu de la boîte inconnu
+## WIS305 — contenu de la boîte
 
-`contenu_du_pack` n'est pas renseigné et n'a pas été inventé : rien dans les
-sources ne dit si le câble USB Type-C et l'adaptateur secteur sont livrés avec
-la sirène. La section « Dans la boîte » reste masquée tant que l'information
-n'est pas confirmée.
+Confirmé par le client : sirène, kit de fixation murale, câble USB Type-C,
+adaptateur secteur et manuel d'utilisation. Le fait que le câble et la prise
+soient fournis est repris dans la description, car c'est une question d'achat
+récurrente sur un produit alimenté en USB.
 
 Réponse de FAQ nettoyée au passage : elle contenait une note de rédaction entre
 parenthèses (« La durée d'autonomie sur batterie seule n'est pas précisée dans
