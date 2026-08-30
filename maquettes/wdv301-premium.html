@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WDV301 — Maquette fiche accessoire premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blanc:#ffffff;
+  --gris-cadre:#f2f3f5;
+  --noir-vitre:#0b0d10;
+  --encre:#14161a;
+  --texte-doux:#6e7480;
+  --filet:#e2e4e8;
+  --bleu:#1a4fab;
+  --alerte:#ff4d3d;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter Tight","Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --bande:clamp(72px,11vw,148px);
+  --marge:clamp(20px,5vw,40px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--blanc);color:var(--encre);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;letter-spacing:-.011em;line-height:1.5}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--bleu);outline-offset:3px;border-radius:4px}
+
+.wrap{max-width:1040px;margin:0 auto;padding:0 var(--marge)}
+.etroit{max-width:760px}
+
+/* ---------- typographie ---------- */
+.ref{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--texte-doux)}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.06}
+h1{font-size:clamp(40px,7.4vw,76px)}
+h2{font-size:clamp(30px,4.6vw,52px)}
+h3{font-size:clamp(20px,2.4vw,26px);letter-spacing:-.02em;line-height:1.2}
+.chapo{font-size:clamp(17px,2vw,22px);line-height:1.5;color:var(--texte-doux);letter-spacing:-.014em}
+
+/* ---------- barre d'achat ---------- */
+.barre{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:16px;
+  padding:11px var(--marge);background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(18px);
+  border-bottom:1px solid var(--filet);font-size:14px}
+.barre b{font-weight:600}
+.barre .sep{color:var(--filet)}
+.barre .pousse{margin-left:auto}
+.bouton{display:inline-flex;align-items:center;justify-content:center;border:0;cursor:pointer;
+  background:var(--bleu);color:#fff;font:inherit;font-weight:500;font-size:15px;
+  padding:11px 22px;border-radius:980px;text-decoration:none;transition:transform .18s,filter .18s}
+.bouton:hover{filter:brightness(1.1)}
+.bouton:active{transform:scale(.97)}
+.bouton--grand{font-size:17px;padding:15px 34px}
+.bouton--clair{background:#fff;color:var(--encre)}
+.lien{color:var(--bleu);text-decoration:none;font-size:15px}
+.lien:hover{text-decoration:underline}
+
+/* ---------- sections ---------- */
+.bande{padding:var(--bande) 0}
+.bande--gris{background:var(--gris-cadre)}
+.bande--nuit{background:var(--noir-vitre);color:#fff}
+.bande--nuit .chapo{color:#8d949e}
+.bande--serree{padding-top:clamp(48px,7vw,88px)}
+
+/* ---------- hero ---------- */
+.hero{text-align:center;background:linear-gradient(180deg,var(--gris-cadre) 0%,#fff 62%);
+  padding:clamp(44px,7vw,78px) 0 clamp(24px,4vw,44px)}
+.hero .ref{margin-bottom:18px}
+.hero h1{margin-bottom:20px}
+.hero .chapo{margin:0 auto;max-width:36ch}
+.hero .achat{margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.prix{font-size:19px;font-weight:500}
+.prix small{color:var(--texte-doux);font-weight:400}
+.hero figure{margin:clamp(24px,4vw,44px) auto 0;max-width:820px}
+.hero img{mix-blend-mode:multiply}
+
+/* ---------- signature : chronologie ---------- */
+.chrono{position:relative;margin-top:clamp(40px,6vw,72px)}
+.vitre{position:relative;height:2px;background:#23262c;border-radius:2px;overflow:visible}
+.onde{position:absolute;top:50%;left:0;width:170px;height:2px;transform:translate(-170px,-50%);
+  background:linear-gradient(90deg,transparent,var(--alerte));border-radius:2px;opacity:0}
+.chrono.actif .onde{animation:file 2.3s cubic-bezier(.4,0,.2,1) .15s forwards}
+@keyframes file{0%{opacity:0;transform:translate(-170px,-50%)}
+  10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translate(calc(100vw + 170px),-50%)}}
+.etapes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,4vw,48px);margin-top:34px}
+.etape{opacity:0;transform:translateY(14px)}
+.chrono.actif .etape{animation:monte .7s cubic-bezier(.2,.7,.3,1) forwards}
+.chrono.actif .etape:nth-child(1){animation-delay:.35s}
+.chrono.actif .etape:nth-child(2){animation-delay:.95s}
+.chrono.actif .etape:nth-child(3){animation-delay:1.55s}
+@keyframes monte{to{opacity:1;transform:none}}
+.etape .t{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--alerte);margin-bottom:10px}
+.etape h3{color:#fff;margin-bottom:8px}
+.etape p{margin:0;color:#8d949e;font-size:15px;line-height:1.55}
+
+/* ---------- roles ---------- */
+.roles{display:grid;gap:clamp(56px,9vw,110px);margin-top:clamp(44px,6vw,76px)}
+.role{display:grid;gap:clamp(24px,4vw,56px);align-items:center}
+@media(min-width:820px){
+  .role{grid-template-columns:1fr 1fr}
+  .role:nth-child(even) .role__img{order:-1}
+}
+.role__img{background:var(--gris-cadre);border-radius:20px;overflow:hidden}
+.role__img img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;mix-blend-mode:multiply}
+.role p{margin:14px 0 0;font-size:17px;line-height:1.6;color:var(--texte-doux)}
+
+/* ---------- video ---------- */
+.video{margin-top:clamp(32px,5vw,56px);border-radius:20px;overflow:hidden;background:#000}
+.video video{width:100%;display:block}
+
+/* ---------- compatibilite ---------- */
+.compat{text-align:center}
+.compat .gammes{font-size:clamp(34px,6vw,64px);font-weight:600;letter-spacing:-.035em;line-height:1.08;margin:22px 0 0}
+.compat .exclu{margin:26px auto 0;max-width:52ch;font-size:15px;color:var(--texte-doux);line-height:1.6}
+.compat .exclu b{color:var(--encre);font-weight:600}
+
+/* ---------- fiche technique ---------- */
+.specs{margin-top:clamp(32px,5vw,52px);border-top:1px solid var(--filet)}
+.spec{display:flex;justify-content:space-between;align-items:baseline;gap:24px;
+  padding:17px 0;border-bottom:1px solid var(--filet)}
+.spec dt{color:var(--texte-doux);font-size:15px;margin:0}
+.spec dd{margin:0;text-align:right;font-size:15px;font-weight:500}
+.spec dd .val{font-family:var(--mono);font-weight:400;letter-spacing:-.01em}
+
+/* ---------- boite ---------- */
+.boite{list-style:none;margin:clamp(28px,4vw,44px) 0 0;padding:0;display:grid;gap:2px;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.boite li{background:#fff;padding:26px 22px;font-size:15px;line-height:1.45}
+.boite li:first-child{border-radius:16px 0 0 16px}
+.boite li:last-child{border-radius:0 16px 16px 0}
+.boite .n{font-family:var(--mono);font-size:12px;color:var(--texte-doux);display:block;margin-bottom:8px}
+@media(max-width:640px){.boite li{border-radius:16px!important}}
+
+/* ---------- faq ---------- */
+.faq{margin-top:clamp(28px,4vw,48px);border-top:1px solid var(--filet)}
+.faq details{border-bottom:1px solid var(--filet)}
+.faq summary{cursor:pointer;list-style:none;padding:22px 40px 22px 0;position:relative;
+  font-size:17px;font-weight:500;letter-spacing:-.015em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:8px;top:50%;width:11px;height:11px;
+  border-right:1.5px solid var(--texte-doux);border-bottom:1.5px solid var(--texte-doux);
+  transform:translateY(-70%) rotate(45deg);transition:transform .25s}
+.faq details[open] summary::after{transform:translateY(-25%) rotate(-135deg)}
+.faq .rep{padding:0 40px 24px 0;margin:0;color:var(--texte-doux);font-size:16px;line-height:1.62}
+
+/* ---------- final ---------- */
+.final{text-align:center}
+.final h2{color:#fff}
+.final .achat{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.final .prix{color:#fff}
+.final .prix small{color:#8d949e}
+
+.note{max-width:1040px;margin:0 auto;padding:22px var(--marge) 60px;font-size:13px;color:var(--texte-doux)}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .etape{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="barre">
+  <b>Détecteur WDV301</b>
+  <span class="sep">·</span>
+  <span>Ouverture + vibration</span>
+  <span class="pousse prix">39,90 €</span>
+  <a class="bouton" href="#acheter">Ajouter au panier</a>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <p class="ref">Daewoo Security · WDV301</p>
+    <h1>Deux détections.<br>Un seul capteur.</h1>
+    <p class="chapo">Il sent l'ouverture. Il sent le choc. Vous êtes prévenu pendant la tentative, pas après l'intrusion.</p>
+    <div class="achat">
+      <p class="prix">39,90 € <small>· livré sous 24 à 48 h</small></p>
+      <a class="bouton bouton--grand" href="#acheter">Ajouter au panier</a>
+    </div>
+    <figure>
+      <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WDV301_image_principale_premium_2048.webp?v=1788074823"
+           alt="Détecteur d'ouverture et de vibration 2-en-1 WDV301 pour alarme Daewoo Touch, Touch XL et Vigilia"
+           width="2048" height="2048">
+    </figure>
+  </div>
+</header>
+
+<!-- SIGNATURE : la chronologie de detection -->
+<section class="bande bande--nuit">
+  <div class="wrap">
+    <div class="etroit">
+      <h2 style="color:#fff">Le choc suffit.</h2>
+      <p class="chapo" style="margin-top:18px">Un contacteur classique attend que la fenêtre s'ouvre. Le WDV301 réagit dès la première secousse sur la vitre.</p>
+    </div>
+    <div class="chrono" id="chrono">
+      <div class="vitre"><span class="onde"></span></div>
+      <div class="etapes">
+        <div class="etape">
+          <p class="t">01 · SUR LA VITRE</p>
+          <h3>Un choc, un forçage</h3>
+          <p>Le capteur de vibration détecte les coups portés au vantail ou au vitrage. Sensibilité réglable sur 5 niveaux.</p>
+        </div>
+        <div class="etape">
+          <p class="t">02 · 433 MHz</p>
+          <h3>Signal vers la centrale</h3>
+          <p>Liaison radio dédiée avec votre centrale Daewoo, sans passer par le Wi-Fi ni par Internet.</p>
+        </div>
+        <div class="etape">
+          <p class="t">03 · SUR VOTRE TÉLÉPHONE</p>
+          <h3>Sirène et notification</h3>
+          <p>L'alarme se déclenche si le système est armé, et l'alerte part sur Daewoo Home Connect — par SMS si la centrale a une carte SIM.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="bande">
+  <div class="wrap">
+    <div class="etroit">
+      <p class="ref">Son rôle</p>
+      <h2 style="margin-top:14px">Là où votre logement est le plus exposé.</h2>
+    </div>
+    <div class="roles">
+      <article class="role">
+        <div>
+          <h3>Baies vitrées et portes-fenêtres</h3>
+          <p>Les grandes surfaces vitrées sont les points d'entrée les plus attaqués et les plus difficiles à protéger. Le WDV301 y couvre les deux scénarios : on force, ou on ouvre.</p>
+        </div>
+        <div class="role__img">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WDV301_installation_porte_fermee_2048.webp?v=1788074569"
+               alt="Détecteur WDV301 installé sur une porte fermée, module et aimant alignés" loading="lazy">
+        </div>
+      </article>
+      <article class="role">
+        <div>
+          <h3>L'ouverture, à la seconde près</h3>
+          <p>Dès que l'aimant s'écarte du module, la centrale est prévenue. La LED confirme la détection, et l'événement s'inscrit dans l'historique de l'application.</p>
+        </div>
+        <div class="role__img">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WDV301_installation_porte_ouverte_LED_2048.webp?v=1788074569"
+               alt="Détecteur WDV301 sur une porte ouverte, LED allumée lors de la détection" loading="lazy">
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALLATION -->
+<section class="bande bande--gris">
+  <div class="wrap">
+    <div class="etroit">
+      <p class="ref">Installation</p>
+      <h2 style="margin-top:14px">Adhésif fourni.<br>Rien à percer.</h2>
+      <p class="chapo" style="margin-top:18px">Basculez l'interrupteur sur ON, associez le détecteur dans l'application en catégorie&nbsp;« Générale », collez le module et l'aimant face à face. Compter deux minutes.</p>
+    </div>
+    <div class="video">
+      <video controls preload="none" playsinline
+             poster="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/preview_images/c3a8e3868f0b47468a6b6eb9732a6b59.thumbnail.0000000000.jpg?v=1765285889">
+        <source src="https://cdn.shopify.com/videos/c/vp/c3a8e3868f0b47468a6b6eb9732a6b59/c3a8e3868f0b47468a6b6eb9732a6b59.HD-720p-1.6Mbps-64794106.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- COMPATIBILITE -->
+<section class="bande compat">
+  <div class="wrap">
+    <p class="ref">Compatibilité</p>
+    <p class="gammes">Touch.<br>Touch&nbsp;XL.<br>Vigilia.</p>
+    <p class="exclu">Centrales <b>AM301</b>, <b>AM302</b> et <b>Vigilia</b>. Ajoutez-en autant que votre centrale peut en gérer.<br>
+      Les gammes <b>Key&nbsp;(SA501)</b> et <b>Élite&nbsp;(PA501Z)</b> utilisent leurs propres contacteurs&nbsp;: WDS501 et WDS502Z&nbsp;Zigbee.</p>
+  </div>
+</section>
+
+<!-- FICHE TECHNIQUE -->
+<section class="bande bande--gris">
+  <div class="wrap etroit">
+    <p class="ref">Fiche technique</p>
+    <h2 style="margin-top:14px">Les chiffres.</h2>
+    <dl class="specs">
+      <div class="spec"><dt>Référence</dt><dd><span class="val">WDV301</span></dd></div>
+      <div class="spec"><dt>Type</dt><dd>Détecteur d'ouverture et de vibration 2-en-1</dd></div>
+      <div class="spec"><dt>Liaison radio</dt><dd><span class="val">433 MHz</span></dd></div>
+      <div class="spec"><dt>Alimentation</dt><dd><span class="val">1 × CR2032</span> incluse</dd></div>
+      <div class="spec"><dt>Sensibilité vibration</dt><dd>Réglable sur <span class="val">5</span> niveaux</dd></div>
+      <div class="spec"><dt>Fixation</dt><dd>Adhésif 3M double face ou vis</dd></div>
+      <div class="spec"><dt>Catégorie dans l'application</dt><dd>Générale</dd></div>
+      <div class="spec"><dt>Abonnement</dt><dd>Aucun</dd></div>
+    </dl>
+    <p style="margin-top:26px"><a class="lien" href="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_WDV301_2.pdf?v=1760689180" target="_blank" rel="noopener">Télécharger le manuel (PDF)</a></p>
+  </div>
+</section>
+
+<!-- DANS LA BOITE -->
+<section class="bande bande--serree">
+  <div class="wrap">
+    <div class="etroit">
+      <p class="ref">Dans la boîte</p>
+      <h2 style="margin-top:14px">Tout est fourni.</h2>
+    </div>
+    <ul class="boite" style="background:var(--gris-cadre);border-radius:16px">
+      <li><span class="n">01</span>Détecteur WDV301<br>module + aimant</li>
+      <li><span class="n">02</span>Pile CR2032<br>déjà installée</li>
+      <li><span class="n">03</span>Adhésif 3M<br>double face</li>
+      <li><span class="n">04</span>Manuel<br>d'utilisation</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="bande bande--serree">
+  <div class="wrap etroit">
+    <p class="ref">Questions fréquentes</p>
+    <h2 style="margin-top:14px">Avant de commander.</h2>
+    <div class="faq">
+      <details open>
+        <summary>Avec quelles centrales le WDV301 est-il compatible ?</summary>
+        <p class="rep">Le WDV301 communique en 433 MHz et fonctionne avec les gammes Touch (AM301), Touch XL (AM302) et Vigilia. Il n'est pas conçu pour les gammes Key (SA501) ni Élite (PA501Z).</p>
+      </details>
+      <details>
+        <summary>Quelle différence avec le détecteur de vibration WVD301 ?</summary>
+        <p class="rep">Le WVD301 ne capte que les chocs. Le WDV301 est un 2-en-1 : détecteur d'ouverture grâce à son aimant, et détecteur de vibration. Il détecte donc une tentative d'effraction avant même l'ouverture — ce qui le rend particulièrement adapté aux grandes baies vitrées et aux portes d'entrée.</p>
+      </details>
+      <details>
+        <summary>Dans quelle catégorie l'enregistrer dans l'application ?</summary>
+        <p class="rep">En catégorie « Générale », impérativement. Enregistré par erreur en « Entrée », la détection de vibration ne sera pas active.</p>
+      </details>
+      <details>
+        <summary>Mon détecteur ne s'associe pas à la centrale.</summary>
+        <p class="rep">Avant de le fixer, ouvrez le capot du module principal. Sur la carte électronique, un interrupteur ON/OFF doit être basculé sur ON pour allumer le détecteur.</p>
+      </details>
+      <details>
+        <summary>La sensibilité est-elle réglable ?</summary>
+        <p class="rep">Oui, sur 5 niveaux. Capot ouvert et interrupteur sur ON, appuyez environ 2 secondes avec un trombone sur le petit bouton doré à droite de l'interrupteur, jusqu'à ce que les LED rouge et bleue s'allument. Chaque appui suivant change le niveau : les LED clignotent de 1 à 5 fois, le niveau 1 étant le plus sensible.</p>
+      </details>
+      <details>
+        <summary>Quelle pile utilise-t-il ?</summary>
+        <p class="rep">Une seule pile CR2032, fournie et déjà installée.</p>
+      </details>
+      <details>
+        <summary>Que se passe-t-il en cas de détection ?</summary>
+        <p class="rep">Dès que l'aimant s'éloigne ou que la vitre subit un choc, le détecteur envoie un signal à la centrale. Si le système est armé, l'alarme se déclenche et vous recevez une notification sur Daewoo Home Connect, ainsi qu'un SMS de secours si votre centrale est équipée d'une carte SIM.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="bande bande--nuit final" id="acheter">
+  <div class="wrap">
+    <p class="ref" style="color:#8d949e">WDV301</p>
+    <h2 style="margin-top:14px">Protégez la vitre,<br>pas seulement la poignée.</h2>
+    <div class="achat">
+      <p class="prix">39,90 € <small>· sans abonnement</small></p>
+      <a class="bouton bouton--grand bouton--clair" href="#">Ajouter au panier</a>
+    </div>
+  </div>
+</section>
+
+<p class="note">Maquette de travail — fiche accessoire Daewoo Security. Visuels, vidéo, caractéristiques et questions fréquentes proviennent des données réelles du produit WDV301.</p>
+
+<script>
+(function(){
+  var c=document.getElementById('chrono');
+  if(!c||!('IntersectionObserver'in window))return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){c.classList.add('actif');return;}
+  new IntersectionObserver(function(es,o){
+    es.forEach(function(e){ if(e.isIntersecting){ c.classList.add('actif'); o.unobserve(e.target); } });
+  },{threshold:.4}).observe(c);
+})();
+</script>
+</body>
+</html>
