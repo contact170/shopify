@@ -12,6 +12,9 @@ Thème d'aperçu : « Fiche accessoire uniformisee v1 (Claude) » — `202527113
 | WSD301 | Détecteur de fumée connecté | `accessoires` | 85 dB dans la maison. Une alerte dans votre poche. |
 | BIR301 | Barrières infrarouge | `accessoires-sans-details` | Franchir le faisceau suffit. |
 | WWF301 | Détecteur de fuite d'eau | `accessoires` | Les premières gouttes suffisent. |
+| WOS305S | Sirène extérieure solaire | `accessoires-sans-details` | 110 dB, alimentés par le soleil. |
+| WOS305 | Sirène extérieure | `accessoires-sans-details` | 110 dB, et un cri si on la décroche. |
+| SPWOS305 | Panneau solaire pour WOS305 | `cam-spw502` | La WOS305, sans jamais la rebrancher. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -102,3 +105,25 @@ de la boîte et la description l'indiquent explicitement et renvoient vers le PD
 téléchargeable depuis la page. À vérifier sur les autres références : le contenu
 de la boîte annonce « 1 manuel d'utilisation » sur toutes, ce qui vient du texte
 générique d'origine.
+
+## Vente croisée : l'option associée
+
+Nouveau métachamp `custom.option_associee` (référence produit) et section
+`sections/acc-option.liquid` : une carte compacte sous la zone d'achat, avec
+visuel, nom, prix et un bouton qui ajoute directement le produit au panier.
+Masquée si le métachamp est vide ou le produit indisponible.
+
+Premier usage : la sirène **WOS305** propose le panneau solaire **SPWOS305**.
+
+## SPWOS305 — template
+
+Le panneau utilise le template `cam-spw502`, partagé avec les panneaux solaires
+de caméras (SPW502, SPW502P2, SPW502P3). Une version premium de ce template a
+été créée sur le brouillon ; les autres panneaux en héritent et afficheront
+moins de sections tant que leurs métachamps ne sont pas renseignés.
+
+## Écart relevé
+
+La longueur du câble du panneau solaire diffère selon la source : le métachamp
+de la **WOS305S** indique 280 cm, la description du **SPWOS305** « environ
+2 mètres ». Chaque fiche reprend sa propre source, à trancher.

@@ -13,6 +13,14 @@
         "atout_3": "Retour sous 14 jours"
       }
     },
+    "option": {
+      "type": "acc-option",
+      "settings": {
+        "label": "En option",
+        "bouton": "Ajouter",
+        "marge_basse": 40
+      }
+    },
     "role": {
       "type": "acc-chrono",
       "settings": {
@@ -150,6 +158,7 @@
   },
   "order": [
     "hero",
+    "option",
     "role",
     "pose",
     "compat",
