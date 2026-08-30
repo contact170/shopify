@@ -18,6 +18,8 @@ Thème d'aperçu : « Fiche accessoire uniformisee v2 (Claude) » — `202545004
 | SPWOS305 | Panneau solaire pour WOS305 | `acc-premium` (cam-spw502) | La WOS305, sans jamais la rebrancher. |
 | WIS305 | Sirène intérieure 100 dB | `acc-premium` | Impossible de savoir d'où ça vient. |
 | SOS301 | Bracelet SOS d'urgence | `acc-premium` | Un seul appui. Même alarme éteinte. |
+| WKE301 | Clavier sans fil + 2 badges | `acc-premium` | Sans sortir le téléphone. |
+| WRF301 | Pack de 2 badges RFID | `acc-premium-sd` | Pas de code à retenir. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -235,3 +237,47 @@ En attendant, le gabarit a été créé sur le thème v2 avec la mise en page
 premium, pour que le SPWOS305 garde sa fiche. Conséquence : le SPW502, panneau
 solaire de caméra hors gamme Touch/Vigilia, hérite lui aussi du design premium
 sur l'aperçu. C'est le seul produit dans ce cas.
+
+## WRF301 : le lecteur RFID n'est pas sur toutes les centrales
+
+Point découvert dans la FAQ existante du produit, et absent de tous les
+métachamps : **la centrale Vigilia intègre un lecteur RFID**, les centrales
+Touch AM301 et Touch XL AM302 non. Sur Touch, le badge est donc inutilisable
+sans le clavier WKE301.
+
+C'est une information décisive à l'achat — un client Touch qui commande des
+badges seuls reçoit un produit qu'il ne peut pas utiliser. Elle est désormais
+en tête de la description, dans la note de compatibilité et dans le bandeau de
+caractéristiques.
+
+Corollaire côté WKE301 : le clavier est l'accessoire qui *ouvre* l'usage des
+badges sur Touch. Argument de vente ajouté à sa fiche, avec le WRF301 en
+option associée sous la zone d'achat.
+
+## WRF301 : produit en double dans le catalogue
+
+Deux fiches actives portent le même SKU **WRF301**, au même prix :
+
+- `pack-de-2-badges-rfid-wrf301` — celle qui a été traitée : visuels récents,
+  FAQ, vidéo d'installation, balises SEO.
+- `daewoo-pack-de-2-badges-rfid-wrf301` — un doublon appauvri : un seul visuel
+  ancien, **balises SEO nulles**, ni FAQ ni vidéo, description courte.
+
+Les deux sont dans les mêmes collections. Deux URL pour un même produit se
+font concurrence dans les résultats de recherche et diluent les signaux SEO.
+Le doublon n'a pas été touché : à archiver avec une redirection 301 vers la
+fiche principale, décision client.
+
+## WKE301 : dimensions contradictoires
+
+- Description d'origine : **140 × 90 × 20 mm**
+- Métachamp `evolutivite_compatibilite` : **180 × 96 × 27 mm**
+
+Aucune source ne permet de trancher. La dimension a donc été retirée du bandeau
+de caractéristiques plutôt que d'afficher une valeur au hasard. À mesurer sur
+un exemplaire.
+
+Corrigé au passage : le métaobjet « À quoi ça sert » du WKE301 annonçait
+« jusqu'à 1 an d'autonomie sur piles », alors que le clavier fonctionne sur
+batterie rechargeable avec 1 à 2 mois d'autonomie. Ce texte s'affiche dans la
+bande sombre de la fiche.
