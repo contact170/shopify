@@ -2,19 +2,19 @@
 {%- assign note = product.metafields.reviews.rating.value.rating -%}
 {%- assign nb = product.metafields.reviews.rating_count.value -%}
 <div class="accp" id="avis-clients">
-  <section class="accp-bande accp-bande--serree">
+  <section style="padding:{{ section.settings.marge_haute }}px 0 0">
     <div class="accp-wrap accp-etroit">
-      <p class="accp-ref">{{ section.settings.surtitre }}</p>
       {%- if note != blank and nb > 0 -%}
         {%- assign largeur = note | times: 20 -%}
         {%- assign note_fr = note | replace: '.', ',' -%}
-        <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-top:16px">
-          <p style="font-size:clamp(38px,5.5vw,54px);font-weight:600;letter-spacing:-.03em;line-height:1;margin:0">{{ note_fr }}<span style="font-size:.42em;color:var(--accp-doux);font-weight:400"> / 5</span></p>
-          <span class="accp-etoiles" style="font-size:22px" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:{{ largeur }}%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span>
-          <span style="color:var(--accp-doux);font-size:15px">{{ nb }} avis verifies</span>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <p class="accp-ref" style="width:100%;margin-bottom:2px">{{ section.settings.surtitre }}</p>
+          <p style="font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1;margin:0">{{ note_fr }}<span style="font-size:.6em;color:var(--accp-doux);font-weight:400"> / 5</span></p>
+          <span class="accp-etoiles" style="font-size:17px" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:{{ largeur }}%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span>
+          <span style="color:var(--accp-doux);font-size:14px">{{ nb }} avis v&eacute;rifi&eacute;s</span>
         </div>
       {%- else -%}
-        <h2 style="margin-top:14px">{{ section.settings.titre }}</h2>
+        <p class="accp-ref">{{ section.settings.surtitre }}</p>
       {%- endif -%}
     </div>
   </section>
@@ -25,7 +25,7 @@
   "name": "Accessoire — avis",
   "settings": [
     { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Avis clients" },
-    { "type": "text", "id": "titre", "label": "Titre de repli", "default": "Avis clients" }
+    { "type": "range", "id": "marge_haute", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Marge haute", "default": 48 }
   ],
   "presets": [ { "name": "Accessoire — avis" } ]
 }
