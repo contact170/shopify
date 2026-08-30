@@ -92,11 +92,11 @@ h3{font-size:clamp(20px,2.4vw,26px);letter-spacing:-.02em;line-height:1.2}
 .hero .chapo{margin:0 auto;max-width:38ch}
 
 /* galerie */
-.galerie{margin:clamp(26px,4vw,40px) auto 0;max-width:430px}
+.galerie{margin:clamp(26px,4vw,40px) auto 0;max-width:340px}
 .galerie__scene{background:#fff;border-radius:20px;padding:10px}
 .galerie__scene img{width:100%;aspect-ratio:1/1;object-fit:contain;mix-blend-mode:multiply}
 .vignettes{display:flex;justify-content:center;gap:10px;margin-top:14px}
-.vignette{width:60px;height:60px;padding:4px;border-radius:12px;background:#fff;
+.vignette{width:54px;height:54px;padding:4px;border-radius:12px;background:#fff;
   border:1.5px solid var(--filet);cursor:pointer;transition:border-color .18s}
 .vignette img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
 .vignette[aria-current="true"]{border-color:var(--encre)}
@@ -113,7 +113,10 @@ h3{font-size:clamp(20px,2.4vw,26px);letter-spacing:-.02em;line-height:1.2}
 .prix small{color:var(--texte-doux);font-weight:400;font-size:15px}
 .achat__ligne{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center}
 .total{margin:0;font-size:14px;color:var(--texte-doux);font-variant-numeric:tabular-nums;min-height:20px}
-.conseil{margin:0;font-size:14px;color:var(--texte-doux)}
+.conseil{margin:0 auto;max-width:46ch;padding:14px 18px;border-radius:14px;
+  background:var(--gris-cadre);font-size:14px;line-height:1.55;color:var(--texte-doux);text-align:left}
+.conseil b{color:var(--encre);font-weight:600}
+.bande--gris .conseil{background:#fff}
 .paiement{margin:2px 0 0;font-size:13px;color:var(--texte-doux)}
 .paiement b{color:var(--encre);font-weight:600}
 .arguments{list-style:none;margin:26px 0 0;padding:0;display:flex;gap:22px;flex-wrap:wrap;
@@ -175,6 +178,19 @@ h3{font-size:clamp(20px,2.4vw,26px);letter-spacing:-.02em;line-height:1.2}
 .boite li{background:#fff;padding:26px 22px;font-size:15px;line-height:1.45}
 .boite .n{font-family:var(--mono);font-size:12px;color:var(--texte-doux);display:block;margin-bottom:8px}
 
+
+/* ---------- videos clients (Moast) ---------- */
+.moast{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(168px,1fr);gap:14px;
+  margin-top:clamp(26px,4vw,38px);overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.moast::-webkit-scrollbar{height:6px}
+.moast::-webkit-scrollbar-thumb{background:var(--filet);border-radius:3px}
+.moast__carte{scroll-snap-align:start;aspect-ratio:9/16;border-radius:16px;
+  border:1.5px dashed var(--filet);background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  padding:18px;text-align:center;color:var(--texte-doux);font-size:13px;line-height:1.45}
+.moast__play{width:42px;height:42px;border-radius:50%;background:var(--gris-cadre);
+  display:grid;place-items:center;color:var(--encre);font-size:13px}
+
 /* ---------- avis ---------- */
 .avis-tete{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-top:16px}
 .avis-note{font-size:clamp(40px,6vw,58px);font-weight:600;letter-spacing:-.03em;line-height:1}
@@ -196,10 +212,7 @@ h3{font-size:clamp(20px,2.4vw,26px);letter-spacing:-.02em;line-height:1.2}
 
 /* ---------- final ---------- */
 .final{text-align:center}
-.final h2{color:#fff}
-.final .prix{color:#fff}
-.final .prix small,.final .total,.final .paiement,.final .conseil{color:#8d949e}
-.final .paiement b{color:#fff}
+.final .achat{margin-top:clamp(24px,3vw,34px)}
 
 .note{max-width:1040px;margin:0 auto;padding:22px var(--marge) 60px;font-size:13px;color:var(--texte-doux)}
 
@@ -269,7 +282,7 @@ h3{font-size:clamp(20px,2.4vw,26px);letter-spacing:-.02em;line-height:1.2}
 
     <div class="achat">
       <p class="prix">39,90 € <small>· l'unité</small></p>
-      <p class="conseil">Un détecteur par ouverture à protéger.</p>
+      <p class="conseil"><b>Un détecteur par ouvrant.</b> Une baie vitrée à deux vantaux en demande donc deux&nbsp;: un de chaque côté de l'ouverture. Chaque vantail peut être ouvert ou forcé indépendamment, il lui faut son propre capteur.</p>
       <div class="achat__ligne">
         <div class="qte" data-qte>
           <button type="button" data-moins aria-label="Diminuer la quantité">−</button>
@@ -413,6 +426,24 @@ h3{font-size:clamp(20px,2.4vw,26px);letter-spacing:-.02em;line-height:1.2}
   </div>
 </section>
 
+<!-- VIDEOS CLIENTS (Moast) -->
+<section class="bande bande--serree">
+  <div class="wrap">
+    <div class="etroit">
+      <p class="ref">En situation</p>
+      <h2 style="margin-top:14px">Vu chez nos clients.</h2>
+      <p class="chapo" style="margin-top:16px">Les vidéos publiées par les clients Daewoo&nbsp;: pose sur une baie vitrée, réglage de la sensibilité, déclenchement en conditions réelles.</p>
+    </div>
+    <div class="moast" role="group" aria-label="Vidéos clients">
+      <div class="moast__carte"><span class="moast__play" aria-hidden="true">▶</span>Emplacement carrousel Moast</div>
+      <div class="moast__carte"><span class="moast__play" aria-hidden="true">▶</span>Vidéo client</div>
+      <div class="moast__carte"><span class="moast__play" aria-hidden="true">▶</span>Vidéo client</div>
+      <div class="moast__carte"><span class="moast__play" aria-hidden="true">▶</span>Vidéo client</div>
+      <div class="moast__carte"><span class="moast__play" aria-hidden="true">▶</span>Vidéo client</div>
+    </div>
+  </div>
+</section>
+
 <!-- AVIS -->
 <section class="bande bande--serree" id="avis">
   <div class="wrap etroit">
@@ -465,19 +496,19 @@ h3{font-size:clamp(20px,2.4vw,26px);letter-spacing:-.02em;line-height:1.2}
 </section>
 
 <!-- FINAL -->
-<section class="bande bande--nuit final" id="acheter">
+<section class="bande bande--gris final" id="acheter">
   <div class="wrap">
-    <p class="ref" style="color:#8d949e">WDV301</p>
+    <p class="ref">WDV301</p>
     <h2 style="margin-top:14px">Protégez la vitre,<br>pas seulement la poignée.</h2>
     <div class="achat">
       <p class="prix">39,90 € <small>· l'unité</small></p>
       <div class="achat__ligne">
-        <div class="qte qte--nuit" data-qte>
+        <div class="qte" data-qte>
           <button type="button" data-moins aria-label="Diminuer la quantité">−</button>
           <output data-valeur aria-live="polite">1</output>
           <button type="button" data-plus aria-label="Augmenter la quantité">+</button>
         </div>
-        <a class="bouton bouton--grand bouton--clair" href="#">Ajouter au panier</a>
+        <a class="bouton bouton--grand" href="#">Ajouter au panier</a>
       </div>
       <p class="total" data-total></p>
       <p class="paiement">Paiement en 3 ou 4 fois avec <b>Alma</b> · Sans abonnement</p>
