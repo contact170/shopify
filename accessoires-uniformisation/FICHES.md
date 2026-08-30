@@ -10,6 +10,7 @@ Thème d'aperçu : « Fiche accessoire uniformisee v1 (Claude) » — `202527113
 | WPS305 | Détecteur de mouvement animaux | `accessoires` | Il voit l'intrus, pas le chat. |
 | WMO301 | Détecteur de mouvement extérieur | `accessoires` | La détection commence avant la porte. |
 | WSD301 | Détecteur de fumée connecté | `accessoires` | 85 dB dans la maison. Une alerte dans votre poche. |
+| BIR301 | Barrières infrarouge | `accessoires-sans-details` | Franchir le faisceau suffit. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -43,5 +44,13 @@ Le métachamp « Alimentation / Autonomie » contenait un argument commercial
 - certification : EN 14604 ;
 - pose : visserie et kit de fixation inclus.
 
-Reste à confirmer : les dimensions, et si la pile est bien livrée avec le
-produit (elle figure dans le contenu de la boîte).
+La pile CR123A est fournie avec le produit. Restent à confirmer : les dimensions.
+
+## BIR301 — balise titre absente
+
+Le produit n'avait aucune balise titre SEO (`seo.title` vide) : Google reprenait
+le titre brut du produit. Une balise a été rédigée.
+
+Ses caractéristiques (portée de 10 m, IP66, dimensions, piles ER15505H,
+autonomie de 2 ans, anti-démontage) étaient présentes dans les métachamps mais
+peu visibles sur la page ; elles remontent dans la fiche technique.
