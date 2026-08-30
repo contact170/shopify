@@ -21,3 +21,14 @@ textes alternatifs des visuels, balises SEO et description longue.
 - Pile du WDG301 : CR2032 (le métachamp indiquait CR2450).
 - `contenu_du_pack` valait « Accessoire / Adhésive de fixation / Manuel » sur
   toute la gamme. Remplacé par le contenu réel, fiche par fiche.
+
+## WMO301 — avertissement d'exposition au soleil
+
+Le capteur ne doit jamais être orienté face aux rayons du soleil : la variation
+brutale de chaleur sur la lentille est interprétée comme un mouvement et provoque
+de fausses détections. L'avertissement figure à trois endroits de la fiche —
+description (« Où l'installer »), volet « Sécurité et détection », et ligne
+« Pose » de la fiche technique.
+
+Point à vérifier sur les autres détecteurs infrarouges de la gamme (WPS305,
+WPS501, WMO501) : la consigne vaut pour tous, elle n'est pas toujours présente.
