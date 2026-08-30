@@ -20,6 +20,7 @@ Thème d'aperçu : « Fiche accessoire uniformisee v2 (Claude) » — `202545004
 | SOS301 | Bracelet SOS d'urgence | `acc-premium` | Un seul appui. Même alarme éteinte. |
 | WKE301 | Clavier sans fil + 2 badges | `acc-premium` | Sans sortir le téléphone. |
 | WRF301 | Pack de 2 badges RFID | `acc-premium-sd` | Pas de code à retenir. |
+| WRC305 | Télécommande à clapet | `acc-premium-sd` | Dans la poche, sans appui accidentel. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
 `conseil_quantite`, `note_compatibilite`, métaobjet `bandeau_caracteristiques`,
@@ -254,19 +255,15 @@ Corollaire côté WKE301 : le clavier est l'accessoire qui *ouvre* l'usage des
 badges sur Touch. Argument de vente ajouté à sa fiche, avec le WRF301 en
 option associée sous la zone d'achat.
 
-## WRF301 : produit en double dans le catalogue
+## WRF301 : doublon supprimé
 
-Deux fiches actives portent le même SKU **WRF301**, au même prix :
+La fiche `daewoo-pack-de-2-badges-rfid-wrf301` a été supprimée par le client.
+Vérifié : elle n'existe plus, et une redirection 301 est en place.
 
-- `pack-de-2-badges-rfid-wrf301` — celle qui a été traitée : visuels récents,
-  FAQ, vidéo d'installation, balises SEO.
-- `daewoo-pack-de-2-badges-rfid-wrf301` — un doublon appauvri : un seul visuel
-  ancien, **balises SEO nulles**, ni FAQ ni vidéo, description courte.
-
-Les deux sont dans les mêmes collections. Deux URL pour un même produit se
-font concurrence dans les résultats de recherche et diluent les signaux SEO.
-Le doublon n'a pas été touché : à archiver avec une redirection 301 vers la
-fiche principale, décision client.
+Réserve : cette redirection pointe vers la collection
+`compatible-gamme-vigilia-touch`, pas vers la fiche qui remplace réellement le
+produit. Rediriger vers `/products/pack-de-2-badges-rfid-wrf301` transmettrait
+le signal SEO à la page équivalente plutôt qu'à une page de liste.
 
 ## WKE301 : dimensions contradictoires
 
@@ -281,3 +278,34 @@ Corrigé au passage : le métaobjet « À quoi ça sert » du WKE301 annonçait
 « jusqu'à 1 an d'autonomie sur piles », alors que le clavier fonctionne sur
 batterie rechargeable avec 1 à 2 mois d'autonomie. Ce texte s'affiche dans la
 bande sombre de la fiche.
+
+## WRC301 : mise en brouillon
+
+Vérifié : la fiche est bien en brouillon, stock à zéro, et la redirection
+`/products/telecommande-wrc301` → `/products/telecommande-compatible-vigilia-touch`
+existe déjà. Un visiteur arrivant sur l'ancienne URL atterrit sur la WRC305,
+qui la remplace. C'est exactement ce qu'il fallait.
+
+Reste actif en revanche : **« Configurateur | Télécommande WRC301 »**
+(SKU WRC301C), stock à zéro, dans la collection « Accessoires configurateurs ».
+Tant qu'il est actif, la référence abandonnée reste proposée dans le parcours du
+configurateur. À passer en brouillon également, ou à remplacer par la WRC305.
+
+## WRC305 : 868 MHz, à confirmer
+
+Le métachamp `connectivite` annonçait une liaison **868 MHz**, alors que les
+autres accessoires de la même gamme communiquent en **433 MHz** (WKE301, WIS305,
+SOS301, tous compatibles avec les mêmes centrales). La valeur d'origine a été
+reprise telle quelle, mais l'écart mérite vérification : si c'est une erreur,
+elle est reprise dans le bandeau de caractéristiques et la FAQ.
+
+La portée annoncée, **20 m**, est également faible pour une télécommande —
+cohérente avec un porte-clés, mais à confirmer.
+
+Créé au passage : la fiche n'avait **aucune FAQ**, contrairement aux autres
+accessoires. Sept questions rédigées, dont l'incompatibilité avec les gammes
+Key et Élite, qui n'apparaissait que dans une ligne rouge en bas de la
+description d'origine.
+
+Type de produit corrigé : il valait « Pour armer/désarmer votre alarme », ce qui
+aurait donné le titre « Daewoo Pour armer/désarmer votre alarme WRC305 ».
