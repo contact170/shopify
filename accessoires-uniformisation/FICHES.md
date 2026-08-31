@@ -593,3 +593,32 @@ Autres alignements :
   quantité. Le tableau technique était jusque-là posé à nu sur la bande.
 - **Sélecteur de quantité** en blanc bordé plutôt qu'en gris : le gris neutre
   devenait terne sur la nouvelle bande bleutée.
+
+## Batterie de secours : 4 h sur l'AM301, 20 h sur l'AM302
+
+Donnée fournie par le client, et elle change le raisonnement de la fiche.
+
+Il y a une heure, l'AM302 était présentée comme ne se distinguant de l'AM301 que
+par la taille de l'écran. C'est faux : **l'autonomie sur batterie va du simple
+au quintuple** — environ 4 heures contre une vingtaine.
+
+C'est même l'écart le plus concret des deux. Quatre heures couvrent une coupure
+ordinaire ; vingt heures couvrent une nuit entière — un incident réseau, un
+orage, des travaux dans la rue. Un écran plus grand est un confort ; une alarme
+qui tient jusqu'au matin est une protection.
+
+Traité en conséquence :
+
+- Bandeaux de caractéristiques : « environ 4 h » et « environ 20 h ».
+- `alimentation_autonomie` sur les deux fiches.
+- FAQ des deux fiches : la question de comparaison annonce désormais **deux**
+  écarts, et la question sur la coupure de courant donne la durée. Sur l'AM302,
+  la question « À quoi sert une autonomie de 20 heures ? » remplace l'ancienne.
+- Descriptions : la section de comparaison de l'AM302 est réécrite en deux
+  points explicites, avec une recommandation — si le secteur est capricieux,
+  c'est l'autonomie qui doit décider, pas l'écran. L'AM301 renvoie vers la XL
+  pour les coupures longues.
+- Accroche de l'AM302 et méta-descriptions des deux fiches.
+
+Chaque fiche oriente maintenant vers l'autre selon le besoin, au lieu de laisser
+croire que le choix se joue sur le confort.
