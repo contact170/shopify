@@ -100,8 +100,10 @@
 .accp-appblocks{margin-top:6px;width:100%;max-width:520px}
 
 /* chronologie */
-.accp-chrono{position:relative;margin-top:clamp(36px,5vw,64px)}
-.accp-vitre{position:relative;height:2px;background:#22305c;border-radius:2px}
+.accp-chrono{position:relative;margin-top:clamp(36px,5vw,64px);overflow:hidden}
+/* l onde d animation voyage jusqu a 100vw : sans ce clip, elle deborde
+   la page vers la droite et cree une zone vide de la largeur de l ecran */
+.accp-vitre{position:relative;height:2px;background:#22305c;border-radius:2px;overflow:hidden}
 .accp-onde{position:absolute;top:50%;left:0;width:170px;height:2px;transform:translate(-170px,-50%);
   background:linear-gradient(90deg,transparent,var(--accp-alerte));border-radius:2px;opacity:0}
 .accp-chrono.est-actif .accp-onde{animation:accp-file 2.3s cubic-bezier(.4,0,.2,1) .15s forwards}

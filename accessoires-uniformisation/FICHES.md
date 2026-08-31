@@ -663,3 +663,33 @@ L'EXT301 annonce qu'il permet d'atteindre **99 accessoires**, alors que les deux
 centrales en annoncent **90**. Deux lectures possibles : soit l'amplificateur
 relève le plafond, soit l'une des deux valeurs est erronée. La donnée d'origine
 a été conservée en l'état des deux côtés. À trancher avec le fabricant.
+
+## Débordement horizontal sur mobile (thème publié)
+
+Signalé par le client après publication : sur mobile, la page défile vers la
+droite sur une zone vide de la largeur de l'écran.
+
+**Cause.** L'onde animée de la bande sombre (`.accp-onde`, section
+`acc-chrono`) se déplace jusqu'à `calc(100vw + 170px)`, et l'animation est en
+`forwards` : elle reste garée à cette position au lieu de disparaître. Elle
+étend donc la largeur du document d'un écran entier. Rien ne la clippait.
+
+**Les deux observations du client confirment le diagnostic :**
+
+- *« ça ne le fait pas sur l'AM302 »* — l'AM301, l'AM302 et le SPWOS305 n'ont
+  pas de métachamp `a_quoi_ca_sert`. La section `acc-chrono` ne s'affiche pas,
+  l'animation n'existe pas. Ce sont les trois seules fiches épargnées.
+- *« ça ne le fait pas tout le temps »* — l'animation se déclenche par
+  IntersectionObserver quand la bande entre dans l'écran. Tant qu'on n'a pas
+  défilé jusque-là, aucun débordement.
+
+Le défaut existait depuis la création de la section, mais restait invisible sur
+un écran large où l'onde sort du champ de vision habituel.
+
+**Correction** dans `assets/acc-premium.css` : `overflow:hidden` sur
+`.accp-vitre` (le filet qui contient l'onde) et sur `.accp-chrono` par
+sécurité. L'onde traverse toujours le filet et disparaît à son bord.
+
+**Non appliquée sur le thème en ligne à ce stade** : les écritures sur le thème
+publié sont bloquées. La correction est dans ce dépôt, à reporter à la main
+dans l'éditeur de code ou via un duplicata.
