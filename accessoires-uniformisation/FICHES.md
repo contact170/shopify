@@ -22,7 +22,7 @@ Thème d'aperçu : « Fiche accessoire uniformisee v2 (Claude) » — `202545004
 | WRF301 | Pack de 2 badges RFID | `acc-premium-sd` | Pas de code à retenir. |
 | WRC305 | Télécommande à clapet | `acc-premium-sd` | Dans la poche, sans appui accidentel. |
 | EXT301 | Amplificateur de signal | `acc-premium` | Quand la centrale n'entend plus l'accessoire. |
-| AM302S | Centrale Touch XL seule | `centrale-seule-touchxl` | Sept pouces. Deux cents accessoires. |
+| AM302S | Centrale Touch XL seule | `centrale-seule-touchxl` | Sept pouces. Tout se lit d'un coup d'œil. |
 | AM301S | Centrale Touch seule | `centrale-seule-touch` | Le cœur du système, vendu seul. |
 
 Pour chaque fiche : type de produit Shopify, `titre_page`, `accroche`,
@@ -539,3 +539,57 @@ Sans objet car archivés ou en brouillon : WDS301, WOS301, WOS301S, WPS301
 (archivés), WRC301, SIM1VIG, WSD301CGRATUIT (brouillons). Les alertes
 précédentes sur les mentions de Vigilia manquantes du WDS301 et du WOS301
 tombent donc d'elles-mêmes.
+
+## AM302 : 90 accessoires, pas 200
+
+Erreur corrigée sur toute la fiche : la Touch XL accepte **90 accessoires**,
+comme l'AM301. La valeur figurait à sept endroits — bandeau de caractéristiques,
+`note_compatibilite`, `securite_detection`, deux réponses de FAQ, la description
+et la méta-description.
+
+Elle avait surtout servi d'argument de vente : le titre de page annonçait
+« Sept pouces. Deux cents accessoires. » et une section entière de la
+description était bâtie dessus. Tout a été repris.
+
+L'angle change en conséquence : **la seule différence entre l'AM301 et l'AM302
+est la taille de l'écran**, 4,3 contre 7 pouces. La fiche le dit maintenant
+franchement, et précise que si l'on pilote tout depuis l'application, l'AM301
+suffit. Un client qui découvre après coup que les deux centrales font la même
+chose se sent floué ; autant l'annoncer et le laisser choisir sur le confort
+d'usage.
+
+Corrigé aussi côté AM301 : sa FAQ comparait « 90 accessoires contre 200 ».
+
+## Présentation uniformisée sur le style du site
+
+La FAQ des fiches accessoires reprend désormais la présentation de celle du
+site : bande bleutée très claire, en-tête centré avec surtitre bleu, questions
+en cartes blanches à coins arrondis et ombre douce, chevron bleu à droite.
+
+Le même traitement a été étendu aux **accordéons de la fiche technique**, qui
+partagent la classe `.accp-faq` : sans cela, deux blocs dépliants voisins
+auraient eu deux allures différentes sur la même page.
+
+Palette alignée sur celle du site, dans la famille bleu nuit :
+
+| Rôle | Avant | Après |
+|---|---|---|
+| Texte fort et titres | `#14161a` (quasi noir) | `#101f47` (bleu nuit) |
+| Texte courant | `#6e7480` (gris neutre) | `#5b6480` (gris bleuté) |
+| Bandes claires | `#f2f3f5` (gris) | `#eef2fd` (bleuté) |
+| Bande sombre | `#0b0d10` | `#0a1230` |
+| Filets | `#e2e4e8` | `#e3e8f5` |
+
+Autres alignements :
+
+- **Surtitres** : passaient en police mono, gris, minuscules espacées. Ils
+  reprennent le traitement du site — sans-serif, bleu, gras, capitales. La mono
+  ne sert plus que pour les repères numérotés (01, 02, 03), où elle reste un
+  détail de composition et non un style concurrent.
+- **En-têtes de bloc centrés** sur l'ensemble des sections, comme l'en-tête de
+  la FAQ et celui de la page. Le corps de texte reste aligné à gauche.
+- **Même carte pour tous les blocs** : rayon de 16 px et ombre commune sur la
+  fiche technique, le contenu de la boîte, les accordéons et le conseil de
+  quantité. Le tableau technique était jusque-là posé à nu sur la bande.
+- **Sélecteur de quantité** en blanc bordé plutôt qu'en gris : le gris neutre
+  devenait terne sur la nouvelle bande bleutée.

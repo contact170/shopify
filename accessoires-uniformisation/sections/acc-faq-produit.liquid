@@ -1,11 +1,18 @@
 {{ 'acc-premium.css' | asset_url | stylesheet_tag }}
 {%- assign f = product.metafields.custom.faq.value -%}
 {%- if f != blank -%}
+<style>
+  .accp-faq-bande{background:var(--accp-clair)}
+  .accp-faq-tete{text-align:center}
+  .accp-faq-tete h2{margin-top:14px}
+</style>
 <div class="accp">
-  <section class="accp-bande accp-bande--serree">
+  <section class="accp-bande accp-bande--serree accp-faq-bande">
     <div class="accp-wrap accp-etroit">
-      <p class="accp-ref">{{ section.settings.surtitre }}</p>
-      {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+      <div class="accp-faq-tete">
+        <p class="accp-ref">{{ section.settings.surtitre }}</p>
+        {%- if section.settings.titre != blank -%}<h2>{{ section.settings.titre }}</h2>{%- endif -%}
+      </div>
       <div class="accp-faq">
         {%- render 'acc-faq-item', q: f.question_1, a: f.reponse_1, ouvert: true -%}
         {%- render 'acc-faq-item', q: f.question_2, a: f.reponse_2 -%}
