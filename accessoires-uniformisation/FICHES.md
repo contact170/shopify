@@ -622,3 +622,44 @@ Traité en conséquence :
 
 Chaque fiche oriente maintenant vers l'autre selon le besoin, au lieu de laisser
 croire que le choix se joue sur le confort.
+
+## Contrôle final avant publication
+
+### Une régression trouvée et corrigée
+
+**Sept fiches avaient perdu leur balise titre** : WKE301, EXT301, WDV301,
+SOS301, WIS305, AM301S et AM302S.
+
+Cause : l'objet `seo` de l'API Shopify est remplacé en bloc, pas fusionné.
+En n'envoyant que `seo: { description }` lors du raccourcissement des
+méta-descriptions puis de la correction des batteries, j'ai effacé les titres
+qui allaient avec. Les sept sont restaurés, titre et description envoyés
+ensemble cette fois.
+
+C'est exactement le genre de défaut qu'un contrôle de dernière minute doit
+attraper : invisible sur la page, mais une fiche sans balise titre laisse
+Google composer le sien à partir du nom du produit.
+
+### État vérifié des 19 fiches
+
+| Contrôle | Résultat |
+|---|---|
+| Statut | 19 actives |
+| Gabarit | 4 gabarits seulement, tous présents sur le thème en ligne et sur le v2 |
+| Balise titre | 19 / 19 |
+| Méta-description | 19 / 19 |
+| Type de produit (h1) | 19 / 19 |
+| Textes alternatifs | 19 / 19, aucun visuel sans alt |
+| Bandeau, FAQ, titre de page, accroche, conseil, compatibilité, contenu de la boîte | 19 / 19 |
+
+### Thème
+
+Les **15 fichiers `acc-*`** correspondent au caractère près au miroir du dépôt,
+et les **4 gabarits premium** sont identiques entre eux (`b1e96322…`).
+
+### Point à confirmer, non corrigé
+
+L'EXT301 annonce qu'il permet d'atteindre **99 accessoires**, alors que les deux
+centrales en annoncent **90**. Deux lectures possibles : soit l'amplificateur
+relève le plafond, soit l'une des deux valeurs est erronée. La donnée d'origine
+a été conservée en l'état des deux côtés. À trancher avec le fabricant.
