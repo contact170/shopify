@@ -686,10 +686,22 @@ droite sur une zone vide de la largeur de l'écran.
 Le défaut existait depuis la création de la section, mais restait invisible sur
 un écran large où l'onde sort du champ de vision habituel.
 
-**Correction** dans `assets/acc-premium.css` : `overflow:hidden` sur
-`.accp-vitre` (le filet qui contient l'onde) et sur `.accp-chrono` par
-sécurité. L'onde traverse toujours le filet et disparaît à son bord.
+**Correction appliquée par le client** dans `assets/acc-premium.css` du thème
+publié : `overflow:hidden` sur `.accp-vitre`, le filet qui contient l'onde.
+Vérifiée et suffisante — `.accp-vitre` étant le bloc conteneur de `.accp-onde`
+(seul ancêtre positionné), c'est le seul clip qui compte. L'ajouter aussi sur
+`.accp-chrono` aurait été redondant. Le miroir de ce dépôt a été aligné sur le
+fichier en ligne : même empreinte `cc9cb077…`.
 
-**Non appliquée sur le thème en ligne à ce stade** : les écritures sur le thème
-publié sont bloquées. La correction est dans ce dépôt, à reporter à la main
-dans l'éditeur de code ou via un duplicata.
+Le clip est sans effet visuel : l'onde traverse toujours le filet sur toute sa
+largeur puis disparaît à son bord, en une proportion identique de l'animation
+sur mobile et sur écran large.
+
+**Dette laissée en place** : l'image-clé finale conserve
+`translate(calc(100vw + 170px), -50%)`. C'est désormais inoffensif puisque
+clippé, mais quiconque retirerait le `overflow:hidden` ferait réapparaître le
+débordement. Une valeur bornée serait plus robuste.
+
+**Leçon** : aucune valeur en `vw` ne devrait figurer dans une animation sans
+conteneur clippant. Sur un écran de 1 400 px le défaut passait inaperçu ; sur
+390 px il doublait la largeur de la page.
