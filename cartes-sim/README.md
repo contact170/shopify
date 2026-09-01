@@ -96,10 +96,13 @@ bibliothèque mais ne sont plus référencés : impossible de les ouvrir depuis
 l'environnement de travail (le proxy bloque le CDN Shopify), donc impossible de
 vérifier qu'ils disent la même chose que les fiches de 2026.
 
-## Ordre de mise en ligne
+## Mise en ligne — faite le 01/09/2026
 
-1. Publier le thème **« Site definitif 31082026 »** (id 202622009684).
-2. **Ensuite seulement**, basculer les trois produits sur leurs nouveaux suffixes.
+1. Thème **« Site definitif 31082026 »** (202622009684) publié. ✔
+2. Les trois produits basculés sur `sim-1mois`, `sim-1an`, `sim-1an-elite`. ✔
+
+Vérifié après bascule : les quatre produits Configurateur restent sur les
+suffixes `carte-sim`, `carte-sim-1-an` et `carte-sim-1-an-elite`, inchangés.
 
 Vérifié le 01/09/2026 : le thème en ligne « Copie de Site definitif 31082026 »
 (202625057108) est une duplication de 202622009684 faite le 31/08 à 16 h 00 et
@@ -150,3 +153,10 @@ templates absents du thème publié.
 - **Anciens PDF** `afone.pdf` et `afone_1mois.pdf` (2020) : toujours dans la
   bibliothèque, non référencés, contenu non vérifiable depuis l'environnement
   de travail.
+- **Descriptions des produits Configurateur** : elles portent encore l'ancien
+  texte. Celle du « Configurateur | SIM 1 an Elite » présente toujours le
+  forfait sous forme de liste à puces — 60 minutes d'appels / 300 SMS /
+  200 Mo de data — c'est-à-dire comme trois enveloppes cumulables, alors que
+  la fiche Afone dit **ou**. Même inexactitude que celle corrigée sur la fiche
+  principale. Non modifiée : les produits Configurateur ont été laissés
+  intacts par principe.
