@@ -105,16 +105,31 @@ L'ordre compte : `templateSuffix` est une propriété du produit, partagée par 
 les thèmes. Basculer avant publication pointerait les pages en ligne vers des
 templates absents du thème publié.
 
-## Points ouverts
+## Arbitrages tranchés le 01/09/2026
 
-- **Compatibilité de la carte 1 mois** : le champ « fournisseur » du produit dit
-  « compatible Key & Touch (SA501 & AM301/AM302) », le métaobjet de compatibilité
-  dit « Vigilia & Touch ». Le contenu écrit suit le métaobjet. À trancher.
-- **Période de l'enveloppe des offres 12 mois** : la fiche Afone ne précise pas si
-  les 30 min / 150 SMS / 50 Mo sont mensuels ou pour l'année entière. Le texte
-  reprend la formulation d'Afone sans trancher.
-- **Brouillon « Carte SIM 1 An Prépayé — Pour centrale Vigilia »** (12260207067476) :
-  produit arrêté, à supprimer.
-- **Titre de la fiche 1 mois** : « (40 min ou 100 SMS) » omet les 40 Mo.
+1. **La carte 1 mois couvre aussi la centrale Key (SA501).** Métaobjet de
+   compatibilité créé (`vigilia-touch-key` → « Vigilia, Touch & Key ») et
+   rattaché au produit ; note de compatibilité, description et balise SEO
+   mises à jour.
+2. **L'enveloppe des offres 12 mois vaut pour l'année entière**, pas par mois.
+   Corrigé dans les bandeaux de caractéristiques (« Enveloppe des 12 mois »),
+   dans l'encart du bloc coûts et dans les descriptions. Sur la carte 1 mois,
+   l'enveloppe est au contraire mensuelle et le texte le dit.
+3. **Un RIB est demandé à l'activation, y compris pour les cartes prépayées
+   1 an.** Rien n'est prélevé pendant les douze mois, mais c'est ce qui permet
+   à la ligne de se poursuivre sans coupure au terme de l'année. Précisé à
+   quatre endroits sur chaque fiche annuelle : bandeau (ligne « Activation »),
+   accordéon « Activer et gérer l'abonnement », FAQ (question dédiée) et
+   mention légale du bloc coûts.
+4. **Brouillon « Carte SIM 1 An Prépayé — Pour centrale Vigilia »**
+   (12260207067476, SKU SIM1VIG) : supprimé. Aucune commande rattachée.
+5. **Titre de la fiche 1 mois** corrigé : « (40 min ou 100 SMS ou 40 Mo) ».
+   Le handle d'URL est inchangé, aucune redirection nécessaire.
+
+## Reste ouvert
+
 - **Images** : 800 × 800 JPG pour les deux premières fiches, 1500 × 1500 PNG pour
   l'Élite. Non uniformisées.
+- **Anciens PDF** `afone.pdf` et `afone_1mois.pdf` (2020) : toujours dans la
+  bibliothèque, non référencés, contenu non vérifiable depuis l'environnement
+  de travail.
