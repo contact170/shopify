@@ -218,7 +218,25 @@ mobiles en cas de coupure du Wi-Fi.
 Le métaobjet `vigilia-touch-key-elite`, créé sur une lecture erronée puis
 devenu inutile, a été supprimé.
 
-### Mise en ligne
+### Mise en ligne — faite le 01/09/2026
 
-Publier **« Retouches fiches SIM 01092026 »**. Les suffixes produit sont déjà
-en place, aucune bascule à refaire.
+Thème « Retouches fiches SIM 01092026 » publié.
+
+Défaut corrigé après publication : le champ **Type de produit** de la fiche
+Élite était vide. `acc-hero` retombait alors sur `custom.categorie_de_produit`
+(« Accessoires ») et composait « Daewoo Accessoires 1 An Prépayé Élite ».
+Le type a été mis à « Carte SIM » comme sur les deux autres fiches.
+
+Titres obtenus sur les trois fiches :
+
+- Daewoo Carte SIM 1 Mois Offert
+- Daewoo Carte SIM 1 An Prépayé
+- Daewoo Carte SIM 1 An Prépayé Élite
+
+### Question ouverte
+
+Le client équipé d'une centrale **Key (SA501)** n'a pas d'offre annuelle : la
+carte 1 an est réservée aux Touch et Vigilia, la carte 1 an Élite à la PA501Z.
+Il ne lui reste que l'abonnement mensuel. Soit la carte 1 an Touch/Vigilia
+convient aussi à la Key et son titre comme sa compatibilité devraient le dire,
+soit il n'existe effectivement pas d'offre annuelle pour cette gamme.
