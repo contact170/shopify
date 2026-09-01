@@ -251,3 +251,31 @@ Dosage retenu :
 
 Le propriétaire de Key qui cherche trouve la réponse ; le visiteur qui s'en
 moque ne voit qu'une gamme arrêtée de moins.
+
+## Photo produit — 01/09/2026
+
+Nouvelle photo déposée dans la bibliothèque : `carte-sim-afone-mobile-fond-blanc.webp`,
+2048 × 2048, 66 ko (MediaImage 72804000792916, créée à 14 h 46).
+
+Elle avait été posée sur les **trois produits Configurateur** (SIM 1 mois,
+SIM 1 an Vigilia/Touch, SIM 1 an Elite), pas sur les trois fiches principales,
+qui portaient encore leurs visuels d'origine :
+
+| Fiche | Ancienne image | Poids |
+|---|---|---|
+| 1 mois | `carte-sim-m2m-afone-40-min-ou-100-sms-113234.jpg` 800 × 800 (2022) | 18 ko |
+| 1 an | `carte-sim-m2m-afone-1-an-prepaye-344353.jpg` 800 × 800 (2022) | 18 ko |
+| 1 an Élite | `SIM_Daewoo.png` 1500 × 1500 (2023) | 90 ko |
+
+La nouvelle photo a été ajoutée aux trois fiches et placée en première position :
+c'est elle qui s'affiche désormais en image principale, avec le texte alternatif
+« Carte SIM M2M Afone Mobile pour alarme Daewoo, sur fond blanc ».
+
+L'API ne sait pas rattacher un média existant à un autre produit : chaque fiche
+a donc reçu sa propre copie du fichier (61 808 o chacune, noms suffixés). Les
+Configurateurs, eux, partagent un seul fichier. Pour n'avoir qu'un fichier
+partout, il faut repasser par l'admin et sélectionner le fichier existant.
+
+Les anciennes images sont toujours présentes en seconde position sur les trois
+fiches — donc visibles dans la bande de vignettes. Suppression en attente de
+validation.
