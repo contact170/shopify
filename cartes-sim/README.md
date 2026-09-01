@@ -1,7 +1,7 @@
 # Fiches cartes SIM M2M Afone — refonte
 
 Date : 01/09/2026
-Thème de travail : « Correctif galeries IP506P + EP506 » (id 202622009684)
+Thème de travail : id **202622009684**, renommé depuis « Site definitif 31082026 »
 
 ## Les trois fiches
 
@@ -98,8 +98,25 @@ vérifier qu'ils disent la même chose que les fiches de 2026.
 
 ## Ordre de mise en ligne
 
-1. Publier le thème « Correctif galeries IP506P + EP506 ».
+1. Publier le thème **« Site definitif 31082026 »** (id 202622009684).
 2. **Ensuite seulement**, basculer les trois produits sur leurs nouveaux suffixes.
+
+Vérifié le 01/09/2026 : le thème en ligne « Copie de Site definitif 31082026 »
+(202625057108) est une duplication de 202622009684 faite le 31/08 à 16 h 00 et
+n'a pas été modifiée depuis (`updatedAt` = instant de création). Les 15 fichiers
+de référence comparés — `settings_data.json`, `settings_schema.json`,
+`layout/theme.liquid`, les trois groupes de sections, `index`, `product`,
+`collection`, `cart`, `theme.css`, `acc-premium.js`, `acc-hero`, `acc-barre`,
+`product.acc-premium.json` — sont identiques dans les deux thèmes. Publier
+202622009684 ne fait donc qu'ajouter les fiches SIM.
+
+Les correctifs galeries caméras (W512MW, W503, W503SP, IP506P, EP506) sont
+**déjà en ligne** : le thème publié les contient.
+
+`themeFilesCopy` ne permet pas de copier entre deux thèmes (pas de `srcThemeId`),
+d'où le choix de publier le thème de travail plutôt que de reporter les fichiers.
+Le thème « Fiches cartes SIM 01092026 » (202692755796), créé par précaution avant
+cette vérification, est inutile et peut être supprimé.
 
 L'ordre compte : `templateSuffix` est une propriété du produit, partagée par tous
 les thèmes. Basculer avant publication pointerait les pages en ligne vers des
@@ -111,10 +128,10 @@ templates absents du thème publié.
    compatibilité créé (`vigilia-touch-key` → « Vigilia, Touch & Key ») et
    rattaché au produit ; note de compatibilité, description et balise SEO
    mises à jour.
-2. **L'enveloppe des offres 12 mois vaut pour l'année entière**, pas par mois.
-   Corrigé dans les bandeaux de caractéristiques (« Enveloppe des 12 mois »),
-   dans l'encart du bloc coûts et dans les descriptions. Sur la carte 1 mois,
-   l'enveloppe est au contraire mensuelle et le texte le dit.
+2. **L'enveloppe est mensuelle sur les trois offres**, y compris sur les cartes
+   prépayées 12 mois : ce qui est prépayé, c'est l'abonnement, pas l'enveloppe.
+   Les trois bandeaux affichent « Enveloppe mensuelle » et le texte précise
+   « chaque mois ».
 3. **Un RIB est demandé à l'activation, y compris pour les cartes prépayées
    1 an.** Rien n'est prélevé pendant les douze mois, mais c'est ce qui permet
    à la ligne de se poursuivre sans coupure au terme de l'année. Précisé à
