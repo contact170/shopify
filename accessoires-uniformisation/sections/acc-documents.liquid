@@ -1,0 +1,87 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Documents a telecharger. Chaque bloc porte son propre lien : fiche
+  operateur, notice, conditions. La section disparait d'elle-meme si
+  aucun document n'est renseigne.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<div class="accp">
+  <style>
+    .accp-docs{list-style:none;margin:clamp(28px,4vw,48px) 0 0;padding:0;display:grid;
+      gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .accp-doc{background:#fff;border-radius:var(--accp-rayon);box-shadow:var(--accp-ombre);
+      transition:box-shadow .2s,transform .2s}
+    .accp-doc:hover{box-shadow:0 2px 4px rgba(16,24,40,.06),0 14px 36px rgba(16,24,40,.09);transform:translateY(-2px)}
+    .accp-doc a{display:flex;gap:18px;align-items:flex-start;padding:26px 24px;text-decoration:none;color:inherit}
+    .accp-doc__icone{flex:0 0 auto;width:42px;height:42px;border-radius:11px;background:var(--accp-clair);
+      display:flex;align-items:center;justify-content:center;color:var(--accp-bleu)}
+    .accp-doc__corps{min-width:0}
+    .accp-doc__titre{margin:0;font-size:18px;font-weight:600;letter-spacing:-.015em;color:var(--accp-encre)}
+    .accp-doc a:hover .accp-doc__titre{color:var(--accp-bleu)}
+    .accp-doc__texte{margin:8px 0 0;font-size:16px;line-height:1.6;color:var(--accp-doux)}
+    .accp-doc__meta{margin:12px 0 0;font-family:var(--accp-mono);font-size:12px;letter-spacing:.08em;
+      text-transform:uppercase;color:var(--accp-doux)}
+  </style>
+  <section class="accp-bande accp-bande--gris">
+    <div class="accp-wrap">
+      <div class="accp-etroit">
+        {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+        {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.chapo != blank -%}
+          <p class="accp-chapo" style="margin-top:18px">{{ section.settings.chapo }}</p>
+        {%- endif -%}
+      </div>
+
+      <ul class="accp-docs">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.lien != blank -%}
+            <li class="accp-doc" {{ block.shopify_attributes }}>
+              <a href="{{ block.settings.lien }}" target="_blank" rel="noopener">
+                <span class="accp-doc__icone" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path>
+                  </svg>
+                </span>
+                <span class="accp-doc__corps">
+                  <span class="accp-doc__titre">{{ block.settings.titre }}</span>
+                  {%- if block.settings.texte != blank -%}
+                    <span class="accp-doc__texte" style="display:block">{{ block.settings.texte }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.meta != blank -%}
+                    <span class="accp-doc__meta" style="display:block">{{ block.settings.meta }}</span>
+                  {%- endif -%}
+                </span>
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — documents",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Documents" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "A telecharger." },
+    { "type": "textarea", "id": "chapo", "label": "Chapo" }
+  ],
+  "blocks": [
+    {
+      "type": "document",
+      "name": "Document",
+      "settings": [
+        { "type": "text", "id": "titre", "label": "Titre" },
+        { "type": "textarea", "id": "texte", "label": "Description" },
+        { "type": "url", "id": "lien", "label": "Lien vers le fichier" },
+        { "type": "text", "id": "meta", "label": "Format et poids", "default": "PDF" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [ { "name": "Accessoire — documents" } ]
+}
+{% endschema %}

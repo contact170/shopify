@@ -1,0 +1,97 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Bloc « ce que ça coûte » des fiches carte SIM. Chaque bloc « palier »
+  est une étape de la dépense dans le temps : ce qu'on paie aujourd'hui,
+  ce qui est inclus, ce qui vient ensuite. La section disparaît d'elle-même
+  si aucun palier n'est renseigné.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<div class="accp">
+  <style>
+    .accp-couts{list-style:none;margin:clamp(28px,4vw,48px) 0 0;padding:0;display:grid;gap:1px;
+      background:var(--accp-filet);border-radius:var(--accp-rayon);overflow:hidden;
+      box-shadow:var(--accp-ombre);grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .accp-cout{background:#fff;padding:28px 26px 30px}
+    .accp-cout__quand{font-family:var(--accp-mono);font-size:12px;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--accp-bleu);margin:0 0 14px}
+    .accp-cout__montant{font-size:clamp(30px,4.4vw,42px);font-weight:600;letter-spacing:-.035em;
+      line-height:1;margin:0;color:var(--accp-encre);font-variant-numeric:tabular-nums}
+    .accp-cout__unite{display:block;margin-top:9px;font-size:15px;color:var(--accp-doux)}
+    .accp-cout__detail{margin:16px 0 0;font-size:16px;line-height:1.6;color:var(--accp-doux)}
+    .accp-inclus{margin:clamp(22px,3vw,32px) 0 0;background:var(--accp-nuit);color:#fff;
+      border-radius:var(--accp-rayon);padding:clamp(26px,3.4vw,36px)}
+    .accp-inclus h3{margin:0;font-size:clamp(19px,2.2vw,23px);font-weight:600;letter-spacing:-.02em;color:#fff}
+    .accp-inclus p{margin:12px 0 0;font-size:17px;line-height:1.65;color:#9aa4c2}
+    .accp-inclus strong{color:#fff;font-weight:600}
+    .accp-note{margin:clamp(20px,3vw,28px) 0 0;font-size:15px;line-height:1.65;color:var(--accp-doux)}
+    .accp-note a{color:var(--accp-bleu)}
+  </style>
+  <section class="accp-bande">
+    <div class="accp-wrap">
+      <div class="accp-etroit">
+        {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+        {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.chapo != blank -%}
+          <p class="accp-chapo" style="margin-top:18px">{{ section.settings.chapo }}</p>
+        {%- endif -%}
+      </div>
+
+      <ul class="accp-couts">
+        {%- for block in section.blocks -%}
+          <li class="accp-cout" {{ block.shopify_attributes }}>
+            {%- if block.settings.quand != blank -%}<p class="accp-cout__quand">{{ block.settings.quand }}</p>{%- endif -%}
+            <p class="accp-cout__montant">
+              {{ block.settings.montant }}
+              {%- if block.settings.unite != blank -%}<span class="accp-cout__unite">{{ block.settings.unite }}</span>{%- endif -%}
+            </p>
+            {%- if block.settings.detail != blank -%}
+              <p class="accp-cout__detail">{{ block.settings.detail }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.inclus_titre != blank or section.settings.inclus_texte != blank -%}
+        <div class="accp-inclus">
+          {%- if section.settings.inclus_titre != blank -%}<h3>{{ section.settings.inclus_titre }}</h3>{%- endif -%}
+          {%- if section.settings.inclus_texte != blank -%}{{ section.settings.inclus_texte }}{%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.note != blank -%}
+        <div class="accp-note accp-etroit">{{ section.settings.note }}</div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — couts",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Le cout, en clair" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Ce que vous payez, et quand." },
+    { "type": "textarea", "id": "chapo", "label": "Chapo" },
+    { "type": "header", "content": "Encart fonce : ce qui est inclus" },
+    { "type": "text", "id": "inclus_titre", "label": "Titre de l'encart" },
+    { "type": "richtext", "id": "inclus_texte", "label": "Texte de l'encart" },
+    { "type": "header", "content": "Mention" },
+    { "type": "richtext", "id": "note", "label": "Note en bas de bloc" }
+  ],
+  "blocks": [
+    {
+      "type": "palier",
+      "name": "Palier de cout",
+      "settings": [
+        { "type": "text", "id": "quand", "label": "Quand", "default": "Aujourd'hui" },
+        { "type": "text", "id": "montant", "label": "Montant", "default": "14,90 €" },
+        { "type": "text", "id": "unite", "label": "Unite", "default": "une seule fois" },
+        { "type": "textarea", "id": "detail", "label": "Detail" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [ { "name": "Accessoire — couts" } ]
+}
+{% endschema %}
