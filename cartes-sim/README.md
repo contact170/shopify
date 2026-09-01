@@ -206,11 +206,17 @@ description produit (section dédiée), balise SEO, et 3e atout du hero
 
 ### 4. Compatibilité de la carte 1 mois
 
-Elle couvre **toutes les centrales Daewoo** : Vigilia, Touch (AM301, AM302),
-Key (SA501) et Élite (PA501Z). Nouveau métaobjet de compatibilité
-`vigilia-touch-key-elite`, note de compatibilité, description et balise SEO
-mises à jour. La note renvoie vers l'offre 1 an Élite pour ceux qui équipent
-une PA501Z, en expliquant pourquoi son enveloppe est plus large.
+Elle couvre les centrales **Vigilia, Touch (AM301, AM302) et Key (SA501)**.
+Métaobjet `vigilia-touch-key`. La centrale **Élite PA501Z n'est pas
+concernée** : cette carte ne lui est pas proposée, elle a sa propre offre.
+
+La note de compatibilité et une section de la description l'expliquent au
+client plutôt que de le laisser deviner : l'Élite dispose d'une offre dédiée
+à l'enveloppe deux fois plus large, parce qu'elle bascule sur les données
+mobiles en cas de coupure du Wi-Fi.
+
+Le métaobjet `vigilia-touch-key-elite`, créé sur une lecture erronée puis
+devenu inutile, a été supprimé.
 
 ### Mise en ligne
 
