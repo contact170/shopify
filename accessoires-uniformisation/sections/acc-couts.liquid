@@ -16,8 +16,9 @@
       text-transform:uppercase;color:var(--accp-bleu);margin:0 0 14px}
     .accp-cout__montant{font-size:clamp(30px,4.4vw,42px);font-weight:600;letter-spacing:-.035em;
       line-height:1;margin:0;color:var(--accp-encre);font-variant-numeric:tabular-nums}
-    .accp-cout__unite{display:block;margin-top:9px;font-size:15px;color:var(--accp-doux)}
-    .accp-cout__detail{margin:16px 0 0;font-size:16px;line-height:1.6;color:var(--accp-doux)}
+    .accp-cout__unite{margin:11px 0 0;font-size:15px;font-weight:400;letter-spacing:normal;
+      line-height:1.5;color:var(--accp-doux)}
+    .accp-cout__detail{margin:18px 0 0;font-size:16px;line-height:1.65;color:var(--accp-doux)}
     .accp-inclus{margin:clamp(22px,3vw,32px) 0 0;background:var(--accp-nuit);color:#fff;
       border-radius:var(--accp-rayon);padding:clamp(26px,3.4vw,36px)}
     .accp-inclus h3{margin:0;font-size:clamp(19px,2.2vw,23px);font-weight:600;letter-spacing:-.02em;color:#fff}
@@ -40,10 +41,10 @@
         {%- for block in section.blocks -%}
           <li class="accp-cout" {{ block.shopify_attributes }}>
             {%- if block.settings.quand != blank -%}<p class="accp-cout__quand">{{ block.settings.quand }}</p>{%- endif -%}
-            <p class="accp-cout__montant">
-              {{ block.settings.montant }}
-              {%- if block.settings.unite != blank -%}<span class="accp-cout__unite">{{ block.settings.unite }}</span>{%- endif -%}
-            </p>
+            <p class="accp-cout__montant">{{ block.settings.montant }}</p>
+            {%- if block.settings.unite != blank -%}
+              <p class="accp-cout__unite">{{ block.settings.unite }}</p>
+            {%- endif -%}
             {%- if block.settings.detail != blank -%}
               <p class="accp-cout__detail">{{ block.settings.detail }}</p>
             {%- endif -%}

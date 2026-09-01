@@ -160,3 +160,59 @@ templates absents du thème publié.
   la fiche Afone dit **ou**. Même inexactitude que celle corrigée sur la fiche
   principale. Non modifiée : les produits Configurateur ont été laissés
   intacts par principe.
+
+## Retouches du 01/09/2026 (après première mise en ligne)
+
+Thème de travail : **« Retouches fiches SIM 01092026 »** (id 202693738836),
+duplication du thème en ligne.
+
+### 1. Titre de page — le SKU remplacé par une référence lisible
+
+`acc-hero` composait le titre `marque + product.type + variant.sku`, ce qui
+donnait « Daewoo Carte SIM DASIM1AN ». Convenable pour un accessoire dont le
+SKU est la référence commerciale (WVD301, WKE301), illisible pour une carte SIM
+dont le SKU est un code interne.
+
+Nouveau réglage de section `reference` : quand il est rempli, il remplace le
+SKU dans le titre ; laissé vide, le comportement reste identique. Aucun autre
+gabarit n'est affecté.
+
+| Fiche | `reference` | Titre obtenu |
+|---|---|---|
+| 1 mois | `1 Mois Offert` | Daewoo Carte SIM 1 Mois Offert |
+| 1 an | `1 An Prépayé` | Daewoo Carte SIM 1 An Prépayé |
+| 1 an Élite | `1 An Prépayé Élite` | Daewoo Carte SIM 1 An Prépayé Élite |
+
+### 2. Ligne sous le montant, dans le bloc coûts
+
+La mention (« une seule fois, pour 12 mois ») était un `<span>` à l'intérieur du
+`<p class="accp-cout__montant">` : elle héritait de `font-weight:600` et surtout
+de `letter-spacing:-.035em`, d'où un texte gras et compressé. Elle est désormais
+un paragraphe distinct, avec `font-weight:400` et `letter-spacing:normal`.
+
+### 3. Élite — la bascule sur les données mobiles
+
+Point métier ajouté : l'Élite PA501Z est **la seule centrale de la gamme** à
+basculer sur les données mobiles en cas de coupure du Wi-Fi. L'application
+Daewoo Home Connect reste utilisable — armer, désarmer, consulter l'historique —
+là où les autres centrales se limitent aux SMS et à l'appel automatique. Les
+caméras, elles, restent inaccessibles.
+
+C'est ce qui justifie l'enveloppe de 200 Mo contre 50 Mo sur l'offre standard.
+Ajouté dans : encart du bloc coûts, accordéon « Ce que la carte SIM apporte »,
+accordéon « Ce qu'elle ne fait pas » (nuancé), FAQ (questions 1 et 3),
+description produit (section dédiée), balise SEO, et 3e atout du hero
+(« Application active hors Wi-Fi »).
+
+### 4. Compatibilité de la carte 1 mois
+
+Elle couvre **toutes les centrales Daewoo** : Vigilia, Touch (AM301, AM302),
+Key (SA501) et Élite (PA501Z). Nouveau métaobjet de compatibilité
+`vigilia-touch-key-elite`, note de compatibilité, description et balise SEO
+mises à jour. La note renvoie vers l'offre 1 an Élite pour ceux qui équipent
+une PA501Z, en expliquant pourquoi son enveloppe est plus large.
+
+### Mise en ligne
+
+Publier **« Retouches fiches SIM 01092026 »**. Les suffixes produit sont déjà
+en place, aucune bascule à refaire.

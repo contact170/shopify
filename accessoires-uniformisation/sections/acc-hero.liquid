@@ -19,15 +19,26 @@
     assign type_acc = product.metafields.custom.categorie_de_produit.value.categorie_de_produit
   endif
 
+  comment
+    Le titre associe la marque, le type de produit et une reference. Par
+    defaut la reference est le SKU, ce qui convient aux accessoires
+    (WVD301, WKE301...). Quand le SKU est un code interne peu lisible, le
+    reglage "reference" du template prend le relais.
+  endcomment
+  assign reference = section.settings.reference
+  if reference == blank
+    assign reference = v.sku
+  endif
+
   assign identite = section.settings.marque
   if type_acc != blank
     assign identite = identite | append: ' ' | append: type_acc
   endif
-  if v.sku != blank
-    assign identite = identite | append: ' ' | append: v.sku
+  if reference != blank
+    assign identite = identite | append: ' ' | append: reference
   endif
   assign identite = identite | strip
-  if type_acc == blank and v.sku == blank
+  if type_acc == blank and reference == blank
     assign identite = nom_court
   endif
 
@@ -154,6 +165,7 @@
   "name": "Accessoire — en-tete",
   "settings": [
     { "type": "text", "id": "marque", "label": "Marque affichee avant le nom", "default": "Daewoo" },
+    { "type": "text", "id": "reference", "label": "Reference affichee dans le titre (vide = SKU du produit)" },
     { "type": "text", "id": "libelle_bouton", "label": "Libelle du bouton", "default": "Ajouter au panier" },
     { "type": "text", "id": "mention_prix", "label": "Mention a cote du prix", "default": "l'unite" },
     { "type": "range", "id": "quantite_max", "min": 1, "max": 50, "step": 1, "label": "Quantite maximum", "default": 20 },
