@@ -233,10 +233,21 @@ Titres obtenus sur les trois fiches :
 - Daewoo Carte SIM 1 An Prépayé
 - Daewoo Carte SIM 1 An Prépayé Élite
 
-### Question ouverte
+### Traitement de la gamme Key
 
-Le client équipé d'une centrale **Key (SA501)** n'a pas d'offre annuelle : la
-carte 1 an est réservée aux Touch et Vigilia, la carte 1 an Élite à la PA501Z.
-Il ne lui reste que l'abonnement mensuel. Soit la carte 1 an Touch/Vigilia
-convient aussi à la Key et son titre comme sa compatibilité devraient le dire,
-soit il n'existe effectivement pas d'offre annuelle pour cette gamme.
+La carte 1 mois **et** la carte 1 an Touch/Vigilia sont compatibles avec la
+centrale Key (SA501). Mais la gamme Key n'est plus commercialisée depuis un an :
+l'afficher dans le badge du hero, au même rang que les gammes vendues,
+vieillirait le catalogue.
+
+Dosage retenu :
+
+| Emplacement | Contenu |
+|---|---|
+| Badge du hero | « Compatible **Vigilia & Touch** » — gammes vendues uniquement |
+| Note de compatibilité, juste dessous | « Elle fonctionne également avec la centrale Key (SA501), gamme précédente qui n'est plus commercialisée. » |
+| Description produit | mentionne « l'ancienne centrale Key (SA501) » |
+| Balise meta description (fiche 1 mois) | cite Key, pour capter la recherche Google |
+
+Le propriétaire de Key qui cherche trouve la réponse ; le visiteur qui s'en
+moque ne voit qu'une gamme arrêtée de moins.
