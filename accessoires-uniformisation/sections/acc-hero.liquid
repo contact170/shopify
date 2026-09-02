@@ -20,12 +20,20 @@
   endif
 
   comment
-    Le titre associe la marque, le type de produit et une reference. Par
-    defaut la reference est le SKU, ce qui convient aux accessoires
-    (WVD301, WKE301...). Quand le SKU est un code interne peu lisible, le
-    reglage "reference" du template prend le relais.
+    Le titre associe la marque, le type de produit et une reference.
+    Ordre de priorite :
+      1. le reglage "reference" du template, quand une page merite un
+         libelle sur mesure ;
+      2. le nom du produit saisi dans le bandeau caracteristiques
+         (WDS501, F502W...), qui reste lisible la ou le SKU est un code
+         interne prefixe (DAWDS501) ;
+      3. le SKU, qui convient deja aux accessoires Touch / Vigilia
+         (WVD301, WKE301...).
   endcomment
   assign reference = section.settings.reference
+  if reference == blank
+    assign reference = product.metafields.custom.bandeau_caracteristiques.value.titre_1
+  endif
   if reference == blank
     assign reference = v.sku
   endif
@@ -165,7 +173,7 @@
   "name": "Accessoire — en-tete",
   "settings": [
     { "type": "text", "id": "marque", "label": "Marque affichee avant le nom", "default": "Daewoo" },
-    { "type": "text", "id": "reference", "label": "Reference affichee dans le titre (vide = SKU du produit)" },
+    { "type": "text", "id": "reference", "label": "Reference affichee (vide = bandeau, puis SKU)" },
     { "type": "text", "id": "libelle_bouton", "label": "Libelle du bouton", "default": "Ajouter au panier" },
     { "type": "text", "id": "mention_prix", "label": "Mention a cote du prix", "default": "l'unite" },
     { "type": "range", "id": "quantite_max", "min": 1, "max": 50, "step": 1, "label": "Quantite maximum", "default": 20 },
