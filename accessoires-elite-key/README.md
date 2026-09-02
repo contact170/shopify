@@ -63,7 +63,7 @@ d'images manquants, et `templateSuffix = acc-premium`.
 | Clavier Zigbee WKE502Z | 7937746927829 | accessoires | securite_detection, connectivite |
 | Sirène intérieure WIS502 | 7975041433813 | accessoires | FAQ |
 | Amplificateur Zigbee EXT501 | 11974636667220 | ext501zig | a_quoi_ca_sert, contenu_du_pack, connectivite, alimentation |
-| Canon à fumée F502W | 8521990766932 | accesoires-sans-videos | option_associee → recharge F502R |
+| Canon à fumée F502W | 8521990766932 | accesoires-sans-videos | option_associee → recharge F502R, cartouche fournie |
 | Autocollants x10 | 6001578311833 | autocollants-x10 | a_quoi_ca_sert, FAQ, contenu_du_pack |
 
 `acc-premium` et `acc-premium-sd` sont **strictement identiques** (même
@@ -121,6 +121,11 @@ gamme.
   **100 à 150 m³**. Corrigé dans le bandeau caractéristiques, le conseil de
   quantité, la description produit et le métaobjet
   `caracteristiques_principales`.
+- **Cartouche du canon à fumée** : l'appareil est livré avec une cartouche.
+  Précisé dans le contenu du pack, le conseil de quantité, la description
+  produit et une question de FAQ supplémentaire, pour que la recharge
+  F502R proposée en option ne soit pas prise pour un complément
+  indispensable à l'achat.
 - **Adaptateur secteur Key** (7978957701333) laissé sur son gabarit
   `sa501` : pièce détachée sans contenu, hors périmètre accessoires.
 - Le WKE501 et le WKE502Z partagent deux visuels ; leurs `alt` ont été
