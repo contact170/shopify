@@ -249,15 +249,22 @@ en avant de la boutique et non ceux du produit. Le reglage
 Shopify (verifie en envoyant une valeur bidon, acceptee sans erreur), il
 n'y avait aucun moyen sur de deviner l'option correspondante.
 
-La valeur a ete trouvee dans le theme apres reglage manuel depuis
-l'editeur : **`reviews_selection: "product_reviews"`**. Le carrousel
-affiche donc bien les avis du produit consulte.
+Deux valeurs ont ete lues dans le theme apres reglage manuel depuis
+l'editeur. La premiere, `product_reviews`, ne correspondait a aucune option
+du bloc : Judge.me la ignorait et retombait sur « tous les avis ». La bonne
+est **`current_product`**, verifiee en ligne sur la fiche SA501.
+
+D'apres la documentation du bloc, « Current product » affiche les avis du
+produit consulte **et exclut** ceux des autres produits de son Product
+Group Judge.me. Il n'existe pas d'option « collection » : les seuls choix
+sont tous les avis, les avis mis en avant, le produit courant, et une
+selection manuelle d'au plus 10 produits.
 
 Configuration retenue, reprise sur les 7 gabarits :
 
 | Reglage | Valeur |
 |---|---|
-| `reviews_selection` | `product_reviews` |
+| `reviews_selection` | `current_product` |
 | `show_sample_reviews` | false (pas de faux avis de demonstration) |
 | `star_rating` | `all` |
 | `display_order` | `media_first` |
