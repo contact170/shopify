@@ -1,24 +1,29 @@
 {{ 'acc-premium.css' | asset_url | stylesheet_tag }}
-{%- assign note = product.metafields.reviews.rating.value.rating -%}
-{%- assign nb = product.metafields.reviews.rating_count.value -%}
+{%- liquid
+  assign note = product.metafields.reviews.rating.value.rating
+  assign nb = product.metafields.reviews.rating_count.value
+  comment
+    Sans avis, la section ne laissait qu'un surtitre orphelin au-dessus du
+    carrousel Judge.me. On masque desormais le bloc entier : le carrousel,
+    lui, se masque tout seul quand le produit n'a rien a montrer.
+  endcomment
+-%}
+{%- if note != blank and nb > 0 -%}
 <div class="accp" id="avis-clients">
   <section style="padding:{{ section.settings.marge_haute }}px 0 0">
     <div class="accp-wrap accp-etroit">
-      {%- if note != blank and nb > 0 -%}
-        {%- assign largeur = note | times: 20 -%}
-        {%- assign note_fr = note | replace: '.', ',' -%}
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-          <p class="accp-ref" style="width:100%;margin-bottom:2px">{{ section.settings.surtitre }}</p>
-          <p style="font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1;margin:0">{{ note_fr }}<span style="font-size:.6em;color:var(--accp-doux);font-weight:400"> / 5</span></p>
-          <span class="accp-etoiles" style="font-size:17px" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:{{ largeur }}%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span>
-          <span style="color:var(--accp-doux);font-size:14px">{{ nb }} avis v&eacute;rifi&eacute;s</span>
-        </div>
-      {%- else -%}
-        <p class="accp-ref">{{ section.settings.surtitre }}</p>
-      {%- endif -%}
+      {%- assign largeur = note | times: 20 -%}
+      {%- assign note_fr = note | replace: '.', ',' -%}
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <p class="accp-ref" style="width:100%;margin-bottom:2px">{{ section.settings.surtitre }}</p>
+        <p style="font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1;margin:0">{{ note_fr }}<span style="font-size:.6em;color:var(--accp-doux);font-weight:400"> / 5</span></p>
+        <span class="accp-etoiles" style="font-size:17px" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:{{ largeur }}%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span>
+        <span style="color:var(--accp-doux);font-size:14px">{{ nb }} avis v&eacute;rifi&eacute;s</span>
+      </div>
     </div>
   </section>
 </div>
+{%- endif -%}
 
 {% schema %}
 {

@@ -240,34 +240,61 @@ produit du bandeau de « SA501 4G » à « Key 4G », ce qui donne le H1
 demandé : **Daewoo Centrale SA501 Key 4G**. Le sous-titre, qui répétait
 l'accroche, devient « La centrale seule, en version 4G. »
 
-### Avis clients : widget produit allege
+### Avis clients : carrousel Judge.me sur les avis du produit
 
-Premiere tentative, abandonnee : remplacer le bloc Judge.me `review_widget`
-par le `cards_carousel` de la page d'accueil. Visuellement plus leger, mais
-ce bloc affiche les avis mis en avant de la boutique, pas ceux du produit
-consulte — ce qui n'a pas de sens sur une fiche. Le reglage
-`reviews_selection` n'est pas valide contre une liste de valeurs cote
-Shopify (verifie en envoyant une valeur bidon, acceptee sans erreur) : il
-n'y avait donc aucun moyen sur de deviner une option « avis du produit ».
+Deux essais avant de trouver. Le `cards_carousel` de la page d'accueil
+etait bien plus leger que le `review_widget`, mais affichait les avis mis
+en avant de la boutique et non ceux du produit. Le reglage
+`reviews_selection` n'etant pas valide contre une liste de valeurs cote
+Shopify (verifie en envoyant une valeur bidon, acceptee sans erreur), il
+n'y avait aucun moyen sur de deviner l'option correspondante.
 
-Retour au `review_widget`, qui affiche bien les avis du produit. Sa hauteur
-est reduite autrement :
+La valeur a ete trouvee dans le theme apres reglage manuel depuis
+l'editeur : **`reviews_selection: "product_reviews"`**. Le carrousel
+affiche donc bien les avis du produit consulte.
 
-- **CSS**, dans `acc-premium.css` : le titre du widget et l'histogramme des
-  notes sont masques. La section `acc-avis` juste au-dessus affiche deja
-  « Avis clients », la note et le nombre d'avis ; l'histogramme, lui,
-  occupait a lui seul une bonne part de la hauteur. Le bouton « ecrire un
-  avis » et la liste des avis restent en place. Regles sans effet si
-  Judge.me renomme ses classes : le bloc reprend simplement sa taille.
-- **Marges** des blocs d'application resserrees dans les 7 gabarits :
-  Moast 40 -> 16 px en bas, avis 12/32 -> 4/16, « Vous avez consulte »
-  24/36 -> 12/24, et la marge haute de `acc-avis` 48 -> 28.
+Configuration retenue, reprise sur les 7 gabarits :
 
-La mise en page du widget lui-meme (compact, carrousel, colonnes) se choisit
-dans l'application Judge.me, pas dans le theme : c'est le levier restant si
-le bloc reste trop haut.
+| Reglage | Valeur |
+|---|---|
+| `reviews_selection` | `product_reviews` |
+| `show_sample_reviews` | false (pas de faux avis de demonstration) |
+| `star_rating` | `all` |
+| `display_order` | `media_first` |
+| `no_image_fallback` | `review_text_only` |
+| `max_reviews` / `reviews_shown` | 20 / 4 |
+| `image_ratio` | 1 |
+| `header_text` | Les avis de nos clients |
+| `show_average_rating` | true |
 
-Note : le fichier `templates/product.zz-probe.json` cree pour ce test est
-reste dans le brouillon, la suppression de fichiers de theme etant bloquee
-depuis l'API. Il n'est utilise par aucun produit ; a supprimer depuis
-l'admin Shopify.
+Gabarits concernes : `acc-premium`, `acc-premium-sd`,
+`centrale-seule-touch`, `centrale-seule-touchxl`, `sim-1mois`, `sim-1an`,
+`sim-1an-elite`.
+
+Deux ajustements qui accompagnent ce choix :
+
+- `acc-avis` ne s'affiche plus du tout quand le produit n'a aucun avis.
+  Auparavant la section laissait un surtitre orphelin au-dessus d'un
+  carrousel vide.
+- Les regles CSS qui masquaient le titre et l'histogramme du
+  `review_widget` ont ete retirees d'`acc-premium.css` : ce bloc n'est plus
+  utilise, et les selecteurs risquaient de masquer par ricochet l'en-tete
+  du carrousel.
+
+**Etat des avis par produit** (metachamp `reviews.rating_count`) : quinze
+accessoires affichent exactement 152 avis, ce qui indique un regroupement
+de produits cote Judge.me plutot que des comptes propres. Les valeurs
+distinctes sont WOS501 (6), autocollants (6), canon a fumee (3),
+adaptateur secteur Key (2) et centrale SA501 4G (16).
+
+**Seul produit sans aucun avis : la sirene interieure WIS502**
+(`7975041433813`), qui n'a pas de metachamp `rating_count`. Son carrousel
+restera vide. Le carrousel n'offre pas de repli automatique vers la
+collection ; la facon propre de traiter ce cas est de rattacher le WIS502
+au groupe de produits Judge.me qui donne leurs 152 avis aux autres
+accessoires, ce qui se fait dans l'application Judge.me.
+
+Note : le fichier `templates/product.zz-probe.json`, cree pour tester les
+valeurs du reglage, est reste dans le theme — la suppression de fichiers de
+theme est bloquee depuis l'API. Il n'est utilise par aucun produit ; a
+supprimer depuis l'admin Shopify.
