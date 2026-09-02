@@ -276,6 +276,8 @@ a donc reçu sa propre copie du fichier (61 808 o chacune, noms suffixés). Les
 Configurateurs, eux, partagent un seul fichier. Pour n'avoir qu'un fichier
 partout, il faut repasser par l'admin et sélectionner le fichier existant.
 
-Les anciennes images sont toujours présentes en seconde position sur les trois
-fiches — donc visibles dans la bande de vignettes. Suppression en attente de
-validation.
+Les trois anciennes images ont été supprimées le 01/09/2026 après validation.
+Chaque fiche ne porte plus qu'un seul média : la nouvelle photo, 2048 × 2048,
+62 ko, avec texte alternatif. La bande de vignettes ne s'affiche donc plus
+(elle est conditionnée à `product.images.size > 1`), ce qui est le rendu voulu
+pour un produit à visuel unique.
