@@ -1,0 +1,95 @@
+{% comment %} ── Comment choisir son alarme — hero + sommaire ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .cah * { box-sizing:border-box; margin:0; padding:0; }
+  .cah { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0b1220; padding:86px 24px 88px; position:relative; overflow:hidden; }
+  .cah::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(720px 360px at 12% -10%,rgba(224,145,43,.13),transparent 62%),
+               radial-gradient(720px 360px at 88% -10%,rgba(18,160,173,.13),transparent 62%),
+               radial-gradient(680px 340px at 50% 118%,rgba(47,111,224,.10),transparent 62%); }
+  .cah-inner { position:relative; z-index:2; max-width:1080px; margin:0 auto; text-align:center; }
+  .cah-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:20px; }
+  .cah-eyebrow::before,.cah-eyebrow::after { content:''; width:28px; height:1px; background:#c9d2dc; }
+  .cah-title { font-size:clamp(30px,4.4vw,52px); font-weight:600; letter-spacing:-.04em; line-height:1.08;
+    margin-bottom:20px; }
+  .cah-sub { font-size:16.5px; font-weight:400; line-height:1.7; color:#43505e; max-width:680px; margin:0 auto 42px; }
+  .cah-sub b { color:#0b1220; font-weight:600; }
+
+  .cah-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:940px; margin:0 auto 36px; }
+  .cah-s { display:flex; flex-direction:column; align-items:flex-start; gap:10px; text-align:left; text-decoration:none;
+    background:#fff; border:1px solid #e3e8ee; border-radius:16px; padding:20px 20px 22px; color:inherit;
+    box-shadow:0 16px 40px -32px rgba(11,18,32,.42); transition:transform .18s,border-color .18s; }
+  .cah-s:hover { transform:translateY(-3px); border-color:#c9d2dc; }
+  .cah-sn { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%;
+    background:#0b1220; color:#fff; font-size:12px; font-weight:600; }
+  .cah-st { font-size:14.5px; font-weight:600; letter-spacing:-.02em; line-height:1.35; }
+  .cah-sd { font-size:12.8px; font-weight:400; color:#5d6a7a; line-height:1.5; }
+
+  .cah-btns { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-bottom:28px; }
+  .cah-b { display:inline-flex; align-items:center; gap:9px; padding:14px 26px; border-radius:9px;
+    font-size:13.8px; font-weight:600; text-decoration:none; transition:transform .18s; }
+  .cah-b:hover { transform:translateY(-2px); }
+  .cah-b--1 { background:#0b1220; color:#fff; }
+  .cah-b--2 { background:#fff; color:#0b1220; border:1px solid #d3dae2; }
+  .cah-b svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+
+  .cah-note { display:inline-flex; align-items:center; gap:9px; font-size:13.5px; color:#43505e;
+    background:#f4f6f8; border:1px solid #e3e8ee; border-radius:99px; padding:11px 22px; }
+  .cah-note svg { width:16px; height:16px; flex:none; fill:none; stroke:#0f8a5f; stroke-width:2.9; stroke-linecap:round; stroke-linejoin:round; }
+  .cah-note b { color:#0b1220; font-weight:600; }
+
+  @media (max-width:920px) { .cah-steps { grid-template-columns:repeat(2,1fr); max-width:520px; } }
+  @media (max-width:600px) { .cah { padding:66px 20px 72px; } .cah-steps { grid-template-columns:1fr; max-width:420px; } }
+</style>
+
+<section class="cah">
+  <div class="cah-inner">
+    <span class="cah-eyebrow">Guide d’achat</span>
+    <h1 class="cah-title">Comment choisir<br>son alarme&nbsp;?</h1>
+    <p class="cah-sub">Quatre questions suffisent&nbsp;: <b>ce que vous protégez</b>, <b>ce qui doit se passer si Internet tombe</b>, <b>comment vous voulez piloter le système</b> et <b>quels détecteurs poser</b>. Répondez-y dans l’ordre, et il ne reste qu’une seule alarme possible — sans abonnement, dans les trois cas.</p>
+
+    <div class="cah-steps">
+      <a class="cah-s" href="#etape-logement">
+        <span class="cah-sn">1</span>
+        <span class="cah-st">Quel logement&nbsp;?</span>
+        <span class="cah-sd">Appartement, maison, maison connectée.</span>
+      </a>
+      <a class="cah-s" href="#etape-reseau">
+        <span class="cah-sn">2</span>
+        <span class="cah-st">Et si Internet coupe&nbsp;?</span>
+        <span class="cah-sd">Wi-Fi seul, SMS en 4G, ou application en 4G+.</span>
+      </a>
+      <a class="cah-s" href="#etape-pilotage">
+        <span class="cah-sn">3</span>
+        <span class="cah-st">Comment piloter&nbsp;?</span>
+        <span class="cah-sd">Clavier, écran tactile ou application seule.</span>
+      </a>
+      <a class="cah-s" href="#etape-accessoires">
+        <span class="cah-sn">4</span>
+        <span class="cah-st">Quels détecteurs&nbsp;?</span>
+        <span class="cah-sd">Portes, vitres, mouvement, extérieur, caméras.</span>
+      </a>
+    </div>
+
+    <div class="cah-btns">
+      <a class="cah-b cah-b--1" href="/pages/configurateur_2">Passer au configurateur
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="cah-b cah-b--2" href="/pages/product-compare">Voir le comparatif détaillé
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+
+    <span class="cah-note">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>Toutes nos alarmes sont <b>sans abonnement</b>, <b>garanties 2 ans</b> et s’installent <b>sans technicien</b>.</span>
+    </span>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Choisir — Hero",
+  "settings": []
+}
+{% endschema %}

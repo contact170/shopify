@@ -1,0 +1,106 @@
+{% comment %} ── Étape 2 — Wi-Fi, 4G : que se passe-t-il si Internet coupe ? ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .car * { box-sizing:border-box; margin:0; padding:0; }
+  .car { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#f7f9fb; color:#0b1220; padding:90px 24px 94px; scroll-margin-top:80px; }
+  .car-inner { max-width:1100px; margin:0 auto; }
+  .car-head { max-width:680px; margin:0 auto 44px; text-align:center; }
+  .car-step { display:inline-flex; align-items:center; gap:9px; font-size:11px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; color:#5d6a7a; margin-bottom:15px; }
+  .car-step i { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px;
+    border-radius:50%; background:#0b1220; color:#fff; font-style:normal; font-size:11px; letter-spacing:0; }
+  .car-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:13px; }
+  .car-sub { font-size:15.5px; color:#4a5663; font-weight:300; line-height:1.68; }
+  .car-sub b { color:#0b1220; font-weight:500; }
+
+  .car-tw { background:#fff; border:1px solid #e3e8ee; border-radius:19px; overflow:hidden;
+    box-shadow:0 18px 44px -32px rgba(11,18,32,.3); }
+  .car-scroll { width:100%; overflow-x:auto; }
+  .car-t { width:100%; border-collapse:collapse; min-width:720px; }
+  .car-t th,.car-t td { padding:16px 18px; text-align:left; vertical-align:top; border-bottom:1px solid #eef1f5; }
+  .car-t thead th { background:#fbfcfd; font-size:13px; font-weight:600; letter-spacing:-.01em; border-bottom:1px solid #e3e8ee; }
+  .car-t thead th span { display:block; font-size:11.5px; font-weight:400; color:#5d6a7a; margin-top:3px; }
+  .car-t thead th i { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:7px; vertical-align:middle; }
+  .car-t tbody tr:last-child td { border-bottom:0; }
+  .car-t td:first-child { font-size:13.8px; font-weight:500; color:#0b1220; width:24%; background:#fbfcfd; }
+  .car-t td { font-size:13.4px; color:#4a5663; font-weight:300; line-height:1.55; }
+  .car-t td b { color:#0b1220; font-weight:600; }
+  .car-tag { display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; border-radius:99px;
+    padding:4px 10px; margin-bottom:6px; }
+  .car-tag--ok { background:rgba(15,138,95,.1); color:#0f8a5f; }
+  .car-tag--mid { background:rgba(224,145,43,.14); color:#a35a00; }
+  .car-tag--ko { background:rgba(205,54,54,.1); color:#b03232; }
+
+  .car-notes { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:22px; }
+  .car-n { background:#fff; border:1px solid #e3e8ee; border-radius:15px; padding:20px 22px; display:flex; gap:12px; align-items:flex-start; }
+  .car-n svg { width:18px; height:18px; flex:none; margin-top:2px; fill:none; stroke:#5d6a7a; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .car-n p { font-size:13.4px; color:#4a5663; font-weight:300; line-height:1.6; }
+  .car-n b { color:#0b1220; font-weight:500; }
+
+  @media (max-width:820px) { .car-notes { grid-template-columns:1fr; } }
+  @media (max-width:600px) { .car { padding:70px 20px 74px; } }
+</style>
+
+<section class="car" id="etape-reseau">
+  <div class="car-inner">
+    <div class="car-head">
+      <span class="car-step"><i>2</i> Connexion &amp; coupures</span>
+      <h2 class="car-title">Que doit-il se passer si votre Internet est coupé&nbsp;?</h2>
+      <p class="car-sub">C’est la vraie différence technique entre les trois gammes. Dans tous les cas, <b>la détection et la sirène continuent de fonctionner en local</b>&nbsp;: ce qui change, c’est votre capacité à être prévenu et à piloter à distance.</p>
+    </div>
+
+    <div class="car-tw">
+      <div class="car-scroll">
+        <table class="car-t">
+          <thead>
+            <tr>
+              <th>Votre situation</th>
+              <th><i style="background:#e0912b"></i>Vigilia Wi-Fi<span>Sans carte SIM</span></th>
+              <th><i style="background:#2f6fe0"></i>Vigilia GSM / Touch<span>Avec carte SIM 4G</span></th>
+              <th><i style="background:#12a0ad"></i>Élite (PA501Z)<span>Avec carte SIM 4G+</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>J’ai le Wi-Fi à la maison</td>
+              <td><span class="car-tag car-tag--ok">Idéal</span><br>Alertes et pilotage complets depuis l’application.</td>
+              <td><span class="car-tag car-tag--ok">Idéal</span><br>Alertes et pilotage complets, avec le relais 4G en secours.</td>
+              <td><span class="car-tag car-tag--ok">Idéal</span><br>En plus du Wi-Fi, une <b>prise Ethernet RJ45</b> pour une liaison filaire stable.</td>
+            </tr>
+            <tr>
+              <td>Ma box tombe en panne</td>
+              <td><span class="car-tag car-tag--ko">Plus d’alerte à distance</span><br>La sirène sonne, mais rien ne part vers votre téléphone.</td>
+              <td><span class="car-tag car-tag--mid">Alertes et pilotage par SMS</span><br>Vous recevez les <b>SMS</b> et commandez l’alarme par SMS&nbsp;; l’application est temporairement inactive.</td>
+              <td><span class="car-tag car-tag--ok">L’application reste active</span><br>La centrale bascule en <b>4G+</b>&nbsp;: vous armez et désarmez à distance comme d’habitude, en plus des SMS.</td>
+            </tr>
+            <tr>
+              <td>Je n’ai pas de box Internet du tout</td>
+              <td><span class="car-tag car-tag--ko">Ne convient pas</span><br>Cette version a besoin d’un réseau Wi-Fi pour fonctionner à distance.</td>
+              <td><span class="car-tag car-tag--mid">Fonctionne en SMS</span><br>Alertes et commandes par <b>SMS</b>, sans application.</td>
+              <td><span class="car-tag car-tag--ok">Fonctionne en 4G+</span><br>Application et SMS opérationnels sans aucune box.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="car-notes">
+      <div class="car-n">
+        <svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.4"/><path d="M9.5 6.5h5"/></svg>
+        <p>Le mode 4G nécessite une <b>carte SIM, toujours en option et jamais fournie</b>. Vous pouvez prendre notre forfait Afone ou la SIM de l’opérateur de votre choix.</p>
+      </div>
+      <div class="car-n">
+        <svg viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5 12a10.5 10.5 0 0 1 14 0"/><path d="M8.5 15.5a6 6 0 0 1 7 0"/><circle cx="12" cy="19" r=".8"/></svg>
+        <p>Les <b>caméras fonctionnent uniquement en Wi-Fi</b>. Pendant une coupure Internet, le flux vidéo n’est pas consultable — même avec une carte SIM dans la centrale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Choisir — 2 Connexion",
+  "settings": []
+}
+{% endschema %}

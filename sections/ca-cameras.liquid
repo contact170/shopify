@@ -1,0 +1,104 @@
+{% comment %} ── Étape 5 — Quelle caméra choisir ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .cac * { box-sizing:border-box; margin:0; padding:0; }
+  .cac { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0b1220; padding:90px 24px 94px; scroll-margin-top:80px; }
+  .cac-inner { max-width:1160px; margin:0 auto; }
+  .cac-head { max-width:680px; margin:0 auto 46px; text-align:center; }
+  .cac-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:15px; }
+  .cac-eyebrow::before,.cac-eyebrow::after { content:''; width:26px; height:1px; background:#d3dae2; }
+  .cac-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:13px; }
+  .cac-sub { font-size:15.5px; color:#4a5663; font-weight:300; line-height:1.68; }
+  .cac-sub b { color:#0b1220; font-weight:500; }
+
+  .cac-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .cac-c { border:1px solid #e3e8ee; border-radius:19px; overflow:hidden; background:#fff; display:flex; flex-direction:column;
+    box-shadow:0 18px 44px -32px rgba(11,18,32,.3); }
+  .cac-shot { aspect-ratio:4/3; background:#f4f6f8; display:flex; align-items:center; justify-content:center; padding:18px; }
+  .cac-shot img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
+  .cac-b { padding:24px 26px 26px; display:flex; flex-direction:column; flex:1; }
+  .cac-q { font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#5d6a7a; margin-bottom:9px; }
+  .cac-n { font-size:19px; font-weight:600; letter-spacing:-.028em; margin-bottom:10px; }
+  .cac-d { font-size:13.6px; color:#4a5663; font-weight:300; line-height:1.62; margin-bottom:14px; flex:1; }
+  .cac-d b { color:#0b1220; font-weight:500; }
+  .cac-ref { font-size:12.4px; color:#5d6a7a; font-weight:300; padding:11px 14px; border-radius:10px; background:#f7f9fb;
+    border:1px solid #eef1f5; margin-bottom:18px; }
+  .cac-ref b { color:#0b1220; font-weight:600; }
+  .cac-go { display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; text-decoration:none;
+    color:#0b1220; align-self:flex-start; padding-bottom:2px; border-bottom:1.5px solid currentColor; transition:gap .18s; }
+  .cac-go:hover { gap:13px; }
+  .cac-go svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2.3; stroke-linecap:round; stroke-linejoin:round; }
+
+  .cac-note { margin-top:24px; background:#f4f6f8; border:1px solid #e3e8ee; border-radius:17px; padding:22px 26px;
+    display:flex; gap:13px; align-items:flex-start; }
+  .cac-note svg { width:18px; height:18px; flex:none; margin-top:2px; fill:none; stroke:#5d6a7a; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .cac-note p { font-size:13.8px; color:#4a5663; font-weight:300; line-height:1.62; }
+  .cac-note b { color:#0b1220; font-weight:500; }
+
+  @media (max-width:980px) { .cac-grid { grid-template-columns:1fr; max-width:430px; margin:0 auto; } }
+  @media (max-width:600px) { .cac { padding:70px 20px 74px; } .cac-note { padding:20px; } }
+</style>
+
+<section class="cac" id="etape-cameras">
+  <div class="cac-inner">
+    <div class="cac-head">
+      <span class="cac-eyebrow">Pour compléter</span>
+      <h2 class="cac-title">Quelle caméra ajouter&nbsp;?</h2>
+      <p class="cac-sub">Une caméra ne remplace pas une alarme, elle la complète&nbsp;: elle vous permet de <b>vérifier ce qui a déclenché la détection</b>. Une seule question à trancher — l’endroit et l’alimentation disponible.</p>
+    </div>
+
+    <div class="cac-grid">
+      <div class="cac-c">
+        <div class="cac-shot"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/ip506P_d369dd17-3f2d-4c98-badc-9d72b9cc9fe8.png?v=1775220472" alt="Caméra de surveillance intérieure Daewoo IP506P motorisée" loading="lazy" width="1080" height="1080"></div>
+        <div class="cac-b">
+          <p class="cac-q">À l’intérieur</p>
+          <p class="cac-n">Caméra intérieure</p>
+          <p class="cac-d">Toutes fonctionnent sur <b>alimentation secteur et Wi-Fi</b>, avec vision nocturne, détection de mouvement et audio pour écouter la pièce. Selon le modèle, la <b>tête motorisée</b> balaie toute la pièce.</p>
+          <p class="cac-ref"><b>Modèles&nbsp;:</b> IF501, IP501, IP506P</p>
+          <a class="cac-go" href="/collections/cameras-interieures">Voir les caméras intérieures
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+
+      <div class="cac-c">
+        <div class="cac-shot"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Visuellifestyleaccessoires_1.png?v=1757927720" alt="Caméra de surveillance extérieure Daewoo installée sur une façade" loading="lazy" width="1080" height="1080"></div>
+        <div class="cac-b">
+          <p class="cac-q">Dehors, avec une prise</p>
+          <p class="cac-n">Caméra extérieure filaire</p>
+          <p class="cac-d">Si vous avez une <b>alimentation électrique à l’extérieur</b>, c’est le meilleur choix&nbsp;: tête motorisée et LED pour une <b>vision nocturne en couleur</b>, sans jamais penser à la recharge.</p>
+          <p class="cac-ref"><b>Modèle&nbsp;:</b> EP506</p>
+          <a class="cac-go" href="/collections/cameras-exterieures">Voir les caméras extérieures
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+
+      <div class="cac-c">
+        <div class="cac-shot" style="background:#fff;">
+          <svg viewBox="0 0 24 24" style="width:82px;height:82px;fill:none;stroke:#c9d2dc;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="4.6"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
+        </div>
+        <div class="cac-b">
+          <p class="cac-q">Dehors, sans prise</p>
+          <p class="cac-n">Caméra autonome ou solaire</p>
+          <p class="cac-d">Aucune alimentation disponible&nbsp;? Ces caméras <b>se posent en quelques minutes n’importe où, dès que le Wi-Fi porte</b>. Le <b>panneau solaire</b> les alimente en continu, sans recharge à gérer.</p>
+          <p class="cac-ref"><b>Modèles&nbsp;:</b> W502 (fixe), W509MW et W512MW (motorisées, solaire)</p>
+          <a class="cac-go" href="/collections/cameras-sans-fil">Voir les caméras autonomes
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cac-note">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="11"/><circle cx="12" cy="8" r=".7"/></svg>
+      <p>Point commun aux trois&nbsp;: <b>les caméras passent toujours par le Wi-Fi</b>. Une carte SIM dans la centrale maintient les alertes de l’alarme pendant une coupure Internet, mais pas l’accès à la vidéo.</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Choisir — 5 Caméras",
+  "settings": []
+}
+{% endschema %}

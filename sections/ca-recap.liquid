@@ -1,0 +1,147 @@
+{% comment %} ── Récapitulatif des trois gammes + renvoi vers le comparatif ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .cax * { box-sizing:border-box; margin:0; padding:0; }
+  .cax { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#f7f9fb; color:#0b1220; padding:90px 24px 94px; scroll-margin-top:80px; }
+  .cax-inner { max-width:1160px; margin:0 auto; }
+  .cax-head { max-width:660px; margin:0 auto 44px; text-align:center; }
+  .cax-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:15px; }
+  .cax-eyebrow::before,.cax-eyebrow::after { content:''; width:26px; height:1px; background:#d3dae2; }
+  .cax-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:13px; }
+  .cax-sub { font-size:15.5px; color:#4a5663; font-weight:300; line-height:1.68; }
+  .cax-sub b { color:#0b1220; font-weight:500; }
+
+  .cax-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .cax-c { position:relative; background:#fff; border:1px solid #e3e8ee; border-radius:19px; overflow:hidden;
+    display:flex; flex-direction:column; box-shadow:0 18px 44px -32px rgba(11,18,32,.3); }
+  .cax-flag { position:absolute; top:0; left:0; right:0; height:3px; }
+  .cax-b { padding:26px 26px 28px; display:flex; flex-direction:column; flex:1; }
+  .cax-rank { font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin-bottom:9px; }
+  .cax-n { font-size:22px; font-weight:600; letter-spacing:-.03em; margin-bottom:5px; }
+  .cax-ref { font-size:12.4px; color:#5d6a7a; font-weight:300; margin-bottom:16px; }
+  .cax-ul { display:flex; flex-direction:column; gap:9px; margin-bottom:20px; flex:1; }
+  .cax-li { display:flex; gap:9px; align-items:flex-start; font-size:13.3px; color:#4a5663; font-weight:300; line-height:1.5; }
+  .cax-li svg { width:15px; height:15px; flex:none; margin-top:2px; fill:none; stroke:#0f8a5f; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  .cax-li b { color:#0b1220; font-weight:500; }
+  .cax-li .cax-x { stroke:#b7c0ca; stroke-width:2.2; }
+  .cax-no { color:#8b95a1; }
+  .cax-price { padding-top:16px; border-top:1px solid #eef1f5; margin-bottom:16px; }
+  .cax-from { display:block; font-size:11.5px; color:#5d6a7a; font-weight:400; }
+  .cax-amt { display:block; font-size:25px; font-weight:600; letter-spacing:-.03em; margin-top:2px; }
+  .cax-btns { display:flex; flex-direction:column; gap:9px; }
+  .cax-bt { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 18px; border-radius:9px;
+    font-size:13.4px; font-weight:600; text-decoration:none; transition:transform .18s; }
+  .cax-bt:hover { transform:translateY(-2px); }
+  .cax-bt--1 { background:#0b1220; color:#fff; }
+  .cax-bt--2 { background:#fff; color:#0b1220; border:1px solid #d3dae2; }
+  .cax-bt svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+
+  .cax--v .cax-flag { background:#e0912b; } .cax--v .cax-rank { color:#a35a00; }
+  .cax--t .cax-flag { background:#2f6fe0; } .cax--t .cax-rank { color:#1f5fd0; }
+  .cax--e .cax-flag { background:#12a0ad; } .cax--e .cax-rank { color:#0a6068; }
+
+  .cax-more { margin-top:24px; display:flex; align-items:center; justify-content:space-between; gap:22px; flex-wrap:wrap;
+    background:#0b1220; border-radius:17px; padding:26px 30px; }
+  .cax-mt { font-size:17px; font-weight:600; letter-spacing:-.025em; color:#fff; margin-bottom:4px; }
+  .cax-md { font-size:13.6px; color:#b3bdc9; font-weight:300; line-height:1.55; max-width:620px; }
+  .cax-mb { display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:9px; background:#fff;
+    color:#0b1220; font-size:13.8px; font-weight:600; text-decoration:none; white-space:nowrap; transition:transform .18s; }
+  .cax-mb:hover { transform:translateY(-2px); }
+  .cax-mb svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+
+  @media (max-width:980px) { .cax-grid { grid-template-columns:1fr; max-width:430px; margin:0 auto; } }
+  @media (max-width:600px) { .cax { padding:70px 20px 74px; } .cax-more { padding:24px 20px; } }
+</style>
+
+<section class="cax" id="recapitulatif">
+  <div class="cax-inner">
+    <div class="cax-head">
+      <span class="cax-eyebrow">Récapitulatif</span>
+      <h2 class="cax-title">Les trois gammes en un coup d’œil.</h2>
+      <p class="cax-sub">Chaque gamme part d’un kit prêt à poser, que l’on complète ensuite à l’unité <b>sans jamais remplacer la centrale</b>. Toutes sont sans abonnement et garanties 2&nbsp;ans.</p>
+    </div>
+
+    <div class="cax-grid">
+      <div class="cax-c cax--v">
+        <span class="cax-flag"></span>
+        <div class="cax-b">
+          <p class="cax-rank">L’essentiel</p>
+          <p class="cax-n">Vigilia</p>
+          <p class="cax-ref">Centrale à clavier à touches</p>
+          <div class="cax-ul">
+            <p class="cax-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Clavier à touches</b> intégré à la centrale</span></p>
+            <p class="cax-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Caméra intérieure IP506P</b> incluse dans le kit</span></p>
+            <p class="cax-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Jusqu’à <b>60 accessoires</b> · Alexa et Google Home</span></p>
+            <p class="cax-li"><svg class="cax-x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cax-no">4G en option sur la version GSM uniquement</span></p>
+          </div>
+          <div class="cax-price"><span class="cax-from">Kit de départ, à partir de</span><span class="cax-amt">139,90 €</span></div>
+          <div class="cax-btns">
+            <a class="cax-bt cax-bt--1" href="/products/daewoo-vigilia-starter-pack">Voir le kit Vigilia
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a class="cax-bt cax-bt--2" href="/collections/systeme-dalarme-vigilia">La gamme complète</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cax-c cax--t">
+        <span class="cax-flag"></span>
+        <div class="cax-b">
+          <p class="cax-rank">Le plus intuitif</p>
+          <p class="cax-n">Touch &amp; Touch XL</p>
+          <p class="cax-ref">Centrales AM301 (4,3") et AM302 (7")</p>
+          <div class="cax-ul">
+            <p class="cax-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Écran tactile couleur</b> — 4,3" ou 7"</span></p>
+            <p class="cax-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Module <b>GSM 4G intégré</b> sur les deux modèles</span></p>
+            <p class="cax-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Jusqu’à <b>90 accessoires</b> · Alexa et Google Home</span></p>
+            <p class="cax-li"><svg class="cax-x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cax-no">Pas d’Ethernet, pas de passerelle Zigbee</span></p>
+          </div>
+          <div class="cax-price"><span class="cax-from">Kit de départ, à partir de</span><span class="cax-amt">199,90 €</span></div>
+          <div class="cax-btns">
+            <a class="cax-bt cax-bt--1" href="/products/alarme-daewoo-wifi-gsm-4g-starter-pack-am301">Voir le kit Touch
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a class="cax-bt cax-bt--2" href="/collections/systeme-dalarme-am301-am302">La gamme complète</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cax-c cax--e">
+        <span class="cax-flag"></span>
+        <div class="cax-b">
+          <p class="cax-rank">La plus connectée</p>
+          <p class="cax-n">Élite</p>
+          <p class="cax-ref">Centrale PA501Z · sans écran</p>
+          <div class="cax-ul">
+            <p class="cax-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Wi-Fi, Ethernet RJ45 et 4G+</b> qui se relaient</span></p>
+            <p class="cax-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Passerelle Zigbee</b> intégrée · jusqu’à 200 accessoires</span></p>
+            <p class="cax-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Batterie de secours de <b>12 heures</b></span></p>
+            <p class="cax-li"><svg class="cax-x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg><span class="cax-no">Ni écran, ni Alexa, ni Google Home</span></p>
+          </div>
+          <div class="cax-price"><span class="cax-from">Kit de départ, à partir de</span><span class="cax-amt">299,90 €</span></div>
+          <div class="cax-btns">
+            <a class="cax-bt cax-bt--1" href="/products/starter-pack-elite-daewoo">Voir le kit Élite
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a class="cax-bt cax-bt--2" href="/collections/systeme-dalarme-pa501z">La gamme complète</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cax-more">
+      <div>
+        <p class="cax-mt">Besoin du détail, ligne par ligne&nbsp;?</p>
+        <p class="cax-md">Le comparatif complet reprend chaque poste — écran, connexion, accessoires, autonomie — et signale ce qui est identique sur les trois gammes pour vous éviter de comparer ce qui ne change pas.</p>
+      </div>
+      <a class="cax-mb" href="/pages/product-compare">Voir le comparatif complet
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Choisir — Récap",
+  "settings": []
+}
+{% endschema %}

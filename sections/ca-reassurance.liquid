@@ -1,0 +1,95 @@
+{% comment %} ── Pourquoi Daewoo Security + paiement + témoignage ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .caz * { box-sizing:border-box; margin:0; padding:0; }
+  .caz { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0b1220; padding:90px 24px 94px; }
+  .caz-inner { max-width:1160px; margin:0 auto; }
+  .caz-head { max-width:640px; margin:0 auto 44px; text-align:center; }
+  .caz-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:15px; }
+  .caz-eyebrow::before,.caz-eyebrow::after { content:''; width:26px; height:1px; background:#d3dae2; }
+  .caz-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:13px; }
+  .caz-sub { font-size:15.5px; color:#4a5663; font-weight:300; line-height:1.68; }
+
+  .caz-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .caz-c { border:1px solid #e3e8ee; border-radius:17px; padding:24px 24px 26px; background:#fff;
+    box-shadow:0 16px 40px -34px rgba(11,18,32,.34); }
+  .caz-ico { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:11px;
+    background:#f4f6f8; margin-bottom:15px; }
+  .caz-ico svg { width:20px; height:20px; fill:none; stroke:#0b1220; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  .caz-n { font-size:15.5px; font-weight:600; letter-spacing:-.02em; line-height:1.32; margin-bottom:9px; }
+  .caz-d { font-size:13.3px; color:#4a5663; font-weight:300; line-height:1.6; }
+  .caz-d b { color:#0b1220; font-weight:500; }
+
+  .caz-story { margin-top:24px; display:grid; grid-template-columns:1.15fr .85fr; gap:0; overflow:hidden;
+    border:1px solid #e3e8ee; border-radius:19px; background:#fff; box-shadow:0 18px 44px -34px rgba(11,18,32,.32); }
+  .caz-sb { padding:34px 36px 36px; display:flex; flex-direction:column; justify-content:center; }
+  .caz-sl { font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#5d6a7a; margin-bottom:11px; }
+  .caz-st { font-size:22px; font-weight:600; letter-spacing:-.03em; line-height:1.22; margin-bottom:12px; }
+  .caz-sd { font-size:14px; color:#4a5663; font-weight:300; line-height:1.65; margin-bottom:20px; }
+  .caz-sd b { color:#0b1220; font-weight:500; }
+  .caz-sg { display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; color:#0b1220;
+    text-decoration:none; align-self:flex-start; padding-bottom:2px; border-bottom:1.5px solid currentColor; transition:gap .18s; }
+  .caz-sg:hover { gap:13px; }
+  .caz-sg svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2.3; stroke-linecap:round; stroke-linejoin:round; }
+  .caz-si { background:#f4f6f8; min-height:260px; }
+  .caz-si img { width:100%; height:100%; object-fit:cover; display:block; }
+
+  @media (max-width:1000px) { .caz-grid { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:860px) { .caz-story { grid-template-columns:1fr; } .caz-si { order:-1; min-height:220px; } }
+  @media (max-width:600px) { .caz { padding:70px 20px 74px; } .caz-grid { grid-template-columns:1fr; } .caz-sb { padding:28px 22px 30px; } }
+</style>
+
+<section class="caz">
+  <div class="caz-inner">
+    <div class="caz-head">
+      <span class="caz-eyebrow">Ce qui ne change pas, quelle que soit la gamme</span>
+      <h2 class="caz-title">Pourquoi choisir une alarme Daewoo&nbsp;?</h2>
+      <p class="caz-sub">Quatre engagements communs aux trois gammes — c’est ce qui reste vrai quel que soit le système que vous choisirez à la fin de ce guide.</p>
+    </div>
+
+    <div class="caz-grid">
+      <div class="caz-c">
+        <span class="caz-ico"><svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 6.5c-.8-1.6-2.6-2.5-5-2.5-2.8 0-4.6 1.2-4.6 3.2 0 4.6 9.8 2.6 9.8 7.4 0 2.2-2 3.4-5.2 3.4-2.6 0-4.5-1-5.4-2.7"/></svg></span>
+        <p class="caz-n">Sans abonnement, à vie</p>
+        <p class="caz-d">Pas de mensualité, pas d’engagement, pas de frais cachés. Vous achetez le matériel une fois&nbsp;: jusqu’à <b>1&nbsp;000&nbsp;€ d’économies sur 3&nbsp;ans</b> face à une offre avec abonnement.</p>
+      </div>
+      <div class="caz-c">
+        <span class="caz-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9.4 11.8 11.4 14l3.4-4"/></svg></span>
+        <p class="caz-n">Vos données restent chez vous</p>
+        <p class="caz-d">Aucune télésurveillance externe, <b>aucune captation vidéo par un tiers</b>. Vous êtes le seul à accéder à vos caméras, à vos alertes et à l’historique du système.</p>
+      </div>
+      <div class="caz-c">
+        <span class="caz-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4.5 4.5 0 0 0 5.9 5.9L14 18.8a2.9 2.9 0 0 1-4.1-4.1z"/><path d="M6.5 17.5 4 20"/></svg></span>
+        <p class="caz-n">Installation en 30 minutes</p>
+        <p class="caz-d">Sans technicien et sans travaux. Le système <b>évolue ensuite à votre rythme</b>&nbsp;: on ajoute un détecteur, une sirène ou une caméra à l’unité, sans changer de centrale.</p>
+      </div>
+      <div class="caz-c">
+        <span class="caz-ico"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.4"/><path d="M2.5 10h19"/><path d="M6 14.5h4"/></svg></span>
+        <p class="caz-n">Payez en 3, 4 ou 10 fois</p>
+        <p class="caz-d">Avec notre partenaire <b>Alma</b>, le paiement en plusieurs fois se choisit directement au moment de la commande, de façon sécurisée.</p>
+      </div>
+    </div>
+
+    <div class="caz-story">
+      <div class="caz-sb">
+        <p class="caz-sl">Un cas concret</p>
+        <p class="caz-st">Jean et Marie ont sécurisé leur maison à la campagne.</p>
+        <p class="caz-sd">Ils ont retenu le système <b>Touch XL</b> pour l’écran 7&nbsp;pouces, et ajouté des détecteurs extérieurs pour couvrir le terrain. Leur configuration complète et le coût final sont détaillés sur leur page.</p>
+        <a class="caz-sg" href="/pages/ils-ont-choisi-daewoo-security">Voir leur configuration
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="caz-si">
+        <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Visuellifestyleaccessoires_1.png?v=1757927720" alt="Maison équipée d’un système d’alarme Daewoo Security" loading="lazy" width="1080" height="1080">
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Choisir — Réassurance",
+  "settings": []
+}
+{% endschema %}

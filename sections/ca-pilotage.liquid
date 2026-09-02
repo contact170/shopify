@@ -1,0 +1,105 @@
+{% comment %} ── Étape 3 — Comment piloter son alarme ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .cap * { box-sizing:border-box; margin:0; padding:0; }
+  .cap { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0b1220; padding:90px 24px 94px; scroll-margin-top:80px; }
+  .cap-inner { max-width:1160px; margin:0 auto; }
+  .cap-head { max-width:660px; margin:0 auto 46px; text-align:center; }
+  .cap-step { display:inline-flex; align-items:center; gap:9px; font-size:11px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; color:#5d6a7a; margin-bottom:15px; }
+  .cap-step i { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px;
+    border-radius:50%; background:#0b1220; color:#fff; font-style:normal; font-size:11px; letter-spacing:0; }
+  .cap-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:13px; }
+  .cap-sub { font-size:15.5px; color:#4a5663; font-weight:300; line-height:1.68; }
+
+  .cap-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .cap-card { border:1px solid #e3e8ee; border-radius:19px; overflow:hidden; background:#fff;
+    display:flex; flex-direction:column; box-shadow:0 18px 44px -32px rgba(11,18,32,.3); }
+  .cap-shot { position:relative; aspect-ratio:1/1; background:#f4f6f8; overflow:hidden; }
+  .cap-shot img { width:100%; height:100%; object-fit:cover; display:block; }
+  .cap-flag { position:absolute; top:0; left:0; right:0; height:3px; z-index:2; }
+  .cap-body { padding:24px 26px 26px; display:flex; flex-direction:column; flex:1; }
+  .cap-lbl { font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin-bottom:8px; }
+  .cap-n { font-size:21px; font-weight:600; letter-spacing:-.03em; margin-bottom:9px; }
+  .cap-d { font-size:13.8px; color:#4a5663; font-weight:300; line-height:1.62; margin-bottom:16px; flex:1; }
+  .cap-d b { color:#0b1220; font-weight:500; }
+  .cap-for { font-size:12.8px; color:#5d6a7a; font-weight:300; line-height:1.55; padding:13px 15px; border-radius:11px;
+    background:#f7f9fb; border:1px solid #eef1f5; margin-bottom:18px; }
+  .cap-for b { color:#0b1220; font-weight:600; display:block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:4px; }
+  .cap-go { display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; text-decoration:none;
+    align-self:flex-start; padding-bottom:2px; border-bottom:1.5px solid currentColor; transition:gap .18s; }
+  .cap-go:hover { gap:13px; }
+  .cap-go svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2.3; stroke-linecap:round; stroke-linejoin:round; }
+
+  .cap--v .cap-flag { background:#e0912b; } .cap--v .cap-lbl,.cap--v .cap-go { color:#a35a00; }
+  .cap--t .cap-flag { background:#2f6fe0; } .cap--t .cap-lbl,.cap--t .cap-go { color:#1f5fd0; }
+  .cap--e .cap-flag { background:#12a0ad; } .cap--e .cap-lbl,.cap--e .cap-go { color:#0a6068; }
+
+  @media (max-width:980px) { .cap-grid { grid-template-columns:1fr; max-width:430px; margin:0 auto; } }
+  @media (max-width:600px) { .cap { padding:70px 20px 74px; } }
+</style>
+
+<section class="cap" id="etape-pilotage">
+  <div class="cap-inner">
+    <div class="cap-head">
+      <span class="cap-step"><i>3</i> Au quotidien</span>
+      <h2 class="cap-title">Comment voulez-vous l’armer chaque jour&nbsp;?</h2>
+      <p class="cap-sub">C’est le geste que vous répéterez deux fois par jour pendant des années. Nos trois centrales se commandent différemment — et c’est souvent ce point, plus que la fiche technique, qui décide.</p>
+    </div>
+
+    <div class="cap-grid">
+      <div class="cap-card cap--v">
+        <div class="cap-shot">
+          <span class="cap-flag"></span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/958b5e1e-36cd-47db-93da-efc4b7f2d77c.jpg?v=1770108516" alt="Centrale d’alarme Vigilia avec clavier à touches intégré" loading="lazy" width="1600" height="1600">
+        </div>
+        <div class="cap-body">
+          <p class="cap-lbl">Clavier à touches</p>
+          <p class="cap-n">Vigilia</p>
+          <p class="cap-d">Des <b>touches mécaniques directement sur la centrale</b>&nbsp;: on tape son code et on arme, sans écran et sans téléphone. Une télécommande et des badges RFID sont fournis dans le kit.</p>
+          <p class="cap-for"><b>Pour vous si</b> vous voulez le geste le plus simple possible, y compris pour quelqu’un qui n’est pas à l’aise avec une application.</p>
+          <a class="cap-go" href="/collections/systeme-dalarme-vigilia">Voir la gamme Vigilia
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+
+      <div class="cap-card cap--t">
+        <div class="cap-shot">
+          <span class="cap-flag"></span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/8734bc42-ff99-47e9-97d1-34e38b0a4397.jpg?v=1770108612" alt="Centrale d’alarme Touch avec écran tactile couleur" loading="lazy" width="1600" height="1600">
+        </div>
+        <div class="cap-body">
+          <p class="cap-lbl">Écran tactile couleur</p>
+          <p class="cap-n">Touch &amp; Touch XL</p>
+          <p class="cap-d">Un <b>écran tactile de 4,3&nbsp;pouces (Touch) ou 7&nbsp;pouces (Touch XL)</b>. Les zones ouvertes, l’historique et le clavier de code s’affichent d’un coup d’œil, sans ouvrir l’application.</p>
+          <p class="cap-for"><b>Pour vous si</b> plusieurs personnes du foyer doivent pouvoir armer et vérifier l’état du système sans smartphone.</p>
+          <a class="cap-go" href="/collections/systeme-dalarme-am301-am302">Voir la gamme Touch
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+
+      <div class="cap-card cap--e">
+        <div class="cap-shot">
+          <span class="cap-flag"></span>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/360bc22c-c301-4e8c-91be-142bfc8834eb.jpg?v=1770108350" alt="Centrale d’alarme Élite PA501Z sans écran, pilotée par application" loading="lazy" width="1600" height="1600">
+        </div>
+        <div class="cap-body">
+          <p class="cap-lbl">Application mobile</p>
+          <p class="cap-n">Élite</p>
+          <p class="cap-d"><b>Ni écran ni clavier sur la centrale</b>, et c’est volontaire&nbsp;: un boîtier allumé signale sa position. Elle se cache dans un placard et tout passe par l’application. Un <b>clavier sans fil WKE502Z</b> peut être ajouté à l’entrée.</p>
+          <p class="cap-for"><b>Pour vous si</b> vous pilotez tout depuis votre téléphone et préférez que la centrale reste invisible.</p>
+          <a class="cap-go" href="/collections/systeme-dalarme-pa501z">Voir la gamme Élite
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Choisir — 3 Pilotage",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,119 @@
+{% comment %} ── Questions fréquentes avant d'acheter ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .caf * { box-sizing:border-box; margin:0; padding:0; }
+  .caf { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#f7f9fb; color:#0b1220; padding:90px 24px 94px; }
+  .caf-inner { max-width:900px; margin:0 auto; }
+  .caf-head { max-width:620px; margin:0 auto 40px; text-align:center; }
+  .caf-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:15px; }
+  .caf-eyebrow::before,.caf-eyebrow::after { content:''; width:26px; height:1px; background:#d3dae2; }
+  .caf-title { font-size:clamp(26px,3.5vw,40px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:13px; }
+  .caf-sub { font-size:15.5px; color:#4a5663; font-weight:300; line-height:1.68; }
+
+  .caf-list { background:#fff; border:1px solid #e3e8ee; border-radius:19px; overflow:hidden;
+    box-shadow:0 18px 44px -34px rgba(11,18,32,.32); }
+  .caf-i { border-bottom:1px solid #eef1f5; }
+  .caf-i:last-child { border-bottom:0; }
+  .caf-i summary { list-style:none; cursor:pointer; padding:21px 26px; display:flex; align-items:center; gap:16px;
+    font-size:15.2px; font-weight:500; letter-spacing:-.015em; line-height:1.4; }
+  .caf-i summary::-webkit-details-marker { display:none; }
+  .caf-i summary:hover { background:#fbfcfd; }
+  .caf-i summary svg { width:17px; height:17px; flex:none; margin-left:auto; fill:none; stroke:#5d6a7a; stroke-width:2.2;
+    stroke-linecap:round; stroke-linejoin:round; transition:transform .22s; }
+  .caf-i[open] summary svg { transform:rotate(45deg); }
+  .caf-a { padding:0 26px 24px 26px; font-size:13.8px; color:#4a5663; font-weight:300; line-height:1.7; }
+  .caf-a b { color:#0b1220; font-weight:500; }
+  .caf-a a { color:#0b1220; font-weight:500; text-decoration:underline; text-underline-offset:3px; }
+  .caf-a p + p { margin-top:9px; }
+
+  .caf-foot { margin-top:22px; text-align:center; font-size:13.8px; color:#4a5663; font-weight:300; }
+  .caf-foot a { color:#0b1220; font-weight:600; text-decoration:none; border-bottom:1.5px solid currentColor; padding-bottom:2px; }
+
+  @media (max-width:600px) { .caf { padding:70px 20px 74px; } .caf-i summary { padding:19px 20px; font-size:14.6px; } .caf-a { padding:0 20px 22px; } }
+</style>
+
+<section class="caf">
+  <div class="caf-inner">
+    <div class="caf-head">
+      <span class="caf-eyebrow">Questions fréquentes</span>
+      <h2 class="caf-title">Ce qu’on nous demande avant d’acheter.</h2>
+      <p class="caf-sub">Les neuf questions qui reviennent le plus souvent auprès de notre service client.</p>
+    </div>
+
+    <div class="caf-list">
+      <details class="caf-i">
+        <summary>Y a-t-il un abonnement à payer&nbsp;?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+        <div class="caf-a"><p>Non, aucun. Vous achetez le matériel une seule fois et l’application <b>Daewoo Home Connect</b> est gratuite, sans limite d’usage ni de durée. Il n’y a ni engagement, ni frais de mise en service, ni option payante à activer plus tard.</p></div>
+      </details>
+
+      <details class="caf-i">
+        <summary>Faut-il une carte SIM&nbsp;?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+        <div class="caf-a"><p>Elle est <b>toujours en option et jamais fournie</b>. Sans carte SIM, le système fonctionne parfaitement en Wi-Fi. Avec une carte SIM, la centrale garde un moyen de vous alerter si votre box tombe&nbsp;: SMS sur les gammes Vigilia GSM et Touch, application maintenue en 4G+ sur l’Élite.</p><p>Vous pouvez prendre notre forfait Afone ou la carte SIM de l’opérateur de votre choix.</p></div>
+      </details>
+
+      <details class="caf-i">
+        <summary>Est-ce que ça fonctionne sans box Internet&nbsp;?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+        <div class="caf-a"><p>Oui, à condition de choisir une centrale équipée du <b>GSM 4G et d’y mettre une carte SIM</b>&nbsp;: la Vigilia GSM et la Touch fonctionnent alors par SMS, l’Élite conserve en plus l’application grâce à la 4G+. Seule la Vigilia en version Wi-Fi seule a besoin d’une box pour vous alerter à distance.</p><p>Dans tous les cas, la détection et la sirène fonctionnent en local, même sans réseau.</p></div>
+      </details>
+
+      <details class="caf-i">
+        <summary>Combien de temps prend l’installation&nbsp;?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+        <div class="caf-a"><p>Comptez environ <b>30 minutes pour un kit de départ</b>, sans technicien et sans travaux. Les accessoires sont sans fil et l’appairage se fait depuis l’application ou l’écran de la centrale.</p></div>
+      </details>
+
+      <details class="caf-i">
+        <summary>Puis-je ajouter des accessoires plus tard&nbsp;?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+        <div class="caf-a"><p>Oui, c’est même le principe&nbsp;: on démarre avec un kit et on complète pièce par pièce, <b>sans jamais remplacer la centrale</b>. La limite dépend de la gamme — jusqu’à 60&nbsp;accessoires sur la Vigilia, 90&nbsp;sur la Touch, 200&nbsp;sur l’Élite.</p></div>
+      </details>
+
+      <details class="caf-i">
+        <summary>Les accessoires sont-ils compatibles entre les gammes&nbsp;?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+        <div class="caf-a"><p>Les gammes <b>Vigilia et Touch partagent le même catalogue d’accessoires</b> (radio 433&nbsp;MHz). L’<b>Élite a sa propre gamme</b>, en Zigbee et radio 433&nbsp;/&nbsp;868&nbsp;MHz&nbsp;: vérifiez toujours la compatibilité indiquée sur la fiche produit avant de commander.</p></div>
+      </details>
+
+      <details class="caf-i">
+        <summary>J’ai un animal, vais-je avoir des fausses alertes&nbsp;?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+        <div class="caf-a"><p>Nos détecteurs de mouvement existent en version <b>compatible animaux</b>&nbsp;: ils ignorent les masses situées sous un certain gabarit. C’est le modèle livré en standard dans nos kits de départ.</p></div>
+      </details>
+
+      <details class="caf-i">
+        <summary>Que se passe-t-il en cas de coupure de courant&nbsp;?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+        <div class="caf-a"><p>Les centrales embarquent une <b>batterie de secours</b> qui prend le relais automatiquement — jusqu’à <b>12&nbsp;heures d’autonomie sur l’Élite</b>. Les accessoires sans fil, eux, fonctionnent sur pile et ne sont pas concernés par une coupure secteur.</p></div>
+      </details>
+
+      <details class="caf-i">
+        <summary>Et si je me trompe de système&nbsp;?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+        <div class="caf-a"><p>Le matériel est <b>garanti 2 ans</b>, le retour est gratuit et notre <b>SAV est basé en France</b>. En cas de doute avant l’achat, écrivez-nous&nbsp;: on vous répond avec la configuration adaptée à votre logement plutôt qu’avec un catalogue.</p><p><a href="/pages/nous-contacter">Poser votre question au service client</a></p></div>
+      </details>
+    </div>
+
+    <p class="caf-foot">Une question qui n’est pas dans la liste&nbsp;? <a href="/pages/nous-contacter">Écrivez-nous</a></p>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Y a-t-il un abonnement à payer ?","acceptedAnswer":{"@type":"Answer","text":"Non, aucun. Vous achetez le matériel une seule fois et l'application Daewoo Home Connect est gratuite, sans limite d'usage ni de durée. Il n'y a ni engagement, ni frais de mise en service, ni option payante à activer plus tard."}},
+    {"@type":"Question","name":"Faut-il une carte SIM ?","acceptedAnswer":{"@type":"Answer","text":"La carte SIM est toujours en option et jamais fournie. Sans carte SIM, le système fonctionne en Wi-Fi. Avec une carte SIM, la centrale garde un moyen de vous alerter si votre box tombe : SMS sur les gammes Vigilia GSM et Touch, application maintenue en 4G+ sur l'Élite."}},
+    {"@type":"Question","name":"Est-ce que ça fonctionne sans box Internet ?","acceptedAnswer":{"@type":"Answer","text":"Oui, avec une centrale équipée du GSM 4G et une carte SIM : la Vigilia GSM et la Touch fonctionnent par SMS, l'Élite conserve en plus l'application grâce à la 4G+. Seule la Vigilia en version Wi-Fi seule a besoin d'une box pour alerter à distance. La détection et la sirène fonctionnent en local, même sans réseau."}},
+    {"@type":"Question","name":"Combien de temps prend l'installation ?","acceptedAnswer":{"@type":"Answer","text":"Environ 30 minutes pour un kit de départ, sans technicien et sans travaux. Les accessoires sont sans fil et l'appairage se fait depuis l'application ou l'écran de la centrale."}},
+    {"@type":"Question","name":"Puis-je ajouter des accessoires plus tard ?","acceptedAnswer":{"@type":"Answer","text":"Oui : on démarre avec un kit et on complète pièce par pièce, sans remplacer la centrale. Jusqu'à 60 accessoires sur la Vigilia, 90 sur la Touch et 200 sur l'Élite."}},
+    {"@type":"Question","name":"Les accessoires sont-ils compatibles entre les gammes ?","acceptedAnswer":{"@type":"Answer","text":"Les gammes Vigilia et Touch partagent le même catalogue d'accessoires en radio 433 MHz. L'Élite a sa propre gamme, en Zigbee et radio 433/868 MHz : vérifiez la compatibilité indiquée sur la fiche produit."}},
+    {"@type":"Question","name":"J'ai un animal, vais-je avoir des fausses alertes ?","acceptedAnswer":{"@type":"Answer","text":"Nos détecteurs de mouvement existent en version compatible animaux, qui ignore les masses situées sous un certain gabarit. C'est le modèle livré en standard dans nos kits de départ."}},
+    {"@type":"Question","name":"Que se passe-t-il en cas de coupure de courant ?","acceptedAnswer":{"@type":"Answer","text":"Les centrales embarquent une batterie de secours qui prend le relais automatiquement, jusqu'à 12 heures d'autonomie sur l'Élite. Les accessoires sans fil fonctionnent sur pile et ne sont pas concernés par une coupure secteur."}},
+    {"@type":"Question","name":"Et si je me trompe de système ?","acceptedAnswer":{"@type":"Answer","text":"Le matériel est garanti 2 ans, le retour est gratuit et le SAV est basé en France. En cas de doute avant l'achat, le service client vous répond avec la configuration adaptée à votre logement."}}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Choisir — FAQ",
+  "settings": []
+}
+{% endschema %}
