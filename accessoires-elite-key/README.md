@@ -131,3 +131,60 @@ gamme.
 - Le WKE501 et le WKE502Z partagent deux visuels ; leurs `alt` ont été
   écrits sans référence produit pour rester justes sur les deux fiches.
   Idem pour les visuels WWF301 / WDG301 réutilisés sur les fiches 501.
+
+## 5. Centrale Key (SA501) 4G — migration 2G
+
+Produit : **Centrale Key (SA501) 4G — vendue sans adaptateur secteur**
+(`15051542659412`, handle `starter-pack-key-sa501-4g`, SKU `SA5014GS`,
+99,90 €). Passée de `pack-par-defaut` à `acc-premium`.
+
+Cette fiche n'a qu'un seul cas de vente : un client qui possède déjà une
+SA501 de première génération et qui utilise, ou veut utiliser, une carte
+SIM. Toute la page est écrite autour de ça.
+
+- **Sous-titre** « Pour remplacer une SA501 2G. » et accroche qui pose
+  d'emblée la condition : sans carte SIM, rien à changer.
+- **Conseil sous le prix** : le test « suis-je concerné ? » avant l'achat.
+- **Son rôle (acc-chrono)** : les trois étapes de la migration — vérifier,
+  remplacer la centrale seule, réassocier les accessoires.
+- **Compatibilité (acc-compat)** : tous les accessoires Key restent
+  compatibles ; réassociation un par un à réception ; les caméras, en
+  Wi-Fi, ne sont pas concernées et ne doivent pas être supprimées de
+  l'application ; vendue sans adaptateur secteur.
+- **FAQ** : 7 questions reprenant le message envoyé aux clients (qui est
+  concerné, compatibilité des accessoires, manipulations à réception,
+  caméras, absence d'adaptateur, carte SIM et abonnement, garantie).
+- **Fiche technique** : bandeau 8 lignes + les trois accordéons
+  (sécurité, connectivité, alimentation).
+- **Option associée** : l'adaptateur secteur SA501, puisque la centrale
+  est livrée sans.
+
+**Correction importante** : `contenu_du_pack` listait le contenu du
+*Starter Pack* (centrale + 2 contacteurs + détecteur + 2 télécommandes +
+2 badges) alors que le produit est la centrale seule à 99,90 €. Remplacé
+par le contenu réel.
+
+L'**adaptateur secteur Key** (`7978957701333`) a été converti dans la
+foulée, puisqu'il est désormais l'option affichée sous le bouton d'achat :
+`acc-premium`, titre de page, accroche, note de compatibilité, bandeau et
+contenu du pack.
+
+### À traiter
+
+- **5 visuels de la Touch XL AM302 sont sur la fiche SA501**
+  (`05_AM302_Alexa_Google_Home`, `06_AM302_comparaison_abonnement`,
+  `03_AM302_protection_GSM`, `07_AM302_avantages_daewoo`,
+  `04_AM302_pilotage_distance`). Ils apparaissent dans la galerie de
+  l'en-tête, après les 3 vrais visuels SA501. Non supprimés : décision à
+  prendre.
+- **Alexa / Google Home** : la description annonce la compatibilité, et
+  l'un des visuels AM302 aussi. À confirmer pour la SA501 — la même
+  mention avait dû être retirée de la fiche IP506.
+- **Bloc « Complétez votre système » masqué** sur les fiches Key seules
+  (WDS501, WVD501, WKE501, centrale SA501 4G, adaptateur secteur) :
+  `acc-complements` cherche une collection dont le titre contient
+  « Compatible », et la gamme Key n'en a pas — « ACCESSOIRES KEY (SA501) »
+  est une collection manuelle. Il faudrait soit la renommer, soit créer une
+  « Compatible gamme Key » sur le tag `gamme_sa501`.
+- La centrale n'a pas reçu `categorie_de_produit` : elle resterait sinon
+  dans « Tous les accessoires ». La centrale Touch AM301 seule, elle, l'a.
