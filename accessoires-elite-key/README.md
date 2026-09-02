@@ -96,20 +96,31 @@ collections par son métachamp `compatibilite` mais par son tag
 badge « Compatible … » de l'en-tête.
 
 « Compatible toutes gammes » n'a pas été touchée (les autocollants y
-étaient déjà). Le canon à fumée et la recharge F502R n'ont pas été ajoutés
-aux deux collections de gamme : à faire si vous voulez que les produits
-« toutes gammes » remontent aussi dans chaque gamme.
+étaient déjà).
+
+Placements validés le 02/09 :
+
+| Produit | Vigilia / Touch | Élite | Key (collection manuelle) |
+|---|---|---|---|
+| Autocollants x10 | oui | oui | oui |
+| Carte SIM 1 mois | oui | non | oui |
+| Carte SIM 1 an Vigilia/Touch | oui | non | oui |
+| Carte SIM 1 an Élite | non | oui | non |
+
+Le canon à fumée reste dans ses collections actuelles (Accessoires Key,
+Maison connectée, Tous les accessoires, Compatible toutes gammes, Spécial
+SA501 4G, Dissuasion) : il n'a pas été ajouté aux deux collections de
+gamme.
 
 ## 4. Points restants
 
 - **Images non retravaillées** : WOS501 (4665442041995) et WIS502
-  (7975041433813) sont encore en `.jpg` / `.png` (dont des fichiers nommés
-  `Designsanstitre…` et `GreenandWhite…`). Leurs `alt` ont été remplis de
-  façon volontairement générique, faute de pouvoir afficher les images
-  depuis cet environnement.
-- **Volume du canon à fumée** : la description et le métaobjet
-  `caracteristiques_principales` annoncent 100 m³, mais une image est
-  nommée `…-protection-150m3.webp`. 100 m³ a été retenu ; à trancher.
+  (7975041433813) sont encore en `.jpg` / `.png`. Produits arrêtés, laissés
+  en l'état sur décision du 02/09.
+- **Volume du canon à fumée** : tranché le 02/09, l'appareil est donné pour
+  **100 à 150 m³**. Corrigé dans le bandeau caractéristiques, le conseil de
+  quantité, la description produit et le métaobjet
+  `caracteristiques_principales`.
 - **Adaptateur secteur Key** (7978957701333) laissé sur son gabarit
   `sa501` : pièce détachée sans contenu, hors périmètre accessoires.
 - Le WKE501 et le WKE502Z partagent deux visuels ; leurs `alt` ont été
