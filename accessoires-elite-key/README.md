@@ -305,3 +305,101 @@ Note : le fichier `templates/product.zz-probe.json`, cree pour tester les
 valeurs du reglage, est reste dans le theme — la suppression de fichiers de
 theme est bloquee depuis l'API. Il n'est utilise par aucun produit ; a
 supprimer depuis l'admin Shopify.
+
+## 7. Suites du 02/09
+
+### Collection « Compatible gamme Key (SA501) »
+
+`gid://shopify/Collection/726036578644` · handle `gamme-key-accessoires` ·
+15 produits · publiee sur la boutique en ligne.
+
+Motif : `acc-complements` cherche, parmi les collections du produit, la
+premiere dont le titre contient « compatible ». La gamme Key n'en avait
+aucune — « ACCESSOIRES KEY (SA501) » est une collection manuelle dont le
+titre ne contient pas le mot — donc le bloc « Completez votre systeme »
+restait masque sur les fiches Key.
+
+Regle : **TAG egale `gamme_key`**, sans la condition
+`categorie_de_produit = Accessoires` retenue pour les deux autres gammes.
+La centrale SA501 4G et l'adaptateur secteur n'ont pas ce metachamp
+(volontairement, pour ne pas faire entrer une centrale dans « Tous les
+accessoires ») et seraient sinon exclus, alors que ce sont justement deux
+des fiches concernees.
+
+Produits tagues : WDS501, WPS501, WVD501, WOS501S, WMO501, WSD501, WRC501,
+WRF501, WWF501, WKE501, WDG501, les cartes SIM 1 mois et 1 an, la centrale
+Key 4G et l'adaptateur secteur. Le canon a fumee et les autocollants n'ont
+pas ete tagues : ils ont deja leur collection « Compatible toutes gammes ».
+
+Les produits compatibles Key **et** Elite appartiennent desormais a deux
+collections « Compatible … ». `acc-complements` prend la premiere trouvee ;
+les deux propositions sont valables, la famille 501 etant commune.
+
+Constate au passage : **WIS502 et WOS501 sont ARCHIVES**, ce qui explique
+et clot le point sur leurs anciennes images et sur l'absence d'avis du
+WIS502.
+
+### Fiches Configurateur des cartes SIM
+
+Les quatre produits Configurateur (1 mois, 1 an Vigilia, 1 an
+Vigilia/Touch, 1 an Elite) ont ete reecrits sur le meme fond que les fiches
+publiques : enveloppe presentee comme une reserve unique exprimee de trois
+facons et renouvelee chaque mois, tarifs, recharge, RIB demande a
+l'activation meme en prepaye, APN `sl2sfr`, France uniquement,
+non-remboursable une fois activee.
+
+L'erreur principale corrigee : la fiche Elite listait
+« 60 minutes / 300 SMS / 200 Mo » comme trois postes qui s'additionnent,
+et ne disait rien du basculement sur les donnees mobiles qui justifie
+justement son enveloppe plus large.
+
+### Visuels EP506
+
+Le metaobjet `ep-506-1` (`245413380436`) utilisait trois visuels de la W503
+sur quatre. Les quatre pointent desormais sur des visuels EP506 en WebP
+2048 px :
+
+| Bloc | Visuel |
+|---|---|
+| Resistante | `camera-exterieure-daewoo-ep506-etanche-intemperies` |
+| Audio bidirectionnel | `camera-daewoo-ep506-surveillance-smartphone` |
+| Vision nocturne couleur | `camera-daewoo-ep506-vision-nocturne-couleur` |
+| Detection de mouvement | `camera-daewoo-ep506-detection-suivi-mouvements` |
+
+Le troisieme bloc portait « Notifications instantanees avec apercu
+rapide » ; aucun visuel EP506 ne correspondait a ce propos, et le seul
+disponible qui s'en approchait servait deja au bloc audio. Le bloc a donc
+ete reecrit sur la vision nocturne couleur, qui est une vraie
+caracteristique de la camera et dispose de son visuel. Les six images
+EP506 ont recu leur texte alternatif.
+
+### Menage
+
+Fait : rien de destructif. Deux points ont ete volontairement laisses en
+l'etat plutot que supprimes a l'aveugle.
+
+- **Anciens PDF Afone** (`afone.pdf` et `afone_1mois.pdf`, 2021, 900 Ko a
+  eux deux) : conserves. Impossible de prouver qu'ils ne sont references
+  nulle part — les pages « Manuels » et « Notices » ont un corps vide et
+  sont construites en sections ou via PageFly, donc leurs liens ne sont pas
+  interrogeables simplement. Le gain de place est negligeable ; le risque
+  d'un lien mort sur une page vivante ne l'est pas. Ils contiennent en
+  revanche des tarifs de 2020 : a supprimer depuis l'admin apres
+  verification visuelle des pages qui pourraient y renvoyer.
+- **Doublon suppose sur la W503** : `camera-autonome-daewoo-w503-panneau-solaire.webp`
+  et `camera-w503-daewoo-panneau-solaire-fixation-murale.webp` font le meme
+  poids exact (77 716 o) mais portent deux descriptions differentes et
+  servent sur deux fiches differentes. Les images ne sont pas affichables
+  depuis cet environnement : a trancher a l'oeil dans la bibliotheque.
+
+A faire depuis l'admin Shopify, l'API bloquant ces suppressions :
+
+- `templates/product.zz-probe.json`, present dans le theme publie
+  « Version definitive 02092026 » et dans le precedent. Fichier de test,
+  utilise par aucun produit.
+- Les brouillons de theme devenus inutiles : « RESTAURATION URGENTE -
+  Fusion complete », « Avis clients v1 - bandeau temps reel », « Retouches
+  fiches SIM 01092026 - Avant Pagefly », « Home conversion 02092026 »,
+  « Accessoires Elite Key 02092026 ». Garder le theme publie et
+  « Espacements et correctif SA501 02092026 » comme retour arriere, ainsi
+  que les deux themes marques « NE PAS SUPPRIMER ».
