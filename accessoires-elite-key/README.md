@@ -239,3 +239,30 @@ récemment 24/36). À réduire si la page paraît encore aérée.
 produit du bandeau de « SA501 4G » à « Key 4G », ce qui donne le H1
 demandé : **Daewoo Centrale SA501 Key 4G**. Le sous-titre, qui répétait
 l'accroche, devient « La centrale seule, en version 4G. »
+
+### Avis clients : carrousel au lieu du grand widget
+
+Le bloc Judge.me `review_widget` occupait une hauteur d'écran entière sur
+chaque fiche. Il est remplacé par le bloc **`cards_carousel`**, celui déjà
+utilisé sur la page d'accueil, avec les mêmes réglages (avis 4 et 5
+étoiles, 4 cartes visibles, médias affichés, flèches sur les côtés).
+
+Deux réglages diffèrent de la home, pour éviter les doublons : `header_text`
+vide et `show_average_rating` à false — la section `acc-avis` juste
+au-dessus affiche déjà « Avis clients », la note et le nombre d'avis.
+
+Appliqué aux 7 gabarits qui partagent cette mise en page :
+`acc-premium`, `acc-premium-sd`, `centrale-seule-touch`,
+`centrale-seule-touchxl`, `sim-1mois`, `sim-1an`, `sim-1an-elite`.
+
+Marges des blocs d'application resserrées au passage : Moast 40 → 16 px en
+bas, avis 12/32 → 4/16, « Vous avez consulté » 24/36 → 12/24, et la marge
+haute de `acc-avis` 48 → 28.
+
+**À savoir** : le carrousel affiche les avis mis en avant de la boutique,
+comme sur la home, avec le nom du produit concerné sur chaque carte — et
+non les avis du produit consulté. Le formulaire « écrire un avis » et la
+liste complète des avis du produit disparaissent donc des fiches. Si vous
+préférez des avis propres à chaque produit, le réglage « sélection des
+avis » du bloc se change directement dans l'éditeur de thème, où la liste
+des options est visible.
