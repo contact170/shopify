@@ -171,20 +171,71 @@ contenu du pack.
 
 ### À traiter
 
-- **5 visuels de la Touch XL AM302 sont sur la fiche SA501**
-  (`05_AM302_Alexa_Google_Home`, `06_AM302_comparaison_abonnement`,
-  `03_AM302_protection_GSM`, `07_AM302_avantages_daewoo`,
-  `04_AM302_pilotage_distance`). Ils apparaissent dans la galerie de
-  l'en-tête, après les 3 vrais visuels SA501. Non supprimés : décision à
-  prendre.
-- **Alexa / Google Home** : la description annonce la compatibilité, et
-  l'un des visuels AM302 aussi. À confirmer pour la SA501 — la même
-  mention avait dû être retirée de la fiche IP506.
-- **Bloc « Complétez votre système » masqué** sur les fiches Key seules
-  (WDS501, WVD501, WKE501, centrale SA501 4G, adaptateur secteur) :
-  `acc-complements` cherche une collection dont le titre contient
-  « Compatible », et la gamme Key n'en a pas — « ACCESSOIRES KEY (SA501) »
-  est une collection manuelle. Il faudrait soit la renommer, soit créer une
-  « Compatible gamme Key » sur le tag `gamme_sa501`.
+- Les 5 visuels issus de la gamme AM302 sont des infographies génériques
+  (Alexa / Google Home, carte SIM, sans abonnement) : conservés sur
+  décision du 02/09. Leurs `alt` ont été neutralisés, puisque les mêmes
+  fichiers servent sur les fiches Touch XL.
+- **Bloc « Complétez votre système »** : `acc-complements` cherche une
+  collection dont le titre contient « Compatible », et la gamme Key n'en a
+  pas — « ACCESSOIRES KEY (SA501) » est une collection manuelle. La section
+  se masque donc proprement sur les fiches Key seules (WDS501, WVD501,
+  WKE501, centrale SA501 4G, adaptateur secteur). Pour l'afficher, il
+  faudrait renommer cette collection ou en créer une « Compatible gamme
+  Key » sur le tag `gamme_sa501`.
 - La centrale n'a pas reçu `categorie_de_produit` : elle resterait sinon
   dans « Tous les accessoires ». La centrale Touch AM301 seule, elle, l'a.
+
+
+## 6. Retouches du 02/09 (après publication)
+
+Thème publié entre-temps : **Accessoires Elite Key 02092026 (Claude)**
+(`202807476564`), qui est devenu le thème principal. Les corrections
+ci-dessous vivent dans un nouveau brouillon,
+**Espacements et correctif SA501 02092026 (Claude)** (`202819666260`),
+à publier.
+
+### Erreur Liquid en bas de page
+
+`Liquid error (sections/acc-complements line 34): comparison of String
+with 1 failed`, visible sur les fiches de la gamme Key seule. La section
+cherche la collection « Compatible … » du produit ; la gamme Key n'en a
+pas, `source_handle` restait vide et `collections['']` ne renvoyait pas de
+collection, si bien que `source.products_count` n'était plus un nombre.
+Le compteur est désormais calculé de façon sûre et la section se masque
+sans rien afficher.
+
+### Titre du bloc « Dans la boîte »
+
+Nouveau métachamp **`custom.titre_boite`** (texte court) lu par
+`acc-boite` avant le réglage de section. Il permet de remplacer
+« Tout est fourni. » fiche par fiche sans toucher au gabarit partagé.
+Réglé sur « La centrale, et rien d'autre. » pour la SA501 4G, dont le
+contenu du pack est désormais une seule ligne.
+
+### Espacements
+
+Rythme vertical resserré d'environ un tiers dans `acc-premium.css`, ce qui
+profite à toutes les fiches premium :
+
+| Variable / règle | Avant | Après |
+|---|---|---|
+| `--accp-bande` | clamp(64px, 10vw, 132px) | clamp(42px, 6.4vw, 84px) |
+| `.accp-bande--serree` | clamp(44px, 6vw, 80px) | clamp(30px, 4.2vw, 54px) |
+| `.accp-hero` (bas) | clamp(48px, 7vw, 76px) | clamp(32px, 4.6vw, 52px) |
+| `.accp-galerie` | clamp(24px, 4vw, 36px) | clamp(18px, 2.8vw, 28px) |
+| `.accp-achat` | clamp(28px, 4vw, 40px) | clamp(20px, 2.8vw, 30px) |
+| `.accp-chrono` | clamp(36px, 5vw, 64px) | clamp(24px, 3.4vw, 42px) |
+| `.accp-specs` | clamp(28px, 4vw, 48px) | clamp(20px, 3vw, 34px) |
+| `.accp-boite` | clamp(24px, 4vw, 40px) | clamp(18px, 2.8vw, 28px) |
+| `.accp-faq` | clamp(26px, 4vw, 42px) | clamp(18px, 2.8vw, 30px) |
+
+Reste un levier non actionné : les marges des sections d'application dans
+`product.acc-premium.json` (Moast 40 px en bas, Judge.me 12/32, Vus
+récemment 24/36). À réduire si la page paraît encore aérée.
+
+### Titre de la fiche SA501
+
+`productType` passé de « Centrale Key » à « Centrale SA501 » et le nom de
+produit du bandeau de « SA501 4G » à « Key 4G », ce qui donne le H1
+demandé : **Daewoo Centrale SA501 Key 4G**. Le sous-titre, qui répétait
+l'accroche, devient « La centrale seule, en version 4G. »

@@ -27,11 +27,22 @@
   if source_handle == blank
     assign source_handle = section.settings.collection_repli
   endif
-  assign source = collections[source_handle]
+  comment
+    Une gamme sans collection « Compatible ... » (la gamme Key, par
+    exemple) laissait source_handle vide : collections[''] ne renvoie pas
+    de collection et products_count n'etait plus un nombre, ce qui faisait
+    apparaitre une erreur Liquid en bas de page. On calcule donc un
+    compteur sur et la section se masque simplement.
+  endcomment
+  assign nb_source = 0
+  if source_handle != blank
+    assign source = collections[source_handle]
+    assign nb_source = source.products_count | default: 0 | plus: 0
+  endif
   assign exclus = section.settings.exclusions | replace: ' ', '' | replace: '\n', ',' | split: ','
 -%}
 
-{%- if source.products_count > 1 -%}
+{%- if nb_source > 1 -%}
   {%- assign n = 0 -%}
   {%- capture cartes -%}
     {%- for p in source.products -%}

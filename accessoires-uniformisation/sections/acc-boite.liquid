@@ -1,5 +1,17 @@
 {{ 'acc-premium.css' | asset_url | stylesheet_tag }}
-{%- assign contenu = product.metafields.custom.contenu_du_pack.value -%}
+{%- liquid
+  assign contenu = product.metafields.custom.contenu_du_pack.value
+  comment
+    Le titre par defaut (« Tout est fourni. ») ne convient pas partout :
+    une centrale vendue seule ou une carte SIM n'ont rien d'un pack
+    complet. Le metachamp titre_boite permet de le remplacer fiche par
+    fiche, sans toucher au gabarit partage.
+  endcomment
+  assign titre_boite = product.metafields.custom.titre_boite.value
+  if titre_boite == blank
+    assign titre_boite = section.settings.titre
+  endif
+-%}
 {%- if contenu != blank -%}
   {%- assign lignes = contenu | newline_to_br | split: '<br />' -%}
 <div class="accp">
@@ -7,7 +19,7 @@
     <div class="accp-wrap">
       <div class="accp-etroit">
         <p class="accp-ref">{{ section.settings.surtitre }}</p>
-        {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if titre_boite != blank -%}<h2 style="margin-top:14px">{{ titre_boite }}</h2>{%- endif -%}
       </div>
       <ul class="accp-boite">
         {%- assign i = 0 -%}

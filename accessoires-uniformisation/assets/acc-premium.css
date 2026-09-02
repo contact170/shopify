@@ -14,7 +14,7 @@
   --accp-ombre:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.06);
   --accp-sans:"Inter Tight",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --accp-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --accp-bande:clamp(64px,10vw,132px);
+  --accp-bande:clamp(42px,6.4vw,84px);
   --accp-marge:clamp(20px,5vw,40px);
   font-family:var(--accp-sans);color:var(--accp-encre);letter-spacing:-.011em;line-height:1.5;
   -webkit-font-smoothing:antialiased;
@@ -28,7 +28,7 @@
 .accp-bande{padding:var(--accp-bande) 0}
 .accp-bande--gris{background:var(--accp-clair)}
 .accp-bande--nuit{background:var(--accp-nuit);color:#fff}
-.accp-bande--serree{padding:clamp(44px,6vw,80px) 0}
+.accp-bande--serree{padding:clamp(30px,4.2vw,54px) 0}
 
 .accp-ref{font-size:14px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accp-bleu);margin:0}
 .accp h1,.accp h2,.accp h3{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.06;text-transform:none}
@@ -63,7 +63,7 @@
 
 /* hero */
 .accp-hero{text-align:center;background:linear-gradient(180deg,var(--accp-clair) 0%,#fff 58%);
-  padding:clamp(34px,5vw,60px) 0 clamp(48px,7vw,76px)}
+  padding:clamp(26px,3.6vw,44px) 0 clamp(32px,4.6vw,52px)}
 .accp-hero h1{margin:14px 0 16px}
 .accp-hero .accp-chapo{margin:0 auto;max-width:38ch}
 .accp-note-clients{display:inline-flex;align-items:center;gap:9px;margin-top:20px;text-decoration:none;font-size:16px;color:var(--accp-doux)}
@@ -71,7 +71,7 @@
 .accp-etoiles{position:relative;display:inline-block;line-height:1;font-size:16px;letter-spacing:2px;color:#c9ccd2}
 .accp-etoiles i{position:absolute;inset:0;overflow:hidden;color:var(--accp-encre);font-style:normal;white-space:nowrap}
 
-.accp-galerie{margin:clamp(24px,4vw,36px) auto 0;max-width:540px}
+.accp-galerie{margin:clamp(18px,2.8vw,28px) auto 0;max-width:540px}
 .accp-scene{background:#fff;border-radius:20px;padding:10px}
 .accp-texte h2{text-align:left}
 .accp-texte h3,.accp-texte h4{text-align:left}
@@ -83,7 +83,7 @@
 .accp-vignette[aria-current="true"]{border-color:var(--accp-encre)}
 .accp-vignette:hover{border-color:#b8bcc4}
 
-.accp-achat{margin-top:clamp(28px,4vw,40px);display:flex;flex-direction:column;align-items:center;gap:15px}
+.accp-achat{margin-top:clamp(20px,2.8vw,30px);display:flex;flex-direction:column;align-items:center;gap:15px}
 .accp-prix{margin:0;font-size:25px;font-weight:600;font-variant-numeric:tabular-nums}
 .accp-prix small{color:var(--accp-doux);font-weight:400;font-size:17px}
 .accp-conseil{margin:0 auto;max-width:46ch;padding:16px 20px;border-radius:14px;background:#fff;
@@ -100,14 +100,14 @@
 .accp-appblocks{margin-top:6px;width:100%;max-width:520px}
 
 /* chronologie */
-.accp-chrono{position:relative;margin-top:clamp(36px,5vw,64px)}
+.accp-chrono{position:relative;margin-top:clamp(24px,3.4vw,42px)}
 .accp-vitre{position:relative;height:2px;background:#22305c;border-radius:2px;overflow:hidden}
 .accp-onde{position:absolute;top:50%;left:0;width:170px;height:2px;transform:translate(-170px,-50%);
   background:linear-gradient(90deg,transparent,var(--accp-alerte));border-radius:2px;opacity:0}
 .accp-chrono.est-actif .accp-onde{animation:accp-file 2.3s cubic-bezier(.4,0,.2,1) .15s forwards}
 @keyframes accp-file{0%{opacity:0;transform:translate(-170px,-50%)}10%{opacity:1}90%{opacity:1}
   100%{opacity:0;transform:translate(calc(100vw + 170px),-50%)}}
-.accp-etapes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(20px,4vw,48px);margin-top:32px}
+.accp-etapes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(18px,3vw,36px);margin-top:26px}
 .accp-etape{opacity:0;transform:translateY(14px)}
 .accp-chrono.est-actif .accp-etape{animation:accp-monte .7s cubic-bezier(.2,.7,.3,1) forwards}
 .accp-chrono.est-actif .accp-etape:nth-child(1){animation-delay:.35s}
@@ -118,7 +118,7 @@
 .accp-etape p{margin:8px 0 0;color:#9aa4c2;font-size:17px;line-height:1.62}
 
 /* installation */
-.accp-video{margin-top:clamp(28px,4vw,52px);border-radius:20px;overflow:hidden;background:#000}
+.accp-video{margin-top:clamp(20px,3vw,36px);border-radius:20px;overflow:hidden;background:#000}
 .accp-video video{width:100%}
 
 /* compatibilite */
@@ -127,7 +127,7 @@
 .accp-exclu{margin:24px auto 0;max-width:58ch;font-size:17px;color:var(--accp-doux);line-height:1.65}
 
 /* fiche technique */
-.accp-specs{margin:clamp(28px,4vw,48px) 0 0;background:#fff;border-radius:var(--accp-rayon);
+.accp-specs{margin:clamp(20px,3vw,34px) 0 0;background:#fff;border-radius:var(--accp-rayon);
   box-shadow:var(--accp-ombre);padding:4px 24px}
 .accp-spec{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:17px 0;border-bottom:1px solid var(--accp-filet)}
 .accp-spec:last-child{border-bottom:0}
@@ -135,14 +135,14 @@
 .accp-spec dd{margin:0;text-align:right;font-size:17px;font-weight:500}
 
 /* contenu de la boite */
-.accp-boite{list-style:none;margin:clamp(24px,4vw,40px) 0 0;padding:0;display:grid;gap:1px;
+.accp-boite{list-style:none;margin:clamp(18px,2.8vw,28px) 0 0;padding:0;display:grid;gap:1px;
   background:var(--accp-filet);border-radius:var(--accp-rayon);overflow:hidden;
   box-shadow:var(--accp-ombre);grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
 .accp-boite li{background:#fff;padding:26px 24px;font-size:17px;line-height:1.5}
 .accp-boite .accp-n{font-family:var(--accp-mono);font-size:13px;color:var(--accp-doux);display:block;margin-bottom:8px}
 
 /* accordeons : FAQ et details de la fiche technique, meme carte blanche */
-.accp-faq{margin-top:clamp(26px,4vw,42px);display:grid;gap:14px}
+.accp-faq{margin-top:clamp(18px,2.8vw,30px);display:grid;gap:14px}
 .accp-faq details{background:#fff;border-radius:var(--accp-rayon);box-shadow:var(--accp-ombre);
   padding:0 26px;transition:box-shadow .2s}
 .accp-faq details[open]{box-shadow:0 2px 4px rgba(16,24,40,.06),0 14px 36px rgba(16,24,40,.09)}
