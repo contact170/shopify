@@ -471,3 +471,46 @@ n'a ete invente, seulement redistribue dans les blocs du gabarit.
 
 Le bloc « Completez votre systeme » fonctionne desormais sur cette fiche,
 la centrale ayant rejoint « Compatible gamme Élite » la veille.
+
+## 9. Bouton « Ajouter au panier » — degrade navy (03/09)
+
+Harmonisation du bouton d'achat sur tout le site : un bleu navy avec un
+degrade leger vers la droite.
+
+Etat constate avant modification, dans l'export du theme :
+
+- `settings.color_button_background` = `#0c1e4a` (navy, deja en place sur
+  tout le theme Home) et `settings.color_button_gradient` **vide**. Le
+  theme expose donc nativement un reglage de degrade, non utilise.
+- `snippets/css-variables.liquid` retombe sur la couleur pleine quand le
+  degrade est vide, ce qui explique l'aspect uniforme actuel.
+- Les fiches premium, elles, utilisaient `--accp-bleu` (`#1a4fab`), un
+  bleu roi plus clair : c'etait la vraie incoherence.
+- Aucune section ni aucun asset ne code une couleur de bouton en dur.
+
+Degrade retenu (« Equilibre », valide sur maquette) :
+
+```
+linear-gradient(90deg,#0c1e4a 0%,#1a3f7a 100%)
+```
+
+Contraste du texte blanc : 16,15:1 au depart, 10,31:1 a l'arrivee — les
+deux extremites restent tres au-dessus du seuil AAA.
+
+Deux endroits a modifier :
+
+1. `config/settings_data.json` — renseigner `color_button_gradient` avec
+   la valeur ci-dessus. `color_button_background` reste a `#0c1e4a` : il
+   sert de repli si le degrade n'est pas supporte. Meme valeur a poser sur
+   `color_drawer_button_gradient` pour le tiroir panier.
+2. `assets/acc-premium.css` — `.accp-bouton` passe de
+   `background:var(--accp-bleu)` a `background:var(--accp-panier)`, un
+   nouveau token qui porte le degrade. `--accp-bleu` **reste inchange** :
+   il sert aussi aux surtitres `.accp-ref`, aux liens `.accp-lien`, a
+   l'anneau de focus et aux chevrons de la FAQ, qui doivent garder le
+   bleu roi. `--accp-navy` est ajoute pour disposer du navy plein.
+   `.accp-bouton[disabled]` recoit `background-image:none` pour que le
+   gris desactive ne laisse pas passer le degrade.
+
+La barre collante (`sections/acc-barre.liquid`) reutilise `.accp-bouton`
+et suit donc automatiquement.

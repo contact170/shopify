@@ -9,6 +9,8 @@
   --accp-doux:#5b6480;
   --accp-filet:#e3e8f5;
   --accp-bleu:#1a4fab;
+  --accp-navy:#0c1e4a;
+  --accp-panier:linear-gradient(90deg,#0c1e4a 0%,#1a3f7a 100%);
   --accp-alerte:#ff4d3d;
   --accp-rayon:16px;
   --accp-ombre:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.06);
@@ -40,11 +42,11 @@
 .accp-bande--nuit h2,.accp-bande--nuit h3{color:#fff}
 
 .accp-bouton{display:inline-flex;align-items:center;justify-content:center;border:0;cursor:pointer;
-  background:var(--accp-bleu);color:#fff;font:inherit;font-weight:500;font-size:19px;
+  background:var(--accp-panier);color:#fff;font:inherit;font-weight:500;font-size:19px;
   padding:17px 42px;border-radius:980px;text-decoration:none;transition:filter .18s,transform .18s}
 .accp-bouton:hover{filter:brightness(1.1);color:#fff}
 .accp-bouton:active{transform:scale(.97)}
-.accp-bouton[disabled]{background:#b8bcc4;cursor:not-allowed}
+.accp-bouton[disabled]{background:#b8bcc4;background-image:none;cursor:not-allowed}
 .accp-lien{color:var(--accp-bleu);text-decoration:none;font-size:17px}
 .accp-lien:hover{text-decoration:underline}
 
