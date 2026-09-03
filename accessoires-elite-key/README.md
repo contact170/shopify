@@ -403,3 +403,35 @@ A faire depuis l'admin Shopify, l'API bloquant ces suppressions :
   « Accessoires Elite Key 02092026 ». Garder le theme publie et
   « Espacements et correctif SA501 02092026 » comme retour arriere, ainsi
   que les deux themes marques « NE PAS SUPPRIMER ».
+
+### Centrale Élite PA501Z seule dans la collection Élite
+
+`DAPA501Z` (`7843976184021`, 199,90 €) portait deja le tag `gamme_elite`
+mais restait hors de « Compatible gamme Élite » : la regle de cette
+collection est `categorie_de_produit = Accessoires` **ET** tag
+`gamme_elite`, et le metachamp manquait.
+
+Solution retenue : ajouter `categorie_de_produit = Accessoires` a la
+centrale, plutot que de retirer cette condition de la regle. La collection
+Élite ne peut pas passer en tag seul comme la gamme Key : `gamme_elite`
+est un tag ancien, porte aussi par les packs (Starter pack Élite, offres
+exclusives, configurateurs), qui se retrouveraient alors dans la
+collection d'accessoires. La gamme Key, elle, utilise un tag `gamme_key`
+cree pour l'occasion, donc sans contamination.
+
+Ce choix suit la convention deja en place : les centrales Touch AM301 et
+Touch XL AM302 vendues seules portent elles aussi
+`categorie_de_produit = Accessoires`. Effet de bord assume et coherent :
+la centrale entre aussi dans « Tous les accessoires » (51 -> 52).
+
+**Point technique utile** : ecrire un metachamp avec `metafieldsSet` ne
+declenche pas le recalcul des collections automatisees. Il faut un
+`productUpdate` sur le produit, meme sans changement de valeur, pour que
+Shopify le reindexe. Sans cela, la collection reste inchangee, ce qui peut
+faire croire a une regle qui ne marche pas.
+
+Asymetrie restante, non traitee faute de demande : la centrale Key SA501
+4G est dans « Compatible gamme Key (SA501) » via le tag, mais pas dans
+« Tous les accessoires », faute du metachamp categorie. Et sa fiche, comme
+celles des centrales Touch, est au gabarit premium, alors que la fiche
+PA501Z est encore sur `pack-par-defaut`.
