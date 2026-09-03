@@ -1,0 +1,66 @@
+{% comment %} ── CTA final du comparatif ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .cpc * { box-sizing:border-box; margin:0; padding:0; }
+  .cpc { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0b1220; padding:88px 24px 96px; }
+  .cpc-inner { max-width:960px; margin:0 auto; }
+  .cpc-box { background:#f4f6f8; border:1px solid #e3e8ee; border-radius:24px; padding:52px 44px 54px;
+    text-align:center; position:relative; overflow:hidden; }
+  .cpc-box::before { content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(560px 280px at 50% -20%,rgba(18,160,173,.12),transparent 64%); }
+  .cpc-box > * { position:relative; z-index:2; }
+  .cpc-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5d6a7a; margin-bottom:18px; }
+  .cpc-eyebrow::before,.cpc-eyebrow::after { content:''; width:26px; height:1px; background:#c9d2dc; }
+  .cpc-title { font-size:clamp(27px,3.8vw,42px); font-weight:600; letter-spacing:-.038em; line-height:1.12;
+    margin-bottom:16px; color:#0b1220; }
+  .cpc-sub { font-size:16px; font-weight:400; line-height:1.7; color:#43505e; max-width:600px; margin:0 auto 32px; }
+  .cpc-sub b { color:#0b1220; font-weight:600; }
+  .cpc-btns { display:flex; gap:13px; justify-content:center; flex-wrap:wrap; margin-bottom:32px; }
+  .cpc-b { display:inline-flex; align-items:center; gap:10px; padding:16px 30px; border-radius:10px;
+    font-size:14.5px; font-weight:600; text-decoration:none; transition:transform .18s, border-color .18s; }
+  .cpc-b:hover { transform:translateY(-2px); }
+  .cpc-b--1 { background:#0b1220; color:#fff; box-shadow:0 14px 32px -12px rgba(11,18,32,.5); }
+  .cpc-b--2 { background:#fff; border:1px solid #dde3ea; color:#0b1220; }
+  .cpc-b--2:hover { border-color:#0b1220; }
+  .cpc-b svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .cpc-mini { display:flex; gap:22px; justify-content:center; flex-wrap:wrap; font-size:13.5px; color:#43505e; font-weight:400;
+    padding-top:28px; border-top:1px solid #e3e8ee; }
+  .cpc-mini span { display:inline-flex; align-items:center; gap:8px; }
+  .cpc-mini svg { width:15px; height:15px; flex:none; fill:none; stroke:#0f8a5f; stroke-width:2.9; stroke-linecap:round; stroke-linejoin:round; }
+  @media (max-width:600px) {
+    .cpc { padding:70px 20px 76px; }
+    .cpc-box { padding:40px 24px 42px; border-radius:20px; }
+    .cpc-b { width:100%; justify-content:center; }
+  }
+</style>
+
+<section class="cpc">
+  <div class="cpc-inner">
+    <div class="cpc-box">
+      <span class="cpc-eyebrow">Toujours hésitant&nbsp;?</span>
+      <h2 class="cpc-title">Laissez-nous composer votre système.</h2>
+      <p class="cpc-sub">Sept questions sur votre logement et vos habitudes, et le configurateur choisit la gamme, la centrale et le nombre de détecteurs — avec <b>jusqu'à 25&nbsp;% de remise</b> sur l'ensemble. Vous restez libre d'ajuster avant de valider.</p>
+      <div class="cpc-btns">
+        <a class="cpc-b cpc-b--1" href="https://daewoo-security.fr/pages/configurateur_2">Configurer mon système
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="cpc-b cpc-b--2" href="https://daewoo-security.fr/pages/nous-contacter">Poser une question
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="cpc-mini">
+        <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Sans abonnement</span>
+        <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Garantie 2 ans</span>
+        <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Retour sous 14 jours</span>
+        <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>SAV en France</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparatif — CTA",
+  "settings": []
+}
+{% endschema %}
