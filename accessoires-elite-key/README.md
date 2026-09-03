@@ -435,3 +435,37 @@ Asymetrie restante, non traitee faute de demande : la centrale Key SA501
 « Tous les accessoires », faute du metachamp categorie. Et sa fiche, comme
 celles des centrales Touch, est au gabarit premium, alors que la fiche
 PA501Z est encore sur `pack-par-defaut`.
+
+## 8. Fiche centrale Élite PA501Z (03/09)
+
+`DAPA501Z` (`7843976184021`, 199,90 €) passe de `pack-par-defaut` a
+`acc-premium`. Quatrieme et derniere « centrale seule » au gabarit premium,
+apres Touch AM301, Touch XL AM302 et Key SA501 4G. En ligne, sans
+publication de theme.
+
+Tout le contenu vient de la fiche existante, qui etait deja riche : rien
+n'a ete invente, seulement redistribue dans les blocs du gabarit.
+
+- **Titre** : `productType` passe de « Alarme » a « Centrale Élite » et le
+  nom de produit du bandeau vaut `PA501Z`, ce qui donne
+  « Daewoo Centrale Élite PA501Z ».
+- **Sous-titre** « Trois reseaux, aucune coupure. » et accroche sur la
+  bascule Wi-Fi / Ethernet / 4G, la passerelle Zigbee et la batterie.
+- **Bandeau caracteristiques**, 8 lignes : reference, type, connexions,
+  bascule reseau automatique, capacite 200 accessoires, batterie 10 h,
+  liaison radio bidirectionnelle cryptee, emplacement carte SIM 4G.
+- **Son role** : le cœur du systeme, la continuite reseau, l'evolutivite.
+- **Compatibilite** : accessoires de la gamme Key compatibles, avec les
+  trois exceptions documentees (WDS501, WVD501, WKE501 → versions Zigbee),
+  passerelle Zigbee ouverte au marche, et l'incompatibilite assumee avec
+  Alexa et Google Home.
+- **FAQ** : 7 questions, dont le remplacement d'une SA501 en gardant ses
+  accessoires, le comportement en coupure Internet et en coupure de
+  courant, et l'absence d'abonnement.
+- **Option associee** : la carte SIM 1 an Élite, puisque la 4G en a besoin.
+- **Dans la boite** : une seule ligne, avec le titre surcharge en
+  « La centrale, seule. » via `custom.titre_boite`.
+- Les cinq visuels PA501Z ont recu leur texte alternatif.
+
+Le bloc « Completez votre systeme » fonctionne desormais sur cette fiche,
+la centrale ayant rejoint « Compatible gamme Élite » la veille.
