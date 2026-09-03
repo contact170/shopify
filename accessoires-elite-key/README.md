@@ -463,8 +463,10 @@ n'a ete invente, seulement redistribue dans les blocs du gabarit.
   accessoires, le comportement en coupure Internet et en coupure de
   courant, et l'absence d'abonnement.
 - **Option associee** : la carte SIM 1 an Élite, puisque la 4G en a besoin.
-- **Dans la boite** : une seule ligne, avec le titre surcharge en
-  « La centrale, seule. » via `custom.titre_boite`.
+- **Dans la boite** : centrale, adaptateur secteur et cable Ethernet
+  RJ45, avec le titre surcharge en « La centrale et son branchement. » via
+  `custom.titre_boite`. Le cable RJ45 est aussi signale dans le bloc
+  alimentation, la liaison filaire etant un argument de la fiche.
 - Les cinq visuels PA501Z ont recu leur texte alternatif.
 
 Le bloc « Completez votre systeme » fonctionne desormais sur cette fiche,
