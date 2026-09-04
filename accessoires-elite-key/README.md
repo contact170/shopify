@@ -514,3 +514,46 @@ Deux endroits a modifier :
 
 La barre collante (`sections/acc-barre.liquid`) reutilise `.accp-bouton`
 et suit donc automatiquement.
+
+## 10. Lien « Je veux comparer » sur l'accueil (04/09)
+
+La carte « Je veux comparer » du bloc « Vous hésitez encore ? » pointait
+vers `/pages/comparateur-am301-sa501-pa501z`. Elle pointe desormais vers
+`/pages/product-compare` (page « Product Compare », publiee).
+
+Le lien est defini dans `snippets/dw-chemins.liquid`, rendu par la section
+`custom_liquid_kCUJGw` de `templates/index.json` :
+
+```liquid
+{% assign compare_url = "https://daewoo-security.fr/pages/product-compare" %}
+```
+
+Le fichier ne change que sur cette ligne : 9 070 octets contre 9 085, soit
+exactement les 15 octets d'ecart entre les deux identifiants de page.
+
+À noter : le bloc `image_JhEhKY` du diaporama `slideshow_BKBykn` porte
+encore l'ancienne URL, mais ce diaporama est **desactive** sur l'accueil,
+il n'a donc pas ete touche.
+
+### Bouton panier : ce qui est fait, ce qui reste
+
+`assets/acc-premium.css` porte le degrade (section 9) : les fiches
+accessoires premium et leur barre collante sont a jour.
+
+`config/settings_data.json` n'a **pas** ete modifie. Deux tentatives de
+reecriture par l'API ont perdu du contenu en cours de retranscription (la
+premiere a supprime les blocs d'application `powerful-form-builder` et
+`pagefly-page-builder` — depuis desinstalles, donc sans consequence, mais
+le controle de taille laissait encore un ecart inexplique). Le champ
+`size` renvoye par l'API est la taille **compactee** du JSON, pas celle du
+fichier lisible, ce qui rend la verification par octets impossible sur ce
+fichier — contrairement aux `.liquid` et `.css`, stockes tels quels.
+
+Les deux reglages restants se posent donc dans l'editeur de theme,
+Parametres du theme → Couleurs :
+
+- **Boutons → Degrade arriere-plan**
+- **Menu et Tiroirs → Degrade de l'arriere-plan du bouton**
+
+Dans les deux cas : degrade lineaire, 90° (vers la droite), `#0C1E4A` a
+0 % et `#1A3F7A` a 100 %. Le champ « Arriere-plan » reste a `#0C1E4A`.

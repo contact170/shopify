@@ -1,0 +1,262 @@
+{% comment %}
+  ── CTA ACCUEIL — 3 chemins (v3, 02/09/2026) ──
+  Avant : trois images PNG avec le texte et les boutons incrustés dedans.
+  Problèmes : trois couleurs de bouton (bleu / vert / orange) dont deux hors
+  charte, trois formats d'image différents (cartes de hauteurs inégales),
+  et surtout du texte invisible pour Google et les lecteurs d'écran.
+
+  Maintenant : on ne garde que la photo de chaque image (découpée à la volée
+  par le CDN Shopify, paramètres crop=top ci-dessous), le reste est en HTML,
+  sur le même modèle de carte que la section « Nos gammes ».
+  Pour modifier les textes, les liens ou l'ordre : tout est dans ce fichier.
+{% endcomment %}
+
+{% assign cta_titre      = "Vous hésitez encore ?" %}
+{% assign cta_sous_titre = "Trois façons d'arriver au bon système. Choisissez celle qui vous ressemble." %}
+
+{% assign quiz_url    = "https://daewoo-security.fr/pages/configurateur_2" %}
+{% assign pack_url    = "https://daewoo-security.fr/pages/pack-alarmes?_pos=1&_psq=pack&_ss=e&_v=1.0" %}
+{% assign compare_url = "https://daewoo-security.fr/pages/product-compare" %}
+
+{% comment %} Photos seules : la partie haute des visuels d'origine, sans le texte incrusté {% endcomment %}
+{% assign quiz_img    = "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Image_Acceuil_Configurateur_Daewoo.png?v=1786099030&width=900&height=890&crop=top" %}
+{% assign pack_img    = "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Image_Acceuil_Pack_Pret_a_poser_Daewoo.png?v=1786099030&width=900&height=892&crop=top" %}
+{% assign compare_img = "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Image_Acceuil_Comparatif_Daewoo.png?v=1786099030&width=900&height=675&crop=top" %}
+
+<div id="ctaacc2-home">
+
+  <div class="c2-header">
+    <h2 class="c2-titre">{{ cta_titre }}</h2>
+    <p class="c2-sous">{{ cta_sous_titre }}</p>
+  </div>
+
+  <div class="c2-grille">
+
+    <!-- CHEMIN MIS EN AVANT : CONFIGURATEUR -->
+    <a href="{{ quiz_url }}" class="c2-carte c2-carte--principale">
+      <div class="c2-visuel" style="background:#e8f1fd;">
+        <span class="c2-ruban">Le plus simple</span>
+        <img src="{{ quiz_img }}" alt="Centrale, détecteurs, caméra et badges d'un système d'alarme Daewoo" loading="lazy" decoding="async" width="900" height="890">
+      </div>
+      <div class="c2-corps">
+        <p class="c2-label">Configurateur</p>
+        <p class="c2-nom">Je veux être guidé</p>
+        <p class="c2-desc">Répondez à quelques questions et composez le système adapté à votre logement.</p>
+        <span class="c2-btn c2-btn--plein">Lancer le configurateur <span aria-hidden="true">→</span></span>
+        <p class="c2-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg>
+          2 min · Simple et rapide
+        </p>
+      </div>
+    </a>
+
+    <!-- CHEMIN SECONDAIRE : PACKS -->
+    <a href="{{ pack_url }}" class="c2-carte">
+      <div class="c2-visuel" style="background:#f4ece2;">
+        <img src="{{ pack_img }}" alt="Pack d'alarme Daewoo complet avec centrale, sirène, détecteurs et télécommandes" loading="lazy" decoding="async" width="900" height="892">
+      </div>
+      <div class="c2-corps">
+        <p class="c2-label">Packs</p>
+        <p class="c2-nom">Je veux un pack prêt à poser</p>
+        <p class="c2-desc">Des ensembles complets, prêts à l'emploi, pour un appartement comme pour une maison.</p>
+        <span class="c2-btn c2-btn--contour">Voir les packs <span aria-hidden="true">→</span></span>
+        <p class="c2-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="8.5 12.2 11 14.7 15.5 9.8"></polyline></svg>
+          Installé en 30 minutes
+        </p>
+      </div>
+    </a>
+
+    <!-- CHEMIN SECONDAIRE : COMPARATIF -->
+    <a href="{{ compare_url }}" class="c2-carte">
+      <div class="c2-visuel" style="background:#f6efe6;">
+        <img src="{{ compare_img }}" alt="Centrales Daewoo Vigilia, Touch et Élite côte à côte" loading="lazy" decoding="async" width="900" height="675">
+      </div>
+      <div class="c2-corps">
+        <p class="c2-label">Comparatif</p>
+        <p class="c2-nom">Je veux comparer</p>
+        <p class="c2-desc">Vigilia, Touch, Touch XL, Élite : les différences ligne par ligne pour trancher.</p>
+        <span class="c2-btn c2-btn--contour">Comparer les gammes <span aria-hidden="true">→</span></span>
+        <p class="c2-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="20" x2="6" y2="13"></line><line x1="12" y1="20" x2="12" y2="8"></line><line x1="18" y1="20" x2="18" y2="4"></line></svg>
+          Tableau comparatif complet
+        </p>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<style>
+#ctaacc2-home {
+  --c2-bg:        var(--color-background, #f8f9fc);
+  --c2-navy:      #0f1a2e;
+  --c2-blue:      #1a4faa;
+  --c2-blue-soft: #185fa5;
+  --c2-blue-bg:   #f0f4ff;
+  --c2-muted:     #6b7280;
+  --c2-line:      #e5e7eb;
+  --c2-hfam:      var(--font-heading-family, system-ui, sans-serif);
+  --c2-bfam:      var(--font-body-family, system-ui, sans-serif);
+  --c2-ease:      cubic-bezier(0.22, 1, 0.36, 1);
+
+  background: var(--c2-bg);
+  padding: 64px 32px 72px;
+  box-sizing: border-box;
+}
+#ctaacc2-home * { box-sizing: border-box; }
+
+.c2-header { text-align: center; margin-bottom: 2.5rem; }
+.c2-titre {
+  font-family: var(--c2-hfam);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--c2-navy);
+  margin: 0 0 .5rem;
+  line-height: 1.2;
+}
+.c2-sous {
+  font-family: var(--c2-bfam);
+  font-size: 15px;
+  color: var(--c2-muted);
+  margin: 0 auto;
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+.c2-grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+/* ── Carte — même modèle que la section « Nos gammes » ── */
+.c2-carte {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1.5px solid var(--c2-line);
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  min-width: 0;
+  transition: transform .2s var(--c2-ease), box-shadow .2s var(--c2-ease);
+}
+.c2-carte:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.08);
+  text-decoration: none;
+}
+.c2-carte:focus-visible { outline: 2px solid var(--c2-blue); outline-offset: 3px; }
+.c2-carte--principale { border: 2px solid var(--c2-blue); }
+
+.c2-visuel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.c2-visuel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.c2-ruban {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: var(--c2-blue);
+  color: #fff;
+  font-family: var(--c2-bfam);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 7px 12px;
+  border-radius: 100px;
+}
+
+.c2-corps {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.c2-label {
+  font-family: var(--c2-bfam);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c2-blue-soft);
+  margin: 0 0 6px;
+}
+.c2-nom {
+  font-family: var(--c2-hfam);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--c2-navy);
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+.c2-desc {
+  font-family: var(--c2-bfam);
+  font-size: 13px;
+  color: var(--c2-muted);
+  line-height: 1.6;
+  margin: 0 0 20px;
+  flex: 1;
+}
+
+/* ── Boutons : un seul bleu, plein pour le chemin recommandé ── */
+.c2-btn {
+  display: block;
+  text-align: center;
+  padding: 13px 20px;
+  border-radius: 10px;
+  font-family: var(--c2-bfam);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  transition: background .2s ease;
+}
+.c2-btn--plein   { background: var(--c2-blue);    color: #fff; }
+.c2-btn--contour { background: var(--c2-blue-bg); color: var(--c2-blue-soft); }
+.c2-carte:hover .c2-btn--plein   { background: #2260cc; }
+.c2-carte:hover .c2-btn--contour { background: #dbeafe; }
+
+.c2-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--c2-bfam);
+  font-size: 12px;
+  color: var(--c2-muted);
+  margin: 12px 0 0;
+  line-height: 1.3;
+}
+.c2-note svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+@media (max-width: 860px) {
+  .c2-grille { grid-template-columns: 1fr 1fr; }
+  .c2-carte:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  #ctaacc2-home { padding: 48px 20px 56px; }
+  .c2-grille { grid-template-columns: 1fr; gap: 16px; }
+  .c2-carte:last-child { grid-column: auto; }
+  .c2-corps { padding: 20px; }
+  .c2-nom { font-size: 18px; }
+}
+</style>
