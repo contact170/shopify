@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "catalogue": {
+      "type": "coll-catalogue",
+      "blocks": {
+        "vigilia": {
+          "type": "destination",
+          "settings": { "collection": "systeme-dalarme-vigilia", "libelle": "Alarmes Vigilia" }
+        },
+        "touch": {
+          "type": "destination",
+          "settings": { "collection": "systeme-dalarme-am301-am302", "libelle": "Alarmes Touch et Touch XL" }
+        },
+        "elite": {
+          "type": "destination",
+          "settings": { "collection": "systeme-dalarme-pa501z", "libelle": "Alarmes Élite" }
+        },
+        "cameras": {
+          "type": "destination",
+          "settings": { "collection": "cameras-de-surveillance", "libelle": "Caméras de surveillance" }
+        },
+        "accessoires": {
+          "type": "destination",
+          "settings": { "collection": "tous-les-accessoires", "libelle": "Tous les accessoires" }
+        },
+        "domotique": {
+          "type": "destination",
+          "settings": { "collection": "domotique", "libelle": "Maison connectée" }
+        }
+      },
+      "block_order": ["vigilia", "touch", "elite", "cameras", "accessoires", "domotique"],
+      "settings": {
+        "surtitre": "Catalogue",
+        "titre": "Tout le catalogue Daewoo Security",
+        "chapo": "Alarmes sans abonnement, caméras et objets connectés. Si vous cherchez quelque chose de précis, passez par une des six entrées ci-dessous : elles vous mèneront plus vite que la liste complète.",
+        "titre_grille": "Tous nos produits",
+        "tag_exclu": "Configurateur",
+        "produits_par_page": 48,
+        "colonnes": 4,
+        "colonnes_mobile": "2"
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "product_limit": 4,
+        "columns": 4,
+        "carousel_on_desktop": true,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "heading": "Vous avez consulté",
+        "heading_size": "title-sm",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "padding_top": 12,
+        "padding_bottom": 48,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    }
+  },
+  "order": ["catalogue", "recently-viewed"]
+}

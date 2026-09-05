@@ -557,3 +557,75 @@ Parametres du theme → Couleurs :
 
 Dans les deux cas : degrade lineaire, 90° (vers la droite), `#0C1E4A` a
 0 % et `#1A3F7A` a 100 %. Le champ « Arriere-plan » reste a `#0C1E4A`.
+
+## 11. Page /collections/all (05/09)
+
+### Ce que la page affichait
+
+`/collections/all` est la collection automatique de Shopify : elle liste
+tout ce qui est publie sur la boutique en ligne. N'etant pas une vraie
+collection, elle n'a ni titre, ni description, ni image.
+
+Le gabarit `templates/collection.json` lui appliquait quand meme
+`main-collection-banner`, regle sur **550 px de haut** avec superposition
+`#0c1e4a` : un grand bloc vide, suivi de la grille.
+
+Mesure faite sur l'API :
+
+| | |
+|---|---|
+| Produits actifs et publies | 156 |
+| dont tag `Configurateur` | **59** (38 %) |
+| Produits reels | 97 |
+| Pages de pagination (50/page) | 4 |
+
+Les 59 produits « Configurateur \| … » sont les variantes internes du
+configurateur. Ils portent le tag `hidden-from-store`, mais **le theme ne
+l'utilise nulle part** : `grep hidden-from-store sections/main-collection.liquid`
+ne renvoie rien. Ils s'affichent donc en clair, avec le meme visuel et
+presque le meme titre que le produit reel.
+
+Le tag `Configurateur` est le sur-ensemble propre : 59 produits, dont les
+57 marques `hidden-from-store`. Aucun produit ne porte `hidden-from-store`
+sans `Configurateur`.
+
+### Ce qui a ete construit
+
+`sections/coll-catalogue.liquid` (9 564 o), section autonome :
+
+1. **En-tete d'orientation** — surtitre, H1, chapo, sur le fond `#eef2fd`
+   des fiches premium.
+2. **Six cartes de destination**, en blocs editables : les trois gammes
+   d'alarme, les cameras, tous les accessoires, la maison connectee.
+   Chaque carte prend l'image de la collection, avec repli sur le premier
+   produit, et affiche son nombre de produits.
+3. **Grille**, qui saute les produits portant le tag exclu. Elle appelle
+   le snippet `product-card` du theme avec les memes reglages globaux que
+   `main-collection` : les cartes sont identiques a celles des autres
+   collections.
+
+`templates/collection.all.json` (2 412 o) monte cette section, puis
+« Vous avez consulte ».
+
+Le tag exclu est un reglage (`tag_exclu`, defaut `Configurateur`) : le
+vider reaffiche tout.
+
+### Reserve a lever
+
+**Je n'ai pas pu verifier que Shopify route bien `/collections/all` vers
+`templates/collection.all.json`.** La documentation ne decrit les gabarits
+alternatifs que via le `template_suffix` d'une collection, et la collection
+« all » etant virtuelle, elle n'en a pas. Le proxy de l'environnement
+bloque le domaine, donc aucun rendu n'est possible d'ici.
+
+Si le routage ne fonctionne pas, la solution de repli est une vraie
+collection automatique (regle `TAG NOT_EQUALS Configurateur`, soit les
+97 produits reels), avec titre, description et image, vers laquelle
+`/collections/all` est redirigee.
+
+### Pagination
+
+La grille saute les produits exclus a l'interieur d'une page deja
+paginee : avec 48 produits par page, une page peut donc en afficher
+moins. C'est un compromis assume — filtrer avant de paginer n'est pas
+possible en Liquid sur une collection automatique.

@@ -1,0 +1,214 @@
+{% comment %}
+  ── /collections/all — page catalogue (05/09/2026) ──
+
+  Cette page est la collection automatique de Shopify : elle liste tout ce
+  qui est publie sur la boutique en ligne, sans titre, sans description et
+  sans image. Le bandeau standard affichait donc 550 px de vide, suivis de
+  156 produits sur 4 pages — dont 59 doublons du configurateur, qui portent
+  le tag « Configurateur » et le meme visuel que le produit reel.
+
+  Cette section remplace l'ensemble :
+    1. un en-tete qui explique ou l'on est et ou aller ;
+    2. des cartes vers les vraies collections (blocs « destination ») ;
+    3. la grille, debarrassee des produits portant le tag exclu.
+
+  La grille reutilise le snippet product-card du theme et ses reglages
+  globaux : les cartes sont donc identiques a celles des autres collections.
+{% endcomment %}
+
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign tag_exclu = section.settings.tag_exclu | strip
+  assign par_page = section.settings.produits_par_page
+-%}
+
+<style>
+  #shopify-section-{{ section.id }}{
+    --cat-navy:#0c1e4a;
+    --cat-bleu:#1a4fab;
+    --cat-doux:#5a6484;
+    --cat-filet:#e3e8f5;
+    --cat-fond:#eef2fd;
+  }
+  .cat-entete{background:var(--cat-fond);padding:clamp(38px,5.4vw,68px) 0 clamp(30px,4.2vw,52px)}
+  .cat-wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+  .cat-surtitre{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--cat-bleu);margin:0 0 12px}
+  .cat-titre{font-size:clamp(28px,4.4vw,46px);font-weight:600;letter-spacing:-.03em;line-height:1.08;
+    margin:0;color:var(--cat-navy);text-wrap:balance}
+  .cat-chapo{margin:14px 0 0;max-width:60ch;font-size:clamp(16px,1.7vw,19px);line-height:1.6;color:var(--cat-doux)}
+
+  .cat-dest{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;
+    margin:clamp(26px,3.4vw,40px) 0 0}
+  .cat-carte{display:flex;flex-direction:column;background:#fff;border:1.5px solid var(--cat-filet);
+    border-radius:16px;overflow:hidden;text-decoration:none;min-width:0;
+    transition:transform .2s cubic-bezier(.22,1,.36,1),box-shadow .2s cubic-bezier(.22,1,.36,1)}
+  .cat-carte:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(12,30,74,.1);text-decoration:none}
+  .cat-carte:focus-visible{outline:2px solid var(--cat-bleu);outline-offset:3px}
+  .cat-visuel{width:100%;aspect-ratio:4/3;overflow:hidden;background:#f4f6fb;flex-shrink:0}
+  .cat-visuel img{width:100%;height:100%;object-fit:cover;display:block}
+  .cat-corps{padding:16px 18px 18px;display:flex;flex-direction:column;gap:5px;flex:1}
+  .cat-nom{font-size:17px;font-weight:600;color:var(--cat-navy);line-height:1.25;margin:0}
+  .cat-compte{font-size:13px;color:var(--cat-doux);margin:0}
+  .cat-fleche{margin-top:auto;padding-top:10px;font-size:14px;font-weight:600;color:var(--cat-bleu)}
+
+  .cat-grille-tete{max-width:1200px;margin:clamp(38px,5vw,60px) auto clamp(14px,2vw,20px);
+    padding:0 clamp(20px,4vw,40px);display:flex;align-items:baseline;justify-content:space-between;
+    gap:16px;flex-wrap:wrap}
+  .cat-grille-titre{font-size:clamp(21px,2.6vw,28px);font-weight:600;letter-spacing:-.02em;
+    color:var(--cat-navy);margin:0}
+  .cat-grille-compte{font-size:14px;color:var(--cat-doux)}
+  .cat-grille-wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,40px) clamp(48px,6vw,88px)}
+  .cat-vide{text-align:center;padding:60px 20px;color:var(--cat-doux)}
+</style>
+
+<div class="cat-entete">
+  <div class="cat-wrap">
+    {%- if section.settings.surtitre != blank -%}
+      <p class="cat-surtitre">{{ section.settings.surtitre }}</p>
+    {%- endif -%}
+    <h1 class="cat-titre">{{ section.settings.titre }}</h1>
+    {%- if section.settings.chapo != blank -%}
+      <p class="cat-chapo">{{ section.settings.chapo }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cat-dest">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign dest = collections[block.settings.collection]
+            assign libelle = block.settings.libelle
+            if libelle == blank
+              assign libelle = dest.title
+            endif
+          -%}
+          {%- if dest != blank and dest.handle != blank -%}
+            <a href="{{ dest.url }}" class="cat-carte" {{ block.shopify_attributes }}>
+              <div class="cat-visuel">
+                {%- liquid
+                  assign visuel = dest.image
+                  if visuel == blank
+                    assign visuel = dest.products.first.featured_image
+                  endif
+                -%}
+                {%- if visuel != blank -%}
+                  <img src="{{ visuel | image_url: width: 520 }}"
+                       alt="{{ libelle | escape }}"
+                       width="520" height="390" loading="lazy" decoding="async">
+                {%- endif -%}
+              </div>
+              <div class="cat-corps">
+                <p class="cat-nom">{{ libelle }}</p>
+                <p class="cat-compte">
+                  {%- if dest.all_products_count == 1 -%}1 produit
+                  {%- else -%}{{ dest.all_products_count }} produits{%- endif -%}
+                </p>
+                <span class="cat-fleche">Voir &rarr;</span>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- paginate collection.products by par_page -%}
+
+  {%- liquid
+    assign visibles = 0
+    for produit in collection.products
+      unless tag_exclu != blank and produit.tags contains tag_exclu
+        assign visibles = visibles | plus: 1
+      endunless
+    endfor
+  -%}
+
+  <div class="cat-grille-tete">
+    <h2 class="cat-grille-titre">{{ section.settings.titre_grille }}</h2>
+    {%- if paginate.pages > 1 -%}
+      <p class="cat-grille-compte">Page {{ paginate.current_page }} sur {{ paginate.pages }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="cat-grille-wrap">
+    {%- if visibles > 0 -%}
+      {%- capture card_sizes -%}(max-width: 639px) calc(100vw / {{ section.settings.colonnes_mobile }}), calc(min({{ settings.page_width }}px, 100vw) / {{ section.settings.colonnes }}){%- endcapture -%}
+      <div class="card-grid card-grid--{{ section.settings.colonnes }} mobile:card-grid--{{ section.settings.colonnes_mobile }} grid relative">
+        {%- for product in collection.products -%}
+          {%- liquid
+            if tag_exclu != blank and product.tags contains tag_exclu
+              continue
+            endif
+
+            assign lazy_load = true
+            if forloop.index <= 4
+              assign lazy_load = false
+            endif
+          -%}
+          {%- render 'product-card',
+            product: product,
+            product_id: product.id,
+            section_id: section.id,
+            lazy_load: lazy_load,
+            sizes: card_sizes,
+            image_ratio: settings.product_image_ratio,
+            image_fill: settings.product_image_fill,
+            show_secondary_image: settings.product_secondary_image,
+            show_multiple_images: settings.product_multiple_images,
+            show_vendor: settings.product_vendor,
+            title_truncation: settings.product_title_truncation,
+            title_line_limit: settings.product_title_line_limit,
+            show_rating: settings.product_rating,
+            show_color_swatches: settings.product_color_swatches,
+            show_countdown: settings.product_countdown,
+            show_quick_add: settings.product_quick_add,
+            show_quick_view: settings.product_quick_view,
+            vertical_badges: settings.product_vertical_badges,
+            show_sold_out: settings.product_sold_out,
+            show_save_amount: settings.product_save_amount,
+            save_type: settings.product_save_type,
+            show_icon_list: settings.product_icon_list
+          -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="cat-vide">Aucun produit sur cette page.</p>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      {%- render 'pagination', paginate: paginate, mode: 'paginated' -%}
+    {%- endif -%}
+  </div>
+
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Catalogue — tout",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Catalogue" },
+    { "type": "text", "id": "titre", "label": "Titre (H1)", "default": "Tout le catalogue Daewoo Security" },
+    { "type": "textarea", "id": "chapo", "label": "Chapo" },
+    { "type": "header", "content": "Grille" },
+    { "type": "text", "id": "titre_grille", "label": "Titre au-dessus de la grille", "default": "Tous nos produits" },
+    { "type": "text", "id": "tag_exclu", "label": "Tag a exclure de la grille", "default": "Configurateur" },
+    { "type": "range", "id": "produits_par_page", "min": 12, "max": 60, "step": 12, "label": "Produits par page", "default": 48 },
+    { "type": "range", "id": "colonnes", "min": 2, "max": 5, "step": 1, "label": "Colonnes sur ordinateur", "default": 4 },
+    { "type": "select", "id": "colonnes_mobile", "label": "Colonnes sur mobile",
+      "options": [ { "value": "1", "label": "1" }, { "value": "2", "label": "2" } ], "default": "2" }
+  ],
+  "blocks": [
+    {
+      "type": "destination",
+      "name": "Destination",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "libelle", "label": "Libelle (vide = titre de la collection)" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Catalogue — tout" } ]
+}
+{% endschema %}
