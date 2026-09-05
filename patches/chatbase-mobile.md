@@ -113,7 +113,15 @@ par le bloc ci-dessous.
        La barre d'achat et la bulle occupent la même bande, juste au-dessus du
        dock. Les décaler l'une par rapport à l'autre ne suffit pas : on masque
        la bulle tant que la barre est affichée, et elle revient ensuite. */
-    body:has(.product-sticky-form__card:not(.invisible)) #chatbase-bubble-button {
+    /* Effacer la pastille quand elle recouvrirait un bouton d'action :
+       - barre d'achat des fiches produit ;
+       - tiroir ouvert (panier, menu, recherche), où elle se pose sur le
+         bouton « Finaliser ma commande ».
+       Le tiroir porte l'attribut `open` tant qu'il est affiché. */
+    body:has(.product-sticky-form__card:not(.invisible)) #chatbase-bubble-button,
+    body:has(#CartDrawer[open]) #chatbase-bubble-button,
+    body:has(#MenuDrawer[open]) #chatbase-bubble-button,
+    body:has(#SearchDrawer[open]) #chatbase-bubble-button {
       opacity: 0 !important;
       pointer-events: none !important;
     }
