@@ -37,18 +37,29 @@ par le bloc ci-dessous.
       font-size: 0 !important;
       overflow: hidden !important;
       justify-content: center !important;
+      align-items: center !important;
 
       /* ─── 2. Bouton collé à la barre du bas, sans espace ─── */
       bottom: var(--mobile-dock-height, 64px) !important;
       transition: opacity .2s ease !important;
     }
 
+    /* Icône d'origine masquée, remplacée par un point d'interrogation.
+       Le libellé « Une question ? » est déjà neutralisé par le font-size: 0
+       du bouton ; le pseudo-élément définit sa propre taille, sinon il
+       hériterait de ce 0 et resterait invisible. */
     #chatbase-bubble-button svg,
     #chatbase-bubble-button img {
-      font-size: 1rem !important;
-      width: 24px !important;
-      height: 24px !important;
-      flex: 0 0 auto !important;
+      display: none !important;
+    }
+
+    #chatbase-bubble-button::after {
+      content: "?" !important;
+      font-size: 26px !important;
+      font-weight: 700 !important;
+      line-height: 1 !important;
+      color: #fff !important;
+      font-family: system-ui, sans-serif !important;
     }
 
     /* La bulle de message proactive est un élément SÉPARÉ du bouton : elle
