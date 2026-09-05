@@ -1,74 +1,119 @@
-# Bulle Chatbase sur mobile
+# Bulle Chatbase sur mobile — CSS à ajouter dans `snippets/custom.liquid`
 
-> **Corrigé le 05/09/2026.** La version précédente de ce document proposait de
-> repositionner la bulle au-dessus du dock mobile. C'était déjà fait : la règle
-> existe dans `snippets/custom.liquid` depuis le 04/09/2026. Le document est
-> réécrit en conséquence.
+> Réécrit le 05/09/2026. Le repositionnement au-dessus du dock existe déjà dans
+> `custom.liquid` ; ce document ne traite que ce qui reste à faire.
 
-## Ce qui est déjà en place
+## Où coller
 
-`snippets/custom.liquid`, rendu en fin de `<body>` sur toutes les pages :
+Dans `snippets/custom.liquid`, **remplacer** le bloc existant :
 
 ```css
-@media screen and (max-width: 767px) {
-  #chatbase-bubble-button {
-    bottom: calc(16px + var(--mobile-dock-height, 64px)) !important;
-  }
-  #chatbase-message-bubbles {
-    bottom: calc(85px + var(--mobile-dock-height, 64px)) !important;
-  }
-}
-```
-
-La bulle est donc déjà remontée au-dessus du dock. Les sélecteurs exacts sont
-`#chatbase-bubble-button` et `#chatbase-message-bubbles`.
-
-## Le vrai problème : la taille, pas la position
-
-Le commentaire du fichier documente la mesure :
-
-> Depuis l'activation du libellé « Une question ? », le bouton Chatbase mesure
-> **192 × 55 px** (contre **55 × 55** avant), soit ~208 px de large avec son
-> offset.
-
-C'est le **libellé** qui prend la place, pas la bulle. Sans lui, le bouton
-redevient une pastille ronde de 55 px.
-
-## Option 1 — Retirer le libellé (recommandé)
-
-Dans le tableau de bord **Chatbase → votre agent → Connect / Embed → Chat
-interface**, videz le champ du libellé du bouton (« Une question ? »).
-
-Le bouton repasse à 55 × 55 px, la gêne disparaît, et vous gardez le support
-sur mobile. Aucune modification de code.
-
-Effet de bord à corriger ensuite : les deux règles de dégagement du
-`.footer-copyright` dans `custom.liquid` (220 px à droite en desktop, 72 px en
-bas sous 1024 px) ont été calculées pour un bouton de 208 px de large. Une fois
-le libellé retiré, elles réservent trop d'espace — ramenez 220 px à ~80 px.
-
-## Option 2 — Masquer la bulle sur mobile
-
-Si vous voulez vraiment la supprimer, dans `snippets/custom.liquid`, à
-l'intérieur du bloc `@media screen and (max-width: 767px)` existant :
-
-```css
-    #chatbase-bubble-button,
-    #chatbase-message-bubbles {
-      display: none !important;
+  @media screen and (max-width: 767px) {
+    #chatbase-bubble-button {
+      bottom: calc(16px + var(--mobile-dock-height, 64px)) !important;
     }
+
+    #chatbase-message-bubbles {
+      bottom: calc(85px + var(--mobile-dock-height, 64px)) !important;
+    }
+  }
 ```
 
-Deux limites :
+par le bloc ci-dessous.
 
-- Le script Chatbase **continue de se charger** sur mobile, avec son coût. Seule
-  la désactivation de l'intégration (Personnaliser → Paramètres du thème →
-  Intégrations d'applications → Chatbase) supprime ce coût — mais elle vaut
-  aussi pour le desktop.
-- Vous perdez un canal de support sur 79 % de votre trafic. Sur des systèmes à
-  200–1000 €, une question sans réponse est souvent une vente perdue.
+## Le CSS
 
-## À ne pas faire
+```css
+  @media screen and (max-width: 767px) {
+    /* ─── 1. Libellé « Une question ? » retiré sur mobile ───
+       Le bouton mesure 192 × 55 px avec le libellé, 55 × 55 sans.
+       font-size: 0 neutralise le texte quelle que soit sa balise — y compris
+       un nœud texte nu — puis on rétablit la taille sur l'icône seule. */
+    #chatbase-bubble-button {
+      width: 56px !important;
+      min-width: 0 !important;
+      padding: 0 !important;
+      gap: 0 !important;
+      font-size: 0 !important;
+      overflow: hidden !important;
+      justify-content: center !important;
 
-N'utilisez pas un sélecteur du type `iframe[src*="chatbase.co"]` : il masquerait
-aussi le Franck intégré dans le contenu des pages `/pages/assistance`.
+      /* ─── 2. Bouton collé à la barre du bas, sans espace ─── */
+      bottom: var(--mobile-dock-height, 64px) !important;
+      transition: opacity .2s ease !important;
+    }
+
+    #chatbase-bubble-button svg,
+    #chatbase-bubble-button img {
+      font-size: 1rem !important;
+      width: 24px !important;
+      height: 24px !important;
+      flex: 0 0 auto !important;
+    }
+
+    #chatbase-message-bubbles {
+      bottom: calc(69px + var(--mobile-dock-height, 64px)) !important;
+    }
+
+    /* ─── 3. Fiches produit : effacer la bulle quand la barre d'achat est là ───
+       La barre d'achat et la bulle occupent la même bande, juste au-dessus du
+       dock. Les décaler l'une par rapport à l'autre ne suffit pas : on masque
+       la bulle tant que la barre est affichée, et elle revient ensuite. */
+    body:has(.product-sticky-form__card:not(.invisible)) #chatbase-bubble-button {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+  }
+```
+
+## Pourquoi l'alignement seul ne règle pas le chevauchement
+
+Mesuré dans le thème :
+
+- `sections/main-product.liquid:908` — la barre d'achat est
+  `product-sticky-form w-full fixed z-20 bottom-0`.
+- `assets/mobile-dock.css:118` — quand le dock est actif, elle reçoit
+  `transform: translateY(calc(var(--mobile-dock-height) * -1))`, donc elle se
+  pose **exactement sur le dock**.
+- Sa carte contient un bouton de `--sp-11` de haut plus deux paddings de
+  `--sp-4` : environ **75 à 80 px**.
+
+La bulle fait 55 px de haut. Aujourd'hui elle occupe la bande allant de
+`dock + 16` à `dock + 71`. Collée à la barre, elle irait de `dock` à
+`dock + 55`. **Dans les deux cas elle est entièrement à l'intérieur de la barre
+d'achat**, qui monte jusqu'à `dock + 80`. Un décalage de 16 px ne peut pas en
+sortir.
+
+C'est pour ça que la règle 3 masque la bulle au lieu de la déplacer.
+
+Le retrait du libellé (règle 1) aide aussi de son côté : la bulle passe de
+208 px à 56 px de large, et ne peut plus atteindre le bouton d'achat, qui est
+aligné à droite de la barre.
+
+## Effet de bord à corriger
+
+Les deux règles de dégagement du `.footer-copyright` dans `custom.liquid` ont
+été calculées pour un bouton de 208 px de large :
+
+```css
+  @media screen and (min-width: 1024px) {
+    .footer-copyright { padding-inline-end: 220px !important; }
+  }
+```
+
+Le libellé n'étant retiré **que sur mobile**, cette règle desktop reste juste :
+n'y touchez pas. En revanche celle sous 1024 px réserve 72 px en bas pour un
+bouton qui n'en fait plus que 56 : vous pouvez ramener `+ 72px` à `+ 56px`.
+
+## À vérifier
+
+1. Fiche produit, faire défiler jusqu'à l'apparition de la barre d'achat : la
+   bulle doit disparaître en fondu, puis revenir en remontant.
+2. Page d'accueil et panier : la bulle est une pastille ronde, collée au dock,
+   icône bien centrée.
+3. Desktop : rien ne doit changer — le libellé reste, la position aussi.
+
+**Non testé de mon côté** : je n'ai pas accès au DOM de Chatbase depuis cet
+environnement. Si l'icône disparaît avec le texte, c'est qu'elle n'est ni un
+`svg` ni un `img` : inspectez le bouton et ajoutez sa balise à la règle qui
+rétablit `font-size`.
