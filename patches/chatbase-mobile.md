@@ -1,88 +1,74 @@
-# Bulle Chatbase : la faire disparaître (ou la déplacer) sur mobile
+# Bulle Chatbase sur mobile
 
-Chatbase est une **intégration d'application**, pas du code de thème :
+> **Corrigé le 05/09/2026.** La version précédente de ce document proposait de
+> repositionner la bulle au-dessus du dock mobile. C'était déjà fait : la règle
+> existe dans `snippets/custom.liquid` depuis le 04/09/2026. Le document est
+> réécrit en conséquence.
 
-```
-config/settings_data.json → current.blocks
-  shopify://apps/chatbase/blocks/chatbase-widget/a5677ff3-9ceb-42be-8a77-c14565a88476
-```
+## Ce qui est déjà en place
 
-Son HTML est injecté par l'application dans la page. On ne peut pas le modifier,
-mais il vit dans le même document que le thème : du CSS du thème l'atteint sans
-problème.
+`snippets/custom.liquid`, rendu en fin de `<body>` sur toutes les pages :
 
-## Avant tout : regarder dans l'éditeur de thème
-
-**Boutique en ligne → Thèmes → Personnaliser → Paramètres du thème → Intégrations
-d'applications → Chatbase.**
-
-Si l'application expose un réglage de position ou d'affichage, utilisez-le : c'est
-plus propre que du CSS, et ça survivra à ses mises à jour. Je ne peux pas
-vérifier d'ici si ce réglage existe.
-
-Le même écran permet de **désactiver complètement** l'intégration — mais elle
-disparaît alors aussi du desktop, et c'est la seule option qui supprime vraiment
-le chargement du script.
-
-## Option A — La déplacer (recommandé)
-
-Sur vos captures, la bulle ne gêne pas parce qu'elle est grosse : elle gêne
-parce qu'elle est **au même endroit que le dock mobile**, en bas. Elle recouvre
-le message de livraison, le champ d'instructions, la flèche du carrousel d'avis.
-
-La remonter au-dessus du dock règle la gêne sans vous priver d'un canal de
-support sur 79 % de votre trafic.
-
-## Option B — La masquer sur mobile
-
-Si vous préférez vraiment la supprimer.
-
-Dans `layout/theme.liquid`, juste avant `</head>` :
-
-```liquid
-    <style>
-      @media screen and (max-width: 767px) {
-        /* Option A : remonter la bulle au-dessus du dock mobile */
-        [id^="chatbase-bubble"] {
-          bottom: calc(var(--mobile-dock-height, 64px) + 12px) !important;
-        }
-
-        /* Option B : la masquer complètement — décommenter pour l'activer,
-           et supprimer la règle ci-dessus. */
-        /*
-        [id^="chatbase-bubble"] { display: none !important; }
-        */
-      }
-    </style>
+```css
+@media screen and (max-width: 767px) {
+  #chatbase-bubble-button {
+    bottom: calc(16px + var(--mobile-dock-height, 64px)) !important;
+  }
+  #chatbase-message-bubbles {
+    bottom: calc(85px + var(--mobile-dock-height, 64px)) !important;
+  }
+}
 ```
 
-`--mobile-dock-height` est déjà calculée et posée sur `<html>` par
-`assets/mobile-dock.js`, la bulle se cale donc automatiquement au-dessus du dock.
+La bulle est donc déjà remontée au-dessus du dock. Les sélecteurs exacts sont
+`#chatbase-bubble-button` et `#chatbase-message-bubbles`.
 
-## Vérifier le sélecteur en 30 secondes
+## Le vrai problème : la taille, pas la position
 
-`[id^="chatbase-bubble"]` correspond aux identifiants utilisés par le widget
-Chatbase. **Je n'ai pas pu le confirmer sur votre site** : le widget n'existe pas
-dans les fichiers du thème, il n'apparaît qu'une fois la page chargée.
+Le commentaire du fichier documente la mesure :
 
-Pour vérifier : sur ordinateur, ouvrez votre site, clic droit sur la bulle →
-**Inspecter**. Dans le panneau, remontez jusqu'au conteneur de la bulle et lisez
-son `id`. S'il ne commence pas par `chatbase-bubble`, remplacez le sélecteur par
-celui que vous voyez.
+> Depuis l'activation du libellé « Une question ? », le bouton Chatbase mesure
+> **192 × 55 px** (contre **55 × 55** avant), soit ~208 px de large avec son
+> offset.
 
-Si le sélecteur ne correspond pas, la règle est simplement sans effet — rien ne
-casse.
+C'est le **libellé** qui prend la place, pas la bulle. Sans lui, le bouton
+redevient une pastille ronde de 55 px.
 
-## Ce que le CSS ne fait pas
+## Option 1 — Retirer le libellé (recommandé)
 
-Masquer la bulle **ne l'empêche pas de se charger**. Le script Chatbase est
-toujours téléchargé et exécuté sur mobile, avec son coût sur la vitesse de la
-page. Si le but est aussi la performance, seule la désactivation de
-l'intégration dans l'éditeur de thème y répond — au prix du desktop.
+Dans le tableau de bord **Chatbase → votre agent → Connect / Embed → Chat
+interface**, videz le champ du libellé du bouton (« Une question ? »).
 
-## Attention à ne pas casser la page Assistance
+Le bouton repasse à 55 × 55 px, la gêne disparaît, et vous gardez le support
+sur mobile. Aucune modification de code.
 
-N'utilisez **pas** un sélecteur du type `iframe[src*="chatbase.co"]` : il
-masquerait aussi le Franck intégré dans vos pages `/pages/assistance` et
-`/pages/page`, qui est un iframe Chatbase affiché dans le contenu. Le sélecteur
-par `id` ci-dessus ne touche que la bulle flottante.
+Effet de bord à corriger ensuite : les deux règles de dégagement du
+`.footer-copyright` dans `custom.liquid` (220 px à droite en desktop, 72 px en
+bas sous 1024 px) ont été calculées pour un bouton de 208 px de large. Une fois
+le libellé retiré, elles réservent trop d'espace — ramenez 220 px à ~80 px.
+
+## Option 2 — Masquer la bulle sur mobile
+
+Si vous voulez vraiment la supprimer, dans `snippets/custom.liquid`, à
+l'intérieur du bloc `@media screen and (max-width: 767px)` existant :
+
+```css
+    #chatbase-bubble-button,
+    #chatbase-message-bubbles {
+      display: none !important;
+    }
+```
+
+Deux limites :
+
+- Le script Chatbase **continue de se charger** sur mobile, avec son coût. Seule
+  la désactivation de l'intégration (Personnaliser → Paramètres du thème →
+  Intégrations d'applications → Chatbase) supprime ce coût — mais elle vaut
+  aussi pour le desktop.
+- Vous perdez un canal de support sur 79 % de votre trafic. Sur des systèmes à
+  200–1000 €, une question sans réponse est souvent une vente perdue.
+
+## À ne pas faire
+
+N'utilisez pas un sélecteur du type `iframe[src*="chatbase.co"]` : il masquerait
+aussi le Franck intégré dans le contenu des pages `/pages/assistance`.
