@@ -51,8 +51,12 @@ par le bloc ci-dessous.
       flex: 0 0 auto !important;
     }
 
+    /* La bulle de message proactive est un élément SÉPARÉ du bouton : elle
+       porte son propre texte (« Une question ? ») et réapparaît au bout de
+       quelques secondes ou après une interaction. Le font-size: 0 du bouton ne
+       la concerne pas. On la masque sur mobile ; elle reste sur desktop. */
     #chatbase-message-bubbles {
-      bottom: calc(69px + var(--mobile-dock-height, 64px)) !important;
+      display: none !important;
     }
 
     /* ─── 3. Fiches produit : effacer la bulle quand la barre d'achat est là ───
