@@ -1,0 +1,265 @@
+{%- doc -%}
+  Bandeau de réassurance du panier, affiché UNIQUEMENT sur mobile (< 768 px).
+
+  Sur desktop ce bloc est masqué et la barre de livraison d'origine reste
+  affichée : la version desktop n'est pas modifiée.
+
+  Deux états :
+  - panier sous le seuil  → barre de progression + montant restant + raccourci
+    vers les accessoires les moins chers (c'est là que la barre rapporte) ;
+  - panier au-dessus      → la place est rendue à la réassurance, au lieu
+    d'une barre pleine à 100 % qui n'apprend plus rien au client.
+
+  @param {number} minimum_amount - Seuil de livraison gratuite, en euros
+
+  @example
+  {% render 'cart-reassurance-mobile', minimum_amount: 50 %}
+{%- enddoc -%}
+
+{%- comment -%}
+  ─────────────────────────────────────────────────────────────
+  TEXTES — tout se modifie ici, et nulle part ailleurs.
+  Chaque affirmation correspond à vos vraies zones de livraison
+  Shopify : France et Belgique gratuites dès 50 €, Colissimo 48 H
+  en France, DPD 3–5 jours en Belgique.
+  Si vous changez vos tarifs de livraison, changez aussi ces textes.
+  ─────────────────────────────────────────────────────────────
+{%- endcomment -%}
+{%- liquid
+  assign txt_free_title = 'Livraison gratuite'
+  assign txt_free_sub = 'France et Belgique'
+  assign txt_remaining_suffix = 'pour la livraison gratuite en France et en Belgique'
+  assign txt_nudge = 'Voir les accessoires du moins cher au plus cher'
+  assign url_nudge = '/collections/tous-les-accessoires?sort_by=price-ascending'
+
+  assign txt_trust_1 = 'Paiement sécurisé'
+  assign txt_trust_2 = 'Colissimo 48 h en France'
+  assign txt_trust_3 = 'Sans abonnement, à vie'
+  assign txt_trust_4 = 'SAV en France, à Bordeaux'
+-%}
+
+{%- liquid
+  assign minimum_amount_in_cents = minimum_amount | times: 100
+  assign total_price = cart.total_price
+
+  comment
+    Même exclusion de l'emballage cadeau que la barre d'origine, pour que les
+    deux affichages ne se contredisent jamais.
+  endcomment
+  if cart != empty and settings.gift_wrap_product != blank and settings.gift_wrap_product.available
+    assign gift_wrap_variant = settings.gift_wrap_product.first_available_variant
+    assign gift_items = cart.items | where: 'variant_id', gift_wrap_variant.id
+    assign gift_wraps_in_cart = 0
+    for item in gift_items
+      assign gift_wraps_in_cart = gift_wraps_in_cart | plus: item.final_line_price
+    endfor
+    assign total_price = total_price | minus: gift_wraps_in_cart
+  endif
+
+  assign threshold_reached = false
+  if total_price >= minimum_amount_in_cents
+    assign threshold_reached = true
+  endif
+-%}
+
+<style>
+  /* Ce bloc n'existe que sous 768 px : le desktop garde la barre d'origine. */
+  .cart-reassure { display: none; }
+  .cart-legacy-bar { display: block; }
+
+  @media screen and (max-width: 767px) {
+    .cart-legacy-bar { display: none; }
+
+    .cart-reassure {
+      display: grid;
+      gap: .7rem;
+      width: 100%;
+      padding: .8rem .9rem;
+      border-radius: var(--card-radius, 12px);
+      background: rgba(var(--color-base-button), .06);
+    }
+
+    .cart-reassure__head {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      min-width: 0;
+    }
+
+    .cart-reassure__badge {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.65rem;
+      height: 1.65rem;
+      border-radius: 999px;
+      background: rgb(var(--color-success-text));
+      color: #fff;
+    }
+
+    .cart-reassure__badge svg { width: 13px; height: 13px; }
+
+    .cart-reassure__title {
+      display: block;
+      font-size: .92rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .cart-reassure__sub {
+      display: block;
+      margin-top: .1rem;
+      font-size: .76rem;
+      line-height: 1.3;
+      opacity: .7;
+    }
+
+    /* --- État « il manque X € » --- */
+    .cart-reassure__remaining {
+      margin: 0;
+      font-size: .86rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .cart-reassure__amount { white-space: nowrap; }
+
+    .cart-reassure__track {
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(var(--color-base-text), .12);
+      overflow: hidden;
+    }
+
+    .cart-reassure__fill {
+      height: 100%;
+      border-radius: 999px;
+      background: rgb(var(--color-base-button));
+      transition: width .3s ease;
+    }
+
+    .cart-reassure__nudge {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      font-size: .8rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: rgb(var(--color-base-button));
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* --- Ligne de réassurance, commune aux deux états --- */
+    .cart-reassure__trust {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .45rem .7rem;
+      margin: 0;
+      padding: .7rem 0 0;
+      border-top: 1px solid rgba(var(--color-base-text), .1);
+      list-style: none;
+    }
+
+    .cart-reassure__trust li {
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .72rem;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .cart-reassure__trust svg {
+      flex: 0 0 auto;
+      width: 13px;
+      height: 13px;
+      opacity: .65;
+    }
+
+    /* ---------------------------------------------------------------
+       Pied du tiroir : sur mobile « Commander » passe pleine largeur et
+       « Voir le panier » devient un lien discret dessous. Les deux
+       boutons se partageaient l'écran 50/50, ce qui plaçait une sortie
+       de tunnel au même niveau visuel que la commande.
+       --------------------------------------------------------------- */
+    .drawer__footer-buttons { grid-template-columns: 1fr !important; }
+
+    .drawer__footer-buttons > .button {
+      grid-column: 1 / -1 !important;
+      width: 100%;
+    }
+
+    .drawer__footer-buttons > .button--primary {
+      min-height: 3.1rem;
+      font-size: 1rem;
+    }
+
+    /* Le cadenas est masqué sous 640 px par le thème : on le remontre,
+       c'est le signal de sécurité au moment précis du paiement. */
+    .drawer__footer-buttons > .button--primary .icon-lock {
+      display: block !important;
+    }
+
+    .drawer__footer-buttons > .button--secondary {
+      min-height: 0;
+      padding: .5rem 0;
+      border: 0;
+      background: none;
+      font-size: .82rem;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      opacity: .7;
+    }
+
+    .drawer__footer-buttons > .button--secondary .btn-fill { display: none; }
+  }
+</style>
+
+<div class="cart-reassure" data-cart-reassure>
+  {%- if threshold_reached -%}
+    <div class="cart-reassure__head">
+      <span class="cart-reassure__badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
+      <span>
+        <span class="cart-reassure__title">{{ txt_free_title }}</span>
+        <span class="cart-reassure__sub">{{ txt_free_sub }}</span>
+      </span>
+    </div>
+  {%- else -%}
+    {%- assign remaining = minimum_amount_in_cents | minus: total_price -%}
+    {%- assign percent = total_price | times: 1.0 | divided_by: minimum_amount_in_cents | at_most: 1 | times: 100 | round -%}
+    <p class="cart-reassure__remaining">
+      Plus que <span class="cart-reassure__amount">{{ remaining | money }}</span> {{ txt_remaining_suffix }}
+    </p>
+    <div class="cart-reassure__track" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">
+      <div class="cart-reassure__fill" style="width: {{ percent }}%;"></div>
+    </div>
+    <a class="cart-reassure__nudge" href="{{ url_nudge }}">
+      {{ txt_nudge }}
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  {%- endif -%}
+
+  <ul class="cart-reassure__trust">
+    <li>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      {{ txt_trust_1 }}
+    </li>
+    <li>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      {{ txt_trust_2 }}
+    </li>
+    <li>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
+      {{ txt_trust_3 }}
+    </li>
+    <li>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      {{ txt_trust_4 }}
+    </li>
+  </ul>
+</div>
