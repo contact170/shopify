@@ -624,10 +624,26 @@ se comporte exactement comme avant.
 
 1. **En-tete d'orientation** — surtitre, H1, chapo, sur le fond `#eef2fd`
    des fiches premium.
-2. **Six cartes de destination** : les trois gammes d'alarme, les cameras,
-   tous les accessoires, la maison connectee. Chaque carte prend l'image de
-   la collection, avec repli sur le premier produit, et affiche son nombre
-   de produits.
+2. **Six cartes de destination**, typographiques : les trois gammes
+   d'alarme, les cameras, tous les accessoires, la maison connectee. Nom de
+   la collection, nombre de produits, chevron qui glisse au survol.
+
+   Pas de photo, apres verification des visuels disponibles :
+
+   | Collection | Image | Ratio |
+   |---|---|---|
+   | Vigilia | banniere 1700x700 | 2,43:1 |
+   | Touch / Touch XL | banniere 3400x1400 | 2,43:1 |
+   | Élite | banniere 1400x500 | 2,8:1 |
+   | Cameras | 970x600 | 1,62:1 |
+   | Tous les accessoires | **aucune** | — |
+   | Maison connectee | 1920x1080 | 1,78:1 |
+
+   Des cartes 4:3 auraient rogne 40 a 50 % de la largeur des trois
+   bannieres d'alarme, dont les noms de fichier (`BANNIERE_PC_VIGILIA…`)
+   indiquent du texte incruste, et « Tous les accessoires » serait retombe
+   sur une photo de contacteur sur fond blanc au milieu de cinq visuels
+   lifestyle.
 3. **Grille** qui saute les produits portant le tag exclu, en appelant le
    snippet `product-card` du theme avec les memes reglages globaux que
    `main-collection` : les cartes sont identiques a celles des autres

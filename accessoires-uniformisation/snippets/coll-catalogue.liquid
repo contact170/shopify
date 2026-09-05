@@ -10,6 +10,10 @@
   garantit pas le rendu statique d'une section a l'interieur d'une condition,
   alors qu'elle garantit celui d'un snippet.
 
+  Les cartes de destination sont typographiques, sans photo : les six
+  collections ont des visuels de ratios trop differents (2,43:1, 2,8:1,
+  1,78:1, 1,62:1) et « Tous les accessoires » n'en a aucun.
+
   Les reglages sont les assigns ci-dessous. cat_destinations est une liste
   « handle-de-collection|libelle », separee par des virgules.
 {% endcomment %}
@@ -49,19 +53,21 @@
     margin:0;color:var(--cat-navy);text-wrap:balance}
   .cat-chapo{margin:14px 0 0;max-width:60ch;font-size:clamp(16px,1.7vw,19px);line-height:1.6;color:var(--cat-doux)}
 
-  .cat-dest{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;
+  .cat-dest{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px;
     margin:clamp(26px,3.4vw,40px) 0 0}
-  .cat-carte{display:flex;flex-direction:column;background:#fff;border:1.5px solid var(--cat-filet);
-    border-radius:16px;overflow:hidden;text-decoration:none;min-width:0;
-    transition:transform .2s cubic-bezier(.22,1,.36,1),box-shadow .2s cubic-bezier(.22,1,.36,1)}
-  .cat-carte:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(12,30,74,.1);text-decoration:none}
+  .cat-carte{display:flex;align-items:center;justify-content:space-between;gap:18px;
+    background:#fff;border:1.5px solid var(--cat-filet);border-radius:14px;
+    padding:20px 22px;text-decoration:none;min-width:0;
+    transition:border-color .2s ease,box-shadow .2s ease}
+  .cat-carte:hover{border-color:var(--cat-bleu);box-shadow:0 8px 24px rgba(12,30,74,.08);text-decoration:none}
   .cat-carte:focus-visible{outline:2px solid var(--cat-bleu);outline-offset:3px}
-  .cat-visuel{width:100%;aspect-ratio:4/3;overflow:hidden;background:#f4f6fb;flex-shrink:0}
-  .cat-visuel img{width:100%;height:100%;object-fit:cover;display:block}
-  .cat-corps{padding:16px 18px 18px;display:flex;flex-direction:column;gap:5px;flex:1}
-  .cat-nom{font-size:17px;font-weight:600;color:var(--cat-navy);line-height:1.25;margin:0}
-  .cat-compte{font-size:13px;color:var(--cat-doux);margin:0}
-  .cat-fleche{margin-top:auto;padding-top:10px;font-size:14px;font-weight:600;color:var(--cat-bleu)}
+  .cat-corps{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .cat-nom{font-size:17px;font-weight:600;color:var(--cat-navy);line-height:1.3;margin:0}
+  .cat-compte{font-size:13px;color:var(--cat-doux);margin:0;font-variant-numeric:tabular-nums}
+  .cat-fleche{flex:0 0 auto;font-size:19px;line-height:1;color:var(--cat-bleu);
+    transition:transform .2s cubic-bezier(.22,1,.36,1)}
+  .cat-carte:hover .cat-fleche{transform:translateX(4px)}
+  @media (prefers-reduced-motion:reduce){.cat-fleche{transition:none}}
 
   .cat-grille-tete{max-width:1200px;margin:clamp(38px,5vw,60px) auto clamp(14px,2vw,20px);
     padding:0 clamp(20px,4vw,40px);display:flex;align-items:baseline;justify-content:space-between;
@@ -97,27 +103,14 @@
           -%}
           {%- if dest != blank and dest.handle != blank -%}
             <a href="{{ dest.url }}" class="cat-carte">
-              <div class="cat-visuel">
-                {%- liquid
-                  assign visuel = dest.image
-                  if visuel == blank
-                    assign visuel = dest.products.first.featured_image
-                  endif
-                -%}
-                {%- if visuel != blank -%}
-                  <img src="{{ visuel | image_url: width: 520 }}"
-                       alt="{{ libelle | escape }}"
-                       width="520" height="390" loading="lazy" decoding="async">
-                {%- endif -%}
-              </div>
-              <div class="cat-corps">
-                <p class="cat-nom">{{ libelle }}</p>
-                <p class="cat-compte">
+              <span class="cat-corps">
+                <span class="cat-nom">{{ libelle }}</span>
+                <span class="cat-compte">
                   {%- if dest.all_products_count == 1 -%}1 produit
                   {%- else -%}{{ dest.all_products_count }} produits{%- endif -%}
-                </p>
-                <span class="cat-fleche">Voir &rarr;</span>
-              </div>
+                </span>
+              </span>
+              <span class="cat-fleche" aria-hidden="true">&rarr;</span>
             </a>
           {%- endif -%}
         {%- endfor -%}
