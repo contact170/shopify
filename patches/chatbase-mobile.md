@@ -44,6 +44,45 @@ par le bloc ci-dessous.
       transition: opacity .2s ease !important;
     }
 
+    #chatbase-bubble-button svg,
+    #chatbase-bubble-button img {
+      font-size: 1rem !important;
+      width: 24px !important;
+      height: 24px !important;
+      flex: 0 0 auto !important;
+    }
+
+    #chatbase-message-bubbles {
+      bottom: calc(85px + var(--mobile-dock-height, 64px)) !important;
+    }
+  }
+```
+
+par le bloc ci-dessous.
+
+## Le CSS
+
+```css
+  @media screen and (max-width: 767px) {
+    /* ─── 1. Libellé « Une question ? » retiré sur mobile ───
+       Le bouton mesure 192 × 55 px avec le libellé, 55 × 55 sans.
+       font-size: 0 neutralise le texte quelle que soit sa balise — y compris
+       un nœud texte nu — puis on rétablit la taille sur l'icône seule. */
+    #chatbase-bubble-button {
+      width: 56px !important;
+      min-width: 0 !important;
+      padding: 0 !important;
+      gap: 0 !important;
+      font-size: 0 !important;
+      overflow: hidden !important;
+      justify-content: center !important;
+      align-items: center !important;
+
+      /* ─── 2. Bouton collé à la barre du bas, sans espace ─── */
+      bottom: var(--mobile-dock-height, 64px) !important;
+      transition: opacity .2s ease !important;
+    }
+
     /* Icône d'origine masquée, remplacée par un point d'interrogation.
        Le libellé « Une question ? » est déjà neutralisé par le font-size: 0
        du bouton ; le pseudo-élément définit sa propre taille, sinon il
@@ -128,3 +167,23 @@ y étant conservé.
 environnement. Si l'icône disparaît avec le texte, c'est qu'elle n'est ni un
 `svg` ni un `img` : inspectez le bouton et ajoutez sa balise à la règle qui
 rétablit `font-size`.
+
+## Remplacer l'icône par un « ? » — non résolu
+
+Tentative du 05/09/2026, abandonnée : masquer l'icône et afficher un `?` via
+`#chatbase-bubble-button::after` n'a rien donné, puis le libellé est revenu.
+
+Deux causes possibles, non départagées :
+
+- Le bouton est un `<iframe>`. Les navigateurs n'appliquent pas de
+  pseudo-élément à un élément remplacé, et son contenu est sur un autre
+  domaine. Dans ce cas la disparition du libellé viendrait du découpage par
+  `width: 56px` + `overflow: hidden`, et non du `font-size: 0`.
+- Une erreur de syntaxe introduite lors des modifications successives annulant
+  les règles suivantes.
+
+**À faire avant toute nouvelle tentative** : relever la balise réelle de
+`#chatbase-bubble-button` dans l'inspecteur (`button`, `div` ou `iframe`).
+
+La voie la plus propre reste de changer l'icône dans les réglages Chatbase
+plutôt que de la contourner en CSS.
