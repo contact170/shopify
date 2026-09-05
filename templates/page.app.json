@@ -1,0 +1,119 @@
+{
+  "sections": {
+    "app_hub": {
+      "type": "app-hub",
+      "blocks": {
+        "gamme_key": {
+          "type": "gamme",
+          "settings": {
+            "label": "Key",
+            "reference": "Centrale SA501",
+            "key": "key",
+            "collection": "gamme-key-accessoires",
+            "sim_product": "carte-sim-m2m-afone-1-an-prepaye",
+            "manual_url": "/pages/manuels"
+          }
+        },
+        "gamme_vigilia_touch": {
+          "type": "gamme",
+          "settings": {
+            "label": "Vigilia / Touch",
+            "reference": "Centrales AM301 · AM302",
+            "key": "vigilia-touch",
+            "collection": "compatible-gamme-vigilia-touch",
+            "sim_product": "carte-sim-m2m-afone-1-an-prepaye",
+            "manual_url": "/pages/manuel-vigilia"
+          }
+        },
+        "gamme_elite": {
+          "type": "gamme",
+          "settings": {
+            "label": "Élite",
+            "reference": "Centrale PA501Z",
+            "key": "elite",
+            "collection": "gamme-elite-accessoires",
+            "sim_product": "carte-sim-m2m-afone-1-an-prepaye-pour-centrale-pa501z",
+            "manual_url": "/pages/manuel-elite"
+          }
+        },
+        "service_manuels": {
+          "type": "service",
+          "settings": {
+            "label": "Manuels & notices",
+            "url": "/pages/manuels",
+            "icon": "newspaper",
+            "external": false
+          }
+        },
+        "service_assistance": {
+          "type": "service",
+          "settings": {
+            "label": "Poser une question à Franck",
+            "url": "/pages/assistance",
+            "icon": "question",
+            "external": false
+          }
+        },
+        "service_whatsapp": {
+          "type": "service",
+          "settings": {
+            "label": "Envoyer une vidéo au technicien",
+            "url": "https://wa.me/33660897483?text=Bonjour%2C%20j%27ai%20une%20question%20sur%20mon%20syst%C3%A8me%20Daewoo",
+            "icon": "comment",
+            "external": true
+          }
+        },
+        "service_sav": {
+          "type": "service",
+          "settings": {
+            "label": "Demande de SAV",
+            "url": "/pages/sav",
+            "icon": "return",
+            "external": false
+          }
+        }
+      },
+      "block_order": [
+        "gamme_key",
+        "gamme_vigilia_touch",
+        "gamme_elite",
+        "service_manuels",
+        "service_assistance",
+        "service_whatsapp",
+        "service_sav"
+      ],
+      "settings": {
+        "eyebrow": "Vous êtes déjà équipé",
+        "title": "Votre système est installé. Voici comment l'améliorer.",
+        "lede": "<p>Indiquez votre centrale : nous n'affichons que les accessoires réellement compatibles avec votre installation. Toujours sans abonnement.</p>",
+        "trust_1": "Sans abonnement",
+        "trust_2": "Expédié de France",
+        "trust_3": "Compatibilité garantie",
+        "selector_title": "Quelle est votre centrale ?",
+        "selector_hint": "Une seule fois : nous mémorisons votre choix pour vos prochaines visites.",
+        "placeholder_text": "Sélectionnez votre centrale ci-dessus pour voir vos accessoires compatibles.",
+        "accessories_title": "Compatible avec votre",
+        "accessories_hint": "accessoires compatibles, vérifiés par nos techniciens.",
+        "accessories_cta": "Voir tous mes accessoires compatibles",
+        "product_limit": 8,
+        "sim_title": "Votre carte SIM arrive à expiration ?",
+        "sim_text": "<p>La SIM prend le relais si votre Wi-Fi tombe. Rechargez-la avant qu'elle n'expire pour garder l'alerte GSM active.</p>",
+        "sim_cta": "Renouveler ma carte SIM",
+        "manual_label": "Manuel",
+        "services_title": "Une question sur votre installation ?",
+        "services_hint": "Nos techniciens répondent en français, depuis Bordeaux.",
+        "referral_title": "Votre système vous convainc ?",
+        "referral_text": "<p>Parrainez un proche : il est protégé, vous êtes récompensé.</p>",
+        "referral_cta": "Découvrir le parrainage",
+        "referral_url": "/pages/programme-de-parrainage",
+        "show_sticky_bar": true,
+        "sticky_label": "Voir tous les accessoires",
+        "sticky_url": "/collections/tous-les-accessoires",
+        "hide_theme_chrome": true,
+        "padding_top": 24,
+        "padding_bottom": 16
+      }
+    }
+  },
+  "order": ["app_hub"]
+}

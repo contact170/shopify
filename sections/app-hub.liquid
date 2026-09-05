@@ -1,0 +1,996 @@
+{%- doc -%}
+  Espace client équipé — page d'atterrissage pour le trafic venant de l'application
+  Daewoo Home Connect.
+
+  Le visiteur possède déjà une centrale Daewoo : la page ne vend pas un système,
+  elle l'aide à identifier sa gamme puis à compléter, entretenir et faire évoluer
+  son installation. Le choix de gamme est mémorisé (localStorage) pour que la
+  visite suivante démarre directement sur les bons produits.
+
+  Bloc `gamme`   : une gamme de centrale + sa collection d'accessoires compatibles.
+  Bloc `service` : un raccourci d'assistance (manuel, SAV, WhatsApp, chat…).
+{%- enddoc -%}
+
+{%- liquid
+  assign gammes = section.blocks | where: 'type', 'gamme'
+  assign services = section.blocks | where: 'type', 'service'
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --ah-text: var(--color-base-text);
+    --ah-bg: var(--color-base-background);
+    --ah-accent: var(--color-base-button);
+  }
+
+  .app-hub {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    color: rgb(var(--ah-text));
+  }
+
+  .app-hub__inner {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* ---------- Accroche ---------- */
+  .app-hub__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .3rem .7rem;
+    border-radius: 999px;
+    background: rgba(var(--ah-accent), .08);
+    color: rgb(var(--ah-accent));
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  .app-hub__title {
+    margin: .9rem 0 0;
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.6rem, 6.5vw, 2.3rem);
+    line-height: 1.15;
+  }
+
+  .app-hub__lede {
+    margin: .7rem 0 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgba(var(--ah-text), .75);
+  }
+
+  /* ---------- Bandeau de réassurance ---------- */
+  .app-hub__trust {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .5rem;
+    margin-top: 1.4rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .app-hub__trust li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .35rem;
+    padding: .7rem .3rem;
+    border-radius: var(--card-radius, 12px);
+    background: rgba(var(--ah-accent), .06);
+    font-size: .74rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .app-hub__trust svg {
+    width: 18px;
+    height: 18px;
+    color: rgb(var(--ah-accent));
+  }
+
+  /* ---------- Titres de section ---------- */
+  .app-hub__block {
+    margin-top: 2.6rem;
+  }
+
+  .app-hub__h2 {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.25rem, 5vw, 1.6rem);
+    line-height: 1.2;
+  }
+
+  .app-hub__hint {
+    margin: .4rem 0 0;
+    font-size: .88rem;
+    line-height: 1.5;
+    color: rgba(var(--ah-text), .65);
+  }
+
+  /* ---------- Sélecteur de gamme ---------- */
+  .app-hub__gammes {
+    display: grid;
+    gap: .6rem;
+    margin-top: 1.1rem;
+  }
+
+  @media (min-width: 600px) {
+    .app-hub__gammes {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .app-hub__gamme {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    width: 100%;
+    min-height: 4.5rem;
+    padding: .8rem;
+    border: 2px solid rgba(var(--ah-text), .12);
+    border-radius: var(--card-radius, 12px);
+    background: #fff;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .18s ease, background-color .18s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (min-width: 600px) {
+    .app-hub__gamme {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      min-height: 8rem;
+    }
+  }
+
+  .app-hub__gamme[aria-pressed='true'] {
+    border-color: rgb(var(--ah-accent));
+    background: rgba(var(--ah-accent), .05);
+  }
+
+  .app-hub__gamme-img {
+    flex: 0 0 auto;
+    width: 3.1rem;
+    height: 3.1rem;
+    object-fit: contain;
+    border-radius: 8px;
+    background: rgba(var(--ah-text), .04);
+  }
+
+  .app-hub__gamme-name {
+    display: block;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  .app-hub__gamme-ref {
+    display: block;
+    margin-top: .15rem;
+    font-size: .78rem;
+    color: rgba(var(--ah-text), .6);
+  }
+
+  .app-hub__gamme-check {
+    margin-left: auto;
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    border: 2px solid rgba(var(--ah-text), .2);
+  }
+
+  .app-hub__gamme[aria-pressed='true'] .app-hub__gamme-check {
+    border-color: rgb(var(--ah-accent));
+    background: rgb(var(--ah-accent)) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 14px no-repeat;
+  }
+
+  /* ---------- Panneaux par gamme ---------- */
+  .app-hub__panel[hidden] {
+    display: none;
+  }
+
+  .app-hub__placeholder {
+    margin-top: 1.4rem;
+    padding: 1.5rem 1rem;
+    border: 1px dashed rgba(var(--ah-text), .2);
+    border-radius: var(--card-radius, 12px);
+    text-align: center;
+    font-size: .9rem;
+    color: rgba(var(--ah-text), .6);
+  }
+
+  /* ---------- Carrousel produits ---------- */
+  .app-hub__scroller {
+    display: flex;
+    gap: .75rem;
+    margin: 1.1rem -1rem 0;
+    padding: 0 1rem .5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .app-hub__scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app-hub__slide {
+    flex: 0 0 auto;
+    width: 46%;
+    max-width: 13rem;
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 600px) {
+    .app-hub__slide {
+      width: 30%;
+    }
+  }
+
+  /* ---------- Encart consommable (carte SIM) ---------- */
+  .app-hub__sim {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    margin-top: 1.2rem;
+    padding: .9rem;
+    border-radius: var(--card-radius, 12px);
+    background: rgba(var(--ah-accent), .06);
+  }
+
+  .app-hub__sim img {
+    flex: 0 0 auto;
+    width: 4rem;
+    height: 4rem;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .app-hub__sim-body {
+    min-width: 0;
+  }
+
+  .app-hub__sim-title {
+    display: block;
+    font-weight: 600;
+    font-size: .95rem;
+    line-height: 1.3;
+  }
+
+  .app-hub__sim-text {
+    margin: .25rem 0 .5rem;
+    font-size: .8rem;
+    line-height: 1.45;
+    color: rgba(var(--ah-text), .7);
+  }
+
+  .app-hub__sim-price {
+    font-weight: 600;
+    color: rgb(var(--color-price));
+  }
+
+  /* ---------- Liens de service ---------- */
+  .app-hub__services {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .6rem;
+    margin-top: 1.1rem;
+  }
+
+  .app-hub__service {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    min-height: 3.6rem;
+    padding: .8rem;
+    border: 1px solid rgba(var(--ah-text), .12);
+    border-radius: var(--card-radius, 12px);
+    font-size: .88rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-decoration: none;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .app-hub__service svg {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    color: rgb(var(--ah-accent));
+  }
+
+  /* ---------- Parrainage ---------- */
+  .app-hub__referral {
+    margin-top: 1.1rem;
+    padding: 1.2rem 1rem;
+    border-radius: var(--card-radius, 12px);
+    background: rgb(var(--ah-accent));
+    color: rgb(var(--color-base-button-text));
+    text-align: center;
+  }
+
+  .app-hub__referral p {
+    margin: .4rem 0 1rem;
+    font-size: .9rem;
+    line-height: 1.5;
+    opacity: .85;
+  }
+
+  .app-hub__referral-cta {
+    display: inline-block;
+    padding: .7rem 1.4rem;
+    border-radius: var(--buttons-radius, 8px);
+    background: rgb(var(--color-base-button-text));
+    color: rgb(var(--ah-accent));
+    font-size: .9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* ---------- Barre d'action fixe ---------- */
+  .app-hub__sticky {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    display: flex;
+    gap: .6rem;
+    margin-top: 2rem;
+    padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
+    background: rgba(var(--ah-bg), .95);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(var(--ah-text), .1);
+  }
+
+  .app-hub__sticky-cta {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4rem;
+    min-height: 3rem;
+    border-radius: var(--buttons-radius, 8px);
+    background: rgb(var(--ah-accent));
+    color: rgb(var(--color-base-button-text));
+    font-size: .95rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .app-hub__sticky-cart {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    min-height: 3rem;
+    border: 1px solid rgba(var(--ah-text), .15);
+    border-radius: var(--buttons-radius, 8px);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  {%- if section.settings.hide_theme_chrome -%}
+    /* Vue « application » : on retire la navigation du site, inutile dans la webview. */
+    body.app-hub-embedded .shopify-section-group-header-group,
+    body.app-hub-embedded .footer-group,
+    body.app-hub-embedded .mobile-dock {
+      display: none !important;
+    }
+  {%- endif -%}
+</style>
+
+<div class="app-hub" id="AppHub-{{ section.id }}" data-app-hub>
+  <div class="app-hub__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="app-hub__eyebrow">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        {{ section.settings.eyebrow | escape }}
+      </span>
+    {%- endif -%}
+
+    {%- if section.settings.title != blank -%}
+      <h1 class="app-hub__title">{{ section.settings.title | escape }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.lede != blank -%}
+      <p class="app-hub__lede">{{ section.settings.lede }}</p>
+    {%- endif -%}
+
+    <ul class="app-hub__trust">
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
+        {{ section.settings.trust_1 | escape }}
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
+        {{ section.settings.trust_2 | escape }}
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        {{ section.settings.trust_3 | escape }}
+      </li>
+    </ul>
+
+    {%- if gammes.size > 0 -%}
+      <div class="app-hub__block">
+        <h2 class="app-hub__h2">{{ section.settings.selector_title | escape }}</h2>
+        <p class="app-hub__hint">{{ section.settings.selector_hint | escape }}</p>
+
+        <div class="app-hub__gammes" role="group" aria-label="{{ section.settings.selector_title | escape }}">
+          {%- for block in gammes -%}
+            <button
+              type="button"
+              class="app-hub__gamme"
+              id="AppHubTab-{{ block.id }}"
+              aria-controls="AppHubPanel-{{ block.id }}"
+              aria-pressed="false"
+              data-app-hub-tab
+              data-gamme="{{ block.settings.key | default: block.id | escape }}"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.image != blank -%}
+                <img
+                  class="app-hub__gamme-img"
+                  src="{{ block.settings.image | image_url: width: 160 }}"
+                  alt=""
+                  width="160"
+                  height="160"
+                  loading="lazy"
+                >
+              {%- endif -%}
+              <span>
+                <span class="app-hub__gamme-name">{{ block.settings.label | escape }}</span>
+                {%- if block.settings.reference != blank -%}
+                  <span class="app-hub__gamme-ref">{{ block.settings.reference | escape }}</span>
+                {%- endif -%}
+              </span>
+              <span class="app-hub__gamme-check" aria-hidden="true"></span>
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="app-hub__placeholder" data-app-hub-placeholder>
+        {{ section.settings.placeholder_text | escape }}
+      </div>
+
+      {%- for block in gammes -%}
+        {%- assign accessories = block.settings.collection -%}
+        <div
+          class="app-hub__panel"
+          id="AppHubPanel-{{ block.id }}"
+          role="region"
+          aria-labelledby="AppHubTab-{{ block.id }}"
+          data-app-hub-panel
+          data-gamme="{{ block.settings.key | default: block.id | escape }}"
+          hidden
+        >
+          {%- if accessories != blank and accessories.products_count > 0 -%}
+            <div class="app-hub__block">
+              <h2 class="app-hub__h2">
+                {{ section.settings.accessories_title | escape }} {{ block.settings.label | escape }}
+              </h2>
+              <p class="app-hub__hint">
+                {{ accessories.products_count }} {{ section.settings.accessories_hint | escape }}
+              </p>
+
+              <div class="app-hub__scroller">
+                {%- for product in accessories.products limit: section.settings.product_limit -%}
+                  <div class="app-hub__slide">
+                    {%- render 'product-card',
+                      product: product,
+                      product_id: product.id,
+                      section_id: section.id,
+                      block_id: block.id,
+                      image_ratio: settings.product_image_ratio,
+                      image_fill: settings.product_image_fill,
+                      show_vendor: false,
+                      show_rating: settings.product_rating,
+                      show_quick_add: true,
+                      mobile_quick_add: true,
+                      show_sold_out: true,
+                      show_save_amount: settings.product_save_amount,
+                      save_type: settings.product_save_type
+                    -%}
+                  </div>
+                {%- endfor -%}
+              </div>
+
+              <a class="app-hub__sticky-cta" style="margin-top:.9rem" href="{{ accessories.url }}">
+                {{ section.settings.accessories_cta | escape }}
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          {%- endif -%}
+
+          {%- assign sim = block.settings.sim_product -%}
+          {%- if sim != blank -%}
+            <div class="app-hub__sim">
+              {%- if sim.featured_image -%}
+                <img src="{{ sim.featured_image | image_url: width: 200 }}" alt="" width="200" height="200" loading="lazy">
+              {%- endif -%}
+              <div class="app-hub__sim-body">
+                <span class="app-hub__sim-title">{{ section.settings.sim_title | escape }}</span>
+                <p class="app-hub__sim-text">{{ section.settings.sim_text }}</p>
+                <a class="app-hub__sim-price" href="{{ sim.url }}">
+                  {{ section.settings.sim_cta | escape }} — {{ sim.price | money }}
+                </a>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.manual_url != blank -%}
+            <div class="app-hub__services" style="margin-top:1.1rem">
+              <a class="app-hub__service" href="{{ block.settings.manual_url }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                {{ section.settings.manual_label | escape }} {{ block.settings.label | escape }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if services.size > 0 -%}
+      <div class="app-hub__block">
+        <h2 class="app-hub__h2">{{ section.settings.services_title | escape }}</h2>
+        <p class="app-hub__hint">{{ section.settings.services_hint | escape }}</p>
+
+        <div class="app-hub__services">
+          {%- for block in services -%}
+            <a
+              class="app-hub__service"
+              href="{{ block.settings.url | default: '#' }}"
+              {% if block.settings.external %}target="_blank" rel="noopener"{% endif %}
+              {{ block.shopify_attributes }}
+            >
+              {%- render 'icon', icon: block.settings.icon, size: 'sm' -%}
+              {{ block.settings.label | escape }}
+            </a>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.referral_title != blank -%}
+      <div class="app-hub__block">
+        <div class="app-hub__referral">
+          <h2 class="app-hub__h2">{{ section.settings.referral_title | escape }}</h2>
+          <p>{{ section.settings.referral_text }}</p>
+          <a class="app-hub__referral-cta" href="{{ section.settings.referral_url | default: '#' }}">
+            {{ section.settings.referral_cta | escape }}
+          </a>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_sticky_bar -%}
+    <div class="app-hub__sticky">
+      <a class="app-hub__sticky-cta" href="{{ section.settings.sticky_url | default: routes.all_products_collection_url }}">
+        {{ section.settings.sticky_label | escape }}
+      </a>
+      <a class="app-hub__sticky-cart" href="{{ routes.cart_url }}" aria-label="{{ 'general.cart.title' | t | escape }}">
+        {%- render 'icon', icon: 'cart', size: 'sm' -%}
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('AppHub-{{ section.id }}');
+    if (!root) return;
+
+    var STORAGE_KEY = 'daewoo:gamme';
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-app-hub-tab]'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('[data-app-hub-panel]'));
+    var placeholder = root.querySelector('[data-app-hub-placeholder]');
+
+    function read() {
+      try { return window.localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+    }
+
+    function write(value) {
+      try { window.localStorage.setItem(STORAGE_KEY, value); } catch (e) { /* mode privé */ }
+    }
+
+    function select(gamme, scroll) {
+      var matched = false;
+
+      tabs.forEach(function (tab) {
+        var isMatch = tab.dataset.gamme === gamme;
+        tab.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+        if (isMatch) matched = true;
+      });
+
+      panels.forEach(function (panel) {
+        panel.hidden = panel.dataset.gamme !== gamme;
+      });
+
+      if (placeholder) placeholder.hidden = matched;
+      if (!matched) return;
+
+      write(gamme);
+
+      // Signal exploitable par Google Analytics / Meta pour mesurer l'engagement.
+      document.dispatchEvent(
+        new CustomEvent('daewoo:gamme-selected', { detail: { gamme: gamme } })
+      );
+
+      if (scroll) {
+        var panel = panels.filter(function (p) { return p.dataset.gamme === gamme; })[0];
+        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        select(tab.dataset.gamme, true);
+      });
+    });
+
+    var stored = read();
+    if (stored) select(stored, false);
+
+    // Marque la page quand elle est ouverte depuis l'application, pour masquer
+    // la navigation du site le temps de la session.
+    try {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('src') === 'app' || params.get('utm_source') === 'app') {
+        window.sessionStorage.setItem('daewoo:embedded', '1');
+      }
+      if (window.sessionStorage.getItem('daewoo:embedded') === '1') {
+        document.body.classList.add('app-hub-embedded');
+      }
+    } catch (e) { /* stockage indisponible */ }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Espace client équipé",
+  "tag": "section",
+  "class": "app-hub-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Accroche"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Surtitre",
+      "default": "Vous êtes déjà équipé"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Votre système est installé. Voici comment l'améliorer."
+    },
+    {
+      "type": "richtext",
+      "id": "lede",
+      "label": "Introduction",
+      "default": "<p>Indiquez votre centrale : nous n'affichons que les accessoires réellement compatibles avec votre installation. Toujours sans abonnement.</p>"
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Réassurance 1",
+      "default": "Sans abonnement"
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Réassurance 2",
+      "default": "Expédié de France"
+    },
+    {
+      "type": "text",
+      "id": "trust_3",
+      "label": "Réassurance 3",
+      "default": "Compatibilité garantie"
+    },
+    {
+      "type": "header",
+      "content": "Sélecteur de centrale"
+    },
+    {
+      "type": "text",
+      "id": "selector_title",
+      "label": "Titre",
+      "default": "Quelle est votre centrale ?"
+    },
+    {
+      "type": "text",
+      "id": "selector_hint",
+      "label": "Précision",
+      "default": "Une seule fois : nous mémorisons votre choix pour vos prochaines visites."
+    },
+    {
+      "type": "text",
+      "id": "placeholder_text",
+      "label": "Message avant sélection",
+      "default": "Sélectionnez votre centrale ci-dessus pour voir vos accessoires compatibles."
+    },
+    {
+      "type": "header",
+      "content": "Accessoires compatibles"
+    },
+    {
+      "type": "text",
+      "id": "accessories_title",
+      "label": "Titre (suivi du nom de la gamme)",
+      "default": "Compatible avec votre"
+    },
+    {
+      "type": "text",
+      "id": "accessories_hint",
+      "label": "Précision (précédée du nombre de produits)",
+      "default": "accessoires compatibles, vérifiés par nos techniciens."
+    },
+    {
+      "type": "text",
+      "id": "accessories_cta",
+      "label": "Bouton vers la collection",
+      "default": "Voir tous mes accessoires compatibles"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "label": "Produits affichés dans le carrousel",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Encart carte SIM"
+    },
+    {
+      "type": "text",
+      "id": "sim_title",
+      "label": "Titre",
+      "default": "Votre carte SIM arrive à expiration ?"
+    },
+    {
+      "type": "richtext",
+      "id": "sim_text",
+      "label": "Texte",
+      "default": "<p>La SIM prend le relais si votre Wi-Fi tombe. Rechargez-la avant qu'elle n'expire pour garder l'alerte GSM active.</p>"
+    },
+    {
+      "type": "text",
+      "id": "sim_cta",
+      "label": "Libellé du lien",
+      "default": "Renouveler ma carte SIM"
+    },
+    {
+      "type": "text",
+      "id": "manual_label",
+      "label": "Libellé du lien manuel (suivi du nom de la gamme)",
+      "default": "Manuel"
+    },
+    {
+      "type": "header",
+      "content": "Assistance"
+    },
+    {
+      "type": "text",
+      "id": "services_title",
+      "label": "Titre",
+      "default": "Une question sur votre installation ?"
+    },
+    {
+      "type": "text",
+      "id": "services_hint",
+      "label": "Précision",
+      "default": "Nos techniciens répondent en français, depuis Bordeaux."
+    },
+    {
+      "type": "header",
+      "content": "Parrainage"
+    },
+    {
+      "type": "text",
+      "id": "referral_title",
+      "label": "Titre",
+      "default": "Votre système vous convainc ?"
+    },
+    {
+      "type": "richtext",
+      "id": "referral_text",
+      "label": "Texte",
+      "default": "<p>Parrainez un proche : il est protégé, vous êtes récompensé.</p>"
+    },
+    {
+      "type": "text",
+      "id": "referral_cta",
+      "label": "Bouton",
+      "default": "Découvrir le parrainage"
+    },
+    {
+      "type": "url",
+      "id": "referral_url",
+      "label": "Lien du parrainage"
+    },
+    {
+      "type": "header",
+      "content": "Barre d'action fixe"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticky_bar",
+      "label": "Afficher la barre fixe en bas d'écran",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sticky_label",
+      "label": "Libellé",
+      "default": "Voir tous les accessoires"
+    },
+    {
+      "type": "url",
+      "id": "sticky_url",
+      "label": "Lien"
+    },
+    {
+      "type": "header",
+      "content": "Affichage dans l'application"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_theme_chrome",
+      "label": "Masquer l'en-tête et le pied de page du site",
+      "info": "S'applique uniquement quand la page est ouverte avec ?src=app ou ?utm_source=app, c'est-à-dire depuis l'application Daewoo Home Connect.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Espacement"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge haute",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge basse",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "gamme",
+      "name": "Gamme de centrale",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Nom de la gamme",
+          "default": "Vigilia / Touch"
+        },
+        {
+          "type": "text",
+          "id": "reference",
+          "label": "Références de la centrale",
+          "default": "AM301 · AM302"
+        },
+        {
+          "type": "text",
+          "id": "key",
+          "label": "Identifiant technique",
+          "info": "Utilisé pour mémoriser le choix du client. Ne pas modifier après la mise en ligne.",
+          "default": "vigilia-touch"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo de la centrale"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection des accessoires compatibles"
+        },
+        {
+          "type": "product",
+          "id": "sim_product",
+          "label": "Carte SIM de cette gamme"
+        },
+        {
+          "type": "url",
+          "id": "manual_url",
+          "label": "Lien vers le manuel"
+        }
+      ]
+    },
+    {
+      "type": "service",
+      "name": "Lien d'assistance",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Libellé",
+          "default": "Assistance"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Lien"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icône",
+          "options": [
+            { "value": "newspaper", "label": "Document / manuel" },
+            { "value": "question", "label": "Question / aide" },
+            { "value": "comment", "label": "Message / chat" },
+            { "value": "return", "label": "Retour / SAV" },
+            { "value": "package", "label": "Colis / livraison" },
+            { "value": "account", "label": "Compte client" },
+            { "value": "info", "label": "Information" },
+            { "value": "note", "label": "Note" }
+          ],
+          "default": "question"
+        },
+        {
+          "type": "checkbox",
+          "id": "external",
+          "label": "Ouvrir dans un nouvel onglet",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Espace client équipé",
+      "blocks": [
+        { "type": "gamme" },
+        { "type": "gamme" },
+        { "type": "gamme" },
+        { "type": "service" },
+        { "type": "service" },
+        { "type": "service" },
+        { "type": "service" }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  }
+}
+{% endschema %}
