@@ -90,20 +90,16 @@ Le retrait du libellé (règle 1) aide aussi de son côté : la bulle passe de
 208 px à 56 px de large, et ne peut plus atteindre le bouton d'achat, qui est
 aligné à droite de la barre.
 
-## Effet de bord à corriger
+## Ne touchez pas au dégagement du footer
 
-Les deux règles de dégagement du `.footer-copyright` dans `custom.liquid` ont
-été calculées pour un bouton de 208 px de large :
+Je m'étais trompé en conseillant de ramener `+ 72px` à `+ 56px` dans la règle
+`@media screen and (max-width: 1023px)`. Cette règle couvre aussi la tablette
+(768–1023 px), où le libellé reste affiché et où le bouton conserve son offset
+natif de 16 px : il y faut toujours 72 px. Laissez la règle telle quelle — les
+16 px excédentaires sur mobile ne se voient pas.
 
-```css
-  @media screen and (min-width: 1024px) {
-    .footer-copyright { padding-inline-end: 220px !important; }
-  }
-```
-
-Le libellé n'étant retiré **que sur mobile**, cette règle desktop reste juste :
-n'y touchez pas. En revanche celle sous 1024 px réserve 72 px en bas pour un
-bouton qui n'en fait plus que 56 : vous pouvez ramener `+ 72px` à `+ 56px`.
+La règle desktop `padding-inline-end: 220px` reste juste elle aussi, le libellé
+y étant conservé.
 
 ## À vérifier
 
