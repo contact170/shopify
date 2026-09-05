@@ -1,37 +1,47 @@
 {% comment %}
   ── /collections/all — page catalogue (05/09/2026) ──
 
-  Cette page est la collection automatique de Shopify : elle liste tout ce
-  qui est publie sur la boutique en ligne, sans titre, sans description et
-  sans image. Le bandeau standard affichait donc 550 px de vide, suivis de
-  156 produits sur 4 pages — dont 59 doublons du configurateur, qui portent
-  le tag « Configurateur » et le meme visuel que le produit reel.
+  Rendu depuis layout/theme.liquid, seul endroit qui distingue cette URL.
 
-  Cette section remplace l'ensemble :
-    1. un en-tete qui explique ou l'on est et ou aller ;
-    2. des cartes vers les vraies collections (blocs « destination ») ;
-    3. la grille, debarrassee des produits portant le tag exclu.
+  Pourquoi pas un gabarit : Shopify ne route pas templates/collection.all.json
+  (verifie en preview le 05/09). Pourquoi pas templates/collection.json : il
+  sert aussi a la collection « Accessoires configurateurs », qui doit afficher
+  ces 77 produits. Pourquoi un snippet et pas une section : la documentation ne
+  garantit pas le rendu statique d'une section a l'interieur d'une condition,
+  alors qu'elle garantit celui d'un snippet.
 
-  La grille reutilise le snippet product-card du theme et ses reglages
-  globaux : les cartes sont donc identiques a celles des autres collections.
+  Les reglages sont les assigns ci-dessous. cat_destinations est une liste
+  « handle-de-collection|libelle », separee par des virgules.
 {% endcomment %}
 
 {{ 'collection.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign tag_exclu = section.settings.tag_exclu | strip
-  assign par_page = section.settings.produits_par_page
+  assign cat_surtitre = 'Catalogue'
+  assign cat_titre = 'Tout le catalogue Daewoo Security'
+  assign cat_chapo = "Alarmes sans abonnement, caméras et objets connectés. Si vous cherchez quelque chose de précis, passez par une des six entrées ci-dessous : elles vous mèneront plus vite que la liste complète."
+  assign cat_titre_grille = 'Tous nos produits'
+  assign cat_tag_exclu = 'Configurateur'
+  assign cat_par_page = 48
+  assign cat_colonnes = 4
+  assign cat_colonnes_mobile = '2'
+
+  assign cat_destinations = "systeme-dalarme-vigilia|Alarmes Vigilia,systeme-dalarme-am301-am302|Alarmes Touch et Touch XL,systeme-dalarme-pa501z|Alarmes Élite,cameras-de-surveillance|Caméras de surveillance,tous-les-accessoires|Tous les accessoires,domotique|Maison connectée"
+
+  assign par_page = cat_par_page
+  assign tag_exclu = cat_tag_exclu
 -%}
 
+<div class="cat">
 <style>
-  #shopify-section-{{ section.id }}{
+  .cat{
     --cat-navy:#0c1e4a;
     --cat-bleu:#1a4fab;
     --cat-doux:#5a6484;
     --cat-filet:#e3e8f5;
     --cat-fond:#eef2fd;
   }
-  .cat-entete{background:var(--cat-fond);padding:clamp(38px,5.4vw,68px) 0 clamp(30px,4.2vw,52px)}
+  .cat .cat-entete{background:var(--cat-fond);padding:clamp(38px,5.4vw,68px) 0 clamp(30px,4.2vw,52px)}
   .cat-wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,40px)}
   .cat-surtitre{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
     color:var(--cat-bleu);margin:0 0 12px}
@@ -65,26 +75,28 @@
 
 <div class="cat-entete">
   <div class="cat-wrap">
-    {%- if section.settings.surtitre != blank -%}
-      <p class="cat-surtitre">{{ section.settings.surtitre }}</p>
+    {%- if cat_surtitre != blank -%}
+      <p class="cat-surtitre">{{ cat_surtitre }}</p>
     {%- endif -%}
-    <h1 class="cat-titre">{{ section.settings.titre }}</h1>
-    {%- if section.settings.chapo != blank -%}
-      <p class="cat-chapo">{{ section.settings.chapo }}</p>
+    <h1 class="cat-titre">{{ cat_titre }}</h1>
+    {%- if cat_chapo != blank -%}
+      <p class="cat-chapo">{{ cat_chapo }}</p>
     {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
+    {%- if cat_destinations != blank -%}
       <div class="cat-dest">
-        {%- for block in section.blocks -%}
+        {%- assign paires = cat_destinations | split: ',' -%}
+        {%- for paire in paires -%}
           {%- liquid
-            assign dest = collections[block.settings.collection]
-            assign libelle = block.settings.libelle
+            assign duo = paire | strip | split: '|'
+            assign dest = collections[duo[0]]
+            assign libelle = duo[1]
             if libelle == blank
               assign libelle = dest.title
             endif
           -%}
           {%- if dest != blank and dest.handle != blank -%}
-            <a href="{{ dest.url }}" class="cat-carte" {{ block.shopify_attributes }}>
+            <a href="{{ dest.url }}" class="cat-carte">
               <div class="cat-visuel">
                 {%- liquid
                   assign visuel = dest.image
@@ -126,7 +138,7 @@
   -%}
 
   <div class="cat-grille-tete">
-    <h2 class="cat-grille-titre">{{ section.settings.titre_grille }}</h2>
+    <h2 class="cat-grille-titre">{{ cat_titre_grille }}</h2>
     {%- if paginate.pages > 1 -%}
       <p class="cat-grille-compte">Page {{ paginate.current_page }} sur {{ paginate.pages }}</p>
     {%- endif -%}
@@ -134,8 +146,8 @@
 
   <div class="cat-grille-wrap">
     {%- if visibles > 0 -%}
-      {%- capture card_sizes -%}(max-width: 639px) calc(100vw / {{ section.settings.colonnes_mobile }}), calc(min({{ settings.page_width }}px, 100vw) / {{ section.settings.colonnes }}){%- endcapture -%}
-      <div class="card-grid card-grid--{{ section.settings.colonnes }} mobile:card-grid--{{ section.settings.colonnes_mobile }} grid relative">
+      {%- capture card_sizes -%}(max-width: 639px) calc(100vw / {{ cat_colonnes_mobile }}), calc(min({{ settings.page_width }}px, 100vw) / {{ cat_colonnes }}){%- endcapture -%}
+      <div class="card-grid card-grid--{{ cat_colonnes }} mobile:card-grid--{{ cat_colonnes_mobile }} grid relative">
         {%- for product in collection.products -%}
           {%- liquid
             if tag_exclu != blank and product.tags contains tag_exclu
@@ -150,7 +162,7 @@
           {%- render 'product-card',
             product: product,
             product_id: product.id,
-            section_id: section.id,
+            section_id: 'catalogue',
             lazy_load: lazy_load,
             sizes: card_sizes,
             image_ratio: settings.product_image_ratio,
@@ -184,31 +196,4 @@
 
 {%- endpaginate -%}
 
-{% schema %}
-{
-  "name": "Catalogue — tout",
-  "settings": [
-    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Catalogue" },
-    { "type": "text", "id": "titre", "label": "Titre (H1)", "default": "Tout le catalogue Daewoo Security" },
-    { "type": "textarea", "id": "chapo", "label": "Chapo" },
-    { "type": "header", "content": "Grille" },
-    { "type": "text", "id": "titre_grille", "label": "Titre au-dessus de la grille", "default": "Tous nos produits" },
-    { "type": "text", "id": "tag_exclu", "label": "Tag a exclure de la grille", "default": "Configurateur" },
-    { "type": "range", "id": "produits_par_page", "min": 12, "max": 60, "step": 12, "label": "Produits par page", "default": 48 },
-    { "type": "range", "id": "colonnes", "min": 2, "max": 5, "step": 1, "label": "Colonnes sur ordinateur", "default": 4 },
-    { "type": "select", "id": "colonnes_mobile", "label": "Colonnes sur mobile",
-      "options": [ { "value": "1", "label": "1" }, { "value": "2", "label": "2" } ], "default": "2" }
-  ],
-  "blocks": [
-    {
-      "type": "destination",
-      "name": "Destination",
-      "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "text", "id": "libelle", "label": "Libelle (vide = titre de la collection)" }
-      ]
-    }
-  ],
-  "presets": [ { "name": "Catalogue — tout" } ]
-}
-{% endschema %}
+</div>

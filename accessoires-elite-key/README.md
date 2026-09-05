@@ -564,68 +564,91 @@ Dans les deux cas : degrade lineaire, 90° (vers la droite), `#0C1E4A` a
 
 `/collections/all` est la collection automatique de Shopify : elle liste
 tout ce qui est publie sur la boutique en ligne. N'etant pas une vraie
-collection, elle n'a ni titre, ni description, ni image.
-
-Le gabarit `templates/collection.json` lui appliquait quand meme
-`main-collection-banner`, regle sur **550 px de haut** avec superposition
-`#0c1e4a` : un grand bloc vide, suivi de la grille.
-
-Mesure faite sur l'API :
+collection, elle n'a ni titre, ni description, ni image — le bandeau
+`main-collection-banner`, regle sur 550 px de haut, affichait donc un
+grand bloc vide.
 
 | | |
 |---|---|
 | Produits actifs et publies | 156 |
 | dont tag `Configurateur` | **59** (38 %) |
 | Produits reels | 97 |
-| Pages de pagination (50/page) | 4 |
 
-Les 59 produits « Configurateur \| … » sont les variantes internes du
-configurateur. Ils portent le tag `hidden-from-store`, mais **le theme ne
-l'utilise nulle part** : `grep hidden-from-store sections/main-collection.liquid`
-ne renvoie rien. Ils s'affichent donc en clair, avec le meme visuel et
-presque le meme titre que le produit reel.
+Les 59 « Configurateur \| … » sont les variantes internes du configurateur.
+Elles portent le tag `hidden-from-store`, mais **le theme ne l'utilise
+nulle part** : ce mot n'apparait pas une fois dans `main-collection.liquid`.
+Elles s'affichaient donc en clair, avec le meme visuel et presque le meme
+titre que le produit reel.
 
 Le tag `Configurateur` est le sur-ensemble propre : 59 produits, dont les
 57 marques `hidden-from-store`. Aucun produit ne porte `hidden-from-store`
 sans `Configurateur`.
 
-### Ce qui a ete construit
+### Deux impasses, verifiees
 
-`sections/coll-catalogue.liquid` (9 564 o), section autonome :
+**1. `templates/collection.all.json` n'est pas route.** Teste en preview le
+05/09 : la page servait toujours l'ancien gabarit. Shopify ne documente les
+gabarits alternatifs que via le `template_suffix` d'une collection, et la
+collection « all » etant virtuelle, elle n'en a pas. Le fichier a ete
+abandonne.
+
+**2. `templates/collection.json` ne peut pas etre filtre.** Il ne sert
+qu'a `/collections/all` et a une douzaine de collections — dont
+**`accessoires-configurateurs`** (regle `TAG EQUALS Configurateur`,
+77 produits), dont c'est justement le role d'afficher ces produits.
+Y exclure le tag viderait cette collection.
+
+Les autres collections, elles, ont toutes leur propre suffixe
+(`collection-vigilia`, `collection-touch`, `collection-elite-2`,
+`cameras`, `accessories-hub`, `key-shop`, `elite-shop`…), donc ne sont pas
+concernees.
+
+### La solution retenue
+
+Le layout est le seul endroit du theme qui distingue cette URL.
+
+`layout/theme.liquid` (3 561 → 4 400 o) : le contenu principal devient
+
+```liquid
+{%- if collection.handle == 'all' -%}
+  {%- render 'coll-catalogue' -%}
+{%- else -%}
+  {{ content_for_layout }}
+{%- endif -%}
+```
+
+Sur toute autre page, `collection.handle` ne vaut pas `all` et le layout
+se comporte exactement comme avant.
+
+`snippets/coll-catalogue.liquid` (8 712 o) :
 
 1. **En-tete d'orientation** — surtitre, H1, chapo, sur le fond `#eef2fd`
    des fiches premium.
-2. **Six cartes de destination**, en blocs editables : les trois gammes
-   d'alarme, les cameras, tous les accessoires, la maison connectee.
-   Chaque carte prend l'image de la collection, avec repli sur le premier
-   produit, et affiche son nombre de produits.
-3. **Grille**, qui saute les produits portant le tag exclu. Elle appelle
-   le snippet `product-card` du theme avec les memes reglages globaux que
+2. **Six cartes de destination** : les trois gammes d'alarme, les cameras,
+   tous les accessoires, la maison connectee. Chaque carte prend l'image de
+   la collection, avec repli sur le premier produit, et affiche son nombre
+   de produits.
+3. **Grille** qui saute les produits portant le tag exclu, en appelant le
+   snippet `product-card` du theme avec les memes reglages globaux que
    `main-collection` : les cartes sont identiques a celles des autres
    collections.
 
-`templates/collection.all.json` (2 412 o) monte cette section, puis
-« Vous avez consulte ».
-
-Le tag exclu est un reglage (`tag_exclu`, defaut `Configurateur`) : le
-vider reaffiche tout.
-
-### Reserve a lever
-
-**Je n'ai pas pu verifier que Shopify route bien `/collections/all` vers
-`templates/collection.all.json`.** La documentation ne decrit les gabarits
-alternatifs que via le `template_suffix` d'une collection, et la collection
-« all » etant virtuelle, elle n'en a pas. Le proxy de l'environnement
-bloque le domaine, donc aucun rendu n'est possible d'ici.
-
-Si le routage ne fonctionne pas, la solution de repli est une vraie
-collection automatique (regle `TAG NOT_EQUALS Configurateur`, soit les
-97 produits reels), avec titre, description et image, vers laquelle
-`/collections/all` est redirigee.
+Un snippet plutot qu'une section : la documentation Shopify ne garantit
+pas le rendu statique d'une section a l'interieur d'une condition, alors
+qu'elle garantit celui d'un snippet. Le prix a payer est que les reglages
+ne sont pas exposes dans l'editeur de theme — ils sont en tete du fichier,
+dans un bloc `assign` commente.
 
 ### Pagination
 
 La grille saute les produits exclus a l'interieur d'une page deja
-paginee : avec 48 produits par page, une page peut donc en afficher
-moins. C'est un compromis assume — filtrer avant de paginer n'est pas
-possible en Liquid sur une collection automatique.
+paginee : avec 48 produits par page, une page peut donc en afficher moins.
+Filtrer avant de paginer n'est pas possible en Liquid sur une collection
+automatique.
+
+### A nettoyer
+
+Le theme porte encore `sections/coll-catalogue.liquid` et
+`templates/collection.all.json`, vestiges de la premiere approche. Ils ne
+sont references nulle part. La suppression de fichiers de theme m'est
+bloquee : a faire dans l'admin.

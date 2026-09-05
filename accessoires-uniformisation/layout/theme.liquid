@@ -1,0 +1,98 @@
+{%- capture direction -%}{% render 'direction' %}{%- endcapture -%}
+<!doctype html>
+<html class="no-js{% if request.design_mode %} shopify-design-mode{% endif %}" lang="{{ request.locale.iso_code }}" dir="{{ direction }}">
+  <head>
+    {% render "head_metas" %}
+
+    {%- liquid
+      render 'social-meta-tags'
+      
+      render 'css-variables'
+      echo 'theme.css' | asset_url | stylesheet_tag: preload: true
+
+      if direction == 'rtl'
+        echo 'rtl.css' | asset_url | stylesheet_tag: preload: true
+      endif
+    -%}
+
+    <link rel="stylesheet" href="{{ 'apps.css' | asset_url }}" media="print" fetchpriority="low" onload="this.media='all'">
+
+    {%- comment -%}
+      ── Ajout 02/09/2026 ──
+      Le thème diffère le chargement des images avec lazysizes : la balise part
+      au navigateur avec data-src mais sans src, ce qui affiche l'icône d'image
+      cassée pendant une seconde. On masque simplement l'image tant qu'elle n'a
+      pas de source ; dès que lazysizes renseigne src, la règle ne s'applique
+      plus et l'image apparaît. La place est réservée, donc aucun décalage.
+      Pour annuler : supprimer ce bloc <style>.
+    {%- endcomment -%}
+    <style>
+      img[data-src]:not([src]) { visibility: hidden !important; }
+    </style>
+
+    {{ content_for_header }}
+
+    <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    {%- if settings.enable_tab_attention -%}
+      <script src="{{ 'tab-attention.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- if request.page_type contains 'customers/' -%}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- render 'js-variables' -%}
+  </head>
+
+  <body class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}{% if request.path == '/challenge' %} template-challange{% endif %}" data-rounded-button="{{ settings.rounded_button }}" data-rounded-input="{{ settings.rounded_input }}" data-rounded-block="{{ settings.rounded_block }}" data-rounded-card="{{ settings.rounded_card }}" data-button-hover="{{ settings.buttons_hover }}"{% if settings.enable_page_transition %} data-page-transition{% endif %}{% if settings.enable_lazy_image %} data-lazy-image{% endif %}{% unless settings.show_modal_close_button %} data-modal-swipe-only{% endunless %} data-title-animation data-page-rendering>
+    <a class="sr-only skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+    {%- liquid
+      if settings.enable_page_transition
+        render 'loading-bar'
+      endif
+      
+      render 'mouse-cursor'
+
+      sections 'header-group'
+      sections 'overlay-group'
+    -%}
+
+    <div class="page-container" id="PageContainer">
+      <main class="main-content relative" id="MainContent" role="main">
+        {%- comment -%}
+          ── Ajout 05/09/2026 ──
+          /collections/all est la collection automatique de Shopify : elle liste
+          tout ce qui est publié, dont les 59 produits « Configurateur | … », et
+          n'a ni titre, ni description, ni image. Shopify ne route pas de gabarit
+          dédié vers cette URL, et templates/collection.json sert aussi à la
+          collection « Accessoires configurateurs », qui doit afficher ces
+          produits : on ne peut donc filtrer ni là, ni dans un gabarit.
+          Le layout est le seul endroit qui distingue cette page.
+          Pour annuler : ne garder que la sortie content_for_layout.
+        {%- endcomment -%}
+        {%- if collection.handle == 'all' -%}
+          {%- render 'coll-catalogue' -%}
+        {%- else -%}
+          {{ content_for_layout }}
+        {%- endif -%}
+      </main>
+
+      <footer class="footer-group block w-full" is="footer-group">
+        {%- sections 'footer-group' -%}
+      </footer>
+    </div>
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li>
+      <li id="a11y-new-window-message">{{ 'general.accessibility.link_messages.new_window' | t }}</li>
+    </ul>
+
+    {%- if request.design_mode == false and settings.preload_links -%}
+      <script src="{{ 'instant-page.js' | asset_url }}" type="module" fetchpriority="low" defer="defer"></script>
+    {%- endif -%}
+    {% render "custom" %}
+  </body>
+</html>
