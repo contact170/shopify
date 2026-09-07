@@ -68,26 +68,31 @@
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
 
-  # Matched by filename rather than a raw gallery index, same rule as
-  # VIG501's fork — the merchant uploaded the same shared infographic
-  # set here. Falls back to hero_image if a named file isn't found.
+  # Matched by filename, but re-mapped after publish: VIG503's feature
+  # order differs from VIG501's (exterior camera comes before interior
+  # camera here), so blindly copying VIG501's slot-number-to-filename
+  # mapping put the wrong image on several sections — 'IP506' (a photo of
+  # the INTERIOR camera) had ended up on feat_image_3 (the EXTERIOR
+  # camera section), and 'Pilotage_distance' (remote app control) had
+  # ended up on feat_image_4 (the actual interior IP506 camera section).
+  # feat_image_2 (siren) and feat_image_3 (exterior camera) intentionally
+  # stay on hero_image: there's no dedicated siren or exterior-camera
+  # photo in this shared set, and 'Protection_GSM' actually depicts
+  # GSM/SIM connectivity, not the siren.
   assign feat_image_1 = hero_image
   assign feat_image_2 = hero_image
   assign feat_image_3 = hero_image
   assign feat_image_4 = hero_image
-  assign feat_image_5 = gallery[5] | default: hero_image
+  assign feat_image_5 = hero_image
   for img in gallery
     if img.src contains 'Securite_a_Distance'
       assign feat_image_1 = img
     endif
-    if img.src contains 'Protection_GSM'
-      assign feat_image_2 = img
-    endif
     if img.src contains 'IP506'
-      assign feat_image_3 = img
+      assign feat_image_4 = img
     endif
     if img.src contains 'Pilotage_distance'
-      assign feat_image_4 = img
+      assign feat_image_5 = img
     endif
   endfor
 
@@ -119,7 +124,9 @@
         "compare": {{ wifi_variant.compare_at_price | money | strip_html | json }},
         "hasCompare": {{ wifi_has_compare | json }},
         "priceCents": {{ wifi_variant.price | json }},
-        "config": "/products/configurateur-kit-vigilia-wi-fi"
+        "config": "/products/configurateur-kit-vigilia-wi-fi",
+        "sku": {{ wifi_variant.sku | json }},
+        "centraleDesc": "Wi-Fi 2.4 GHz. Clavier tactile + sirène 85 dB intégrés. Batterie de secours 4h. Jusqu'à 60 accessoires connectables."
       },
       "{{ gsm_variant.id }}": {
         "key": "gsm",
@@ -127,7 +134,9 @@
         "compare": {{ gsm_variant.compare_at_price | money | strip_html | json }},
         "hasCompare": {{ gsm_has_compare | json }},
         "priceCents": {{ gsm_variant.price | json }},
-        "config": "/products/configurateur-kit-vigilia-wi-fi-gsm"
+        "config": "/products/configurateur-kit-vigilia-wi-fi-gsm",
+        "sku": {{ gsm_variant.sku | json }},
+        "centraleDesc": "Wi-Fi + GSM 4G. Clavier tactile + sirène 85 dB intégrés. Batterie de secours 4h. Relais GSM automatique si le Wi-Fi est coupé. Jusqu'à 60 accessoires connectables."
       }
     }
   </script>
@@ -175,6 +184,8 @@
       color:var(--pv-navy);margin-bottom:18px;
     }
     .pv-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--pv-success);}
+    .pv-ref{font-weight:700;color:var(--pv-ink);}
+    dd.pv-ref{display:block;font-weight:600;letter-spacing:.02em;}
     .pv h1,.pv h2,.pv h3{font-weight:600;letter-spacing:-.02em;line-height:1.08;margin:0;}
     .pv p{margin:0;}
 
@@ -561,7 +572,7 @@
   {%- comment -%} Hero {%- endcomment -%}
   <section class="pv-hero">
     <div class="pv-wrap">
-      <span class="pv-eyebrow">Daewoo Security · Pack Vigilia</span>
+      <span class="pv-eyebrow">Daewoo Security · Pack Vigilia <span class="pv-ref">{{ variant.sku }}</span></span>
       <h1>Une protection qui voit tout,<br>même les grands espaces.</h1>
       <p class="pv-hero__sub">
         Alarme connectée et double vidéosurveillance 100&nbsp;% solaire — caméra extérieure et sirène incluses,
@@ -646,8 +657,8 @@
         <div class="pv-contents__item">
           <span class="pv-contents__qty">1×</span>
           <div>
-            <div class="pv-contents__name">Centrale Vigilia Wi-Fi</div>
-            <div class="pv-contents__desc">Clavier tactile + sirène 85 dB intégrés, jusqu'à 60 accessoires connectables</div>
+            <div class="pv-contents__name">Centrale d'alarme VIGILIA</div>
+            <div class="pv-contents__desc pv-centrale-desc">{% if selected_key == 'gsm' %}Wi-Fi + GSM 4G. Clavier tactile + sirène 85 dB intégrés. Batterie de secours 4h. Relais GSM automatique si le Wi-Fi est coupé. Jusqu'à 60 accessoires connectables.{% else %}Wi-Fi 2.4 GHz. Clavier tactile + sirène 85 dB intégrés. Batterie de secours 4h. Jusqu'à 60 accessoires connectables.{% endif %}</div>
           </div>
         </div>
         <div class="pv-contents__item">
@@ -932,7 +943,7 @@
         </div>
         <div class="pv-specs__item">
           <dt>Référence</dt>
-          <dd>{{ variant.sku | default: 'VIG503' }}</dd>
+          <dd class="pv-ref">{{ variant.sku | default: 'VIG503' }}</dd>
         </div>
       </dl>
     </div>
@@ -1343,6 +1354,8 @@
       var priceAmounts = root.querySelectorAll('.pv-price-amount');
       var priceCompares = root.querySelectorAll('.pv-price-compare');
       var configLinks = root.querySelectorAll('[data-pv-config-link]');
+      var refEls = root.querySelectorAll('.pv-ref');
+      var centraleDescEls = root.querySelectorAll('.pv-centrale-desc');
 
       function selectConnectivity(key) {
         var variantId = keyToVariantId[key];
@@ -1361,6 +1374,8 @@
           el.classList.toggle('is-visible', !!data.hasCompare);
         });
         configLinks.forEach(function (el) { el.setAttribute('href', data.config); });
+        refEls.forEach(function (el) { el.textContent = data.sku; });
+        centraleDescEls.forEach(function (el) { el.textContent = data.centraleDesc; });
       }
 
       toggleEls.forEach(function (el) {
