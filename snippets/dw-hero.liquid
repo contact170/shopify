@@ -378,7 +378,9 @@
 </style>
 
 {% comment %}
-  Titre du carrousel « parcours en 4 étapes » : rendu ici faute de pouvoir
-  l'afficher depuis la section showcase-slider elle-même (voir le snippet).
+  Le titre du carrousel « parcours en 4 étapes » était rendu ici, parce que le
+  hero était collé au carrousel. Depuis que les trois chemins s'intercalent
+  entre les deux, il est rendu par sa propre section « Liquid personnalisé »,
+  placée juste au-dessus du carrousel, qui appelle le snippet
+  dw-parcours-intro.
 {% endcomment %}
-{% render 'dw-parcours-intro' %}
