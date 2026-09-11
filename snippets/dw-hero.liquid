@@ -378,9 +378,16 @@
 </style>
 
 {% comment %}
-  Le titre du carrousel « parcours en 4 étapes » était rendu ici, parce que le
-  hero était collé au carrousel. Depuis que les trois chemins s'intercalent
-  entre les deux, il est rendu par sa propre section « Liquid personnalisé »,
-  placée juste au-dessus du carrousel, qui appelle le snippet
-  dw-parcours-intro.
+  ── Suite de la page d'accueil, rendue depuis ce snippet (11/09/2026) ──
+
+  1. Les trois chemins. Le texte ci-dessus demande « Quel système pour votre
+     logement ? » : les trois cartes y répondent, donc elles suivent
+     immédiatement. Elles étaient auparavant cinq sections plus bas, après les
+     packs populaires — soit trois écrans plus loin sur mobile.
+
+  2. Le titre du carrousel des 4 étapes, qui doit rester collé au carrousel :
+     la section « Showcase slider » neutralise le rendu des titres en son sein,
+     il est donc peint ici, juste au-dessus d'elle.
 {% endcomment %}
+{% render 'dw-chemins-cartes' %}
+{% render 'dw-parcours-intro' %}
