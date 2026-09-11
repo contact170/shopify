@@ -1,0 +1,384 @@
+{% comment %}
+  ── HERO ACCUEIL DAEWOO — version conversion (02/09/2026) ──
+  Valeurs de preuve sociale à tenir à jour ici :
+{% endcomment %}
+{% assign dw_note      = "4,6" %}
+{% assign dw_nb_avis   = "plus de 1 000" %}
+{% assign dw_nb_foyers = "60 000" %}
+{% assign dw_url_packs = "https://daewoo-security.fr/pages/pack-alarmes?_pos=1&_psq=pack&_ss=e&_v=1.0" %}
+{% assign dw_url_confi = "https://daewoo-security.fr/pages/configurateur_2" %}
+
+<div class="daewoo-banner">
+  <div class="daewoo-banner__hero">
+
+    <!-- IMAGE DE FOND (claire à gauche, sujet à droite) -->
+    <div class="daewoo-banner__bg">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Image_Hero_2_1.webp?v=1787380944&width=1672"
+        srcset="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Image_Hero_2_1.webp?v=1787380944&width=800   800w,
+                https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Image_Hero_2_1.webp?v=1787380944&width=1200 1200w,
+                https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Image_Hero_2_1.webp?v=1787380944&width=1672 1672w"
+        sizes="100vw"
+        width="1672"
+        height="941"
+        alt="Intérieur de maison lumineux sécurisé par un système d'alarme Daewoo sans abonnement"
+        class="daewoo-banner__bg-img"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      >
+    </div>
+    <!-- Voile clair (desktop uniquement) -->
+    <div class="daewoo-banner__scrim"></div>
+
+    <div class="daewoo-banner__inner">
+      <div class="daewoo-banner__content">
+
+        <span class="daewoo-banner__badge">SANS ABONNEMENT</span>
+
+        <h1 class="daewoo-banner__title">Protégez votre maison<br>en toute simplicité</h1>
+
+        <!-- PREUVE SOCIALE — au-dessus de la ligne de flottaison -->
+        <div class="daewoo-banner__proof">
+          <span class="daewoo-banner__stars" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2v15.3l-6.1 3.3 1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+          </span>
+          <span class="daewoo-banner__proof-txt">
+            <strong>{{ dw_note }}/5</strong> — {{ dw_nb_avis }} avis clients
+            <span class="daewoo-banner__proof-sep">·</span>
+            <strong>{{ dw_nb_foyers }} foyers</strong> protégés
+          </span>
+        </div>
+
+        <div class="daewoo-banner__price">
+          <span class="daewoo-banner__price-from">Système complet à partir de</span>
+          <span class="daewoo-banner__price-line">
+            <span class="daewoo-banner__price-amount">139,90&nbsp;€<span class="daewoo-banner__price-ttc">TTC</span></span>
+            <span class="daewoo-banner__price-note">soit <strong>0&nbsp;€/mois</strong>, à vie</span>
+          </span>
+        </div>
+
+        <p class="daewoo-banner__description">
+          Système d'alarme complet, facile à installer et pilotable à distance.
+        </p>
+
+        <div class="daewoo-banner__ctas">
+          <a href="{{ dw_url_packs }}" class="daewoo-banner__btn daewoo-banner__btn--primary">
+            <span>Découvrir les packs</span><span class="daewoo-banner__arrow">→</span>
+          </a>
+          <a href="{{ dw_url_confi }}" class="daewoo-banner__link">
+            <span class="daewoo-banner__link-long">Je ne sais pas lequel choisir&nbsp;: guidez-moi en 2&nbsp;min</span>
+            <span class="daewoo-banner__link-short">Guidez-moi en 2&nbsp;min</span>
+            <span class="daewoo-banner__arrow">→</span>
+          </a>
+        </div>
+
+        <div class="daewoo-banner__trust">
+          <div class="daewoo-banner__trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Marque reconnue<br>depuis 1971</span>
+          </div>
+          <div class="daewoo-banner__trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+            <span>Support client<br>basé en France</span>
+          </div>
+          <div class="daewoo-banner__trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <span>Livraison<br>2 à 3 jours</span>
+          </div>
+          <div class="daewoo-banner__trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"></path><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Garantie<br>2 ans</span>
+          </div>
+          <div class="daewoo-banner__trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            <span>Retour sous<br>14 jours</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .daewoo-banner {
+    --navy:  #0a1a3a;
+    --blue:  #1552d6;
+    --cream: #f3f0ea;
+    --muted: rgba(10,26,58,0.72);
+    --gold:  #f5a623;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    width: 100%; max-width: 100%; position: relative; overflow: hidden;
+  }
+  .daewoo-banner * { box-sizing: border-box; }
+  .daewoo-banner h1, .daewoo-banner p, .daewoo-banner span, .daewoo-banner a {
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+    text-transform: none !important; letter-spacing: normal !important; font-style: normal !important;
+  }
+  .daewoo-banner h1::first-letter, .daewoo-banner p::first-letter {
+    font-size: inherit !important; font-weight: inherit !important; float: none !important; line-height: inherit !important;
+  }
+  .daewoo-banner *::before, .daewoo-banner *::after { content: none !important; }
+
+
+  .daewoo-banner__hero {
+    position: relative; width: 100%; min-height: 660px;
+    display: flex; overflow: hidden; background-color: var(--cream);
+  }
+  .daewoo-banner__bg { position: absolute; inset: 0; z-index: 0; }
+  .daewoo-banner__bg-img {
+    width: 100%; height: 100%; object-fit: cover;
+    object-position: right center; display: block;
+  }
+  .daewoo-banner__scrim {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to right,
+      rgba(243,240,234,0.96) 0%,
+      rgba(243,240,234,0.90) 38%,
+      rgba(243,240,234,0.40) 58%,
+      rgba(243,240,234,0.00) 76%);
+  }
+
+  .daewoo-banner__inner {
+    position: relative; z-index: 2; width: 100%;
+    display: flex; align-items: center;
+    padding: 52px clamp(24px, 5vw, 72px);
+  }
+  .daewoo-banner__content { width: 100%; max-width: 620px; display: flex; flex-direction: column; gap: 16px; }
+
+  .daewoo-banner__badge {
+    align-self: flex-start; background: var(--navy); color: #fff !important;
+    font-size: 13px !important; font-weight: 700 !important;
+    letter-spacing: 0.08em !important; text-transform: uppercase !important;
+    padding: 10px 22px; border-radius: 100px;
+  }
+  .daewoo-banner__title {
+    font-size: clamp(34px, 5vw, 52px) !important; font-weight: 800 !important;
+    color: var(--navy) !important; line-height: 1.1 !important; margin: 0 !important;
+  }
+
+  /* ── Preuve sociale ── */
+  .daewoo-banner__proof {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+    margin: -2px 0 2px;
+  }
+  .daewoo-banner__stars { display: inline-flex; gap: 2px; }
+  .daewoo-banner__stars svg { width: 18px; height: 18px; color: var(--gold) !important; }
+  .daewoo-banner__proof-txt {
+    font-size: 15px !important; font-weight: 500 !important;
+    color: var(--navy) !important; line-height: 1.4 !important;
+  }
+  .daewoo-banner__proof-txt strong { font-weight: 700 !important; color: var(--navy) !important; }
+  .daewoo-banner__proof-sep { color: rgba(10,26,58,0.35) !important; margin: 0 4px; }
+
+  /* ── Prix (rééquilibré : la promesse prime sur le montant) ── */
+  .daewoo-banner__price { display: flex; flex-direction: column; gap: 4px; margin: 2px 0; }
+  .daewoo-banner__price-from { font-size: 15px !important; font-weight: 500 !important; color: var(--muted) !important; }
+  .daewoo-banner__price-line { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; }
+  .daewoo-banner__price-amount { font-size: clamp(30px, 3.6vw, 38px) !important; font-weight: 800 !important; color: var(--blue) !important; line-height: 1 !important; }
+  .daewoo-banner__price-ttc { font-size: 15px !important; font-weight: 600 !important; margin-left: 6px; }
+  .daewoo-banner__price-note { font-size: 15px !important; font-weight: 500 !important; color: var(--muted) !important; }
+  .daewoo-banner__price-note strong { color: var(--navy) !important; font-weight: 700 !important; }
+
+  .daewoo-banner__description { font-size: 16px !important; color: var(--muted) !important; line-height: 1.55 !important; margin: 0 !important; font-weight: 400 !important; }
+
+  /* ── CTA : un seul bouton primaire + un lien secondaire ── */
+  .daewoo-banner__ctas { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 4px; max-width: 430px; }
+  .daewoo-banner__btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 17px 30px; font-size: 16px; font-weight: 700;
+    text-decoration: none; border-radius: 6px; transition: all 0.2s ease;
+  }
+  .daewoo-banner__arrow { font-size: 17px; }
+  .daewoo-banner__btn--primary { background: var(--blue); color: #fff !important; border: 2px solid var(--blue); box-shadow: 0 8px 24px rgba(21,82,214,0.28); }
+  .daewoo-banner__btn--primary:hover { background: #0f43b8; border-color: #0f43b8; transform: translateY(-1px); }
+  .daewoo-banner__link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14.5px !important; font-weight: 600 !important;
+    color: var(--blue) !important; text-decoration: underline;
+    text-underline-offset: 3px; padding: 2px 0;
+  }
+  .daewoo-banner__link:hover { color: #0f43b8 !important; }
+  .daewoo-banner__link-short { display: none; }
+
+  /* ── Réassurance : 5 repères sur une seule ligne ── */
+  .daewoo-banner__trust {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    margin-top: 10px; max-width: 620px;
+    background: #fff; border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(10,26,58,0.10); padding: 16px 14px;
+  }
+  .daewoo-banner__trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; }
+  .daewoo-banner__trust-item svg { width: 22px; height: 22px; color: var(--navy) !important; flex-shrink: 0; stroke-width: 1.7; }
+  .daewoo-banner__trust-item span { font-size: 11.5px !important; color: var(--navy) !important; line-height: 1.3 !important; font-weight: 500 !important; }
+
+
+  @media (max-width: 768px) {
+    .daewoo-banner__hero { flex-direction: column; min-height: unset; }
+
+    /* Image recadrée : le premier CTA doit rester visible sans scroller */
+    .daewoo-banner__bg {
+      position: relative; inset: auto; order: 1;
+      width: 100%; height: auto;
+    }
+    .daewoo-banner__bg-img {
+      width: 100%; height: auto;
+      aspect-ratio: 2 / 1;
+      max-height: 168px;
+      object-fit: cover;
+      object-position: 72% center;
+    }
+
+    .daewoo-banner__scrim { display: none; }
+
+    .daewoo-banner__inner {
+      order: 2; position: relative; z-index: 2;
+      background: var(--cream);
+      padding: 20px 20px 22px;
+    }
+    .daewoo-banner__content { max-width: 100%; gap: 12px; }
+
+    .daewoo-banner__badge { font-size: 11.5px !important; padding: 7px 16px; }
+    .daewoo-banner__title { font-size: 27px !important; }
+    .daewoo-banner__proof-txt { font-size: 13.5px !important; }
+    .daewoo-banner__stars svg { width: 16px; height: 16px; }
+
+    .daewoo-banner__price-from { font-size: 13px !important; }
+    .daewoo-banner__price-amount { font-size: 30px !important; }
+    .daewoo-banner__price-note { font-size: 13.5px !important; }
+    .daewoo-banner__description { font-size: 14px !important; }
+
+    /* Les boutons remontent au-dessus de la description : sur mobile, la
+       phrase générique ne mérite pas de repousser l'action hors de l'écran. */
+    .daewoo-banner__badge       { order: 1; }
+    .daewoo-banner__title       { order: 2; }
+    .daewoo-banner__proof       { order: 3; }
+    .daewoo-banner__price       { order: 4; }
+    .daewoo-banner__ctas        { order: 5; }
+    .daewoo-banner__description { order: 6; }
+    .daewoo-banner__trust       { order: 7; }
+
+    .daewoo-banner__ctas { max-width: 100%; width: 100%; gap: 10px; margin-top: 6px; }
+
+    /* Bouton principal : plus grand que sur desktop, pas plus petit. */
+    .daewoo-banner__btn {
+      width: 100%; min-height: 56px; padding: 17px 20px;
+      font-size: 16.5px; border-radius: 8px;
+    }
+    .daewoo-banner__btn--primary { box-shadow: 0 10px 28px rgba(21,82,214,0.32); }
+
+    /* Le configurateur devient un vrai bouton secondaire : même largeur et
+       même hauteur de frappe que le principal, hiérarchie donnée par le
+       contour plutôt que par la taille. */
+    .daewoo-banner__link {
+      display: flex; width: 100%; min-height: 54px;
+      align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 18px;
+      border: 2px solid var(--blue); border-radius: 8px; background: #fff;
+      font-size: 15px !important; font-weight: 700 !important;
+      text-decoration: none; text-align: center;
+    }
+    .daewoo-banner__link-long  { display: none; }
+    .daewoo-banner__link-short { display: inline; }
+
+    .daewoo-banner__trust {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px 8px; padding: 14px 10px; max-width: 100%;
+    }
+    .daewoo-banner__trust-item span { font-size: 10px !important; }
+  }
+</style>
+
+<style>
+  /* Révélation mot-à-mot des titres désactivée sur la page d'accueil :
+     sur mobile lent, les titres de section restaient illisibles pendant le scroll. */
+  split-words, split-words .word, split-words .char, .splitting .word, .splitting .char {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+</style>
+
+<div class="dws-intro">
+  <div class="dws-intro__inner">
+
+    <h2 class="dws-intro__title">Quel système pour votre logement&nbsp;?</h2>
+
+    <p class="dws-intro__text">
+      Un appartement n'a pas les mêmes besoins qu'une maison avec jardin.
+      Alarmes sans fil, caméras intérieures et extérieures, détecteurs d'ouverture, badges&nbsp;:
+      <strong>vous composez le kit adapté au vôtre</strong>, et vous l'agrandissez quand vous voulez.
+    </p>
+
+    <p class="dws-intro__text">
+      Le matériel s'achète une fois — <strong>aucun abonnement, aucun engagement</strong> —
+      et tout se pilote depuis l'<strong>application gratuite Daewoo&nbsp;Home</strong>.
+    </p>
+
+  </div>
+</div>
+
+<style>
+  .dws-intro {
+    --navy:  #0a1a3a;
+    --muted: rgba(10,26,58,0.72);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    padding: clamp(36px, 5vw, 56px) clamp(20px, 5vw, 72px);
+  }
+  .dws-intro * { box-sizing: border-box; }
+
+  .dws-intro *::before, .dws-intro *::after { content: none !important; }
+
+  .dws-intro__inner { max-width: 820px; margin: 0 auto; text-align: center; }
+
+  .dws-intro__title {
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+    font-size: clamp(22px, 2.6vw, 30px) !important;
+    font-weight: 700 !important;
+    color: var(--navy) !important;
+    line-height: 1.25 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    font-style: normal !important;
+    margin: 0 0 14px !important;
+  }
+  .dws-intro__text {
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: var(--muted) !important;
+    line-height: 1.65 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    margin: 0 !important;
+  }
+  .dws-intro__text + .dws-intro__text { margin-top: 12px !important; }
+  .dws-intro__text strong {
+    color: var(--navy) !important;
+    font-weight: 600 !important;
+  }
+  .dws-intro__title::first-letter, .dws-intro__text::first-letter {
+    font-size: inherit !important; font-weight: inherit !important;
+    float: none !important; line-height: inherit !important;
+  }
+
+  @media (max-width: 768px) {
+    .dws-intro { padding: 26px 20px 22px; }
+    .dws-intro__inner { text-align: left; }
+    .dws-intro__title { font-size: 21px !important; margin-bottom: 10px !important; }
+    .dws-intro__text  { font-size: 15px !important; line-height: 1.6 !important; }
+  }
+</style>
+
+{% comment %}
+  Titre du carrousel « parcours en 4 étapes » : rendu ici faute de pouvoir
+  l'afficher depuis la section showcase-slider elle-même (voir le snippet).
+{% endcomment %}
+{% render 'dw-parcours-intro' %}
