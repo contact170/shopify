@@ -196,6 +196,7 @@
     .pv-hero{padding:96px 0 56px;text-align:center;}
     .pv-hero h1{font-size:clamp(34px,6vw,60px);max-width:900px;margin:0 auto;}
     .pv-hero__tagline{font-size:clamp(18px,2.6vw,26px);color:var(--pv-navy);max-width:820px;margin:14px auto 0;font-weight:500;font-style:italic;}
+    .pv-hero__summary{font-size:14px;color:var(--pv-gray);max-width:660px;margin:12px auto 0;line-height:1.5;}
     .pv .pv-hero__sub{
       font-size:clamp(17px,2.2vw,22px);color:var(--pv-gray);
       max-width:660px;margin:22px auto 0;line-height:1.5;font-weight:400;text-align:center;
@@ -584,6 +585,7 @@
         Le pack le plus complet de la gamme Vigilia&nbsp;: 12 capteurs d'intrusion, détection incendie intégrée,
         deux caméras motorisées et une sirène solaire 100&nbsp;% sans fil. Installation sans technicien, sans abonnement.
       </p>
+      <p class="pv-hero__summary">Le VIG507 comprend une centrale Vigilia, deux caméras et dix-sept accessoires, soit vingt éléments au total.</p>
       {%- if hero_image -%}
         <div class="pv-hero__media pv-reveal">
           {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
@@ -1130,6 +1132,11 @@
         </details>
 
         <details>
+          <summary>Le GSM remplace-t-il le Wi-Fi&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Non, il assure uniquement les appels et SMS de secours.</p>
+        </details>
+
+        <details>
           <summary>Que se passe-t-il en cas de coupure de courant ou d'internet&nbsp;?<span class="pv-faq__icon">＋</span></summary>
           <p class="pv-faq__a">En cas de coupure de courant, la centrale bascule sur sa batterie de secours intégrée (environ 4 heures d'autonomie). Sur la version Wi-Fi, si votre box internet est également coupée, la centrale continue de fonctionner en local (sirènes et détection) mais ne peut plus vous notifier. Avec la version Wi-Fi + GSM 4G et une carte SIM installée, vous continuez de recevoir des alertes et de piloter l'alarme par SMS. Dans tous les cas, sans Wi-Fi, les 2 caméras (IP506 et W512MW) ne sont pas accessibles à distance, même sur la version GSM.</p>
         </details>
@@ -1317,8 +1324,77 @@
     ]
   </script>
 
+  {%- capture ld_description -%}Le VIG507 comprend une centrale Vigilia, deux caméras et dix-sept accessoires, soit vingt éléments au total. Alarme connectée sans abonnement, avec détection incendie intégrée.{%- endcapture -%}
   <script type="application/ld+json">
-    {{ product | structured_data }}
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "description": {{ ld_description | json }},
+    "sku": {{ variant.sku | json }},
+    "brand": { "@type": "Brand", "name": "Daewoo Security" },
+    "image": [{{ hero_image | image_url: width: 1200 | json }}],
+    "url": {{ shop.url | append: product.url | json }},
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ variant.price | json }},
+      "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+      "url": {{ shop.url | append: product.url | json }}
+    },
+    "additionalProperty": [
+      { "@type": "PropertyValue", "name": "Connectivité", "value": "Wi-Fi 2.4 GHz, version Wi-Fi + GSM 4G disponible (Pack VIG507+) ; les caméras fonctionnent uniquement en Wi-Fi" },
+      { "@type": "PropertyValue", "name": "Autonomie", "value": "Centrale sur secteur avec batterie de secours 4h ; sirène extérieure solaire autonome" },
+      { "@type": "PropertyValue", "name": "Résolution des caméras", "value": "Full HD" },
+      { "@type": "PropertyValue", "name": "Puissance sonore", "value": "110 dB (sirène extérieure WOS305S), 85 dB (sirène intégrée à la centrale)" },
+      { "@type": "PropertyValue", "name": "Capacité d'accessoires", "value": "Jusqu'à 60 accessoires compatibles" },
+      { "@type": "PropertyValue", "name": "Abonnement", "value": "Aucun abonnement requis" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": {{ shop.url | json }} },
+      { "@type": "ListItem", "position": 2, "name": {{ product.title | json }}, "item": {{ shop.url | append: product.url | json }} }
+    ]
+  }
+  </script>
+
+  {%- capture faq_q1 -%}Ai-je besoin d'un abonnement ?{%- endcapture -%}
+  {%- capture faq_a1 -%}Non. Vous achetez le pack une seule fois : pas de mensualité, pas de frais cachés. Le pilotage se fait via l'application Daewoo Home Connect, incluse et gratuite.{%- endcapture -%}
+  {%- capture faq_q2 -%}Comment fonctionne la détection incendie ?{%- endcapture -%}
+  {%- capture faq_a2 -%}Le détecteur de fumée connecté reste actif 24h/24, y compris lorsque l'alarme est désarmée. Dès qu'il détecte un départ de feu, il déclenche instantanément toutes les sirènes du pack et vous envoie une notification push immédiate sur votre smartphone.{%- endcapture -%}
+  {%- capture faq_q3 -%}Quelle est la différence entre la version Wi-Fi et Wi-Fi + GSM 4G ?{%- endcapture -%}
+  {%- capture faq_a3 -%}La version Wi-Fi se connecte à votre box internet. La version Wi-Fi + GSM 4G ajoute une carte Nano SIM (non fournie) en secours : si votre Wi-Fi ou votre électricité est coupée, la centrale reste joignable et pilotable par SMS. Attention : les 2 caméras de ce pack restent accessibles uniquement via le Wi-Fi, même avec la version GSM et une carte SIM installée — la SIM gère exclusivement les alertes et le pilotage de l'alarme, jamais le flux vidéo.{%- endcapture -%}
+  {%- capture faq_q4 -%}Le GSM remplace-t-il le Wi-Fi ?{%- endcapture -%}
+  {%- capture faq_a4 -%}Non, il assure uniquement les appels et SMS de secours.{%- endcapture -%}
+  {%- capture faq_q5 -%}Que se passe-t-il en cas de coupure de courant ou d'internet ?{%- endcapture -%}
+  {%- capture faq_a5 -%}En cas de coupure de courant, la centrale bascule sur sa batterie de secours intégrée (environ 4 heures d'autonomie). Sur la version Wi-Fi, si votre box internet est également coupée, la centrale continue de fonctionner en local (sirènes et détection) mais ne peut plus vous notifier. Avec la version Wi-Fi + GSM 4G et une carte SIM installée, vous continuez de recevoir des alertes et de piloter l'alarme par SMS. Dans tous les cas, sans Wi-Fi, les 2 caméras (IP506 et W512MW) ne sont pas accessibles à distance, même sur la version GSM.{%- endcapture -%}
+  {%- capture faq_q6 -%}Que contient exactement le pack ?{%- endcapture -%}
+  {%- capture faq_a6 -%}La centrale VIGILIA, 4 détecteurs de mouvement WPS305, 8 contacteurs/détecteurs de vibration WDV301, 1 sirène extérieure solaire sans fil WOS305S, 1 caméra intérieure motorisée IP506, 1 caméra extérieure motorisée W512MW, 1 détecteur de fumée connecté, 1 télécommande avec clapet et 2 badges RFID.{%- endcapture -%}
+  {%- capture faq_q7 -%}Puis-je agrandir mon système plus tard ?{%- endcapture -%}
+  {%- capture faq_a7 -%}Oui. Le système VIGILIA accepte jusqu'à 60 accessoires (détecteurs, caméras, sirènes, claviers, télécommandes). Utilisez notre configurateur pour ajuster votre pack, ou ajoutez des accessoires à tout moment depuis l'application.{%- endcapture -%}
+  {%- capture faq_q8 -%}Comment se passe l'installation ?{%- endcapture -%}
+  {%- capture faq_a8 -%}Aucune compétence technique requise : branchez la centrale, fixez les capteurs fournis et suivez les étapes affichées dans l'application Daewoo Home Connect. Ce pack comptant 17 accessoires et 2 caméras, prévoyez un peu plus de temps qu'un pack plus simple : l'application vous guide accessoire par accessoire, sans câblage obligatoire.{%- endcapture -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": {{ faq_q1 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a1 | json }} } },
+      { "@type": "Question", "name": {{ faq_q2 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a2 | json }} } },
+      { "@type": "Question", "name": {{ faq_q3 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a3 | json }} } },
+      { "@type": "Question", "name": {{ faq_q4 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a4 | json }} } },
+      { "@type": "Question", "name": {{ faq_q5 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a5 | json }} } },
+      { "@type": "Question", "name": {{ faq_q6 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a6 | json }} } },
+      { "@type": "Question", "name": {{ faq_q7 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a7 | json }} } },
+      { "@type": "Question", "name": {{ faq_q8 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a8 | json }} } }
+    ]
+  }
   </script>
 
   <script>
