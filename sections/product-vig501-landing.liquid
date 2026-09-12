@@ -570,27 +570,6 @@
         Alarme connectée, caméra intérieure motorisée et sirène flash filaire réunies dans un pack évolutif de 8 accessoires.
         Installation en 20 minutes, sans technicien, sans abonnement.
       </p>
-      <div class="pv-hero__cta">
-        {%- if has_connectivity_choice -%}
-          <div class="pv-hero__toggle">
-            {%- render 'pv-connectivity-toggle', selected: selected_key -%}
-          </div>
-        {%- endif -%}
-        <div id="PVHeroCta-{{ section.id }}">
-          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
-        </div>
-        <div class="pv-hero__price">
-          <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
-          <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
-        </div>
-        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
-      </div>
-      <div class="pv-hero__trust">
-        <span>🔒 Sans abonnement</span>
-        <span>📷 Caméra intérieure incluse</span>
-        <span>🔔 Sirène flash + son puissant</span>
-        <span>🧩 Évolutif jusqu'à 60 accessoires</span>
-      </div>
       {%- if hero_image -%}
         <div class="pv-hero__media pv-reveal">
           {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
@@ -612,6 +591,27 @@
           </div>
         {%- endif -%}
       {%- endif -%}
+      <div class="pv-hero__cta">
+        {%- if has_connectivity_choice -%}
+          <div class="pv-hero__toggle">
+            {%- render 'pv-connectivity-toggle', selected: selected_key -%}
+          </div>
+        {%- endif -%}
+        <div id="PVHeroCta-{{ section.id }}">
+          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+        </div>
+        <div class="pv-hero__price">
+          <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
+          <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
+        </div>
+        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
+      </div>
+      <div class="pv-hero__trust">
+        <span>🔒 Sans abonnement</span>
+        <span>📷 Caméra intérieure incluse</span>
+        <span>🔔 Sirène flash + son puissant</span>
+        <span>🧩 Évolutif jusqu'à 60 accessoires</span>
+      </div>
     </div>
   </section>
 
