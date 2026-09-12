@@ -196,6 +196,7 @@
       font-size:clamp(17px,2.2vw,22px);color:var(--pv-gray);
       max-width:660px;margin:12px auto 0;line-height:1.5;font-weight:400;text-align:center;
     }
+    .pv-hero__summary{font-size:14px;color:var(--pv-gray);max-width:660px;margin:12px auto 0;line-height:1.5;}
     .pv-hero__cta{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:14px;}
     .pv-hero__price{font-size:15px;color:var(--pv-gray);}
     .pv-hero__price strong{color:var(--pv-ink);font-size:17px;}
@@ -603,6 +604,7 @@
         Centrale d'alarme à clavier, détecteurs et caméra intérieure réunis dans un kit essentiel.
         Installation en 10 minutes, sans technicien, sans abonnement.
       </p>
+      <p class="pv-hero__summary">Le Starter Pack Vigilia comprend une centrale Vigilia, une caméra et six accessoires, soit huit éléments au total.</p>
       {%- if hero_image -%}
         <div class="pv-hero__media pv-reveal">
           {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
@@ -1104,6 +1106,11 @@
         </details>
 
         <details>
+          <summary>Le GSM remplace-t-il le Wi-Fi&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Non, il assure uniquement les appels et SMS de secours.</p>
+        </details>
+
+        <details>
           <summary>Que se passe-t-il en cas de coupure de courant&nbsp;?<span class="pv-faq__icon">＋</span></summary>
           <p class="pv-faq__a">En cas de coupure de courant, la centrale dispose d'une batterie de secours qui prend le relais pendant environ 4 heures. Si votre box internet est également coupée, sur la version Wi-Fi la centrale continue de fonctionner en local (détection et sirène) mais ne peut plus vous notifier. Sur la version Wi-Fi + GSM avec une carte SIM installée, vous continuez de recevoir des alertes par SMS. Dans tous les cas, sans Wi-Fi ni électricité, la caméra IP506P incluse n'est pas accessible à distance.</p>
         </details>
@@ -1289,8 +1296,74 @@
     ]
   </script>
 
+  {%- capture ld_description -%}Le Starter Pack Vigilia comprend une centrale Vigilia, une caméra et six accessoires, soit huit éléments au total. Alarme connectée sans abonnement, installation en 10 minutes sans technicien.{%- endcapture -%}
   <script type="application/ld+json">
-    {{ product | structured_data }}
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "description": {{ ld_description | json }},
+    "sku": {{ variant.sku | json }},
+    "brand": { "@type": "Brand", "name": "Daewoo Security" },
+    "image": [{{ hero_image | image_url: width: 1200 | json }}],
+    "url": {{ shop.url | append: product.url | json }},
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ variant.price | json }},
+      "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+      "url": {{ shop.url | append: product.url | json }}
+    },
+    "additionalProperty": [
+      { "@type": "PropertyValue", "name": "Connectivité", "value": "Wi-Fi 2.4 GHz, GSM en option (carte SIM non fournie)" },
+      { "@type": "PropertyValue", "name": "Autonomie", "value": "Centrale sur secteur avec batterie de secours intégrée, environ 4 heures d'autonomie" },
+      { "@type": "PropertyValue", "name": "Résolution de la caméra", "value": "Full HD" },
+      { "@type": "PropertyValue", "name": "Puissance sonore", "value": "85 dB (sirène intégrée à la centrale)" },
+      { "@type": "PropertyValue", "name": "Capacité d'accessoires", "value": "Jusqu'à 60 accessoires compatibles" },
+      { "@type": "PropertyValue", "name": "Abonnement", "value": "Aucun abonnement requis" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": {{ shop.url | json }} },
+      { "@type": "ListItem", "position": 2, "name": {{ product.title | json }}, "item": {{ shop.url | append: product.url | json }} }
+    ]
+  }
+  </script>
+
+  {%- capture faq_q1 -%}Ai-je besoin d'un abonnement ?{%- endcapture -%}
+  {%- capture faq_a1 -%}Non. Vous achetez ce pack une seule fois : pas de mensualité, pas de frais cachés. Le pilotage se fait au clavier ou via l'application Daewoo Home Connect, incluse et gratuite.{%- endcapture -%}
+  {%- capture faq_q2 -%}Quelle est la différence entre la version Wi-Fi et Wi-Fi + GSM 4G ?{%- endcapture -%}
+  {%- capture faq_a2 -%}La version Wi-Fi se connecte uniquement à votre réseau Wi-Fi. La version Wi-Fi + GSM 4G ajoute une fonction GSM (carte SIM non fournie) : en cas de coupure Wi-Fi ou Internet, la centrale bascule automatiquement sur le réseau mobile et continue de transmettre les alertes. Recommandée pour une résidence secondaire ou une sécurité renforcée.{%- endcapture -%}
+  {%- capture faq_q3 -%}Le GSM remplace-t-il le Wi-Fi ?{%- endcapture -%}
+  {%- capture faq_a3 -%}Non, il assure uniquement les appels et SMS de secours.{%- endcapture -%}
+  {%- capture faq_q4 -%}Que se passe-t-il en cas de coupure de courant ?{%- endcapture -%}
+  {%- capture faq_a4 -%}En cas de coupure de courant, la centrale dispose d'une batterie de secours qui prend le relais pendant environ 4 heures. Si votre box internet est également coupée, sur la version Wi-Fi la centrale continue de fonctionner en local (détection et sirène) mais ne peut plus vous notifier. Sur la version Wi-Fi + GSM avec une carte SIM installée, vous continuez de recevoir des alertes par SMS. Dans tous les cas, sans Wi-Fi ni électricité, la caméra IP506P incluse n'est pas accessible à distance.{%- endcapture -%}
+  {%- capture faq_q5 -%}La caméra est-elle bien incluse dans le pack ?{%- endcapture -%}
+  {%- capture faq_a5 -%}Oui. Ce starter pack inclut la centrale, 1 détecteur de mouvement, 2 détecteurs d'ouverture/vibration, 1 télécommande, 2 badges RFID — et la caméra intérieure IP506P avec fonction vie privée.{%- endcapture -%}
+  {%- capture faq_q6 -%}Puis-je agrandir mon système plus tard ?{%- endcapture -%}
+  {%- capture faq_a6 -%}Oui. Le système Vigilia accepte jusqu'à 60 accessoires (détecteurs, caméras, sirènes, claviers, télécommandes). Utilisez notre configurateur pour composer un pack plus complet dès maintenant, ou découvrez directement le Pack Vigilia complet avec 2 caméras et sirène solaire.{%- endcapture -%}
+  {%- capture faq_q7 -%}Comment se passe l'installation ?{%- endcapture -%}
+  {%- capture faq_a7 -%}Aucune compétence technique requise : branchez la centrale sur une prise, fixez les capteurs fournis et suivez les étapes affichées dans l'application Daewoo Home Connect. En moins de 30 minutes, votre système est opérationnel.{%- endcapture -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": {{ faq_q1 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a1 | json }} } },
+      { "@type": "Question", "name": {{ faq_q2 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a2 | json }} } },
+      { "@type": "Question", "name": {{ faq_q3 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a3 | json }} } },
+      { "@type": "Question", "name": {{ faq_q4 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a4 | json }} } },
+      { "@type": "Question", "name": {{ faq_q5 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a5 | json }} } },
+      { "@type": "Question", "name": {{ faq_q6 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a6 | json }} } },
+      { "@type": "Question", "name": {{ faq_q7 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a7 | json }} } }
+    ]
+  }
   </script>
 
   <script>
