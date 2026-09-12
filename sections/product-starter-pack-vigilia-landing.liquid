@@ -376,6 +376,7 @@
     .pv-compare__card ul li svg{flex-shrink:0;margin-top:3px;color:var(--pv-success);}
     .pv-compare__price{display:flex;align-items:baseline;gap:8px;padding-top:14px;border-top:1px solid var(--pv-line);}
     .pv-compare__price strong{font-size:22px;}
+    .pv-compare__note{font-size:13px;line-height:1.5;color:var(--pv-gray);margin:0 0 16px;padding:10px 12px;background:#f3f4f6;border-radius:8px;}
 
     /* ---- features ---- */
     .pv-feature{
@@ -760,6 +761,7 @@
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>En cas de coupure Wi-Fi ou Internet, bascule automatiquement sur le réseau mobile 4G</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Idéale pour résidence secondaire, connexion instable ou sécurité renforcée</li>
           </ul>
+          <p class="pv-compare__note">La carte SIM sert uniquement aux alertes par SMS et aux appels. L'application et les caméras nécessitent toujours une connexion Wi‑Fi.</p>
           <span class="pv-compare__price">
             {%- if gsm_has_compare -%}<span class="pv-price-compare is-visible">{{ gsm_variant.compare_at_price | money }}</span>{%- endif -%}
             <strong>{{ gsm_variant.price | money }}</strong>

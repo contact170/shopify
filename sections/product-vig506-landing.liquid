@@ -362,6 +362,7 @@
     .pv-compare__card ul li.pv-compare__caveat{color:#7a4a06;}
     .pv-compare__price{display:flex;align-items:baseline;gap:8px;padding-top:14px;border-top:1px solid var(--pv-line);}
     .pv-compare__price strong{font-size:22px;}
+    .pv-compare__note{font-size:13px;line-height:1.5;color:var(--pv-gray);margin:0 0 16px;padding:10px 12px;background:#f3f4f6;border-radius:8px;}
 
     /* ---- features ---- */
     .pv-feature{
@@ -666,7 +667,7 @@
           <span class="pv-contents__qty">1×</span>
           <div>
             <div class="pv-contents__name">Sirène extérieure solaire sans fil WOS305</div>
-            <div class="pv-contents__desc">Flash stroboscopique rouge + son ultra-puissant, aucun câblage ni prise secteur nécessaire</div>
+            <div class="pv-contents__desc">Flash stroboscopique rouge + 110 dB, se déclenche quand la centrale détecte une intrusion, aucun câblage ni prise secteur nécessaire</div>
           </div>
         </div>
         <div class="pv-contents__item">
@@ -734,6 +735,7 @@
               <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Alertes et pilotage (armer/désarmer) de la centrale par SMS même sans internet</li>
               <li class="pv-compare__caveat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-4M12 8h.01"></path></svg>Important&nbsp;: la carte SIM ne couvre que l'alarme. En cas de coupure Wi-Fi, les 2 caméras motorisées restent inaccessibles, même avec une SIM installée — elles se connectent uniquement en Wi-Fi</li>
             </ul>
+            <p class="pv-compare__note">La carte SIM sert uniquement aux alertes par SMS et aux appels. L'application et les caméras nécessitent toujours une connexion Wi‑Fi.</p>
             <span class="pv-compare__price">
               {%- if gsm_has_compare -%}<span class="pv-price-compare is-visible">{{ gsm_variant.compare_at_price | money }}</span>{%- endif -%}
               <strong>{{ gsm_variant.price | money }}</strong>
@@ -779,9 +781,10 @@
           <span class="pv-feature__num">PROTECTION EXTÉRIEURE</span>
           <h2>Dissuasion immédiate, sans le moindre câble.</h2>
           <p class="pv-feature__text">
-            La sirène extérieure solaire WOS305 combine flash stroboscopique rouge et son ultra-puissant dès qu'un
-            mouvement est détecté aux abords de votre logement. Son panneau solaire intégré la rend 100&nbsp;% sans
-            fil&nbsp;: aucun câblage ni prise secteur n'est nécessaire.
+            La sirène extérieure solaire WOS305 se déclenche lorsque la centrale détecte une intrusion.
+            Son flash et sa puissance sonore de 110&nbsp;dB renforcent immédiatement la dissuasion. Son
+            panneau solaire intégré la rend 100&nbsp;% sans fil&nbsp;: aucun câblage ni prise secteur
+            n'est nécessaire.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Dissuasion sonore et visuelle immédiate en cas de détection</li>
