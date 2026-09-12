@@ -1297,23 +1297,50 @@
   </script>
 
   {%- capture ld_description -%}Le Starter Pack Vigilia comprend une centrale Vigilia, une caméra et six accessoires, soit huit éléments au total. Alarme connectée sans abonnement, installation en 10 minutes sans technicien.{%- endcapture -%}
+  {%- assign ld_product_url = shop.url | append: product.url -%}
+  {%- assign ld_wifi_price = wifi_variant.price | divided_by: 100.0 -%}
+  {%- assign ld_gsm_price = gsm_variant.price | divided_by: 100.0 -%}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": "ProductGroup",
     "name": {{ product.title | json }},
     "description": {{ ld_description | json }},
-    "sku": {{ variant.sku | json }},
+    "productGroupID": {{ wifi_variant.sku | json }},
+    "variesBy": ["https://schema.org/name"],
     "brand": { "@type": "Brand", "name": "Daewoo Security" },
     "image": [{{ hero_image | image_url: width: 1200 | json }}],
-    "url": {{ shop.url | append: product.url | json }},
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": {{ cart.currency.iso_code | json }},
-      "price": {{ variant.price | json }},
-      "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
-      "url": {{ shop.url | append: product.url | json }}
-    },
+    "url": {{ ld_product_url | json }},
+    "hasVariant": [
+      {
+        "@type": "Product",
+        "name": {{ product.title | append: ' - Wi-Fi' | json }},
+        "sku": {{ wifi_variant.sku | json }},
+        "url": {{ ld_product_url | append: '?variant=' | append: wifi_variant.id | json }},
+        "image": [{{ hero_image | image_url: width: 1200 | json }}],
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "price": {{ ld_wifi_price | json }},
+          "availability": "https://schema.org/{% if wifi_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "url": {{ ld_product_url | append: '?variant=' | append: wifi_variant.id | json }}
+        }
+      },
+      {
+        "@type": "Product",
+        "name": {{ product.title | append: ' - Wi-Fi + GSM 4G' | json }},
+        "sku": {{ gsm_variant.sku | json }},
+        "url": {{ ld_product_url | append: '?variant=' | append: gsm_variant.id | json }},
+        "image": [{{ hero_image | image_url: width: 1200 | json }}],
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "price": {{ ld_gsm_price | json }},
+          "availability": "https://schema.org/{% if gsm_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "url": {{ ld_product_url | append: '?variant=' | append: gsm_variant.id | json }}
+        }
+      }
+    ],
     "additionalProperty": [
       { "@type": "PropertyValue", "name": "Connectivité", "value": "Wi-Fi 2.4 GHz, GSM en option (carte SIM non fournie)" },
       { "@type": "PropertyValue", "name": "Autonomie", "value": "Centrale sur secteur avec batterie de secours intégrée, environ 4 heures d'autonomie" },
