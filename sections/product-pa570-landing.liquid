@@ -7,16 +7,25 @@
   Structural fork of sections/product-vig503-landing.liquid — same
   Apple-style rhythm, same shared hidden cart form + pv-atc-button /
   pv-trust-row snippets, same sticky bar and Alma modal — so the Élite
-  pages read as the same store as the Vigilia ones. Three things are new,
-  and they are the whole point of the fork:
+  pages read as the same store as the Vigilia ones. The range is signalled
+  by a warm sand hero and a bronze accent rather than a dark slab: an
+  earlier graphite version was rejected by the merchant as too dark, and
+  it fought the product photography, which is shot on white.
 
-  1. A failover simulator (RJ45 / Wi-Fi / 4G+) over three scenarios, since
-     the Élite is the only centrale in the catalogue with three WAN paths.
+  Four things are new, and they are the point of the fork:
+
+  1. A continuity matrix (three situations × five functions), so a
+     visitor compares outage scenarios without clicking anything. It
+     replaces a tabbed simulator the merchant found unclear.
   2. A carte SIM M2M module, sourced verbatim from the merchant-authored
      description of product SIM1ANPA ("Carte SIM M2M Afone 1 An Prépayé -
      Pour centrale Élite").
-  3. A Zigbee 3.0 module (mesh vs 433 MHz star), sourced from the
-     merchant-authored description of DAPA501Z (the centrale sold alone).
+  3. A Zigbee 3.0 module, sourced from the merchant-authored description
+     of DAPA501Z (the centrale sold alone). It explains bidirectional,
+     acknowledged, encrypted radio — NOT mesh routing. The merchant
+     confirmed that only mains-powered Zigbee equipment relays on this
+     system; the pack's sensors are battery end devices and do not.
+  4. An accessory picker whose steppers re-price every CTA on the page.
 
   Two facts are deliberately NOT taken from this product's own current
   descriptionHtml, which contradicts the two fiches above and was flagged
@@ -78,6 +87,15 @@
   # not the 50 Mo standard one). Same treatment — live price, real link.
   assign sim_card = all_products['carte-sim-m2m-afone-1-an-prepaye-pour-centrale-pa501z']
   assign sim_price = sim_card.price_min
+
+  # Accessory picker. Looked up by handle so price, photo, stock and
+  # variant id all come from the catalogue rather than being frozen into
+  # the page. Anything unavailable simply doesn't render its card.
+  #
+  # The merchant asked for a "WSD502Z" — no such reference exists in the
+  # catalogue. The Élite-compatible smoke detector is the WSD501, which
+  # is what's offered here; flagged to the merchant.
+  assign acc_handles = 'amplificateur-dondes-zigbee-pour-centrale-pa501z,contacteur-de-porte-zigbee-wds502z-compatible-avec-la-centrale-pa501z,detecteur-de-vibration-zigbee-wvd502z-compatible-avec-la-centrale-pa501z,detecteur-de-fumee-wsd501-pour-alarme-daewoo-sa501' | split: ','
 
   assign has_rating = false
 -%}
@@ -480,62 +498,61 @@
        ÉLITE — additions on top of the shared Vigilia page styles.
        Everything below is prefixed .pe- so it can't collide with the
        .pv- rules above, which stay byte-identical across both ranges.
-       Three accents carry meaning and nothing else:
-         graphite/gold = the Élite range, violet = Zigbee, amber = 4G.
+
+       Palette: the range is signalled by a warm sand ground and a
+       bronze accent rather than a dark slab — the product photography
+       is shot on white, and a dark hero fought it. Two functional
+       accents carry meaning and nothing else: violet = Zigbee,
+       amber = 4G. The navy CTA band stays the only dark block on the
+       page, exactly as on the Vigilia pages.
        ============================================================ */
     #shopify-section-{{ section.id }} .pv{
-      --pe-graphite:#12100c;
-      --pe-graphite-2:#2a2213;
-      --pe-gold:#c8a96e;
-      --pe-gold-soft:#f0e0b0;
+      --pe-sand:#f7f2e8;
+      --pe-sand-2:#fdfbf7;
+      --pe-bronze:#8a6a2f;
+      --pe-bronze-soft:#b9954f;
+      --pe-bronze-line:#e4d7bb;
       --pe-zig:#6d4fd1;
-      --pe-zig-bg:#f3efff;
+      --pe-zig-bg:#f4f1ff;
+      --pe-zig-line:#d9cffa;
       --pe-zig-ink:#3d2a86;
       --pe-amber:#b06f10;
       --pe-amber-bg:#fdf3e3;
+      --pe-amber-line:#eccfa0;
       --pe-amber-ink:#6b4207;
       --pe-eth:#1f6f3f;
       --pe-eth-bg:#eaf4ed;
       --pe-danger:#a11b1b;
+      --pe-danger-bg:#fdf3f3;
     }
 
-    /* ---- gold eyebrow variants ---- */
+    /* ---- eyebrow variants ---- */
     .pv .pe-eyebrow--zig{color:var(--pe-zig-ink);}
     .pv .pe-eyebrow--zig::before{background:var(--pe-zig);}
     .pv .pe-eyebrow--amber{color:var(--pe-amber-ink);}
     .pv .pe-eyebrow--amber::before{background:var(--pe-amber);}
+    .pv .pe-eyebrow--bronze{color:var(--pe-bronze);}
+    .pv .pe-eyebrow--bronze::before{background:var(--pe-bronze-soft);}
 
-    /* ---- hero band: the one place the range gets its own colour ---- */
+    /* ---- hero: warm sand ground, ink type, bronze hairline ---- */
     .pe-hero{
-      background:linear-gradient(160deg,var(--pe-graphite) 0%,var(--pe-graphite-2) 58%,#3b2f16 100%);
-      color:#fff;margin-bottom:0;
+      background:linear-gradient(180deg,var(--pe-sand-2) 0%,var(--pe-sand) 100%);
+      border-bottom:1px solid var(--pe-bronze-line);
     }
-    .pv .pe-hero h1{color:#fff;}
-    .pv .pe-hero .pv-hero__tagline{color:var(--pe-gold);font-style:normal;}
-    .pv .pe-hero .pv-hero__sub,.pv .pe-hero .pv-hero__summary{color:#b9b2a0;}
-    .pv .pe-hero .pv-eyebrow{color:var(--pe-gold-soft);}
-    .pv .pe-hero .pv-eyebrow::before{background:var(--pe-gold);}
-    .pv .pe-hero .pv-ref{color:#fff;}
-    .pv .pe-hero .pv-hero__price{color:#b9b2a0;}
-    .pv .pe-hero .pv-hero__price strong{color:#fff;}
-    .pv .pe-hero .pv-price-compare{color:#8d8778;}
-    .pv .pe-hero .pv-btn--primary{background:var(--pe-gold);color:#1a1208;box-shadow:0 8px 20px -8px rgba(0,0,0,.6);}
-    .pv .pe-hero .pv-btn--primary .btn-fill{background:#d8bc85;}
-    .pv .pe-hero .pv-pay__alma{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);}
-    .pv .pe-hero .pv-pay__alma-text{color:#cfc8b6;}
-    .pv .pe-hero .pv-hero__trust{color:#b9b2a0;}
-    .pv .pe-hero .pv-hero__media img{background:rgba(255,255,255,.06);}
-    .pv .pe-hero .pv-thumbs__item{background:rgba(255,255,255,.08);}
-    .pv .pe-hero .pv-thumbs__item.is-active{border-color:var(--pe-gold);}
+    .pv .pe-hero .pv-eyebrow{color:var(--pe-bronze);}
+    .pv .pe-hero .pv-eyebrow::before{background:var(--pe-bronze-soft);}
+    .pv .pe-hero .pv-hero__tagline{color:var(--pe-bronze);font-style:normal;}
+    .pv .pe-hero .pv-hero__media img{background:#fff;}
+    .pv .pe-hero .pv-thumbs__item{background:#fff;}
 
     .pe-hero__chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:26px;}
     .pe-chip{
       font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:999px;
-      background:rgba(255,255,255,.09);color:var(--pe-gold-soft);border:1px solid rgba(255,255,255,.14);
+      background:#fff;color:var(--pe-bronze);border:1px solid var(--pe-bronze-line);
     }
-    .pe-chip--zig{background:rgba(109,79,209,.3);border-color:rgba(160,135,240,.45);color:#d8caff;}
-    .pe-chip--eth{background:rgba(52,140,90,.26);border-color:rgba(110,200,150,.4);color:#a8e6c1;}
-    .pe-chip--4g{background:rgba(200,130,20,.26);border-color:rgba(240,180,90,.42);color:#f7d9a5;}
+    .pe-chip--zig{background:var(--pe-zig-bg);border-color:var(--pe-zig-line);color:var(--pe-zig-ink);}
+    .pe-chip--eth{background:var(--pe-eth-bg);border-color:#bcdcc8;color:var(--pe-eth);}
+    .pe-chip--4g{background:var(--pe-amber-bg);border-color:var(--pe-amber-line);color:var(--pe-amber-ink);}
 
     /* ---- Zigbee badge on the pack-contents rows ---- */
     .pe-zigtag{
@@ -567,10 +584,10 @@
     .pe-rail--eth{border-color:#bcdcc8;}
     .pe-rail--eth .pe-rail__ic,.pe-rail--eth .pe-rail__rank{background:var(--pe-eth-bg);color:var(--pe-eth);}
     .pe-rail--wifi .pe-rail__ic,.pe-rail--wifi .pe-rail__rank{background:#e8f0fa;color:var(--pv-navy);}
-    .pe-rail--4g{border-color:#eccfa0;}
+    .pe-rail--4g{border-color:var(--pe-amber-line);}
     .pe-rail--4g .pe-rail__ic{background:var(--pe-amber-bg);color:var(--pe-amber);}
     .pe-rail--4g .pe-rail__rank{background:var(--pe-amber-bg);color:var(--pe-amber-ink);}
-    .pe-rail--zig{border-color:#cfc0f2;}
+    .pe-rail--zig{border-color:var(--pe-zig-line);}
     .pe-rail--zig .pe-rail__ic{background:var(--pe-zig-bg);color:var(--pe-zig);}
     .pe-rail--zig .pe-rail__rank{background:var(--pe-zig-bg);color:var(--pe-zig-ink);}
 
@@ -581,42 +598,45 @@
     .pe-spec__v{font-size:19px;font-weight:600;margin-top:7px;letter-spacing:-.01em;}
     .pv .pe-spec__n{font-size:13px;color:var(--pv-gray);margin-top:5px;line-height:1.5;}
 
-    /* ---- failover simulator ---- */
-    .pe-sim{border:1px solid var(--pv-line);border-radius:20px;overflow:hidden;background:#fff;}
-    .pe-sim__tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--pv-line);background:var(--pv-bg-alt);}
-    .pe-sim__tab{
-      flex:1 1 210px;padding:16px 18px;border:none;background:transparent;cursor:pointer;
-      font-family:inherit;text-align:left;border-bottom:3px solid transparent;color:var(--pv-gray);
+    /* ---- continuity matrix: what still works, in one look ----
+       Replaces the tabbed simulator: three situations side by side, so
+       nothing has to be clicked to be compared. The first column is
+       sticky so the row label stays readable while the matrix scrolls
+       sideways on a phone. */
+    .pe-matrix{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--pv-line);border-radius:18px;background:#fff;}
+    .pe-matrix table{border-collapse:collapse;width:100%;min-width:640px;}
+    .pe-matrix th,.pe-matrix td{padding:16px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--pv-line);}
+    .pe-matrix tbody tr:last-child th,.pe-matrix tbody tr:last-child td{border-bottom:none;}
+    .pe-matrix thead th{
+      font-size:13px;font-weight:700;color:var(--pv-ink);line-height:1.4;
+      border-bottom:1px solid var(--pv-ink);background:var(--pv-bg-alt);vertical-align:bottom;
     }
-    .pe-sim__tab:hover{background:#ececf0;}
-    .pe-sim__tab:focus-visible{outline:2px solid var(--pv-navy);outline-offset:-2px;}
-    .pe-sim__tab[aria-selected="true"]{background:#fff;color:var(--pv-ink);border-bottom-color:var(--pe-gold);}
-    .pe-sim__tab-k{display:block;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--pv-gray);}
-    .pe-sim__tab[aria-selected="true"] .pe-sim__tab-k{color:var(--pe-amber);}
-    .pe-sim__tab-t{display:block;font-size:15.5px;font-weight:600;margin-top:5px;}
-    .pe-sim__body{padding:26px;display:grid;grid-template-columns:1fr;gap:28px;align-items:start;}
-    @media (min-width:900px){.pe-sim__body{grid-template-columns:1fr 1fr;padding:32px;gap:36px;}}
-    .pv .pe-sim__state{font-size:15.5px;line-height:1.65;color:var(--pv-gray);}
-    .pe-sim__state strong{color:var(--pv-ink);font-weight:600;}
-    .pe-sim__cols{display:grid;grid-template-columns:1fr;gap:20px;margin-top:22px;}
-    @media (min-width:520px){.pe-sim__cols{grid-template-columns:1fr 1fr;}}
-    .pe-sim__col h3{font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;font-weight:700;}
-    .pe-sim__col--ok h3{color:var(--pv-success);}
-    .pe-sim__col--ko h3{color:var(--pe-danger);}
-    .pe-sim__col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}
-    .pe-sim__col li{font-size:13.5px;line-height:1.5;display:flex;gap:9px;align-items:flex-start;color:var(--pv-ink);}
-    .pe-sim__col li svg{flex-shrink:0;margin-top:3px;}
-    .pe-sim__col--ok li svg{color:var(--pv-success);}
-    .pe-sim__col--ko li svg{color:var(--pe-danger);}
-    .pe-sim__diagram{background:var(--pv-bg-alt);border-radius:16px;padding:22px;}
-    .pe-sim__diagram svg{width:100%;height:auto;max-width:100%;}
+    .pe-matrix thead th span{display:block;font-size:11.5px;font-weight:600;color:var(--pv-gray);text-transform:none;letter-spacing:0;margin-top:5px;}
+    .pe-matrix tbody th{
+      font-size:14px;font-weight:600;color:var(--pv-ink);
+      position:sticky;left:0;background:#fff;min-width:200px;
+      box-shadow:1px 0 0 var(--pv-line);
+    }
+    .pe-matrix thead th:first-child{position:sticky;left:0;background:var(--pv-bg-alt);box-shadow:1px 0 0 var(--pv-line);z-index:1;}
+    .pe-state{display:inline-flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.45;}
+    .pe-state svg{flex-shrink:0;margin-top:2px;}
+    .pe-state--ok{color:var(--pv-success);}
+    .pe-state--ko{color:var(--pe-danger);}
+    .pe-state__note{display:block;color:var(--pv-gray);font-size:12.5px;margin-top:3px;}
+    .pe-matrix__foot{
+      display:flex;flex-direction:column;gap:10px;margin-top:18px;
+      border-left:3px solid var(--pe-amber);background:var(--pe-amber-bg);
+      padding:16px 18px;border-radius:0 12px 12px 0;
+    }
+    .pv .pe-matrix__foot p{font-size:14px;line-height:1.6;color:var(--pe-amber-ink);}
+    .pv .pe-matrix__foot p strong{color:#4d2f05;}
 
     /* ---- yes / no panels ---- */
     .pe-duo{display:grid;grid-template-columns:1fr;gap:20px;}
     @media (min-width:760px){.pe-duo{grid-template-columns:1fr 1fr;}}
     .pe-panel{border:1px solid var(--pv-line);border-radius:18px;padding:26px;background:#fff;}
     .pe-panel--yes{border-color:#bcdcc8;background:#f6fbf7;}
-    .pe-panel--no{border-color:#e3c9c9;background:#fdf7f7;}
+    .pe-panel--no{border-color:#e3c9c9;background:var(--pe-danger-bg);}
     .pe-panel h3{font-size:18px;font-weight:600;letter-spacing:-.01em;}
     .pe-panel ul{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:12px;}
     .pe-panel li{font-size:14.5px;line-height:1.55;display:flex;gap:10px;align-items:flex-start;color:var(--pv-ink);}
@@ -624,16 +644,16 @@
     .pe-panel--yes li svg{color:var(--pv-success);}
     .pe-panel--no li svg{color:var(--pe-danger);}
 
-    /* ---- two-column explainer + warning aside ---- */
+    /* ---- two-column explainer + aside ---- */
     .pe-why{display:grid;grid-template-columns:1fr;gap:28px;align-items:start;}
     @media (min-width:900px){.pe-why{grid-template-columns:1fr 1fr;gap:44px;}}
     .pe-why h3{font-size:23px;font-weight:600;letter-spacing:-.02em;}
-    .pe-why p{font-size:15.5px;line-height:1.7;color:var(--pv-gray);margin-top:14px;}
+    .pv .pe-why p{font-size:15.5px;line-height:1.7;color:var(--pv-gray);margin-top:14px;}
     .pe-warn{border-left:3px solid var(--pe-amber);background:var(--pe-amber-bg);padding:18px 20px;border-radius:0 12px 12px 0;}
-    .pe-warn p{font-size:14.5px;line-height:1.65;color:var(--pe-amber-ink);margin:0;}
-    .pe-warn p + p{margin-top:12px;}
+    .pv .pe-warn p{font-size:14.5px;line-height:1.65;color:var(--pe-amber-ink);margin:0;}
+    .pv .pe-warn p + p{margin-top:12px;}
     .pe-warn--zig{border-left-color:var(--pe-zig);background:var(--pe-zig-bg);}
-    .pe-warn--zig p{color:var(--pe-zig-ink);}
+    .pv .pe-warn--zig p{color:var(--pe-zig-ink);}
 
     /* ---- tables ---- */
     .pe-table{overflow-x:auto;-webkit-overflow-scrolling:touch;}
@@ -655,33 +675,20 @@
     .pe-check li{font-size:14.5px;line-height:1.55;display:flex;gap:10px;align-items:flex-start;color:var(--pv-ink);}
     .pe-check svg{flex-shrink:0;margin-top:3px;color:var(--pv-navy);}
 
-    /* ---- SIM upsell card ---- */
-    .pe-simcta{
-      display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;
-      border:1px solid var(--pv-line);border-radius:18px;padding:24px;background:#fff;
-    }
-    .pe-simcta__t{font-size:16.5px;font-weight:600;}
-    .pv .pe-simcta__d{font-size:13.5px;color:var(--pv-gray);margin-top:6px;line-height:1.5;}
-
-    /* ---- Zigbee dark band ---- */
-    .pe-zigband{background:linear-gradient(150deg,#1a1430 0%,#2b2154 55%,#3c2a6b 100%);color:#fff;}
-    .pv .pe-zigband h2{color:#fff;}
-    .pv .pe-zigband .pv-eyebrow{color:#c9b8ff;}
-    .pv .pe-zigband .pv-eyebrow::before{background:#a58cff;}
-    .pv .pe-zigband .pv-contents__head p{color:#c3bbdd;}
-    .pv .pe-zigband__lead{font-size:17px;line-height:1.65;color:#c3bbdd;max-width:62ch;margin-top:16px;}
-    .pe-mesh{display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;}
-    @media (min-width:760px){.pe-mesh{grid-template-columns:1fr 1fr;gap:24px;}}
-    .pe-mesh__card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:24px;}
-    .pe-mesh__card h3{font-size:16px;font-weight:600;color:#fff;margin-top:14px;}
-    .pe-mesh__card p{font-size:14px;line-height:1.6;color:#b7aed3;margin-top:8px;}
-    .pe-mesh__card svg{width:100%;height:auto;}
-    .pe-mesh__tag{
+    /* ---- Zigbee: one-way vs two-way radio ---- */
+    .pe-zigband{background:var(--pe-zig-bg);border-block:1px solid var(--pe-zig-line);}
+    .pe-radio{display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;}
+    @media (min-width:760px){.pe-radio{grid-template-columns:1fr 1fr;gap:24px;}}
+    .pe-radio__card{background:#fff;border:1px solid var(--pe-zig-line);border-radius:18px;padding:24px;}
+    .pe-radio__card h3{font-size:16px;font-weight:600;margin-top:16px;}
+    .pv .pe-radio__card p{font-size:14px;line-height:1.6;color:var(--pv-gray);margin-top:8px;}
+    .pe-radio__card svg{width:100%;height:auto;max-width:100%;}
+    .pe-radio__tag{
       display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;
-      text-transform:uppercase;padding:5px 11px;border-radius:999px;margin-bottom:16px;
+      text-transform:uppercase;padding:5px 11px;border-radius:999px;margin-bottom:18px;
     }
-    .pe-mesh__tag--old{background:rgba(255,255,255,.1);color:#b7aed3;}
-    .pe-mesh__tag--new{background:rgba(165,140,255,.28);color:#d8caff;}
+    .pe-radio__tag--old{background:var(--pv-bg-alt);color:var(--pv-gray);}
+    .pe-radio__tag--new{background:var(--pe-zig-bg);color:var(--pe-zig-ink);}
 
     /* ---- domotique cards + scenarios ---- */
     .pe-domo{display:grid;grid-template-columns:1fr;gap:14px;margin-top:32px;}
@@ -693,10 +700,62 @@
     .pe-scen{display:flex;flex-direction:column;gap:10px;margin-top:26px;}
     .pe-scen__row{
       display:flex;gap:12px;align-items:center;flex-wrap:wrap;
-      border:1px dashed #cfc0f2;background:var(--pe-zig-bg);border-radius:14px;padding:15px 18px;font-size:14.5px;
+      border:1px dashed var(--pe-zig-line);background:var(--pe-zig-bg);border-radius:14px;padding:15px 18px;font-size:14.5px;
     }
     .pe-scen__if{font-weight:600;color:var(--pe-zig-ink);}
     .pe-scen__arrow{color:var(--pe-zig);font-weight:700;}
+
+    /* ---- accessory picker: cards with a stepper that re-prices the page ---- */
+    .pe-acc{display:grid;grid-template-columns:1fr;gap:16px;}
+    @media (min-width:600px){.pe-acc{grid-template-columns:1fr 1fr;}}
+    @media (min-width:1000px){.pe-acc{grid-template-columns:repeat(4,1fr);}}
+    .pe-acc__card{
+      display:flex;flex-direction:column;background:#fff;
+      border:1px solid var(--pv-line);border-radius:18px;overflow:hidden;
+      transition:border-color .18s ease,box-shadow .18s ease;
+    }
+    .pe-acc__card.is-picked{border-color:var(--pv-navy);box-shadow:0 10px 26px -18px rgba(12,30,74,.45);}
+    .pe-acc__photo{background:var(--pv-bg-alt);aspect-ratio:1/1;max-width:100%;}
+    .pe-acc__photo img{width:100%;height:100%;object-fit:cover;}
+    .pe-acc__body{display:flex;flex-direction:column;gap:8px;padding:18px 20px 20px;flex-grow:1;}
+    .pe-acc__ref{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pe-zig-ink);}
+    .pe-acc__ref--plain{color:var(--pv-gray);}
+    .pe-acc__name{font-size:15px;font-weight:600;line-height:1.35;}
+    .pv .pe-acc__why{font-size:13px;line-height:1.55;color:var(--pv-gray);flex-grow:1;}
+    .pe-acc__price{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;}
+    .pe-step{display:flex;align-items:center;gap:0;border:1px solid var(--pv-line);border-radius:999px;overflow:hidden;align-self:flex-start;}
+    .pe-step button{
+      width:38px;height:38px;border:none;background:#fff;color:var(--pv-ink);
+      font-family:inherit;font-size:19px;line-height:1;cursor:pointer;
+    }
+    .pe-step button:hover:not([disabled]){background:var(--pv-bg-alt);}
+    .pe-step button[disabled]{color:var(--pv-line);cursor:not-allowed;}
+    .pe-step button:focus-visible{outline:2px solid var(--pv-navy);outline-offset:-2px;}
+    .pe-step__qty{
+      min-width:42px;text-align:center;font-size:15px;font-weight:600;
+      font-variant-numeric:tabular-nums;border-inline:1px solid var(--pv-line);
+      align-self:stretch;display:flex;align-items:center;justify-content:center;
+    }
+
+    /* ---- running total bar ---- */
+    .pe-total{
+      display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;
+      margin-top:28px;padding:22px 24px;border-radius:18px;
+      background:var(--pe-sand);border:1px solid var(--pe-bronze-line);
+    }
+    .pe-total__k{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--pe-bronze);font-weight:700;}
+    .pe-total__v{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:6px;font-variant-numeric:tabular-nums;}
+    .pv .pe-total__d{font-size:13.5px;color:var(--pv-gray);margin-top:6px;}
+    .pe-total__actions{display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
+
+    /* ---- inline SIM add ---- */
+    .pe-simcta{
+      display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;
+      border:1px solid var(--pv-line);border-radius:18px;padding:24px;background:#fff;
+    }
+    .pe-simcta__t{font-size:16.5px;font-weight:600;}
+    .pv .pe-simcta__d{font-size:13.5px;color:var(--pv-gray);margin-top:6px;line-height:1.5;}
+    .pe-simcta__actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
   </style>
 
   {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
@@ -846,7 +905,7 @@
           <span class="pv-contents__qty">5×</span>
           <div>
             <div class="pv-contents__name">Contacteurs d'ouverture WDS502Z</div>
-            <div class="pv-contents__desc">Portes et fenêtres. Remontée instantanée par le réseau maillé.</div>
+            <div class="pv-contents__desc">Portes et fenêtres. Remontée instantanée, confirmée par la centrale.</div>
             <span class="pe-zigtag">Zigbee 3.0</span>
           </div>
         </div>
@@ -967,170 +1026,69 @@
   </section>
 
   {%- comment -%}
-    Failover simulator. Three tabs, each stating plainly what keeps
-    working and what stops — including the fact that camera streams are
-    Wi-Fi only and are lost in both outage scenarios, SIM or no SIM.
+    Continuity matrix. Replaces an earlier tabbed simulator that the
+    merchant found unclear: the three situations now sit side by side so
+    a visitor compares them without clicking anything. Camera rows say
+    plainly that the video stream is Wi-Fi only and is lost in both
+    outages, SIM or no SIM.
   {%- endcomment -%}
   <section class="pv-section">
     <div class="pv-wrap">
       <div class="pv-contents__head pv-reveal">
         <span class="pv-eyebrow pe-eyebrow--amber">Continuité de service</span>
-        <h2>Que se passe-t-il exactement quand quelque chose tombe ?</h2>
-        <p>Trois scénarios, et à chaque fois ce qui continue de fonctionner — et ce qui s'arrête.</p>
+        <h2>Ce qui continue de fonctionner, quoi qu'il arrive</h2>
+        <p>Trois situations, cinq fonctions. Sans rien enjoliver.</p>
       </div>
 
-      <div class="pe-sim pv-reveal">
-        <div class="pe-sim__tabs" role="tablist" aria-label="Scénarios de panne">
-          <button class="pe-sim__tab" role="tab" id="PETab1-{{ section.id }}" aria-controls="PEPan1-{{ section.id }}" aria-selected="true" type="button">
-            <span class="pe-sim__tab-k">Situation normale</span>
-            <span class="pe-sim__tab-t">Tout fonctionne</span>
-          </button>
-          <button class="pe-sim__tab" role="tab" id="PETab2-{{ section.id }}" aria-controls="PEPan2-{{ section.id }}" aria-selected="false" type="button">
-            <span class="pe-sim__tab-k">Panne n° 1</span>
-            <span class="pe-sim__tab-t">La box Internet tombe</span>
-          </button>
-          <button class="pe-sim__tab" role="tab" id="PETab3-{{ section.id }}" aria-controls="PEPan3-{{ section.id }}" aria-selected="false" type="button">
-            <span class="pe-sim__tab-k">Panne n° 2</span>
-            <span class="pe-sim__tab-t">Coupure de courant</span>
-          </button>
-        </div>
+      <div class="pe-matrix pv-reveal">
+        <table>
+          <caption class="pv-visually-hidden">Fonctionnement du pack Élite PA570 selon la situation</caption>
+          <thead>
+            <tr>
+              <th scope="col">Fonction</th>
+              <th scope="col">Tout va bien<span>Box et courant en service</span></th>
+              <th scope="col">Box internet coupée<span>Avec carte SIM 4G+</span></th>
+              <th scope="col">Coupure de courant<span>Avec carte SIM 4G+</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Détection et sirènes</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">La centrale n'a pas besoin d'internet pour déclencher</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">10 h sur la batterie de secours</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Alertes d'intrusion sur votre téléphone</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Notification, SMS et appel via la 4G+</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Notification, SMS et appel via la 4G+</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Pilotage depuis l'application</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Armer, désarmer, consulter l'historique</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Pendant les 10 h d'autonomie</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Flux vidéo des caméras</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ko"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Non<span class="pe-state__note">Les caméras passent uniquement par le Wi-Fi</span></span></td>
+              <td><span class="pe-state pe-state--ko"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Non<span class="pe-state__note">Wi-Fi coupé, et la caméra intérieure est sur secteur</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Scénarios domotique Zigbee</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Le Zigbee ne dépend pas d'internet</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Sauf les équipements branchés sur le secteur</span></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        <div class="pe-sim__body" role="tabpanel" id="PEPan1-{{ section.id }}" aria-labelledby="PETab1-{{ section.id }}">
-          <div>
-            <p class="pe-sim__state">La centrale est reliée à votre box <strong>en RJ45</strong>, la liaison la plus stable. Le Wi-Fi reste configuré en second, les caméras s'y connectent, et les 9 capteurs Zigbee dialoguent avec la centrale sur leur propre réseau maillé.</p>
-            <div class="pe-sim__cols">
-              <div class="pe-sim__col pe-sim__col--ok">
-                <h3>Ce qui marche</h3>
-                <ul>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Alarme, sirènes et capteurs</li>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Notifications sur votre téléphone</li>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Flux vidéo en direct des deux caméras</li>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Scénarios domotique Zigbee</li>
-                </ul>
-              </div>
-              <div class="pe-sim__col pe-sim__col--ko">
-                <h3>Ce qui s'arrête</h3>
-                <ul>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Rien.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="pe-sim__diagram">
-            <svg viewBox="0 0 320 210" role="img" aria-label="Schéma : la centrale est reliée à la box en Ethernet, l'application est joignable, les capteurs communiquent en Zigbee">
-              <rect x="8" y="14" width="96" height="40" rx="9" fill="#ffffff" stroke="#d2d2d7"></rect>
-              <text x="56" y="32" text-anchor="middle" font-size="11" fill="#1d1d1f">Box Internet</text>
-              <text x="56" y="46" text-anchor="middle" font-size="9.5" fill="#037e05">en service</text>
-              <rect x="112" y="80" width="96" height="48" rx="10" fill="#12100c"></rect>
-              <text x="160" y="100" text-anchor="middle" font-size="11" fill="#ffffff">Centrale</text>
-              <text x="160" y="115" text-anchor="middle" font-size="10" fill="#c8a96e">PA501Z</text>
-              <rect x="216" y="14" width="96" height="40" rx="9" fill="#ffffff" stroke="#d2d2d7"></rect>
-              <text x="264" y="32" text-anchor="middle" font-size="11" fill="#1d1d1f">Application</text>
-              <text x="264" y="46" text-anchor="middle" font-size="9.5" fill="#037e05">+ caméras</text>
-              <path d="M56 54 L56 104 L112 104" fill="none" stroke="#1f6f3f" stroke-width="2.5"></path>
-              <text x="62" y="78" font-size="9.5" fill="#1f6f3f">RJ45</text>
-              <path d="M208 104 L264 104 L264 54" fill="none" stroke="#1f6f3f" stroke-width="2.5"></path>
-              <circle cx="40" cy="170" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <circle cx="110" cy="188" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <circle cx="186" cy="182" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <circle cx="262" cy="166" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <path d="M40 155 L140 128 M110 173 L150 128 M186 167 L172 128 M262 151 L190 124 M55 168 L95 185 M125 186 L171 182 M201 178 L247 170" fill="none" stroke="#6d4fd1" stroke-width="1.6" stroke-dasharray="3 3"></path>
-              <text x="160" y="146" text-anchor="middle" font-size="9.5" fill="#3d2a86">maillage Zigbee — 9 capteurs</text>
-            </svg>
-          </div>
-        </div>
-
-        <div class="pe-sim__body" role="tabpanel" id="PEPan2-{{ section.id }}" aria-labelledby="PETab2-{{ section.id }}" hidden>
-          <div>
-            <p class="pe-sim__state">Plus de box : ni RJ45, ni Wi-Fi. <strong>Si une carte SIM M2M est installée</strong>, la centrale bascule seule sur les données mobiles 4G+ et l'application reste utilisable. C'est la différence de l'Élite : vous gardez la main, au lieu d'attendre passivement une alerte.</p>
-            <div class="pe-sim__cols">
-              <div class="pe-sim__col pe-sim__col--ok">
-                <h3>Ce qui marche</h3>
-                <ul>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Alarme, sirènes et capteurs Zigbee</li>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Application : armer, désarmer, consulter l'historique</li>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Alertes d'intrusion par notification, SMS et appel</li>
-                </ul>
-              </div>
-              <div class="pe-sim__col pe-sim__col--ko">
-                <h3>Ce qui s'arrête</h3>
-                <ul>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Le flux vidéo des caméras : elles fonctionnent uniquement en Wi-Fi, carte SIM ou non</li>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Sans carte SIM : plus aucune remontée vers l'extérieur, la sirène fonctionne toujours</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="pe-sim__diagram">
-            <svg viewBox="0 0 320 210" role="img" aria-label="Schéma : la box est hors service, la centrale bascule sur la 4G, les caméras sont indisponibles">
-              <rect x="8" y="14" width="96" height="40" rx="9" fill="#fdf7f7" stroke="#e3c9c9"></rect>
-              <text x="56" y="32" text-anchor="middle" font-size="11" fill="#a11b1b">Box Internet</text>
-              <text x="56" y="46" text-anchor="middle" font-size="9.5" fill="#a11b1b">hors service</text>
-              <rect x="112" y="80" width="96" height="48" rx="10" fill="#12100c"></rect>
-              <text x="160" y="100" text-anchor="middle" font-size="11" fill="#ffffff">Centrale</text>
-              <text x="160" y="115" text-anchor="middle" font-size="10" fill="#c8a96e">PA501Z</text>
-              <rect x="216" y="14" width="96" height="40" rx="9" fill="#ffffff" stroke="#d2d2d7"></rect>
-              <text x="264" y="32" text-anchor="middle" font-size="11" fill="#1d1d1f">Application</text>
-              <text x="264" y="46" text-anchor="middle" font-size="9.5" fill="#a11b1b">sans caméras</text>
-              <path d="M56 54 L56 104 L112 104" fill="none" stroke="#e3c9c9" stroke-width="2.5" stroke-dasharray="4 4"></path>
-              <path d="M46 72 L66 92 M66 72 L46 92" stroke="#a11b1b" stroke-width="2.4"></path>
-              <path d="M208 104 L264 104 L264 54" fill="none" stroke="#b06f10" stroke-width="2.5"></path>
-              <text x="220" y="96" font-size="9.5" fill="#b06f10">4G+ données</text>
-              <circle cx="40" cy="170" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <circle cx="110" cy="188" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <circle cx="186" cy="182" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <circle cx="262" cy="166" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <path d="M40 155 L140 128 M110 173 L150 128 M186 167 L172 128 M262 151 L190 124 M55 168 L95 185 M125 186 L171 182 M201 178 L247 170" fill="none" stroke="#6d4fd1" stroke-width="1.6" stroke-dasharray="3 3"></path>
-              <text x="160" y="146" text-anchor="middle" font-size="9.5" fill="#3d2a86">maillage Zigbee — intact</text>
-            </svg>
-          </div>
-        </div>
-
-        <div class="pe-sim__body" role="tabpanel" id="PEPan3-{{ section.id }}" aria-labelledby="PETab3-{{ section.id }}" hidden>
-          <div>
-            <p class="pe-sim__state">Le courant saute : la box s'éteint avec. La centrale passe sur sa <strong>batterie interne, 10 heures d'autonomie</strong>, et continue de surveiller. Les capteurs Zigbee sont sur pile, ils ne sont pas concernés.</p>
-            <div class="pe-sim__cols">
-              <div class="pe-sim__col pe-sim__col--ok">
-                <h3>Ce qui marche</h3>
-                <ul>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Détection et sirène intégrée, pendant 10 heures</li>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Sirène extérieure solaire, sur sa propre batterie</li>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Alertes via la 4G+, si la carte SIM est installée</li>
-                </ul>
-              </div>
-              <div class="pe-sim__col pe-sim__col--ko">
-                <h3>Ce qui s'arrête</h3>
-                <ul>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Les caméras : la caméra intérieure est sur secteur, et le Wi-Fi est coupé</li>
-                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Au-delà de 10 heures sans courant, la centrale s'éteint</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="pe-sim__diagram">
-            <svg viewBox="0 0 320 210" role="img" aria-label="Schéma : coupure de courant, la centrale fonctionne sur batterie et alerte via la 4G">
-              <rect x="8" y="14" width="96" height="40" rx="9" fill="#fdf7f7" stroke="#e3c9c9"></rect>
-              <text x="56" y="32" text-anchor="middle" font-size="11" fill="#a11b1b">Secteur 230 V</text>
-              <text x="56" y="46" text-anchor="middle" font-size="9.5" fill="#a11b1b">coupé</text>
-              <rect x="112" y="80" width="96" height="48" rx="10" fill="#12100c"></rect>
-              <text x="160" y="99" text-anchor="middle" font-size="11" fill="#ffffff">Centrale</text>
-              <text x="160" y="114" text-anchor="middle" font-size="10" fill="#c8a96e">batterie · 10 h</text>
-              <rect x="216" y="14" width="96" height="40" rx="9" fill="#ffffff" stroke="#d2d2d7"></rect>
-              <text x="264" y="32" text-anchor="middle" font-size="11" fill="#1d1d1f">Alertes</text>
-              <text x="264" y="46" text-anchor="middle" font-size="9.5" fill="#b06f10">SMS · appel · app</text>
-              <path d="M56 54 L56 104 L112 104" fill="none" stroke="#e3c9c9" stroke-width="2.5" stroke-dasharray="4 4"></path>
-              <path d="M46 72 L66 92 M66 72 L46 92" stroke="#a11b1b" stroke-width="2.4"></path>
-              <path d="M208 104 L264 104 L264 54" fill="none" stroke="#b06f10" stroke-width="2.5"></path>
-              <text x="220" y="96" font-size="9.5" fill="#b06f10">4G+ secours</text>
-              <circle cx="40" cy="170" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <circle cx="110" cy="188" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <circle cx="186" cy="182" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <circle cx="262" cy="166" r="15" fill="#f3efff" stroke="#6d4fd1"></circle>
-              <path d="M40 155 L140 128 M110 173 L150 128 M186 167 L172 128 M262 151 L190 124 M55 168 L95 185 M125 186 L171 182 M201 178 L247 170" fill="none" stroke="#6d4fd1" stroke-width="1.6" stroke-dasharray="3 3"></path>
-              <text x="160" y="146" text-anchor="middle" font-size="9.5" fill="#3d2a86">capteurs sur pile — intacts</text>
-            </svg>
-          </div>
-        </div>
+      <div class="pe-matrix__foot pv-reveal">
+        <p><strong>Sans carte SIM.</strong> En cas de coupure de la box ou du courant, la détection et les sirènes fonctionnent toujours — mais plus aucune alerte ne sort du logement, et l'application devient injoignable jusqu'au retour d'internet.</p>
+        <p><strong>Les caméras, dans tous les cas.</strong> Elles fonctionnent uniquement en Wi-Fi. Aucune carte SIM ne rend le flux vidéo accessible pendant une coupure : c'est vrai sur l'Élite comme sur le reste de la gamme.</p>
       </div>
     </div>
   </section>
@@ -1231,7 +1189,22 @@
             <div class="pe-simcta__t">{{ sim_card.title }}</div>
             <p class="pe-simcta__d">200 Mo par mois · à glisser dans la centrale, rien à configurer{% if sim_price %} · {{ sim_price | money }}{% endif %}</p>
           </div>
-          <a href="{{ sim_card.url }}" class="pv-btn pv-btn--ghost pv-btn--sm">Voir la carte SIM</a>
+          <div class="pe-simcta__actions">
+            {%- assign sim_variant = sim_card.variants.first -%}
+            {%- if sim_card.available and sim_variant -%}
+              <button
+                type="button"
+                class="pv-btn pv-btn--ghost pv-btn--sm"
+                data-pe-acc-toggle
+                data-pe-acc-id="{{ sim_variant.id }}"
+                data-pe-acc-price="{{ sim_variant.price }}"
+                data-pe-label-add="Ajouter la carte SIM — {{ sim_variant.price | money }}"
+                data-pe-label-remove="Carte SIM ajoutée · retirer"
+                aria-pressed="false"
+              >Ajouter la carte SIM — {{ sim_variant.price | money }}</button>
+            {%- endif -%}
+            <a href="{{ sim_card.url }}" class="pv-btn pv-btn--ghost pv-btn--sm">Voir la fiche</a>
+          </div>
         </div>
       {%- endif -%}
     </div>
@@ -1247,46 +1220,52 @@
     </div>
   </div>
 
-  {%- comment -%} Zigbee module — dark band for the mesh explainer {%- endcomment -%}
+  {%- comment -%}
+    Zigbee module. Deliberately says nothing about mesh routing: on this
+    system the sensors are battery-powered end devices and do not relay
+    for one another. Only mains-powered Zigbee equipment extends the
+    network, which is what the EXT501ZIG amplifier is for — so the range
+    question hands off to the accessory picker below instead of claiming
+    a self-healing mesh that doesn't exist here.
+  {%- endcomment -%}
   <section class="pv-section pe-zigband">
     <div class="pv-wrap">
       <div class="pv-contents__head pv-reveal">
-        <span class="pv-eyebrow">Le réseau des capteurs</span>
-        <h2>Zigbee 3.0 : pourquoi vos capteurs se parlent entre eux</h2>
-        <p class="pe-zigband__lead" style="margin-left:auto;margin-right:auto;">Les alarmes classiques utilisent une radio en étoile à 433 MHz : chaque capteur parle seul à la centrale, et s'il est trop loin, il ne parle plus. Zigbee fonctionne autrement.</p>
+        <span class="pv-eyebrow pe-eyebrow--zig">Le réseau des capteurs</span>
+        <h2>Zigbee 3.0 : une radio qui parle dans les deux sens</h2>
+        <p>Sur une alarme radio classique, un capteur émet son alerte et espère qu'elle arrive. Sur l'Élite, la centrale répond.</p>
       </div>
 
-      <div class="pe-mesh pv-reveal">
-        <div class="pe-mesh__card">
-          <span class="pe-mesh__tag pe-mesh__tag--old">Radio classique 433 MHz</span>
-          <svg viewBox="0 0 260 150" role="img" aria-label="Schéma en étoile : chaque capteur parle seul à la centrale, le plus éloigné est hors de portée">
-            <circle cx="130" cy="75" r="22" fill="#3c2a6b" stroke="rgba(255,255,255,.3)"></circle>
-            <text x="130" y="79" text-anchor="middle" font-size="9.5" fill="#ffffff">centrale</text>
-            <circle cx="45" cy="30" r="11" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.35)"></circle>
-            <circle cx="40" cy="120" r="11" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.35)"></circle>
-            <circle cx="215" cy="35" r="11" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.35)"></circle>
-            <circle cx="228" cy="125" r="11" fill="rgba(161,27,27,.25)" stroke="#e08f8f"></circle>
-            <path d="M56 36 L110 66 M51 114 L110 85 M204 41 L150 66" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.5"></path>
-            <path d="M217 120 L152 88" fill="none" stroke="#e08f8f" stroke-width="1.5" stroke-dasharray="4 4"></path>
-            <text x="198" y="146" text-anchor="middle" font-size="9" fill="#e08f8f">hors de portée</text>
+      <div class="pe-radio pv-reveal">
+        <div class="pe-radio__card">
+          <span class="pe-radio__tag pe-radio__tag--old">Radio classique</span>
+          <svg viewBox="0 0 260 96" role="img" aria-label="Schéma : le capteur émet vers la centrale, sans retour">
+            <circle cx="36" cy="48" r="20" fill="#f5f5f7" stroke="#d2d2d7"></circle>
+            <text x="36" y="52" text-anchor="middle" font-size="10" fill="#6e6e73">capteur</text>
+            <rect x="180" y="26" width="64" height="44" rx="9" fill="#f5f5f7" stroke="#d2d2d7"></rect>
+            <text x="212" y="52" text-anchor="middle" font-size="10" fill="#6e6e73">centrale</text>
+            <path d="M60 48 L172 48" fill="none" stroke="#86868b" stroke-width="2"></path>
+            <path d="M164 42 L174 48 L164 54" fill="none" stroke="#86868b" stroke-width="2"></path>
+            <text x="116" y="36" text-anchor="middle" font-size="10" fill="#86868b">un seul sens</text>
           </svg>
-          <h3>Chacun pour soi</h3>
-          <p>Un capteur au fond du garage est soit à portée de la centrale, soit muet. La seule solution est d'ajouter un répéteur.</p>
+          <h3>Le capteur émet, et c'est tout</h3>
+          <p>Si la trame se perd, personne ne le sait. Une pile vide ou un capteur décroché peut passer inaperçu pendant des semaines.</p>
         </div>
-        <div class="pe-mesh__card">
-          <span class="pe-mesh__tag pe-mesh__tag--new">Zigbee 3.0 — réseau maillé</span>
-          <svg viewBox="0 0 260 150" role="img" aria-label="Schéma maillé : les capteurs se relaient entre eux pour atteindre la centrale">
-            <circle cx="130" cy="75" r="22" fill="#6d4fd1" stroke="#d8caff"></circle>
-            <text x="130" y="79" text-anchor="middle" font-size="9.5" fill="#ffffff">centrale</text>
-            <circle cx="45" cy="30" r="11" fill="rgba(165,140,255,.25)" stroke="#a58cff"></circle>
-            <circle cx="40" cy="120" r="11" fill="rgba(165,140,255,.25)" stroke="#a58cff"></circle>
-            <circle cx="215" cy="35" r="11" fill="rgba(165,140,255,.25)" stroke="#a58cff"></circle>
-            <circle cx="228" cy="125" r="11" fill="rgba(165,140,255,.25)" stroke="#a58cff"></circle>
-            <path d="M56 36 L110 66 M51 114 L110 85 M204 41 L150 66 M217 120 L150 86 M45 41 L40 109 M215 46 L228 114 M56 27 L204 32" fill="none" stroke="#a58cff" stroke-width="1.5"></path>
-            <text x="130" y="146" text-anchor="middle" font-size="9" fill="#d8caff">chaque capteur relaie ses voisins</text>
+        <div class="pe-radio__card">
+          <span class="pe-radio__tag pe-radio__tag--new">Zigbee 3.0 — gamme Élite</span>
+          <svg viewBox="0 0 260 96" role="img" aria-label="Schéma : le capteur émet et la centrale renvoie un accusé de réception">
+            <circle cx="36" cy="48" r="20" fill="#f4f1ff" stroke="#6d4fd1"></circle>
+            <text x="36" y="52" text-anchor="middle" font-size="10" fill="#3d2a86">capteur</text>
+            <rect x="180" y="26" width="64" height="44" rx="9" fill="#6d4fd1"></rect>
+            <text x="212" y="52" text-anchor="middle" font-size="10" fill="#ffffff">centrale</text>
+            <path d="M60 38 L172 38" fill="none" stroke="#6d4fd1" stroke-width="2"></path>
+            <path d="M164 32 L174 38 L164 44" fill="none" stroke="#6d4fd1" stroke-width="2"></path>
+            <path d="M172 62 L60 62" fill="none" stroke="#6d4fd1" stroke-width="2" stroke-dasharray="5 4"></path>
+            <path d="M68 56 L58 62 L68 68" fill="none" stroke="#6d4fd1" stroke-width="2"></path>
+            <text x="116" y="84" text-anchor="middle" font-size="10" fill="#3d2a86">accusé de réception</text>
           </svg>
-          <h3>Chacun relaie les autres</h3>
-          <p>Le capteur le plus éloigné passe par ses voisins pour joindre la centrale. Plus vous ajoutez de capteurs, plus le réseau devient solide.</p>
+          <h3>La centrale accuse réception</h3>
+          <p>Chaque message est confirmé et chiffré. La centrale sait en permanence quels capteurs répondent, lesquels faiblissent, et lequel vient d'être arraché.</p>
         </div>
       </div>
     </div>
@@ -1296,18 +1275,30 @@
     <div class="pv-wrap">
       <div class="pe-table pv-reveal">
         <table>
-          <caption>Ce que ça change, concrètement</caption>
+          <caption>Ce que la centrale Élite fait, et qu'une alarme radio classique ne fait pas</caption>
           <thead>
-            <tr><th scope="col">Critère</th><th scope="col">Radio 433 MHz classique</th><th scope="col">Zigbee 3.0 — gamme Élite</th></tr>
+            <tr><th scope="col">Critère</th><th scope="col">Radio classique</th><th scope="col">Zigbee 3.0 — gamme Élite</th></tr>
           </thead>
           <tbody>
-            <tr><th scope="row">Portée</th><td>Limitée à la distance capteur ↔ centrale</td><td class="pe-win">Étendue par relais successifs entre capteurs</td></tr>
-            <tr><th scope="row">Réactivité</th><td>Délai perceptible sur les longues distances</td><td class="pe-win">Remontée quasi instantanée</td></tr>
-            <tr><th scope="row">Consommation des piles</th><td>Standard</td><td class="pe-win">Nettement plus économe : les piles durent plus longtemps</td></tr>
-            <tr><th scope="row">Grandes propriétés</th><td>Répéteur à ajouter dès que la portée manque</td><td class="pe-win">Le maillage se renforce à chaque capteur ajouté</td></tr>
-            <tr><th scope="row">Évolution domotique</th><td>Fermée à la gamme d'origine</td><td class="pe-win">Ouverte à de nombreux périphériques Zigbee du marché</td></tr>
+            <tr><th scope="row">Sens de communication</th><td>Le capteur émet, sans retour</td><td class="pe-win">Bidirectionnel, avec accusé de réception</td></tr>
+            <tr><th scope="row">Surveillance des capteurs</th><td>Une panne peut passer inaperçue</td><td class="pe-win">La centrale signale un capteur muet, une pile faible ou un arrachement</td></tr>
+            <tr><th scope="row">Consommation</th><td>Standard</td><td class="pe-win">Très économe : les piles durent nettement plus longtemps</td></tr>
+            <tr><th scope="row">Sécurité de la liaison</th><td>Variable selon les systèmes</td><td class="pe-win">Communication chiffrée et anti-brouillage</td></tr>
+            <tr><th scope="row">Écosystème</th><td>Limité à la gamme d'origine</td><td class="pe-win">Standard ouvert : compatible avec de nombreux périphériques Zigbee du marché</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="pe-why pv-reveal" style="margin-top:56px;">
+        <div>
+          <h3>Et si un capteur est trop loin de la centrale ?</h3>
+          <p>C'est la vraie limite à connaître avant d'installer. Les capteurs de votre pack fonctionnent sur pile : pour tenir des années, ils passent l'essentiel de leur temps en veille et <strong>ne relaient pas le signal des autres</strong>. Chacun doit donc être à portée de la centrale.</p>
+          <p>Un garage au fond du jardin, une dépendance, un troisième étage : dans ces cas-là, il faut un équipement Zigbee alimenté sur le secteur pour faire le relais.</p>
+        </div>
+        <div class="pe-warn pe-warn--zig">
+          <p><strong>L'amplificateur Zigbee EXT501ZIG</strong> se branche sur une simple prise, à mi-chemin entre la centrale et la zone qui capte mal. Il étend la portée du réseau et reste alimenté en permanence — c'est lui qui relaie, pas vos capteurs.</p>
+          <p><a href="#PEAcc-{{ section.id }}" style="color:inherit;font-weight:600;">Ajouter un amplificateur à mon pack →</a></p>
+        </div>
       </div>
 
       <div class="pv-reveal" style="margin-top:56px;">
@@ -1337,6 +1328,85 @@
         <div class="pe-warn pe-warn--zig">
           <p><strong>Trois exceptions.</strong> Les modèles <strong>WDS501</strong> (contacteur), <strong>WVD501</strong> (vibration) et <strong>WKE501</strong> (clavier) ne sont pas repris : pour ces trois fonctions, ce sont les versions Zigbee — WDS502Z, WVD502Z et WKE502Z — que nous recommandons.</p>
           <p><strong>Et une limite assumée.</strong> La centrale Élite n'est compatible ni avec Alexa, ni avec Google Home. C'est un choix de sécurité et de confidentialité renforcée : votre alarme ne transite pas par un assistant vocal tiers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%}
+    Accessory picker. Each stepper feeds one page-wide total: every
+    .pv-price-amount on the page (hero CTA, sticky bar, mid band, final
+    CTA) shows pack + accessories, so the price a visitor reads is always
+    the price they'll be charged. Adding to cart posts the accessories to
+    /cart/add.js first, then lets the theme's own product form submit the
+    pack, so the cart drawer opens with every line already in it.
+  {%- endcomment -%}
+  <section class="pv-section pv-section--alt" id="PEAcc-{{ section.id }}">
+    <div class="pv-wrap">
+      <div class="pv-contents__head pv-reveal">
+        <span class="pv-eyebrow pe-eyebrow--bronze">Complétez votre pack</span>
+        <h2>Ajoutez ce qui manque, sans quitter cette page</h2>
+        <p>Les accessoires s'appairent à la centrale depuis l'application, en quelques secondes. Le prix se met à jour au fur et à mesure.</p>
+      </div>
+
+      <div class="pe-acc pv-reveal">
+        {%- for acc_handle in acc_handles -%}
+          {%- assign acc = all_products[acc_handle] -%}
+          {%- assign acc_variant = acc.variants.first -%}
+          {%- if acc.available and acc_variant -%}
+            {%- liquid
+              assign acc_is_zigbee = true
+              case acc_variant.sku
+                when 'EXT501ZIG'
+                  assign acc_name = 'Amplificateur Zigbee EXT501ZIG'
+                  assign acc_why = "Le seul moyen d'étendre la portée du réseau : branché sur une prise, il relaie le signal vers un garage, une dépendance ou un étage éloigné."
+                when 'DAWDS502Z'
+                  assign acc_name = "Contacteur d'ouverture WDS502Z"
+                  assign acc_why = "Une porte ou une fenêtre de plus à surveiller. Le pack en compte déjà 5 — comptez-en un par ouverture accessible."
+                when 'DAWVD502Z'
+                  assign acc_name = 'Détecteur de vibration WVD502Z'
+                  assign acc_why = "Une baie vitrée de plus : l'alarme part au premier choc, avant que la vitre ne cède."
+                when 'DAWSD501'
+                  assign acc_name = 'Détecteur de fumée WSD501'
+                  assign acc_why = "Le seul risque que l'alarme ne couvre pas encore. Alerte sur votre téléphone, même quand vous êtes absent."
+                  assign acc_is_zigbee = false
+                else
+                  assign acc_name = acc.title
+                  assign acc_why = ''
+                  assign acc_is_zigbee = false
+              endcase
+            -%}
+            <div class="pe-acc__card" data-pe-acc data-pe-acc-id="{{ acc_variant.id }}" data-pe-acc-price="{{ acc_variant.price }}">
+              {%- if acc.featured_image -%}
+                <div class="pe-acc__photo">
+                  {{ acc.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '240,360,480', alt: acc_name }}
+                </div>
+              {%- endif -%}
+              <div class="pe-acc__body">
+                <span class="pe-acc__ref{% unless acc_is_zigbee %} pe-acc__ref--plain{% endunless %}">{% if acc_is_zigbee %}Zigbee 3.0{% else %}Compatible Élite{% endif %}</span>
+                <span class="pe-acc__name">{{ acc_name }}</span>
+                <p class="pe-acc__why">{{ acc_why }}</p>
+                <span class="pe-acc__price">{{ acc_variant.price | money }}</span>
+                <div class="pe-step">
+                  <button type="button" data-pe-minus aria-label="Retirer un {{ acc_name }}" disabled>−</button>
+                  <span class="pe-step__qty" data-pe-qty aria-live="polite" aria-label="Quantité : {{ acc_name }}">0</span>
+                  <button type="button" data-pe-plus aria-label="Ajouter un {{ acc_name }}">+</button>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="pe-total pv-reveal">
+        <div>
+          <div class="pe-total__k">Total de votre configuration</div>
+          <div class="pe-total__v"><span class="pv-price-amount">{{ variant.price | money }}</span></div>
+          <p class="pe-total__d" data-pe-total-detail>Pack Élite PA570 seul. Ajoutez des accessoires ci-dessus pour compléter votre installation.</p>
+        </div>
+        <div class="pe-total__actions">
+          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: false -%}
+          <p class="pe-total__d">Livraison sous 2 jours ouvrés · Garantie 2 ans</p>
         </div>
       </div>
     </div>
@@ -1553,7 +1623,7 @@
 
         <details>
           <summary>Qu'apporte le Zigbee par rapport à une alarme classique&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">Le Zigbee 3.0 forme un réseau maillé : chaque capteur relaie ses voisins au lieu de parler seul à la centrale. La portée s'étend donc à mesure que vous ajoutez des accessoires, la remontée d'information est quasi instantanée et la consommation des piles est nettement plus faible qu'en radio 433 MHz classique. La passerelle intégrée est également compatible avec de nombreux périphériques Zigbee du marché.</p>
+          <p class="pv-faq__a">Le Zigbee 3.0 est une radio bidirectionnelle et chiffrée : la centrale accuse réception de chaque message. Elle sait donc en permanence quels capteurs répondent, lesquels ont une pile qui faiblit, et lequel vient d'être arraché — ce qu'une radio classique, où le capteur émet sans retour, ne permet pas. Les capteurs consomment aussi beaucoup moins, donc les piles durent plus longtemps. À savoir en revanche : les capteurs fonctionnant sur pile ne relaient pas le signal entre eux. Pour couvrir une zone éloignée de la centrale, il faut un amplificateur Zigbee branché sur une prise.</p>
         </details>
 
         <details>
@@ -1757,28 +1827,173 @@
         });
       }
 
-      /* Failover simulator: three tabs, one visible panel. Panels are
-         toggled with the `hidden` attribute rather than a class so the
-         hidden ones stay out of the accessibility tree and out of the
-         page's find-in-page results. */
-      var tabs = Array.prototype.slice.call(root.querySelectorAll('.pe-sim__tab'));
-      function selectTab(tab) {
-        tabs.forEach(function (t) {
-          var isSel = t === tab;
-          t.setAttribute('aria-selected', isSel ? 'true' : 'false');
-          var panel = document.getElementById(t.getAttribute('aria-controls'));
-          if (panel) panel.hidden = !isSel;
-        });
+      /* Accessory picker.
+         One page-wide total: the pack plus whatever the visitor has
+         stepped up, written into every .pv-price-amount on the page —
+         hero CTA, sticky bar, mid band, total bar, final CTA — so the
+         figure being read is always the figure being charged. */
+      var basePrice = {{ variant.price | json }};
+      var baseHasCompare = {{ variant_has_compare | json }};
+      var picks = {};
+      var totalDetailEl = root.querySelector('[data-pe-total-detail]');
+      var totalDetailBase = totalDetailEl ? totalDetailEl.textContent : '';
+      var priceAmountEls = root.querySelectorAll('.pv-price-amount');
+      var priceCompareEls = root.querySelectorAll('.pv-price-compare');
+
+      function formatEuros(cents) {
+        return (cents / 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '\u00A0€';
       }
-      tabs.forEach(function (tab, i) {
-        tab.addEventListener('click', function () { selectTab(tab); });
-        tab.addEventListener('keydown', function (e) {
-          var next = null;
-          if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
-          if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
-          if (next) { e.preventDefault(); next.focus(); selectTab(next); }
+
+      /* Kept in sync with the running total so the Alma simulation quotes
+         the configured pack, not the bare one. */
+      var priceCents = basePrice;
+
+      function refreshTotal() {
+        var extra = 0;
+        var count = 0;
+        Object.keys(picks).forEach(function (id) {
+          extra += picks[id].qty * picks[id].price;
+          count += picks[id].qty;
+        });
+        priceCents = basePrice + extra;
+
+        priceAmountEls.forEach(function (el) { el.textContent = formatEuros(priceCents); });
+        /* A crossed-out pack price next to a configured total would be
+           comparing two different things, so it only shows on the bare pack. */
+        priceCompareEls.forEach(function (el) {
+          el.classList.toggle('is-visible', baseHasCompare && count === 0);
+        });
+
+        if (totalDetailEl) {
+          totalDetailEl.textContent = count === 0
+            ? totalDetailBase
+            : 'Pack Élite PA570 ' + formatEuros(basePrice) + ' + ' + count + (count > 1 ? ' accessoires ' : ' accessoire ') + formatEuros(extra);
+        }
+      }
+
+      function registerPick(id, price) {
+        if (!picks[id]) picks[id] = { qty: 0, price: price };
+        return picks[id];
+      }
+
+      root.querySelectorAll('[data-pe-acc]').forEach(function (card) {
+        var id = card.getAttribute('data-pe-acc-id');
+        var price = parseInt(card.getAttribute('data-pe-acc-price'), 10);
+        if (!id || isNaN(price)) return;
+        registerPick(id, price);
+
+        var qtyEl = card.querySelector('[data-pe-qty]');
+        var minusBtn = card.querySelector('[data-pe-minus]');
+        var plusBtn = card.querySelector('[data-pe-plus]');
+
+        function setQty(next) {
+          var q = Math.max(0, Math.min(10, next));
+          picks[id].qty = q;
+          if (qtyEl) qtyEl.textContent = q;
+          if (minusBtn) minusBtn.disabled = q === 0;
+          if (plusBtn) plusBtn.disabled = q === 10;
+          card.classList.toggle('is-picked', q > 0);
+          refreshTotal();
+        }
+        if (minusBtn) minusBtn.addEventListener('click', function () { setQty(picks[id].qty - 1); });
+        if (plusBtn) plusBtn.addEventListener('click', function () { setQty(picks[id].qty + 1); });
+      });
+
+      /* The SIM card is a one-or-none add rather than a stepper. */
+      root.querySelectorAll('[data-pe-acc-toggle]').forEach(function (btn) {
+        var id = btn.getAttribute('data-pe-acc-id');
+        var price = parseInt(btn.getAttribute('data-pe-acc-price'), 10);
+        if (!id || isNaN(price)) return;
+        registerPick(id, price);
+
+        btn.addEventListener('click', function () {
+          var on = picks[id].qty === 0;
+          picks[id].qty = on ? 1 : 0;
+          btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+          btn.textContent = on
+            ? btn.getAttribute('data-pe-label-remove')
+            : btn.getAttribute('data-pe-label-add');
+          refreshTotal();
         });
       });
+
+      /* Add to cart with accessories.
+         The accessories go in first through /cart/add.js, then the
+         theme's own product form is submitted for the pack itself — so
+         the cart drawer opens once, with every line already in it, and
+         nothing about the theme's normal add-to-cart path changes when
+         no accessory is selected. */
+      var productForm = document.getElementById('{{ form_id }}');
+      var errorEl = productForm ? productForm.querySelector('.product-form__error-message') : null;
+      var atcButtons = Array.prototype.slice.call(root.querySelectorAll('button[form="{{ form_id }}"]'));
+      var addBusy = false;
+
+      function selectedItems() {
+        var items = [];
+        Object.keys(picks).forEach(function (id) {
+          if (picks[id].qty > 0) items.push({ id: Number(id), quantity: picks[id].qty });
+        });
+        return items;
+      }
+
+      function clearPicks() {
+        Object.keys(picks).forEach(function (id) { picks[id].qty = 0; });
+        root.querySelectorAll('[data-pe-acc]').forEach(function (card) {
+          card.classList.remove('is-picked');
+          var qtyEl = card.querySelector('[data-pe-qty]');
+          var minusBtn = card.querySelector('[data-pe-minus]');
+          var plusBtn = card.querySelector('[data-pe-plus]');
+          if (qtyEl) qtyEl.textContent = '0';
+          if (minusBtn) minusBtn.disabled = true;
+          if (plusBtn) plusBtn.disabled = false;
+        });
+        root.querySelectorAll('[data-pe-acc-toggle]').forEach(function (btn) {
+          btn.setAttribute('aria-pressed', 'false');
+          btn.textContent = btn.getAttribute('data-pe-label-add');
+        });
+        refreshTotal();
+      }
+
+      atcButtons.forEach(function (btn) {
+        btn.addEventListener('click', function (event) {
+          if (addBusy) return;
+          var items = selectedItems();
+          if (!items.length) return; /* nothing extra — the theme handles it */
+
+          event.preventDefault();
+          addBusy = true;
+          var toRestore = atcButtons.filter(function (b) { return !b.disabled; });
+          toRestore.forEach(function (b) { b.disabled = true; });
+
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ items: items })
+          })
+            .then(function (response) {
+              if (!response.ok) throw new Error('cart/add failed');
+              return response.json();
+            })
+            .then(function () { clearPicks(); })
+            .catch(function () {
+              if (errorEl) {
+                errorEl.textContent = "Les accessoires n'ont pas pu être ajoutés. Seul le pack a été mis au panier.";
+                errorEl.hidden = false;
+              }
+            })
+            .then(function () {
+              toRestore.forEach(function (b) { b.disabled = false; });
+              addBusy = false;
+              if (productForm && typeof productForm.requestSubmit === 'function') {
+                productForm.requestSubmit();
+              } else if (productForm) {
+                productForm.submit();
+              }
+            });
+        });
+      });
+
+      refreshTotal();
 
       /* Generic modal open/close — the Alma dialog is the only one on this
          page, but the helper stays generic so it matches the Vigilia forks.
@@ -1808,10 +2023,8 @@
          applies (and only shows) from 200 €, with a real 7.34 % fee. */
       var almaModal = document.getElementById('PEAlmaModal-{{ section.id }}');
       var almaOpenBtn = root.querySelector('[data-pv-alma-open]');
-      var priceCents = {{ variant.price | json }};
-      function formatEuros(cents) {
-        return (cents / 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-      }
+      /* priceCents and formatEuros are the accessory picker's — the
+         Alma simulation follows the configured total, not the bare pack. */
       function updateAlmaAmounts() {
         if (!almaModal) return;
         var totalEl = almaModal.querySelector('[data-pv-alma-total]');
