@@ -763,7 +763,7 @@
         <h3>Ce que la carte SIM apporte</h3>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Une voie de secours indépendante de votre box, qui ne s'active que si Internet tombe.</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><strong>L'application reste utilisable</strong> pendant la coupure : armer, désarmer, consulter l'historique.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><strong>L'application reste utilisable</strong> pendant la coupure : armer, désarmer, consulter l'historique. C'est la seule différence avec les gammes Vigilia et Touch, où la carte SIM ne porte que les SMS et les appels.</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Les alertes d'intrusion continuent d'arriver, par notification, SMS et appel téléphonique.</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Une alerte en cas d'arrachement d'un capteur, même réseau coupé.</li>
         </ul>
@@ -1069,9 +1069,9 @@
 
     <div class="steps">
       <div class="step">
-        <div class="step__n">Étape 1</div>
-        <h3>Valider la maquette sur le PA570</h3>
-        <p>Vous tranchez sur le ton, la profondeur technique et l'ordre des blocs. Je construis la vraie section Liquid et je la publie sur un thème de test, pour que vous la voyiez en ligne avant toute mise en production.</p>
+        <div class="step__n">Étape 1 · faite</div>
+        <h3>La page PA570 est en ligne sur un thème de test</h3>
+        <p>Thème <strong>TEST - Page Elite PA570 (Claude)</strong>, non publié. La page live n'est pas touchée : le produit garde son template actuel, la nouvelle page se prévisualise à part. À vous de juger le rendu réel avant qu'on bascule quoi que ce soit.</p>
       </div>
       <div class="step">
         <div class="step__n">Étape 2</div>
@@ -1085,15 +1085,15 @@
       </div>
     </div>
 
-    <h3 style="color:#fff;font-size:20px;margin-top:56px;">Deux corrections à faire, quoi qu'il arrive</h3>
+    <h3 style="color:#fff;font-size:20px;margin-top:56px;">Deux corrections, tranchées</h3>
     <div class="fixes">
       <div class="fix">
-        <h4>Les caméras en 4G</h4>
-        <p>La description actuelle du PA570 affirme que « l'accès aux caméras est maintenu » avec une carte SIM. Votre propre fiche <code>SIM1ANPA</code> dit l'inverse : les caméras sont en Wi-Fi uniquement. C'est une promesse non tenue qui finira en retour produit ou en litige.</p>
+        <h4>Les caméras en 4G — corrigé</h4>
+        <p>La description actuelle du PA570 affirme que « l'accès aux caméras est maintenu » avec une carte SIM. C'est faux : les caméras restent en Wi-Fi uniquement, carte SIM ou non. La seule différence de l'Élite face aux gammes Vigilia et Touch est que <strong>l'application reste active</strong> pendant la coupure. La page de test dit exactement cela, partout.</p>
       </div>
       <div class="fix">
-        <h4>L'autonomie de la batterie</h4>
-        <p>La description du PA570 annonce <code>12 h</code> de batterie de secours ; la fiche de la centrale PA501Z annonce <code>10 h</code>. Il faut trancher — j'ai retenu 10 h dans cette maquette, la valeur la plus prudente.</p>
+        <h4>L'autonomie de la batterie — <code>10 h</code></h4>
+        <p>La description du PA570 annonçait <code>12 h</code>, la fiche de la centrale PA501Z <code>10 h</code>. Retenu : <strong>10 h</strong>, par sécurité. Reste à corriger la description du produit elle-même, qui affiche encore 12 h.</p>
       </div>
     </div>
   </div>
