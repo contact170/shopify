@@ -128,23 +128,12 @@
 
   /* ---------- zigbee ---------- */
   .zigband{background:var(--zig-bg);border-block:1px solid var(--zig-line);}
-  .radio{display:grid;grid-template-columns:1fr;gap:20px;margin-top:36px;}
-  @media (min-width:760px){.radio{grid-template-columns:1fr 1fr;gap:24px;}}
+  .trio{display:grid;grid-template-columns:1fr;gap:16px;margin-top:36px;}
+  @media (min-width:700px){.trio{grid-template-columns:repeat(3,1fr);gap:20px;}}
+  .trio__ic{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--zig-bg);color:var(--zig);margin-bottom:16px;}
   .radio__card{background:#fff;border:1px solid var(--zig-line);border-radius:18px;padding:24px;}
-  .radio__card h3{font-size:16px;margin-top:16px;}
+  .radio__card h3{font-size:16px;margin-top:0;}
   .radio__card p{font-size:14px;line-height:1.6;color:var(--gray);margin-top:8px;}
-  .radio__card svg{width:100%;height:auto;}
-  .radio__tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:999px;margin-bottom:18px;}
-  .radio__tag--old{background:var(--bg-alt);color:var(--gray);}
-  .radio__tag--new{background:var(--zig-bg);color:var(--zig-ink);}
-
-  .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:36px;}
-  .tbl table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px;}
-  .tbl caption{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gray);font-weight:700;padding-bottom:14px;}
-  .tbl th,.tbl td{padding:15px 16px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5;}
-  .tbl thead th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--gray);font-weight:700;border-bottom:1px solid var(--ink);}
-  .tbl tbody th{font-weight:600;}
-  .tbl td.win{color:var(--zig-ink);font-weight:600;}
 
   .why{display:grid;grid-template-columns:1fr;gap:28px;align-items:start;margin-top:48px;}
   @media (min-width:900px){.why{grid-template-columns:1fr 1fr;gap:44px;}}
@@ -346,40 +335,31 @@
   <div class="wrap">
     <div class="head">
       <span class="eyebrow eyebrow--zig">Point 3 · le Zigbee</span>
-      <h2>Plus un mot sur le maillage</h2>
-      <p class="lead">Vos capteurs sont sur pile : ils ne relaient pas le signal entre eux. L'argument devient donc la radio bidirectionnelle — le capteur émet, et la centrale accuse réception. C'est vérifiable, c'est vrai, et ça ouvre sur la vente de l'amplificateur.</p>
+      <h2>On ne garde que ce qui est vérifiable</h2>
+      <p class="lead">Trois blocs sont retirés : « le réseau des capteurs », la comparaison avec la radio classique — qui revenait à dénigrer vos propres gammes Vigilia et Touch — et les scénarios domotique, faute d'être validés. Reste ce qui vient de vos fiches produit.</p>
     </div>
 
-    <div class="radio">
+    <div class="trio">
       <div class="radio__card">
-        <span class="radio__tag radio__tag--old">Radio classique</span>
-        <svg viewBox="0 0 260 96" role="img" aria-label="Le capteur émet vers la centrale, sans retour">
-          <circle cx="36" cy="48" r="20" fill="#f5f5f7" stroke="#d2d2d7"/>
-          <text x="36" y="52" text-anchor="middle" font-size="10" fill="#6e6e73">capteur</text>
-          <rect x="180" y="26" width="64" height="44" rx="9" fill="#f5f5f7" stroke="#d2d2d7"/>
-          <text x="212" y="52" text-anchor="middle" font-size="10" fill="#6e6e73">centrale</text>
-          <path d="M60 48 L172 48" fill="none" stroke="#86868b" stroke-width="2"/>
-          <path d="M164 42 L174 48 L164 54" fill="none" stroke="#86868b" stroke-width="2"/>
-          <text x="116" y="36" text-anchor="middle" font-size="10" fill="#86868b">un seul sens</text>
-        </svg>
-        <h3>Le capteur émet, et c'est tout</h3>
-        <p>Si la trame se perd, personne ne le sait. Une pile vide ou un capteur décroché peut passer inaperçu pendant des semaines.</p>
+        <span class="trio__ic" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 11h7l-2 9 9-11h-7l2-9Z"/></svg>
+        </span>
+        <h3>Une passerelle intégrée à la centrale</h3>
+        <p>La PA501Z embarque sa passerelle Zigbee 3.0. Aucun boîtier supplémentaire, aucune application tierce.</p>
       </div>
       <div class="radio__card">
-        <span class="radio__tag radio__tag--new">Zigbee 3.0 — gamme Élite</span>
-        <svg viewBox="0 0 260 96" role="img" aria-label="Le capteur émet et la centrale renvoie un accusé de réception">
-          <circle cx="36" cy="48" r="20" fill="#f4f1ff" stroke="#6d4fd1"/>
-          <text x="36" y="52" text-anchor="middle" font-size="10" fill="#3d2a86">capteur</text>
-          <rect x="180" y="26" width="64" height="44" rx="9" fill="#6d4fd1"/>
-          <text x="212" y="52" text-anchor="middle" font-size="10" fill="#ffffff">centrale</text>
-          <path d="M60 38 L172 38" fill="none" stroke="#6d4fd1" stroke-width="2"/>
-          <path d="M164 32 L174 38 L164 44" fill="none" stroke="#6d4fd1" stroke-width="2"/>
-          <path d="M172 62 L60 62" fill="none" stroke="#6d4fd1" stroke-width="2" stroke-dasharray="5 4"/>
-          <path d="M68 56 L58 62 L68 68" fill="none" stroke="#6d4fd1" stroke-width="2"/>
-          <text x="116" y="84" text-anchor="middle" font-size="10" fill="#3d2a86">accusé de réception</text>
-        </svg>
-        <h3>La centrale accuse réception</h3>
-        <p>Chaque message est confirmé et chiffré. La centrale sait en permanence quels capteurs répondent, lesquels faiblissent, et lequel vient d'être arraché.</p>
+        <span class="trio__ic" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        </span>
+        <h3>Neuf capteurs Zigbee dans la boîte</h3>
+        <p>5 contacteurs WDS502Z et 4 détecteurs de vibration WVD502Z, appairés depuis l'application.</p>
+      </div>
+      <div class="radio__card">
+        <span class="trio__ic" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        </span>
+        <h3>Liaison chiffrée et supervisée</h3>
+        <p>Radio bidirectionnelle chiffrée avec les accessoires, alerte en cas de tentative d'arrachement.</p>
       </div>
     </div>
   </div>
@@ -387,31 +367,25 @@
 
 <section class="sec">
   <div class="wrap">
-    <div class="tbl">
-      <table>
-        <caption>Ce que la centrale Élite fait, et qu'une alarme radio classique ne fait pas</caption>
-        <thead>
-          <tr><th scope="col">Critère</th><th scope="col">Radio classique</th><th scope="col">Zigbee 3.0 — gamme Élite</th></tr>
-        </thead>
-        <tbody>
-          <tr><th scope="row">Sens de communication</th><td>Le capteur émet, sans retour</td><td class="win">Bidirectionnel, avec accusé de réception</td></tr>
-          <tr><th scope="row">Surveillance des capteurs</th><td>Une panne peut passer inaperçue</td><td class="win">La centrale signale un capteur muet, une pile faible ou un arrachement</td></tr>
-          <tr><th scope="row">Consommation</th><td>Standard</td><td class="win">Très économe : les piles durent nettement plus longtemps</td></tr>
-          <tr><th scope="row">Sécurité de la liaison</th><td>Variable selon les systèmes</td><td class="win">Communication chiffrée et anti-brouillage</td></tr>
-          <tr><th scope="row">Écosystème</th><td>Limité à la gamme d'origine</td><td class="win">Standard ouvert : compatible avec de nombreux périphériques Zigbee du marché</td></tr>
-        </tbody>
-      </table>
+    <div class="why" style="margin-top:0;">
+      <div>
+        <h3>Et si un capteur Zigbee est trop loin de la centrale ?</h3>
+        <p>Les capteurs du pack fonctionnent sur pile : ils passent l'essentiel de leur temps en veille et <strong>ne relaient pas le signal des autres</strong>. Chacun doit être à portée de la centrale. Pour une zone éloignée, il faut un relais alimenté en permanence.</p>
+      </div>
+      <div class="aside">
+        <p><strong>L'amplificateur EXT501ZIG</strong> se branche sur une prise, à mi-chemin, et étend la portée du réseau Zigbee.</p>
+        <p><strong>Attention :</strong> c'est un amplificateur <strong>Zigbee</strong>. Il étend la portée des accessoires Zigbee de la gamme Élite, et uniquement ceux-là — aucun effet sur les accessoires radio de la gamme SA501, que la centrale accepte par ailleurs.</p>
+      </div>
     </div>
 
     <div class="why">
       <div>
-        <h3>Et si un capteur est trop loin de la centrale ?</h3>
-        <p>C'est la vraie limite à connaître avant d'installer. Les capteurs du pack fonctionnent sur pile : pour tenir des années, ils passent l'essentiel de leur temps en veille et <strong>ne relaient pas le signal des autres</strong>. Chacun doit donc être à portée de la centrale.</p>
-        <p>Un garage au fond du jardin, une dépendance, un troisième étage : dans ces cas-là, il faut un équipement Zigbee alimenté sur le secteur pour faire le relais.</p>
+        <h3>Ajouter des équipements Zigbee du commerce</h3>
+        <p>Deux conditions pour qu'un équipement soit reconnu par la centrale : être en <strong>Zigbee 3.0</strong>, et être compatible <strong>Tuya</strong>. Prises connectées, ampoules, capteurs de température, têtes thermostatiques sont les catégories qui répondent le plus souvent aux deux critères.</p>
       </div>
       <div class="aside">
-        <p><strong>L'amplificateur Zigbee EXT501ZIG</strong> se branche sur une simple prise, à mi-chemin entre la centrale et la zone qui capte mal. Il étend la portée du réseau et reste alimenté en permanence — c'est lui qui relaie, pas vos capteurs.</p>
-        <p>La limite technique devient l'argument de vente du premier encart ci-dessous.</p>
+        <p><strong>Une réserve, dite franchement.</strong> Le fonctionnement à 100 % des accessoires qui ne sont pas de marque Daewoo n'est pas garanti, même lorsqu'ils annoncent Zigbee 3.0 et Tuya : les implémentations varient d'un fabricant à l'autre.</p>
+        <p>La page invite à vous appeler avant l'achat plutôt que de promettre une compatibilité universelle.</p>
       </div>
     </div>
   </div>
@@ -528,8 +502,8 @@
       </div>
       <div class="dec__item">
         <div class="dec__k">Zigbee</div>
-        <h3>Aucune mention de maillage</h3>
-        <p>Les capteurs sur pile ne relaient pas. L'argument est la radio bidirectionnelle avec accusé de réception, et la portée se traite avec l'amplificateur EXT501ZIG.</p>
+        <h3>Ni maillage, ni comparaison, ni scénarios</h3>
+        <p>Les capteurs sur pile ne relaient pas. Pas de comparaison avec la radio classique : elle dénigre Vigilia et Touch. Pas de scénarios domotique tant qu'ils ne sont pas validés. L'amplificateur est Zigbee uniquement, et le tiers doit être Zigbee 3.0 + Tuya, sans garantie.</p>
       </div>
       <div class="dec__item">
         <div class="dec__k">Avis clients</div>

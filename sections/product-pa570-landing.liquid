@@ -20,11 +20,14 @@
   2. A carte SIM M2M module, sourced verbatim from the merchant-authored
      description of product SIM1ANPA ("Carte SIM M2M Afone 1 An Prépayé -
      Pour centrale Élite").
-  3. A Zigbee 3.0 module, sourced from the merchant-authored description
-     of DAPA501Z (the centrale sold alone). It explains bidirectional,
-     acknowledged, encrypted radio — NOT mesh routing. The merchant
-     confirmed that only mains-powered Zigbee equipment relays on this
-     system; the pack's sensors are battery end devices and do not.
+  3. A Zigbee 3.0 module, held to what the merchant has confirmed: no
+     mesh routing (the pack's sensors are battery end devices and don't
+     relay), no comparison against 433 MHz radio (it reads as an attack
+     on the merchant's own Vigilia and Touch ranges), and no automation
+     scenarios (unconfirmed, so out). The EXT501ZIG amplifier extends
+     the ZIGBEE network only — not the SA501 RF accessories the centrale
+     also accepts. Third-party devices need Zigbee 3.0 AND Tuya, and
+     even then non-Daewoo accessories carry no guarantee.
   4. An accessory picker whose steppers re-price every CTA on the page.
 
   Two facts are deliberately NOT taken from this product's own current
@@ -666,7 +669,6 @@
     .pe-table thead th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--pv-gray);font-weight:700;border-bottom:1px solid var(--pv-ink);}
     .pe-table tbody th{font-weight:600;color:var(--pv-ink);}
     .pe-table td.pe-num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600;}
-    .pe-table td.pe-win{color:var(--pe-zig-ink);font-weight:600;}
     .pv .pe-table__note{font-size:13.5px;color:var(--pv-gray);margin-top:16px;}
 
     /* ---- checklist ---- */
@@ -675,35 +677,17 @@
     .pe-check li{font-size:14.5px;line-height:1.55;display:flex;gap:10px;align-items:flex-start;color:var(--pv-ink);}
     .pe-check svg{flex-shrink:0;margin-top:3px;color:var(--pv-navy);}
 
-    /* ---- Zigbee: one-way vs two-way radio ---- */
+    /* ---- Zigbee: what the protocol actually covers ---- */
     .pe-zigband{background:var(--pe-zig-bg);border-block:1px solid var(--pe-zig-line);}
-    .pe-radio{display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;}
-    @media (min-width:760px){.pe-radio{grid-template-columns:1fr 1fr;gap:24px;}}
-    .pe-radio__card{background:#fff;border:1px solid var(--pe-zig-line);border-radius:18px;padding:24px;}
-    .pe-radio__card h3{font-size:16px;font-weight:600;margin-top:16px;}
-    .pv .pe-radio__card p{font-size:14px;line-height:1.6;color:var(--pv-gray);margin-top:8px;}
-    .pe-radio__card svg{width:100%;height:auto;max-width:100%;}
-    .pe-radio__tag{
-      display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;
-      text-transform:uppercase;padding:5px 11px;border-radius:999px;margin-bottom:18px;
+    .pe-zig3{display:grid;grid-template-columns:1fr;gap:16px;margin-top:40px;}
+    @media (min-width:700px){.pe-zig3{grid-template-columns:repeat(3,1fr);gap:20px;}}
+    .pe-zig3__card{background:#fff;border:1px solid var(--pe-zig-line);border-radius:18px;padding:24px;}
+    .pe-zig3__ic{
+      width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+      background:var(--pe-zig-bg);color:var(--pe-zig);margin-bottom:16px;
     }
-    .pe-radio__tag--old{background:var(--pv-bg-alt);color:var(--pv-gray);}
-    .pe-radio__tag--new{background:var(--pe-zig-bg);color:var(--pe-zig-ink);}
-
-    /* ---- domotique cards + scenarios ---- */
-    .pe-domo{display:grid;grid-template-columns:1fr;gap:14px;margin-top:32px;}
-    @media (min-width:560px){.pe-domo{grid-template-columns:1fr 1fr;}}
-    @media (min-width:960px){.pe-domo{grid-template-columns:repeat(4,1fr);}}
-    .pe-domo__c{border:1px solid var(--pv-line);border-radius:16px;padding:20px;background:#fff;}
-    .pe-domo__c h3{font-size:15px;font-weight:600;}
-    .pe-domo__c p{font-size:13px;color:var(--pv-gray);line-height:1.55;margin-top:7px;}
-    .pe-scen{display:flex;flex-direction:column;gap:10px;margin-top:26px;}
-    .pe-scen__row{
-      display:flex;gap:12px;align-items:center;flex-wrap:wrap;
-      border:1px dashed var(--pe-zig-line);background:var(--pe-zig-bg);border-radius:14px;padding:15px 18px;font-size:14.5px;
-    }
-    .pe-scen__if{font-weight:600;color:var(--pe-zig-ink);}
-    .pe-scen__arrow{color:var(--pe-zig);font-weight:700;}
+    .pe-zig3__card h3{font-size:16px;font-weight:600;letter-spacing:-.01em;}
+    .pv .pe-zig3__card p{font-size:14px;line-height:1.6;color:var(--pv-gray);margin-top:8px;}
 
     /* ---- accessory picker: cards with a stepper that re-prices the page ---- */
     .pe-acc{display:grid;grid-template-columns:1fr;gap:16px;}
@@ -975,7 +959,7 @@
           <div class="pe-spec">
             <div class="pe-spec__k">Application</div>
             <div class="pe-spec__v">Daewoo Home Connect</div>
-            <p class="pe-spec__n">iOS et Android, gratuite. Alarme, caméras et scénarios au même endroit.</p>
+            <p class="pe-spec__n">iOS et Android, gratuite. Alarme et caméras au même endroit.</p>
           </div>
         </div>
 
@@ -1077,10 +1061,10 @@
               <td><span class="pe-state pe-state--ko"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Non<span class="pe-state__note">Wi-Fi coupé, et la caméra intérieure est sur secteur</span></span></td>
             </tr>
             <tr>
-              <th scope="row">Scénarios domotique Zigbee</th>
+              <th scope="row">Liaison avec les capteurs Zigbee</th>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Le Zigbee ne dépend pas d'internet</span></span></td>
-              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Sauf les équipements branchés sur le secteur</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Les capteurs sont sur pile, la centrale sur batterie</span></span></td>
             </tr>
           </tbody>
         </table>
@@ -1203,7 +1187,7 @@
                 aria-pressed="false"
               >Ajouter la carte SIM — {{ sim_variant.price | money }}</button>
             {%- endif -%}
-            <a href="{{ sim_card.url }}" class="pv-btn pv-btn--ghost pv-btn--sm">Voir la fiche</a>
+            <a href="{{ sim_card.url }}" target="_blank" rel="noopener" class="pv-btn pv-btn--ghost pv-btn--sm">Voir la fiche</a>
           </div>
         </div>
       {%- endif -%}
@@ -1221,51 +1205,48 @@
   </div>
 
   {%- comment -%}
-    Zigbee module. Deliberately says nothing about mesh routing: on this
-    system the sensors are battery-powered end devices and do not relay
-    for one another. Only mains-powered Zigbee equipment extends the
-    network, which is what the EXT501ZIG amplifier is for — so the range
-    question hands off to the accessory picker below instead of claiming
-    a self-healing mesh that doesn't exist here.
+    Zigbee module, third pass. Everything here is limited to what the
+    merchant has confirmed:
+    - no mesh routing (battery sensors are end devices and don't relay);
+    - no comparison against 433 MHz radio — it reads as an attack on the
+      merchant's own Vigilia and Touch ranges, which use it;
+    - no automation scenarios: the merchant could not confirm them, so
+      they are out rather than "probably true";
+    - the EXT501ZIG amplifier extends the ZIGBEE network only. It does
+      nothing for the RF accessories of the SA501 range that the PA501Z
+      also accepts;
+    - third-party devices must be Zigbee 3.0 AND Tuya, and even then
+      Daewoo does not guarantee every non-Daewoo accessory works.
   {%- endcomment -%}
   <section class="pv-section pe-zigband">
     <div class="pv-wrap">
       <div class="pv-contents__head pv-reveal">
-        <span class="pv-eyebrow pe-eyebrow--zig">Le réseau des capteurs</span>
-        <h2>Zigbee 3.0 : une radio qui parle dans les deux sens</h2>
-        <p>Sur une alarme radio classique, un capteur émet son alerte et espère qu'elle arrive. Sur l'Élite, la centrale répond.</p>
+        <span class="pv-eyebrow pe-eyebrow--zig">La technologie Zigbee</span>
+        <h2>Zigbee 3.0, le protocole des capteurs Élite</h2>
+        <p>Neuf des treize accessoires du pack communiquent avec la centrale en Zigbee 3.0. Voici ce que cela recouvre, exactement.</p>
       </div>
 
-      <div class="pe-radio pv-reveal">
-        <div class="pe-radio__card">
-          <span class="pe-radio__tag pe-radio__tag--old">Radio classique</span>
-          <svg viewBox="0 0 260 96" role="img" aria-label="Schéma : le capteur émet vers la centrale, sans retour">
-            <circle cx="36" cy="48" r="20" fill="#f5f5f7" stroke="#d2d2d7"></circle>
-            <text x="36" y="52" text-anchor="middle" font-size="10" fill="#6e6e73">capteur</text>
-            <rect x="180" y="26" width="64" height="44" rx="9" fill="#f5f5f7" stroke="#d2d2d7"></rect>
-            <text x="212" y="52" text-anchor="middle" font-size="10" fill="#6e6e73">centrale</text>
-            <path d="M60 48 L172 48" fill="none" stroke="#86868b" stroke-width="2"></path>
-            <path d="M164 42 L174 48 L164 54" fill="none" stroke="#86868b" stroke-width="2"></path>
-            <text x="116" y="36" text-anchor="middle" font-size="10" fill="#86868b">un seul sens</text>
-          </svg>
-          <h3>Le capteur émet, et c'est tout</h3>
-          <p>Si la trame se perd, personne ne le sait. Une pile vide ou un capteur décroché peut passer inaperçu pendant des semaines.</p>
+      <div class="pe-zig3 pv-reveal">
+        <div class="pe-zig3__card">
+          <span class="pe-zig3__ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 11h7l-2 9 9-11h-7l2-9Z"></path></svg>
+          </span>
+          <h3>Une passerelle intégrée à la centrale</h3>
+          <p>La PA501Z embarque sa passerelle Zigbee 3.0. Aucun boîtier supplémentaire à brancher, aucune application tierce à installer.</p>
         </div>
-        <div class="pe-radio__card">
-          <span class="pe-radio__tag pe-radio__tag--new">Zigbee 3.0 — gamme Élite</span>
-          <svg viewBox="0 0 260 96" role="img" aria-label="Schéma : le capteur émet et la centrale renvoie un accusé de réception">
-            <circle cx="36" cy="48" r="20" fill="#f4f1ff" stroke="#6d4fd1"></circle>
-            <text x="36" y="52" text-anchor="middle" font-size="10" fill="#3d2a86">capteur</text>
-            <rect x="180" y="26" width="64" height="44" rx="9" fill="#6d4fd1"></rect>
-            <text x="212" y="52" text-anchor="middle" font-size="10" fill="#ffffff">centrale</text>
-            <path d="M60 38 L172 38" fill="none" stroke="#6d4fd1" stroke-width="2"></path>
-            <path d="M164 32 L174 38 L164 44" fill="none" stroke="#6d4fd1" stroke-width="2"></path>
-            <path d="M172 62 L60 62" fill="none" stroke="#6d4fd1" stroke-width="2" stroke-dasharray="5 4"></path>
-            <path d="M68 56 L58 62 L68 68" fill="none" stroke="#6d4fd1" stroke-width="2"></path>
-            <text x="116" y="84" text-anchor="middle" font-size="10" fill="#3d2a86">accusé de réception</text>
-          </svg>
-          <h3>La centrale accuse réception</h3>
-          <p>Chaque message est confirmé et chiffré. La centrale sait en permanence quels capteurs répondent, lesquels faiblissent, et lequel vient d'être arraché.</p>
+        <div class="pe-zig3__card">
+          <span class="pe-zig3__ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          </span>
+          <h3>Neuf capteurs Zigbee dans la boîte</h3>
+          <p>5 contacteurs d'ouverture WDS502Z et 4 détecteurs de vibration WVD502Z, appairés à la centrale depuis l'application.</p>
+        </div>
+        <div class="pe-zig3__card">
+          <span class="pe-zig3__ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+          </span>
+          <h3>Liaison chiffrée et supervisée</h3>
+          <p>La centrale communique en radio bidirectionnelle chiffrée avec ses accessoires, et vous alerte en cas de tentative d'arrachement d'un périphérique.</p>
         </div>
       </div>
     </div>
@@ -1273,56 +1254,34 @@
 
   <section class="pv-section">
     <div class="pv-wrap">
-      <div class="pe-table pv-reveal">
-        <table>
-          <caption>Ce que la centrale Élite fait, et qu'une alarme radio classique ne fait pas</caption>
-          <thead>
-            <tr><th scope="col">Critère</th><th scope="col">Radio classique</th><th scope="col">Zigbee 3.0 — gamme Élite</th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row">Sens de communication</th><td>Le capteur émet, sans retour</td><td class="pe-win">Bidirectionnel, avec accusé de réception</td></tr>
-            <tr><th scope="row">Surveillance des capteurs</th><td>Une panne peut passer inaperçue</td><td class="pe-win">La centrale signale un capteur muet, une pile faible ou un arrachement</td></tr>
-            <tr><th scope="row">Consommation</th><td>Standard</td><td class="pe-win">Très économe : les piles durent nettement plus longtemps</td></tr>
-            <tr><th scope="row">Sécurité de la liaison</th><td>Variable selon les systèmes</td><td class="pe-win">Communication chiffrée et anti-brouillage</td></tr>
-            <tr><th scope="row">Écosystème</th><td>Limité à la gamme d'origine</td><td class="pe-win">Standard ouvert : compatible avec de nombreux périphériques Zigbee du marché</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="pe-why pv-reveal" style="margin-top:56px;">
+      <div class="pe-why pv-reveal">
         <div>
-          <h3>Et si un capteur est trop loin de la centrale ?</h3>
-          <p>C'est la vraie limite à connaître avant d'installer. Les capteurs de votre pack fonctionnent sur pile : pour tenir des années, ils passent l'essentiel de leur temps en veille et <strong>ne relaient pas le signal des autres</strong>. Chacun doit donc être à portée de la centrale.</p>
-          <p>Un garage au fond du jardin, une dépendance, un troisième étage : dans ces cas-là, il faut un équipement Zigbee alimenté sur le secteur pour faire le relais.</p>
+          <h3>Et si un capteur Zigbee est trop loin de la centrale ?</h3>
+          <p>Les capteurs du pack fonctionnent sur pile : pour tenir dans la durée, ils passent l'essentiel de leur temps en veille et <strong>ne relaient pas le signal des autres</strong>. Chacun doit donc être à portée de la centrale.</p>
+          <p>Un garage au fond du jardin, une dépendance, un troisième étage : dans ces cas-là, il faut un relais alimenté en permanence sur le secteur.</p>
         </div>
         <div class="pe-warn pe-warn--zig">
-          <p><strong>L'amplificateur Zigbee EXT501ZIG</strong> se branche sur une simple prise, à mi-chemin entre la centrale et la zone qui capte mal. Il étend la portée du réseau et reste alimenté en permanence — c'est lui qui relaie, pas vos capteurs.</p>
+          <p><strong>L'amplificateur EXT501ZIG</strong> se branche sur une simple prise, à mi-chemin entre la centrale et la zone qui capte mal, et étend la portée du réseau Zigbee.</p>
+          <p><strong>Attention :</strong> c'est un amplificateur <strong>Zigbee</strong>. Il étend la portée des accessoires Zigbee de la gamme Élite, et uniquement ceux-là — il n'a aucun effet sur les accessoires radio de la gamme SA501, que la centrale accepte par ailleurs.</p>
           <p><a href="#PEAcc-{{ section.id }}" style="color:inherit;font-weight:600;">Ajouter un amplificateur à mon pack →</a></p>
         </div>
       </div>
 
-      <div class="pv-reveal" style="margin-top:56px;">
-        <span class="pv-eyebrow pe-eyebrow--zig">Au-delà de l'alarme</span>
-        <h2 style="font-size:clamp(24px,3.4vw,34px);font-weight:600;letter-spacing:-.02em;">Votre alarme devient le cerveau de la maison</h2>
-        <p style="font-size:17px;line-height:1.6;color:var(--pv-gray);margin-top:14px;max-width:62ch;">La passerelle Zigbee de la PA501Z n'est pas réservée aux capteurs Daewoo : elle est compatible avec de nombreux périphériques Zigbee du marché, pilotés depuis la même application.</p>
-
-        <div class="pe-domo">
-          <div class="pe-domo__c"><h3>Prises connectées</h3><p>Éteindre un convecteur à distance, simuler une présence.</p></div>
-          <div class="pe-domo__c"><h3>Têtes thermostatiques</h3><p>Baisser le chauffage automatiquement quand vous armez en partant.</p></div>
-          <div class="pe-domo__c"><h3>Capteurs de température</h3><p>Être alerté si la température chute dans une résidence secondaire.</p></div>
-          <div class="pe-domo__c"><h3>Éclairage et volets</h3><p>Allumer, fermer ou ouvrir selon l'état de l'alarme.</p></div>
+      <div class="pe-why pv-reveal" style="margin-top:56px;">
+        <div>
+          <h3>Ajouter des équipements Zigbee du commerce</h3>
+          <p>La passerelle de la PA501Z n'est pas réservée aux accessoires Daewoo. Pour être reconnu par la centrale, un équipement doit réunir <strong>deux conditions</strong> : être en <strong>Zigbee 3.0</strong>, et être compatible <strong>Tuya</strong>.</p>
+          <p>Prises connectées, ampoules, capteurs de température, têtes thermostatiques : ce sont les catégories d'équipements qui répondent le plus souvent à ces deux critères.</p>
         </div>
-
-        <div class="pe-scen">
-          <div class="pe-scen__row"><span class="pe-scen__if">Si l'alarme est armée</span><span class="pe-scen__arrow" aria-hidden="true">→</span><span>fermer les volets roulants</span></div>
-          <div class="pe-scen__row"><span class="pe-scen__if">Si la caméra détecte un mouvement</span><span class="pe-scen__arrow" aria-hidden="true">→</span><span>allumer la lumière extérieure</span></div>
-          <div class="pe-scen__row"><span class="pe-scen__if">Si je désarme en rentrant</span><span class="pe-scen__arrow" aria-hidden="true">→</span><span>la caméra intérieure repasse en mode Vie Privée</span></div>
+        <div class="pe-warn pe-warn--zig">
+          <p><strong>Une réserve, dite franchement.</strong> Nous ne garantissons pas le fonctionnement à 100 % des accessoires qui ne sont pas de marque Daewoo, même lorsqu'ils annoncent Zigbee 3.0 et Tuya. Les implémentations varient d'un fabricant à l'autre.</p>
+          <p>En cas de doute avant un achat, appelez-nous : nous vous dirons si le modèle visé a déjà été vu fonctionner avec la centrale Élite.</p>
         </div>
       </div>
 
       <div class="pe-why pv-reveal" style="margin-top:56px;">
         <div>
-          <h3>Ce qu'il faut savoir avant d'acheter des accessoires</h3>
+          <h3>Ce qu'il faut savoir avant d'acheter des accessoires Daewoo</h3>
           <p>La PA501Z accepte une grande partie des accessoires de la gamme SA501 : détecteurs de mouvement, sirènes, télécommandes, claviers, contacteurs de garage, détecteurs de fumée et de fuite d'eau. Vous pouvez donc remplacer une ancienne centrale SA501 ou faire évoluer un système existant sans changer tous vos équipements.</p>
         </div>
         <div class="pe-warn pe-warn--zig">
@@ -1471,8 +1430,8 @@
           <h2>Un système, pas juste des accessoires.</h2>
           <p class="pv-feature__text">
             Daewoo Home Connect pilote l'ensemble : armement et désarmement à distance, alertes,
-            visualisation en direct des deux caméras, scénarios domotique Zigbee. Gratuite,
-            sans abonnement, sur iOS et Android.
+            visualisation en direct des deux caméras. Gratuite, sans abonnement,
+            sur iOS et Android.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Mode Maison : ouvertures et vibrations actives, mouvement désactivé</li>
@@ -1622,8 +1581,13 @@
         </details>
 
         <details>
-          <summary>Qu'apporte le Zigbee par rapport à une alarme classique&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">Le Zigbee 3.0 est une radio bidirectionnelle et chiffrée : la centrale accuse réception de chaque message. Elle sait donc en permanence quels capteurs répondent, lesquels ont une pile qui faiblit, et lequel vient d'être arraché — ce qu'une radio classique, où le capteur émet sans retour, ne permet pas. Les capteurs consomment aussi beaucoup moins, donc les piles durent plus longtemps. À savoir en revanche : les capteurs fonctionnant sur pile ne relaient pas le signal entre eux. Pour couvrir une zone éloignée de la centrale, il faut un amplificateur Zigbee branché sur une prise.</p>
+          <summary>Qu'est-ce que le Zigbee change pour moi&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">La centrale Élite embarque une passerelle Zigbee 3.0, et neuf des accessoires du pack — les 5 contacteurs WDS502Z et les 4 détecteurs de vibration WVD502Z — communiquent avec elle dans ce protocole. La liaison est chiffrée et supervisée&nbsp;: la centrale vous alerte notamment en cas de tentative d'arrachement d'un périphérique. La passerelle permet aussi d'ajouter des équipements Zigbee du commerce, à condition qu'ils soient en Zigbee 3.0 et compatibles Tuya.</p>
+        </details>
+
+        <details>
+          <summary>Puis-je brancher des accessoires Zigbee d'une autre marque&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Oui, à deux conditions&nbsp;: l'équipement doit être en <strong>Zigbee 3.0</strong> et compatible <strong>Tuya</strong>. Nous ne garantissons cependant pas le fonctionnement à 100&nbsp;% des accessoires qui ne sont pas de marque Daewoo, même lorsqu'ils annoncent ces deux compatibilités&nbsp;: les implémentations varient d'un fabricant à l'autre. En cas de doute avant un achat, contactez-nous.</p>
         </details>
 
         <details>
@@ -1633,7 +1597,7 @@
 
         <details>
           <summary>La centrale est-elle compatible Alexa ou Google Home&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">Non, et c'est un choix. La centrale Élite n'est compatible ni avec Alexa ni avec Google Home, pour des raisons de sécurité et de confidentialité renforcée : votre alarme ne transite pas par un assistant vocal tiers. Les scénarios domotique passent par l'application Daewoo Home Connect et la passerelle Zigbee.</p>
+          <p class="pv-faq__a">Non, et c'est un choix. La centrale Élite n'est compatible ni avec Alexa ni avec Google Home, pour des raisons de sécurité et de confidentialité renforcée : votre alarme ne transite pas par un assistant vocal tiers.</p>
         </details>
 
         <details>
