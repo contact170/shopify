@@ -841,8 +841,8 @@
     <div class="pv-wrap">
       <span class="pv-eyebrow">Daewoo Security · Pack Élite <span class="pv-ref">{{ variant.sku | default: 'PA573' }}</span></span>
       <h1>Pack alarme Élite PA573 Harmonie+, centrale PA501Z</h1>
-      <p class="pv-hero__tagline">Une caméra extérieure motorisée et treize capteurs Zigbee pour les grands volumes.</p>
-      <p class="pv-hero__summary">Le PA573 comprend une centrale Élite, deux caméras motorisées, treize capteurs Zigbee et deux détecteurs de mouvement.</p>
+      <p class="pv-hero__tagline">Une caméra extérieure motorisée solaire et treize capteurs Zigbee pour les grands volumes.</p>
+      <p class="pv-hero__summary">Le PA573 comprend une centrale Élite, une caméra extérieure solaire, une caméra intérieure, treize capteurs Zigbee et deux détecteurs de mouvement.</p>
       {%- if hero_image -%}
         <div class="pv-hero__media pv-reveal">
           {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
@@ -879,12 +879,13 @@
         <span class="pe-chip pe-chip--eth">Port RJ45</span>
         <span class="pe-chip pe-chip--4g">4G+ données</span>
         <span class="pe-chip">Batterie 10&nbsp;h</span>
+        <span class="pe-chip">Caméra solaire</span>
         <span class="pe-chip">2 caméras motorisées</span>
         <span class="pe-chip">13 capteurs Zigbee</span>
       </div>
       <p class="pv-hero__sub">Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — avec
-        une caméra extérieure motorisée, une caméra intérieure motorisée, treize capteurs Zigbee,
-        deux détecteurs de mouvement et un clavier déporté.</p>
+        une caméra extérieure motorisée solaire, une caméra intérieure motorisée, treize capteurs
+        Zigbee, deux détecteurs de mouvement et un clavier déporté.</p>
     </div>
   </section>
 
@@ -916,7 +917,7 @@
     <div class="pv-wrap">
       <div class="pv-contents__head pv-reveal">
         <h2>Tout ce qu'il faut, dans une seule boîte</h2>
-        <p>Deux caméras motorisées et une couverture intérieure renforcée, pour les grands volumes.</p>
+        <p>Une caméra extérieure solaire, une caméra intérieure et une couverture renforcée, pour les grands volumes.</p>
       </div>
       <div class="pv-contents__grid pv-reveal">
         <div class="pv-contents__item">
@@ -931,6 +932,13 @@
           <div>
             <div class="pv-contents__name">Caméra extérieure motorisée W512MW</div>
             <div class="pv-contents__desc">Panoramique, Full HD, vision nocturne, audio bidirectionnel.</div>
+          </div>
+        </div>
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">1×</span>
+          <div>
+            <div class="pv-contents__name">Panneau solaire</div>
+            <div class="pv-contents__desc">Recharge la W512MW en continu : aucun câble électrique à tirer.</div>
           </div>
         </div>
         <div class="pv-contents__item">
@@ -1446,16 +1454,17 @@
     <div class="pv-wrap">
       <div class="pv-feature pv-reveal">
         <div class="pv-feature__media">
-          {{ feat_image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Caméra extérieure motorisée W512MW' }}
+          {{ feat_image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Caméra extérieure motorisée solaire W512MW' }}
         </div>
         <div class="pv-feature__body">
           <span class="pv-feature__num">VIDÉOSURVEILLANCE EXTÉRIEURE</span>
           <h2>Une caméra qui balaie, au lieu de fixer un angle.</h2>
           <p class="pv-feature__text">
-            La W512MW est motorisée : elle pivote pour couvrir toute une façade, une cour ou une allée depuis un seul point de fixation. Full HD, vision nocturne, audio bidirectionnel.
+            La W512MW est motorisée : elle pivote pour couvrir toute une façade, une cour ou une allée depuis un seul point de fixation. Son panneau solaire la recharge en continu, donc aucun câble électrique. Full HD, vision nocturne, audio bidirectionnel.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Motorisée : balayage panoramique depuis le téléphone</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Panneau solaire fourni : aucune recharge à prévoir</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Vision nocturne et audio bidirectionnel</li>
           </ul>
         </div>
@@ -1530,7 +1539,7 @@
         </div>
         <div class="pv-specs__item">
           <dt>Caméras incluses</dt>
-          <dd>1 caméra extérieure motorisée W512MW (panoramique, Full HD, vision nocturne)&#10;1 caméra intérieure motorisée IP506P (360°, auto-tracking, mode Vie Privée)</dd>
+          <dd>1 caméra extérieure motorisée solaire W512MW (panoramique, Full HD, vision nocturne)&#10;1 caméra intérieure motorisée IP506P (360°, auto-tracking, mode Vie Privée)</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Capteurs inclus</dt>
@@ -1754,7 +1763,7 @@
   </dialog>
 
   {%- comment -%} Structured data {%- endcomment -%}
-  {%- capture ld_description -%}Pack alarme maison sans fil Élite PA573 Harmonie+ : centrale PA501Z multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 1 caméra extérieure motorisée W512MW, 1 caméra intérieure IP506P, 13 capteurs Zigbee, 2 détecteurs de mouvement et une sirène extérieure solaire. Sans abonnement obligatoire.{%- endcapture -%}
+  {%- capture ld_description -%}Pack alarme maison sans fil Élite PA573 Harmonie+ : centrale PA501Z multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 1 caméra extérieure motorisée solaire W512MW, 1 caméra intérieure IP506P, 13 capteurs Zigbee, 2 détecteurs de mouvement et une sirène extérieure solaire. Sans abonnement obligatoire.{%- endcapture -%}
   {%- comment -%}
     Product. Les champs vont au-delà du minimum name/price/availability :
     Google conditionne aujourd'hui l'éligibilité aux résultats enrichis
