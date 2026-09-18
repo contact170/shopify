@@ -758,6 +758,26 @@
       padding:16px;background:var(--pe-sand);
     }
     .pv-crosssell__photo img{max-height:100%;width:auto;object-fit:contain;}
+
+    /* ---- hero v2 (en test sur le PA570) ----
+       Le visuel et le CTA remontent sous la tagline. Plafonner la hauteur
+       du visuel est ce qui fait réellement entrer le bouton dans le
+       premier écran : les photos de pack sont carrées, donc les 640 px de
+       large de la règle partagée valent 640 px de haut. Seules des
+       contraintes max sont posées (jamais width ni height fixes), donc le
+       navigateur réduit l'image en conservant ses proportions. */
+    .pe-hero--v2{padding-top:72px;}
+    .pv .pe-hero--v2 .pv-hero__summary{margin-top:16px;}
+    .pv .pe-hero--v2 .pv-hero__media{margin-top:34px;}
+    .pv .pe-hero--v2 .pv-hero__media img{
+      width:auto;height:auto;max-height:min(52vh,520px);object-fit:contain;
+    }
+    .pv .pe-hero--v2 .pv-hero__cta{margin-top:26px;}
+    .pe-hero--v2 .pe-hero__chips{margin-top:22px;}
+    .pv .pe-hero--v2 .pv-hero__sub{
+      margin-top:34px;padding-top:30px;border-top:1px solid var(--pe-bronze-line);
+      font-size:clamp(16px,2vw,19px);
+    }
   </style>
 
   {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
@@ -792,15 +812,32 @@
     {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
   </div>
 
-  {%- comment -%} Hero {%- endcomment -%}
-  <section class="pv-hero pe-hero">
+  {%- comment -%}
+    Hero, variante 2 — en test sur le PA570 seulement (packs.py: hero='v2').
+
+    Ordre revu pour que la photo du pack et le bouton d'achat entrent dans
+    le premier écran : dans la v1, le H1 était suivi de deux paragraphes
+    (sub puis summary), soit 350 à 450 px de texte sur mobile avant la
+    première image, et le CTA encore 700 px plus bas.
+
+    Ici la tagline est suivie du seul `summary` — la ligne la plus courte
+    et la plus concrète, celle qui dit ce qu'il y a dans la boîte — puis
+    du visuel, du CTA et des chips. Les chips restent collées au CTA :
+    c'est une ligne de specs scannable, elle travaille avec le prix, pas
+    avec le texte narratif. Le paragraphe `sub` descend sous le CTA, où
+    il sert de transition vers la section « Tout ce qu'il faut, dans une
+    seule boîte ».
+
+    Le réordonnancement ne suffit pas à lui seul : les visuels de pack
+    sont carrés, donc 640 px de large valent 640 px de haut et le bouton
+    resterait sous la ligne de flottaison sur desktop. La classe
+    pe-hero--v2 plafonne la hauteur du visuel (voir css-extra.liquid).
+  {%- endcomment -%}
+  <section class="pv-hero pe-hero pe-hero--v2">
     <div class="pv-wrap">
       <span class="pv-eyebrow">Daewoo Security · Pack Élite <span class="pv-ref">{{ variant.sku | default: 'PA570' }}</span></span>
       <h1>Pack alarme Élite PA570 ZenGuard, centrale PA501Z</h1>
       <p class="pv-hero__tagline">La seule centrale de la gamme qui reste pilotable quand la box tombe en panne.</p>
-      <p class="pv-hero__sub">Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — accompagnée
-        de 13 accessoires dont 9 capteurs Zigbee, deux caméras et une sirène extérieure solaire.
-        Installation sans technicien, sans travaux, sans abonnement obligatoire.</p>
       <p class="pv-hero__summary">Le PA570 comprend une centrale Élite, deux caméras et treize accessoires, soit seize éléments au total.</p>
       {%- if hero_image -%}
         <div class="pv-hero__media pv-reveal">
@@ -840,8 +877,12 @@
         <span class="pe-chip">Batterie 10&nbsp;h</span>
         <span class="pe-chip">Jusqu'à 200 accessoires</span>
       </div>
+      <p class="pv-hero__sub">Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — accompagnée
+        de 13 accessoires dont 9 capteurs Zigbee, deux caméras et une sirène extérieure solaire.
+        Installation sans technicien, sans travaux, sans abonnement obligatoire.</p>
     </div>
   </section>
+
 
   {%- comment -%} Trust strip {%- endcomment -%}
   <div class="pv-wrap">

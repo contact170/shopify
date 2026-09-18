@@ -759,6 +759,26 @@
       padding:16px;background:var(--pe-sand);
     }
     .pv-crosssell__photo img{max-height:100%;width:auto;object-fit:contain;}
+
+    /* ---- hero v2 (en test sur le PA570) ----
+       Le visuel et le CTA remontent sous la tagline. Plafonner la hauteur
+       du visuel est ce qui fait réellement entrer le bouton dans le
+       premier écran : les photos de pack sont carrées, donc les 640 px de
+       large de la règle partagée valent 640 px de haut. Seules des
+       contraintes max sont posées (jamais width ni height fixes), donc le
+       navigateur réduit l'image en conservant ses proportions. */
+    .pe-hero--v2{padding-top:72px;}
+    .pv .pe-hero--v2 .pv-hero__summary{margin-top:16px;}
+    .pv .pe-hero--v2 .pv-hero__media{margin-top:34px;}
+    .pv .pe-hero--v2 .pv-hero__media img{
+      width:auto;height:auto;max-height:min(52vh,520px);object-fit:contain;
+    }
+    .pv .pe-hero--v2 .pv-hero__cta{margin-top:26px;}
+    .pe-hero--v2 .pe-hero__chips{margin-top:22px;}
+    .pv .pe-hero--v2 .pv-hero__sub{
+      margin-top:34px;padding-top:30px;border-top:1px solid var(--pe-bronze-line);
+      font-size:clamp(16px,2vw,19px);
+    }
   </style>
 
   {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
@@ -844,6 +864,7 @@
       </div>
     </div>
   </section>
+
 
   {%- comment -%} Trust strip {%- endcomment -%}
   <div class="pv-wrap">

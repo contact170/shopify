@@ -1,0 +1,42 @@
+  {%- comment -%} Hero {%- endcomment -%}
+  <section class="pv-hero pe-hero">
+    <div class="pv-wrap">
+      <span class="pv-eyebrow">Daewoo Security · Pack Élite <span class="pv-ref">{{ variant.sku | default: '%%SKU%%' }}</span></span>
+      <h1>%%H1%%</h1>
+      <p class="pv-hero__tagline">%%TAGLINE%%</p>
+      <p class="pv-hero__sub">%%SUB%%</p>
+      <p class="pv-hero__summary">%%SUMMARY%%</p>
+      {%- if hero_image -%}
+        <div class="pv-hero__media pv-reveal">
+          {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
+        </div>
+        {%- if gallery.size > 1 -%}
+          <div class="pv-thumbs" role="group" aria-label="Photos du produit">
+            {%- for img in gallery limit: 8 -%}
+              <button
+                type="button"
+                class="pv-thumbs__item{% if img.id == hero_image.id %} is-active{% endif %}"
+                data-pe-thumb
+                data-full="{{ img | image_url: width: 1200 }}"
+                data-full-srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1200 }} 1200w"
+                aria-label="Photo {{ forloop.index }} sur {{ gallery.size }}"
+              >
+                {{ img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+      <div class="pv-hero__cta">
+        <div id="PEHeroCta-{{ section.id }}">
+          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+        </div>
+        <div class="pv-hero__price">
+          <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
+          <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
+        </div>
+        {%- render 'pv-trust-row', has_rating: has_rating -%}
+      </div>
+      <div class="pe-hero__chips">%%CHIPS%%</div>
+    </div>
+  </section>
