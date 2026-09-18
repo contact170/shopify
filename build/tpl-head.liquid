@@ -59,23 +59,21 @@
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
 
-  # Feature images are matched by filename so re-ordering the product
-  # gallery in admin can't silently put the interior camera photo on the
-  # exterior camera section. Anything unmatched falls back to the hero.
+  # Exterior-camera shot: matched by filename in this pack's own gallery so
+  # re-ordering the images in admin can't put the wrong camera on the block.
   assign feat_image_1 = hero_image
-  assign feat_image_2 = hero_image
-  assign feat_image_3 = hero_image
   for img in gallery
     if img.src contains '%%IMG1%%'
       assign feat_image_1 = img
     endif
-    if img.src contains 'IP506'
-      assign feat_image_2 = img
-    endif
-    if img.src contains 'Pilotage' or img.src contains 'distance'
-      assign feat_image_3 = img
-    endif
   endfor
+
+  # Interior camera: taken from the IP506P product itself rather than from
+  # this pack's gallery. Several packs carry an "IP506_Infographie" slide
+  # there, and a filename match landed that diagram on the block instead of
+  # a product photo — the merchant asked for the photo.
+  assign cam_int = all_products['camera-interieure-rotative-ip506p']
+  assign feat_image_2 = cam_int.featured_image | default: hero_image
 
   # Cross-sell: the Starter Pack Élite, looked up by handle for a real
   # photo and a live price rather than a hardcoded figure.

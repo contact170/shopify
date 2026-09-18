@@ -9,10 +9,10 @@ and that several of those descriptions still contradict:
     and PA571's calls it "Centrale PA571");
   - its backup battery lasts 10 h (several descriptions claim 12 h).
 
-Where a description does not name a sensor reference, the page does not
-invent one. PA571 is the case in point: its contacteurs and détecteurs de
-vibration are listed generically, so its Zigbee card stays generic too and
-the question is flagged to the merchant rather than answered by guesswork.
+PA571's description lists its contacteurs and détecteurs de vibration
+generically, without references. The merchant has since confirmed they are
+the Zigbee ones, so the page names them WDS502Z and WVD502Z like the rest
+of the range.
 """
 
 CENTRALE = ('Centrale Élite PA501Z',
@@ -51,8 +51,13 @@ FEAT_INT = dict(img='feat_image_2', alt='Caméra intérieure motorisée IP506P e
     text="La IP506P suit les mouvements sur 360° avec auto-tracking. Quand vous désarmez l'alarme en rentrant, l'objectif se rétracte mécaniquement — pas un simple voyant logiciel, un mouvement que vous voyez.",
     bullets=['Rotation 360° et auto-tracking', 'Mode Vie Privée mécanique'])
 
+# Shopify Files asset, 1254x1254, alt "Application mobile Daewoo Home Connect".
+APP_SHOT = ('https://cdn.shopify.com/s/files/1/0326/3132/4811/files/'
+            'Application_Daewoo.webp?v=1787742289&amp;width=1000')
+
 def feat_app(cams):
-    return dict(img='feat_image_3', alt='Application Daewoo Home Connect',
+    return dict(img='feat_image_3', src=APP_SHOT, w=1254, h=1254,
+        alt='Application mobile Daewoo Home Connect',
         eyebrow='UNE SEULE APPLICATION', h2='Un système, pas juste des accessoires.',
         text="Daewoo Home Connect pilote l'ensemble : armement et désarmement à distance, alertes, visualisation en direct des %s. Gratuite, sans abonnement, sur iOS et Android." % cams,
         bullets=['Mode Maison : ouvertures et vibrations actives, mouvement désactivé',
@@ -101,32 +106,32 @@ PACKS = [
     doc='Pack Alarme Defense+ PA571"\n  (629,90 €, SKU PA571, templateSuffix "pa571")',
     sticky='Pack Élite PA571', schema='Pack Élite PA571', js_name='Pack Élite PA571',
     h1='Pack alarme Élite PA571 Defense+, centrale PA501Z',
-    tagline='Trois caméras et onze capteurs, pour couvrir le tour de la maison.',
-    sub="Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — avec\n        deux caméras extérieures autonomes, une caméra intérieure motorisée, onze capteurs\n        et une sirène extérieure solaire. Sans travaux, sans abonnement obligatoire.",
-    summary='Le PA571 comprend une centrale Élite, trois caméras, onze capteurs et une sirène extérieure solaire.',
+    tagline='Trois caméras et onze capteurs Zigbee, pour couvrir le tour de la maison.',
+    sub="Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — avec\n        deux caméras extérieures autonomes, une caméra intérieure motorisée, onze capteurs Zigbee\n        et une sirène extérieure solaire. Sans travaux, sans abonnement obligatoire.",
+    summary='Le PA571 comprend une centrale Élite, trois caméras, onze capteurs Zigbee et une sirène extérieure solaire.',
     chips=CHIPS_BASE + [('', '3 caméras incluses')],
-    contents_lead='Trois caméras et onze capteurs, pour une maison avec plusieurs façades à couvrir.',
+    contents_lead='Trois caméras et onze capteurs Zigbee, pour une maison avec plusieurs façades à couvrir.',
     contents=[
       ('1×',) + CENTRALE,
       ('2×', 'Caméras extérieures autonomes W503', '100 % sans fil, batterie longue durée, Full HD, vision nocturne couleur, audio bidirectionnel.'),
       ('1×',) + IP506P,
       ('1×',) + SIRENE,
-      ('6×', 'Contacteurs de porte et fenêtre', 'Entrée, baies vitrées, fenêtres, accès secondaires et garage.'),
-      ('5×', 'Détecteurs de vibration', 'Baies vitrées et fenêtres : détection préventive, avant effraction.'),
+      ('6×', "Contacteurs d'ouverture WDS502Z", 'Entrée, baies vitrées, fenêtres, accès secondaires et garage.', 'zig'),
+      ('5×', 'Détecteurs de vibration WVD502Z', 'Baies vitrées et fenêtres : détection préventive, avant effraction.', 'zig'),
       ('1×', 'Détecteur de mouvement', 'Double faisceau infrarouge Pet Immune : ignore les animaux de moins de 12 kg.'),
       ('—',) + FIXATIONS,
     ],
-    zig2=('Une passerelle prête pour les capteurs Zigbee',
-          "La centrale appaire les accessoires Zigbee 3.0 de la gamme Élite depuis l'application, et accepte jusqu'à 200 accessoires au total."),
+    zig2=('Onze capteurs Zigbee dans la boîte',
+          "6 contacteurs d'ouverture WDS502Z et 5 détecteurs de vibration WVD502Z, appairés à la centrale depuis l'application."),
     img1='W503',
     features=[FEAT_W503, FEAT_INT, feat_app('trois caméras')],
     band='Équipez votre maison avec le pack Élite PA571',
     total_base='Pack Élite PA571 seul. Ajoutez des accessoires ci-dessus pour compléter votre installation.',
     specs_lead="Tout ce qu'il faut savoir sur le Pack Élite PA571.",
     specs_cams='2 caméras extérieures autonomes W503 (Full HD, vision nocturne couleur, audio bidirectionnel)&#10;1 caméra intérieure motorisée IP506P (360°, auto-tracking, mode Vie Privée)',
-    specs_sensors='6 contacteurs de porte et fenêtre&#10;5 détecteurs de vibration&#10;1 détecteur de mouvement Pet Immune',
+    specs_sensors="6 contacteurs d'ouverture WDS502Z&#10;5 détecteurs de vibration WVD502Z&#10;1 détecteur de mouvement Pet Immune",
     final='Pack Élite PA571 Defense+ — trois caméras et triple connexion',
-    ld="Pack alarme maison sans fil Élite PA571 Defense+ : centrale PA501Z multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 2 caméras extérieures autonomes W503, 1 caméra intérieure motorisée IP506P, 11 capteurs et une sirène extérieure solaire. Sans abonnement obligatoire.",
+    ld="Pack alarme maison sans fil Élite PA571 Defense+ : centrale PA501Z multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 2 caméras extérieures autonomes W503, 1 caméra intérieure motorisée IP506P, 11 capteurs Zigbee et une sirène extérieure solaire. Sans abonnement obligatoire.",
   ),
   dict(
     key='pa572', sku='PA572', suffix='pa572',

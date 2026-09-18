@@ -53,13 +53,24 @@ def features_html(feats):
         rev = ' pv-feature--reverse' if i % 2 == 1 else ''
         bullets = ''.join(
             '            <li>%s%s</li>\n' % (CHECK, b) for b in f['bullets'])
+        # A feature can point at a Shopify Files asset (the app screenshot has
+        # no product to hang off) instead of a Liquid image object.
+        if f.get('src'):
+            # height:auto because the theme's `.pv img` sets max-width but not
+            # height — with both attributes present the image would squash.
+            media = ('          <img src="%s" alt="%s" loading="lazy" '
+                     'width="%d" height="%d" style="height:auto;">\n'
+                     % (f['src'], f['alt'], f.get('w', 1000), f.get('h', 1000)))
+        else:
+            media = ('          {{ %s | image_url: width: 1000 | image_tag: loading: \'lazy\', '
+                     'widths: \'500,750,1000\', alt: \'%s\' }}\n' % (f['img'], f['alt']))
         out.append(
             '  {%%- comment -%%} Feature %d {%%- endcomment -%%}\n'
             '  <section class="pv-section %s">\n'
             '    <div class="pv-wrap">\n'
             '      <div class="pv-feature%s pv-reveal">\n'
             '        <div class="pv-feature__media">\n'
-            '          {{ %s | image_url: width: 1000 | image_tag: loading: \'lazy\', widths: \'500,750,1000\', alt: \'%s\' }}\n'
+            '%s'
             '        </div>\n'
             '        <div class="pv-feature__body">\n'
             '          <span class="pv-feature__num">%s</span>\n'
@@ -67,7 +78,7 @@ def features_html(feats):
             '          <p class="pv-feature__text">\n            %s\n          </p>\n'
             '          <ul>\n%s          </ul>\n'
             '        </div>\n      </div>\n    </div>\n  </section>\n\n'
-            % (i + 1, alt, rev, f['img'], f['alt'], f['eyebrow'], f['h2'], f['text'], bullets))
+            % (i + 1, alt, rev, media, f['eyebrow'], f['h2'], f['text'], bullets))
     return ''.join(out)
 
 
@@ -144,6 +155,9 @@ def build():
         head, body, tail = head_t, body_t, tail_t
         for k, v in subs.items():
             head, body, tail = head.replace(k, v), body.replace(k, v), tail.replace(k, v)
+        # Keep the figure and its unit on one line. Body only: the same string
+        # inside the JSON-LD of the tail would render as a literal "&nbsp;".
+        body = body.replace('10 h', '10&nbsp;h')
 
         section = (head + '\n<div id="shopify-section-{{ section.id }}" class="pv">\n'
                    + '  <style>\n' + css_core + '\n' + css_extra + '  </style>\n'

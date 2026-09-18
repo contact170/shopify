@@ -60,23 +60,21 @@
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
 
-  # Feature images are matched by filename so re-ordering the product
-  # gallery in admin can't silently put the interior camera photo on the
-  # exterior camera section. Anything unmatched falls back to the hero.
+  # Exterior-camera shot: matched by filename in this pack's own gallery so
+  # re-ordering the images in admin can't put the wrong camera on the block.
   assign feat_image_1 = hero_image
-  assign feat_image_2 = hero_image
-  assign feat_image_3 = hero_image
   for img in gallery
     if img.src contains 'W503'
       assign feat_image_1 = img
     endif
-    if img.src contains 'IP506'
-      assign feat_image_2 = img
-    endif
-    if img.src contains 'Pilotage' or img.src contains 'distance'
-      assign feat_image_3 = img
-    endif
   endfor
+
+  # Interior camera: taken from the IP506P product itself rather than from
+  # this pack's gallery. Several packs carry an "IP506_Infographie" slide
+  # there, and a filename match landed that diagram on the block instead of
+  # a product photo — the merchant asked for the photo.
+  assign cam_int = all_products['camera-interieure-rotative-ip506p']
+  assign feat_image_2 = cam_int.featured_image | default: hero_image
 
   # Cross-sell: the Starter Pack Élite, looked up by handle for a real
   # photo and a live price rather than a hardcoded figure.
@@ -858,7 +856,7 @@
           <span class="pv-contents__qty">1×</span>
           <div>
             <div class="pv-contents__name">Centrale Élite PA501Z</div>
-            <div class="pv-contents__desc">Ethernet RJ45, Wi-Fi 2,4 GHz, 4G+ (carte SIM en option), passerelle Zigbee 3.0. Batterie de secours 10 h.</div>
+            <div class="pv-contents__desc">Ethernet RJ45, Wi-Fi 2,4 GHz, 4G+ (carte SIM en option), passerelle Zigbee 3.0. Batterie de secours 10&nbsp;h.</div>
           </div>
         </div>
         <div class="pv-contents__item">
@@ -960,7 +958,7 @@
           </div>
           <div class="pe-spec">
             <div class="pe-spec__k">Batterie de secours</div>
-            <div class="pe-spec__v">10 heures</div>
+            <div class="pe-spec__v">10&nbsp;heures</div>
             <p class="pe-spec__n">Le système reste armé pendant une coupure de courant.</p>
           </div>
           <div class="pe-spec">
@@ -1052,7 +1050,7 @@
               <th scope="row">Détection et sirènes</th>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">La centrale n'a pas besoin d'internet pour déclencher</span></span></td>
-              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">10 h sur la batterie de secours</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">10&nbsp;h sur la batterie de secours</span></span></td>
             </tr>
             <tr>
               <th scope="row">Alertes d'intrusion sur votre téléphone</th>
@@ -1064,7 +1062,7 @@
               <th scope="row">Pilotage depuis l'application</th>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Armer, désarmer, consulter l'historique</span></span></td>
-              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Pendant les 10 h d'autonomie</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Pendant les 10&nbsp;h d'autonomie</span></span></td>
             </tr>
             <tr>
               <th scope="row">Flux vidéo des caméras</th>
@@ -1432,7 +1430,7 @@
     <div class="pv-wrap">
       <div class="pv-feature pv-reveal">
         <div class="pv-feature__media">
-          {{ feat_image_3 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Application Daewoo Home Connect' }}
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Application_Daewoo.webp?v=1787742289&amp;width=1000" alt="Application mobile Daewoo Home Connect" loading="lazy" width="1254" height="1254" style="height:auto;">
         </div>
         <div class="pv-feature__body">
           <span class="pv-feature__num">UNE SEULE APPLICATION</span>
@@ -1468,7 +1466,7 @@
         </div>
         <div class="pv-specs__item">
           <dt>Alimentation &amp; autonomie</dt>
-          <dd>Centrale : secteur + batterie de secours 10 h&#10;Sirène extérieure solaire, autonome</dd>
+          <dd>Centrale : secteur + batterie de secours 10&nbsp;h&#10;Sirène extérieure solaire, autonome</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Caméras incluses</dt>
@@ -1609,7 +1607,7 @@
 
         <details>
           <summary>Combien de temps l'alarme tient-elle sans électricité&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">La centrale dispose d'une batterie de secours de 10 heures. Les capteurs Zigbee sont sur pile et ne sont pas affectés par une coupure de courant, et la sirène extérieure solaire dispose de sa propre batterie rechargée par la lumière du jour.</p>
+          <p class="pv-faq__a">La centrale dispose d'une batterie de secours de 10&nbsp;heures. Les capteurs Zigbee sont sur pile et ne sont pas affectés par une coupure de courant, et la sirène extérieure solaire dispose de sa propre batterie rechargée par la lumière du jour.</p>
         </details>
 
         <details>
