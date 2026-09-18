@@ -101,9 +101,10 @@
   # variant id all come from the catalogue rather than being frozen into
   # the page. Anything unavailable simply doesn't render its card.
   #
-  # The merchant asked for a "WSD502Z" — no such reference exists in the
-  # catalogue. The Élite-compatible smoke detector is the WSD501, which
-  # is what's offered here; flagged to the merchant.
+  # Le marchand avait demandé un "WSD502Z" : cette référence n'existe pas
+  # au catalogue. Il a confirmé le WSD501, détecteur de fumée de la gamme
+  # SA501 compatible avec la centrale Élite. C'est le seul des quatre
+  # accessoires proposés qui soit en radio et non en Zigbee.
   assign acc_handles = 'amplificateur-dondes-zigbee-pour-centrale-pa501z,contacteur-de-porte-zigbee-wds502z-compatible-avec-la-centrale-pa501z,detecteur-de-vibration-zigbee-wvd502z-compatible-avec-la-centrale-pa501z,detecteur-de-fumee-wsd501-pour-alarme-daewoo-sa501' | split: ','
 
   assign has_rating = false
