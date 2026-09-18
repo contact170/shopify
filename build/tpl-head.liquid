@@ -1,0 +1,101 @@
+{%- doc -%}
+  Bespoke, conversion-focused product page for "%%DOC_PRODUCT%%
+
+  Structural fork of sections/product-vig503-landing.liquid — same
+  Apple-style rhythm, same shared hidden cart form + pv-atc-button /
+  pv-trust-row snippets, same sticky bar and Alma modal — so the Élite
+  pages read as the same store as the Vigilia ones. The range is signalled
+  by a warm sand hero and a bronze accent rather than a dark slab: an
+  earlier graphite version was rejected by the merchant as too dark, and
+  it fought the product photography, which is shot on white.
+
+  Four things are new, and they are the point of the fork:
+
+  1. A continuity matrix (three situations × five functions), so a
+     visitor compares outage scenarios without clicking anything. It
+     replaces a tabbed simulator the merchant found unclear.
+  2. A carte SIM M2M module, sourced verbatim from the merchant-authored
+     description of product SIM1ANPA ("Carte SIM M2M Afone 1 An Prépayé -
+     Pour centrale Élite").
+  3. A Zigbee 3.0 module, held to what the merchant has confirmed: no
+     mesh routing (the pack's sensors are battery end devices and don't
+     relay), no comparison against 433 MHz radio (it reads as an attack
+     on the merchant's own Vigilia and Touch ranges), and no automation
+     scenarios (unconfirmed, so out). The EXT501ZIG amplifier extends
+     the ZIGBEE network only — not the SA501 RF accessories the centrale
+     also accepts. Third-party devices need Zigbee 3.0 AND Tuya, and
+     even then non-Daewoo accessories carry no guarantee.
+  4. An accessory picker whose steppers re-price every CTA on the page.
+
+  Two facts are deliberately NOT taken from this product's own current
+  descriptionHtml, which contradicts the two fiches above and was flagged
+  to the merchant, who confirmed both corrections:
+  - Cameras are Wi-Fi only. With a SIM installed and the box down, the APP
+    stays usable (that is the single difference with Vigilia/Touch, where
+    the SIM only carries SMS and calls) — the camera streams do NOT.
+    The PA570 description currently claims "accès aux caméras maintenu".
+  - Backup battery is 10 h (DAPA501Z fiche), not the 12 h the PA570
+    description claims. Merchant confirmed 10 h "par sécurité".
+
+  Single-variant product, so no connectivity toggle and no PVData blob:
+  everything the VIG503 fork needed for its Wi-Fi / Wi-Fi+GSM switch is
+  dropped here.
+
+  No rating badge and no reviews section: the 68 curated reviews reused
+  across the Vigilia pages are Vigilia-family reviews and do not apply to
+  the Élite. To be wired to real Élite reviews before this goes live.
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign form_id = 'PEForm-' | append: section.id
+  assign hero_img_id = 'PEHeroImg-' | append: section.id
+
+  assign variant_has_compare = false
+  if variant.compare_at_price > variant.price
+    assign variant_has_compare = true
+  endif
+
+  assign gallery = product.images
+  assign hero_image = product.featured_image | default: gallery[0]
+
+  # Feature images are matched by filename so re-ordering the product
+  # gallery in admin can't silently put the interior camera photo on the
+  # exterior camera section. Anything unmatched falls back to the hero.
+  assign feat_image_1 = hero_image
+  assign feat_image_2 = hero_image
+  assign feat_image_3 = hero_image
+  for img in gallery
+    if img.src contains '%%IMG1%%'
+      assign feat_image_1 = img
+    endif
+    if img.src contains 'IP506'
+      assign feat_image_2 = img
+    endif
+    if img.src contains 'Pilotage' or img.src contains 'distance'
+      assign feat_image_3 = img
+    endif
+  endfor
+
+  # Cross-sell: the Starter Pack Élite, looked up by handle for a real
+  # photo and a live price rather than a hardcoded figure.
+  assign starter_pack = all_products['starter-pack-elite-daewoo']
+  assign starter_pack_image = starter_pack.featured_image
+  assign starter_pack_price = starter_pack.price_min
+
+  # Upsell: the M2M SIM card designed for this centrale (200 Mo envelope,
+  # not the 50 Mo standard one). Same treatment — live price, real link.
+  assign sim_card = all_products['carte-sim-m2m-afone-1-an-prepaye-pour-centrale-pa501z']
+  assign sim_price = sim_card.price_min
+
+  # Accessory picker. Looked up by handle so price, photo, stock and
+  # variant id all come from the catalogue rather than being frozen into
+  # the page. Anything unavailable simply doesn't render its card.
+  #
+  # The merchant asked for a "WSD502Z" — no such reference exists in the
+  # catalogue. The Élite-compatible smoke detector is the WSD501, which
+  # is what's offered here; flagged to the merchant.
+  assign acc_handles = 'amplificateur-dondes-zigbee-pour-centrale-pa501z,contacteur-de-porte-zigbee-wds502z-compatible-avec-la-centrale-pa501z,detecteur-de-vibration-zigbee-wvd502z-compatible-avec-la-centrale-pa501z,detecteur-de-fumee-wsd501-pour-alarme-daewoo-sa501' | split: ','
+
+  assign has_rating = false
+-%}

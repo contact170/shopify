@@ -1,6 +1,6 @@
 {%- doc -%}
-  Bespoke, conversion-focused product page for "Pack Alarme Maison sans Fil
-  Elite (Zenguard) PA570" (499,90 €, SKU PA570, templateSuffix "pa570")
+  Bespoke, conversion-focused product page for "Pack Alarme Harmonie+ PA573"
+  (659,90 €, SKU PA573, templateSuffix "pa573")
 
   Structural fork of sections/product-vig503-landing.liquid — same
   Apple-style rhythm, same shared hidden cart form + pv-atc-button /
@@ -67,7 +67,7 @@
   assign feat_image_2 = hero_image
   assign feat_image_3 = hero_image
   for img in gallery
-    if img.src contains 'W503'
+    if img.src contains 'W512'
       assign feat_image_1 = img
     endif
     if img.src contains 'IP506'
@@ -766,7 +766,7 @@
         {%- endif -%}
       </div>
       <div class="pv-sticky__text">
-        <div class="pv-sticky__name">Pack Élite PA570</div>
+        <div class="pv-sticky__name">Pack Élite PA573</div>
       </div>
     </div>
     {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
@@ -775,13 +775,13 @@
   {%- comment -%} Hero {%- endcomment -%}
   <section class="pv-hero pe-hero">
     <div class="pv-wrap">
-      <span class="pv-eyebrow">Daewoo Security · Pack Élite <span class="pv-ref">{{ variant.sku | default: 'PA570' }}</span></span>
-      <h1>Pack alarme Élite PA570 ZenGuard, centrale PA501Z</h1>
-      <p class="pv-hero__tagline">La seule centrale de la gamme qui reste pilotable quand la box tombe.</p>
-      <p class="pv-hero__sub">Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — accompagnée
-        de 13 accessoires dont 9 capteurs Zigbee, deux caméras et une sirène extérieure solaire.
-        Installation sans technicien, sans travaux, sans abonnement obligatoire.</p>
-      <p class="pv-hero__summary">Le PA570 comprend une centrale Élite, deux caméras et treize accessoires, soit seize éléments au total.</p>
+      <span class="pv-eyebrow">Daewoo Security · Pack Élite <span class="pv-ref">{{ variant.sku | default: 'PA573' }}</span></span>
+      <h1>Pack alarme Élite PA573 Harmonie+, centrale PA501Z</h1>
+      <p class="pv-hero__tagline">Une caméra extérieure motorisée et treize capteurs Zigbee pour les grands volumes.</p>
+      <p class="pv-hero__sub">Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — avec
+        une caméra extérieure motorisée, une caméra intérieure motorisée, treize capteurs Zigbee,
+        deux détecteurs de mouvement et un clavier déporté.</p>
+      <p class="pv-hero__summary">Le PA573 comprend une centrale Élite, deux caméras motorisées, treize capteurs Zigbee et deux détecteurs de mouvement.</p>
       {%- if hero_image -%}
         <div class="pv-hero__media pv-reveal">
           {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
@@ -818,7 +818,8 @@
         <span class="pe-chip pe-chip--eth">Port RJ45</span>
         <span class="pe-chip pe-chip--4g">4G+ données</span>
         <span class="pe-chip">Batterie 10&nbsp;h</span>
-        <span class="pe-chip">Jusqu'à 200 accessoires</span>
+        <span class="pe-chip">2 caméras motorisées</span>
+        <span class="pe-chip">13 capteurs Zigbee</span>
       </div>
     </div>
   </section>
@@ -850,7 +851,7 @@
     <div class="pv-wrap">
       <div class="pv-contents__head pv-reveal">
         <h2>Tout ce qu'il faut, dans une seule boîte</h2>
-        <p>13 accessoires et deux caméras, pensés pour une maison avec beaucoup d'ouvertures vitrées.</p>
+        <p>Deux caméras motorisées et une couverture intérieure renforcée, pour les grands volumes.</p>
       </div>
       <div class="pv-contents__grid pv-reveal">
         <div class="pv-contents__item">
@@ -863,15 +864,15 @@
         <div class="pv-contents__item">
           <span class="pv-contents__qty">1×</span>
           <div>
-            <div class="pv-contents__name">Caméra intérieure motorisée IP506P</div>
-            <div class="pv-contents__desc">Rotation 360°, auto-tracking, vision nocturne. Objectif qui se rétracte physiquement en mode Vie Privée. Alimentation secteur.</div>
+            <div class="pv-contents__name">Caméra extérieure motorisée W512MW</div>
+            <div class="pv-contents__desc">Panoramique, Full HD, vision nocturne, audio bidirectionnel.</div>
           </div>
         </div>
         <div class="pv-contents__item">
           <span class="pv-contents__qty">1×</span>
           <div>
-            <div class="pv-contents__name">Caméra extérieure autonome W503</div>
-            <div class="pv-contents__desc">100 % sans fil, batterie longue durée, Full HD, vision nocturne couleur avec projecteur intégré.</div>
+            <div class="pv-contents__name">Caméra intérieure motorisée IP506P</div>
+            <div class="pv-contents__desc">Rotation 360°, auto-tracking, vision nocturne. Objectif qui se rétracte physiquement en mode Vie Privée. Alimentation secteur.</div>
           </div>
         </div>
         <div class="pv-contents__item">
@@ -882,32 +883,40 @@
           </div>
         </div>
         <div class="pv-contents__item">
-          <span class="pv-contents__qty">5×</span>
+          <span class="pv-contents__qty">7×</span>
           <div>
-            <div class="pv-contents__name">Contacteurs d'ouverture WDS502Z</div>
-            <div class="pv-contents__desc">Portes et fenêtres. Remontée instantanée, confirmée par la centrale.</div>
+            <div class="pv-contents__name">Contacteurs d'ouverture Zigbee</div>
+            <div class="pv-contents__desc">Portes d'entrée, portes de service et garage.</div>
             <span class="pe-zigtag">Zigbee 3.0</span>
           </div>
         </div>
         <div class="pv-contents__item">
-          <span class="pv-contents__qty">4×</span>
+          <span class="pv-contents__qty">6×</span>
           <div>
-            <div class="pv-contents__name">Détecteurs de vibration WVD502Z</div>
-            <div class="pv-contents__desc">Baies vitrées et fenêtres : l'alarme part au premier choc, avant l'entrée.</div>
+            <div class="pv-contents__name">Détecteurs de vibration Zigbee</div>
+            <div class="pv-contents__desc">Baies vitrées et fenêtres : détection avant effraction.</div>
             <span class="pe-zigtag">Zigbee 3.0</span>
-          </div>
-        </div>
-        <div class="pv-contents__item">
-          <span class="pv-contents__qty">1×</span>
-          <div>
-            <div class="pv-contents__name">Détecteur de mouvement WPS501</div>
-            <div class="pv-contents__desc">Double faisceau infrarouge Pet Immune : ignore les animaux de moins de 12 kg.</div>
           </div>
         </div>
         <div class="pv-contents__item">
           <span class="pv-contents__qty">2×</span>
           <div>
-            <div class="pv-contents__name">Télécommandes 4 boutons WRC501</div>
+            <div class="pv-contents__name">Détecteurs de mouvement Pet Immune</div>
+            <div class="pv-contents__desc">Grands volumes. Ignorent les animaux de moins de 12 kg.</div>
+          </div>
+        </div>
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">1×</span>
+          <div>
+            <div class="pv-contents__name">Clavier déporté sans fil WKE502Z</div>
+            <div class="pv-contents__desc">Armement et désarmement par code confidentiel.</div>
+            <span class="pe-zigtag">Zigbee 3.0</span>
+          </div>
+        </div>
+        <div class="pv-contents__item">
+          <span class="pv-contents__qty">2×</span>
+          <div>
+            <div class="pv-contents__name">Télécommandes 4 fonctions</div>
             <div class="pv-contents__desc">Armement, désarmement, mode nuit, et SOS par appui long de 3 secondes.</div>
           </div>
         </div>
@@ -1193,7 +1202,7 @@
   {%- comment -%} Mid-page CTA band {%- endcomment -%}
   <div class="pv-wrap">
     <div class="pv-band pv-reveal">
-      <h2>Équipez votre maison avec le pack Élite PA570</h2>
+      <h2>Équipez votre maison avec le pack Élite PA573</h2>
       <p>Livraison rapide, garantie 2 ans, installation sans technicien et sans abonnement obligatoire.</p>
       {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
       {%- render 'pv-trust-row', has_rating: has_rating -%}
@@ -1234,8 +1243,8 @@
           <span class="pe-zig3__ic" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
           </span>
-          <h3>Neuf capteurs Zigbee dans la boîte</h3>
-          <p>5 contacteurs d'ouverture WDS502Z et 4 détecteurs de vibration WVD502Z, appairés à la centrale depuis l'application.</p>
+          <h3>Quatorze équipements Zigbee dans la boîte</h3>
+          <p>7 contacteurs d'ouverture, 6 détecteurs de vibration et le clavier WKE502Z, tous en Zigbee 3.0, appairés depuis l'application.</p>
         </div>
         <div class="pe-zig3__card">
           <span class="pe-zig3__ic" aria-hidden="true">
@@ -1357,7 +1366,7 @@
         <div>
           <div class="pe-total__k">Total de votre configuration</div>
           <div class="pe-total__v"><span class="pv-price-amount">{{ variant.price | money }}</span></div>
-          <p class="pe-total__d" data-pe-total-detail>Pack Élite PA570 seul. Ajoutez des accessoires ci-dessus pour compléter votre installation.</p>
+          <p class="pe-total__d" data-pe-total-detail>Pack Élite PA573 seul. Ajoutez des accessoires ci-dessus pour compléter votre installation.</p>
         </div>
         <div class="pe-total__actions">
           {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: false -%}
@@ -1372,17 +1381,17 @@
     <div class="pv-wrap">
       <div class="pv-feature pv-reveal">
         <div class="pv-feature__media">
-          {{ feat_image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Caméra extérieure autonome W503' }}
+          {{ feat_image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Caméra extérieure motorisée W512MW' }}
         </div>
         <div class="pv-feature__body">
           <span class="pv-feature__num">VIDÉOSURVEILLANCE EXTÉRIEURE</span>
-          <h2>Un œil sur l'allée, sans tirer un seul câble.</h2>
+          <h2>Une caméra qui balaie, au lieu de fixer un angle.</h2>
           <p class="pv-feature__text">
-            La caméra W503 fonctionne sur batterie longue durée. Elle se fixe où vous voulez, même sans prise à proximité, et bascule en vision nocturne couleur grâce à son projecteur intégré.
+            La W512MW est motorisée : elle pivote pour couvrir toute une façade, une cour ou une allée depuis un seul point de fixation. Full HD, vision nocturne, audio bidirectionnel.
           </p>
           <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Full HD, vision nocturne couleur</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>100 % sans fil, aucun raccordement électrique</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Motorisée : balayage panoramique depuis le téléphone</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Vision nocturne et audio bidirectionnel</li>
           </ul>
         </div>
       </div>
@@ -1422,7 +1431,7 @@
           <span class="pv-feature__num">UNE SEULE APPLICATION</span>
           <h2>Un système, pas juste des accessoires.</h2>
           <p class="pv-feature__text">
-            Daewoo Home Connect pilote l'ensemble : armement et désarmement à distance, alertes, visualisation en direct des deux caméras. Gratuite, sans abonnement, sur iOS et Android.
+            Daewoo Home Connect pilote l'ensemble : armement et désarmement à distance, alertes, visualisation en direct des deux caméras motorisées. Gratuite, sans abonnement, sur iOS et Android.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Mode Maison : ouvertures et vibrations actives, mouvement désactivé</li>
@@ -1439,7 +1448,7 @@
     <div class="pv-wrap">
       <div class="pv-specs__head pv-reveal">
         <h2>En résumé</h2>
-        <p>Tout ce qu'il faut savoir sur le Pack Élite PA570.</p>
+        <p>Tout ce qu'il faut savoir sur le Pack Élite PA573.</p>
       </div>
       <dl class="pv-specs__grid pv-reveal">
         <div class="pv-specs__item">
@@ -1456,11 +1465,11 @@
         </div>
         <div class="pv-specs__item">
           <dt>Caméras incluses</dt>
-          <dd>1 caméra intérieure motorisée IP506P (360°, auto-tracking, mode Vie Privée)&#10;1 caméra extérieure autonome W503 (Full HD, vision nocturne couleur)</dd>
+          <dd>1 caméra extérieure motorisée W512MW (panoramique, Full HD, vision nocturne)&#10;1 caméra intérieure motorisée IP506P (360°, auto-tracking, mode Vie Privée)</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Capteurs inclus</dt>
-          <dd>5 contacteurs d'ouverture WDS502Z&#10;4 détecteurs de vibration WVD502Z</dd>
+          <dd>7 contacteurs d'ouverture Zigbee&#10;6 détecteurs de vibration Zigbee&#10;1 clavier déporté WKE502Z&#10;2 détecteurs de mouvement Pet Immune</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Évolutivité</dt>
@@ -1476,7 +1485,7 @@
         </div>
         <div class="pv-specs__item">
           <dt>Référence</dt>
-          <dd class="pv-ref">{{ variant.sku | default: 'PA570' }}</dd>
+          <dd class="pv-ref">{{ variant.sku | default: 'PA573' }}</dd>
         </div>
       </dl>
     </div>
@@ -1627,7 +1636,7 @@
   <section class="pv-section pv-final">
     <div class="pv-wrap">
       <div class="pv-reveal">
-        <h2>Pack Élite PA570 ZenGuard — Zigbee 3.0 et triple connexion</h2>
+        <h2>Pack Élite PA573 Harmonie+ — caméras motorisées et capteurs Zigbee</h2>
         <p>
           <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
           <span class="pv-price-amount">{{ variant.price | money }}</span> · Sans abonnement · Garantie 2 ans
@@ -1678,7 +1687,7 @@
   </dialog>
 
   {%- comment -%} Structured data {%- endcomment -%}
-  {%- capture ld_description -%}Pack alarme maison sans fil Élite PA570 ZenGuard : centrale PA501Z multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 13 accessoires dont 9 capteurs Zigbee, 2 caméras et une sirène extérieure solaire. Sans abonnement obligatoire.{%- endcapture -%}
+  {%- capture ld_description -%}Pack alarme maison sans fil Élite PA573 Harmonie+ : centrale PA501Z multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 1 caméra extérieure motorisée W512MW, 1 caméra intérieure IP506P, 13 capteurs Zigbee, 2 détecteurs de mouvement et une sirène extérieure solaire. Sans abonnement obligatoire.{%- endcapture -%}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1822,7 +1831,7 @@
         if (totalDetailEl) {
           totalDetailEl.textContent = count === 0
             ? totalDetailBase
-            : 'Pack Élite PA570 ' + formatEuros(basePrice) + ' + ' + count + (count > 1 ? ' accessoires ' : ' accessoire ') + formatEuros(extra);
+            : 'Pack Élite PA573 ' + formatEuros(basePrice) + ' + ' + count + (count > 1 ? ' accessoires ' : ' accessoire ') + formatEuros(extra);
         }
       }
 
@@ -2010,7 +2019,7 @@
 
 {% schema %}
 {
-  "name": "Pack Élite PA570",
+  "name": "Pack Élite PA573",
   "settings": []
 }
 {% endschema %}

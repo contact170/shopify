@@ -1,0 +1,338 @@
+
+  {%- comment -%} Structured data {%- endcomment -%}
+  {%- capture ld_description -%}%%LD_DESC%%{%- endcapture -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "description": {{ ld_description | json }},
+    "sku": {{ variant.sku | json }},
+    "brand": { "@type": "Brand", "name": "Daewoo Security" },
+    {%- if hero_image %}"image": {{ hero_image | image_url: width: 1200 | prepend: 'https:' | json }},{% endif %}
+    "offers": {
+      "@type": "Offer",
+      "url": {{ shop.url | append: product.url | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ variant.price | divided_by: 100.0 | json }},
+      "availability": {% if variant.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
+      "seller": { "@type": "Organization", "name": "Daewoo Security" }
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": {{ shop.url | json }} },
+      { "@type": "ListItem", "position": 2, "name": "Système d'alarme ÉLITE", "item": {{ shop.url | append: '/collections/systeme-dalarme-pa501z' | json }} },
+      { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ shop.url | append: product.url | json }} }
+    ]
+  }
+  </script>
+
+  {%- capture faq_q1 -%}La carte SIM est-elle obligatoire ?{%- endcapture -%}
+  {%- capture faq_a1 -%}Non. Sans carte SIM, le pack fonctionne normalement tant que votre box internet est en service : détection, sirènes, notifications et caméras. La carte SIM ajoute une voie de secours qui prend le relais si le Wi-Fi n'est plus disponible.{%- endcapture -%}
+  {%- capture faq_q2 -%}Puis-je voir mes caméras pendant une coupure internet ?{%- endcapture -%}
+  {%- capture faq_a2 -%}Non. Les caméras fonctionnent uniquement en Wi-Fi : si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée. L'application reste utilisable pour armer, désarmer et consulter l'historique, et les alertes d'intrusion continuent d'arriver par notification, SMS et appel.{%- endcapture -%}
+  {%- capture faq_q3 -%}Quelle est la différence avec une carte SIM sur une alarme Vigilia ou Touch ?{%- endcapture -%}
+  {%- capture faq_a3 -%}Sur les gammes Vigilia et Touch, la carte SIM ne sert qu'aux alertes par SMS et aux appels. Sur la centrale Élite PA501Z, elle porte en plus les données mobiles : l'application Daewoo Home Connect reste utilisable pendant la coupure.{%- endcapture -%}
+  {%- capture faq_q4 -%}Mes anciens accessoires SA501 sont-ils compatibles ?{%- endcapture -%}
+  {%- capture faq_a4 -%}Oui pour la grande majorité : détecteurs de mouvement, sirènes, télécommandes, claviers, détecteurs de fumée et de fuite d'eau, contacteur de porte de garage. Trois exceptions : les WDS501, WVD501 et WKE501, pour lesquels nous recommandons les versions Zigbee WDS502Z, WVD502Z et WKE502Z.{%- endcapture -%}
+  {%- capture faq_q5 -%}Combien de temps l'alarme tient-elle sans électricité ?{%- endcapture -%}
+  {%- capture faq_a5 -%}La centrale dispose d'une batterie de secours de 10 heures. Les capteurs Zigbee sont sur pile et ne sont pas affectés, et la sirène extérieure solaire dispose de sa propre batterie rechargée par la lumière du jour.{%- endcapture -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": {{ faq_q1 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a1 | json }} } },
+      { "@type": "Question", "name": {{ faq_q2 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a2 | json }} } },
+      { "@type": "Question", "name": {{ faq_q3 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a3 | json }} } },
+      { "@type": "Question", "name": {{ faq_q4 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a4 | json }} } },
+      { "@type": "Question", "name": {{ faq_q5 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a5 | json }} } }
+    ]
+  }
+  </script>
+
+  <script>
+    (function () {
+      var root = document.getElementById('shopify-section-{{ section.id }}');
+      if (!root) return;
+
+      /* Reveal-on-scroll */
+      var revealEls = root.querySelectorAll('.pv-reveal');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+
+      /* Sticky add-to-cart bar: show once the hero CTA has scrolled out of view */
+      var heroCta = root.querySelector('#PEHeroCta-{{ section.id }}');
+      var stickyBar = root.querySelector('#PESticky-{{ section.id }}');
+      if (heroCta && stickyBar && 'IntersectionObserver' in window) {
+        var stickyIo = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            stickyBar.classList.toggle('is-shown', !entry.isIntersecting);
+          });
+        }, { threshold: 0, rootMargin: '-64px 0px 0px 0px' });
+        stickyIo.observe(heroCta);
+      }
+
+      /* Hero photo carousel: clicking a thumbnail swaps the main image */
+      var heroImg = document.getElementById('{{ hero_img_id }}');
+      var thumbs = root.querySelectorAll('[data-pe-thumb]');
+      if (heroImg && thumbs.length) {
+        thumbs.forEach(function (thumb) {
+          thumb.addEventListener('click', function () {
+            heroImg.src = thumb.getAttribute('data-full');
+            heroImg.srcset = thumb.getAttribute('data-full-srcset');
+            thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+            thumb.classList.add('is-active');
+          });
+        });
+      }
+
+      /* Accessory picker.
+         One page-wide total: the pack plus whatever the visitor has
+         stepped up, written into every .pv-price-amount on the page —
+         hero CTA, sticky bar, mid band, total bar, final CTA — so the
+         figure being read is always the figure being charged. */
+      var basePrice = {{ variant.price | json }};
+      var baseHasCompare = {{ variant_has_compare | json }};
+      var picks = {};
+      var totalDetailEl = root.querySelector('[data-pe-total-detail]');
+      var totalDetailBase = totalDetailEl ? totalDetailEl.textContent : '';
+      var priceAmountEls = root.querySelectorAll('.pv-price-amount');
+      var priceCompareEls = root.querySelectorAll('.pv-price-compare');
+
+      function formatEuros(cents) {
+        return (cents / 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '\u00A0€';
+      }
+
+      /* Kept in sync with the running total so the Alma simulation quotes
+         the configured pack, not the bare one. */
+      var priceCents = basePrice;
+
+      function refreshTotal() {
+        var extra = 0;
+        var count = 0;
+        Object.keys(picks).forEach(function (id) {
+          extra += picks[id].qty * picks[id].price;
+          count += picks[id].qty;
+        });
+        priceCents = basePrice + extra;
+
+        priceAmountEls.forEach(function (el) { el.textContent = formatEuros(priceCents); });
+        /* A crossed-out pack price next to a configured total would be
+           comparing two different things, so it only shows on the bare pack. */
+        priceCompareEls.forEach(function (el) {
+          el.classList.toggle('is-visible', baseHasCompare && count === 0);
+        });
+
+        if (totalDetailEl) {
+          totalDetailEl.textContent = count === 0
+            ? totalDetailBase
+            : '%%JS_PACKNAME%% ' + formatEuros(basePrice) + ' + ' + count + (count > 1 ? ' accessoires ' : ' accessoire ') + formatEuros(extra);
+        }
+      }
+
+      function registerPick(id, price) {
+        if (!picks[id]) picks[id] = { qty: 0, price: price };
+        return picks[id];
+      }
+
+      root.querySelectorAll('[data-pe-acc]').forEach(function (card) {
+        var id = card.getAttribute('data-pe-acc-id');
+        var price = parseInt(card.getAttribute('data-pe-acc-price'), 10);
+        if (!id || isNaN(price)) return;
+        registerPick(id, price);
+
+        var qtyEl = card.querySelector('[data-pe-qty]');
+        var minusBtn = card.querySelector('[data-pe-minus]');
+        var plusBtn = card.querySelector('[data-pe-plus]');
+
+        function setQty(next) {
+          var q = Math.max(0, Math.min(10, next));
+          picks[id].qty = q;
+          if (qtyEl) qtyEl.textContent = q;
+          if (minusBtn) minusBtn.disabled = q === 0;
+          if (plusBtn) plusBtn.disabled = q === 10;
+          card.classList.toggle('is-picked', q > 0);
+          refreshTotal();
+        }
+        if (minusBtn) minusBtn.addEventListener('click', function () { setQty(picks[id].qty - 1); });
+        if (plusBtn) plusBtn.addEventListener('click', function () { setQty(picks[id].qty + 1); });
+      });
+
+      /* The SIM card is a one-or-none add rather than a stepper. */
+      root.querySelectorAll('[data-pe-acc-toggle]').forEach(function (btn) {
+        var id = btn.getAttribute('data-pe-acc-id');
+        var price = parseInt(btn.getAttribute('data-pe-acc-price'), 10);
+        if (!id || isNaN(price)) return;
+        registerPick(id, price);
+
+        btn.addEventListener('click', function () {
+          var on = picks[id].qty === 0;
+          picks[id].qty = on ? 1 : 0;
+          btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+          btn.textContent = on
+            ? btn.getAttribute('data-pe-label-remove')
+            : btn.getAttribute('data-pe-label-add');
+          refreshTotal();
+        });
+      });
+
+      /* Add to cart with accessories.
+         The accessories go in first through /cart/add.js, then the
+         theme's own product form is submitted for the pack itself — so
+         the cart drawer opens once, with every line already in it, and
+         nothing about the theme's normal add-to-cart path changes when
+         no accessory is selected. */
+      var productForm = document.getElementById('{{ form_id }}');
+      var errorEl = productForm ? productForm.querySelector('.product-form__error-message') : null;
+      var atcButtons = Array.prototype.slice.call(root.querySelectorAll('button[form="{{ form_id }}"]'));
+      var addBusy = false;
+
+      function selectedItems() {
+        var items = [];
+        Object.keys(picks).forEach(function (id) {
+          if (picks[id].qty > 0) items.push({ id: Number(id), quantity: picks[id].qty });
+        });
+        return items;
+      }
+
+      function clearPicks() {
+        Object.keys(picks).forEach(function (id) { picks[id].qty = 0; });
+        root.querySelectorAll('[data-pe-acc]').forEach(function (card) {
+          card.classList.remove('is-picked');
+          var qtyEl = card.querySelector('[data-pe-qty]');
+          var minusBtn = card.querySelector('[data-pe-minus]');
+          var plusBtn = card.querySelector('[data-pe-plus]');
+          if (qtyEl) qtyEl.textContent = '0';
+          if (minusBtn) minusBtn.disabled = true;
+          if (plusBtn) plusBtn.disabled = false;
+        });
+        root.querySelectorAll('[data-pe-acc-toggle]').forEach(function (btn) {
+          btn.setAttribute('aria-pressed', 'false');
+          btn.textContent = btn.getAttribute('data-pe-label-add');
+        });
+        refreshTotal();
+      }
+
+      atcButtons.forEach(function (btn) {
+        btn.addEventListener('click', function (event) {
+          if (addBusy) return;
+          var items = selectedItems();
+          if (!items.length) return; /* nothing extra — the theme handles it */
+
+          event.preventDefault();
+          addBusy = true;
+          var toRestore = atcButtons.filter(function (b) { return !b.disabled; });
+          toRestore.forEach(function (b) { b.disabled = true; });
+
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ items: items })
+          })
+            .then(function (response) {
+              if (!response.ok) throw new Error('cart/add failed');
+              return response.json();
+            })
+            .then(function () { clearPicks(); })
+            .catch(function () {
+              if (errorEl) {
+                errorEl.textContent = "Les accessoires n'ont pas pu être ajoutés. Seul le pack a été mis au panier.";
+                errorEl.hidden = false;
+              }
+            })
+            .then(function () {
+              toRestore.forEach(function (b) { b.disabled = false; });
+              addBusy = false;
+              if (productForm && typeof productForm.requestSubmit === 'function') {
+                productForm.requestSubmit();
+              } else if (productForm) {
+                productForm.submit();
+              }
+            });
+        });
+      });
+
+      refreshTotal();
+
+      /* Generic modal open/close — the Alma dialog is the only one on this
+         page, but the helper stays generic so it matches the Vigilia forks.
+         .is-open is added a frame after showModal() so the CSS transition
+         on .pv-modal__inner actually runs. */
+      function openModal(dialogEl) {
+        if (!dialogEl || typeof dialogEl.showModal !== 'function') return;
+        dialogEl.showModal();
+        requestAnimationFrame(function () { dialogEl.classList.add('is-open'); });
+      }
+      function closeModal(dialogEl) {
+        if (!dialogEl) return;
+        dialogEl.classList.remove('is-open');
+        dialogEl.close();
+      }
+      root.querySelectorAll('.pv-modal').forEach(function (dialogEl) {
+        dialogEl.querySelectorAll('[data-pv-modal-close]').forEach(function (btn) {
+          btn.addEventListener('click', function () { closeModal(dialogEl); });
+        });
+        dialogEl.addEventListener('click', function (e) {
+          if (e.target === dialogEl) closeModal(dialogEl);
+        });
+        dialogEl.addEventListener('close', function () { dialogEl.classList.remove('is-open'); });
+      });
+
+      /* Alma installments popup: 3x/4x are always fee-free, 10x only
+         applies (and only shows) from 200 €, with a real 7.34 % fee. */
+      var almaModal = document.getElementById('PEAlmaModal-{{ section.id }}');
+      var almaOpenBtn = root.querySelector('[data-pv-alma-open]');
+      /* priceCents and formatEuros are the accessory picker's — the
+         Alma simulation follows the configured total, not the bare pack. */
+      function updateAlmaAmounts() {
+        if (!almaModal) return;
+        var totalEl = almaModal.querySelector('[data-pv-alma-total]');
+        var el3x = almaModal.querySelector('[data-pv-alma-3x]');
+        var el4x = almaModal.querySelector('[data-pv-alma-4x]');
+        var wrap10x = almaModal.querySelector('[data-pv-alma-10x-wrap]');
+        var el10x = almaModal.querySelector('[data-pv-alma-10x]');
+
+        if (totalEl) totalEl.textContent = formatEuros(priceCents);
+        if (el3x) el3x.textContent = '3 x ' + formatEuros(Math.round(priceCents / 3));
+        if (el4x) el4x.textContent = '4 x ' + formatEuros(Math.round(priceCents / 4));
+
+        var showTenX = priceCents >= 20000;
+        if (wrap10x) wrap10x.hidden = !showTenX;
+        if (showTenX && el10x) {
+          el10x.textContent = '10 x ' + formatEuros(Math.round(Math.round(priceCents * 1.0734) / 10));
+        }
+      }
+      if (almaOpenBtn && almaModal) {
+        almaOpenBtn.addEventListener('click', function () {
+          updateAlmaAmounts();
+          openModal(almaModal);
+        });
+      }
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "%%SCHEMA_NAME%%",
+  "settings": []
+}
+{% endschema %}

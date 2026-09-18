@@ -1,0 +1,244 @@
+
+    /* ============================================================
+       ÉLITE — additions on top of the shared Vigilia page styles.
+       Everything below is prefixed .pe- so it can't collide with the
+       .pv- rules above, which stay byte-identical across both ranges.
+
+       Palette: the range is signalled by a warm sand ground and a
+       bronze accent rather than a dark slab — the product photography
+       is shot on white, and a dark hero fought it. Two functional
+       accents carry meaning and nothing else: violet = Zigbee,
+       amber = 4G. The navy CTA band stays the only dark block on the
+       page, exactly as on the Vigilia pages.
+       ============================================================ */
+    #shopify-section-{{ section.id }} .pv{
+      --pe-sand:#f7f2e8;
+      --pe-sand-2:#fdfbf7;
+      --pe-bronze:#8a6a2f;
+      --pe-bronze-soft:#b9954f;
+      --pe-bronze-line:#e4d7bb;
+      --pe-zig:#6d4fd1;
+      --pe-zig-bg:#f4f1ff;
+      --pe-zig-line:#d9cffa;
+      --pe-zig-ink:#3d2a86;
+      --pe-amber:#b06f10;
+      --pe-amber-bg:#fdf3e3;
+      --pe-amber-line:#eccfa0;
+      --pe-amber-ink:#6b4207;
+      --pe-eth:#1f6f3f;
+      --pe-eth-bg:#eaf4ed;
+      --pe-danger:#a11b1b;
+      --pe-danger-bg:#fdf3f3;
+    }
+
+    /* ---- eyebrow variants ---- */
+    .pv .pe-eyebrow--zig{color:var(--pe-zig-ink);}
+    .pv .pe-eyebrow--zig::before{background:var(--pe-zig);}
+    .pv .pe-eyebrow--amber{color:var(--pe-amber-ink);}
+    .pv .pe-eyebrow--amber::before{background:var(--pe-amber);}
+    .pv .pe-eyebrow--bronze{color:var(--pe-bronze);}
+    .pv .pe-eyebrow--bronze::before{background:var(--pe-bronze-soft);}
+
+    /* ---- hero: warm sand ground, ink type, bronze hairline ---- */
+    .pe-hero{
+      background:linear-gradient(180deg,var(--pe-sand-2) 0%,var(--pe-sand) 100%);
+      border-bottom:1px solid var(--pe-bronze-line);
+    }
+    .pv .pe-hero .pv-eyebrow{color:var(--pe-bronze);}
+    .pv .pe-hero .pv-eyebrow::before{background:var(--pe-bronze-soft);}
+    .pv .pe-hero .pv-hero__tagline{color:var(--pe-bronze);font-style:normal;}
+    .pv .pe-hero .pv-hero__media img{background:#fff;}
+    .pv .pe-hero .pv-thumbs__item{background:#fff;}
+
+    .pe-hero__chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:26px;}
+    .pe-chip{
+      font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:999px;
+      background:#fff;color:var(--pe-bronze);border:1px solid var(--pe-bronze-line);
+    }
+    .pe-chip--zig{background:var(--pe-zig-bg);border-color:var(--pe-zig-line);color:var(--pe-zig-ink);}
+    .pe-chip--eth{background:var(--pe-eth-bg);border-color:#bcdcc8;color:var(--pe-eth);}
+    .pe-chip--4g{background:var(--pe-amber-bg);border-color:var(--pe-amber-line);color:var(--pe-amber-ink);}
+
+    /* ---- Zigbee badge on the pack-contents rows ---- */
+    .pe-zigtag{
+      display:inline-block;margin-top:8px;font-size:11px;font-weight:700;
+      letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;
+      background:var(--pe-zig-bg);color:var(--pe-zig-ink);
+    }
+
+    /* ---- centrale anatomy: 4 network rails + spec grid ---- */
+    .pe-anat{display:grid;grid-template-columns:1fr;gap:32px;align-items:center;}
+    @media (min-width:900px){.pe-anat{grid-template-columns:.95fr 1.05fr;gap:48px;}}
+    .pe-rails{display:flex;flex-direction:column;gap:10px;}
+    .pe-rail{
+      display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:flex-start;
+      border:1px solid var(--pv-line);border-radius:14px;padding:16px 18px;background:#fff;
+    }
+    @media (min-width:520px){.pe-rail{grid-template-columns:auto 1fr auto;align-items:center;}}
+    .pe-rail__ic{
+      width:36px;height:36px;border-radius:10px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .pe-rail__t{font-size:15px;font-weight:600;}
+    .pv .pe-rail__d{font-size:13px;color:var(--pv-gray);margin-top:4px;line-height:1.5;}
+    .pe-rail__rank{
+      font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+      padding:5px 10px;border-radius:999px;white-space:nowrap;justify-self:start;margin-top:8px;
+    }
+    @media (min-width:520px){.pe-rail__rank{margin-top:0;justify-self:end;}}
+    .pe-rail--eth{border-color:#bcdcc8;}
+    .pe-rail--eth .pe-rail__ic,.pe-rail--eth .pe-rail__rank{background:var(--pe-eth-bg);color:var(--pe-eth);}
+    .pe-rail--wifi .pe-rail__ic,.pe-rail--wifi .pe-rail__rank{background:#e8f0fa;color:var(--pv-navy);}
+    .pe-rail--4g{border-color:var(--pe-amber-line);}
+    .pe-rail--4g .pe-rail__ic{background:var(--pe-amber-bg);color:var(--pe-amber);}
+    .pe-rail--4g .pe-rail__rank{background:var(--pe-amber-bg);color:var(--pe-amber-ink);}
+    .pe-rail--zig{border-color:var(--pe-zig-line);}
+    .pe-rail--zig .pe-rail__ic{background:var(--pe-zig-bg);color:var(--pe-zig);}
+    .pe-rail--zig .pe-rail__rank{background:var(--pe-zig-bg);color:var(--pe-zig-ink);}
+
+    .pe-specs{display:grid;grid-template-columns:1fr;gap:1px;background:var(--pv-line);border:1px solid var(--pv-line);border-radius:18px;overflow:hidden;}
+    @media (min-width:520px){.pe-specs{grid-template-columns:1fr 1fr;}}
+    .pe-spec{background:#fff;padding:20px 22px;}
+    .pe-spec__k{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--pv-gray);font-weight:700;}
+    .pe-spec__v{font-size:19px;font-weight:600;margin-top:7px;letter-spacing:-.01em;}
+    .pv .pe-spec__n{font-size:13px;color:var(--pv-gray);margin-top:5px;line-height:1.5;}
+
+    /* ---- continuity matrix: what still works, in one look ----
+       Replaces the tabbed simulator: three situations side by side, so
+       nothing has to be clicked to be compared. The first column is
+       sticky so the row label stays readable while the matrix scrolls
+       sideways on a phone. */
+    .pe-matrix{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--pv-line);border-radius:18px;background:#fff;}
+    .pe-matrix table{border-collapse:collapse;width:100%;min-width:640px;}
+    .pe-matrix th,.pe-matrix td{padding:16px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--pv-line);}
+    .pe-matrix tbody tr:last-child th,.pe-matrix tbody tr:last-child td{border-bottom:none;}
+    .pe-matrix thead th{
+      font-size:13px;font-weight:700;color:var(--pv-ink);line-height:1.4;
+      border-bottom:1px solid var(--pv-ink);background:var(--pv-bg-alt);vertical-align:bottom;
+    }
+    .pe-matrix thead th span{display:block;font-size:11.5px;font-weight:600;color:var(--pv-gray);text-transform:none;letter-spacing:0;margin-top:5px;}
+    .pe-matrix tbody th{
+      font-size:14px;font-weight:600;color:var(--pv-ink);
+      position:sticky;left:0;background:#fff;min-width:200px;
+      box-shadow:1px 0 0 var(--pv-line);
+    }
+    .pe-matrix thead th:first-child{position:sticky;left:0;background:var(--pv-bg-alt);box-shadow:1px 0 0 var(--pv-line);z-index:1;}
+    .pe-state{display:inline-flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.45;}
+    .pe-state svg{flex-shrink:0;margin-top:2px;}
+    .pe-state--ok{color:var(--pv-success);}
+    .pe-state--ko{color:var(--pe-danger);}
+    .pe-state__note{display:block;color:var(--pv-gray);font-size:12.5px;margin-top:3px;}
+    .pe-matrix__foot{
+      display:flex;flex-direction:column;gap:10px;margin-top:18px;
+      border-left:3px solid var(--pe-amber);background:var(--pe-amber-bg);
+      padding:16px 18px;border-radius:0 12px 12px 0;
+    }
+    .pv .pe-matrix__foot p{font-size:14px;line-height:1.6;color:var(--pe-amber-ink);}
+    .pv .pe-matrix__foot p strong{color:#4d2f05;}
+
+    /* ---- yes / no panels ---- */
+    .pe-duo{display:grid;grid-template-columns:1fr;gap:20px;}
+    @media (min-width:760px){.pe-duo{grid-template-columns:1fr 1fr;}}
+    .pe-panel{border:1px solid var(--pv-line);border-radius:18px;padding:26px;background:#fff;}
+    .pe-panel--yes{border-color:#bcdcc8;background:#f6fbf7;}
+    .pe-panel--no{border-color:#e3c9c9;background:var(--pe-danger-bg);}
+    .pe-panel h3{font-size:18px;font-weight:600;letter-spacing:-.01em;}
+    .pe-panel ul{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:12px;}
+    .pe-panel li{font-size:14.5px;line-height:1.55;display:flex;gap:10px;align-items:flex-start;color:var(--pv-ink);}
+    .pe-panel li svg{flex-shrink:0;margin-top:3px;}
+    .pe-panel--yes li svg{color:var(--pv-success);}
+    .pe-panel--no li svg{color:var(--pe-danger);}
+
+    /* ---- two-column explainer + aside ---- */
+    .pe-why{display:grid;grid-template-columns:1fr;gap:28px;align-items:start;}
+    @media (min-width:900px){.pe-why{grid-template-columns:1fr 1fr;gap:44px;}}
+    .pe-why h3{font-size:23px;font-weight:600;letter-spacing:-.02em;}
+    .pv .pe-why p{font-size:15.5px;line-height:1.7;color:var(--pv-gray);margin-top:14px;}
+    .pe-warn{border-left:3px solid var(--pe-amber);background:var(--pe-amber-bg);padding:18px 20px;border-radius:0 12px 12px 0;}
+    .pv .pe-warn p{font-size:14.5px;line-height:1.65;color:var(--pe-amber-ink);margin:0;}
+    .pv .pe-warn p + p{margin-top:12px;}
+    .pe-warn--zig{border-left-color:var(--pe-zig);background:var(--pe-zig-bg);}
+    .pv .pe-warn--zig p{color:var(--pe-zig-ink);}
+
+    /* ---- tables ---- */
+    .pe-table{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .pe-table table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px;}
+    .pe-table caption{
+      text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+      color:var(--pv-gray);font-weight:700;padding-bottom:14px;
+    }
+    .pe-table th,.pe-table td{padding:15px 16px;text-align:left;border-bottom:1px solid var(--pv-line);vertical-align:top;line-height:1.5;}
+    .pe-table thead th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--pv-gray);font-weight:700;border-bottom:1px solid var(--pv-ink);}
+    .pe-table tbody th{font-weight:600;color:var(--pv-ink);}
+    .pe-table td.pe-num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600;}
+    .pv .pe-table__note{font-size:13.5px;color:var(--pv-gray);margin-top:16px;}
+
+    /* ---- checklist ---- */
+    .pe-check{list-style:none;padding:0;margin:20px 0 0;display:grid;grid-template-columns:1fr;gap:14px;}
+    @media (min-width:760px){.pe-check{grid-template-columns:1fr 1fr;gap:16px 32px;}}
+    .pe-check li{font-size:14.5px;line-height:1.55;display:flex;gap:10px;align-items:flex-start;color:var(--pv-ink);}
+    .pe-check svg{flex-shrink:0;margin-top:3px;color:var(--pv-navy);}
+
+    /* ---- Zigbee: what the protocol actually covers ---- */
+    .pe-zigband{background:var(--pe-zig-bg);border-block:1px solid var(--pe-zig-line);}
+    .pe-zig3{display:grid;grid-template-columns:1fr;gap:16px;margin-top:40px;}
+    @media (min-width:700px){.pe-zig3{grid-template-columns:repeat(3,1fr);gap:20px;}}
+    .pe-zig3__card{background:#fff;border:1px solid var(--pe-zig-line);border-radius:18px;padding:24px;}
+    .pe-zig3__ic{
+      width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+      background:var(--pe-zig-bg);color:var(--pe-zig);margin-bottom:16px;
+    }
+    .pe-zig3__card h3{font-size:16px;font-weight:600;letter-spacing:-.01em;}
+    .pv .pe-zig3__card p{font-size:14px;line-height:1.6;color:var(--pv-gray);margin-top:8px;}
+
+    /* ---- accessory picker: cards with a stepper that re-prices the page ---- */
+    .pe-acc{display:grid;grid-template-columns:1fr;gap:16px;}
+    @media (min-width:600px){.pe-acc{grid-template-columns:1fr 1fr;}}
+    @media (min-width:1000px){.pe-acc{grid-template-columns:repeat(4,1fr);}}
+    .pe-acc__card{
+      display:flex;flex-direction:column;background:#fff;
+      border:1px solid var(--pv-line);border-radius:18px;overflow:hidden;
+      transition:border-color .18s ease,box-shadow .18s ease;
+    }
+    .pe-acc__card.is-picked{border-color:var(--pv-navy);box-shadow:0 10px 26px -18px rgba(12,30,74,.45);}
+    .pe-acc__photo{background:var(--pv-bg-alt);aspect-ratio:1/1;max-width:100%;}
+    .pe-acc__photo img{width:100%;height:100%;object-fit:cover;}
+    .pe-acc__body{display:flex;flex-direction:column;gap:8px;padding:18px 20px 20px;flex-grow:1;}
+    .pe-acc__ref{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pe-zig-ink);}
+    .pe-acc__ref--plain{color:var(--pv-gray);}
+    .pe-acc__name{font-size:15px;font-weight:600;line-height:1.35;}
+    .pv .pe-acc__why{font-size:13px;line-height:1.55;color:var(--pv-gray);flex-grow:1;}
+    .pe-acc__price{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;}
+    .pe-step{display:flex;align-items:center;gap:0;border:1px solid var(--pv-line);border-radius:999px;overflow:hidden;align-self:flex-start;}
+    .pe-step button{
+      width:38px;height:38px;border:none;background:#fff;color:var(--pv-ink);
+      font-family:inherit;font-size:19px;line-height:1;cursor:pointer;
+    }
+    .pe-step button:hover:not([disabled]){background:var(--pv-bg-alt);}
+    .pe-step button[disabled]{color:var(--pv-line);cursor:not-allowed;}
+    .pe-step button:focus-visible{outline:2px solid var(--pv-navy);outline-offset:-2px;}
+    .pe-step__qty{
+      min-width:42px;text-align:center;font-size:15px;font-weight:600;
+      font-variant-numeric:tabular-nums;border-inline:1px solid var(--pv-line);
+      align-self:stretch;display:flex;align-items:center;justify-content:center;
+    }
+
+    /* ---- running total bar ---- */
+    .pe-total{
+      display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;
+      margin-top:28px;padding:22px 24px;border-radius:18px;
+      background:var(--pe-sand);border:1px solid var(--pe-bronze-line);
+    }
+    .pe-total__k{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--pe-bronze);font-weight:700;}
+    .pe-total__v{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:6px;font-variant-numeric:tabular-nums;}
+    .pv .pe-total__d{font-size:13.5px;color:var(--pv-gray);margin-top:6px;}
+    .pe-total__actions{display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
+
+    /* ---- inline SIM add ---- */
+    .pe-simcta{
+      display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;
+      border:1px solid var(--pv-line);border-radius:18px;padding:24px;background:#fff;
+    }
+    .pe-simcta__t{font-size:16.5px;font-weight:600;}
+    .pv .pe-simcta__d{font-size:13.5px;color:var(--pv-gray);margin-top:6px;line-height:1.5;}
+    .pe-simcta__actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}

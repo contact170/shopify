@@ -1,0 +1,724 @@
+
+  {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
+  {%- form 'product', product, id: form_id, data-type: 'add-to-cart-form', is: 'product-form', class: 'pv-visually-hidden' -%}
+    <input type="hidden" name="id" value="{{ variant.id }}" id="PEVariantId-{{ section.id }}">
+    <input type="hidden" name="quantity" value="1">
+    {%- comment -%}
+      The theme's ProductForm custom element looks up its own submit button
+      with `this.querySelector('[type="submit"]')` — since every real
+      "Ajouter au panier" button on this page lives outside this hidden
+      form (linked via form="…"), that lookup would return null and throw
+      before the cart request is ever sent. This dummy button keeps that
+      lookup valid.
+    {%- endcomment -%}
+    <button type="submit" name="add" tabindex="-1" aria-hidden="true"></button>
+    <div class="product-form__error-message alert alert--error" role="alert" hidden style="position:fixed;left:16px;right:16px;bottom:84px;z-index:70;background:#fff;border:1px solid #e11d48;color:#e11d48;padding:12px 16px;border-radius:12px;font-size:14px;"></div>
+  {%- endform -%}
+  <style>.pv-visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
+
+  {%- comment -%} Sticky add-to-cart bar {%- endcomment -%}
+  <div class="pv-sticky" id="PESticky-{{ section.id }}">
+    <div class="pv-sticky__info">
+      <div class="pv-sticky__thumb">
+        {%- if hero_image -%}
+          {{ hero_image | image_url: width: 80 | image_tag: loading: 'lazy', widths: '80,160' }}
+        {%- endif -%}
+      </div>
+      <div class="pv-sticky__text">
+        <div class="pv-sticky__name">%%STICKY%%</div>
+      </div>
+    </div>
+    {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+  </div>
+
+  {%- comment -%} Hero {%- endcomment -%}
+  <section class="pv-hero pe-hero">
+    <div class="pv-wrap">
+      <span class="pv-eyebrow">Daewoo Security · Pack Élite <span class="pv-ref">{{ variant.sku | default: '%%SKU%%' }}</span></span>
+      <h1>%%H1%%</h1>
+      <p class="pv-hero__tagline">%%TAGLINE%%</p>
+      <p class="pv-hero__sub">%%SUB%%</p>
+      <p class="pv-hero__summary">%%SUMMARY%%</p>
+      {%- if hero_image -%}
+        <div class="pv-hero__media pv-reveal">
+          {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
+        </div>
+        {%- if gallery.size > 1 -%}
+          <div class="pv-thumbs" role="group" aria-label="Photos du produit">
+            {%- for img in gallery limit: 8 -%}
+              <button
+                type="button"
+                class="pv-thumbs__item{% if img.id == hero_image.id %} is-active{% endif %}"
+                data-pe-thumb
+                data-full="{{ img | image_url: width: 1200 }}"
+                data-full-srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1200 }} 1200w"
+                aria-label="Photo {{ forloop.index }} sur {{ gallery.size }}"
+              >
+                {{ img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+      <div class="pv-hero__cta">
+        <div id="PEHeroCta-{{ section.id }}">
+          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+        </div>
+        <div class="pv-hero__price">
+          <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
+          <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
+        </div>
+        {%- render 'pv-trust-row', has_rating: has_rating -%}
+      </div>
+      <div class="pe-hero__chips">%%CHIPS%%</div>
+    </div>
+  </section>
+
+  {%- comment -%} Trust strip {%- endcomment -%}
+  <div class="pv-wrap">
+    <div class="pv-strip pv-reveal">
+      <div class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Installation sans technicien ni câblage
+      </div>
+      <div class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Sans abonnement obligatoire
+      </div>
+      <div class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Compatible gamme SA501 et Zigbee
+      </div>
+      <div class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Garantie 2 ans, SAV en France
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Pack contents {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-contents__head pv-reveal">
+        <h2>Tout ce qu'il faut, dans une seule boîte</h2>
+        <p>%%CONTENTS_LEAD%%</p>
+      </div>
+      <div class="pv-contents__grid pv-reveal">
+%%CONTENTS%%      </div>
+    </div>
+  </section>
+
+  {%- comment -%}
+    Centrale anatomy — the point of this block is to separate the three
+    WAN paths from the Zigbee radio before the failover simulator, since
+    visitors routinely assume a box outage disarms their sensors.
+  {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-contents__head pv-reveal">
+        <span class="pv-eyebrow">La centrale PA501Z</span>
+        <h2>Quatre réseaux, un seul boîtier</h2>
+        <p>Trois chemins pour joindre Internet, un quatrième pour parler aux capteurs. C'est cette architecture qui sépare l'Élite du reste de la gamme.</p>
+      </div>
+
+      <div class="pe-anat pv-reveal">
+        <div class="pe-specs">
+          <div class="pe-spec">
+            <div class="pe-spec__k">Accessoires</div>
+            <div class="pe-spec__v">200 max.</div>
+            <p class="pe-spec__n">Compatible avec une grande partie de la gamme SA501.</p>
+          </div>
+          <div class="pe-spec">
+            <div class="pe-spec__k">Batterie de secours</div>
+            <div class="pe-spec__v">10 heures</div>
+            <p class="pe-spec__n">Le système reste armé pendant une coupure de courant.</p>
+          </div>
+          <div class="pe-spec">
+            <div class="pe-spec__k">Radio capteurs</div>
+            <div class="pe-spec__v">Bidirectionnelle chiffrée</div>
+            <p class="pe-spec__n">Anti-brouillage et détection d'arrachement d'un périphérique.</p>
+          </div>
+          <div class="pe-spec">
+            <div class="pe-spec__k">Application</div>
+            <div class="pe-spec__v">Daewoo Home Connect</div>
+            <p class="pe-spec__n">iOS et Android, gratuite. Alarme et caméras au même endroit.</p>
+          </div>
+        </div>
+
+        <div class="pe-rails">
+          <div class="pe-rail pe-rail--eth">
+            <span class="pe-rail__ic" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="10" rx="2"></rect><path d="M7 9V6h10v3M8 19v2M16 19v2"></path></svg>
+            </span>
+            <div>
+              <div class="pe-rail__t">Ethernet RJ45</div>
+              <p class="pe-rail__d">Un câble jusqu'à la box. Insensible au Wi-Fi saturé du voisinage.</p>
+            </div>
+            <span class="pe-rail__rank">Prioritaire</span>
+          </div>
+          <div class="pe-rail pe-rail--wifi">
+            <span class="pe-rail__ic" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5.5 5.5 0 0 1 7 0"></path><circle cx="12" cy="19.5" r="1.2" fill="currentColor"></circle></svg>
+            </span>
+            <div>
+              <div class="pe-rail__t">Wi-Fi 2,4 GHz</div>
+              <p class="pe-rail__d">Si le câble n'est pas possible. Indispensable aux caméras, dans tous les cas.</p>
+            </div>
+            <span class="pe-rail__rank">Relais</span>
+          </div>
+          <div class="pe-rail pe-rail--4g">
+            <span class="pe-rail__ic" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M9 20V6M14 20v-9M19 20V4"></path></svg>
+            </span>
+            <div>
+              <div class="pe-rail__t">4G+ données mobiles</div>
+              <p class="pe-rail__d">Carte SIM M2M en option. Prend la main automatiquement si Internet tombe.</p>
+            </div>
+            <span class="pe-rail__rank">Secours</span>
+          </div>
+          <div class="pe-rail pe-rail--zig">
+            <span class="pe-rail__ic" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 11h7l-2 9 9-11h-7l2-9Z"></path></svg>
+            </span>
+            <div>
+              <div class="pe-rail__t">Passerelle Zigbee 3.0</div>
+              <p class="pe-rail__d">Le réseau interne entre la centrale et vos capteurs. Indépendant d'Internet.</p>
+            </div>
+            <span class="pe-rail__rank">Capteurs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%}
+    Continuity matrix. Replaces an earlier tabbed simulator that the
+    merchant found unclear: the three situations now sit side by side so
+    a visitor compares them without clicking anything. Camera rows say
+    plainly that the video stream is Wi-Fi only and is lost in both
+    outages, SIM or no SIM.
+  {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-contents__head pv-reveal">
+        <span class="pv-eyebrow pe-eyebrow--amber">Continuité de service</span>
+        <h2>Ce qui continue de fonctionner, quoi qu'il arrive</h2>
+        <p>Trois situations, cinq fonctions. Sans rien enjoliver.</p>
+      </div>
+
+      <div class="pe-matrix pv-reveal">
+        <table>
+          <caption class="pv-visually-hidden">Fonctionnement du pack Élite PA570 selon la situation</caption>
+          <thead>
+            <tr>
+              <th scope="col">Fonction</th>
+              <th scope="col">Tout va bien<span>Box et courant en service</span></th>
+              <th scope="col">Box internet coupée<span>Avec carte SIM 4G+</span></th>
+              <th scope="col">Coupure de courant<span>Avec carte SIM 4G+</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Détection et sirènes</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">La centrale n'a pas besoin d'internet pour déclencher</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">10 h sur la batterie de secours</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Alertes d'intrusion sur votre téléphone</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Notification, SMS et appel via la 4G+</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Notification, SMS et appel via la 4G+</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Pilotage depuis l'application</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Armer, désarmer, consulter l'historique</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Pendant les 10 h d'autonomie</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Flux vidéo des caméras</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ko"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Non<span class="pe-state__note">Les caméras passent uniquement par le Wi-Fi</span></span></td>
+              <td><span class="pe-state pe-state--ko"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Non<span class="pe-state__note">Wi-Fi coupé, et la caméra intérieure est sur secteur</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Liaison avec les capteurs Zigbee</th>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Le Zigbee ne dépend pas d'internet</span></span></td>
+              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Les capteurs sont sur pile, la centrale sur batterie</span></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pe-matrix__foot pv-reveal">
+        <p><strong>Sans carte SIM.</strong> En cas de coupure de la box ou du courant, la détection et les sirènes fonctionnent toujours — mais plus aucune alerte ne sort du logement, et l'application devient injoignable jusqu'au retour d'internet.</p>
+        <p><strong>Les caméras, dans tous les cas.</strong> Elles fonctionnent uniquement en Wi-Fi. Aucune carte SIM ne rend le flux vidéo accessible pendant une coupure : c'est vrai sur l'Élite comme sur le reste de la gamme.</p>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%}
+    SIM module. Facts below are the merchant-authored ones from the
+    SIM1ANPA fiche: 200 Mo (vs 50 Mo standard), 85 € = card + 12 months
+    prepaid (7,08 €/month year one, 7,80 € after), 2 € top-up = 30 min /
+    150 SMS / 100 Mo, activation on Afone with a RIB, France only, non
+    refundable once activated.
+  {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-contents__head pv-reveal">
+        <span class="pv-eyebrow pe-eyebrow--amber">La carte SIM 4G+</span>
+        <h2>La carte SIM, expliquée sans jargon</h2>
+        <p>Elle est en option, ce n'est pas un abonnement de télésurveillance, et elle ne sert pas à ce que la plupart des gens imaginent.</p>
+      </div>
+
+      <div class="pe-duo pv-reveal">
+        <div class="pe-panel pe-panel--yes">
+          <h3>Ce que la carte SIM apporte</h3>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Une voie de secours indépendante de votre box, qui n'entre en jeu que si le Wi-Fi n'est plus disponible.</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><strong>L'application reste utilisable pendant la coupure</strong> : armer, désarmer, consulter l'historique. C'est la seule différence avec les gammes Vigilia et Touch, où la carte SIM ne porte que les SMS et les appels.</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Les alertes d'intrusion continuent d'arriver : notification, SMS et appel téléphonique.</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Douze mois d'abonnement réglés d'avance : vous n'y pensez plus de l'année.</li>
+          </ul>
+        </div>
+        <div class="pe-panel pe-panel--no">
+          <h3>Ce qu'elle ne fait pas</h3>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg><strong>Elle ne rend pas les caméras accessibles.</strong> Les caméras fonctionnent uniquement en Wi-Fi : pendant une coupure, leur flux vidéo reste indisponible, carte SIM installée ou non.</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Ce n'est pas une télésurveillance : personne n'intervient à votre place, c'est vous qui recevez l'alerte.</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Elle n'est pas obligatoire : sans elle, le pack fonctionne normalement tant que votre box est en service.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pe-why pv-reveal" style="margin-top:44px;">
+        <div>
+          <h3>Pourquoi une carte M2M plutôt qu'un forfait classique</h3>
+          <p>Les forfaits mobiles grand public — Free, Orange, SFR, Bouygues — sont contractuellement réservés aux communications entre téléphones. Lorsqu'un opérateur détecte qu'une de ses cartes est utilisée dans un système d'alarme, il peut suspendre la ligne sans préavis. Une simple modification des paramètres de la carte, côté opérateur, peut également la rendre inutilisable dans la centrale.</p>
+          <p>Une carte M2M — <em>machine to machine</em> — est conçue pour cet usage. C'est ce qui garantit la stabilité de la liaison dans la durée.</p>
+        </div>
+        <div class="pe-warn">
+          <p><strong>À savoir.</strong> Daewoo Security ne peut pas être tenu responsable d'une coupure décidée par un opérateur sur un forfait grand public, cette modification ne résultant pas d'une intervention sur l'alarme.</p>
+          <p>Notre carte M2M dédiée à l'Élite offre une enveloppe de <strong>200 Mo</strong> contre 50 Mo sur l'offre standard : c'est précisément la bascule de l'application en 4G qui consomme ces données, et ce qui explique l'écart de prix entre les deux cartes.</p>
+        </div>
+      </div>
+
+      <div class="pe-table pv-reveal" style="margin-top:44px;">
+        <table>
+          <caption>Ce que coûte réellement la liaison 4G+</caption>
+          <thead>
+            <tr><th scope="col">Poste</th><th scope="col">Montant</th><th scope="col">Détail</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Carte SIM 1 an prépayée</th>
+              <td class="pe-num">{% if sim_price %}{{ sim_price | money }}{% else %}85,00 €{% endif %}</td>
+              <td>La carte et douze mois d'abonnement, soit 7,08 € par mois sur la première année.</td>
+            </tr>
+            <tr>
+              <th scope="row">Au-delà de la première année</th>
+              <td class="pe-num">7,80 € / mois</td>
+              <td>L'abonnement se poursuit au mois sans engagement, ou vous rachetez une carte 1 an prépayée.</td>
+            </tr>
+            <tr>
+              <th scope="row">Enveloppe mensuelle</th>
+              <td class="pe-num">200 Mo</td>
+              <td>Renouvelée chaque mois, dimensionnée pour la bascule de l'application en 4G.</td>
+            </tr>
+            <tr>
+              <th scope="row">Recharge si dépassement</th>
+              <td class="pe-num">2,00 €</td>
+              <td>Au choix : 30 minutes d'appel, ou 150 SMS, ou 100 Mo.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="pe-table__note">Aucun de ces frais n'est un abonnement à un service de surveillance : vous payez une ligne mobile de secours, rien d'autre.</p>
+      </div>
+
+      <div class="pv-reveal" style="margin-top:48px;">
+        <span class="pv-eyebrow pe-eyebrow--amber">Avant de commander</span>
+        <h3 style="font-size:23px;font-weight:600;letter-spacing:-.02em;">Quatre points à connaître</h3>
+        <ul class="pe-check">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>L'activation se fait en ligne, sur le site d'Afone.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><strong>Un RIB vous sera demandé, même pour cette carte prépayée.</strong> Rien ne sera prélevé pendant les douze premiers mois : c'est ce qui permet à la ligne de se poursuivre sans coupure au terme de l'année.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>La carte n'est valable qu'en France.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Une fois activée auprès de l'opérateur, elle ne peut plus faire l'objet d'un retour ni d'un remboursement.</li>
+        </ul>
+      </div>
+
+      {%- if sim_card -%}
+        <div class="pe-simcta pv-reveal" style="margin-top:36px;">
+          <div>
+            <div class="pe-simcta__t">{{ sim_card.title }}</div>
+            <p class="pe-simcta__d">200 Mo par mois · à glisser dans la centrale, rien à configurer{% if sim_price %} · {{ sim_price | money }}{% endif %}</p>
+          </div>
+          <div class="pe-simcta__actions">
+            {%- assign sim_variant = sim_card.variants.first -%}
+            {%- if sim_card.available and sim_variant -%}
+              <button
+                type="button"
+                class="pv-btn pv-btn--ghost pv-btn--sm"
+                data-pe-acc-toggle
+                data-pe-acc-id="{{ sim_variant.id }}"
+                data-pe-acc-price="{{ sim_variant.price }}"
+                data-pe-label-add="Ajouter la carte SIM — {{ sim_variant.price | money }}"
+                data-pe-label-remove="Carte SIM ajoutée · retirer"
+                aria-pressed="false"
+              >Ajouter la carte SIM — {{ sim_variant.price | money }}</button>
+            {%- endif -%}
+            <a href="{{ sim_card.url }}" target="_blank" rel="noopener" class="pv-btn pv-btn--ghost pv-btn--sm">Voir la fiche</a>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- comment -%} Mid-page CTA band {%- endcomment -%}
+  <div class="pv-wrap">
+    <div class="pv-band pv-reveal">
+      <h2>%%BAND_TITLE%%</h2>
+      <p>Livraison rapide, garantie 2 ans, installation sans technicien et sans abonnement obligatoire.</p>
+      {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+      {%- render 'pv-trust-row', has_rating: has_rating -%}
+    </div>
+  </div>
+
+  {%- comment -%}
+    Zigbee module, third pass. Everything here is limited to what the
+    merchant has confirmed:
+    - no mesh routing (battery sensors are end devices and don't relay);
+    - no comparison against 433 MHz radio — it reads as an attack on the
+      merchant's own Vigilia and Touch ranges, which use it;
+    - no automation scenarios: the merchant could not confirm them, so
+      they are out rather than "probably true";
+    - the EXT501ZIG amplifier extends the ZIGBEE network only. It does
+      nothing for the RF accessories of the SA501 range that the PA501Z
+      also accepts;
+    - third-party devices must be Zigbee 3.0 AND Tuya, and even then
+      Daewoo does not guarantee every non-Daewoo accessory works.
+  {%- endcomment -%}
+  <section class="pv-section pe-zigband">
+    <div class="pv-wrap">
+      <div class="pv-contents__head pv-reveal">
+        <span class="pv-eyebrow pe-eyebrow--zig">La technologie Zigbee</span>
+        <h2>Zigbee 3.0, le protocole des capteurs Élite</h2>
+        <p>Neuf des treize accessoires du pack communiquent avec la centrale en Zigbee 3.0. Voici ce que cela recouvre, exactement.</p>
+      </div>
+
+      <div class="pe-zig3 pv-reveal">
+        <div class="pe-zig3__card">
+          <span class="pe-zig3__ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 11h7l-2 9 9-11h-7l2-9Z"></path></svg>
+          </span>
+          <h3>Une passerelle intégrée à la centrale</h3>
+          <p>La PA501Z embarque sa passerelle Zigbee 3.0. Aucun boîtier supplémentaire à brancher, aucune application tierce à installer.</p>
+        </div>
+        <div class="pe-zig3__card">
+          <span class="pe-zig3__ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          </span>
+%%ZIG2%%
+        </div>
+        <div class="pe-zig3__card">
+          <span class="pe-zig3__ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+          </span>
+          <h3>Liaison chiffrée et supervisée</h3>
+          <p>La centrale communique en radio bidirectionnelle chiffrée avec ses accessoires, et vous alerte en cas de tentative d'arrachement d'un périphérique.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pe-why pv-reveal">
+        <div>
+          <h3>Et si un capteur Zigbee est trop loin de la centrale ?</h3>
+          <p>Les capteurs du pack fonctionnent sur pile : pour tenir dans la durée, ils passent l'essentiel de leur temps en veille et <strong>ne relaient pas le signal des autres</strong>. Chacun doit donc être à portée de la centrale.</p>
+          <p>Un garage au fond du jardin, une dépendance, un troisième étage : dans ces cas-là, il faut un relais alimenté en permanence sur le secteur.</p>
+        </div>
+        <div class="pe-warn pe-warn--zig">
+          <p><strong>L'amplificateur EXT501ZIG</strong> se branche sur une simple prise, à mi-chemin entre la centrale et la zone qui capte mal, et étend la portée du réseau Zigbee.</p>
+          <p><strong>Attention :</strong> c'est un amplificateur <strong>Zigbee</strong>. Il étend la portée des accessoires Zigbee de la gamme Élite, et uniquement ceux-là — il n'a aucun effet sur les accessoires radio de la gamme SA501, que la centrale accepte par ailleurs.</p>
+          <p><a href="#PEAcc-{{ section.id }}" style="color:inherit;font-weight:600;">Ajouter un amplificateur à mon pack →</a></p>
+        </div>
+      </div>
+
+      <div class="pe-why pv-reveal" style="margin-top:56px;">
+        <div>
+          <h3>Ajouter des équipements Zigbee du commerce</h3>
+          <p>La passerelle de la PA501Z n'est pas réservée aux accessoires Daewoo. Pour être reconnu par la centrale, un équipement doit réunir <strong>deux conditions</strong> : être en <strong>Zigbee 3.0</strong>, et être compatible <strong>Tuya</strong>.</p>
+          <p>Prises connectées, ampoules, capteurs de température, têtes thermostatiques : ce sont les catégories d'équipements qui répondent le plus souvent à ces deux critères.</p>
+        </div>
+        <div class="pe-warn pe-warn--zig">
+          <p><strong>Une réserve, dite franchement.</strong> Nous ne garantissons pas le fonctionnement à 100 % des accessoires qui ne sont pas de marque Daewoo, même lorsqu'ils annoncent Zigbee 3.0 et Tuya. Les implémentations varient d'un fabricant à l'autre.</p>
+          <p>Dans les faits, <strong>aucune incompatibilité réelle ne nous a été remontée à ce jour</strong>.</p>
+        </div>
+      </div>
+
+      <div class="pe-why pv-reveal" style="margin-top:56px;">
+        <div>
+          <h3>Ce qu'il faut savoir avant d'acheter des accessoires Daewoo</h3>
+          <p>La PA501Z accepte une grande partie des accessoires de la gamme SA501 : détecteurs de mouvement, sirènes, télécommandes, claviers, contacteurs de garage, détecteurs de fumée et de fuite d'eau. Vous pouvez donc remplacer une ancienne centrale SA501 ou faire évoluer un système existant sans changer tous vos équipements.</p>
+        </div>
+        <div class="pe-warn pe-warn--zig">
+          <p><strong>Trois exceptions.</strong> Les modèles <strong>WDS501</strong> (contacteur), <strong>WVD501</strong> (vibration) et <strong>WKE501</strong> (clavier) ne sont pas repris : pour ces trois fonctions, ce sont les versions Zigbee — WDS502Z, WVD502Z et WKE502Z — que nous recommandons.</p>
+          <p><strong>Et une limite assumée.</strong> La centrale Élite n'est compatible ni avec Alexa, ni avec Google Home. C'est un choix de sécurité et de confidentialité renforcée : votre alarme ne transite pas par un assistant vocal tiers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%}
+    Accessory picker. Each stepper feeds one page-wide total: every
+    .pv-price-amount on the page (hero CTA, sticky bar, mid band, final
+    CTA) shows pack + accessories, so the price a visitor reads is always
+    the price they'll be charged. Adding to cart posts the accessories to
+    /cart/add.js first, then lets the theme's own product form submit the
+    pack, so the cart drawer opens with every line already in it.
+  {%- endcomment -%}
+  <section class="pv-section pv-section--alt" id="PEAcc-{{ section.id }}">
+    <div class="pv-wrap">
+      <div class="pv-contents__head pv-reveal">
+        <span class="pv-eyebrow pe-eyebrow--bronze">Complétez votre pack</span>
+        <h2>Ajoutez ce qui manque, sans quitter cette page</h2>
+        <p>Les accessoires s'appairent à la centrale depuis l'application, en quelques secondes. Le prix se met à jour au fur et à mesure.</p>
+      </div>
+
+      <div class="pe-acc pv-reveal">
+        {%- for acc_handle in acc_handles -%}
+          {%- assign acc = all_products[acc_handle] -%}
+          {%- assign acc_variant = acc.variants.first -%}
+          {%- if acc.available and acc_variant -%}
+            {%- liquid
+              assign acc_is_zigbee = true
+              case acc_variant.sku
+                when 'EXT501ZIG'
+                  assign acc_name = 'Amplificateur Zigbee EXT501ZIG'
+                  assign acc_why = "Le seul moyen d'étendre la portée du réseau : branché sur une prise, il relaie le signal vers un garage, une dépendance ou un étage éloigné."
+                when 'DAWDS502Z'
+                  assign acc_name = "Contacteur d'ouverture WDS502Z"
+                  assign acc_why = "Une porte ou une fenêtre de plus à surveiller. Le pack en compte déjà 5 — comptez-en un par ouverture accessible."
+                when 'DAWVD502Z'
+                  assign acc_name = 'Détecteur de vibration WVD502Z'
+                  assign acc_why = "Une baie vitrée de plus : l'alarme part au premier choc, avant que la vitre ne cède."
+                when 'DAWSD501'
+                  assign acc_name = 'Détecteur de fumée WSD501'
+                  assign acc_why = "Le seul risque que l'alarme ne couvre pas encore. Alerte sur votre téléphone, même quand vous êtes absent."
+                  assign acc_is_zigbee = false
+                else
+                  assign acc_name = acc.title
+                  assign acc_why = ''
+                  assign acc_is_zigbee = false
+              endcase
+            -%}
+            <div class="pe-acc__card" data-pe-acc data-pe-acc-id="{{ acc_variant.id }}" data-pe-acc-price="{{ acc_variant.price }}">
+              {%- if acc.featured_image -%}
+                <div class="pe-acc__photo">
+                  {{ acc.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '240,360,480', alt: acc_name }}
+                </div>
+              {%- endif -%}
+              <div class="pe-acc__body">
+                <span class="pe-acc__ref{% unless acc_is_zigbee %} pe-acc__ref--plain{% endunless %}">{% if acc_is_zigbee %}Zigbee 3.0{% else %}Compatible Élite{% endif %}</span>
+                <span class="pe-acc__name">{{ acc_name }}</span>
+                <p class="pe-acc__why">{{ acc_why }}</p>
+                <span class="pe-acc__price">{{ acc_variant.price | money }}</span>
+                <div class="pe-step">
+                  <button type="button" data-pe-minus aria-label="Retirer un {{ acc_name }}" disabled>−</button>
+                  <span class="pe-step__qty" data-pe-qty aria-live="polite" aria-label="Quantité : {{ acc_name }}">0</span>
+                  <button type="button" data-pe-plus aria-label="Ajouter un {{ acc_name }}">+</button>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="pe-total pv-reveal">
+        <div>
+          <div class="pe-total__k">Total de votre configuration</div>
+          <div class="pe-total__v"><span class="pv-price-amount">{{ variant.price | money }}</span></div>
+          <p class="pe-total__d" data-pe-total-detail>%%TOTAL_BASE%%</p>
+        </div>
+        <div class="pe-total__actions">
+          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: false -%}
+          <p class="pe-total__d">Livraison sous 2 jours ouvrés · Garantie 2 ans</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+%%FEATURES%%  {%- comment -%} Specs {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-specs__head pv-reveal">
+        <h2>En résumé</h2>
+        <p>%%SPECS_LEAD%%</p>
+      </div>
+      <dl class="pv-specs__grid pv-reveal">
+%%SPECS%%      </dl>
+    </div>
+  </section>
+
+  {%- comment -%} Guarantee band {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-guarantee pv-reveal">
+        <div class="pv-guarantee__item">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.4 8.2 8 9 4.6-.8 8-4 8-9V6l-8-3Z"></path></svg>
+          <h3>Garantie 2 ans</h3>
+          <p>SAV assuré en France, en français.</p>
+        </div>
+        <div class="pv-guarantee__item">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13v10H3zM16 10h3.5L22 13v4h-6"></path><circle cx="7" cy="18" r="1.8"></circle><circle cx="18" cy="18" r="1.8"></circle></svg>
+          <h3>Expédié sous 2 jours</h3>
+          <p>Suivi de commande fourni.</p>
+        </div>
+        <div class="pv-guarantee__item">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"></path></svg>
+          <h3>Retour sous 14 jours</h3>
+          <p>Hors carte SIM déjà activée.</p>
+        </div>
+        <div class="pv-guarantee__item">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h8M12 8v8"></path></svg>
+          <h3>Sans abonnement</h3>
+          <p>La carte SIM reste optionnelle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Cross-sell {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-crosssell__head pv-reveal">
+        <h2>Pas tout à fait la bonne taille ?</h2>
+        <p>Comparez les packs Élite, ou démarrez plus simple avec le Starter Pack.</p>
+      </div>
+      <div class="pv-crosssell__grid pv-reveal">
+        <div class="pv-crosssell__card">
+          <div class="pv-crosssell__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          </div>
+          <h3>Besoin de plus ? Comparez les packs Élite</h3>
+          <p>Du PA570 au PA574 : plus de capteurs, plus de caméras, caméras solaires ou motorisées selon la configuration de votre logement.</p>
+          <a href="/collections/systeme-dalarme-pa501z" class="pv-btn pv-btn--ghost pv-btn--sm">Voir toute la gamme Élite</a>
+        </div>
+        {%- if starter_pack -%}
+          <a href="{{ starter_pack.url }}" class="pv-crosssell__card pv-crosssell__card--photo">
+            {%- if starter_pack_image -%}
+              <div class="pv-crosssell__photo">{{ starter_pack_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: 'Le Starter Pack Élite PA501Z' }}</div>
+            {%- endif -%}
+            <div class="pv-crosssell__body">
+              <h3>Besoin de plus simple ? Le Starter Pack Élite</h3>
+              <p>La même centrale PA501Z, livrée avec 5 accessoires pour démarrer.</p>
+              {%- if starter_pack_price -%}
+                <div class="pv-crosssell__price">dès {{ starter_pack_price | money }}</div>
+              {%- endif -%}
+              <span class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Starter Pack</span>
+            </div>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} FAQ {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-faq pv-reveal">
+        <h2>Questions fréquentes</h2>
+
+        <details>
+          <summary>La carte SIM est-elle obligatoire&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Non. Sans carte SIM, le pack fonctionne normalement tant que votre box internet est en service : détection, sirènes, notifications et caméras. La carte SIM ajoute une voie de secours qui prend le relais si le Wi-Fi n'est plus disponible.</p>
+        </details>
+
+        <details>
+          <summary>Puis-je voir mes caméras pendant une coupure internet&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Non. Les caméras fonctionnent uniquement en Wi-Fi : si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée. En revanche, l'application reste utilisable pour armer, désarmer et consulter l'historique, et les alertes d'intrusion continuent d'arriver par notification, SMS et appel.</p>
+        </details>
+
+        <details>
+          <summary>Quelle est la différence avec une carte SIM sur une alarme Vigilia ou Touch&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Sur les gammes Vigilia et Touch, la carte SIM ne sert qu'aux alertes par SMS et aux appels. Sur la centrale Élite PA501Z, elle porte en plus les données mobiles : l'application Daewoo Home Connect reste utilisable pendant la coupure. C'est la seule différence, et c'est ce qui explique l'enveloppe de 200 Mo de la carte dédiée à l'Élite, contre 50 Mo sur l'offre standard.</p>
+        </details>
+
+        <details>
+          <summary>Puis-je mettre ma propre carte SIM Free ou Orange&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Les forfaits mobiles grand public sont contractuellement réservés aux communications entre téléphones. Lorsqu'un opérateur détecte qu'une de ses cartes est utilisée dans un système d'alarme, il peut suspendre la ligne sans préavis, et une simple modification de paramètres côté opérateur peut la rendre inutilisable dans la centrale. C'est la raison d'être de la carte M2M, conçue pour cet usage. Daewoo Security ne peut pas être tenu responsable d'une coupure décidée par un opérateur sur un forfait grand public.</p>
+        </details>
+
+        <details>
+          <summary>Qu'est-ce que le Zigbee change pour moi&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">La centrale Élite embarque une passerelle Zigbee 3.0, et neuf des accessoires du pack — les 5 contacteurs WDS502Z et les 4 détecteurs de vibration WVD502Z — communiquent avec elle dans ce protocole. La liaison est chiffrée et supervisée&nbsp;: la centrale vous alerte notamment en cas de tentative d'arrachement d'un périphérique. La passerelle permet aussi d'ajouter des équipements Zigbee du commerce, à condition qu'ils soient en Zigbee 3.0 et compatibles Tuya.</p>
+        </details>
+
+        <details>
+          <summary>Puis-je brancher des accessoires Zigbee d'une autre marque&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Oui, à deux conditions&nbsp;: l'équipement doit être en <strong>Zigbee 3.0</strong> et compatible <strong>Tuya</strong>. Nous ne garantissons cependant pas le fonctionnement à 100&nbsp;% des accessoires qui ne sont pas de marque Daewoo, même lorsqu'ils annoncent ces deux compatibilités&nbsp;: les implémentations varient d'un fabricant à l'autre. Dans les faits, aucune incompatibilité réelle ne nous a été remontée à ce jour.</p>
+        </details>
+
+        <details>
+          <summary>Mes anciens accessoires SA501 sont-ils compatibles&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Oui pour la grande majorité : détecteurs de mouvement, sirènes, télécommandes, claviers, détecteurs de fumée et de fuite d'eau, contacteur de porte de garage. Trois exceptions : les WDS501, WVD501 et WKE501, pour lesquels nous recommandons les versions Zigbee WDS502Z, WVD502Z et WKE502Z.</p>
+        </details>
+
+        <details>
+          <summary>La centrale est-elle compatible Alexa ou Google Home&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Non, et c'est un choix. La centrale Élite n'est compatible ni avec Alexa ni avec Google Home, pour des raisons de sécurité et de confidentialité renforcée : votre alarme ne transite pas par un assistant vocal tiers.</p>
+        </details>
+
+        <details>
+          <summary>Combien de temps l'alarme tient-elle sans électricité&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">La centrale dispose d'une batterie de secours de 10 heures. Les capteurs Zigbee sont sur pile et ne sont pas affectés par une coupure de courant, et la sirène extérieure solaire dispose de sa propre batterie rechargée par la lumière du jour.</p>
+        </details>
+
+        <details>
+          <summary>Comment se passe l'installation&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Aucune compétence technique requise : branchez la centrale, reliez-la à votre box en RJ45 ou en Wi-Fi, fixez les capteurs fournis et suivez les étapes affichées dans l'application Daewoo Home Connect. Aucun percement structurel ni câblage n'est nécessaire pour les capteurs.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Sales appointment CTA {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-appt pv-reveal">
+        <div class="pv-appt__text">
+          <p class="pv-appt__eyebrow">Encore une question&nbsp;?</p>
+          <h3>Parlez à un conseiller Daewoo Security</h3>
+          <p class="pv-appt__sub">30 minutes, par téléphone ou en visio, pour vous aider à choisir la bonne configuration — sans engagement.</p>
+        </div>
+        <a href="https://calendly.com/contact-daewoo-security/30min" target="_blank" rel="noopener" class="pv-btn pv-btn--ghost">
+          <span class="pv-btn__text">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
+            Réserver un appel gratuit
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Final CTA {%- endcomment -%}
+  <section class="pv-section pv-final">
+    <div class="pv-wrap">
+      <div class="pv-reveal">
+        <h2>%%FINAL_TITLE%%</h2>
+        <p>
+          <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
+          <span class="pv-price-amount">{{ variant.price | money }}</span> · Sans abonnement · Garantie 2 ans
+        </p>
+        <div class="pv-final__ctas">
+          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+        </div>
+        {%- render 'pv-trust-row', has_rating: has_rating -%}
+        <p class="pv-final__legal">Livraison sous 2 jours ouvrés · Retour sous 14 jours · Service client basé en France</p>
+      </div>
+    </div>
+  </section>

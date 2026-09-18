@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "main": {
+      "type": "product-pa571-landing",
+      "settings": {}
+    },
+    "help-drawer": {
+      "type": "help-drawer",
+      "blocks": {
+        "content_bYAbKg": {
+          "type": "content",
+          "settings": {
+            "icon": "phone",
+            "heading": "Besoin d’un conseil ?",
+            "text": "<p>Une question sur un produit ? </p><p>Écrivez-nous à<em><strong> contact@daewoo-security.fr</strong></em> ou utilisez notre chat : un conseiller vous répondra rapidement.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "color_text": "#4d7c0f",
+            "color_background": "#f7fee7",
+            "gradient_background": "",
+            "color_highlight": "#ffddbf",
+            "gradient_highlight": ""
+          }
+        },
+        "content_jMekii": {
+          "type": "content",
+          "settings": {
+            "icon": "return",
+            "heading": "Retour & rétractation faciles",
+            "text": "<p>Vous disposez de 14 jours pour changer d’avis. En cas de souci, notre service client vous guide dans le retour ou l’échange de votre produit.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "color_text": "#b45309",
+            "color_background": "#fffbeb",
+            "gradient_background": "",
+            "color_highlight": "#ffddbf",
+            "gradient_highlight": ""
+          }
+        },
+        "content_yiBF6p": {
+          "type": "content",
+          "settings": {
+            "icon": "headphone",
+            "heading": "Service après-vente",
+            "text": "<p>Notre équipe basée en France répond rapidement à toutes vos demandes. Pour les contacter rendez-vous sur la page assistance</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "color_text": "#0369a1",
+            "color_background": "#f0f9ff",
+            "gradient_background": "",
+            "color_highlight": "#ffddbf",
+            "gradient_highlight": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_bYAbKg",
+        "content_jMekii",
+        "content_yiBF6p"
+      ],
+      "settings": {
+        "heading": "Besoin d'aide ?",
+        "description": "<p>Pour toutes questions, n'hésitez pas à nous contacter. Nous vous répondrons dans les plus brefs délais.</p>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "help-drawer"
+  ]
+}
