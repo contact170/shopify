@@ -1745,22 +1745,65 @@
 
   {%- comment -%} Structured data {%- endcomment -%}
   {%- capture ld_description -%}Pack alarme maison sans fil Élite PA570 ZenGuard : centrale PA501Z multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 13 accessoires dont 9 capteurs Zigbee, 2 caméras et une sirène extérieure solaire. Sans abonnement obligatoire.{%- endcapture -%}
+  {%- comment -%}
+    Product. Les champs vont au-delà du minimum name/price/availability :
+    Google conditionne aujourd'hui l'éligibilité aux résultats enrichis
+    marchands à la politique de retour et aux frais de port, et les
+    moteurs génératifs reprennent ces mêmes champs.
+
+    Les valeurs sont celles du profil d'expédition réel de la boutique :
+    en France, la livraison est offerte au-dessus de 50 €, donc toujours
+    offerte sur ces packs. Les délais reprennent ceux annoncés sur la
+    page : expédition sous 2 jours, livraison sous 4 à 5 jours.
+
+    Pas d'aggregateRating ni de review : aucun avis n'est encore
+    rattaché à la gamme Élite, et en déclarer sans les afficher est une
+    infraction aux règles de Google. À ajouter dès qu'il y en a — c'est
+    le plus gros levier restant sur ces pages.
+  {%- endcomment -%}
+  {%- capture ld_images -%}
+    {%- for img in gallery limit: 6 -%}
+      {{ img | image_url: width: 1600 | prepend: 'https:' | json }}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  {%- endcapture -%}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": {{ shop.url | append: product.url | append: '#product' | json }},
     "name": {{ product.title | json }},
     "description": {{ ld_description | json }},
     "sku": {{ variant.sku | json }},
+    "mpn": {{ variant.sku | json }},
+    "category": "Systèmes d'alarme sans fil",
     "brand": { "@type": "Brand", "name": "Daewoo Security" },
-    {%- if hero_image %}"image": {{ hero_image | image_url: width: 1200 | prepend: 'https:' | json }},{% endif %}
+    {%- if gallery.size > 0 %}"image": [{{ ld_images | strip_newlines | strip }}],{% elsif hero_image %}"image": {{ hero_image | image_url: width: 1600 | prepend: 'https:' | json }},{% endif %}
     "offers": {
       "@type": "Offer",
       "url": {{ shop.url | append: product.url | json }},
       "priceCurrency": {{ cart.currency.iso_code | json }},
       "price": {{ variant.price | divided_by: 100.0 | json }},
+      "priceValidUntil": "{{ 'now' | date: '%Y' | plus: 1 }}-12-31",
+      "itemCondition": "https://schema.org/NewCondition",
       "availability": {% if variant.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
-      "seller": { "@type": "Organization", "name": "Daewoo Security" }
+      "seller": { "@type": "Organization", "name": "Daewoo Security", "url": {{ shop.url | json }} },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "FR",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 14,
+        "returnMethod": "https://schema.org/ReturnByMail"
+      },
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "EUR" },
+        "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 2, "unitCode": "DAY" },
+          "transitTime": { "@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY" }
+        }
+      }
     }
   }
   </script>
