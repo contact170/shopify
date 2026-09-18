@@ -600,14 +600,16 @@
         <p>Comparez les packs Élite, ou démarrez plus simple avec le Starter Pack.</p>
       </div>
       <div class="pv-crosssell__grid pv-reveal">
-        <div class="pv-crosssell__card">
-          <div class="pv-crosssell__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+        <a href="/collections/systeme-dalarme-pa501z" class="pv-crosssell__card pv-crosssell__card--photo">
+          {%- if centrale_image -%}
+            <div class="pv-crosssell__photo">{{ centrale_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: "La centrale d'alarme Élite PA501Z" }}</div>
+          {%- endif -%}
+          <div class="pv-crosssell__body">
+            <h3>Besoin de plus ? Comparez les packs Élite</h3>
+            <p>Du PA570 au PA574 : la même centrale PA501Z, avec plus de capteurs, plus de caméras, solaires ou motorisées selon la configuration de votre logement.</p>
+            <span class="pv-btn pv-btn--ghost pv-btn--sm">Voir toute la gamme Élite</span>
           </div>
-          <h3>Besoin de plus ? Comparez les packs Élite</h3>
-          <p>Du PA570 au PA574 : plus de capteurs, plus de caméras, caméras solaires ou motorisées selon la configuration de votre logement.</p>
-          <a href="/collections/systeme-dalarme-pa501z" class="pv-btn pv-btn--ghost pv-btn--sm">Voir toute la gamme Élite</a>
-        </div>
+        </a>
         {%- if starter_pack -%}
           <a href="{{ starter_pack.url }}" class="pv-crosssell__card pv-crosssell__card--photo">
             {%- if starter_pack_image -%}

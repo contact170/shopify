@@ -59,21 +59,32 @@
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
 
-  # Exterior-camera shot: matched by filename in this pack's own gallery so
-  # re-ordering the images in admin can't put the wrong camera on the block.
-  assign feat_image_1 = hero_image
-  for img in gallery
+  # Feature photography comes from the camera products themselves, not from
+  # this pack's own gallery: the packs carry infographic slides
+  # ("W503_Infographie", "IP506_Infographie") and a filename match there put
+  # a diagram on the block instead of a photo. Each camera product's gallery
+  # is then searched for the shot that illustrates this block's claim,
+  # falling back to its main photo if the merchant renames or removes it.
+  assign cam_ext = all_products['%%CAM_EXT%%']
+  assign feat_image_1 = cam_ext.featured_image | default: hero_image
+  for img in cam_ext.images
     if img.src contains '%%IMG1%%'
       assign feat_image_1 = img
     endif
   endfor
 
-  # Interior camera: taken from the IP506P product itself rather than from
-  # this pack's gallery. Several packs carry an "IP506_Infographie" slide
-  # there, and a filename match landed that diagram on the block instead of
-  # a product photo — the merchant asked for the photo.
   assign cam_int = all_products['camera-interieure-rotative-ip506p']
   assign feat_image_2 = cam_int.featured_image | default: hero_image
+  for img in cam_int.images
+    if img.src contains 'ip506p-mode-vie-privee'
+      assign feat_image_2 = img
+    endif
+  endfor
+
+  # Cross-sell: the "compare the range" card is illustrated with the
+  # centrale itself. It was the only card of the pair without a photo.
+  assign centrale = all_products['strong-centrale-dalarme-strong-elite']
+  assign centrale_image = centrale.featured_image
 
   # Cross-sell: the Starter Pack Élite, looked up by handle for a real
   # photo and a live price rather than a hardcoded figure.

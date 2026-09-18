@@ -131,6 +131,7 @@ def build():
     for p in PACKS:
         subs = {
             '%%DOC_PRODUCT%%': p['doc'],
+            '%%CAM_EXT%%': p['cam_ext'],
             '%%IMG1%%': p['img1'],
             '%%SKU%%': p['sku'],
             '%%STICKY%%': p['sticky'],

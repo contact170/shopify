@@ -60,21 +60,32 @@
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
 
-  # Exterior-camera shot: matched by filename in this pack's own gallery so
-  # re-ordering the images in admin can't put the wrong camera on the block.
-  assign feat_image_1 = hero_image
-  for img in gallery
-    if img.src contains 'W503'
+  # Feature photography comes from the camera products themselves, not from
+  # this pack's own gallery: the packs carry infographic slides
+  # ("W503_Infographie", "IP506_Infographie") and a filename match there put
+  # a diagram on the block instead of a photo. Each camera product's gallery
+  # is then searched for the shot that illustrates this block's claim,
+  # falling back to its main photo if the merchant renames or removes it.
+  assign cam_ext = all_products['camera-daewoo-w503-autonome-haute-resolution-wifi-1080p']
+  assign feat_image_1 = cam_ext.featured_image | default: hero_image
+  for img in cam_ext.images
+    if img.src contains 'w503-sans-fil'
       assign feat_image_1 = img
     endif
   endfor
 
-  # Interior camera: taken from the IP506P product itself rather than from
-  # this pack's gallery. Several packs carry an "IP506_Infographie" slide
-  # there, and a filename match landed that diagram on the block instead of
-  # a product photo — the merchant asked for the photo.
   assign cam_int = all_products['camera-interieure-rotative-ip506p']
   assign feat_image_2 = cam_int.featured_image | default: hero_image
+  for img in cam_int.images
+    if img.src contains 'ip506p-mode-vie-privee'
+      assign feat_image_2 = img
+    endif
+  endfor
+
+  # Cross-sell: the "compare the range" card is illustrated with the
+  # centrale itself. It was the only card of the pair without a photo.
+  assign centrale = all_products['strong-centrale-dalarme-strong-elite']
+  assign centrale_image = centrale.featured_image
 
   # Cross-sell: the Starter Pack Élite, looked up by handle for a real
   # photo and a live price rather than a hardcoded figure.
@@ -736,6 +747,17 @@
     .pe-simcta__t{font-size:16.5px;font-weight:600;}
     .pv .pe-simcta__d{font-size:13.5px;color:var(--pv-gray);margin-top:6px;line-height:1.5;}
     .pe-simcta__actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+
+    /* ---- cross-sell photos ----
+       The shared core rule puts aspect-ratio and object-fit on the wrapper
+       div, where object-fit does nothing. Both Élite cards now carry a
+       product shot on white, so the image is centred and contained in the
+       4/3 frame instead of being left to its own intrinsic size. */
+    .pv-crosssell__photo{
+      display:flex;align-items:center;justify-content:center;
+      padding:16px;background:var(--pe-sand);
+    }
+    .pv-crosssell__photo img{max-height:100%;width:auto;object-fit:contain;}
   </style>
 
   {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
@@ -1509,14 +1531,16 @@
         <p>Comparez les packs Élite, ou démarrez plus simple avec le Starter Pack.</p>
       </div>
       <div class="pv-crosssell__grid pv-reveal">
-        <div class="pv-crosssell__card">
-          <div class="pv-crosssell__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+        <a href="/collections/systeme-dalarme-pa501z" class="pv-crosssell__card pv-crosssell__card--photo">
+          {%- if centrale_image -%}
+            <div class="pv-crosssell__photo">{{ centrale_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: "La centrale d'alarme Élite PA501Z" }}</div>
+          {%- endif -%}
+          <div class="pv-crosssell__body">
+            <h3>Besoin de plus ? Comparez les packs Élite</h3>
+            <p>Du PA570 au PA574 : la même centrale PA501Z, avec plus de capteurs, plus de caméras, solaires ou motorisées selon la configuration de votre logement.</p>
+            <span class="pv-btn pv-btn--ghost pv-btn--sm">Voir toute la gamme Élite</span>
           </div>
-          <h3>Besoin de plus ? Comparez les packs Élite</h3>
-          <p>Du PA570 au PA574 : plus de capteurs, plus de caméras, caméras solaires ou motorisées selon la configuration de votre logement.</p>
-          <a href="/collections/systeme-dalarme-pa501z" class="pv-btn pv-btn--ghost pv-btn--sm">Voir toute la gamme Élite</a>
-        </div>
+        </a>
         {%- if starter_pack -%}
           <a href="{{ starter_pack.url }}" class="pv-crosssell__card pv-crosssell__card--photo">
             {%- if starter_pack_image -%}
