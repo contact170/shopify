@@ -151,6 +151,9 @@ def build():
 
         left = re.findall(r'%%[A-Z0-9_]+%%', section)
         assert not left, (p['key'], set(left))
+        # Shopify caps a section schema name at 25 characters. Over that,
+        # themeFilesUpsert drops the file and reports no error at all.
+        assert len(p['schema']) <= 25, (p['key'], p['schema'], len(p['schema']))
 
         name = 'product-%s-landing' % p['key']
         open(os.path.join(OUT, name + '.liquid'), 'w').write(section)

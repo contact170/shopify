@@ -236,10 +236,10 @@ PACKS = [
     ld="Pack alarme maison sans fil Élite PA574 Tranquillité+ : centrale PA501Z multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 2 caméras extérieures motorisées W512MW avec panneaux solaires, 1 caméra intérieure IP506P, 14 capteurs Zigbee, un clavier mural et une sirène extérieure solaire. Sans abonnement obligatoire.",
   ),
   dict(
-    key='pa501-ex1', sku='PA5012601-001', suffix='pa501-ex1',
+    key='eliteoffre1', sku='PA5012601-001', suffix='eliteoffre1',
     handle='offre-exclusive-pack-elite-compatible-animaux-sans-abonnement-copie',
-    doc='OFFRE EXCLUSIVE | Pack ÉLITE PA501Z |\n  Double Caméra Solaire W512MW" (809,90 € au lieu de 1 068,90 €,\n  SKU PA5012601-001, templateSuffix "pa501-ex1")',
-    sticky='Offre exclusive · Pack Élite', schema='Offre exclusive Pack Élite', js_name='Pack Élite',
+    doc='OFFRE EXCLUSIVE | Pack ÉLITE PA501Z |\n  Double Caméra Solaire W512MW" (809,90 € au lieu de 1 068,90 €,\n  SKU PA5012601-001, templateSuffix "eliteoffre1")',
+    sticky='Offre exclusive · Pack Élite', schema='Offre exclusive Élite', js_name='Pack Élite',
     h1='Offre exclusive — Pack Élite PA501Z, double caméra solaire W512MW',
     tagline='Deux caméras motorisées 100 % solaires, au prix de l\'offre limitée.',
     sub="Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — avec\n        deux caméras extérieures motorisées totalement autonomes, huit capteurs Zigbee,\n        un détecteur de mouvement et une sirène extérieure solaire.",
