@@ -68,7 +68,7 @@ CHIPS_BASE = [('zig', 'Zigbee 3.0'), ('eth', 'Port RJ45'), ('4g', '4G+ données'
 
 PACKS = [
   dict(
-    key='pa570', sku='PA570', suffix='pa570', hero='v2',
+    key='pa570', sku='PA570', suffix='pa570',
     handle='daewoo-pack-alarme-maison-sans-fil-elite-zenguard-centrale-pa501z-kit-comprenant-13-accessoires-1-camera-autonome-exterieure-1-interieure',
     doc='Pack Alarme Maison sans Fil\n  Elite (Zenguard) PA570" (499,90 €, SKU PA570, templateSuffix "pa570")',
     sticky='Pack Élite PA570', schema='Pack Élite PA570', js_name='Pack Élite PA570',

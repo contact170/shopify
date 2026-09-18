@@ -254,22 +254,29 @@
     }
     .pv-crosssell__photo img{max-height:100%;width:auto;object-fit:contain;}
 
-    /* ---- hero v2 (en test sur le PA570) ----
-       Le visuel et le CTA remontent sous la tagline. Plafonner la hauteur
-       du visuel est ce qui fait réellement entrer le bouton dans le
-       premier écran : les photos de pack sont carrées, donc les 640 px de
-       large de la règle partagée valent 640 px de haut. Seules des
-       contraintes max sont posées (jamais width ni height fixes), donc le
-       navigateur réduit l'image en conservant ses proportions. */
-    .pe-hero--v2{padding-top:72px;}
-    .pv .pe-hero--v2 .pv-hero__summary{margin-top:16px;}
-    .pv .pe-hero--v2 .pv-hero__media{margin-top:34px;}
-    .pv .pe-hero--v2 .pv-hero__media img{
-      width:auto;height:auto;max-height:min(52vh,520px);object-fit:contain;
+    /* ---- hero : visuel et CTA remontés ----
+       Le visuel et le CTA passent sous la tagline, le paragraphe
+       descriptif sous le CTA. Plafonner la hauteur du visuel est ce qui
+       fait réellement entrer le bouton dans le premier écran : les photos
+       de pack sont carrées, donc les 640 px de large de la règle partagée
+       valent 640 px de haut.
+
+       max-width doit être redonné ici. La règle partagée pose
+       width:100%;max-width:640px — passer width à auto sans toucher au
+       max-width laissait l'image occuper ses 640 px sur un écran de
+       360 px, et elle débordait à droite. Seules des contraintes max sont
+       posées, jamais width ni height fixes, pour que le navigateur
+       conserve les proportions. */
+    .pe-hero{padding-top:72px;}
+    .pv .pe-hero .pv-hero__summary{margin-top:16px;}
+    .pv .pe-hero .pv-hero__media{margin-top:34px;}
+    .pv .pe-hero .pv-hero__media img{
+      width:auto;height:auto;
+      max-width:min(100%,640px);max-height:min(52vh,520px);
     }
-    .pv .pe-hero--v2 .pv-hero__cta{margin-top:26px;}
-    .pe-hero--v2 .pe-hero__chips{margin-top:22px;}
-    .pv .pe-hero--v2 .pv-hero__sub{
+    .pv .pe-hero .pv-hero__cta{margin-top:26px;}
+    .pe-hero .pe-hero__chips{margin-top:22px;}
+    .pv .pe-hero .pv-hero__sub{
       margin-top:34px;padding-top:30px;border-top:1px solid var(--pe-bronze-line);
       font-size:clamp(16px,2vw,19px);
     }

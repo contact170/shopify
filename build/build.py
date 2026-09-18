@@ -121,12 +121,7 @@ def build():
 
     head_t = open(os.path.join(HERE, 'tpl-head.liquid')).read()
     body_t = open(os.path.join(HERE, 'tpl-body.liquid')).read()
-    # Two hero variants: v1 is the original order (texte, puis visuel,
-    # puis CTA), v2 remonte le visuel et le CTA sous la tagline. En test
-    # sur un seul pack le temps que le marchand compare — quand la v2
-    # sera validée, il suffit de la passer en défaut et de supprimer v1.
-    heroes = {'v1': open(os.path.join(HERE, 'tpl-hero.liquid')).read(),
-              'v2': open(os.path.join(HERE, 'tpl-hero2.liquid')).read()}
+    hero_t = open(os.path.join(HERE, 'tpl-hero.liquid')).read()
     tail_t = open(os.path.join(HERE, 'tpl-tail.liquid')).read()
     css_extra = open(os.path.join(HERE, 'css-extra.liquid')).read()
 
@@ -159,7 +154,7 @@ def build():
             '%%JS_PACKNAME%%': p['js_name'],
             '%%SCHEMA_NAME%%': p['schema'],
         }
-        body = body_t.replace('%%HERO%%', heroes[p.get('hero', 'v1')])
+        body = body_t.replace('%%HERO%%', hero_t)
         head, tail = head_t, tail_t
         for k, v in subs.items():
             head, body, tail = head.replace(k, v), body.replace(k, v), tail.replace(k, v)
