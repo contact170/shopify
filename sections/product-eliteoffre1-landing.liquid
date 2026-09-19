@@ -814,7 +814,11 @@
        defaut, jamais en page cassee. */
     .pe-judgeme{max-width:920px;margin:32px auto 0;text-align:left;}
     .pv .pe-judgeme{font-size:14.5px;}
-    .pe-judgeme .jdgm-star{color:var(--pe-amber);}
+    /* Judge.me injecte sa feuille de style apres la notre : a specificite
+       egale c'est la sienne qui gagne, d'ou le !important sur la couleur
+       des etoiles. La couleur de fond du widget se regle chez eux, elle,
+       et vaut pour tout le site. */
+    .pe-judgeme .jdgm-star{color:var(--pe-amber) !important;}
 
     /* Masques : le titre et le resume repetent notre en-tete francais ; les
        medailles Judge.me, le tri, les votes "Was this helpful" et le badge
@@ -953,6 +957,10 @@
         margin-left:6px;font-size:10.5px;
       }
     }
+    /* .pv p{margin:0} du CSS de base a la specificite (0,1,1) et ecrasait
+       .pv-reviews__summary (0,1,0) : la note collait au titre. On repasse
+       par .pv pour remonter au-dessus. */
+    .pv .pv-reviews__summary{margin-top:20px;}
     .pv .pe-reviews__note{
       font-size:13.5px;color:var(--pv-gray);margin-top:10px;
       max-width:560px;margin-left:auto;margin-right:auto;
