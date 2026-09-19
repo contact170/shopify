@@ -1,0 +1,38 @@
+{%- doc -%}
+  Bloc prix d'une carte de la section "Élite — Packs".
+
+  Les trois cartes affichaient des montants saisis a la main, qui se
+  desynchronisaient des que le marchand changeait un tarif : la carte
+  Tranquillite+ annoncait 739,90 EUR alors que le produit etait passe a
+  789,90 EUR. Le montant vient donc du produit, et les valeurs ecrites en
+  dur ne servent plus que de secours si le produit est introuvable ou
+  depublie, pour qu'une carte ne se retrouve jamais sans prix.
+
+  Params : product, label, fallback_amount, fallback_was, fallback_save.
+{%- enddoc -%}
+
+{%- liquid
+  assign amount = fallback_amount
+  assign was = fallback_was
+  assign save = fallback_save
+
+  if product != blank
+    assign amount = product.price | money
+    assign was = ''
+    assign save = ''
+    if product.compare_at_price > product.price
+      assign saved = product.compare_at_price | minus: product.price
+      # Division entiere : le pourcentage est arrondi vers le bas, jamais
+      # gonfle.
+      assign pct = saved | times: 100 | divided_by: product.compare_at_price
+      assign was = product.compare_at_price | money
+      assign save = '−' | append: pct | append: ' %'
+    endif
+  endif
+-%}
+<div class="elp-price">
+  <span class="elp-from">{{ label }}</span>
+  <span class="elp-amt">{{ amount }}</span>
+  {%- if was != blank %}<span class="elp-was">{{ was }}</span>{% endif -%}
+  {%- if save != blank %}<span class="elp-save">{{ save }}</span>{% endif -%}
+</div>
