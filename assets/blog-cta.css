@@ -80,11 +80,20 @@
   gap: 10px;
 }
 
-.rte .bcta__btn,
-.bcta__btn {
+/* Neutralisation du style de lien du contenu riche.
+   Dans ce theme, les liens de .rte recoivent un soulignement dessine en
+   background-image par une regle plus specifique que la notre
+   (de la forme .article .rte a). L'encart de milieu d'article etant
+   injecte a l'interieur de .rte, il faut la neutraliser explicitement :
+   sans cela le trait traverse le bouton et le fond ne s'applique pas.
+   D'ou la specificite relevee ci-dessous, et les !important cibles
+   uniquement sur les proprietes reellement disputees. */
+
+.bcta .bcta__btn,
+.rte .bcta .bcta__btn,
+.article .rte .bcta .bcta__btn {
   flex: 1 1 190px;
   text-align: center;
-  text-decoration: none !important;
   font-size: 14px;
   font-weight: 600;
   line-height: 1.2;
@@ -92,27 +101,44 @@
   border-radius: 8px;
   box-sizing: border-box;
   border: 1px solid transparent;
-  transition: opacity .15s ease, background-color .15s ease;
+  transition: opacity .15s ease;
+
+  background-image: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  text-underline-offset: 0 !important;
 }
 
-.rte .bcta__btn--primaire,
-.bcta__btn--primaire {
+.bcta .bcta__btn::before,
+.bcta .bcta__btn::after,
+.rte .bcta .bcta__btn::before,
+.rte .bcta .bcta__btn::after,
+.article .rte .bcta .bcta__btn::before,
+.article .rte .bcta .bcta__btn::after {
+  content: none !important;
+  display: none !important;
+}
+
+.bcta .bcta__btn--primaire,
+.rte .bcta .bcta__btn--primaire,
+.article .rte .bcta .bcta__btn--primaire {
   color: #fff !important;
-  background: var(--bcta-marque);
+  background-color: var(--bcta-marque) !important;
 }
 
-.rte .bcta__btn--secondaire,
-.bcta__btn--secondaire {
+.bcta .bcta__btn--secondaire,
+.rte .bcta .bcta__btn--secondaire,
+.article .rte .bcta .bcta__btn--secondaire {
   color: var(--bcta-encre) !important;
-  background: #fff;
+  background-color: #fff !important;
   border-color: var(--bcta-trait);
 }
 
-.bcta__btn:hover { opacity: .88; }
-.bcta__btn:focus-visible { outline: 2px solid var(--bcta-marque); outline-offset: 2px; }
+.bcta .bcta__btn:hover { opacity: .88; }
+.bcta .bcta__btn:focus-visible { outline: 2px solid var(--bcta-marque); outline-offset: 2px; }
 
 @media (max-width: 480px) {
   .bcta { padding: 1.5rem 1.25rem; }
   .bcta__actions { flex-direction: column; }
-  .rte .bcta__btn, .bcta__btn { flex: 1 1 auto; }
+  .bcta .bcta__btn, .rte .bcta .bcta__btn { flex: 1 1 auto; }
 }
