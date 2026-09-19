@@ -1,0 +1,136 @@
+{% comment %} ── Accessoires compatibles Élite — grille sans défilement ── {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .elx * { box-sizing:border-box; margin:0; padding:0; }
+  .elx { font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#fff; color:#0d1520; padding:92px 24px 96px; }
+  .elx-inner { max-width:1180px; margin:0 auto; }
+  .elx-head { display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; margin-bottom:40px; }
+  .elx-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:#5c6a75; margin-bottom:14px; }
+  .elx-eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,#12a0ad,rgba(18,160,173,0)); }
+  .elx-title { font-size:clamp(26px,3.4vw,38px); font-weight:600; letter-spacing:-.035em; line-height:1.12; margin-bottom:12px; }
+  .elx-sub { font-size:15px; color:#4b5a63; font-weight:300; line-height:1.65; max-width:540px; }
+  .elx-sub b { color:#0d1520; font-weight:500; }
+  .elx-all { display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:9px;
+    border:1px solid #d9e0df; background:#fff; color:#0d1520; font-size:13.5px; font-weight:600;
+    text-decoration:none; white-space:nowrap; transition:border-color .18s, transform .18s; }
+  .elx-all:hover { border-color:#0a6068; transform:translateY(-2px); }
+  .elx-all svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+
+  .elx-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .elx-i { display:flex; flex-direction:column; border:1px solid #e2e7e6; border-radius:14px; overflow:hidden;
+    background:#fff; text-decoration:none; color:inherit; transition:border-color .18s, transform .18s, box-shadow .18s; }
+  .elx-i:hover { border-color:#0a6068; transform:translateY(-3px); box-shadow:0 16px 34px -22px rgba(13,21,32,.36); }
+  .elx-thumb { background:#f1f3f2; border-bottom:1px solid #e9edec; padding:12px; overflow:hidden; }
+  .elx-thumb img { width:100%; height:132px; object-fit:contain; display:block; }
+  .elx-txt { padding:15px 16px 17px; display:flex; flex-direction:column; flex:1; }
+  .elx-cat { display:block; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:#0a6068; margin-bottom:7px; }
+  .elx-nm { display:block; font-size:13.5px; font-weight:500; line-height:1.4; color:#0d1520; margin-bottom:10px; flex:1; }
+  .elx-pr { display:block; font-size:14px; font-weight:600; color:#0d1520; letter-spacing:-.01em; }
+
+  .elx-note { margin-top:26px; padding:20px 24px; border-radius:14px; background:#f1f3f2; border:1px solid #e2e7e6;
+    font-size:13.8px; color:#4b5a63; font-weight:300; line-height:1.62; }
+  .elx-note b { color:#0d1520; font-weight:500; }
+
+  @media (max-width:1000px) { .elx-grid { grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:760px)  { .elx-grid { grid-template-columns:repeat(2,1fr); } .elx { padding:72px 20px; } }
+  @media (max-width:420px)  { .elx-grid { grid-template-columns:1fr; } }
+</style>
+
+<section class="elx">
+  <div class="elx-inner">
+    <div class="elx-head">
+      <div>
+        <span class="elx-eyebrow">Évolutivité</span>
+        <h2 class="elx-title">Ajoutez ce qui vous manque, quand il vous manque.</h2>
+        <p class="elx-sub">Tous ces accessoires s'appairent à la centrale Élite depuis l'application, <b>à l'unité et sans outil</b>. Vous commencez avec un pack, vous complétez au fil du temps.</p>
+      </div>
+      <a class="elx-all" href="https://daewoo-security.fr/collections/gamme-elite-accessoires">
+        Tous les accessoires Élite
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <div class="elx-grid">
+      {%- comment -%}
+        Les douze vignettes et les douze prix etaient ecrits en dur ici.
+        Les visuels produits ayant ete refaits, les douze pointaient vers
+        des fichiers remplaces, et celui du detecteur de fuite d'eau avait
+        ete supprime : la carte affichait une image cassee. Image et prix
+        viennent desormais de la fiche, les valeurs ecrites ne servant plus
+        que de secours.
+      {%- endcomment -%}
+      {%- render 'elx-card',
+        handle: 'contacteur-de-porte-zigbee-wds502z-compatible-avec-la-centrale-pa501z',
+        cat: 'Ouvertures', nm: "Contacteur de porte Zigbee WDS502Z", alt: "Contacteur de porte Zigbee WDS502Z",
+        fallback_price: '34,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/contacteur-de-porte-zigbee-wds502z-compatible-avec-la-centrale-pa501z-673318.jpg?v=1699416347', fallback_w: 1000, fallback_h: 1000 -%}
+      {%- render 'elx-card',
+        handle: 'detecteur-de-vibration-zigbee-wvd502z-compatible-avec-la-centrale-pa501z',
+        cat: 'Ouvertures', nm: "Détecteur de vibration Zigbee WVD502Z", alt: "Détecteur de vibration Zigbee WVD502Z",
+        fallback_price: '44,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/detecteur-de-vibration-zigbee-wvd502z-compatible-avec-la-centrale-pa501z-421838.jpg?v=1699416348', fallback_w: 1000, fallback_h: 1000 -%}
+      {%- render 'elx-card',
+        handle: 'detecteur-douverture-de-porte-de-garage',
+        cat: 'Ouvertures', nm: "Contacteur de porte de garage WDG501", alt: "Contacteur de porte de garage WDG501",
+        fallback_price: '49,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/detecteur-douverture-de-porte-de-garage-674643.jpg?v=1651850130', fallback_w: 1500, fallback_h: 1500 -%}
+      {%- render 'elx-card',
+        handle: 'detecteur-de-mouvement-pet-immune-wps501-pour-alarme-daewoo',
+        cat: 'Mouvement', nm: "Détecteur de mouvement WPS501, compatible animaux", alt: "Détecteur de mouvement compatible animaux WPS501",
+        fallback_price: '35,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/detecteur-de-mouvement-pet-immune-wps501-pour-alarme-daewoo-184619.jpg?v=1651850946', fallback_w: 1000, fallback_h: 1000 -%}
+      {%- render 'elx-card',
+        handle: 'detecteur-de-mouvement-exterieur-wmo501-pour-alarme-daewoo',
+        cat: 'Mouvement', nm: "Détecteur de mouvement extérieur WMO501", alt: "Détecteur de mouvement extérieur WMO501",
+        fallback_price: '79,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/detecteur-de-mouvement-exterieur-wmo501-pour-alarme-daewoo-148547.jpg?v=1651851022', fallback_w: 2100, fallback_h: 2100 -%}
+      {%- render 'elx-card',
+        handle: 'sirene-exterieure-solaire-pour-alarme-daewoo-sa501',
+        cat: 'Dissuasion', nm: "Sirène extérieure solaire WOS501S", alt: "Sirène extérieure solaire WOS501S",
+        fallback_price: '129,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/sirene-exterieure-solaire-pour-alarme-daewoo-sa501-827284.jpg?v=1651851821', fallback_w: 1000, fallback_h: 1000 -%}
+      {%- render 'elx-card',
+        handle: 'clavier-sans-fil-zigbee-wke502z-compatible-avec-la-centrale-pa501z',
+        cat: 'Commande', nm: "Clavier sans fil Zigbee WKE502Z", alt: "Clavier sans fil Zigbee WKE502Z",
+        fallback_price: '59,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/clavier-sans-fil-zigbee-wke502z-compatible-avec-la-centrale-pa501z-154694.webp?v=1699416346', fallback_w: 1000, fallback_h: 1000 -%}
+      {%- render 'elx-card',
+        handle: 'telecommande-pour-alarme-daewoo',
+        cat: 'Commande', nm: "Télécommande WRC501 avec bouton SOS", alt: "Télécommande WRC501",
+        fallback_price: '23,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/telecommande-wrc501-pour-alarme-daewoo-771576.jpg?v=1651852034', fallback_w: 1000, fallback_h: 1000 -%}
+      {%- render 'elx-card',
+        handle: 'badge-rfid-wrf501-pour-alarme-daewoo-sa501',
+        cat: 'Commande', nm: "Badge RFID WRF501", alt: "Badge RFID WRF501",
+        fallback_price: '9,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/badge-rfid-wrf501-pour-alarme-daewoo-sa501-678941.jpg?v=1651851465', fallback_w: 1000, fallback_h: 1000 -%}
+      {%- render 'elx-card',
+        handle: 'detecteur-de-fumee-wsd501-pour-alarme-daewoo-sa501',
+        cat: 'Accidents domestiques', nm: "Détecteur de fumée connecté WSD501", alt: "Détecteur de fumée connecté WSD501",
+        fallback_price: '39,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/files/image_2024_12_09T08_18_43_013Z.jpg?v=1733735447', fallback_w: 1500, fallback_h: 1500 -%}
+      {%- render 'elx-card',
+        handle: 'detecteur-de-fuite-deau-compatible-avec-lalarme-daewoo',
+        cat: 'Accidents domestiques', nm: "Détecteur de fuite d'eau WWF501", alt: "Détecteur de fuite d'eau WWF501",
+        fallback_price: '39,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/products/detecteur-de-fuite-deau-wwf501-compatible-avec-lalarme-daewoo-888605.jpg?v=1651851677', fallback_w: 800, fallback_h: 800 -%}
+      {%- render 'elx-card',
+        handle: 'amplificateur-dondes-zigbee-pour-centrale-pa501z',
+        cat: 'Portée Zigbee', nm: "Amplificateur d'ondes Zigbee EXT501 — pour les références 502Z", alt: "Amplificateur d'ondes Zigbee EXT501 pour centrale PA501Z",
+        fallback_price: '79,90 €',
+        fallback_image: 'https://cdn.shopify.com/s/files/1/0326/3132/4811/files/EXT501ZIG_2.png?v=1752758726', fallback_w: 1080, fallback_h: 1080 -%}
+    </div>
+
+    <p class="elx-note"><b>À propos du Zigbee&nbsp;:</b> seules trois références de la gamme communiquent en Zigbee — le contacteur <b>WDS502Z</b>, le détecteur de vibration <b>WVD502Z</b> et le clavier <b>WKE502Z</b>. L'<b>amplificateur d'ondes EXT501</b> n'étend donc la portée que de ces trois accessoires. Tous les autres utilisent la <b>fréquence radio 433 ou 868 MHz</b>.</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Élite — Accessoires",
+  "settings": []
+}
+{% endschema %}

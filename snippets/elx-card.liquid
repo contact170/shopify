@@ -1,0 +1,31 @@
+{%- doc -%}
+  Carte accessoire de la grille "Compatible Élite".
+
+  L'image et le prix viennent de la fiche produit. Ils y etaient ecrits en
+  dur, et le renouvellement des visuels avait laisse les douze vignettes
+  pointer vers des fichiers remplaces, dont un supprime.
+
+  Le libelle et la categorie, eux, restent passes par la section : ils sont
+  plus courts que les titres de fiche, faits pour tenir sur deux lignes.
+
+  Params : handle, cat, nm, alt, fallback_price, fallback_image,
+  fallback_w, fallback_h.
+{%- enddoc -%}
+
+{%- liquid
+  assign p = all_products[handle]
+  assign prix = fallback_price
+  if p != blank
+    assign prix = p.price | money
+  endif
+-%}
+<a class="elx-i" href="/products/{{ handle }}">
+  <span class="elx-thumb">
+    {%- if p.featured_image -%}
+      {{ p.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: alt }}
+    {%- else -%}
+      <img src="{{ fallback_image }}" alt="{{ alt }}" loading="lazy" width="{{ fallback_w }}" height="{{ fallback_h }}">
+    {%- endif -%}
+  </span>
+  <span class="elx-txt"><span class="elx-cat">{{ cat }}</span><span class="elx-nm">{{ nm }}</span><span class="elx-pr">{{ prix }}</span></span>
+</a>
