@@ -803,28 +803,156 @@
     }
 
     /* ---- avis Judge.me ----
-       Le widget est produit par Judge.me ; on ne fait que l'encadrer à la
-       largeur de nos sections. Son titre "Customer Reviews" est masqué, le
-       nôtre le précède déjà en français.
+       Judge.me sort une liste dense separee par des filets, avec son propre
+       chrome en anglais. On la repasse au vocabulaire de la page — cartes,
+       ambre, meme typographie — et on masque ce qui fait doublon avec notre
+       en-tete ou n'est pas traduit.
 
-       À savoir : le reste de son habillage ("Based on 32 reviews", "Write a
-       review", "Verified buyer") reste en anglais tant que les traductions
-       ne sont pas renseignées dans l'admin Judge.me. Les avis eux-mêmes sont
-       en français, ce sont les clients qui les écrivent. */
-    .pe-judgeme{max-width:860px;margin:34px auto 0;}
-    /* Le titre "Customer Reviews" et le resume "Based on 32 reviews" sont en
-       anglais et repetent l'en-tete francais juste au-dessus : on les retire
-       plutot que de laisser deux fois la meme note, dont une en anglais. */
-    .pe-judgeme .jdgm-rev-widg__title,
-    .pe-judgeme .jdgm-rev-widg__summary{display:none;}
+       Toutes les regles sont prefixees .pe-judgeme : le widget est le seul
+       HTML de cette page que nous n'ecrivons pas, et Judge.me peut le faire
+       evoluer sans prevenir. Ce qui ne matche plus se degrade en style par
+       defaut, jamais en page cassee. */
+    .pe-judgeme{max-width:920px;margin:32px auto 0;text-align:left;}
     .pv .pe-judgeme{font-size:14.5px;}
-    .pe-judgeme .jdgm-star{color:#f5a623;}
-    /* L'histogramme arrive masque et n'est revele que par leur script ; sans
-       lui il resterait un bloc vide. Il ne porte que des chiffres, donc rien
-       a traduire. */
-    .pe-judgeme .jdgm-histogram{margin:0 auto 26px;max-width:420px;}
-    .pe-judgeme .jdgm-rev{text-align:left;}
-    .pe-judgeme .jdgm-rev__title{display:block;margin-bottom:4px;}
+    .pe-judgeme .jdgm-star{color:var(--pe-amber);}
+
+    /* Masques : le titre et le resume repetent notre en-tete francais ; les
+       medailles Judge.me, le tri, les votes "Was this helpful" et le badge
+       de transparence restent en anglais tant que les traductions ne sont
+       pas renseignees dans leur admin. */
+    .pe-judgeme .jdgm-rev-widg__title,
+    .pe-judgeme .jdgm-rev-widg__summary,
+    .pe-judgeme .jdgm-medals-wrapper,
+    .pe-judgeme .jdgm-rev-widg__sort-wrapper,
+    .pe-judgeme .jdgm-write-rev-link,
+    .pe-judgeme .jdgm-rev__actions,
+    .pe-judgeme .jdgm-rev__transparency-badge-wrapper,
+    .pe-judgeme .jdgm-rev__buyer-badge-wrapper,
+    .pe-judgeme .jdgm-rev__replier-wrapper,
+    .pe-judgeme .jdgm-rev__br{display:none !important;}
+
+    /* Repartition des notes. Que des chiffres, donc rien a traduire ; c'est
+       la seule preuve que les 32 avis ne sont pas tous des 5 etoiles. */
+    .pe-judgeme .jdgm-histogram{max-width:400px;margin:0 auto 28px;}
+    .pe-judgeme .jdgm-histogram__row{
+      display:flex;align-items:center;gap:10px;margin-bottom:7px;
+    }
+    .pe-judgeme .jdgm-histogram__star{white-space:nowrap;font-size:11px;letter-spacing:-1px;}
+    .pe-judgeme .jdgm-histogram__bar{
+      flex:1;height:7px;border-radius:99px;background:#e9e9ed;overflow:hidden;
+    }
+    .pe-judgeme .jdgm-histogram__bar-content{height:100%;background:var(--pe-amber);border-radius:99px;}
+    .pe-judgeme .jdgm-histogram__percentage{display:none;}
+    .pe-judgeme .jdgm-histogram__frequency{
+      min-width:30px;text-align:right;font-size:12.5px;color:var(--pv-gray);
+    }
+    .pe-judgeme .jdgm-histogram__clear-filter{display:none;}
+
+    /* Un avis = une carte. */
+    .pe-judgeme .jdgm-rev-widg__reviews{display:grid;gap:14px;}
+    .pe-judgeme .jdgm-rev{
+      background:#fff;border:1px solid var(--pv-line);border-radius:16px;
+      padding:20px 22px;margin:0;box-shadow:0 1px 2px rgba(16,24,40,.04);
+    }
+
+    /* En-tete : initiale, auteur et pastille sur la premiere ligne, date
+       calee a droite, etoiles en dessous. */
+    .pe-judgeme .jdgm-rev__header{
+      display:grid;grid-template-columns:38px 1fr auto;
+      grid-template-areas:"avatar author date" "avatar stars stars";
+      column-gap:12px;row-gap:3px;align-items:center;margin-bottom:12px;
+    }
+    .pe-judgeme .jdgm-rev__icon{
+      grid-area:avatar;width:38px;height:38px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      background:var(--pe-sand);color:var(--pe-bronze);
+      font-weight:700;font-size:15px;line-height:1;
+    }
+    .pe-judgeme .jdgm-rev__author-wrapper{grid-area:author;}
+    .pv .pe-judgeme .jdgm-rev__author{font-weight:650;color:var(--pv-ink);}
+    .pe-judgeme .jdgm-rev__rating{grid-area:stars;font-size:13px;letter-spacing:-1px;}
+    .pe-judgeme .jdgm-rev__timestamp{
+      grid-area:date;font-size:12.5px;color:var(--pv-gray);white-space:nowrap;
+    }
+
+    /* Le badge natif "Verified buyer" est en anglais et depend de leur
+       script. L'attribut data-verified-buyer, lui, est dans le HTML rendu
+       cote serveur : on s'en sert pour poser notre propre pastille. */
+    .pe-judgeme .jdgm-rev[data-verified-buyer="true"] .jdgm-rev__author-wrapper::after{
+      content:"Achat vérifié";
+      display:inline-block;margin-left:8px;vertical-align:1px;
+      background:var(--pe-eth-bg);color:var(--pe-eth);
+      font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;
+    }
+
+    .pv .pe-judgeme .jdgm-rev__title{
+      display:block;font-size:15.5px;font-weight:700;
+      color:var(--pv-ink);margin:0 0 6px;
+    }
+    .pv .pe-judgeme .jdgm-rev__body{line-height:1.62;}
+    .pv .pe-judgeme .jdgm-rev__body p{margin:0 0 10px;}
+    .pv .pe-judgeme .jdgm-rev__body p:last-child{margin-bottom:0;}
+
+    /* Repli des avis longs : voir le commentaire du script, en bas de page. */
+    .pe-judgeme .jdgm-rev__body{position:relative;}
+    .pe-judgeme .jdgm-rev__body.pe-clamped{max-height:10.4em;overflow:hidden;}
+    .pe-judgeme .jdgm-rev__body.pe-clamped::after{
+      content:"";position:absolute;left:0;right:0;bottom:0;height:3.4em;
+      background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 85%);
+      pointer-events:none;
+    }
+    .pv .pe-judgeme .pe-more{
+      display:inline-block;margin-top:10px;padding:0;border:0;background:none;
+      font:inherit;font-weight:650;color:var(--pe-amber);cursor:pointer;
+    }
+    .pe-judgeme .pe-more:hover{text-decoration:underline;}
+
+    /* Reponse du marchand. Le libelle vient de nous : leur .jdgm-rev__replier
+       n'est rempli que si le nom du repondant est configure chez eux, et il
+       etait vide ici. */
+    .pe-judgeme .jdgm-rev__reply-content{
+      margin-top:14px;padding:12px 16px;
+      background:var(--pv-bg-alt);border-left:3px solid var(--pv-line);
+      border-radius:0 10px 10px 0;
+    }
+    .pe-judgeme .jdgm-rev__reply-content::before{
+      content:"Réponse de Daewoo Security";
+      display:block;font-weight:650;font-size:12.5px;
+      color:var(--pv-ink);margin-bottom:6px;
+    }
+    .pv .pe-judgeme .jdgm-rev__reply-content p{margin:0 0 8px;font-size:14px;}
+    .pv .pe-judgeme .jdgm-rev__reply-content p:last-child{margin-bottom:0;}
+
+    .pe-judgeme .jdgm-rev__pics img,
+    .pe-judgeme .jdgm-rev__vids img{border-radius:10px;}
+
+    .pe-judgeme .jdgm-paginate{
+      display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-top:22px;
+    }
+    .pe-judgeme .jdgm-paginate__page{
+      min-width:34px;height:34px;padding:0 8px;
+      display:inline-flex;align-items:center;justify-content:center;
+      border:1px solid var(--pv-line);border-radius:9px;background:#fff;
+      font-size:13.5px;color:var(--pv-ink);text-decoration:none;cursor:pointer;
+    }
+    .pe-judgeme .jdgm-paginate__page:hover{border-color:var(--pv-gray);}
+    .pe-judgeme .jdgm-paginate__page.jdgm-curt{
+      background:var(--pv-navy);border-color:var(--pv-navy);color:#fff;font-weight:650;
+    }
+
+    @media (max-width:640px){
+      .pe-judgeme .jdgm-rev{padding:16px 17px;border-radius:14px;}
+      .pe-judgeme .jdgm-rev__header{
+        grid-template-columns:34px 1fr;
+        grid-template-areas:"avatar author" "avatar date" "stars stars";
+        row-gap:2px;
+      }
+      .pe-judgeme .jdgm-rev__icon{width:34px;height:34px;font-size:14px;}
+      .pe-judgeme .jdgm-rev__timestamp{justify-self:start;}
+      .pe-judgeme .jdgm-rev[data-verified-buyer="true"] .jdgm-rev__author-wrapper::after{
+        margin-left:6px;font-size:10.5px;
+      }
+    }
     .pv .pe-reviews__note{
       font-size:13.5px;color:var(--pv-gray);margin-top:10px;
       max-width:560px;margin-left:auto;margin-right:auto;
@@ -2226,6 +2354,56 @@
           var spinWrap = jdgmHost.querySelector('.jdgm-rev-widg__paginate-spinner-wrapper');
           if (spinWrap) spinWrap.style.display = 'none';
         }, 3500);
+
+        /* Les avis les plus convaincants sont souvent les plus longs : l'un
+           d'eux fait deux mille caracteres et pousserait les suivants hors
+           de l'ecran. On le replie au-dela d'une dizaine de lignes plutot
+           que de le couper, avec un bouton pour le derouler.
+
+           Deux precautions. On ignore un avis non affiche : sa hauteur y
+           vaut zero, on le replierait a tort. Et Judge.me remplace tout le
+           bloc a chaque changement de page, d'ou l'observateur qui reapplique
+           le repli au contenu neuf. */
+        var clampReviews = function () {
+          var bodies = jdgmHost.querySelectorAll('.jdgm-rev__body');
+          for (var i = 0; i < bodies.length; i++) {
+            var body = bodies[i];
+            if (body.getAttribute('data-pe-clamp') || body.offsetParent === null) continue;
+            body.setAttribute('data-pe-clamp', '1');
+
+            body.classList.add('pe-clamped');
+            if (body.scrollHeight <= body.clientHeight + 4) {
+              body.classList.remove('pe-clamped');
+              continue;
+            }
+
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'pe-more';
+            btn.textContent = 'Lire la suite';
+            btn.setAttribute('aria-expanded', 'false');
+            (function (b, t) {
+              t.addEventListener('click', function () {
+                var folded = b.classList.toggle('pe-clamped');
+                t.textContent = folded ? 'Lire la suite' : 'Réduire';
+                t.setAttribute('aria-expanded', folded ? 'false' : 'true');
+              });
+            })(body, btn);
+            if (body.parentNode) body.parentNode.insertBefore(btn, body.nextSibling);
+          }
+        };
+
+        var clampTimer = null;
+        var scheduleClamp = function () {
+          window.clearTimeout(clampTimer);
+          clampTimer = window.setTimeout(clampReviews, 120);
+        };
+        scheduleClamp();
+        if (window.MutationObserver) {
+          new MutationObserver(scheduleClamp).observe(jdgmHost, {
+            childList: true, subtree: true
+          });
+        }
       }
     })();
   </script>

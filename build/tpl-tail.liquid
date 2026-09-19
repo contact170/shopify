@@ -422,6 +422,56 @@
           var spinWrap = jdgmHost.querySelector('.jdgm-rev-widg__paginate-spinner-wrapper');
           if (spinWrap) spinWrap.style.display = 'none';
         }, 3500);
+
+        /* Les avis les plus convaincants sont souvent les plus longs : l'un
+           d'eux fait deux mille caracteres et pousserait les suivants hors
+           de l'ecran. On le replie au-dela d'une dizaine de lignes plutot
+           que de le couper, avec un bouton pour le derouler.
+
+           Deux precautions. On ignore un avis non affiche : sa hauteur y
+           vaut zero, on le replierait a tort. Et Judge.me remplace tout le
+           bloc a chaque changement de page, d'ou l'observateur qui reapplique
+           le repli au contenu neuf. */
+        var clampReviews = function () {
+          var bodies = jdgmHost.querySelectorAll('.jdgm-rev__body');
+          for (var i = 0; i < bodies.length; i++) {
+            var body = bodies[i];
+            if (body.getAttribute('data-pe-clamp') || body.offsetParent === null) continue;
+            body.setAttribute('data-pe-clamp', '1');
+
+            body.classList.add('pe-clamped');
+            if (body.scrollHeight <= body.clientHeight + 4) {
+              body.classList.remove('pe-clamped');
+              continue;
+            }
+
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'pe-more';
+            btn.textContent = 'Lire la suite';
+            btn.setAttribute('aria-expanded', 'false');
+            (function (b, t) {
+              t.addEventListener('click', function () {
+                var folded = b.classList.toggle('pe-clamped');
+                t.textContent = folded ? 'Lire la suite' : 'Réduire';
+                t.setAttribute('aria-expanded', folded ? 'false' : 'true');
+              });
+            })(body, btn);
+            if (body.parentNode) body.parentNode.insertBefore(btn, body.nextSibling);
+          }
+        };
+
+        var clampTimer = null;
+        var scheduleClamp = function () {
+          window.clearTimeout(clampTimer);
+          clampTimer = window.setTimeout(clampReviews, 120);
+        };
+        scheduleClamp();
+        if (window.MutationObserver) {
+          new MutationObserver(scheduleClamp).observe(jdgmHost, {
+            childList: true, subtree: true
+          });
+        }
       }
     })();
   </script>
