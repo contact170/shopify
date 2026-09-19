@@ -1,0 +1,36 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════════
+  snippets/vital.liquid — Daewoo Security
+  Rendu dans le <head> de toutes les pages (appelé par snippets/head_metas.liquid).
+
+  Ne contient plus que le chargement de lazysizes, qui renseigne le src des
+  images différées. Il est indispensable : layout/theme.liquid masque toute
+  image encore dépourvue de src (img[data-src]:not([src])). Supprimer ce
+  fichier sans déplacer la ligne ci-dessous rendrait toutes les images
+  invisibles sur l'ensemble du site.
+
+  Historique :
+    19/09/2026 — retrait du reliquat d'app d'optimisation qui occupait ce
+                 fichier. Il injectait dans le <head> de chaque page :
+
+                   · un bloc #fv-loading-icon de 99vw sur 99vh contenant un
+                     seul caractère grec, en font-size 190vw et opacity
+                     0.0001 (et non 0, que Chrome ignorerait), calibré pour
+                     devenir l'élément retenu comme Largest Contentful Paint
+                     et faire mesurer une page instantanée ;
+                   · un eval(decodeURIComponent(atob(...))) supprimant ce
+                     bloc au bout de 1500 ms ;
+                   · le préchargement et le chargement de loader.init.js,
+                     script hébergé sur le CDN d'une boutique tierce et
+                     modifiable à tout moment par son propriétaire ;
+                   · une balise meta ui-context sans effet.
+
+                 Motif : mesure de vitesse faussée vis-à-vis de Google d'une
+                 part, script tiers non maîtrisé sur toutes les pages d'autre
+                 part. Même origine que le bloc « loadJSscripts » retiré de
+                 snippets/custom.liquid le 04/09/2026.
+
+                 Pour revenir en arrière : thème « Version final 19092026 ».
+  ══════════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+<script src="{{ 'lazysizes.min.js' | asset_url }}" async></script>

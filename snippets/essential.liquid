@@ -1,0 +1,33 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════════
+  snippets/essential.liquid — Daewoo Security
+
+  Fichier volontairement vide. Conservé plutôt que supprimé : si un appel
+  render 'essential' subsistait quelque part, un fichier absent
+  afficherait une erreur Liquid sur la page, un fichier vide ne rend rien.
+
+  Historique :
+    19/09/2026 — retrait du second volet de l'app d'optimisation (le premier
+                 était dans snippets/vital.liquid, retiré le même jour).
+
+                 Ce fichier installait un MutationObserver sur tout le
+                 document, actif en permanence, qui interceptait chaque
+                 balise <script> ajoutée à la page et, sauf si elle portait
+                 la classe « analytics » :
+
+                   · réécrivait le code de chargement asynchrone de Shopify
+                     pour que asyncLoad() ne parte plus qu'au déclenchement
+                     d'un évènement maison « asyncLazyLoad » ;
+                   · basculait le src vers data-src — donc empêchait le
+                     chargement — de assets/storefront/features,
+                     assets/shopify_pay et connect.facebook.net.
+
+                 Autrement dit : fonctionnalités de vitrine Shopify, bouton
+                 Shop Pay et pixel Meta mis en attente. Ils n'étaient censés
+                 repartir que via le bloc « loadJSscripts », lui-même retiré
+                 de snippets/custom.liquid le 04/09/2026 — ce qui laissait
+                 la moitié bloquante sans sa moitié libératrice.
+
+                 Pour revenir en arrière : thème « Version final 19092026 ».
+  ══════════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
