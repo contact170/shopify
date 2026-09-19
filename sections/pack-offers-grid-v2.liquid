@@ -1,0 +1,765 @@
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-head {
+    max-width: 640px;
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-eyebrow {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: #6e6e73;
+    margin-bottom: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-heading {
+    font-size: clamp(1.9rem, 4vw, 3.1rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 0 16px;
+    color: #1d1d1f;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-desc {
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    line-height: 1.6;
+    color: #6e6e73;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-subrow {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin: 32px 0 44px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-subrow-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-subrow-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: #f5f5f7;
+    color: #6e6e73;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-subrow-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-subrow-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1d1d1f;
+    line-height: 1.3;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-subrow-sublabel {
+    display: block;
+    font-size: 11.5px;
+    color: #8a8a8e;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card {
+    position: relative;
+    grid-column: span 1;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+    transition: transform .35s cubic-bezier(.16, 1, .3, 1), box-shadow .35s cubic-bezier(.16, 1, .3, 1);
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -24px rgba(0, 0, 0, .18);
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--featured {
+    grid-column: 1 / -1;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--featured .pk2-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--grid .pk2-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+    background: radial-gradient(140% 140% at 30% 15%, #f6f6f9 0%, #eeeef2 55%, #e6e6ec 100%);
+  }
+
+  #shopify-section-{{ section.id }} .pk2-media::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    z-index: 0;
+    background: radial-gradient(60% 60% at 55% 45%, color-mix(in srgb, var(--pk2-accent) 26%, transparent) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(closest-side, transparent 0%, transparent 58%, rgba(230, 230, 236, .92) 100%);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-media img {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 18px rgba(0, 0, 0, .08));
+  }
+
+  /* Bandeau baisse de prix. Pose au-dessus des deux degrades de la vignette,
+     d'ou le z-index 3 : ::after monte deja a 2. */
+  #shopify-section-{{ section.id }} .pk2-drop {
+    position: absolute;
+    z-index: 3;
+    top: 14px;
+    left: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: #d2193e;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 18px -8px rgba(210, 25, 62, .75);
+  }
+
+  #shopify-section-{{ section.id }} .pk2-drop svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--featured .pk2-media {
+    flex: .85;
+    padding: 28px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--grid .pk2-media {
+    aspect-ratio: 1 / 1;
+    padding: 20px 20px 6px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--featured .pk2-content {
+    flex: 1.1;
+    padding: 32px 24px 32px 36px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--grid .pk2-content {
+    padding: 6px 20px 22px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-badge--featured {
+    color: #fff;
+    background: var(--pk2-accent);
+    padding: 7px 14px;
+    border-radius: 999px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-badge--featured svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-badge--grid {
+    color: var(--pk2-accent);
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card-heading {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #1d1d1f;
+    margin: 0 0 8px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--featured .pk2-card-heading {
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    max-width: 26ch;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--grid .pk2-card-heading {
+    font-size: 1.08rem;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #6e6e73;
+    max-width: 42ch;
+    margin: 0 0 14px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-chips {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--featured .pk2-chips {
+    justify-content: flex-start;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--featured .pk2-chip {
+    flex: 0 1 auto;
+    min-width: 84px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-chip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1.5px solid color-mix(in srgb, var(--pk2-accent) 40%, transparent);
+    color: var(--pk2-accent);
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-chip-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-chip-label {
+    font-size: 10.5px;
+    line-height: 1.25;
+    color: #6e6e73;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-price-now {
+    font-weight: 700;
+    color: #1d1d1f;
+    letter-spacing: -0.01em;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--featured .pk2-price-now {
+    font-size: 1.6rem;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--grid .pk2-price-now {
+    font-size: 1.25rem;
+    color: var(--pk2-accent);
+  }
+
+  #shopify-section-{{ section.id }} .pk2-price-old {
+    font-size: 14px;
+    color: #98989d;
+    text-decoration: line-through;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-price-badge {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #0a0a0e;
+    background: color-mix(in srgb, var(--pk2-accent) 55%, white);
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-savings {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    font-size: 12px;
+    font-weight: 600;
+    color: #92400e;
+    background: #fdf1e0;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-savings svg {
+    color: #c17f2a;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 999px;
+    align-self: flex-start;
+    transition: transform .3s cubic-bezier(.16, 1, .3, 1), box-shadow .3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--featured .pk2-cta {
+    font-size: 14.5px;
+    padding: 13px 24px;
+    color: #fff;
+    background: var(--pk2-accent);
+    box-shadow: 0 10px 24px -10px var(--pk2-accent);
+  }
+
+  #shopify-section-{{ section.id }} .pk2-card--grid .pk2-cta {
+    font-size: 13px;
+    padding: 10px 18px;
+    color: var(--pk2-accent);
+    background: transparent;
+    border: 1.5px solid var(--pk2-accent);
+  }
+
+  #shopify-section-{{ section.id }} .pk2-cta:hover {
+    transform: translateY(-2px);
+  }
+
+  #shopify-section-{{ section.id }} .pk2-cta svg {
+    width: 13px;
+    height: 13px;
+    transition: transform .3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .pk2-cta:hover svg {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 989px) {
+    #shopify-section-{{ section.id }} .pk2-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    #shopify-section-{{ section.id }} .pk2-card--featured .pk2-inner {
+      flex-direction: column;
+    }
+    #shopify-section-{{ section.id }} .pk2-card--featured .pk2-media {
+      order: 1;
+      aspect-ratio: 16 / 10;
+      padding: 20px;
+    }
+    #shopify-section-{{ section.id }} .pk2-card--featured .pk2-content {
+      order: 2;
+      padding: 24px 22px 26px;
+    }
+    #shopify-section-{{ section.id }} .pk2-card--featured .pk2-card-heading {
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 699px) {
+    #shopify-section-{{ section.id }} .pk2-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div id="offres" class="section section--padding{% if section.settings.divider %} section--divider{% endif %}">
+  <div class="page-width relative">
+    <div class="pk2-head">
+      {%- if section.settings.subheading != blank -%}
+        <span class="pk2-eyebrow">{{ section.settings.subheading | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pk2-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="pk2-desc rte">{{ section.settings.description }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- liquid
+      assign has_subrow = false
+      if section.settings.subrow1_label != blank or section.settings.subrow2_label != blank or section.settings.subrow3_label != blank
+        assign has_subrow = true
+      endif
+    -%}
+    {%- if has_subrow -%}
+      <div class="pk2-subrow">
+        {%- for i in (1..3) -%}
+          {%- liquid
+            case i
+              when 1
+                assign s_icon = section.settings.subrow1_icon
+                assign s_label = section.settings.subrow1_label
+                assign s_sublabel = section.settings.subrow1_sublabel
+              when 2
+                assign s_icon = section.settings.subrow2_icon
+                assign s_label = section.settings.subrow2_label
+                assign s_sublabel = section.settings.subrow2_sublabel
+              when 3
+                assign s_icon = section.settings.subrow3_icon
+                assign s_label = section.settings.subrow3_label
+                assign s_sublabel = section.settings.subrow3_sublabel
+            endcase
+          -%}
+          {%- if s_label != blank -%}
+            <div class="pk2-subrow-item">
+              <span class="pk2-subrow-icon">
+                {%- case s_icon -%}
+                  {%- when 'wrench' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2 2.8-2.8z"/></svg>
+                  {%- when 'zigbee' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>
+                  {%- when 'app' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="18" r=".8" fill="currentColor" stroke="none"/></svg>
+                {%- endcase -%}
+              </span>
+              <span>
+                <span class="pk2-subrow-label">{{ s_label | escape }}</span>
+                <span class="pk2-subrow-sublabel">{{ s_sublabel | escape }}</span>
+              </span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="pk2-grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign accent = block.settings.accent_color | default: '#0071e3'
+          assign card_class = 'pk2-card pk2-card--grid'
+          assign badge_class = 'pk2-badge pk2-badge--grid'
+          if block.settings.size == 'featured'
+            assign card_class = 'pk2-card pk2-card--featured'
+            assign badge_class = 'pk2-badge pk2-badge--featured'
+          endif
+
+          # Les prix etaient saisis a la main dans chaque bloc et se
+          # desynchronisaient des que le marchand changeait un tarif dans
+          # l'admin : la page a affiche 809,90 EUR pendant que le produit
+          # etait a 699,90 EUR. Ils sont maintenant lus sur le produit.
+          #
+          # Le produit est designe par product_handle ; a defaut on le deduit
+          # du lien du bouton, qui pointe deja vers la fiche. Les valeurs
+          # saisies restent en secours si le produit est introuvable ou
+          # depublie, pour qu'une carte ne se retrouve jamais sans prix.
+          assign pack_product = null
+          assign pack_handle = block.settings.product_handle | strip
+          if pack_handle == blank and block.settings.button_link contains '/products/'
+            assign link_tail = block.settings.button_link | split: '/products/' | last
+            assign pack_handle = link_tail | split: '?' | first | split: '#' | first | strip
+          endif
+          if pack_handle != blank
+            assign pack_product = all_products[pack_handle]
+          endif
+
+          assign price_now = block.settings.price
+          assign price_old = block.settings.compare_at_price
+          assign price_badge = block.settings.discount_label
+          assign price_savings = block.settings.savings_amount
+
+          if pack_product != blank
+            assign p_cents = pack_product.price
+            assign c_cents = pack_product.compare_at_price
+
+            assign price_now = p_cents | money
+            # Plusieurs variantes a des tarifs differents : le prix affiche
+            # est celui de la moins chere, on le dit plutot que de laisser
+            # croire a un tarif unique.
+            if pack_product.price_varies
+              assign price_now = 'Dès ' | append: price_now
+            endif
+
+            assign price_old = ''
+            assign price_badge = ''
+            assign price_savings = ''
+            if c_cents > p_cents
+              assign saved = c_cents | minus: p_cents
+              # Division entiere : le pourcentage est arrondi vers le bas,
+              # jamais gonfle.
+              assign pct = saved | times: 100 | divided_by: c_cents
+              assign price_old = c_cents | money
+              assign price_badge = '-' | append: pct | append: '%'
+              assign saved_txt = saved | money
+              assign price_savings = 'Vous économisez ' | append: saved_txt
+            endif
+          endif
+        -%}
+        <div class="{{ card_class }}" style="--pk2-accent: {{ accent }};" {{ block.shopify_attributes }}>
+          <div class="pk2-inner">
+            {%- if block.settings.image_url != blank -%}
+              <div class="pk2-media">
+                {%- if block.settings.price_drop -%}
+                  <span class="pk2-drop">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                    {{ block.settings.price_drop_label | default: 'Baisse de prix' | escape }}
+                  </span>
+                {%- endif -%}
+                <img src="{{ block.settings.image_url }}" alt="{{ block.settings.heading | escape }}" loading="lazy" width="900" height="900">
+              </div>
+            {%- endif -%}
+            <div class="pk2-content">
+              {%- if block.settings.category_label != blank -%}
+                <span class="{{ badge_class }}">
+                  {%- if block.settings.size == 'featured' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"/></svg>
+                  {%- endif -%}
+                  {{ block.settings.category_label | escape }}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.heading != blank -%}
+                <h3 class="pk2-card-heading">{{ block.settings.heading | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="pk2-card-desc">{{ block.settings.description | escape }}</p>
+              {%- endif -%}
+
+              {%- liquid
+                assign has_chips = false
+                if block.settings.chip1_label != blank or block.settings.chip2_label != blank or block.settings.chip3_label != blank or block.settings.chip4_label != blank
+                  assign has_chips = true
+                endif
+              -%}
+              {%- if has_chips -%}
+                <div class="pk2-chips">
+                  {%- for i in (1..4) -%}
+                    {%- liquid
+                      case i
+                        when 1
+                          assign chip_icon = block.settings.chip1_icon
+                          assign chip_label = block.settings.chip1_label
+                        when 2
+                          assign chip_icon = block.settings.chip2_icon
+                          assign chip_label = block.settings.chip2_label
+                        when 3
+                          assign chip_icon = block.settings.chip3_icon
+                          assign chip_label = block.settings.chip3_label
+                        when 4
+                          assign chip_icon = block.settings.chip4_icon
+                          assign chip_label = block.settings.chip4_label
+                      endcase
+                    -%}
+                    {%- if chip_label != blank -%}
+                      <span class="pk2-chip">
+                        <span class="pk2-chip-icon">
+                        {%- case chip_icon -%}
+                          {%- when 'wifi' -%}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8.5a16 16 0 0 1 20 0"/><path d="M5 12.5a11 11 0 0 1 14 0"/><path d="M8.5 16.5a6 6 0 0 1 7 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></svg>
+                          {%- when 'sim' -%}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                          {%- when 'shield' -%}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>
+                          {%- when 'camera' -%}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="14" height="11" rx="2"/><path d="M17 10l4-2v9l-4-2"/><circle cx="10" cy="12.5" r="2.5"/></svg>
+                          {%- when 'app' -%}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="18" r=".8" fill="currentColor" stroke="none"/></svg>
+                          {%- when 'zigbee' -%}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>
+                          {%- when 'box' -%}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M3 8v9l9 5 9-5V8"/><path d="M12 13v9"/></svg>
+                          {%- when 'wrench' -%}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2 2.8-2.8z"/></svg>
+                          {%- when 'battery' -%}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="17" height="8" rx="2"/><path d="M21 10v4" stroke-linecap="round"/><path d="M6 11v2" stroke-linecap="round"/></svg>
+                        {%- endcase -%}
+                        </span>
+                        <span class="pk2-chip-label">{{ chip_label | escape }}</span>
+                      </span>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+
+              {%- if price_now != blank -%}
+                <div class="pk2-price">
+                  <span class="pk2-price-now">{{ price_now }}</span>
+                  {%- if price_old != blank -%}
+                    <span class="pk2-price-old">{{ price_old }}</span>
+                  {%- endif -%}
+                  {%- if price_badge != blank -%}
+                    <span class="pk2-price-badge">{{ price_badge }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+              {%- if price_savings != blank -%}
+                <span class="pk2-savings">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+                  {{ price_savings }}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
+                <a href="{{ block.settings.button_link }}" class="pk2-cta">
+                  {{ block.settings.button_label | escape }}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Grille packs v2",
+  "settings": [
+    { "type": "text", "id": "subheading", "label": "Étiquette", "default": "Offres exclusives" },
+    { "type": "inline_richtext", "id": "heading", "label": "Titre", "default": "Trouvez le pack qui vous ressemble" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Sécurité, caméras et sirène réunies dans un seul pack, sans abonnement.</p>" },
+    { "type": "header", "content": "Ligne d'arguments" },
+    { "type": "select", "id": "subrow1_icon", "label": "Icône 1", "options": [{"value":"wrench","label":"Outil"},{"value":"zigbee","label":"Zigbee"},{"value":"app","label":"Application"}], "default": "wrench" },
+    { "type": "text", "id": "subrow1_label", "label": "Texte 1", "default": "Installation facile" },
+    { "type": "text", "id": "subrow1_sublabel", "label": "Sous-texte 1", "default": "en quelques minutes" },
+    { "type": "select", "id": "subrow2_icon", "label": "Icône 2", "options": [{"value":"wrench","label":"Outil"},{"value":"zigbee","label":"Zigbee"},{"value":"app","label":"Application"}], "default": "zigbee" },
+    { "type": "text", "id": "subrow2_label", "label": "Texte 2", "default": "Protection évolutive" },
+    { "type": "text", "id": "subrow2_sublabel", "label": "Sous-texte 2", "default": "ajoutez des accessoires" },
+    { "type": "select", "id": "subrow3_icon", "label": "Icône 3", "options": [{"value":"wrench","label":"Outil"},{"value":"zigbee","label":"Zigbee"},{"value":"app","label":"Application"}], "default": "app" },
+    { "type": "text", "id": "subrow3_label", "label": "Texte 3", "default": "Contrôle à distance" },
+    { "type": "text", "id": "subrow3_sublabel", "label": "Sous-texte 3", "default": "depuis votre smartphone" },
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Espacement haut", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Espacement bas", "default": 72 },
+    { "type": "checkbox", "id": "divider", "label": "Séparateur", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "pack",
+      "name": "Pack",
+      "settings": [
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Taille",
+          "options": [
+            { "value": "featured", "label": "Vedette (pleine largeur)" },
+            { "value": "grid", "label": "Grille (1/3)" }
+          ],
+          "default": "grid"
+        },
+        { "type": "text", "id": "image_url", "label": "Image (URL)" },
+        { "type": "text", "id": "category_label", "label": "Étiquette de gamme" },
+        { "type": "text", "id": "heading", "label": "Titre" },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "header", "content": "Puces (contenu du pack)" },
+        { "type": "select", "id": "chip1_icon", "label": "Icône 1", "options": [{"value":"wifi","label":"WiFi"},{"value":"sim","label":"SIM/4G"},{"value":"shield","label":"Bouclier"},{"value":"camera","label":"Caméra"},{"value":"app","label":"Application"},{"value":"zigbee","label":"Zigbee"},{"value":"box","label":"Boîte"},{"value":"wrench","label":"Outil"},{"value":"battery","label":"Batterie"}], "default": "wifi" },
+        { "type": "text", "id": "chip1_label", "label": "Texte puce 1" },
+        { "type": "select", "id": "chip2_icon", "label": "Icône 2", "options": [{"value":"wifi","label":"WiFi"},{"value":"sim","label":"SIM/4G"},{"value":"shield","label":"Bouclier"},{"value":"camera","label":"Caméra"},{"value":"app","label":"Application"},{"value":"zigbee","label":"Zigbee"},{"value":"box","label":"Boîte"},{"value":"wrench","label":"Outil"},{"value":"battery","label":"Batterie"}], "default": "camera" },
+        { "type": "text", "id": "chip2_label", "label": "Texte puce 2" },
+        { "type": "select", "id": "chip3_icon", "label": "Icône 3", "options": [{"value":"wifi","label":"WiFi"},{"value":"sim","label":"SIM/4G"},{"value":"shield","label":"Bouclier"},{"value":"camera","label":"Caméra"},{"value":"app","label":"Application"},{"value":"zigbee","label":"Zigbee"},{"value":"box","label":"Boîte"},{"value":"wrench","label":"Outil"},{"value":"battery","label":"Batterie"}], "default": "shield" },
+        { "type": "text", "id": "chip3_label", "label": "Texte puce 3" },
+        { "type": "select", "id": "chip4_icon", "label": "Icône 4", "options": [{"value":"wifi","label":"WiFi"},{"value":"sim","label":"SIM/4G"},{"value":"shield","label":"Bouclier"},{"value":"camera","label":"Caméra"},{"value":"app","label":"Application"},{"value":"zigbee","label":"Zigbee"},{"value":"box","label":"Boîte"},{"value":"wrench","label":"Outil"},{"value":"battery","label":"Batterie"}], "default": "box" },
+        { "type": "text", "id": "chip4_label", "label": "Texte puce 4" },
+        { "type": "header", "content": "Prix" },
+        { "type": "paragraph", "content": "Les prix sont lus sur le produit lié par le bouton : ils suivent l'admin Shopify sans ressaisie. Les champs ci-dessous ne servent que si le produit est introuvable ou dépublié." },
+        { "type": "text", "id": "product_handle", "label": "Identifiant du produit (facultatif)", "info": "À renseigner seulement si le bouton ne pointe pas vers la fiche produit." },
+        { "type": "checkbox", "id": "price_drop", "label": "Afficher le bandeau « Baisse de prix »", "default": false },
+        { "type": "text", "id": "price_drop_label", "label": "Texte du bandeau", "default": "Baisse de prix" },
+        { "type": "text", "id": "price", "label": "Prix (secours)" },
+        { "type": "text", "id": "compare_at_price", "label": "Prix barré (secours)" },
+        { "type": "text", "id": "discount_label", "label": "Badge de réduction (secours)" },
+        { "type": "text", "id": "savings_amount", "label": "Texte d'économie (secours)" },
+        { "type": "header", "content": "Bouton" },
+        { "type": "text", "id": "button_label", "label": "Texte du bouton", "default": "Voir le pack" },
+        { "type": "url", "id": "button_link", "label": "Lien" },
+        { "type": "color", "id": "accent_color", "label": "Couleur d'accent", "default": "#0071e3" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grille packs v2",
+      "category": "t:categories.collections",
+      "blocks": [
+        { "type": "pack", "settings": { "size": "featured" } },
+        { "type": "pack", "settings": { "size": "grid" } },
+        { "type": "pack", "settings": { "size": "grid" } },
+        { "type": "pack", "settings": { "size": "grid" } }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "templates": ["password"]
+  }
+}
+{% endschema %}
