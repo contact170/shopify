@@ -278,6 +278,62 @@ PACKS = [
     ld="Offre exclusive sur le pack alarme maison sans fil Élite PA501Z : centrale multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 2 caméras extérieures motorisées solaires W512MW, 1 caméra intérieure IP506P, 8 capteurs Zigbee, un détecteur de mouvement et une sirène extérieure solaire. Sans abonnement obligatoire.",
   ),
   dict(
+    key='eliteoffre3', sku='PA5012601-003', suffix='eliteoffre3',
+    handle='offre-exclusive-pack-elite-compatible-animaux-sans-abonnement',
+    doc='OFFRE EXCLUSIVE | Pack ÉLITE" (593,90 €, SKU PA5012601-003,\n  templateSuffix "eliteoffre3").\n\n  A ne pas confondre avec PA5012601-001, dont le handle ne differe que par\n  un suffixe "-copie" : celui-ci est moins fourni — une seule camera, pas de\n  camera interieure, trois detecteurs de vibration au lieu de quatre.\n\n  Seul pack a camera exterieure sans camera interieure : le deuxieme bloc\n  illustre est celui de la sirene solaire, et sa photo vient de la fiche de\n  la sirene.',
+    sticky='Offre exclusive · Pack Élite', schema='Offre Élite solaire', js_name='Pack Élite',
+    h1='Offre exclusive — Pack Élite PA501Z, caméra et sirène solaires',
+    tagline='Une caméra motorisée et une sirène de façade qui se rechargent seules.',
+    sub="Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — avec\n        une caméra extérieure motorisée solaire, sept capteurs Zigbee, un détecteur de\n        mouvement compatible animaux et une sirène extérieure solaire.",
+    summary="Le pack comprend une centrale Élite, une caméra extérieure solaire, sept capteurs Zigbee, un détecteur de mouvement et une sirène extérieure solaire.",
+    chips=CHIPS_BASE + [('', 'Caméra solaire'), ('', 'Offre limitée')],
+    contents_lead='Une protection périmétrique complète, caméra et sirène autonomes comprises, en offre limitée.',
+    contents=[
+      ('1×',) + CENTRALE,
+      ('1×', 'Caméra extérieure motorisée solaire W512MW', 'Panoramique depuis un seul point de fixation, rechargée par son panneau solaire. Aucun câble électrique à tirer.'),
+      ('1×',) + SIRENE,
+      ('4×', "Contacteurs d'ouverture WDS502Z", 'Portes et fenêtres. Remontée instantanée, confirmée par la centrale.', 'zig'),
+      ('3×', 'Détecteurs de vibration WVD502Z', "Baies vitrées et fenêtres : l'alarme part au premier choc, avant l'entrée.", 'zig'),
+      ('1×', 'Détecteur de mouvement WPS501', 'Double faisceau infrarouge Pet Immune : ignore les animaux de moins de 12 kg.'),
+      ('2×', 'Télécommandes 4 boutons WRC501', 'Armement, désarmement, mode nuit, et SOS par appui long de 3 secondes.'),
+      ('—',) + FIXATIONS,
+    ],
+    zig2=('Sept capteurs Zigbee dans la boîte',
+          "4 contacteurs WDS502Z et 3 détecteurs de vibration WVD502Z, appairés à la centrale depuis l'application."),
+    cam_ext='camera-w512mw-exterieure-rotative-1440p-avec-panneau-solaire', img1='w512mw-installation-maison',
+    feat_images="""  # Seul pack a camera exterieure sans camera interieure : feat_image_2 ne
+  # peut pas venir de la fiche IP506P comme ailleurs. Il vient de celle de la
+  # sirene solaire, qui illustre le deuxieme bloc.
+  assign cam_ext = all_products['%%CAM_EXT%%']
+  assign feat_image_1 = cam_ext.featured_image | default: hero_image
+  for img in cam_ext.images
+    if img.src contains '%%IMG1%%'
+      assign feat_image_1 = img
+    endif
+  endfor
+
+  assign sirene = all_products['sirene-exterieure-solaire-pour-alarme-daewoo-sa501']
+  assign feat_image_2 = sirene.featured_image | default: hero_image
+""",
+    features=[
+      FEAT_W512,
+      dict(img='feat_image_2', alt='Sirène extérieure solaire WOS501S fixée en façade',
+        eyebrow='DISSUASION EXTÉRIEURE', h2='Une sirène en façade, sans faire venir un électricien.',
+        text="La WOS501S se fixe en hauteur et se recharge à la lumière du jour : aucun câble à faire passer dans le mur, aucune prise à ajouter. Flash lumineux couplé à la sirène, pour que le voisinage soit alerté en même temps que vous.",
+        bullets=['Rechargée par la lumière du jour, aucune alimentation à prévoir',
+                 'Flash lumineux couplé à la sirène',
+                 'Alerte de sabotage si on tente de la décrocher']),
+      feat_app('la caméra'),
+    ],
+    band="Profitez de l'offre exclusive sur le pack Élite",
+    total_base="Pack Élite en offre exclusive. Ajoutez des accessoires ci-dessus pour compléter votre installation.",
+    specs_lead="Tout ce qu'il faut savoir sur cette offre exclusive.",
+    specs_cams='1 caméra extérieure motorisée solaire W512MW (panoramique, vision nocturne, audio bidirectionnel)&#10;Aucune caméra intérieure dans ce pack',
+    specs_sensors="4 contacteurs WDS502Z&#10;3 détecteurs de vibration WVD502Z&#10;1 détecteur de mouvement WPS501&#10;2 télécommandes WRC501",
+    final='Offre exclusive — Pack Élite PA501Z, caméra et sirène solaires',
+    ld="Offre exclusive sur le pack alarme maison sans fil Élite PA501Z : centrale multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 1 caméra extérieure motorisée solaire W512MW, 7 capteurs Zigbee (4 contacteurs WDS502Z et 3 détecteurs de vibration WVD502Z), 1 détecteur de mouvement WPS501 compatible animaux, 2 télécommandes WRC501 et une sirène extérieure solaire WOS501S. Sans abonnement obligatoire.",
+  ),
+  dict(
     key='starter', sku='PA501ZSTARTER', suffix='starterelite',
     handle='starter-pack-elite-daewoo',
     doc='Starter pack Élite PA501Z Wifi / GSM 4G+ Livrée avec\n  5 Accessoires" (299,90 €, SKU PA501ZSTARTER, templateSuffix "starterelite").\n\n  Seul pack de la gamme sans caméra ni sirène : la ligne "flux vidéo" de la\n  matrice, les deux blocs caméra et la question 2 de la FAQ sont remplacés,\n  et le renvoi latéral pointe vers le PA570 au lieu du Starter lui-même.',
