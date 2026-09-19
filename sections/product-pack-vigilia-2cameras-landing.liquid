@@ -53,10 +53,81 @@
 
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
-  assign feat_image_1 = gallery[1] | default: hero_image
-  assign feat_image_2 = gallery[2] | default: hero_image
-  assign feat_image_3 = gallery[3] | default: hero_image
-  assign feat_image_4 = gallery[4] | default: hero_image
+
+  # ──────────────────────────────────────────────────────────────────────
+  # Visuels des encarts de fonctionnalité.
+  #
+  # Choisis par nom de fichier, jamais par position dans la galerie :
+  # l'ordre des photos change en back-office et un index figé décale
+  # toutes les images d'un cran. C'est ce qui avait mis l'infographie 4G
+  # sous « Un système, pas juste des accessoires » et la présentation de
+  # la centrale sous « Dissuasion immédiate ».
+  #
+  # Les infographies transverses — Pourquoi_Vigilia, Avantages_Daewoo,
+  # Comparaison_Abonnement, Protection_GSM, Compatible_Alexa — ne sont
+  # jamais placées dans ces encarts : elles parlent de la marque, de
+  # l'abonnement et de la 4G, pas de la fonction décrite à côté. À défaut
+  # d'un visuel dédié on retombe sur une vraie photo du pack, jamais sur
+  # une infographie hors sujet.
+  # ──────────────────────────────────────────────────────────────────────
+  assign pv_transverses = 'Pourquoi_Vigilia|Avantages_Daewoo|Comparaison_Abonnement|Protection_GSM|Compatible_Alexa|Securite_a_Distance|Pilotage_distance|IP506|BANNIERE' | split: '|'
+
+  # Deuxième vraie photo du pack : le repli quand aucun visuel dédié
+  # n'existe pour un encart.
+  assign pv_photo_2 = hero_image
+  assign pv_rang = 0
+  for img in gallery
+    assign pv_est_transverse = false
+    for marq in pv_transverses
+      if img.src contains marq
+        assign pv_est_transverse = true
+      endif
+    endfor
+    unless pv_est_transverse
+      assign pv_rang = pv_rang | plus: 1
+      if pv_rang == 2
+        assign pv_photo_2 = img
+      endif
+    endunless
+  endfor
+
+  assign pv_img_detection = hero_image
+  assign pv_img_sirene = hero_image
+  assign pv_img_camera = pv_photo_2
+  assign pv_img_app = hero_image
+
+  # La photo produit de la caméra (IP506P) passe devant son infographie :
+  # à côté d'un paragraphe, une photo se lit, une infographie se subit.
+  assign pv_cam_photo = false
+  assign pv_cam_info = false
+  for img in gallery
+    if img.src contains 'Securite_a_Distance'
+      assign pv_img_detection = img
+    endif
+    if img.src contains 'wos305' or img.src contains 'WOS305'
+      assign pv_img_sirene = img
+    endif
+    if img.src contains 'IP506P'
+      assign pv_cam_photo = img
+    elsif img.src contains 'IP506'
+      assign pv_cam_info = img
+    endif
+    if img.src contains 'Pilotage_distance'
+      assign pv_img_app = img
+    endif
+  endfor
+  if pv_cam_info
+    assign pv_img_camera = pv_cam_info
+  endif
+  if pv_cam_photo
+    assign pv_img_camera = pv_cam_photo
+  endif
+
+  # Les numéros d'encart sont propres à cette page, le sens est partagé.
+  assign feat_image_1 = pv_img_detection
+  assign feat_image_2 = pv_img_sirene
+  assign feat_image_3 = pv_img_camera
+  assign feat_image_4 = pv_img_app
 
   # Cross-sell card: the Starter Pack Vigilia, looked up by handle for a
   # real photo + live price rather than a hardcoded description.
