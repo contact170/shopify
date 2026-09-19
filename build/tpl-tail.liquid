@@ -380,6 +380,49 @@
           openModal(almaModal);
         });
       }
+
+      /* Filet de securite pour le widget Judge.me.
+         Leur HTML pre-rendu s'ouvre sur un <style> qui le masque, que leur
+         script est cense retirer. Si ce script n'arrive jamais — bloque,
+         differe par un optimiseur de performance, absent en apercu — les avis
+         restent invisibles sans que rien ne le signale. Passe ce delai on
+         affiche donc nous-memes le contenu deja present : les trois avis
+         rendus cote serveur valent mieux qu'un blanc. La pagination, elle,
+         reste inerte tant que leur script n'a pas pris la main, on la masque
+         dans ce cas. */
+      var jdgmHost = document.getElementById({{ reviews_anchor | json }});
+      if (jdgmHost) {
+        window.setTimeout(function () {
+          var widg = jdgmHost.querySelector('.jdgm-rev-widg');
+          if (!widg || widg.offsetParent !== null) return;
+
+          var hiders = jdgmHost.querySelectorAll('.jdgm-temp-hiding-style');
+          for (var h = 0; h < hiders.length; h++) {
+            if (hiders[h].parentNode) hiders[h].parentNode.removeChild(hiders[h]);
+          }
+          widg.style.display = 'block';
+
+          /* Leur script remplit aussi les dates depuis data-content et retire
+             le spinner ; sans lui chaque avis afficherait une roue qui tourne
+             indefiniment. */
+          var stamps = jdgmHost.querySelectorAll('.jdgm-rev__timestamp');
+          for (var t = 0; t < stamps.length; t++) {
+            var raw = stamps[t].getAttribute('datetime');
+            var d = raw ? new Date(raw) : null;
+            stamps[t].classList.remove('jdgm-spinner');
+            if (d && !isNaN(d.getTime())) {
+              stamps[t].textContent = d.toLocaleDateString('fr-FR', {
+                day: 'numeric', month: 'long', year: 'numeric'
+              });
+            }
+          }
+
+          var pager = jdgmHost.querySelector('.jdgm-paginate');
+          if (pager) pager.style.display = 'none';
+          var spinWrap = jdgmHost.querySelector('.jdgm-rev-widg__paginate-spinner-wrapper');
+          if (spinWrap) spinWrap.style.display = 'none';
+        }, 3500);
+      }
     })();
   </script>
 </div>

@@ -572,8 +572,22 @@
           </p>
           <p class="pe-reviews__note">Avis portant sur la centrale Élite PA501Z et les packs qui l'embarquent.</p>
         </div>
+        {%- comment -%}
+          Le metafield judgeme.widget contient le widget deja rendu, mais il
+          s'ouvre sur un <style> qui met .jdgm-rev-widg en display:none. C'est
+          le script de Judge.me qui retire ce style — et il ne traite que les
+          widgets places dans un conteneur .jdgm-widget portant data-id. Sans
+          ce conteneur le HTML est bien dans la page, mais invisible. D'ou le
+          wrapper ci-dessous, et le filet de securite dans pe-judgeme-fallback.
+        {%- endcomment -%}
         <div class="pe-judgeme pv-reveal">
-          {{ product.metafields.judgeme.widget }}
+          <div
+            class="jdgm-widget jdgm-review-widget"
+            data-id="{{ product.id }}"
+            data-product-title="{{ product.title | escape }}"
+          >
+            {{ product.metafields.judgeme.widget }}
+          </div>
         </div>
       </div>
     </section>

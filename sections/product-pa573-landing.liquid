@@ -811,9 +811,19 @@
        ne sont pas renseignées dans l'admin Judge.me. Les avis eux-mêmes sont
        en français, ce sont les clients qui les écrivent. */
     .pe-judgeme{max-width:860px;margin:34px auto 0;}
-    .pe-judgeme .jdgm-rev-widg__title{display:none;}
+    /* Le titre "Customer Reviews" et le resume "Based on 32 reviews" sont en
+       anglais et repetent l'en-tete francais juste au-dessus : on les retire
+       plutot que de laisser deux fois la meme note, dont une en anglais. */
+    .pe-judgeme .jdgm-rev-widg__title,
+    .pe-judgeme .jdgm-rev-widg__summary{display:none;}
     .pv .pe-judgeme{font-size:14.5px;}
     .pe-judgeme .jdgm-star{color:#f5a623;}
+    /* L'histogramme arrive masque et n'est revele que par leur script ; sans
+       lui il resterait un bloc vide. Il ne porte que des chiffres, donc rien
+       a traduire. */
+    .pe-judgeme .jdgm-histogram{margin:0 auto 26px;max-width:420px;}
+    .pe-judgeme .jdgm-rev{text-align:left;}
+    .pe-judgeme .jdgm-rev__title{display:block;margin-bottom:4px;}
     .pv .pe-reviews__note{
       font-size:13.5px;color:var(--pv-gray);margin-top:10px;
       max-width:560px;margin-left:auto;margin-right:auto;
@@ -1651,8 +1661,22 @@
           </p>
           <p class="pe-reviews__note">Avis portant sur la centrale Élite PA501Z et les packs qui l'embarquent.</p>
         </div>
+        {%- comment -%}
+          Le metafield judgeme.widget contient le widget deja rendu, mais il
+          s'ouvre sur un <style> qui met .jdgm-rev-widg en display:none. C'est
+          le script de Judge.me qui retire ce style — et il ne traite que les
+          widgets places dans un conteneur .jdgm-widget portant data-id. Sans
+          ce conteneur le HTML est bien dans la page, mais invisible. D'ou le
+          wrapper ci-dessous, et le filet de securite dans pe-judgeme-fallback.
+        {%- endcomment -%}
         <div class="pe-judgeme pv-reveal">
-          {{ product.metafields.judgeme.widget }}
+          <div
+            class="jdgm-widget jdgm-review-widget"
+            data-id="{{ product.id }}"
+            data-product-title="{{ product.title | escape }}"
+          >
+            {{ product.metafields.judgeme.widget }}
+          </div>
         </div>
       </div>
     </section>
@@ -2207,6 +2231,49 @@
           updateAlmaAmounts();
           openModal(almaModal);
         });
+      }
+
+      /* Filet de securite pour le widget Judge.me.
+         Leur HTML pre-rendu s'ouvre sur un <style> qui le masque, que leur
+         script est cense retirer. Si ce script n'arrive jamais — bloque,
+         differe par un optimiseur de performance, absent en apercu — les avis
+         restent invisibles sans que rien ne le signale. Passe ce delai on
+         affiche donc nous-memes le contenu deja present : les trois avis
+         rendus cote serveur valent mieux qu'un blanc. La pagination, elle,
+         reste inerte tant que leur script n'a pas pris la main, on la masque
+         dans ce cas. */
+      var jdgmHost = document.getElementById({{ reviews_anchor | json }});
+      if (jdgmHost) {
+        window.setTimeout(function () {
+          var widg = jdgmHost.querySelector('.jdgm-rev-widg');
+          if (!widg || widg.offsetParent !== null) return;
+
+          var hiders = jdgmHost.querySelectorAll('.jdgm-temp-hiding-style');
+          for (var h = 0; h < hiders.length; h++) {
+            if (hiders[h].parentNode) hiders[h].parentNode.removeChild(hiders[h]);
+          }
+          widg.style.display = 'block';
+
+          /* Leur script remplit aussi les dates depuis data-content et retire
+             le spinner ; sans lui chaque avis afficherait une roue qui tourne
+             indefiniment. */
+          var stamps = jdgmHost.querySelectorAll('.jdgm-rev__timestamp');
+          for (var t = 0; t < stamps.length; t++) {
+            var raw = stamps[t].getAttribute('datetime');
+            var d = raw ? new Date(raw) : null;
+            stamps[t].classList.remove('jdgm-spinner');
+            if (d && !isNaN(d.getTime())) {
+              stamps[t].textContent = d.toLocaleDateString('fr-FR', {
+                day: 'numeric', month: 'long', year: 'numeric'
+              });
+            }
+          }
+
+          var pager = jdgmHost.querySelector('.jdgm-paginate');
+          if (pager) pager.style.display = 'none';
+          var spinWrap = jdgmHost.querySelector('.jdgm-rev-widg__paginate-spinner-wrapper');
+          if (spinWrap) spinWrap.style.display = 'none';
+        }, 3500);
       }
     })();
   </script>
