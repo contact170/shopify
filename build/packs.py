@@ -277,4 +277,85 @@ PACKS = [
     final='Offre exclusive — Pack Élite PA501Z et double caméra solaire',
     ld="Offre exclusive sur le pack alarme maison sans fil Élite PA501Z : centrale multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 2 caméras extérieures motorisées solaires W512MW, 1 caméra intérieure IP506P, 8 capteurs Zigbee, un détecteur de mouvement et une sirène extérieure solaire. Sans abonnement obligatoire.",
   ),
+  dict(
+    key='starter', sku='PA501ZSTARTER', suffix='starterelite',
+    handle='starter-pack-elite-daewoo',
+    doc='Starter pack Élite PA501Z Wifi / GSM 4G+ Livrée avec\n  5 Accessoires" (299,90 €, SKU PA501ZSTARTER, templateSuffix "starterelite").\n\n  Seul pack de la gamme sans caméra ni sirène : la ligne "flux vidéo" de la\n  matrice, les deux blocs caméra et la question 2 de la FAQ sont remplacés,\n  et le renvoi latéral pointe vers le PA570 au lieu du Starter lui-même.',
+    sticky='Starter Pack Élite', schema='Starter Pack Élite', js_name='Starter Pack Élite',
+    h1='Starter Pack Élite PA501Z, la centrale et de quoi commencer',
+    tagline='La même centrale que les packs complets, avec cinq accessoires pour démarrer.',
+    sub="Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — avec\n        deux contacteurs d'ouverture Zigbee, un détecteur de mouvement compatible animaux\n        et deux télécommandes. Tout le reste s'ajoute quand vous le décidez.",
+    summary='Le Starter Pack comprend la centrale Élite et cinq accessoires, soit six éléments au total.',
+    chips=CHIPS_BASE + [('', '5 accessoires'), ("", "Jusqu'à 200 accessoires")],
+    contents_lead="L'essentiel pour protéger une entrée et une pièce de passage, sur la centrale la plus complète de la gamme.",
+    contents=[
+      ('1×',) + CENTRALE,
+      ('2×', "Contacteurs d'ouverture WDS502Z", 'Porte d\'entrée et fenêtre. Remontée instantanée, confirmée par la centrale.', 'zig'),
+      ('1×', 'Détecteur de mouvement WPS501', 'Double faisceau infrarouge Pet Immune : ignore les animaux de moins de 12 kg.'),
+      ('2×', 'Télécommandes 4 boutons WRC501', 'Armement, désarmement, mode nuit, et SOS par appui long de 3 secondes.'),
+      ('—',) + FIXATIONS,
+    ],
+    zig2=('Deux capteurs Zigbee dans la boîte',
+          "Les 2 contacteurs WDS502Z sont appairés depuis l'application. Le reste de la gamme Zigbee s'ajoute ensuite, sans rien remplacer."),
+    cam_ext='', img1='',
+    feat_images="""  # Ce pack n'embarque aucune caméra : les visuels des blocs viennent de la
+  # centrale elle-même, prise sur sa propre fiche pour disposer des vues de
+  # détail que la galerie du pack ne porte pas toujours.
+  assign pa501 = all_products['strong-centrale-dalarme-strong-elite']
+  assign feat_image_1 = pa501.featured_image | default: hero_image
+  for img in pa501.images
+    if img.src contains 'elite-lifestyle'
+      assign feat_image_1 = img
+    endif
+  endfor
+
+  assign feat_image_2 = pa501.featured_image | default: hero_image
+  for img in pa501.images
+    if img.src contains 'elite-vue-arriere'
+      assign feat_image_2 = img
+    endif
+  endfor
+""",
+    matrix_cam_row='',
+    matrix_lead='Trois situations, quatre fonctions. Sans rien enjoliver.',
+    matrix_foot_cam="<strong>Et les caméras, si vous en ajoutez ?</strong> Elles passent uniquement par le Wi-Fi. Aucune carte SIM ne rend leur flux vidéo accessible pendant une coupure : c'est vrai sur l'Élite comme sur le reste de la gamme.",
+    faq2=('Puis-je ajouter des caméras à ce pack ?',
+          "Oui. La centrale PA501Z pilote la caméra intérieure IP506P et les caméras extérieures W503 et W512MW, qui s'ajoutent quand vous le souhaitez. À savoir avant d'acheter : les caméras passent uniquement par le Wi-Fi. Si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée — c'est vrai sur toute la gamme."),
+    xsell=dict(
+      handle='daewoo-pack-alarme-maison-sans-fil-elite-zenguard-centrale-pa501z-kit-comprenant-13-accessoires-1-camera-autonome-exterieure-1-interieure',
+      lead='Comparez les packs Élite, ou passez directement à un pack avec caméras.',
+      alt='Le Pack Élite PA570 ZenGuard',
+      title='Besoin de caméras ? Le Pack PA570',
+      text='La même centrale, avec 13 accessoires, une caméra extérieure autonome et une caméra intérieure.',
+      btn='Voir le Pack PA570'),
+    features=[
+      dict(img='feat_image_1', alt="Centrale d'alarme Élite PA501Z installée dans une maison",
+        eyebrow='LA CENTRALE', h2="C'est la pièce qu'on n'achète qu'une fois.",
+        text="Le Starter Pack embarque exactement la même centrale que les packs à 500 ou 800 €. Les capteurs, les caméras et les sirènes s'ajoutent ensuite, un par un, sans jamais racheter le cerveau du système.",
+        bullets=['Identique à celle des packs PA570 à PA574',
+                 "Jusqu'à 200 accessoires ajoutables",
+                 'Compatible gamme SA501, hors WDS501, WVD501 et WKE501']),
+      dict(img='feat_image_2', alt='Vue arrière de la centrale PA501Z, port Ethernet et emplacement carte SIM',
+        eyebrow='CONNECTIQUE', h2='Une prise réseau, et un emplacement pour la SIM.',
+        text="Au dos du boîtier : un port Ethernet RJ45 pour une liaison câblée insensible au Wi-Fi saturé du voisinage, et un emplacement de carte SIM pour la 4G+ en secours. La carte reste optionnelle.",
+        bullets=['Port RJ45 prioritaire, Wi-Fi 2,4 GHz en relais',
+                 'Emplacement SIM pour la 4G+ de secours',
+                 'Batterie de secours 10 h intégrée']),
+      dict(img='feat_image_3', src=APP_SHOT, w=1254, h=1254,
+        alt='Application mobile Daewoo Home Connect',
+        eyebrow='UNE SEULE APPLICATION', h2='Un système, pas juste des accessoires.',
+        text="Daewoo Home Connect pilote l'ensemble : armement et désarmement à distance, alertes, et la vidéo des caméras que vous ajouterez. Gratuite, sans abonnement, sur iOS et Android.",
+        bullets=['Mode Maison : ouvertures actives, mouvement désactivé',
+                 "Temporisation d'entrée et de sortie réglable",
+                 "Alerte immédiate en cas d'arrachement d'un périphérique"]),
+    ],
+    band='Commencez avec le Starter Pack Élite',
+    total_base='Starter Pack Élite seul. Ajoutez des accessoires ci-dessus pour couvrir plus de pièces.',
+    specs_lead="Tout ce qu'il faut savoir sur le Starter Pack Élite.",
+    specs_power='Centrale : secteur + batterie de secours 10 h&#10;Sirène intégrée à la centrale',
+    specs_cams="Aucune caméra dans ce pack&#10;Compatibles en option : IP506P (intérieure), W503 et W512MW (extérieures)",
+    specs_sensors="2 contacteurs d'ouverture WDS502Z&#10;1 détecteur de mouvement WPS501&#10;2 télécommandes 4 boutons WRC501",
+    final='Starter Pack Élite PA501Z — la centrale et cinq accessoires',
+    ld="Starter Pack alarme maison sans fil Élite PA501Z : centrale multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 2 contacteurs d'ouverture Zigbee WDS502Z, 1 détecteur de mouvement WPS501 compatible animaux et 2 télécommandes WRC501. Évolutif jusqu'à 200 accessoires, sans abonnement obligatoire.",
+  ),
 ]

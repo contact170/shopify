@@ -59,36 +59,16 @@
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
 
-  # Feature photography comes from the camera products themselves, not from
-  # this pack's own gallery: the packs carry infographic slides
-  # ("W503_Infographie", "IP506_Infographie") and a filename match there put
-  # a diagram on the block instead of a photo. Each camera product's gallery
-  # is then searched for the shot that illustrates this block's claim,
-  # falling back to its main photo if the merchant renames or removes it.
-  assign cam_ext = all_products['%%CAM_EXT%%']
-  assign feat_image_1 = cam_ext.featured_image | default: hero_image
-  for img in cam_ext.images
-    if img.src contains '%%IMG1%%'
-      assign feat_image_1 = img
-    endif
-  endfor
-
-  assign cam_int = all_products['camera-interieure-rotative-ip506p']
-  assign feat_image_2 = cam_int.featured_image | default: hero_image
-  for img in cam_int.images
-    if img.src contains 'ip506p-mode-vie-privee'
-      assign feat_image_2 = img
-    endif
-  endfor
-
+%%FEAT_IMAGES%%
   # Cross-sell: the "compare the range" card is illustrated with the
   # centrale itself. It was the only card of the pair without a photo.
   assign centrale = all_products['strong-centrale-dalarme-strong-elite']
   assign centrale_image = centrale.featured_image
 
-  # Cross-sell: the Starter Pack Élite, looked up by handle for a real
-  # photo and a live price rather than a hardcoded figure.
-  assign starter_pack = all_products['starter-pack-elite-daewoo']
+  # Renvoi latéral : le pack voisin, cherché par handle pour avoir sa vraie
+  # photo et son prix du jour plutôt qu'un chiffre figé. Les packs renvoient
+  # vers le Starter, le Starter renvoie vers le premier pack avec caméras.
+  assign starter_pack = all_products['%%XSELL_HANDLE%%']
   assign starter_pack_image = starter_pack.featured_image
   assign starter_pack_price = starter_pack.price_min
 
@@ -107,5 +87,19 @@
   # accessoires proposés qui soit en radio et non en Zigbee.
   assign acc_handles = 'amplificateur-dondes-zigbee-pour-centrale-pa501z,contacteur-de-porte-zigbee-wds502z-compatible-avec-la-centrale-pa501z,detecteur-de-vibration-zigbee-wvd502z-compatible-avec-la-centrale-pa501z,detecteur-de-fumee-wsd501-pour-alarme-daewoo-sa501' | split: ','
 
+  # Note et nombre d'avis, lus en direct depuis les métachamps que Judge.me
+  # synchronise sur chaque produit. Les avis de la gamme Élite sont rattachés
+  # aux six packs comme au Starter Pack, d'où la même note partout — rien
+  # n'est recopié dans la page : un nouvel avis s'y reflète tout seul.
+  assign rating_mf = product.metafields.reviews.rating
+  assign rating_count_mf = product.metafields.reviews.rating_count
   assign has_rating = false
+  if rating_mf != blank and rating_count_mf.value > 0
+    assign has_rating = true
+    assign rating_value = rating_mf.value.rating
+    assign rating_max = rating_mf.value.scale_max
+    assign rating_count = rating_count_mf.value
+    assign rating_pct = rating_value | times: 100.0 | divided_by: rating_max
+  endif
+  assign reviews_anchor = 'PEReviews-' | append: section.id
 -%}

@@ -50,7 +50,7 @@
           <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
           <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
         </div>
-        {%- render 'pv-trust-row', has_rating: has_rating -%}
+        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
       </div>
       <div class="pe-hero__chips">%%CHIPS%%</div>
       <p class="pv-hero__sub">%%SUB%%</p>

@@ -280,3 +280,21 @@
       margin-top:34px;padding-top:30px;border-top:1px solid var(--pe-bronze-line);
       font-size:clamp(16px,2vw,19px);
     }
+
+    /* ---- avis Judge.me ----
+       Le widget est produit par Judge.me ; on ne fait que l'encadrer à la
+       largeur de nos sections. Son titre "Customer Reviews" est masqué, le
+       nôtre le précède déjà en français.
+
+       À savoir : le reste de son habillage ("Based on 32 reviews", "Write a
+       review", "Verified buyer") reste en anglais tant que les traductions
+       ne sont pas renseignées dans l'admin Judge.me. Les avis eux-mêmes sont
+       en français, ce sont les clients qui les écrivent. */
+    .pe-judgeme{max-width:860px;margin:34px auto 0;}
+    .pe-judgeme .jdgm-rev-widg__title{display:none;}
+    .pv .pe-judgeme{font-size:14.5px;}
+    .pe-judgeme .jdgm-star{color:#f5a623;}
+    .pv .pe-reviews__note{
+      font-size:13.5px;color:var(--pv-gray);margin-top:10px;
+      max-width:560px;margin-left:auto;margin-right:auto;
+    }

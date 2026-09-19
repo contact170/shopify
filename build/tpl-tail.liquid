@@ -33,6 +33,17 @@
     "mpn": {{ variant.sku | json }},
     "category": "Systèmes d'alarme sans fil",
     "brand": { "@type": "Brand", "name": "Daewoo Security" },
+    {%- comment -%}
+      La note vient des métachamps alimentés par Judge.me, où les avis sont
+      réellement rattachés à ce produit. Elle n'est émise que si le produit
+      en a : pas de note inventée sur une fiche sans avis.
+    {%- endcomment -%}
+    {%- if has_rating %}"aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ rating_value | json }},
+      "bestRating": {{ rating_max | json }},
+      "reviewCount": {{ rating_count | json }}
+    },{% endif %}
     {%- if gallery.size > 0 %}"image": [{{ ld_images | strip_newlines | strip }}],{% elsif hero_image %}"image": {{ hero_image | image_url: width: 1600 | prepend: 'https:' | json }},{% endif %}
     "offers": {
       "@type": "Offer",
@@ -78,8 +89,8 @@
 
   {%- capture faq_q1 -%}La carte SIM est-elle obligatoire ?{%- endcapture -%}
   {%- capture faq_a1 -%}Non. Sans carte SIM, le pack fonctionne normalement tant que votre box internet est en service : détection, sirènes, notifications et caméras. La carte SIM ajoute une voie de secours qui prend le relais si le Wi-Fi n'est plus disponible.{%- endcapture -%}
-  {%- capture faq_q2 -%}Puis-je voir mes caméras pendant une coupure internet ?{%- endcapture -%}
-  {%- capture faq_a2 -%}Non. Les caméras fonctionnent uniquement en Wi-Fi : si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée. L'application reste utilisable pour armer, désarmer et consulter l'historique, et les alertes d'intrusion continuent d'arriver par notification, SMS et appel.{%- endcapture -%}
+  {%- capture faq_q2 -%}%%FAQ2_Q_LD%%{%- endcapture -%}
+  {%- capture faq_a2 -%}%%FAQ2_A_LD%%{%- endcapture -%}
   {%- capture faq_q3 -%}Quelle est la différence avec une carte SIM sur une alarme Vigilia ou Touch ?{%- endcapture -%}
   {%- capture faq_a3 -%}Sur les gammes Vigilia et Touch, la carte SIM ne sert qu'aux alertes par SMS et aux appels. Sur la centrale Élite PA501Z, elle porte en plus les données mobiles : l'application Daewoo Home Connect reste utilisable pendant la coupure.{%- endcapture -%}
   {%- capture faq_q4 -%}Mes anciens accessoires SA501 sont-ils compatibles ?{%- endcapture -%}

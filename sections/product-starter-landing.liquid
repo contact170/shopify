@@ -1,6 +1,10 @@
 {%- doc -%}
-  Bespoke, conversion-focused product page for "Pack Alarme Horizon+ PA572"
-  (699,90 €, SKU PA572, templateSuffix "pa572")
+  Bespoke, conversion-focused product page for "Starter pack Élite PA501Z Wifi / GSM 4G+ Livrée avec
+  5 Accessoires" (299,90 €, SKU PA501ZSTARTER, templateSuffix "starterelite").
+
+  Seul pack de la gamme sans caméra ni sirène : la ligne "flux vidéo" de la
+  matrice, les deux blocs caméra et la question 2 de la FAQ sont remplacés,
+  et le renvoi latéral pointe vers le PA570 au lieu du Starter lui-même.
 
   Structural fork of sections/product-vig503-landing.liquid — same
   Apple-style rhythm, same shared hidden cart form + pv-atc-button /
@@ -60,23 +64,20 @@
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
 
-  # Les photos des blocs viennent des fiches des caméras, pas de la galerie
-  # du pack : celle-ci ne porte que des infographies ("W503_Infographie",
-  # "IP506_Infographie") qu'une recherche par nom de fichier plaçait à la
-  # place d'une photo. On cherche dans la galerie de la caméra la vue qui
-  # illustre la promesse du bloc, avec repli sur sa photo principale.
-  assign cam_ext = all_products['camera-daewoo-w503-autonome-haute-resolution-wifi-1080p']
-  assign feat_image_1 = cam_ext.featured_image | default: hero_image
-  for img in cam_ext.images
-    if img.src contains 'w503-sans-fil'
+  # Ce pack n'embarque aucune caméra : les visuels des blocs viennent de la
+  # centrale elle-même, prise sur sa propre fiche pour disposer des vues de
+  # détail que la galerie du pack ne porte pas toujours.
+  assign pa501 = all_products['strong-centrale-dalarme-strong-elite']
+  assign feat_image_1 = pa501.featured_image | default: hero_image
+  for img in pa501.images
+    if img.src contains 'elite-lifestyle'
       assign feat_image_1 = img
     endif
   endfor
 
-  assign cam_int = all_products['camera-interieure-rotative-ip506p']
-  assign feat_image_2 = cam_int.featured_image | default: hero_image
-  for img in cam_int.images
-    if img.src contains 'ip506p-mode-vie-privee'
+  assign feat_image_2 = pa501.featured_image | default: hero_image
+  for img in pa501.images
+    if img.src contains 'elite-vue-arriere'
       assign feat_image_2 = img
     endif
   endfor
@@ -89,7 +90,7 @@
   # Renvoi latéral : le pack voisin, cherché par handle pour avoir sa vraie
   # photo et son prix du jour plutôt qu'un chiffre figé. Les packs renvoient
   # vers le Starter, le Starter renvoie vers le premier pack avec caméras.
-  assign starter_pack = all_products['starter-pack-elite-daewoo']
+  assign starter_pack = all_products['daewoo-pack-alarme-maison-sans-fil-elite-zenguard-centrale-pa501z-kit-comprenant-13-accessoires-1-camera-autonome-exterieure-1-interieure']
   assign starter_pack_image = starter_pack.featured_image
   assign starter_pack_price = starter_pack.price_min
 
@@ -846,7 +847,7 @@
         {%- endif -%}
       </div>
       <div class="pv-sticky__text">
-        <div class="pv-sticky__name">Pack Élite PA572</div>
+        <div class="pv-sticky__name">Starter Pack Élite</div>
       </div>
     </div>
     {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
@@ -871,10 +872,10 @@
   {%- endcomment -%}
   <section class="pv-hero pe-hero">
     <div class="pv-wrap">
-      <span class="pv-eyebrow">Daewoo Security · Pack Élite <span class="pv-ref">{{ variant.sku | default: 'PA572' }}</span></span>
-      <h1>Pack alarme Élite PA572 Horizon+, centrale PA501Z</h1>
-      <p class="pv-hero__tagline">Kit XXL : treize capteurs Zigbee et deux caméras extérieures solaires.</p>
-      <p class="pv-hero__summary">Le PA572 comprend une centrale Élite, trois caméras, treize capteurs Zigbee, un clavier et deux télécommandes.</p>
+      <span class="pv-eyebrow">Daewoo Security · Pack Élite <span class="pv-ref">{{ variant.sku | default: 'PA501ZSTARTER' }}</span></span>
+      <h1>Starter Pack Élite PA501Z, la centrale et de quoi commencer</h1>
+      <p class="pv-hero__tagline">La même centrale que les packs complets, avec cinq accessoires pour démarrer.</p>
+      <p class="pv-hero__summary">Le Starter Pack comprend la centrale Élite et cinq accessoires, soit six éléments au total.</p>
       {%- if hero_image -%}
         <div class="pv-hero__media pv-reveal">
           {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
@@ -911,12 +912,12 @@
         <span class="pe-chip pe-chip--eth">Port RJ45</span>
         <span class="pe-chip pe-chip--4g">4G+ données</span>
         <span class="pe-chip">Batterie 10&nbsp;h</span>
-        <span class="pe-chip">2 caméras solaires</span>
-        <span class="pe-chip">13 capteurs Zigbee</span>
+        <span class="pe-chip">5 accessoires</span>
+        <span class="pe-chip">Jusqu'à 200 accessoires</span>
       </div>
       <p class="pv-hero__sub">Centrale PA501Z multiprotocole — Ethernet, Wi-Fi, 4G+ et passerelle Zigbee 3.0 — avec
-        deux caméras extérieures et leurs panneaux solaires, une caméra intérieure motorisée,
-        treize capteurs Zigbee, un clavier déporté et une sirène extérieure solaire.</p>
+        deux contacteurs d'ouverture Zigbee, un détecteur de mouvement compatible animaux
+        et deux télécommandes. Tout le reste s'ajoute quand vous le décidez.</p>
     </div>
   </section>
 
@@ -948,7 +949,7 @@
     <div class="pv-wrap">
       <div class="pv-contents__head pv-reveal">
         <h2>Tout ce qu'il faut, dans une seule boîte</h2>
-        <p>Un kit XXL, pensé pour les grandes maisons et les terrains avec plusieurs accès.</p>
+        <p>L'essentiel pour protéger une entrée et une pièce de passage, sur la centrale la plus complète de la gamme.</p>
       </div>
       <div class="pv-contents__grid pv-reveal">
         <div class="pv-contents__item">
@@ -961,44 +962,8 @@
         <div class="pv-contents__item">
           <span class="pv-contents__qty">2×</span>
           <div>
-            <div class="pv-contents__name">Caméras extérieures autonomes W503</div>
-            <div class="pv-contents__desc">Full HD, vision nocturne couleur, audio bidirectionnel, IP65.</div>
-          </div>
-        </div>
-        <div class="pv-contents__item">
-          <span class="pv-contents__qty">2×</span>
-          <div>
-            <div class="pv-contents__name">Panneaux solaires SPW503</div>
-            <div class="pv-contents__desc">Alimentation continue des caméras W503, sans câble à tirer.</div>
-          </div>
-        </div>
-        <div class="pv-contents__item">
-          <span class="pv-contents__qty">1×</span>
-          <div>
-            <div class="pv-contents__name">Caméra intérieure motorisée IP506P</div>
-            <div class="pv-contents__desc">Rotation 360°, auto-tracking, vision nocturne. Objectif qui se rétracte physiquement en mode Vie Privée. Alimentation secteur.</div>
-          </div>
-        </div>
-        <div class="pv-contents__item">
-          <span class="pv-contents__qty">1×</span>
-          <div>
-            <div class="pv-contents__name">Sirène extérieure solaire WOS501S</div>
-            <div class="pv-contents__desc">Flash lumineux et sirène en façade, rechargée par la lumière du jour. Aucune prise nécessaire.</div>
-          </div>
-        </div>
-        <div class="pv-contents__item">
-          <span class="pv-contents__qty">7×</span>
-          <div>
             <div class="pv-contents__name">Contacteurs d'ouverture WDS502Z</div>
-            <div class="pv-contents__desc">Portes et fenêtres. Remontée instantanée, confirmée par la centrale.</div>
-            <span class="pe-zigtag">Zigbee 3.0</span>
-          </div>
-        </div>
-        <div class="pv-contents__item">
-          <span class="pv-contents__qty">6×</span>
-          <div>
-            <div class="pv-contents__name">Détecteurs de vibration WVD502Z</div>
-            <div class="pv-contents__desc">Baies vitrées et fenêtres : l'alarme part au premier choc, avant l'entrée.</div>
+            <div class="pv-contents__desc">Porte d'entrée et fenêtre. Remontée instantanée, confirmée par la centrale.</div>
             <span class="pe-zigtag">Zigbee 3.0</span>
           </div>
         </div>
@@ -1007,14 +972,6 @@
           <div>
             <div class="pv-contents__name">Détecteur de mouvement WPS501</div>
             <div class="pv-contents__desc">Double faisceau infrarouge Pet Immune : ignore les animaux de moins de 12 kg.</div>
-          </div>
-        </div>
-        <div class="pv-contents__item">
-          <span class="pv-contents__qty">1×</span>
-          <div>
-            <div class="pv-contents__name">Clavier déporté sans fil WKE502Z</div>
-            <div class="pv-contents__desc">Armement et désarmement par code ou badge, sans passer par le téléphone.</div>
-            <span class="pe-zigtag">Zigbee 3.0</span>
           </div>
         </div>
         <div class="pv-contents__item">
@@ -1130,12 +1087,12 @@
       <div class="pv-contents__head pv-reveal">
         <span class="pv-eyebrow pe-eyebrow--amber">Continuité de service</span>
         <h2>Ce qui continue de fonctionner, quoi qu'il arrive</h2>
-        <p>Trois situations, cinq fonctions. Sans rien enjoliver.</p>
+        <p>Trois situations, quatre fonctions. Sans rien enjoliver.</p>
       </div>
 
       <div class="pe-matrix pv-reveal">
         <table>
-          <caption class="pv-visually-hidden">Fonctionnement du pack Élite {{ variant.sku | default: 'PA572' }} selon la situation</caption>
+          <caption class="pv-visually-hidden">Fonctionnement du pack Élite {{ variant.sku | default: 'PA501ZSTARTER' }} selon la situation</caption>
           <thead>
             <tr>
               <th scope="col">Fonction</th>
@@ -1163,12 +1120,7 @@
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Armer, désarmer, consulter l'historique</span></span></td>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Pendant les 10&nbsp;h d'autonomie</span></span></td>
             </tr>
-            <tr>
-              <th scope="row">Flux vidéo des caméras</th>
-              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
-              <td><span class="pe-state pe-state--ko"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Non<span class="pe-state__note">Les caméras passent uniquement par le Wi-Fi</span></span></td>
-              <td><span class="pe-state pe-state--ko"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Non<span class="pe-state__note">Wi-Fi coupé, et la caméra intérieure est sur secteur</span></span></td>
-            </tr>
+
             <tr>
               <th scope="row">Liaison avec les capteurs Zigbee</th>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
@@ -1181,7 +1133,7 @@
 
       <div class="pe-matrix__foot pv-reveal">
         <p><strong>Sans carte SIM.</strong> En cas de coupure de la box ou du courant, la détection et les sirènes fonctionnent toujours — mais plus aucune alerte ne sort du logement, et l'application devient injoignable jusqu'au retour d'internet.</p>
-        <p><strong>Les caméras, dans tous les cas.</strong> Elles fonctionnent uniquement en Wi-Fi. Aucune carte SIM ne rend le flux vidéo accessible pendant une coupure : c'est vrai sur l'Élite comme sur le reste de la gamme.</p>
+        <p><strong>Et les caméras, si vous en ajoutez ?</strong> Elles passent uniquement par le Wi-Fi. Aucune carte SIM ne rend leur flux vidéo accessible pendant une coupure : c'est vrai sur l'Élite comme sur le reste de la gamme.</p>
       </div>
     </div>
   </section>
@@ -1306,7 +1258,7 @@
   {%- comment -%} Mid-page CTA band {%- endcomment -%}
   <div class="pv-wrap">
     <div class="pv-band pv-reveal">
-      <h2>Équipez votre maison avec le pack Élite PA572</h2>
+      <h2>Commencez avec le Starter Pack Élite</h2>
       <p>Livraison rapide, garantie 2 ans, installation sans technicien et sans abonnement obligatoire.</p>
       {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
       {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
@@ -1347,8 +1299,8 @@
           <span class="pe-zig3__ic" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
           </span>
-          <h3>Quatorze équipements Zigbee dans la boîte</h3>
-          <p>7 contacteurs WDS502Z, 6 détecteurs de vibration WVD502Z et le clavier WKE502Z, appairés à la centrale depuis l'application.</p>
+          <h3>Deux capteurs Zigbee dans la boîte</h3>
+          <p>Les 2 contacteurs WDS502Z sont appairés depuis l'application. Le reste de la gamme Zigbee s'ajoute ensuite, sans rien remplacer.</p>
         </div>
         <div class="pe-zig3__card">
           <span class="pe-zig3__ic" aria-hidden="true">
@@ -1470,7 +1422,7 @@
         <div>
           <div class="pe-total__k">Total de votre configuration</div>
           <div class="pe-total__v"><span class="pv-price-amount">{{ variant.price | money }}</span></div>
-          <p class="pe-total__d" data-pe-total-detail>Pack Élite PA572 seul. Ajoutez des accessoires ci-dessus pour compléter votre installation.</p>
+          <p class="pe-total__d" data-pe-total-detail>Starter Pack Élite seul. Ajoutez des accessoires ci-dessus pour couvrir plus de pièces.</p>
         </div>
         <div class="pe-total__actions">
           {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: false -%}
@@ -1485,17 +1437,18 @@
     <div class="pv-wrap">
       <div class="pv-feature pv-reveal">
         <div class="pv-feature__media">
-          {{ feat_image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Caméras extérieures W503 et panneaux solaires SPW503' }}
+          {{ feat_image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Centrale d’alarme Élite PA501Z installée dans une maison' }}
         </div>
         <div class="pv-feature__body">
-          <span class="pv-feature__num">VIDÉOSURVEILLANCE EXTÉRIEURE</span>
-          <h2>Deux caméras que vous ne rechargerez jamais.</h2>
+          <span class="pv-feature__num">LA CENTRALE</span>
+          <h2>C'est la pièce qu'on n'achète qu'une fois.</h2>
           <p class="pv-feature__text">
-            Chaque caméra W503 est livrée avec son panneau solaire SPW503 : l'alimentation est continue, sans câble à tirer ni batterie à descendre. Full HD, vision nocturne couleur, audio bidirectionnel, IP65.
+            Le Starter Pack embarque exactement la même centrale que les packs à 500 ou 800 €. Les capteurs, les caméras et les sirènes s'ajoutent ensuite, un par un, sans jamais racheter le cerveau du système.
           </p>
           <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Panneau solaire SPW503 fourni pour chaque caméra</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Audio bidirectionnel : vous parlez au visiteur depuis le téléphone</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Identique à celle des packs PA570 à PA574</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Jusqu'à 200 accessoires ajoutables</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Compatible gamme SA501, hors WDS501, WVD501 et WKE501</li>
           </ul>
         </div>
       </div>
@@ -1507,17 +1460,18 @@
     <div class="pv-wrap">
       <div class="pv-feature pv-feature--reverse pv-reveal">
         <div class="pv-feature__media">
-          {{ feat_image_2 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Caméra intérieure motorisée IP506P en mode Vie Privée' }}
+          {{ feat_image_2 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Vue arrière de la centrale PA501Z, port Ethernet et emplacement carte SIM' }}
         </div>
         <div class="pv-feature__body">
-          <span class="pv-feature__num">VIDÉOSURVEILLANCE INTÉRIEURE</span>
-          <h2>Chez vous, l'objectif se referme physiquement.</h2>
+          <span class="pv-feature__num">CONNECTIQUE</span>
+          <h2>Une prise réseau, et un emplacement pour la SIM.</h2>
           <p class="pv-feature__text">
-            La IP506P suit les mouvements sur 360° avec auto-tracking. Quand vous désarmez l'alarme en rentrant, l'objectif se rétracte mécaniquement — pas un simple voyant logiciel, un mouvement que vous voyez.
+            Au dos du boîtier : un port Ethernet RJ45 pour une liaison câblée insensible au Wi-Fi saturé du voisinage, et un emplacement de carte SIM pour la 4G+ en secours. La carte reste optionnelle.
           </p>
           <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Rotation 360° et auto-tracking</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Mode Vie Privée mécanique</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Port RJ45 prioritaire, Wi-Fi 2,4 GHz en relais</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Emplacement SIM pour la 4G+ de secours</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Batterie de secours 10&nbsp;h intégrée</li>
           </ul>
         </div>
       </div>
@@ -1535,10 +1489,10 @@
           <span class="pv-feature__num">UNE SEULE APPLICATION</span>
           <h2>Un système, pas juste des accessoires.</h2>
           <p class="pv-feature__text">
-            Daewoo Home Connect pilote l'ensemble : armement et désarmement à distance, alertes, visualisation en direct des trois caméras. Gratuite, sans abonnement, sur iOS et Android.
+            Daewoo Home Connect pilote l'ensemble : armement et désarmement à distance, alertes, et la vidéo des caméras que vous ajouterez. Gratuite, sans abonnement, sur iOS et Android.
           </p>
           <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Mode Maison : ouvertures et vibrations actives, mouvement désactivé</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Mode Maison : ouvertures actives, mouvement désactivé</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Temporisation d'entrée et de sortie réglable</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Alerte immédiate en cas d'arrachement d'un périphérique</li>
           </ul>
@@ -1552,7 +1506,7 @@
     <div class="pv-wrap">
       <div class="pv-specs__head pv-reveal">
         <h2>En résumé</h2>
-        <p>Tout ce qu'il faut savoir sur le Pack Élite PA572.</p>
+        <p>Tout ce qu'il faut savoir sur le Starter Pack Élite.</p>
       </div>
       <dl class="pv-specs__grid pv-reveal">
         <div class="pv-specs__item">
@@ -1565,15 +1519,15 @@
         </div>
         <div class="pv-specs__item">
           <dt>Alimentation &amp; autonomie</dt>
-          <dd>Centrale : secteur + batterie de secours 10&nbsp;h&#10;Sirène extérieure solaire, autonome</dd>
+          <dd>Centrale : secteur + batterie de secours 10&nbsp;h&#10;Sirène intégrée à la centrale</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Caméras incluses</dt>
-          <dd>2 caméras extérieures autonomes W503 avec panneaux solaires SPW503 (Full HD, IP65)&#10;1 caméra intérieure motorisée IP506P (360°, auto-tracking, mode Vie Privée)</dd>
+          <dd>Aucune caméra dans ce pack&#10;Compatibles en option : IP506P (intérieure), W503 et W512MW (extérieures)</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Capteurs inclus</dt>
-          <dd>7 contacteurs d'ouverture WDS502Z&#10;6 détecteurs de vibration WVD502Z&#10;1 clavier déporté WKE502Z</dd>
+          <dd>2 contacteurs d'ouverture WDS502Z&#10;1 détecteur de mouvement WPS501&#10;2 télécommandes 4 boutons WRC501</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Évolutivité</dt>
@@ -1589,7 +1543,7 @@
         </div>
         <div class="pv-specs__item">
           <dt>Référence</dt>
-          <dd class="pv-ref">{{ variant.sku | default: 'PA572' }}</dd>
+          <dd class="pv-ref">{{ variant.sku | default: 'PA501ZSTARTER' }}</dd>
         </div>
       </dl>
     </div>
@@ -1661,7 +1615,7 @@
     <div class="pv-wrap">
       <div class="pv-crosssell__head pv-reveal">
         <h2>Pas tout à fait la bonne taille ?</h2>
-        <p>Comparez les packs Élite, ou démarrez plus simple avec le Starter Pack.</p>
+        <p>Comparez les packs Élite, ou passez directement à un pack avec caméras.</p>
       </div>
       <div class="pv-crosssell__grid pv-reveal">
         <a href="/collections/systeme-dalarme-pa501z" class="pv-crosssell__card pv-crosssell__card--photo">
@@ -1677,15 +1631,15 @@
         {%- if starter_pack -%}
           <a href="{{ starter_pack.url }}" class="pv-crosssell__card pv-crosssell__card--photo">
             {%- if starter_pack_image -%}
-              <div class="pv-crosssell__photo">{{ starter_pack_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: 'Le Starter Pack Élite PA501Z' }}</div>
+              <div class="pv-crosssell__photo">{{ starter_pack_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: 'Le Pack Élite PA570 ZenGuard' }}</div>
             {%- endif -%}
             <div class="pv-crosssell__body">
-              <h3>Besoin de plus simple ? Le Starter Pack Élite</h3>
-              <p>La même centrale PA501Z, livrée avec 5 accessoires pour démarrer.</p>
+              <h3>Besoin de caméras ? Le Pack PA570</h3>
+              <p>La même centrale, avec 13 accessoires, une caméra extérieure autonome et une caméra intérieure.</p>
               {%- if starter_pack_price -%}
                 <div class="pv-crosssell__price">dès {{ starter_pack_price | money }}</div>
               {%- endif -%}
-              <span class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Starter Pack</span>
+              <span class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Pack PA570</span>
             </div>
           </a>
         {%- endif -%}
@@ -1705,8 +1659,8 @@
         </details>
 
         <details>
-          <summary>Puis-je voir mes caméras pendant une coupure internet&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">Non. Les caméras fonctionnent uniquement en Wi-Fi : si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée. En revanche, l'application reste utilisable pour armer, désarmer et consulter l'historique, et les alertes d'intrusion continuent d'arriver par notification, SMS et appel.</p>
+          <summary>Puis-je ajouter des caméras à ce pack&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Oui. La centrale PA501Z pilote la caméra intérieure IP506P et les caméras extérieures W503 et W512MW, qui s'ajoutent quand vous le souhaitez. À savoir avant d'acheter : les caméras passent uniquement par le Wi-Fi. Si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée — c'est vrai sur toute la gamme.</p>
         </details>
 
         <details>
@@ -1775,7 +1729,7 @@
   <section class="pv-section pv-final">
     <div class="pv-wrap">
       <div class="pv-reveal">
-        <h2>Pack Élite PA572 Horizon+ — kit XXL et caméras solaires</h2>
+        <h2>Starter Pack Élite PA501Z — la centrale et cinq accessoires</h2>
         <p>
           <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
           <span class="pv-price-amount">{{ variant.price | money }}</span> · Sans abonnement · Garantie 2 ans
@@ -1826,7 +1780,7 @@
   </dialog>
 
   {%- comment -%} Structured data {%- endcomment -%}
-  {%- capture ld_description -%}Pack alarme maison sans fil Élite PA572 Horizon+ : centrale PA501Z multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 2 caméras extérieures W503 avec panneaux solaires, 1 caméra intérieure IP506P, 13 capteurs Zigbee, un clavier déporté et une sirène extérieure solaire. Sans abonnement obligatoire.{%- endcapture -%}
+  {%- capture ld_description -%}Starter Pack alarme maison sans fil Élite PA501Z : centrale multiprotocole (Ethernet RJ45, Wi-Fi, 4G+, passerelle Zigbee 3.0), 2 contacteurs d'ouverture Zigbee WDS502Z, 1 détecteur de mouvement WPS501 compatible animaux et 2 télécommandes WRC501. Évolutif jusqu'à 200 accessoires, sans abonnement obligatoire.{%- endcapture -%}
   {%- comment -%}
     Product. Les champs vont au-delà du minimum name/price/availability :
     Google conditionne aujourd'hui l'éligibilité aux résultats enrichis
@@ -1915,8 +1869,8 @@
 
   {%- capture faq_q1 -%}La carte SIM est-elle obligatoire ?{%- endcapture -%}
   {%- capture faq_a1 -%}Non. Sans carte SIM, le pack fonctionne normalement tant que votre box internet est en service : détection, sirènes, notifications et caméras. La carte SIM ajoute une voie de secours qui prend le relais si le Wi-Fi n'est plus disponible.{%- endcapture -%}
-  {%- capture faq_q2 -%}Puis-je voir mes caméras pendant une coupure internet ?{%- endcapture -%}
-  {%- capture faq_a2 -%}Non. Les caméras fonctionnent uniquement en Wi-Fi : si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée. En revanche, l'application reste utilisable pour armer, désarmer et consulter l'historique, et les alertes d'intrusion continuent d'arriver par notification, SMS et appel.{%- endcapture -%}
+  {%- capture faq_q2 -%}Puis-je ajouter des caméras à ce pack ?{%- endcapture -%}
+  {%- capture faq_a2 -%}Oui. La centrale PA501Z pilote la caméra intérieure IP506P et les caméras extérieures W503 et W512MW, qui s'ajoutent quand vous le souhaitez. À savoir avant d'acheter : les caméras passent uniquement par le Wi-Fi. Si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée — c'est vrai sur toute la gamme.{%- endcapture -%}
   {%- capture faq_q3 -%}Quelle est la différence avec une carte SIM sur une alarme Vigilia ou Touch ?{%- endcapture -%}
   {%- capture faq_a3 -%}Sur les gammes Vigilia et Touch, la carte SIM ne sert qu'aux alertes par SMS et aux appels. Sur la centrale Élite PA501Z, elle porte en plus les données mobiles : l'application Daewoo Home Connect reste utilisable pendant la coupure.{%- endcapture -%}
   {%- capture faq_q4 -%}Mes anciens accessoires SA501 sont-ils compatibles ?{%- endcapture -%}
@@ -2024,7 +1978,7 @@
         if (totalDetailEl) {
           totalDetailEl.textContent = count === 0
             ? totalDetailBase
-            : 'Pack Élite PA572 ' + formatEuros(basePrice) + ' + ' + count + (count > 1 ? ' accessoires ' : ' accessoire ') + formatEuros(extra);
+            : 'Starter Pack Élite ' + formatEuros(basePrice) + ' + ' + count + (count > 1 ? ' accessoires ' : ' accessoire ') + formatEuros(extra);
         }
       }
 
@@ -2212,7 +2166,7 @@
 
 {% schema %}
 {
-  "name": "Pack Élite PA572",
+  "name": "Starter Pack Élite",
   "settings": []
 }
 {% endschema %}

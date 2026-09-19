@@ -162,7 +162,7 @@
       <div class="pv-contents__head pv-reveal">
         <span class="pv-eyebrow pe-eyebrow--amber">Continuité de service</span>
         <h2>Ce qui continue de fonctionner, quoi qu'il arrive</h2>
-        <p>Trois situations, cinq fonctions. Sans rien enjoliver.</p>
+        <p>%%MATRIX_LEAD%%</p>
       </div>
 
       <div class="pe-matrix pv-reveal">
@@ -195,12 +195,7 @@
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Armer, désarmer, consulter l'historique</span></span></td>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui<span class="pe-state__note">Pendant les 10 h d'autonomie</span></span></td>
             </tr>
-            <tr>
-              <th scope="row">Flux vidéo des caméras</th>
-              <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
-              <td><span class="pe-state pe-state--ko"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Non<span class="pe-state__note">Les caméras passent uniquement par le Wi-Fi</span></span></td>
-              <td><span class="pe-state pe-state--ko"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>Non<span class="pe-state__note">Wi-Fi coupé, et la caméra intérieure est sur secteur</span></span></td>
-            </tr>
+%%MATRIX_CAM_ROW%%
             <tr>
               <th scope="row">Liaison avec les capteurs Zigbee</th>
               <td><span class="pe-state pe-state--ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Oui</span></td>
@@ -213,7 +208,7 @@
 
       <div class="pe-matrix__foot pv-reveal">
         <p><strong>Sans carte SIM.</strong> En cas de coupure de la box ou du courant, la détection et les sirènes fonctionnent toujours — mais plus aucune alerte ne sort du logement, et l'application devient injoignable jusqu'au retour d'internet.</p>
-        <p><strong>Les caméras, dans tous les cas.</strong> Elles fonctionnent uniquement en Wi-Fi. Aucune carte SIM ne rend le flux vidéo accessible pendant une coupure : c'est vrai sur l'Élite comme sur le reste de la gamme.</p>
+        <p>%%MATRIX_FOOT_CAM%%</p>
       </div>
     </div>
   </section>
@@ -341,7 +336,7 @@
       <h2>%%BAND_TITLE%%</h2>
       <p>Livraison rapide, garantie 2 ans, installation sans technicien et sans abonnement obligatoire.</p>
       {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
-      {%- render 'pv-trust-row', has_rating: has_rating -%}
+      {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
     </div>
   </div>
 
@@ -551,12 +546,45 @@
     </div>
   </section>
 
+  {%- comment -%}
+    Avis clients. Le widget Judge.me est rendu tel quel : son script est
+    chargé sur toute la boutique par l'app embed judgeme_core, et c'est lui
+    qui déplie les avis au-delà des premiers, la pagination et les filtres.
+    Le métachamp ne contient que les tout premiers avis pré-rendus, il ne
+    suffit donc pas à lui seul.
+
+    Le widget porte son propre titre, "Customer Reviews", en anglais : il est
+    masqué en CSS au profit du nôtre.
+
+    La mention sous la note est là pour être honnête sur ce que couvrent ces
+    avis : ils portent sur la centrale et la gamme, pas sur le contenu précis
+    de ce pack-là.
+  {%- endcomment -%}
+  {%- if has_rating -%}
+    <section class="pv-section pv-section--alt" id="{{ reviews_anchor }}">
+      <div class="pv-wrap">
+        <div class="pv-reviews__head pv-reveal">
+          <span class="pv-eyebrow pe-eyebrow--amber">Avis clients</span>
+          <h2>Ce qu'en disent les utilisateurs de la gamme Élite</h2>
+          <p class="pv-reviews__summary">
+            <strong>{{ rating_value | round: 2 | replace: '.', ',' }}/{{ rating_max | round }}</strong>
+            sur {{ rating_count }} avis vérifiés
+          </p>
+          <p class="pe-reviews__note">Avis portant sur la centrale Élite PA501Z et les packs qui l'embarquent.</p>
+        </div>
+        <div class="pe-judgeme pv-reveal">
+          {{ product.metafields.judgeme.widget }}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
   {%- comment -%} Cross-sell {%- endcomment -%}
   <section class="pv-section">
     <div class="pv-wrap">
       <div class="pv-crosssell__head pv-reveal">
         <h2>Pas tout à fait la bonne taille ?</h2>
-        <p>Comparez les packs Élite, ou démarrez plus simple avec le Starter Pack.</p>
+        <p>%%XSELL_LEAD%%</p>
       </div>
       <div class="pv-crosssell__grid pv-reveal">
         <a href="/collections/systeme-dalarme-pa501z" class="pv-crosssell__card pv-crosssell__card--photo">
@@ -572,15 +600,15 @@
         {%- if starter_pack -%}
           <a href="{{ starter_pack.url }}" class="pv-crosssell__card pv-crosssell__card--photo">
             {%- if starter_pack_image -%}
-              <div class="pv-crosssell__photo">{{ starter_pack_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: 'Le Starter Pack Élite PA501Z' }}</div>
+              <div class="pv-crosssell__photo">{{ starter_pack_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: '%%XSELL_ALT%%' }}</div>
             {%- endif -%}
             <div class="pv-crosssell__body">
-              <h3>Besoin de plus simple ? Le Starter Pack Élite</h3>
-              <p>La même centrale PA501Z, livrée avec 5 accessoires pour démarrer.</p>
+              <h3>%%XSELL_TITLE%%</h3>
+              <p>%%XSELL_TEXT%%</p>
               {%- if starter_pack_price -%}
                 <div class="pv-crosssell__price">dès {{ starter_pack_price | money }}</div>
               {%- endif -%}
-              <span class="pv-btn pv-btn--ghost pv-btn--sm">Voir le Starter Pack</span>
+              <span class="pv-btn pv-btn--ghost pv-btn--sm">%%XSELL_BTN%%</span>
             </div>
           </a>
         {%- endif -%}
@@ -600,8 +628,8 @@
         </details>
 
         <details>
-          <summary>Puis-je voir mes caméras pendant une coupure internet&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">Non. Les caméras fonctionnent uniquement en Wi-Fi : si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée. En revanche, l'application reste utilisable pour armer, désarmer et consulter l'historique, et les alertes d'intrusion continuent d'arriver par notification, SMS et appel.</p>
+          <summary>%%FAQ2_Q%%<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">%%FAQ2_A%%</p>
         </details>
 
         <details>
@@ -678,7 +706,7 @@
         <div class="pv-final__ctas">
           {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
-        {%- render 'pv-trust-row', has_rating: has_rating -%}
+        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
         <p class="pv-final__legal">Expédition sous 2 jours · Livraison sous 4 à 5 jours · Retour sous 14 jours · Service client basé en France</p>
       </div>
     </div>

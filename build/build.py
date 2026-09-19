@@ -25,6 +25,54 @@ OUT = os.path.join(os.path.dirname(HERE), 'out')
 VIG = os.path.join(os.path.dirname(HERE), 'vig503-landing.liquid')
 VIG_TPL = os.path.join(os.path.dirname(HERE), 'vig503.json')
 
+# Les six packs à caméras partagent ces blocs ; le Starter Pack, qui n'en a
+# aucune, fournit les siens via les clés feat_images / matrix_cam_row / faq2.
+FEAT_IMAGES_CAM = """  # Les photos des blocs viennent des fiches des caméras, pas de la galerie
+  # du pack : celle-ci ne porte que des infographies ("W503_Infographie",
+  # "IP506_Infographie") qu'une recherche par nom de fichier plaçait à la
+  # place d'une photo. On cherche dans la galerie de la caméra la vue qui
+  # illustre la promesse du bloc, avec repli sur sa photo principale.
+  assign cam_ext = all_products['%%CAM_EXT%%']
+  assign feat_image_1 = cam_ext.featured_image | default: hero_image
+  for img in cam_ext.images
+    if img.src contains '%%IMG1%%'
+      assign feat_image_1 = img
+    endif
+  endfor
+
+  assign cam_int = all_products['camera-interieure-rotative-ip506p']
+  assign feat_image_2 = cam_int.featured_image | default: hero_image
+  for img in cam_int.images
+    if img.src contains 'ip506p-mode-vie-privee'
+      assign feat_image_2 = img
+    endif
+  endfor
+"""
+
+FAQ2_CAM = (
+    'Puis-je voir mes caméras pendant une coupure internet ?',
+    "Non. Les caméras fonctionnent uniquement en Wi-Fi : si votre box est coupée, "
+    "leur flux vidéo n'est plus accessible, même avec une carte SIM installée. En "
+    "revanche, l'application reste utilisable pour armer, désarmer et consulter "
+    "l'historique, et les alertes d'intrusion continuent d'arriver par notification, "
+    "SMS et appel.")
+
+XSELL_CAM = dict(
+    handle='starter-pack-elite-daewoo',
+    lead='Comparez les packs Élite, ou démarrez plus simple avec le Starter Pack.',
+    alt='Le Starter Pack Élite PA501Z',
+    title='Besoin de plus simple ? Le Starter Pack Élite',
+    text='La même centrale PA501Z, livrée avec 5 accessoires pour démarrer.',
+    btn='Voir le Starter Pack')
+
+MATRIX_LEAD_CAM = 'Trois situations, cinq fonctions. Sans rien enjoliver.'
+MATRIX_FOOT_CAM = ("<strong>Les caméras, dans tous les cas.</strong> Elles fonctionnent "
+                   "uniquement en Wi-Fi. Aucune carte SIM ne rend le flux vidéo accessible "
+                   "pendant une coupure : c'est vrai sur l'Élite comme sur le reste de la gamme.")
+
+SPECS_POWER_CAM = ('Centrale : secteur + batterie de secours 10 h&#10;'
+                   'Sirène extérieure solaire, autonome')
+
 CHECK = ('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
          'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5">'
          '</path></svg>')
@@ -46,6 +94,18 @@ def contents_html(rows):
     return ''.join(out)
 
 
+APOS = "'"
+
+def liquid_str(value):
+    """Texte destiné à une chaîne Liquid entre apostrophes simples.
+
+    Une apostrophe ASCII y refermerait la chaîne : le fichier devient
+    invalide et Shopify le rejette silencieusement, sans userErrors. On la
+    remplace par l'apostrophe typographique, correcte en français.
+    """
+    return value.replace(APOS, '\u2019')
+
+
 def features_html(feats):
     out = []
     for i, f in enumerate(feats):
@@ -60,10 +120,10 @@ def features_html(feats):
             # height — with both attributes present the image would squash.
             media = ('          <img src="%s" alt="%s" loading="lazy" '
                      'width="%d" height="%d" style="height:auto;">\n'
-                     % (f['src'], f['alt'], f.get('w', 1000), f.get('h', 1000)))
+                     % (f['src'], liquid_str(f['alt']), f.get('w', 1000), f.get('h', 1000)))
         else:
             media = ('          {{ %s | image_url: width: 1000 | image_tag: loading: \'lazy\', '
-                     'widths: \'500,750,1000\', alt: \'%s\' }}\n' % (f['img'], f['alt']))
+                     'widths: \'500,750,1000\', alt: \'%s\' }}\n' % (f['img'], liquid_str(f['alt'])))
         out.append(
             '  {%%- comment -%%} Feature %d {%%- endcomment -%%}\n'
             '  <section class="pv-section %s">\n'
@@ -86,7 +146,7 @@ def specs_html(p):
     rows = [
         ('Connectivité', 'Ethernet RJ45 (prioritaire), Wi-Fi 2,4 GHz&#10;4G+ en secours avec carte SIM M2M en option'),
         ('Réseau capteurs', 'Passerelle Zigbee 3.0 intégrée&#10;Radio bidirectionnelle chiffrée, anti-brouillage'),
-        ('Alimentation &amp; autonomie', 'Centrale : secteur + batterie de secours 10 h&#10;Sirène extérieure solaire, autonome'),
+        ('Alimentation &amp; autonomie', p.get('specs_power', SPECS_POWER_CAM)),
         ('Caméras incluses', p['specs_cams']),
         ('Capteurs inclus', p['specs_sensors']),
         ('Évolutivité', "Jusqu'à 200 accessoires&#10;Compatible gamme SA501, hors WDS501, WVD501 et WKE501"),
@@ -124,13 +184,33 @@ def build():
     hero_t = open(os.path.join(HERE, 'tpl-hero.liquid')).read()
     tail_t = open(os.path.join(HERE, 'tpl-tail.liquid')).read()
     css_extra = open(os.path.join(HERE, 'css-extra.liquid')).read()
+    global MATRIX_CAM_ROW
+    MATRIX_CAM_ROW = open(os.path.join(HERE, 'matrix-cam-row.liquid')).read().rstrip('\n')
 
     raw = re.sub(r'/\*.*?\*/', '', open(VIG_TPL).read(), flags=re.S)
     help_drawer = json.loads(raw)['sections']['help-drawer']
 
     os.makedirs(OUT, exist_ok=True)
     for p in PACKS:
+        faq2_q, faq2_a = p.get('faq2', FAQ2_CAM)
+        x = dict(XSELL_CAM, **p.get('xsell', {}))
+        # %%FEAT_IMAGES%% vient en premier : le bloc qu'il insère contient
+        # lui-même %%CAM_EXT%% et %%IMG1%%, qui sont remplacés ensuite.
         subs = {
+            '%%FEAT_IMAGES%%': p.get('feat_images', FEAT_IMAGES_CAM),
+            '%%MATRIX_CAM_ROW%%': p.get('matrix_cam_row', MATRIX_CAM_ROW),
+            '%%MATRIX_LEAD%%': p.get('matrix_lead', MATRIX_LEAD_CAM),
+            '%%MATRIX_FOOT_CAM%%': p.get('matrix_foot_cam', MATRIX_FOOT_CAM),
+            '%%FAQ2_Q%%': faq2_q.replace(' ?', '&nbsp;?'),
+            '%%FAQ2_A%%': faq2_a,
+            '%%FAQ2_Q_LD%%': faq2_q,
+            '%%FAQ2_A_LD%%': faq2_a,
+            '%%XSELL_HANDLE%%': x['handle'],
+            '%%XSELL_LEAD%%': x['lead'],
+            '%%XSELL_ALT%%': liquid_str(x['alt']),
+            '%%XSELL_TITLE%%': x['title'],
+            '%%XSELL_TEXT%%': x['text'],
+            '%%XSELL_BTN%%': x['btn'],
             '%%DOC_PRODUCT%%': p['doc'],
             '%%CAM_EXT%%': p['cam_ext'],
             '%%IMG1%%': p['img1'],
@@ -166,6 +246,8 @@ def build():
                    + '  <style>\n' + css_core + '\n' + css_extra + '  </style>\n'
                    + body + '\n' + alma + '\n' + tail)
 
+        for bad in re.findall(r"alt: '[^\n]*?'", section):
+            assert bad.count(APOS) == 2, (p['key'], 'apostrophe dans un alt', bad)
         left = re.findall(r'%%[A-Z0-9_]+%%', section)
         assert not left, (p['key'], set(left))
         # Shopify caps a section schema name at 25 characters. Over that,

@@ -60,12 +60,11 @@
   assign gallery = product.images
   assign hero_image = product.featured_image | default: gallery[0]
 
-  # Feature photography comes from the camera products themselves, not from
-  # this pack's own gallery: the packs carry infographic slides
-  # ("W503_Infographie", "IP506_Infographie") and a filename match there put
-  # a diagram on the block instead of a photo. Each camera product's gallery
-  # is then searched for the shot that illustrates this block's claim,
-  # falling back to its main photo if the merchant renames or removes it.
+  # Les photos des blocs viennent des fiches des caméras, pas de la galerie
+  # du pack : celle-ci ne porte que des infographies ("W503_Infographie",
+  # "IP506_Infographie") qu'une recherche par nom de fichier plaçait à la
+  # place d'une photo. On cherche dans la galerie de la caméra la vue qui
+  # illustre la promesse du bloc, avec repli sur sa photo principale.
   assign cam_ext = all_products['camera-daewoo-w503-autonome-haute-resolution-wifi-1080p']
   assign feat_image_1 = cam_ext.featured_image | default: hero_image
   for img in cam_ext.images
@@ -87,8 +86,9 @@
   assign centrale = all_products['strong-centrale-dalarme-strong-elite']
   assign centrale_image = centrale.featured_image
 
-  # Cross-sell: the Starter Pack Élite, looked up by handle for a real
-  # photo and a live price rather than a hardcoded figure.
+  # Renvoi latéral : le pack voisin, cherché par handle pour avoir sa vraie
+  # photo et son prix du jour plutôt qu'un chiffre figé. Les packs renvoient
+  # vers le Starter, le Starter renvoie vers le premier pack avec caméras.
   assign starter_pack = all_products['starter-pack-elite-daewoo']
   assign starter_pack_image = starter_pack.featured_image
   assign starter_pack_price = starter_pack.price_min
@@ -108,7 +108,21 @@
   # accessoires proposés qui soit en radio et non en Zigbee.
   assign acc_handles = 'amplificateur-dondes-zigbee-pour-centrale-pa501z,contacteur-de-porte-zigbee-wds502z-compatible-avec-la-centrale-pa501z,detecteur-de-vibration-zigbee-wvd502z-compatible-avec-la-centrale-pa501z,detecteur-de-fumee-wsd501-pour-alarme-daewoo-sa501' | split: ','
 
+  # Note et nombre d'avis, lus en direct depuis les métachamps que Judge.me
+  # synchronise sur chaque produit. Les avis de la gamme Élite sont rattachés
+  # aux six packs comme au Starter Pack, d'où la même note partout — rien
+  # n'est recopié dans la page : un nouvel avis s'y reflète tout seul.
+  assign rating_mf = product.metafields.reviews.rating
+  assign rating_count_mf = product.metafields.reviews.rating_count
   assign has_rating = false
+  if rating_mf != blank and rating_count_mf.value > 0
+    assign has_rating = true
+    assign rating_value = rating_mf.value.rating
+    assign rating_max = rating_mf.value.scale_max
+    assign rating_count = rating_count_mf.value
+    assign rating_pct = rating_value | times: 100.0 | divided_by: rating_max
+  endif
+  assign reviews_anchor = 'PEReviews-' | append: section.id
 -%}
 
 <div id="shopify-section-{{ section.id }}" class="pv">
@@ -786,6 +800,24 @@
       margin-top:34px;padding-top:30px;border-top:1px solid var(--pe-bronze-line);
       font-size:clamp(16px,2vw,19px);
     }
+
+    /* ---- avis Judge.me ----
+       Le widget est produit par Judge.me ; on ne fait que l'encadrer à la
+       largeur de nos sections. Son titre "Customer Reviews" est masqué, le
+       nôtre le précède déjà en français.
+
+       À savoir : le reste de son habillage ("Based on 32 reviews", "Write a
+       review", "Verified buyer") reste en anglais tant que les traductions
+       ne sont pas renseignées dans l'admin Judge.me. Les avis eux-mêmes sont
+       en français, ce sont les clients qui les écrivent. */
+    .pe-judgeme{max-width:860px;margin:34px auto 0;}
+    .pe-judgeme .jdgm-rev-widg__title{display:none;}
+    .pv .pe-judgeme{font-size:14.5px;}
+    .pe-judgeme .jdgm-star{color:#f5a623;}
+    .pv .pe-reviews__note{
+      font-size:13.5px;color:var(--pv-gray);margin-top:10px;
+      max-width:560px;margin-left:auto;margin-right:auto;
+    }
   </style>
 
   {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
@@ -872,7 +904,7 @@
           <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
           <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
         </div>
-        {%- render 'pv-trust-row', has_rating: has_rating -%}
+        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
       </div>
       <div class="pe-hero__chips">
         <span class="pe-chip pe-chip--zig">Zigbee 3.0</span>
@@ -1261,7 +1293,7 @@
       <h2>Équipez votre maison avec le pack Élite PA570</h2>
       <p>Livraison rapide, garantie 2 ans, installation sans technicien et sans abonnement obligatoire.</p>
       {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
-      {%- render 'pv-trust-row', has_rating: has_rating -%}
+      {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
     </div>
   </div>
 
@@ -1575,6 +1607,39 @@
     </div>
   </section>
 
+  {%- comment -%}
+    Avis clients. Le widget Judge.me est rendu tel quel : son script est
+    chargé sur toute la boutique par l'app embed judgeme_core, et c'est lui
+    qui déplie les avis au-delà des premiers, la pagination et les filtres.
+    Le métachamp ne contient que les tout premiers avis pré-rendus, il ne
+    suffit donc pas à lui seul.
+
+    Le widget porte son propre titre, "Customer Reviews", en anglais : il est
+    masqué en CSS au profit du nôtre.
+
+    La mention sous la note est là pour être honnête sur ce que couvrent ces
+    avis : ils portent sur la centrale et la gamme, pas sur le contenu précis
+    de ce pack-là.
+  {%- endcomment -%}
+  {%- if has_rating -%}
+    <section class="pv-section pv-section--alt" id="{{ reviews_anchor }}">
+      <div class="pv-wrap">
+        <div class="pv-reviews__head pv-reveal">
+          <span class="pv-eyebrow pe-eyebrow--amber">Avis clients</span>
+          <h2>Ce qu'en disent les utilisateurs de la gamme Élite</h2>
+          <p class="pv-reviews__summary">
+            <strong>{{ rating_value | round: 2 | replace: '.', ',' }}/{{ rating_max | round }}</strong>
+            sur {{ rating_count }} avis vérifiés
+          </p>
+          <p class="pe-reviews__note">Avis portant sur la centrale Élite PA501Z et les packs qui l'embarquent.</p>
+        </div>
+        <div class="pe-judgeme pv-reveal">
+          {{ product.metafields.judgeme.widget }}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
   {%- comment -%} Cross-sell {%- endcomment -%}
   <section class="pv-section">
     <div class="pv-wrap">
@@ -1702,7 +1767,7 @@
         <div class="pv-final__ctas">
           {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
-        {%- render 'pv-trust-row', has_rating: has_rating -%}
+        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
         <p class="pv-final__legal">Expédition sous 2 jours · Livraison sous 4 à 5 jours · Retour sous 14 jours · Service client basé en France</p>
       </div>
     </div>
@@ -1778,6 +1843,17 @@
     "mpn": {{ variant.sku | json }},
     "category": "Systèmes d'alarme sans fil",
     "brand": { "@type": "Brand", "name": "Daewoo Security" },
+    {%- comment -%}
+      La note vient des métachamps alimentés par Judge.me, où les avis sont
+      réellement rattachés à ce produit. Elle n'est émise que si le produit
+      en a : pas de note inventée sur une fiche sans avis.
+    {%- endcomment -%}
+    {%- if has_rating %}"aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ rating_value | json }},
+      "bestRating": {{ rating_max | json }},
+      "reviewCount": {{ rating_count | json }}
+    },{% endif %}
     {%- if gallery.size > 0 %}"image": [{{ ld_images | strip_newlines | strip }}],{% elsif hero_image %}"image": {{ hero_image | image_url: width: 1600 | prepend: 'https:' | json }},{% endif %}
     "offers": {
       "@type": "Offer",
@@ -1824,7 +1900,7 @@
   {%- capture faq_q1 -%}La carte SIM est-elle obligatoire ?{%- endcapture -%}
   {%- capture faq_a1 -%}Non. Sans carte SIM, le pack fonctionne normalement tant que votre box internet est en service : détection, sirènes, notifications et caméras. La carte SIM ajoute une voie de secours qui prend le relais si le Wi-Fi n'est plus disponible.{%- endcapture -%}
   {%- capture faq_q2 -%}Puis-je voir mes caméras pendant une coupure internet ?{%- endcapture -%}
-  {%- capture faq_a2 -%}Non. Les caméras fonctionnent uniquement en Wi-Fi : si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée. L'application reste utilisable pour armer, désarmer et consulter l'historique, et les alertes d'intrusion continuent d'arriver par notification, SMS et appel.{%- endcapture -%}
+  {%- capture faq_a2 -%}Non. Les caméras fonctionnent uniquement en Wi-Fi : si votre box est coupée, leur flux vidéo n'est plus accessible, même avec une carte SIM installée. En revanche, l'application reste utilisable pour armer, désarmer et consulter l'historique, et les alertes d'intrusion continuent d'arriver par notification, SMS et appel.{%- endcapture -%}
   {%- capture faq_q3 -%}Quelle est la différence avec une carte SIM sur une alarme Vigilia ou Touch ?{%- endcapture -%}
   {%- capture faq_a3 -%}Sur les gammes Vigilia et Touch, la carte SIM ne sert qu'aux alertes par SMS et aux appels. Sur la centrale Élite PA501Z, elle porte en plus les données mobiles : l'application Daewoo Home Connect reste utilisable pendant la coupure.{%- endcapture -%}
   {%- capture faq_q4 -%}Mes anciens accessoires SA501 sont-ils compatibles ?{%- endcapture -%}
