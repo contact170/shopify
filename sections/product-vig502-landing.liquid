@@ -870,6 +870,13 @@
     </div>
   </div>
 
+  {%- comment -%} Accessoires à ajouter au pack, sans quitter la page {%- endcomment -%}
+  {%- render 'pv-accessoires',
+    form_id: form_id,
+    variant: variant,
+    variant_has_compare: variant_has_compare,
+    pack_name: 'Pack Vigilia VIG502' -%}
+
   {%- comment -%} Feature 5 — Contrôle total {%- endcomment -%}
   <section class="pv-section">
     <div class="pv-wrap">
@@ -1446,8 +1453,13 @@
 
       var toggleEls = root.querySelectorAll('[data-pv-connectivity]');
       var variantIdInput = root.querySelector('#PVVariantId-{{ section.id }}');
-      var priceAmounts = root.querySelectorAll('.pv-price-amount');
-      var priceCompares = root.querySelectorAll('.pv-price-compare');
+      /* Le tableau comparatif Wi-Fi / Wi-Fi+GSM affiche les prix des DEUX
+         versions avec ces mêmes classes. Les y inclure ferait qu'en
+         choisissant une version on réécrirait le prix affiché sur
+         l'autre : ils sont donc exclus des affichages pilotés ici. */
+      function pvHorsComparatif(el) { return !el.closest('.pv-compare__price'); }
+      var priceAmounts = Array.prototype.filter.call(root.querySelectorAll('.pv-price-amount'), pvHorsComparatif);
+      var priceCompares = Array.prototype.filter.call(root.querySelectorAll('.pv-price-compare'), pvHorsComparatif);
       var configLinks = root.querySelectorAll('[data-pv-config-link]');
       var refEls = root.querySelectorAll('.pv-ref');
       var centraleDescEls = root.querySelectorAll('.pv-centrale-desc');

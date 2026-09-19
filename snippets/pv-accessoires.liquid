@@ -1,0 +1,116 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════════
+  snippets/pv-accessoires.liquid — Daewoo Security, 19/09/2026
+
+  Sélecteur d'accessoires des pages Vigilia, repris du bloc « Complétez
+  votre pack » des pages Élite. Un compteur par accessoire, un total qui
+  suit, et un seul bouton qui met le pack ET les accessoires au panier.
+
+  Motif : un client qui voulait un contacteur de plus devait quitter la
+  page pour la collection, puis revenir. On le perdait en route.
+
+  Les accessoires sont proposés même lorsqu'ils figurent déjà dans le
+  pack. C'est voulu : la demande la plus fréquente est d'en ajouter un de
+  plus, pas de découvrir le produit. Le lien vers la collection reste
+  pour les 24 autres références compatibles.
+
+  Prix, photo et disponibilité sont lus sur les fiches à chaque affichage
+  — rien n'est recopié ici, donc rien ne peut dériver. Un accessoire en
+  rupture disparaît de lui-même, et le bloc entier s'efface s'il ne reste
+  rien à proposer.
+
+  Paramètres : form_id, variant, variant_has_compare, pack_name
+  ══════════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+{%- liquid
+  assign pva_handles = 'contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302|detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x|contacteur-de-porte-de-garage-wdg301|telecommande-compatible-vigilia-touch' | split: '|'
+  assign pva_collection = '/collections/compatible-gamme-vigilia-touch'
+  assign pva_nom_pack = pack_name | default: product.title
+
+  assign pva_dispo = 0
+  for pva_h in pva_handles
+    assign pva_test = all_products[pva_h]
+    if pva_test.available and pva_test.variants.first
+      assign pva_dispo = pva_dispo | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if pva_dispo > 0 -%}
+{{ 'pv-accessoires.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'pv-accessoires.js' | asset_url }}" defer="defer"></script>
+
+<section class="pv-section pv-section--alt pva"
+         data-pva-root
+         data-pva-form="{{ form_id }}"
+         data-pva-base="{{ variant.price }}"
+         data-pva-compare="{% if variant_has_compare %}1{% else %}0{% endif %}"
+         data-pva-pack="{{ pva_nom_pack | escape }}">
+  <div class="pv-wrap">
+    <div class="pva__head pv-reveal">
+      <span class="pv-eyebrow">Complétez votre pack</span>
+      <h2>Ajoutez ce qui manque, sans quitter cette page</h2>
+      <p>Ces accessoires s&rsquo;appairent à la centrale depuis l&rsquo;application, en quelques secondes. Le total se met à jour au fur et à mesure.</p>
+    </div>
+
+    <div class="pva__grid pv-reveal">
+      {%- for pva_h in pva_handles -%}
+        {%- assign pva_p = all_products[pva_h] -%}
+        {%- assign pva_v = pva_p.variants.first -%}
+        {%- if pva_p.available and pva_v -%}
+          {%- liquid
+            case pva_v.sku
+              when 'WDV301'
+                assign pva_nom = "Contacteur 2-en-1 ouverture et vibration"
+                assign pva_pour = "Une ouverture de plus à surveiller. Il réagit aussi au choc sur la vitre, avant qu'elle ne cède."
+              when 'WPS305'
+                assign pva_nom = "Détecteur de mouvement compatible animaux"
+                assign pva_pour = "Une pièce de plus à couvrir. Il ignore les animaux de moins de 10 kg évoluant à plus de 2 mètres."
+              when 'WDG301'
+                assign pva_nom = "Contacteur de porte de garage"
+                assign pva_pour = "Le garage est souvent l'accès le moins protégé. Ce modèle est conçu pour les portes basculantes et sectionnelles."
+              when 'WRC305'
+                assign pva_nom = "Télécommande à clapet"
+                assign pva_pour = "Une par membre du foyer. Le clapet couvre les boutons et évite les appuis involontaires au fond d'une poche."
+              else
+                assign pva_nom = pva_p.title
+                assign pva_pour = ''
+            endcase
+          -%}
+          <div class="pva__card" data-pva-item data-pva-id="{{ pva_v.id }}" data-pva-price="{{ pva_v.price }}">
+            {%- if pva_p.featured_image -%}
+              <div class="pva__photo">
+                {{ pva_p.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '240,360,480', alt: pva_nom }}
+              </div>
+            {%- endif -%}
+            <div class="pva__body">
+              <span class="pva__ref">{{ pva_v.sku }}</span>
+              <span class="pva__nom">{{ pva_nom }}</span>
+              <p class="pva__pour">{{ pva_pour }}</p>
+              <span class="pva__prix">{{ pva_v.price | money }}</span>
+              <div class="pva__step">
+                <button type="button" data-pva-minus aria-label="Retirer un {{ pva_nom | escape }}" disabled>&minus;</button>
+                <span class="pva__qty" data-pva-qty aria-live="polite" aria-label="Quantité : {{ pva_nom | escape }}">0</span>
+                <button type="button" data-pva-plus aria-label="Ajouter un {{ pva_nom | escape }}">+</button>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="pva__foot pv-reveal">
+      <div class="pva__total">
+        <div class="pva__total-k">Total de votre configuration</div>
+        <div class="pva__total-v"><span class="pv-price-amount">{{ variant.price | money }}</span></div>
+        <p class="pva__total-d" data-pva-detail>{{ pva_nom_pack }} seul</p>
+      </div>
+      <div class="pva__actions">
+        {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: false -%}
+        <a class="pva__lien" href="{{ pva_collection }}">Voir les autres accessoires disponibles</a>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
