@@ -1,0 +1,118 @@
+/* Encart commercial des articles de blog — Daewoo Security, 19/09/2026.
+   Posé par sections/main-article-overlay.liquid, utilisé par snippets/blog-cta.liquid.
+   L'encart de milieu d'article est injecte dans .rte : les selecteurs sont
+   donc assez specifiques pour ne pas heriter des regles de contenu riche. */
+
+.bcta {
+  --bcta-encre: #1a1a1a;
+  --bcta-doux: #555;
+  --bcta-trait: #e4e4e7;
+  --bcta-fond: #fbfbfc;
+  --bcta-marque: #0b1e4a;
+
+  display: block;
+  box-sizing: border-box;
+  margin: 2.5rem 0;
+  padding: 1.75rem;
+  background: var(--bcta-fond);
+  border: 1px solid var(--bcta-trait);
+  border-radius: 12px;
+  color: var(--bcta-encre);
+}
+
+.bcta--fin { max-width: 560px; margin-inline: auto; }
+
+.rte .bcta p,
+.rte .bcta ul,
+.rte .bcta li { margin: 0; }
+
+.bcta__sur {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a8a94;
+  margin-bottom: 10px !important;
+}
+
+.bcta__titre {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 8px !important;
+}
+
+.bcta__texte {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--bcta-doux);
+  margin-bottom: 1.5rem !important;
+}
+
+.bcta__points {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem !important;
+  display: grid;
+  gap: 8px;
+}
+
+.rte .bcta__points li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.rte .bcta__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2d7a4f;
+}
+
+.bcta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rte .bcta__btn,
+.bcta__btn {
+  flex: 1 1 190px;
+  text-align: center;
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 13px 18px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  transition: opacity .15s ease, background-color .15s ease;
+}
+
+.rte .bcta__btn--primaire,
+.bcta__btn--primaire {
+  color: #fff !important;
+  background: var(--bcta-marque);
+}
+
+.rte .bcta__btn--secondaire,
+.bcta__btn--secondaire {
+  color: var(--bcta-encre) !important;
+  background: #fff;
+  border-color: var(--bcta-trait);
+}
+
+.bcta__btn:hover { opacity: .88; }
+.bcta__btn:focus-visible { outline: 2px solid var(--bcta-marque); outline-offset: 2px; }
+
+@media (max-width: 480px) {
+  .bcta { padding: 1.5rem 1.25rem; }
+  .bcta__actions { flex-direction: column; }
+  .rte .bcta__btn, .bcta__btn { flex: 1 1 auto; }
+}

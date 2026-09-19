@@ -1,0 +1,144 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════════
+  snippets/blog-cta.liquid — Daewoo Security
+
+  Encart commercial des articles de blog. Choisit sa destination d'après le
+  sujet de l'article, déduit du handle et du titre : les articles n'ont
+  aucun tag, c'est donc le seul signal disponible.
+
+  Paramètre :
+    placement — "milieu" (encart compact, inséré dans le corps du texte)
+                "fin"    (bloc complet, en pied d'article)
+
+  Les destinations visent des URL stables — pages et collections — et non
+  des fiches produits, dont le handle change et casse le lien.
+  Toutes ont été vérifiées dans les statistiques de session sur 90 jours.
+
+  Le CSS est déposé une seule fois par la section main-article-overlay.
+
+  L'ordre des familles compte : un article peut porter plusieurs signaux.
+  « Top 10 des alarmes sans fil avec caméra » relève d'abord du comparatif,
+  pas de la caméra. La cascade va donc du plus discriminant au plus général.
+  ══════════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+{%- liquid
+  assign sujet = article.handle | append: ' ' | append: article.title | downcase
+  assign famille = 'defaut'
+
+  assign mots_comparatif = 'comparatif,comparaison,verisure,daitem,diagral,delta-dore,delta dore,somfy,ajax,tike,60-millions,60 millions,versus,meilleur,meilleure,top-,top 10,avis,alternative'
+  assign mots_camera = 'camera,caméra,videosurveillance,vidéosurveillance,visiophone,nvr,enregistreur'
+  assign mots_prix = 'prix,tarif,pas-cher,pas cher,budget,devis,cout,coût,combien'
+  assign mots_accessoire = 'detecteur,détecteur,capteur,sirene,sirène,contacteur,fumee,fumée,vibration,mouvement,ouverture,badge,telecommande,télécommande'
+  assign mots_reseau = 'sans-wifi,sans wifi,gsm,4g,connectee,connectée,connectivite,connectivité,zigbee,wifi'
+
+  assign listes = 'comparatif|camera|prix|accessoire|reseau' | split: '|'
+  for cle in listes
+    if famille != 'defaut'
+      break
+    endif
+    case cle
+      when 'comparatif'
+        assign mots = mots_comparatif | split: ','
+      when 'camera'
+        assign mots = mots_camera | split: ','
+      when 'prix'
+        assign mots = mots_prix | split: ','
+      when 'accessoire'
+        assign mots = mots_accessoire | split: ','
+      when 'reseau'
+        assign mots = mots_reseau | split: ','
+    endcase
+    for mot in mots
+      if sujet contains mot
+        assign famille = cle
+        break
+      endif
+    endfor
+  endfor
+-%}
+
+{%- liquid
+  case famille
+    when 'comparatif'
+      assign sur = "Comparer"
+      assign titre = "Les trois gammes Daewoo, côte à côte"
+      assign texte = "Vigilia, Touch et Élite : le tableau compare les écrans, la connectivité, le nombre d'accessoires et les prix réels."
+      assign url = '/pages/comparateur-am301-sa501-pa501z'
+      assign libelle = "Ouvrir le comparateur"
+      assign url2 = '/pages/pack-alarmes'
+      assign libelle2 = "Voir les packs"
+
+    when 'camera'
+      assign sur = "Vidéosurveillance"
+      assign titre = "Nos caméras, sans abonnement"
+      assign texte = "Intérieures, extérieures, solaires ou motorisées. Enregistrement sur carte mémoire, aucun frais mensuel."
+      assign url = '/collections/cameras-de-surveillance'
+      assign libelle = "Voir les caméras"
+      assign url2 = '/pages/comparateur-am301-sa501-pa501z'
+      assign libelle2 = "Comparer les gammes"
+
+    when 'prix'
+      assign sur = "Budget"
+      assign titre = "Combien coûte une alarme chez nous"
+      assign texte = "Des packs prêts à poser, prix affichés, sans abonnement ni frais cachés. Vous payez le matériel, une fois."
+      assign url = '/pages/pack-alarmes'
+      assign libelle = "Voir les packs et les prix"
+      assign url2 = '/pages/configurateur_2'
+      assign libelle2 = "Configurer sur mesure"
+
+    when 'accessoire'
+      assign sur = "Accessoires"
+      assign titre = "Compléter votre installation"
+      assign texte = "Détecteurs, sirènes, claviers, télécommandes. Vérifiez la compatibilité avec votre centrale avant de commander."
+      assign url = '/collections/tous-les-accessoires'
+      assign libelle = "Voir les accessoires"
+      assign url2 = '/pages/configurateur_2'
+      assign libelle2 = "Configurer mon système"
+
+    when 'reseau'
+      assign sur = "Connectivité"
+      assign titre = "Wi-Fi, ou Wi-Fi et 4G"
+      assign texte = "Nos centrales fonctionnent en Wi-Fi. Une carte SIM en option prend le relais si la box tombe, panne ou sabotage."
+      assign url = '/collections/systeme-dalarme-vigilia'
+      assign libelle = "Voir la gamme Vigilia"
+      assign url2 = '/pages/comparateur-am301-sa501-pa501z'
+      assign libelle2 = "Comparer les gammes"
+
+    else
+      assign sur = "Sur mesure"
+      assign titre = "Quel système pour votre logement ?"
+      assign texte = "Quelques questions sur votre surface et vos accès, et vous obtenez la configuration adaptée. Sans engagement."
+      assign url = '/pages/configurateur_2'
+      assign libelle = "Configurer mon alarme"
+      assign url2 = '/pages/pack-alarmes'
+      assign libelle2 = "Voir les packs"
+  endcase
+-%}
+
+{%- if placement == 'milieu' -%}
+  <aside class="bcta bcta--milieu" role="complementary" aria-label="{{ titre | escape }}">
+    <p class="bcta__sur">{{ sur }}</p>
+    <p class="bcta__titre">{{ titre }}</p>
+    <p class="bcta__texte">{{ texte }}</p>
+    <p class="bcta__actions">
+      <a class="bcta__btn bcta__btn--primaire" href="{{ url }}">{{ libelle }}</a>
+      <a class="bcta__btn bcta__btn--secondaire" href="{{ url2 }}">{{ libelle2 }}</a>
+    </p>
+  </aside>
+{%- else -%}
+  <aside class="bcta bcta--fin" role="complementary" aria-label="{{ titre | escape }}">
+    <p class="bcta__sur">{{ sur }}</p>
+    <p class="bcta__titre">{{ titre }}</p>
+    <p class="bcta__texte">{{ texte }}</p>
+    <ul class="bcta__points">
+      <li>Sans abonnement, jamais</li>
+      <li>Installation par vos soins, en une heure</li>
+      <li>Assistance basée à Mérignac</li>
+    </ul>
+    <p class="bcta__actions">
+      <a class="bcta__btn bcta__btn--primaire" href="{{ url }}">{{ libelle }}</a>
+      <a class="bcta__btn bcta__btn--secondaire" href="{{ url2 }}">{{ libelle2 }}</a>
+    </p>
+  </aside>
+{%- endif -%}
