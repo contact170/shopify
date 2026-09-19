@@ -1,0 +1,857 @@
+{{ 'touch-landing.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Section : Pack Touch AM301 — Landing page complète
+  Charge le CSS dédié dans le <head> via le template page.touch.liquid
+{%- liquid
+  # Le prix du pack etait repete en dur a cinq endroits de cette page,
+  # barre de navigation et FAQ comprises.
+  assign p_pack = all_products['offre-exclusive-pack-touch-compatible-animaux-sans-abonnement']
+  assign prix_pack = '499,90 €'
+  # Le prix barre etait fige a 699,90 EUR alors que la fiche en porte un
+  # autre : deux pages annoncaient des remises differentes pour le meme
+  # pack. Il vient de la fiche, et disparait si l'offre se termine.
+  assign prix_pack_barre = ''
+  if p_pack != blank
+    assign prix_pack = p_pack.price | money
+    if p_pack.compare_at_price > p_pack.price
+      assign prix_pack_barre = p_pack.compare_at_price | money
+    endif
+  endif
+-%}
+
+{%- endcomment -%}
+
+
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">Pack Touch AM301</a>
+  <ul class="nav-links">
+    <li><a href="#connexion">Connexion</a></li>
+    <li><a href="#cameras">Caméras</a></li>
+    <li><a href="#fonctions">Fonctions</a></li>
+    <li><a href="#contenu">Contenu</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#avis">Avis</a></li>
+  </ul>
+  <a href="#cta-section" class="nav-buy">Acheter — {{ prix_pack }}</a>
+</nav>
+
+<!-- STICKY BAR -->
+<div id="sticky">
+  <div class="sticky-left">
+    <span class="sticky-name">Pack Touch AM301 — Sécurité Totale Intérieur + Extérieur</span>
+    <span class="sticky-price">{{ prix_pack }} · Livraison offerte · Sans abonnement</span>
+  </div>
+  <div class="sticky-btns">
+    <a href="#cta-section" class="btn-buy">Acheter</a>
+    <a href="#contenu" class="btn-learn">Voir le contenu</a>
+  </div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-eyebrow">Pack Touch — Sécurité Totale</div>
+  <h1 class="hero-title">
+    <span>Pack Touch.</span>
+    <span style="color:var(--blue)">Double caméra extérieure.</span>
+    <span style="font-weight:300;color:var(--gray3)">Sans abonnement.</span>
+  </h1>
+  <p class="hero-sub">Centrale tactile AM301 avec sirène et batterie intégrées, <strong>2 caméras extérieures W503 100 % sans fil</strong>, sirène solaire 110 dB et 11 accessoires. Zéro abonnement.</p>
+  <div class="hero-ctas">
+    <a href="#cta-section" class="btn-buy">Acheter — {{ prix_pack }}</a>
+    <a href="#contenu" class="btn-learn">Voir le contenu du pack ↓</a>
+  </div>
+  <p class="hero-price-note">En stock. Expédié sous <strong>2 jours ouvrables</strong>. Garantie <strong>2 ans</strong>.</p>
+
+  <!-- Hero visual — uses real Daewoo product images -->
+  <div class="hero-img-wrap" style="padding:0 2rem;max-width:820px">
+    <img class="blend" src="https://daewoo-security.fr/cdn/shop/files/ChatGPTImage28mai2026_14_00_03.png?v=1779975615&width=1254" alt="Pack Touch AM301 - Double caméra extérieure">
+    <div class="hero-chip" style="top:12%;left:2%"><div class="dot"></div>2× caméras W503 sans fil</div>
+    <div class="hero-chip" style="top:40%;right:0%"><div class="dot"></div>Écran tactile 4,3"</div>
+    <div class="hero-chip" style="bottom:18%;left:0%"><div class="dot" style="background:#ff9f0a"></div>Sirène solaire 110 dB</div>
+  </div>
+</section>
+
+<!-- ═══ STATS ═══ -->
+<section class="section" style="padding-bottom:0">
+  <div class="container">
+    <div class="container-sm reveal"><span class="eyebrow">Chiffres clés</span></div>
+    <div class="stats-row reveal">
+      <div class="stat-box"><div class="stat-num">0<span>€</span></div><div class="stat-lbl">D'abonnement mensuel.<br>Payez une fois, c'est tout.</div></div>
+      <div class="stat-box"><div class="stat-num">110<span>dB</span></div><div class="stat-lbl">Sirène solaire WOS305S.<br>Audible jusqu'à 600 m.</div></div>
+      <div class="stat-box"><div class="stat-num">4<span>h</span></div><div class="stat-lbl">Batterie de secours.<br>Protégé même sans courant.</div></div>
+      <div class="stat-box"><div class="stat-num">90<span>+</span></div><div class="stat-lbl">Accessoires compatibles.<br>Système évolutif.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BENTO : LE PACK EN UN COUP D'ŒIL ═══ -->
+<section class="section" id="pack-overview">
+  <div class="container">
+    <div class="container-sm reveal" style="text-align:center;margin-bottom:0">
+      <span class="eyebrow">Les équipements</span>
+      <h2 class="section-title">Tout est inclus.</h2>
+      <p class="section-body">14 pièces pour une protection intérieure ET extérieure complète, avec deux caméras extérieures 100 % sans fil.</p>
+    </div>
+    <div class="bento reveal-scale">
+
+      <!-- Centrale -->
+      <div class="bento-card span3" style="background:#f0f4ff;min-height:260px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="bc-label">Centrale</div>
+          <div class="bc-big">Touch<span> AM301</span></div>
+          <div class="bc-body" style="margin-top:.5rem">Écran tactile 4,3" + sirène 95 dB intégrée. Batterie de secours 4h. Wi-Fi (GSM en option). Jusqu'à 90 accessoires. Compatible Google Home & Alexa.</div>
+        </div>
+        <img src="https://daewoo-security.fr/cdn/shop/files/Touch_e31e5742-619e-4dd3-86a8-bf9898bdd8de.png?width=700" alt="Centrale Touch AM301 — sans abonnement, clavier tactile, sirène et batterie intégrées" style="width:100%;margin:0 auto;display:block;margin-top:1rem;border-radius:12px;object-fit:contain;max-height:260px;background:white">
+      </div>
+
+      <!-- Double caméra extérieure -->
+      <div class="bento-card span3" style="background:#f5f5f7">
+        <div class="bc-label">Double caméra extérieure</div>
+        <div class="bc-title">2× W503 — 100 % sans fil</div>
+        <div class="bc-body" style="margin-bottom:1rem"><strong>Installation 100 % sans fil</strong> : aucun câble, fonctionnement autonome sur batterie. Full HD, vision nocturne <strong>infrarouge ET couleur</strong>, alertes en temps réel sur smartphone. Couvrez deux zones stratégiques : entrée, jardin, garage ou façade.</div>
+        <img src="/__l5e/assets-v1/bfb5d0a4-4f36-438d-b137-33ee62d99a9d/w503-real.webp" alt="Caméra W503 — 100 % sans fil, batterie autonome, Wi-Fi" style="width:100%;border-radius:12px;margin-top:.5rem;object-fit:contain;max-height:200px;background:white;padding:.5rem">
+      </div>
+
+      <!-- Caméra intérieure -->
+      <div class="bento-card span2 dark">
+        <div class="bc-label">Caméra intérieure</div>
+        <div class="bc-title">IP506P — Filaire</div>
+        <div class="bc-body">Full HD 360°, filtrage corps humain. L'objectif se referme <em>physiquement</em> en Mode Vie Privée.</div>
+      </div>
+
+      <!-- Sirène solaire -->
+      <div class="bento-card span2" style="background:#fff7ed">
+        <div class="bc-label" style="color:#c45c00">Sirène extérieure</div>
+        <div class="bc-big" style="color:#c45c00">110<span style="color:#c45c00;font-size:1.3rem">dB</span></div>
+        <div class="bc-title">WOS305S — 100 % solaire</div>
+        <div class="bc-body">Son ultra-puissant 110 dB + flash stroboscopique rouge. Panneau solaire intégré, aucun branchement nécessaire.</div>
+      </div>
+
+      <!-- Contacteurs -->
+      <div class="bento-card span2" style="background:#f0fff4">
+        <div class="badge"><div class="badge-dot"></div>Inclus × 4</div>
+        <div class="bc-title">Détecteurs 2-en-1 WDV301</div>
+        <div class="bc-body">Détection ouverture + vibration simultanée. Alerte <strong>avant</strong> l'effraction, dès la tentative d'entrée.</div>
+      </div>
+
+      <!-- Détecteurs -->
+      <div class="bento-card span2 blue">
+        <div class="badge" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)"><div class="badge-dot" style="background:white"></div>Inclus × 1</div>
+        <div class="bc-title">Détecteur compatible animaux</div>
+        <div class="bc-body">Ignore les animaux jusqu'à 12 kg. Détection de mouvement intelligente, parfait pour les foyers avec chiens ou chats.</div>
+      </div>
+
+      <!-- Télécommande + RFID -->
+      <div class="bento-card span2">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1" fill="var(--blue)"/><rect x="8" y="6" width="8" height="3" rx="1"/></svg></div>
+        <div class="bc-title">2× Télécommandes WRC305</div>
+        <div class="bc-body">Armement, désarmement et SOS en un clic. Une pour chaque membre du foyer.</div>
+      </div>
+
+      <!-- Zéro abonnement -->
+      <div class="bento-card span4 dark" style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap">
+        <div>
+          <div class="bc-big">0 €<span> / mois</span></div>
+          <div class="bc-title" style="margin-top:.3rem">Aucun abonnement, jamais.</div>
+          <div class="bc-body" style="max-width:360px">Vous payez une fois. La carte SIM GSM est incluse sans frais récurrents. Vous restez propriétaire de votre système, libre et protégé.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONNEXION DOUBLE (FILM DARK) ═══ -->
+<section class="film-section" id="connexion">
+  <div class="container">
+    <div class="film-inner">
+      <div class="film-text reveal">
+        <span class="eyebrow">Caméras extérieures sans fil</span>
+        <h2 class="film-title">2 caméras W503.<br>Zéro câble. Zéro travaux.</h2>
+        <p class="film-body">Les deux caméras extérieures W503 sont <strong style="color:white">100 % sans fil</strong>. Pas d'alimentation à tirer, pas de câble réseau, pas de saignée dans le mur. Elles fonctionnent sur <strong style="color:white">batterie autonome rechargeable</strong> et communiquent en Wi-Fi avec la centrale.<br><br>Posez-les où vous voulez : entrée, garage, jardin, façade arrière. Déplacez-les quand vous voulez.</p>
+        <div class="film-specs">
+          <div class="film-spec">
+            <div class="fspec-val">100<span> % sans fil</span></div>
+            <div class="fspec-lbl">Aucun câble électrique ni réseau à tirer</div>
+          </div>
+          <div class="film-spec">
+            <div class="fspec-val">Batterie<span> autonome</span></div>
+            <div class="fspec-lbl">Rechargeable, surveillance continue 24/7</div>
+          </div>
+          <div class="film-spec">
+            <div class="fspec-val">Vision<span> IR & couleur</span></div>
+            <div class="fspec-lbl">Vision nocturne infrarouge ET vision nocturne couleur</div>
+          </div>
+          <div class="film-spec">
+            <div class="fspec-val">2<span> zones</span></div>
+            <div class="fspec-lbl">Couvrez entrée + jardin, ou façade avant + arrière</div>
+          </div>
+        </div>
+      </div>
+      <!-- Schéma flow -->
+      <div class="reveal" style="display:flex;flex-direction:column;gap:1rem">
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:2rem">
+          <div style="font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1.5rem;text-align:center">Caméra W503 — Installation</div>
+          <div style="display:flex;flex-direction:column;gap:.75rem">
+            <div style="display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.05);border-radius:12px;padding:.9rem 1rem">
+              <div style="font-size:1.2rem">📷</div>
+              <div>
+                <div style="font-size:.82rem;font-weight:600;color:white">Caméra W503 sur batterie</div>
+                <div style="font-size:.72rem;color:rgba(255,255,255,.4)">Aucun câble, fixation au mur en 5 min</div>
+              </div>
+              <div style="margin-left:auto;background:rgba(48,209,88,.15);color:#30d158;font-size:.65rem;font-weight:600;padding:.2rem .6rem;border-radius:100px">SANS FIL</div>
+            </div>
+            <div style="text-align:center;font-size:.85rem;color:rgba(255,255,255,.3)">↓ Wi-Fi</div>
+            <div style="display:flex;align-items:center;gap:.75rem;background:rgba(0,113,227,.1);border:1px solid rgba(0,113,227,.25);border-radius:12px;padding:.9rem 1rem">
+              <div style="font-size:1.2rem">🖥️</div>
+              <div>
+                <div style="font-size:.82rem;font-weight:600;color:white">Centrale Touch AM301</div>
+                <div style="font-size:.72rem;color:rgba(255,255,255,.4)">Déclenchée par la caméra (scénarios) — sirène + alerte</div>
+              </div>
+              <div style="margin-left:auto;background:rgba(0,113,227,.2);color:#60a5fa;font-size:.65rem;font-weight:600;padding:.2rem .6rem;border-radius:100px">CENTRALE</div>
+            </div>
+            <div style="text-align:center;font-size:.85rem;color:rgba(255,255,255,.3)">↓</div>
+            <div style="display:flex;align-items:center;gap:.75rem;background:rgba(48,209,88,.08);border-radius:12px;padding:.9rem 1rem">
+              <div style="font-size:1.2rem">🔔</div>
+              <div>
+                <div style="font-size:.82rem;font-weight:600;color:white">Votre smartphone</div>
+                <div style="font-size:.72rem;color:rgba(255,255,255,.4)">Notification + vidéo en direct via l'app</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="background:rgba(255,153,10,.08);border:1px solid rgba(255,153,10,.2);border-radius:14px;padding:1rem 1.25rem">
+          <div style="font-size:.75rem;font-weight:600;color:#ff9f0a;margin-bottom:.25rem">💡 Option GSM 4G</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.5">Ajoutez une carte SIM dans la centrale AM301 pour recevoir vos alertes par SMS même en cas de coupure du Wi-Fi.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CAMÉRAS ═══ -->
+<section class="section" id="cameras">
+  <div class="container">
+    <div class="container-sm reveal" style="text-align:center;margin-bottom:0">
+      <span class="eyebrow">Triple vidéosurveillance</span>
+      <h2 class="section-title">Deux caméras extérieures.<br>Une intérieure.</h2>
+      <p class="section-body">Deux caméras extérieures W503 <strong>100 % sans fil</strong> pour couvrir entrée + jardin (ou façade avant + arrière), et une caméra intérieure IP506P pour l'intérieur. Toutes incluses.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem">
+
+      <!-- CAM EXT -->
+      <div class="reveal" style="background:var(--gray1);border-radius:24px;overflow:hidden">
+        <div style="background:#e8e8ed;height:280px;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <img src="/__l5e/assets-v1/bfb5d0a4-4f36-438d-b137-33ee62d99a9d/w503-real.webp" alt="Caméra W503 — 100 % sans fil, batterie autonome" style="width:100%;height:100%;object-fit:contain;padding:1.5rem">
+        </div>
+        <div style="padding:1.75rem">
+          <div style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:.4rem">2× Caméras extérieures</div>
+          <div style="font-size:1.2rem;font-weight:700;color:var(--black);margin-bottom:.75rem;letter-spacing:-.02em">W503 — 100 % sans fil</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--gray3)"><span style="color:var(--blue);font-weight:600">●</span> <strong>Aucun câble</strong> — installation sans travaux</div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--gray3)"><span style="color:var(--blue);font-weight:600">●</span> Fonctionnement autonome sur batterie</div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--gray3)"><span style="color:var(--blue);font-weight:600">●</span> Full HD + vision nocturne <strong>infrarouge ET couleur</strong></div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--gray3)"><span style="color:var(--blue);font-weight:600">●</span> Alertes en temps réel sur smartphone</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAM INT -->
+      <div class="reveal" style="background:var(--black);border-radius:24px;overflow:hidden">
+        <div style="background:#f5f5f7;height:280px;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <img src="https://daewoo-security.fr/cdn/shop/files/IP506P_1.png?width=600" alt="Caméra intérieure IP506P avec Mode Vie Privée" style="width:100%;height:100%;object-fit:cover">
+        </div>
+        <div style="padding:1.75rem">
+          <div style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.4rem">Caméra intérieure</div>
+          <div style="font-size:1.2rem;font-weight:700;color:white;margin-bottom:.75rem;letter-spacing:-.02em">IP506P — Mode Vie Privée</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:rgba(255,255,255,.55)"><span style="color:#30d158;font-weight:600">●</span> Panoramique 360° + filtrage corps humain</div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:rgba(255,255,255,.55)"><span style="color:#30d158;font-weight:600">●</span> Mode Vie Privée mécanique : l'objectif se referme physiquement</div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:rgba(255,255,255,.55)"><span style="color:#30d158;font-weight:600">●</span> Full HD avec vision nocturne</div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:rgba(255,255,255,.55)"><span style="color:#30d158;font-weight:600">●</span> Vous êtes le seul à avoir accès à vos images</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Camera viewer UI simulation -->
+    <div class="reveal" style="background:var(--black);border-radius:24px;padding:2rem;margin-top:1rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+        <div style="font-size:.78rem;font-weight:600;color:rgba(255,255,255,.5)">Daewoo Home Connect</div>
+        <div style="display:flex;align-items:center;gap:.4rem;font-size:.65rem;color:rgba(255,255,255,.4)"><div style="width:6px;height:6px;border-radius:50%;background:#30d158"></div>EN DIRECT</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div style="background-image:linear-gradient(to bottom,rgba(0,0,0,.1) 60%,rgba(0,0,0,.7)),url('/__l5e/assets-v1/5ba9e11b-4fde-4f9d-9c84-b19e23239176/cam-day.jpg');background-size:cover;background-position:center;border:1px solid rgba(255,255,255,.08);border-radius:12px;aspect-ratio:16/9;display:flex;align-items:flex-end;justify-content:flex-start;padding:.5rem;position:relative;overflow:hidden">
+          <div style="position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:.3rem;background:rgba(0,0,0,.45);padding:.15rem .45rem;border-radius:4px"><div style="width:5px;height:5px;border-radius:50%;background:#ff3b30;animation:blink 1.5s infinite"></div><span style="font-size:.55rem;color:rgba(255,255,255,.85)">REC</span></div>
+          <div style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.45);padding:.15rem .45rem;border-radius:4px;font-size:.55rem;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums">14:32:08</div>
+          <div style="background:rgba(0,0,0,.65);border-radius:5px;padding:.25rem .55rem;font-size:.62rem;color:rgba(255,255,255,.75);backdrop-filter:blur(6px)"><strong style="display:block;color:white">W503 #1</strong>Entrée — Jour (couleur)</div>
+        </div>
+        <div style="background-image:linear-gradient(to bottom,rgba(0,0,0,.1) 60%,rgba(0,0,0,.7)),url('/__l5e/assets-v1/f132ad53-1d99-4b00-b08c-c594f4c65e1b/cam-night-pool.jpg');background-size:cover;background-position:center;border:1px solid rgba(255,255,255,.08);border-radius:12px;aspect-ratio:16/9;display:flex;align-items:flex-end;justify-content:flex-start;padding:.5rem;position:relative;overflow:hidden">
+          <div style="position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:.3rem;background:rgba(0,0,0,.45);padding:.15rem .45rem;border-radius:4px"><div style="width:5px;height:5px;border-radius:50%;background:#ff3b30;animation:blink 1.5s infinite"></div><span style="font-size:.55rem;color:rgba(255,255,255,.85)">REC</span></div>
+          <div style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.45);padding:.15rem .45rem;border-radius:4px;font-size:.55rem;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums">22:14:08</div>
+          <div style="background:rgba(0,0,0,.65);border-radius:5px;padding:.25rem .55rem;font-size:.62rem;color:rgba(255,255,255,.75);backdrop-filter:blur(6px)"><strong style="display:block;color:white">W503 #2</strong>Jardin — Nuit (infrarouge)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FONCTIONS INTELLIGENTES ═══ -->
+<section class="section bg-gray" id="fonctions">
+  <div class="container">
+    <div class="container-sm reveal" style="text-align:center;margin-bottom:0">
+      <span class="eyebrow">Fonctions intelligentes</span>
+      <h2 class="section-title">Pensée pour votre quotidien.</h2>
+      <p class="section-body">Chaque fonction a été conçue pour vous simplifier la vie sans compromis sur la sécurité.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem">
+
+      <div class="bento-card reveal" style="background:white">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <div class="bc-title">Option GSM 4G</div>
+        <div class="bc-body">Ajoutez une carte SIM dans la centrale pour recevoir vos alertes par SMS même en cas de coupure du Wi-Fi.</div>
+      </div>
+
+      <div class="bento-card reveal" style="background:white">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="bc-title">Pilotage par SMS</div>
+        <div class="bc-body">Armez ou désarmez votre alarme par simple SMS, même sans connexion internet disponible.</div>
+      </div>
+
+      <div class="bento-card reveal" style="background:white">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="bc-title">Mode Maison (nuit)</div>
+        <div class="bc-body">Capteurs d'ouverture actifs, détecteurs de mouvement désactivés. Circulez librement la nuit en toute sécurité.</div>
+      </div>
+
+      <div class="bento-card reveal" style="background:white">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div class="bc-title">Scénarios automatiques</div>
+        <div class="bc-body">Si une caméra W503 détecte un mouvement → elle déclenche la centrale et la sirène. Si vous désarmez → la caméra intérieure passe en mode vie privée.</div>
+      </div>
+
+      <div class="bento-card reveal" style="background:white">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="bc-title">Temporisation réglable</div>
+        <div class="bc-body">Délai d'entrée/sortie de 0 à 180 secondes, configurable depuis l'application Daewoo Home Connect.</div>
+      </div>
+
+      <div class="bento-card reveal" style="background:white">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
+        <div class="bc-title">Compatible assistants vocaux</div>
+        <div class="bc-body">Armez ou désarmez votre alarme à la voix via Google Home ou Amazon Alexa, depuis n'importe quelle pièce.</div>
+      </div>
+
+      <div class="bento-card reveal" style="background:white">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="bc-title">Communication cryptée</div>
+        <div class="bc-body">Tous les échanges entre la centrale et les accessoires sont chiffrés. Vous êtes le seul à avoir accès à votre système.</div>
+      </div>
+
+      <div class="bento-card reveal" style="background:white">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+        <div class="bc-title">Détection d'arrachement</div>
+        <div class="bc-body">Si quelqu'un tente d'arracher la centrale du mur, une alerte est immédiatement envoyée sur votre smartphone.</div>
+      </div>
+
+      <div class="bento-card reveal" style="background:white">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        <div class="bc-title">Système évolutif jusqu'à 90 accessoires</div>
+        <div class="bc-body">Ajoutez des détecteurs, claviers, caméras et prises connectées à tout moment. Tous gérés sur l'app Daewoo Home Connect.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MODES DE SURVEILLANCE ═══ -->
+<section class="section">
+  <div class="container">
+    <div class="container-sm reveal" style="text-align:center;margin-bottom:0">
+      <span class="eyebrow">Modes de surveillance</span>
+      <h2 class="section-title">3 modes. Une protection adaptée à chaque situation.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem">
+      <div class="reveal" style="border-radius:20px;padding:2rem;background:var(--gray1);text-align:center">
+        <div style="font-size:2rem;margin-bottom:1rem">🟢</div>
+        <div style="font-size:1rem;font-weight:700;color:var(--black);margin-bottom:.5rem">Total</div>
+        <div style="font-size:.82rem;font-weight:300;color:var(--gray3);line-height:1.6">Tous les capteurs actifs. Vous êtes absent, la maison est intégralement surveillée.</div>
+      </div>
+      <div class="reveal" style="border-radius:20px;padding:2rem;background:var(--gray1);text-align:center">
+        <div style="font-size:2rem;margin-bottom:1rem">🌙</div>
+        <div style="font-size:1rem;font-weight:700;color:var(--black);margin-bottom:.5rem">Partiel — Mode Maison</div>
+        <div style="font-size:.82rem;font-weight:300;color:var(--gray3);line-height:1.6">Capteurs d'ouverture actifs uniquement. Les détecteurs de mouvement sont désactivés pour que vous puissiez circuler librement la nuit.</div>
+      </div>
+      <div class="reveal" style="border-radius:20px;padding:2rem;background:var(--gray1);text-align:center">
+        <div style="font-size:2rem;margin-bottom:1rem">🔓</div>
+        <div style="font-size:1rem;font-weight:700;color:var(--black);margin-bottom:.5rem">Désarmée</div>
+        <div style="font-size:.82rem;font-weight:300;color:var(--gray3);line-height:1.6">Système désactivé. La caméra intérieure bascule automatiquement en mode vie privée.</div>
+      </div>
+    </div>
+    <div class="reveal" style="background:rgba(255,59,48,.06);border:1px solid rgba(255,59,48,.15);border-radius:16px;padding:1.25rem 1.75rem;margin-top:1rem;display:flex;align-items:center;gap:1rem">
+      <div style="font-size:1.5rem">🆘</div>
+      <div>
+        <div style="font-size:.88rem;font-weight:600;color:#c0392b;margin-bottom:.2rem">Fonction SOS</div>
+        <div style="font-size:.8rem;color:var(--gray3)">En cas d'agression à domicile, déclenchez une alerte SOS immédiate depuis la télécommande ou les badges RFID.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTENU DU PACK ═══ -->
+<section class="section bg-gray" id="contenu">
+  <div class="container">
+    <div class="container-sm reveal" style="text-align:center;margin-bottom:0">
+      <span class="eyebrow">Contenu de la boîte</span>
+      <h2 class="section-title">14 pièces. Tout est inclus.</h2>
+      <p class="section-body">Piles, notices et accessoires de fixation inclus. Rien à acheter en plus pour commencer.</p>
+    </div>
+    <div class="pack-table reveal">
+      <div class="pack-row head">
+        <span>Qté</span><span>Produit</span><span style="text-align:right">Type</span><span style="text-align:right">Statut</span>
+      </div>
+      <div class="pack-row"><div class="pr-qty">1×</div><div><div class="pr-name">Centrale Touch AM301</div><div class="pr-ref">Écran tactile 4,3" + sirène 95 dB + batterie 4h intégrées</div></div><div class="pr-type">Centrale</div><span class="pr-badge">✓ Inclus</span></div>
+      <div class="pack-row" style="background:rgba(0,113,227,.04)"><div class="pr-qty">2×</div><div><div class="pr-name">Caméras extérieures W503</div><div class="pr-ref"><strong>100 % sans fil</strong> — batterie autonome, Full HD, vision nocturne</div></div><div class="pr-type">Caméra</div><span class="pr-badge">✓ Inclus</span></div>
+      <div class="pack-row"><div class="pr-qty">1×</div><div><div class="pr-name">Caméra intérieure IP506P</div><div class="pr-ref">Filaire, Full HD 360°, mode vie privée mécanique</div></div><div class="pr-type">Caméra</div><span class="pr-badge">✓ Inclus</span></div>
+      <div class="pack-row"><div class="pr-qty">1×</div><div><div class="pr-name">Sirène extérieure solaire WOS305S</div><div class="pr-ref"><strong>110 dB</strong> + flash stroboscopique rouge, 100 % sans fil (solaire)</div></div><div class="pr-type">Sirène</div><span class="pr-badge">✓ Inclus</span></div>
+      <div class="pack-row"><div class="pr-qty">4×</div><div><div class="pr-name">Détecteurs 2-en-1 WDV301</div><div class="pr-ref">Ouverture + vibration — alerte avant effraction</div></div><div class="pr-type">Détecteur</div><span class="pr-badge">✓ Inclus</span></div>
+      <div class="pack-row"><div class="pr-qty">1×</div><div><div class="pr-name">Détecteur de mouvement compatible animaux</div><div class="pr-ref">Ignore les animaux jusqu'à 12 kg</div></div><div class="pr-type">Détecteur</div><span class="pr-badge">✓ Inclus</span></div>
+      <div class="pack-row"><div class="pr-qty">2×</div><div><div class="pr-name">Télécommandes WRC305</div><div class="pr-ref">Armement, désarmement et SOS en un clic</div></div><div class="pr-type">Accessoire</div><span class="pr-badge">✓ Inclus</span></div>
+      <div class="pack-row"><div class="pr-qty">2×</div><div><div class="pr-name">Autocollants de dissuasion</div><div class="pr-ref">À placer sur portes ou fenêtres visibles</div></div><div class="pr-type">Accessoire</div><span class="pr-badge">✓ Inclus</span></div>
+      <div class="pack-row" style="background:rgba(0,113,227,.03)"><div class="pr-qty" style="color:var(--gray4)">—</div><div><div class="pr-name">Piles, notices et accessoires de fixation</div><div class="pr-ref">Tout le nécessaire pour l'installation</div></div><div class="pr-type">Inclus</div><span class="pr-badge">✓ Inclus</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INSTALLATION ═══ -->
+<section class="section" id="installation">
+  <div class="container">
+    <div class="container-sm reveal" style="text-align:center;margin-bottom:0">
+      <span class="eyebrow">Installation</span>
+      <h2 class="section-title">Prêt en 10 minutes.<br>Sans technicien.</h2>
+      <p class="section-body">Aucune compétence technique requise. Fixez les capteurs, connectez la centrale à votre Wi-Fi, c'est tout.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Téléchargez l'app</div>
+        <div class="step-body">Installez <strong>Daewoo Home Connect</strong> gratuitement sur iOS ou Android. Elle vous guide étape par étape.</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Connectez la centrale</div>
+        <div class="step-body">Branchez la centrale sur secteur, suivez les instructions dans l'app. Opérationnel en 2 à 5 minutes.</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Placez vos capteurs</div>
+        <div class="step-body">Ajoutez les accessoires un par un. Association automatique. Adhésifs fournis, perçage non requis dans la plupart des cas.</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Recevez les alertes</div>
+        <div class="step-body">Dès qu'un mouvement ou une ouverture est détecté, vous recevez une notification immédiate sur votre téléphone.</div>
+      </div>
+    </div>
+
+    <!-- Image installation -->
+    <div class="reveal-scale" style="margin-top:3rem;border-radius:24px;overflow:hidden;background:var(--gray1)">
+      <img src="/__l5e/assets-v1/c1ac9fad-6621-4530-a9e0-560552014ad4/pourquoi-touch.jpg" alt="Pourquoi choisir la centrale Touch / Touch XL — sans abonnement, clavier tactile, sirène et batterie intégrées, compatible 90+ accessoires" style="width:100%;display:block;border-radius:24px">
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SPECS TECHNIQUES ═══ -->
+<section class="section bg-gray" id="specs">
+  <div class="container">
+    <div class="container-sm reveal" style="text-align:center;margin-bottom:0">
+      <span class="eyebrow">Caractéristiques techniques</span>
+      <h2 class="section-title">Les détails qui comptent.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:3rem">
+      <div class="reveal" style="background:white;border-radius:20px;padding:2rem">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--gray2)">Connectivité</div>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Wi-Fi</span><span style="font-weight:500;color:var(--black)">2,4 GHz</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">GSM 4G</span><span style="font-weight:500;color:var(--black)">En option — carte SIM</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Notifications</span><span style="font-weight:500;color:var(--black)">Push + SMS (via GSM)</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Assistants vocaux</span><span style="font-weight:500;color:var(--black)">Google Home / Alexa</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Application</span><span style="font-weight:500;color:var(--black)">Daewoo Home Connect</span></div>
+        </div>
+      </div>
+      <div class="reveal" style="background:white;border-radius:20px;padding:2rem">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--gray2)">Alimentation & Autonomie</div>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Batterie de secours</span><span style="font-weight:500;color:var(--black)">4 heures</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Sirène intégrée (centrale)</span><span style="font-weight:500;color:var(--black)">95 dB</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Sirène extérieure WOS305S</span><span style="font-weight:500;color:var(--black)">110 dB — solaire</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Caméras extérieures W503</span><span style="font-weight:500;color:var(--black)">100 % sans fil (batterie)</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Caméra intérieure IP506P</span><span style="font-weight:500;color:var(--black)">Filaire</span></div>
+        </div>
+      </div>
+      <div class="reveal" style="background:white;border-radius:20px;padding:2rem">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--gray2)">Sécurité & Détection</div>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Modes de surveillance</span><span style="font-weight:500;color:var(--black)">Total / Partiel / Désarmée</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Détection arrachement</span><span style="font-weight:500;color:var(--black)">Oui — alerte immédiate</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Communication</span><span style="font-weight:500;color:var(--black)">Cryptée</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Temporisation</span><span style="font-weight:500;color:var(--black)">0 à 180 secondes</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Fonction SOS</span><span style="font-weight:500;color:var(--black)">Oui</span></div>
+        </div>
+      </div>
+      <div class="reveal" style="background:white;border-radius:20px;padding:2rem">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--gray2)">Évolutivité</div>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Accessoires max.</span><span style="font-weight:500;color:var(--black)">90</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Caméras supplémentaires</span><span style="font-weight:500;color:var(--black)">Illimité</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Maison connectée</span><span style="font-weight:500;color:var(--black)">Prises, interrupteurs…</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Abonnement</span><span style="font-weight:500;color:var(--black)">Aucun — 0 €/mois</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--gray3)">Garantie</span><span style="font-weight:500;color:var(--black)">2 ans</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="section" id="faq">
+  <div class="container" style="max-width:800px">
+    <div class="container-sm reveal" style="text-align:center;margin-bottom:0">
+      <span class="eyebrow">Questions fréquentes</span>
+      <h2 class="section-title">On vous répond.</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Est-ce que je peux installer le système moi-même ?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Oui, tout a été conçu pour une installation simple et rapide, sans technicien. Branchez la centrale sur une prise, fixez les capteurs fournis, et suivez les étapes dans l'application Daewoo Home Connect. En moins de 30 minutes, votre système est opérationnel.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Que se passe-t-il en cas de coupure de courant ?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">La centrale Touch AM301 dispose d'une batterie de secours intégrée qui prend le relais pendant environ 4 heures. Si vous avez installé une carte SIM (option GSM), vous recevrez des notifications par SMS même si votre box internet est coupée. Les caméras extérieures W503 fonctionnent sur leur propre batterie : elles restent opérationnelles, mais la consultation vidéo en direct nécessite le Wi-Fi.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Les caméras extérieures W503 sont-elles vraiment 100 % sans fil ?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Oui. Les deux caméras W503 incluses fonctionnent <strong>sans aucun câble</strong> : ni alimentation électrique, ni câble réseau. Elles disposent d'une batterie rechargeable autonome et communiquent en Wi-Fi avec la centrale Touch AM301. Vous les fixez où vous voulez (entrée, jardin, garage, façade arrière) en quelques minutes, sans saignée ni travaux.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Est-ce que le système déclenche l'alarme avant une effraction ?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Oui. Grâce aux détecteurs de vibration WDV301, le système peut déclencher l'alerte dès qu'une tentative d'intrusion est détectée — avant même l'ouverture de la porte ou de la fenêtre.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Mon enfant peut-il l'utiliser facilement ?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Oui. Grâce aux 2 télécommandes WRC305 fournies et à l'écran tactile de la centrale Touch (que les enfants maîtrisent généralement très bien), un enfant peut activer ou désactiver l'alarme sans avoir besoin d'un smartphone. Vous pouvez également paramétrer une temporisation pour avoir le temps de rentrer.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Puis-je ajouter des accessoires plus tard ?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Oui, le système est évolutif jusqu'à 90 accessoires, ce qui est largement suffisant pour n'importe quelle maison. Vous pouvez ajouter des caméras, des détecteurs, ou des périphériques pour rendre votre maison connectée — prises, interrupteurs… — tous gérés depuis l'app Daewoo Home Connect.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Est-ce que mes caméras sont privées ?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Oui. Grâce au système Daewoo, vous êtes le seul à avoir accès à vos caméras. Aucun centre de télésurveillance ni tiers ne peut y accéder. De plus, la caméra IP506P incluse dans ce pack dispose d'un mode Vie Privée mécanique : l'objectif se referme physiquement quand vous activez ce mode.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Y a-t-il des frais d'abonnement ?<div class="faq-toggle">+</div></div>
+        <div class="faq-a">Aucun abonnement. Vous payez {{ prix_pack }} une seule fois et c'est tout. Vous restez propriétaire de votre système, libre et sécurisé sans engagement ni mensualité.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA FINAL ═══ -->
+<!-- ═══ AVIS CLIENTS ═══ -->
+<section class="section" id="avis" style="background:#f5f5f7">
+  <div class="container" style="max-width:1080px">
+    <div class="container-sm reveal" style="text-align:center;margin-bottom:2.5rem">
+      <span class="eyebrow">Avis clients vérifiés</span>
+      <h2 class="section-title">Ils ont protégé leur maison.</h2>
+    </div>
+
+    <div class="reveal" style="display:grid;grid-template-columns:minmax(260px,320px) 1fr;gap:2.5rem;align-items:center;background:#fff;border-radius:22px;padding:2rem;margin-bottom:2rem;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+      <div style="text-align:center">
+        <div style="font-size:3.5rem;font-weight:700;line-height:1;color:#1d1d1f">4,52<span style="font-size:1.5rem;color:#86868b;font-weight:400">/5</span></div>
+        <div style="color:#f5a623;font-size:1.4rem;letter-spacing:2px;margin:.4rem 0">★★★★★</div>
+        <div style="color:#86868b;font-size:.9rem">Basé sur <strong style="color:#1d1d1f">42 avis</strong> vérifiés</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;font-size:.88rem">
+        <div style="display:flex;align-items:center;gap:.75rem"><span style="width:55px;color:#86868b">5 ★</span><div style="flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="width:57%;height:100%;background:#f5a623"></div></div><span style="width:30px;text-align:right;color:#86868b">24</span></div>
+        <div style="display:flex;align-items:center;gap:.75rem"><span style="width:55px;color:#86868b">4 ★</span><div style="flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="width:38%;height:100%;background:#f5a623"></div></div><span style="width:30px;text-align:right;color:#86868b">16</span></div>
+        <div style="display:flex;align-items:center;gap:.75rem"><span style="width:55px;color:#86868b">3 ★</span><div style="flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="width:5%;height:100%;background:#f5a623"></div></div><span style="width:30px;text-align:right;color:#86868b">2</span></div>
+        <div style="display:flex;align-items:center;gap:.75rem"><span style="width:55px;color:#86868b">2 ★</span><div style="flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="width:0%;height:100%;background:#f5a623"></div></div><span style="width:30px;text-align:right;color:#86868b">0</span></div>
+        <div style="display:flex;align-items:center;gap:.75rem"><span style="width:55px;color:#86868b">1 ★</span><div style="flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="width:0%;height:100%;background:#f5a623"></div></div><span style="width:30px;text-align:right;color:#86868b">0</span></div>
+      </div>
+    </div>
+
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem">
+
+      <article style="background:#fff;border-radius:18px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.04);display:flex;flex-direction:column;gap:.75rem">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#f5a623;letter-spacing:1px">★★★★★</div>
+          <div style="font-size:.75rem;color:#86868b">09/06/2026</div>
+        </div>
+        <div style="font-weight:600;color:#1d1d1f">Tranquillité</div>
+        <p style="color:#3a3a3c;font-size:.92rem;line-height:1.55;margin:0">« Facile à installer, très complet. »</p>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-top:auto;padding-top:.75rem;border-top:1px solid #f0f0f0">
+          <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.85rem">CK</div>
+          <div>
+            <div style="font-size:.85rem;font-weight:600;color:#1d1d1f">Christian K.</div>
+            <div style="font-size:.7rem;color:#86868b">✓ Achat vérifié</div>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border-radius:18px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.04);display:flex;flex-direction:column;gap:.75rem">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#f5a623;letter-spacing:1px">★★★★★</div>
+          <div style="font-size:.75rem;color:#86868b">04/06/2026</div>
+        </div>
+        <div style="font-weight:600;color:#1d1d1f">Bon rapport qualité-prix</div>
+        <p style="color:#3a3a3c;font-size:.92rem;line-height:1.55;margin:0">« Système facile à poser, intuitif. La caméra peut être intégrée au système. Bon rapport qualité-prix. »</p>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-top:auto;padding-top:.75rem;border-top:1px solid #f0f0f0">
+          <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#11998e,#38ef7d);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.85rem">MO</div>
+          <div>
+            <div style="font-size:.85rem;font-weight:600;color:#1d1d1f">Mustapha O.</div>
+            <div style="font-size:.7rem;color:#86868b">✓ Achat vérifié</div>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border-radius:18px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.04);display:flex;flex-direction:column;gap:.75rem">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#f5a623;letter-spacing:1px">★★★★<span style="color:#ddd">★</span></div>
+          <div style="font-size:.75rem;color:#86868b">08/11/2023</div>
+        </div>
+        <div style="font-weight:600;color:#1d1d1f">Ça fonctionne bien</div>
+        <p style="color:#3a3a3c;font-size:.92rem;line-height:1.55;margin:0">« Les scénarios demandent un peu de prise en main mais le service Daewoo répond à mes questions. Sinon ça fonctionne bien. »</p>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-top:auto;padding-top:.75rem;border-top:1px solid #f0f0f0">
+          <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.85rem">ER</div>
+          <div>
+            <div style="font-size:.85rem;font-weight:600;color:#1d1d1f">Eric R.</div>
+            <div style="font-size:.7rem;color:#86868b">✓ Achat vérifié</div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="reveal" style="text-align:center;margin-top:2rem">
+      <a href="https://daewoo-security.fr/products/offre-exclusive-pack-touch-compatible-animaux-sans-abonnement" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;color:#1d1d1f;text-decoration:none;font-weight:500;font-size:.95rem;border-bottom:1px solid currentColor;padding-bottom:2px">Voir les 42 avis sur daewoo-security.fr →</a>
+    </div>
+  </div>
+</section>
+
+<section id="cta-section">
+  <div class="container" style="position:relative;z-index:2">
+    <div class="cta-eyebrow reveal">Pack Touch — Sécurité Totale</div>
+    <h2 class="cta-title reveal">Pack Touch AM301.</h2>
+    <div class="offer-banner reveal">
+      <div class="offer-tag"><span class="pulse"></span>Offre spéciale — durée limitée</div>
+      <div class="offer-price-row">
+        <div class="offer-price-now">{{ prix_pack }}</div>
+        {%- if prix_pack_barre != blank %}<div class="offer-price-old">{{ prix_pack_barre }}</div>{% endif -%}
+      </div>
+      <div class="offer-headline">Cette offre exclusive prend fin dans :</div>
+      <div class="countdown" id="countdown" aria-live="polite">
+        <div class="cd-box"><div class="cd-num" id="cd-d">07</div><div class="cd-lbl">Jours</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box"><div class="cd-num" id="cd-h">00</div><div class="cd-lbl">Heures</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box"><div class="cd-num" id="cd-m">00</div><div class="cd-lbl">Min</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box"><div class="cd-num" id="cd-s">00</div><div class="cd-lbl">Sec</div></div>
+      </div>
+    </div>
+    <div class="cta-btns reveal">
+      {%- comment -%} Bouton Ajouter au panier — produit Shopify {%- endcomment -%}
+      {%- assign touch_product = all_products[section.settings.product_handle] -%}
+      {%- if touch_product != blank and touch_product.available -%}
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-touch-add-form style="display:inline">
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="id" value="{{ touch_product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="btn-buy-white">Ajouter au panier — {{ touch_product.price | money }}</button>
+        </form>
+      {%- else -%}
+        <a href="/products/{{ section.settings.product_handle }}" class="btn-buy-white">Voir le produit</a>
+      {%- endif -%}
+      <a href="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/MANUEL_COMPLET_2.0_AM301_773fc359-0975-4e2c-984f-a7ceb9e0162c.pdf?v=1731934300" class="btn-learn-white" target="_blank" rel="noopener">Manuel d'utilisation PDF</a>
+    </div>
+    <div class="cta-reassure reveal">
+      <div class="cr-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Livraison offerte, expédié sous 2 jours</div>
+      <div class="cr-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Garantie 2 ans</div>
+      <div class="cr-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support technique France</div>
+      <div class="cr-item"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Retours faciles</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© Daewoo Security — Informations issues de <a href="https://daewoo-security.fr" target="_blank">daewoo-security.fr</a> · Design inspiré Apple · Aucune information inventée</p>
+</footer>
+
+<script>
+// Sticky bar
+const sticky = document.getElementById('sticky');
+window.addEventListener('scroll', () => {
+  sticky.classList.toggle('show', window.scrollY > 600);
+});
+
+// Reveal on scroll
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal, .reveal-scale').forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 0.07 + 's';
+  io.observe(el);
+});
+
+// FAQ
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => item.classList.toggle('open'));
+});
+
+// Countdown 7 jours (persisté en localStorage par visiteur)
+(function(){
+  const KEY = 'touch-offer-end';
+  let end = parseInt(localStorage.getItem(KEY) || '0', 10);
+  const now = Date.now();
+  if (!end || end < now) {
+    end = now + 7 * 24 * 60 * 60 * 1000;
+    localStorage.setItem(KEY, String(end));
+  }
+  const pad = n => String(n).padStart(2,'0');
+  const els = {
+    d: document.getElementById('cd-d'),
+    h: document.getElementById('cd-h'),
+    m: document.getElementById('cd-m'),
+    s: document.getElementById('cd-s'),
+  };
+  function tick(){
+    const diff = Math.max(0, end - Date.now());
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    if (els.d) els.d.textContent = pad(d);
+    if (els.h) els.h.textContent = pad(h);
+    if (els.m) els.m.textContent = pad(m);
+    if (els.s) els.s.textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+
+
+{%- comment -%} Script de la landing (sticky bar, reveal, FAQ, countdown 7j) {%- endcomment -%}
+<script>
+(function(){
+  // Sticky bar
+  var sticky = document.getElementById('sticky');
+  if (sticky) window.addEventListener('scroll', function(){
+    sticky.classList.toggle('show', window.scrollY > 600);
+  });
+  // Reveal on scroll
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal, .reveal-scale').forEach(function(el, i){
+    el.style.transitionDelay = (i % 4) * 0.07 + 's';
+    io.observe(el);
+  });
+  // FAQ
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    item.addEventListener('click', function(){ item.classList.toggle('open'); });
+  });
+  // Countdown 7 jours (persisté par visiteur)
+  var KEY = 'touch-offer-end';
+  var end = parseInt(localStorage.getItem(KEY) || '0', 10);
+  var now = Date.now();
+  if (!end || end < now){
+    end = now + 7 * 24 * 60 * 60 * 1000;
+    localStorage.setItem(KEY, String(end));
+  }
+  function pad(n){ return String(n).padStart(2,'0'); }
+  var els = {
+    d: document.getElementById('cd-d'),
+    h: document.getElementById('cd-h'),
+    m: document.getElementById('cd-m'),
+    s: document.getElementById('cd-s')
+  };
+  function tick(){
+    var diff = Math.max(0, end - Date.now());
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    if (els.d) els.d.textContent = pad(d);
+    if (els.h) els.h.textContent = pad(h);
+    if (els.m) els.m.textContent = pad(m);
+    if (els.s) els.s.textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Ajout au panier en AJAX (reste sur la page → ouvre le drawer du thème si dispo)
+  var form = document.querySelector('[data-touch-add-form]');
+  if (form){
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var btn = form.querySelector('button');
+      var original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Ajout en cours…';
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept':'application/json' },
+        body: new URLSearchParams(new FormData(form)).toString()
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(){
+        // Ouvre le drawer si le thème en dispose, sinon redirige vers /cart
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+        if (window.theme && typeof window.theme.openCart === 'function') {
+          window.theme.openCart();
+        } else {
+          window.location.href = '/cart';
+        }
+      })
+      .catch(function(){ window.location.href = '/cart'; })
+      .finally(function(){ btn.disabled = false; btn.textContent = original; });
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Pack Touch — Landing",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product_handle",
+      "label": "Produit lié (bouton Ajouter au panier)",
+      "info": "Sélectionne le produit Pack Touch AM301"
+    }
+  ],
+  "presets": [
+    { "name": "Pack Touch — Landing" }
+  ]
+}
+{% endschema %}
+{% section 'section-touch-landing' %}
