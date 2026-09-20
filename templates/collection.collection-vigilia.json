@@ -1,0 +1,728 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_VGyMwR": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<style>\n  .vg-hero *,\n  .vg-trust-bar * {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  .vg-hero {\n    position: relative;\n    min-height: 460px;\n    display: flex;\n    align-items: center;\n    overflow: hidden;\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif;\n    border-radius: 20px 20px 0 0;\n  }\n\n  .vg-hero-bg {\n    position: absolute;\n    inset: 0;\n  }\n\n  .vg-hero-bg::after {\n    content: '';\n    position: absolute;\n    inset: 0;\n    background: linear-gradient(\n      95deg,\n      rgba(0,0,0,0.80) 0%,\n      rgba(0,0,0,0.45) 48%,\n      rgba(0,0,0,0.05) 100%\n    );\n  }\n\n  .vg-hero-bg img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center right;\n    display: block;\n  }\n\n  .vg-hero-content {\n    position: relative;\n    z-index: 2;\n    max-width: 1200px;\n    margin: 0 auto;\n    padding: 64px 40px;\n    width: 100%;\n  }\n\n  .vg-tag {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    padding: 5px 14px;\n    border-radius: 980px;\n    background: rgba(255,255,255,0.12);\n    border: 1px solid rgba(255,255,255,0.2);\n    color: rgba(255,255,255,0.92);\n    font-size: 12px;\n    font-weight: 500;\n    letter-spacing: 0.01em;\n    margin-bottom: 20px;\n  }\n\n  .vg-title {\n    font-weight: 600;\n    font-size: clamp(30px, 4vw, 50px);\n    line-height: 1.06;\n    letter-spacing: -0.02em;\n    color: #fff;\n    margin-bottom: 14px;\n    max-width: 520px;\n  }\n\n  .vg-title span { color: #2997ff; }\n\n  .vg-sub {\n    font-size: 16px;\n    color: rgba(255,255,255,0.72);\n    line-height: 1.55;\n    max-width: 400px;\n    margin-bottom: 32px;\n    font-weight: 400;\n  }\n\n  .vg-ctas {\n    display: flex;\n    gap: 12px;\n    flex-wrap: wrap;\n  }\n\n  .vg-btn-packs {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #fff;\n    color: #1d1d1f;\n    font-size: 15px;\n    font-weight: 500;\n    padding: 13px 24px;\n    border-radius: 980px;\n    text-decoration: none;\n    transition: opacity 0.2s, transform 0.15s;\n  }\n  .vg-btn-packs:hover {\n    opacity: 0.85;\n    transform: translateY(-1px);\n    color: #1d1d1f;\n    text-decoration: none;\n  }\n  .vg-btn-packs svg {\n    width: 15px; height: 15px;\n    stroke: currentColor; fill: none; stroke-width: 2;\n    transition: transform 0.2s;\n  }\n  .vg-btn-packs:hover svg { transform: translateX(3px); }\n\n  .vg-btn-config {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: transparent;\n    color: rgba(255,255,255,0.92);\n    font-size: 15px;\n    font-weight: 500;\n    padding: 12px 22px;\n    border-radius: 980px;\n    border: 1px solid rgba(255,255,255,0.35);\n    text-decoration: none;\n    transition: border-color 0.2s, transform 0.15s;\n  }\n  .vg-btn-config:hover {\n    border-color: rgba(255,255,255,0.75);\n    color: #fff;\n    transform: translateY(-1px);\n    text-decoration: none;\n  }\n  .vg-btn-config svg {\n    width: 15px; height: 15px;\n    stroke: currentColor; fill: none; stroke-width: 2;\n  }\n\n  .vg-trust-bar {\n    background: #1d1d1f;\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif;\n    border-radius: 0 0 20px 20px;\n  }\n\n  .vg-trust-inner {\n    max-width: 1200px;\n    margin: 0 auto;\n    padding: 0 40px;\n    display: flex;\n    overflow-x: auto;\n    scrollbar-width: none;\n  }\n  .vg-trust-inner::-webkit-scrollbar { display: none; }\n\n  .vg-trust-item {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    padding: 18px 32px 18px 0;\n    margin-right: 32px;\n    border-right: 1px solid rgba(255,255,255,0.1);\n    white-space: nowrap;\n    flex-shrink: 0;\n  }\n  .vg-trust-item:last-child { border-right: none; margin-right: 0; }\n\n  .vg-trust-icon {\n    width: 30px; height: 30px;\n    border-radius: 9px;\n    background: rgba(255,255,255,0.08);\n    display: flex; align-items: center; justify-content: center;\n    flex-shrink: 0;\n  }\n  .vg-trust-icon svg {\n    width: 15px; height: 15px;\n    stroke: #2997ff; fill: none; stroke-width: 2;\n  }\n\n  .vg-trust-label {\n    font-size: 12.5px; font-weight: 600;\n    color: #fff; display: block; line-height: 1.2;\n  }\n  .vg-trust-sub {\n    font-size: 11.5px;\n    color: rgba(255,255,255,0.45);\n    display: block; line-height: 1.3;\n  }\n\n  @media (max-width: 640px) {\n    .vg-hero { flex-direction: column; align-items: stretch; min-height: unset; border-radius: 14px 14px 0 0; }\n    .vg-hero-bg { position: relative; width: 100%; height: 260px; }\n    .vg-hero-bg img { object-position: center center; }\n    .vg-hero-bg::after { background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%); }\n    .vg-hero-content { background: #000; padding: 32px 24px 36px; position: relative; }\n    .vg-title { font-size: 26px; max-width: 100%; }\n    .vg-sub { font-size: 14px; max-width: 100%; }\n    .vg-ctas { flex-direction: column; gap: 10px; }\n    .vg-btn-packs, .vg-btn-config { width: 100%; justify-content: center; }\n    .vg-trust-inner { padding: 0 24px; }\n    .vg-trust-bar { border-radius: 0 0 14px 14px; }\n  }\n</style>\n\n<section class=\"vg-hero\">\n  <div class=\"vg-hero-bg\">\n    <img src=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Visuels_amazon_vendor_3_a1675f6c-d7ca-46f7-bf83-a223e20eb5e5.webp?v=1777539260\" alt=\"Alarme Vigilia\" loading=\"eager\">\n  </div>\n  <div class=\"vg-hero-content\">\n    <span class=\"vg-tag\">Sans abonnement · Sans engagement</span>\n    <h1 class=\"vg-title\">Protégez votre maison<br>avec l'alarme <span>Vigilia</span></h1>\n    <p class=\"vg-sub\">Installation en 30 minutes, sans perçage. Alertes en temps réel sur votre smartphone.</p>\n    <div class=\"vg-ctas\">\n      <a href=\"https://daewoo-security.fr/pages/pack-alarmes?_pos=1&_psq=pack&_ss=e&_v=1.0\" class=\"vg-btn-packs\">\n        Voir les packs\n        <svg viewBox=\"0 0 24 24\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><polyline points=\"12 5 19 12 12 19\"/></svg>\n      </a>\n      <a href=\"https://daewoo-security.fr/pages/configurateur_2\" class=\"vg-btn-config\">\n        <svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14\"/></svg>\n        Configurer mon système\n      </a>\n    </div>\n  </div>\n</section>\n\n<div class=\"vg-trust-bar\">\n  <div class=\"vg-trust-inner\">\n    <div class=\"vg-trust-item\">\n      <div class=\"vg-trust-icon\">\n        <svg viewBox=\"0 0 24 24\"><polyline points=\"22 12 18 12 15 21 9 3 6 12 2 12\"/></svg>\n      </div>\n      <div>\n        <span class=\"vg-trust-label\">Installation 30 min</span>\n        <span class=\"vg-trust-sub\">Sans câblage ni perçage</span>\n      </div>\n    </div>\n    <div class=\"vg-trust-item\">\n      <div class=\"vg-trust-icon\">\n        <svg viewBox=\"0 0 24 24\"><rect x=\"1\" y=\"4\" width=\"22\" height=\"16\" rx=\"2\"/><line x1=\"1\" y1=\"10\" x2=\"23\" y2=\"10\"/></svg>\n      </div>\n      <div>\n        <span class=\"vg-trust-label\">Sans abonnement</span>\n        <span class=\"vg-trust-sub\">Application gratuite incluse</span>\n      </div>\n    </div>\n    <div class=\"vg-trust-item\">\n      <div class=\"vg-trust-icon\">\n        <svg viewBox=\"0 0 24 24\"><path d=\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/></svg>\n      </div>\n      <div>\n        <span class=\"vg-trust-label\">SAV basé en France</span>\n        <span class=\"vg-trust-sub\">Support 7j/7</span>\n      </div>\n    </div>\n    <div class=\"vg-trust-item\">\n      <div class=\"vg-trust-icon\">\n        <svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg>\n      </div>\n      <div>\n        <span class=\"vg-trust-label\">Garantie 2 ans</span>\n        <span class=\"vg-trust-sub\">Retour possible sous 14 jours</span>\n      </div>\n    </div>\n  </div>\n</div>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "daewoo_panel_showcase": {
+      "type": "daewoo-panel-showcase",
+      "blocks": {
+        "feature_keypad": {
+          "type": "feature",
+          "settings": {
+            "side": "left",
+            "icon": "keypad",
+            "title": "Clavier intégré",
+            "description": "Activez et désactivez directement depuis la centrale."
+          }
+        },
+        "feature_rfid": {
+          "type": "feature",
+          "settings": {
+            "side": "left",
+            "icon": "rfid",
+            "title": "Lecteur RFID",
+            "description": "Un badge suffit pour désarmer l'alarme."
+          }
+        },
+        "feature_siren": {
+          "type": "feature",
+          "settings": {
+            "side": "left",
+            "icon": "siren",
+            "title": "Sirène intégrée 85 dB",
+            "description": "Une première dissuasion immédiatement dans le logement."
+          }
+        },
+        "feature_battery": {
+          "type": "feature",
+          "settings": {
+            "side": "right",
+            "icon": "battery",
+            "title": "Batterie de secours",
+            "description": "Environ 4 heures d'autonomie en cas de coupure de courant."
+          }
+        },
+        "feature_wifi": {
+          "type": "feature",
+          "settings": {
+            "side": "right",
+            "icon": "wifi",
+            "title": "Connexion Wi-Fi 2,4 GHz",
+            "description": "Pilotage via l'application Daewoo Home Connect."
+          }
+        },
+        "feature_sim": {
+          "type": "feature",
+          "settings": {
+            "side": "right",
+            "icon": "sim",
+            "title": "Version Wi-Fi + GSM disponible",
+            "description": "Ajoutez une carte SIM pour recevoir des alertes SMS en cas de coupure Internet."
+          }
+        }
+      },
+      "block_order": [
+        "feature_keypad",
+        "feature_rfid",
+        "feature_siren",
+        "feature_battery",
+        "feature_wifi",
+        "feature_sim"
+      ],
+      "settings": {
+        "heading": "Tout commence ici.",
+        "description": "Compacte, simple à utiliser et pensée pour le quotidien, la centrale Vigilia réunit l'essentiel dans un seul produit.",
+        "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Daewoo_Vigilia_-_Alarme_-_Photo_Produit_1600_x_1600_px_5.png?v=1770108516",
+        "image_alt": "Centrale d'alarme Vigilia Daewoo avec clavier intégré et lecteur RFID"
+      }
+    },
+    "daewoo_vigilia_evolution": {
+      "type": "daewoo-vigilia-evolution",
+      "blocks": {
+        "plan_wifi": {
+          "type": "plan",
+          "settings": {
+            "title": "Vigilia Wi-Fi",
+            "features": "<ul><li>Application mobile</li><li>Notifications push</li><li>Wi-Fi 2,4 GHz</li><li>Fonctionne localement même sans internet.</li><li>Idéale si votre connexion Internet est stable.</li></ul>",
+            "price_label": "À partir de",
+            "price": "139,90 €"
+          }
+        },
+        "plan_wifi_gsm": {
+          "type": "plan",
+          "settings": {
+            "title": "Vigilia Wi-Fi + GSM",
+            "features": "<ul><li>Application mobile</li><li>Notifications push</li><li>Wi-Fi 2,4 GHz</li><li>Carte SIM optionnelle</li><li>Alertes SMS possibles</li><li>Sécurité renforcée en cas de coupure Internet</li></ul>",
+            "price_label": "À partir de",
+            "price": "189,90 €"
+          }
+        }
+      },
+      "block_order": [
+        "plan_wifi",
+        "plan_wifi_gsm"
+      ],
+      "settings": {
+        "heading": "Un système qui évolue avec vos besoins.",
+        "description": "Commencez avec l'essentiel puis ajoutez les accessoires dont vous avez besoin, quand vous le souhaitez.",
+        "button_label": "Voir tous les accessoires",
+        "button_link": "/collections/compatible-gamme-vigilia-touch",
+        "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/958b5e1e-36cd-47db-93da-efc4b7f2d77c.jpg?v=1770108516",
+        "image_alt": "Pack complet Vigilia avec centrale et accessoires",
+        "plans_heading": "Quelle Vigilia choisir ?"
+      }
+    },
+    "daewoo_app_showcase": {
+      "type": "daewoo-app-showcase",
+      "blocks": {
+        "feature_remote": {
+          "type": "feature",
+          "settings": {
+            "icon": "remote",
+            "title": "Contrôle à distance",
+            "description": "Activez, désactivez et gérez votre alarme."
+          }
+        },
+        "feature_scenario": {
+          "type": "feature",
+          "settings": {
+            "icon": "scenario",
+            "title": "Scénarios intelligents",
+            "description": "Créez des automatisations adaptées à votre quotidien."
+          }
+        },
+        "feature_bell": {
+          "type": "feature",
+          "settings": {
+            "icon": "bell",
+            "title": "Alertes en temps réel",
+            "description": "Recevez instantanément toutes les notifications."
+          }
+        },
+        "feature_accessories": {
+          "type": "feature",
+          "settings": {
+            "icon": "accessories",
+            "title": "Gestion des accessoires",
+            "description": "Ajoutez, modifiez et contrôlez tous vos équipements."
+          }
+        },
+        "feature_camera": {
+          "type": "feature",
+          "settings": {
+            "icon": "camera",
+            "title": "Vidéosurveillance",
+            "description": "Consultez vos caméras en direct ou en lecture."
+          }
+        },
+        "feature_share": {
+          "type": "feature",
+          "settings": {
+            "icon": "share",
+            "title": "Partage facile",
+            "description": "Donnez l'accès à votre famille en quelques secondes."
+          }
+        }
+      },
+      "block_order": [
+        "feature_remote",
+        "feature_scenario",
+        "feature_bell",
+        "feature_accessories",
+        "feature_camera",
+        "feature_share"
+      ],
+      "settings": {
+        "logo_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Icone_moderne_DaeWoo_avec_logo_3D.png?v=1786629006",
+        "brand_name": "DAEWOO HOME CONNECT",
+        "heading": "Toute votre maison dans votre poche.",
+        "description": "Contrôlez votre système, recevez vos alertes et consultez vos caméras où que vous soyez.",
+        "app_store_link": "https://apps.apple.com/fr/app/daewoo-home-connect/id1491449350",
+        "play_store_link": "https://play.google.com/store/apps/details?id=com.NewDeal.Homeconnect&hl=fr",
+        "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Application_Photo_Jardin.jpg?v=1786689881",
+        "image_alt": ""
+      }
+    },
+    "daewoo_scenarios_showcase": {
+      "type": "daewoo-scenarios-showcase",
+      "blocks": {
+        "scenario_leave": {
+          "type": "scenario",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/vigilia_scene_depart_full.png?v=1786630328",
+            "image_alt": "",
+            "title": "Vous quittez la maison",
+            "description": "Activez votre système d'un geste et partez l'esprit tranquille."
+          }
+        },
+        "scenario_home": {
+          "type": "scenario",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/vigilia_scene_maison_full.png?v=1786630328",
+            "image_alt": "",
+            "title": "Vous êtes chez vous",
+            "description": "Activez uniquement les zones souhaitées avec le mode Maison."
+          }
+        },
+        "scenario_intrusion": {
+          "type": "scenario",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/vigilia_scene_intrusion_full.png?v=1786630327",
+            "image_alt": "",
+            "title": "Quelqu'un tente d'entrer",
+            "description": "Le système détecte, alerte et déclenche selon votre configuration."
+          }
+        }
+      },
+      "block_order": [
+        "scenario_leave",
+        "scenario_home",
+        "scenario_intrusion"
+      ],
+      "settings": {
+        "heading": "Pensée pour les situations réelles."
+      }
+    },
+    "image_with_text_Fhj8Um": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_dNWmFb": {
+          "type": "heading",
+          "settings": {
+            "heading": "Ils ont choisi Daewoo Security",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "highlighted_reveal": false
+          }
+        },
+        "text_GHpzhj": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Jean et Marie, 48 et 46 ans, ont protégé leur maison à la campagne avec le système <strong>Touch XL</strong>.<br/><br/>Découvrez <strong>leur configuration sur mesure</strong>, les détecteurs extérieurs installés et le coût global de leur solution.</p>",
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "button_fJeJ7H": {
+          "type": "button",
+          "settings": {
+            "button_label": "Voir leur configuration",
+            "button_link": "shopify://pages/ils-ont-choisi-daewoo-security",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_dNWmFb",
+        "text_GHpzhj",
+        "button_fJeJ7H"
+      ],
+      "name": "t:sections.image-with-text.name",
+      "settings": {
+        "image": "shopify://shop_images/Capture_d_ecran_le_2025-10-30_a_13.45.18.png",
+        "image_height": "650px",
+        "image_width": "medium",
+        "layout": "image_first",
+        "text_alignment": "left",
+        "content_position": "align-self-center",
+        "image_height_mobile": "auto",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false,
+        "enable_parallax": true,
+        "parallax_direction": "vertical"
+      }
+    },
+    "17537033312cec849b": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_gXyCBK": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_gXyCBK"
+      ],
+      "settings": {
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 0,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "custom_liquid_Fg3wQW": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<style>\n  .pkv-section * { box-sizing: border-box; margin: 0; padding: 0; }\n\n  .pkv-section {\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif;\n    padding: 96px 24px;\n    background: #f5f5f7;\n    overflow: hidden;\n  }\n\n  .pkv-inner { max-width: 1160px; margin: 0 auto; }\n\n  .pkv-header { text-align: center; margin-bottom: 56px; }\n\n  .pkv-tag {\n    display: inline-flex;\n    align-items: center;\n    background: rgba(0,113,227,0.08);\n    color: #0071e3;\n    font-size: 12px;\n    font-weight: 600;\n    padding: 5px 14px;\n    border-radius: 980px;\n    margin-bottom: 16px;\n    letter-spacing: 0.02em;\n  }\n\n  .pkv-title {\n    font-size: clamp(28px, 3.6vw, 40px);\n    font-weight: 600;\n    color: #1d1d1f;\n    line-height: 1.1;\n    letter-spacing: -0.02em;\n    margin-bottom: 14px;\n  }\n\n  .pkv-subtitle {\n    font-size: 16px;\n    color: #6e6e73;\n    max-width: 520px;\n    margin: 0 auto;\n    line-height: 1.5;\n  }\n\n  .pkv-grid {\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 20px;\n    margin-bottom: 48px;\n    align-items: stretch;\n  }\n\n  .pkv-card {\n    border-radius: 20px;\n    overflow: hidden;\n    position: relative;\n    transition: transform 0.2s, box-shadow 0.2s;\n    background: #fff;\n    display: flex;\n    flex-direction: column;\n  }\n\n  .pkv-card:hover {\n    transform: translateY(-4px);\n    box-shadow: 0 16px 36px rgba(0,0,0,0.08);\n  }\n\n  .pkv-card.featured {\n    box-shadow: 0 0 0 2px #0071e3;\n  }\n\n  .pkv-card-badge {\n    position: absolute;\n    top: 14px;\n    right: 14px;\n    background: #0071e3;\n    color: #fff;\n    font-size: 11px;\n    font-weight: 600;\n    padding: 4px 12px;\n    border-radius: 980px;\n    white-space: nowrap;\n    z-index: 2;\n  }\n\n  .pkv-card-img-wrap {\n    width: 100%;\n    aspect-ratio: 1 / 1;\n    overflow: hidden;\n    background: #f5f5f7;\n    flex-shrink: 0;\n  }\n\n  .pkv-card-img-wrap img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n    display: block;\n  }\n\n  .pkv-card-body {\n    padding: 26px;\n    display: flex;\n    flex-direction: column;\n    flex: 1;\n  }\n\n  .pkv-card-ref {\n    font-size: 11px;\n    font-weight: 600;\n    color: #86868b;\n    letter-spacing: 0.04em;\n    text-transform: uppercase;\n    margin-bottom: 5px;\n  }\n\n  .pkv-card-title {\n    font-size: 17px;\n    font-weight: 600;\n    color: #1d1d1f;\n    margin-bottom: 4px;\n    line-height: 1.3;\n    letter-spacing: -0.01em;\n  }\n\n  .pkv-card-desc {\n    font-size: 12.5px;\n    color: #86868b;\n    margin-bottom: 16px;\n  }\n\n  .pkv-price {\n    font-size: 22px;\n    font-weight: 600;\n    color: #1d1d1f;\n    margin-bottom: 18px;\n    letter-spacing: -0.01em;\n  }\n\n  .pkv-divider {\n    height: 1px;\n    background: rgba(0,0,0,0.08);\n    margin-bottom: 18px;\n  }\n\n  .pkv-features {\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    margin-bottom: 26px;\n    flex: 1;\n  }\n\n  .pkv-feature {\n    display: flex;\n    align-items: flex-start;\n    gap: 10px;\n    font-size: 12.5px;\n    color: #424245;\n    line-height: 1.45;\n  }\n\n  .pkv-feature-dot {\n    width: 17px;\n    height: 17px;\n    border-radius: 50%;\n    background: #eef5ff;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-shrink: 0;\n    margin-top: 1px;\n  }\n\n  .pkv-feature-dot svg {\n    width: 9px;\n    height: 9px;\n    stroke: #0071e3;\n    fill: none;\n    stroke-width: 2.5;\n  }\n\n  .pkv-card-btn {\n    display: block;\n    text-align: center;\n    padding: 12px 20px;\n    border-radius: 980px;\n    font-size: 14px;\n    font-weight: 500;\n    text-decoration: none;\n    transition: opacity 0.2s, transform 0.15s;\n    margin-top: auto;\n  }\n\n  .pkv-card-btn:hover { opacity: 0.85; transform: translateY(-1px); text-decoration: none; }\n\n  .pkv-card-btn.outline {\n    background: #f5f5f7;\n    color: #1d1d1f;\n  }\n\n  .pkv-card-btn.outline:hover { color: #1d1d1f; }\n\n  .pkv-card-btn.solid {\n    background: #1d1d1f;\n    color: #fff;\n  }\n\n  .pkv-card-btn.solid:hover { color: #fff; }\n\n  .pkv-cta {\n    background: #1d1d1f;\n    border-radius: 20px;\n    padding: 36px 44px;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    gap: 24px;\n    flex-wrap: wrap;\n  }\n\n  .pkv-cta-title { font-size: 19px; font-weight: 600; color: #fff; margin-bottom: 4px; letter-spacing: -0.01em; }\n  .pkv-cta-sub { font-size: 13.5px; color: rgba(255,255,255,0.6); }\n\n  .pkv-cta-btn {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #fff;\n    color: #1d1d1f;\n    font-size: 14px;\n    font-weight: 500;\n    padding: 13px 26px;\n    border-radius: 980px;\n    text-decoration: none;\n    transition: opacity 0.2s, transform 0.15s;\n    white-space: nowrap;\n  }\n\n  .pkv-cta-btn:hover { opacity: 0.85; color: #1d1d1f; transform: translateY(-1px); text-decoration: none; }\n\n  .pkv-cta-btn svg {\n    width: 16px; height: 16px;\n    stroke: currentColor; fill: none; stroke-width: 2;\n    transition: transform 0.2s;\n  }\n\n  .pkv-cta-btn:hover svg { transform: translateX(3px); }\n\n  @media (max-width: 768px) {\n    .pkv-section { padding: 64px 0; }\n    .pkv-header { padding: 0 24px; }\n    .pkv-cta-wrap { padding: 0 24px; }\n\n    .pkv-grid {\n      display: flex;\n      flex-wrap: nowrap;\n      overflow-x: auto;\n      scroll-snap-type: x mandatory;\n      -webkit-overflow-scrolling: touch;\n      gap: 16px;\n      padding: 8px 24px 16px;\n      margin-bottom: 32px;\n      scrollbar-width: none;\n      align-items: stretch;\n    }\n\n    .pkv-grid::-webkit-scrollbar { display: none; }\n\n    .pkv-card {\n      flex: 0 0 78vw;\n      max-width: 320px;\n      scroll-snap-align: start;\n    }\n\n    .pkv-cta { flex-direction: column; text-align: center; }\n  }\n</style>\n\n<div class=\"pkv-section\">\n  <div class=\"pkv-inner\">\n\n    <div class=\"pkv-header\">\n      <div class=\"pkv-tag\">Nos packs alarme</div>\n      <h2 class=\"pkv-title\">Tout ce qu'il faut pour<br>protéger votre maison</h2>\n      <p class=\"pkv-subtitle\">Chaque pack Vigilia est composé par nos experts pour couvrir votre logement sans avoir à chercher quoi acheter.</p>\n    </div>\n\n    <div class=\"pkv-grid\">\n\n      <!-- Pack Starter Vigilia -->\n      <div class=\"pkv-card\">\n        <div class=\"pkv-card-img-wrap\">\n          <img src=\"https://daewoo-security.fr/cdn/shop/files/958b5e1e-36cd-47db-93da-efc4b7f2d77c.jpg?v=1770108516&width=1600\" alt=\"Starter Pack Vigilia\">\n        </div>\n        <div class=\"pkv-card-body\">\n          <p class=\"pkv-card-ref\">Starter</p>\n          <p class=\"pkv-card-title\">Starter Pack Vigilia</p>\n          <p class=\"pkv-card-desc\">Appartement / Maison — l'essentiel pour démarrer</p>\n          <p class=\"pkv-price\">À partir de 139,90 €</p>\n          <div class=\"pkv-divider\"></div>\n          <div class=\"pkv-features\">\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Centrale Vigilia sans fil — clavier tactile + sirène 85 dB\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Caméra intérieure IP506P — Full HD\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              2× Contacteurs WDV301 + 1× Détecteur mouvement WPS305\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              1× Télécommande WRC305 + 2× Badges RFID\n            </div>\n          </div>\n          <a href=\"https://daewoo-security.fr/products/daewoo-vigilia-starter-pack?_pos=1&_sid=2302b090d&_ss=r\" class=\"pkv-card-btn outline\">Voir le pack →</a>\n        </div>\n      </div>\n\n      <!-- Pack VIG503 -->\n      <div class=\"pkv-card featured\">\n        <div class=\"pkv-card-badge\">Le plus populaire</div>\n        <div class=\"pkv-card-img-wrap\">\n          <img src=\"https://daewoo-security.fr/cdn/shop/files/VIG503_4.png?v=1773150766&width=1000\" alt=\"Pack Vigilia VIG503\">\n        </div>\n        <div class=\"pkv-card-body\">\n          <p class=\"pkv-card-ref\">VIG503</p>\n          <p class=\"pkv-card-title\">Pack Vigilia VIG503+</p>\n          <p class=\"pkv-card-desc\">Maison / Pavillon — 2 caméras + sirène solaire</p>\n          <p class=\"pkv-price\">À partir de 499,90 €</p>\n          <div class=\"pkv-divider\"></div>\n          <div class=\"pkv-features\">\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Centrale Vigilia Wi-Fi — clavier tactile + sirène 85 dB\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Caméra extérieure solaire W503SP + caméra intérieure IP506\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Sirène extérieure solaire WOS305S — flash stroboscopique\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              5× Contacteurs WDV301 + 2× Détecteurs mouvement WPS305\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              1× Télécommande SOS + 2× Badges RFID inclus\n            </div>\n          </div>\n          <a href=\"https://daewoo-security.fr/products/alarme-maison-wifi-sans-fil-vigilia-vig503-kit-complet-avec-2-cameras-full-hd-interieure-exterieure-solaire-et-11-accessoires\" class=\"pkv-card-btn solid\">Voir le pack →</a>\n        </div>\n      </div>\n\n      <!-- Pack VIG507 -->\n      <div class=\"pkv-card\">\n        <div class=\"pkv-card-img-wrap\">\n          <img src=\"https://daewoo-security.fr/cdn/shop/files/VIG507_2.png?v=1773156752&width=1000\" alt=\"Pack Vigilia VIG507\">\n        </div>\n        <div class=\"pkv-card-body\">\n          <p class=\"pkv-card-ref\">VIG507</p>\n          <p class=\"pkv-card-title\">Pack Vigilia VIG507+</p>\n          <p class=\"pkv-card-desc\">Grande maison / Villa — protection maximale Wi-Fi + GSM</p>\n          <p class=\"pkv-price\">À partir de 699,90 €</p>\n          <div class=\"pkv-divider\"></div>\n          <div class=\"pkv-features\">\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Centrale Vigilia Wi-Fi + GSM — sirène 85 dB intégrée\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Caméra motorisée extérieure W512MW + intérieure IP506\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              Sirène solaire WOS305S + détecteur fumée connecté 24h/24\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              8× Contacteurs WDV301 + 4× Détecteurs mouvement WPS305\n            </div>\n            <div class=\"pkv-feature\">\n              <div class=\"pkv-feature-dot\"><svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg></div>\n              1× Télécommande SOS + 2× Badges RFID inclus\n            </div>\n          </div>\n          <a href=\"https://daewoo-security.fr/products/alarme-maison-wifi-sans-fil-vigilia-vig507-kit-complet-avec-2-cameras-full-hd-interieur-exterieur-solaire-motorisee-et-17-accessoires-copie\" class=\"pkv-card-btn outline\">Voir le pack →</a>\n        </div>\n      </div>\n\n    </div>\n\n    <!-- CTA -->\n    <div class=\"pkv-cta-wrap\">\n      <div class=\"pkv-cta\">\n        <div>\n          <p class=\"pkv-cta-title\">Pas sûr du pack idéal pour votre logement ?</p>\n          <p class=\"pkv-cta-sub\">Répondez à 7 questions — notre configurateur compose le pack parfait pour vous.</p>\n        </div>\n        <a href=\"https://daewoo-security.fr/pages/configurateur_2\" class=\"pkv-cta-btn\">\n          Trouver mon pack\n          <svg viewBox=\"0 0 24 24\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><polyline points=\"12 5 19 12 12 19\"/></svg>\n        </a>\n      </div>\n    </div>\n\n  </div>\n</div>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "apps_MpwGBR": {
+      "type": "apps",
+      "blocks": {
+        "moast_carousel_VigDDJ": {
+          "type": "shopify://apps/moast/blocks/carousel/1ac7547b-5443-446c-868c-7fab4566ee16",
+          "settings": {
+            "dynamic": false,
+            "feed": "63ae965f-c1f2-49f4-b82e-c65f093c442a",
+            "feed_usage": "back_up",
+            "header": "",
+            "slide_type": "cards",
+            "product_cards": "none",
+            "autoplay_mode": "none",
+            "autoscroll_duration": 0,
+            "slide_size_mode": "fixed",
+            "slide_size": "250",
+            "slides_in_view_desktop": 4,
+            "slides_in_view_mobile": 2,
+            "aspect_ratio": "vertical",
+            "border": 0,
+            "border_color": "linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)",
+            "slide_rounding": "20",
+            "slide_spacing": 16,
+            "padding_top": 40,
+            "pagination": "below",
+            "alignment": "center",
+            "click_action": "fullscreen",
+            "float_location": "bottom_right",
+            "float_size": "medium",
+            "show_captions": false,
+            "show_handles": false,
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "moast_carousel_VigDDJ"
+      ],
+      "settings": {
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "custom_liquid_f6eqiw": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<style>\n  .inst-section * { box-sizing: border-box; margin: 0; padding: 0; }\n\n  .inst-section {\n    background: #000000;\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif;\n    overflow: hidden;\n    position: relative;\n    min-height: 440px;\n    display: flex;\n    align-items: stretch;\n  }\n\n  .inst-left {\n    flex: 1;\n    min-width: 260px;\n    padding: 64px 48px;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n  }\n\n  .inst-tag {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    background: rgba(255,255,255,0.08);\n    color: rgba(255,255,255,0.9);\n    font-size: 12px;\n    font-weight: 500;\n    padding: 5px 14px;\n    border-radius: 980px;\n    margin-bottom: 24px;\n    width: fit-content;\n  }\n\n  .inst-tag::before {\n    content: '';\n    width: 6px;\n    height: 6px;\n    background: #30d158;\n    border-radius: 50%;\n    display: inline-block;\n  }\n\n  .inst-title {\n    font-size: clamp(24px, 3.2vw, 34px);\n    font-weight: 600;\n    color: #fff;\n    margin-bottom: 40px;\n    line-height: 1.12;\n    letter-spacing: -0.02em;\n  }\n\n  .inst-steps {\n    display: flex;\n    flex-direction: column;\n    gap: 26px;\n  }\n\n  .inst-step {\n    display: flex;\n    gap: 16px;\n    align-items: flex-start;\n  }\n\n  .inst-num {\n    background: rgba(255,255,255,0.1);\n    color: #fff;\n    border-radius: 50%;\n    width: 30px;\n    height: 30px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 13px;\n    font-weight: 600;\n    flex-shrink: 0;\n    margin-top: 1px;\n  }\n\n  .inst-step-title {\n    font-size: 15px;\n    font-weight: 600;\n    color: #fff;\n    margin-bottom: 4px;\n    letter-spacing: -0.005em;\n  }\n\n  .inst-step-desc {\n    font-size: 13.5px;\n    color: rgba(255,255,255,0.55);\n    line-height: 1.5;\n  }\n\n  .inst-right {\n    flex: 0 0 45%;\n    position: relative;\n    overflow: hidden;\n  }\n\n  .inst-right img {\n    position: absolute;\n    inset: 0;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n    display: block;\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);\n    mask-image: linear-gradient(to right, transparent 0%, black 20%);\n  }\n\n  @media (max-width: 768px) {\n    .inst-section { flex-direction: column; }\n    .inst-left { padding: 44px 24px; }\n    .inst-right {\n      flex: 0 0 280px;\n      width: 100%;\n    }\n    .inst-right img {\n      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%);\n      mask-image: linear-gradient(to bottom, transparent 0%, black 20%);\n    }\n  }\n</style>\n\n<div class=\"inst-section\">\n\n  <div class=\"inst-left\">\n    <div class=\"inst-tag\">Installation facile</div>\n    <h2 class=\"inst-title\">Installée en 30 minutes,<br>même sans bricolage</h2>\n    <div class=\"inst-steps\">\n\n      <div class=\"inst-step\">\n        <div class=\"inst-num\">1</div>\n        <div>\n          <p class=\"inst-step-title\">Déballez et positionnez</p>\n          <p class=\"inst-step-desc\">Placez les capteurs aux endroits stratégiques</p>\n        </div>\n      </div>\n\n      <div class=\"inst-step\">\n        <div class=\"inst-num\">2</div>\n        <div>\n          <p class=\"inst-step-title\">Associez à l'application</p>\n          <p class=\"inst-step-desc\">Scannez le QR code, tout se configure automatiquement</p>\n        </div>\n      </div>\n\n      <div class=\"inst-step\">\n        <div class=\"inst-num\">3</div>\n        <div>\n          <p class=\"inst-step-title\">Activez et dormez tranquille</p>\n          <p class=\"inst-step-desc\">Votre maison est protégée dès la première nuit</p>\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"inst-right\">\n    <img src=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Daewoo_Vigilia_-_Alarme_-_Photo_Produit_1600_x_1600_px_2.webp?v=1777557470\" alt=\"Centrale Touch installation\">\n  </div>\n\n</div>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "custom_liquid_eVqR3c": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<style>\n  .wvv-section * { box-sizing: border-box; margin: 0; padding: 0; }\n\n  .wvv-section {\n    background: #ffffff;\n    padding: 88px 24px;\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif;\n  }\n\n  .wvv-title {\n    text-align: center;\n    font-size: clamp(24px, 3vw, 32px);\n    font-weight: 600;\n    letter-spacing: -0.02em;\n    color: #1d1d1f;\n    margin-bottom: 48px;\n  }\n\n  .wvv-grid {\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 18px;\n    max-width: 1160px;\n    margin: 0 auto;\n  }\n\n  .wvv-card {\n    background: #f5f5f7;\n    border-radius: 18px;\n    padding: 32px 24px;\n    text-align: center;\n  }\n\n  .wvv-card-icon {\n    width: 44px;\n    height: 44px;\n    border-radius: 12px;\n    background: #fff;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    margin: 0 auto 16px;\n    color: #0071e3;\n  }\n\n  .wvv-card-icon svg {\n    width: 21px;\n    height: 21px;\n  }\n\n  .wvv-card-label {\n    font-size: 15px;\n    font-weight: 600;\n    color: #1d1d1f;\n    margin-bottom: 6px;\n    line-height: 1.3;\n    letter-spacing: -0.005em;\n  }\n\n  .wvv-card-desc {\n    font-size: 13px;\n    color: #6e6e73;\n    line-height: 1.5;\n  }\n\n  @media (max-width: 900px) {\n    .wvv-grid { grid-template-columns: 1fr 1fr; }\n  }\n\n  @media (max-width: 640px) {\n    .wvv-grid { grid-template-columns: 1fr; }\n  }\n</style>\n\n<div class=\"wvv-section\">\n  <h2 class=\"wvv-title\">Pourquoi choisir la gamme Vigilia ?</h2>\n  <div class=\"wvv-grid\">\n\n    <div class=\"wvv-card\">\n      <div class=\"wvv-card-icon\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"10\" width=\"16\" height=\"10\" rx=\"2\"></rect><path d=\"M8 10V7a4 4 0 0 1 8 0v3\"></path><circle cx=\"12\" cy=\"15\" r=\"1.2\" fill=\"currentColor\" stroke=\"none\"></circle></svg>\n      </div>\n      <p class=\"wvv-card-label\">Simplicité d'utilisation</p>\n      <p class=\"wvv-card-desc\">Une interface claire pour piloter votre système sans prise de tête.</p>\n    </div>\n\n    <div class=\"wvv-card\">\n      <div class=\"wvv-card-icon\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"7\" y=\"2\" width=\"10\" height=\"20\" rx=\"3\"></rect><line x1=\"9.5\" y1=\"17.5\" x2=\"14.5\" y2=\"17.5\"></line></svg>\n      </div>\n      <p class=\"wvv-card-label\">App Daewoo Home Connect</p>\n      <p class=\"wvv-card-desc\">Gérez votre système à distance, recevez des alertes et consultez vos caméras.</p>\n    </div>\n\n    <div class=\"wvv-card\">\n      <div class=\"wvv-card-icon\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"6\" width=\"20\" height=\"13\" rx=\"2.5\"></rect><line x1=\"2\" y1=\"10.5\" x2=\"22\" y2=\"10.5\"></line></svg>\n      </div>\n      <p class=\"wvv-card-label\">Sans abonnement</p>\n      <p class=\"wvv-card-desc\">Vous payez le matériel, rien de plus.</p>\n    </div>\n\n    <div class=\"wvv-card\">\n      <div class=\"wvv-card-icon\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M12 7v5l3 2\"></path></svg>\n      </div>\n      <p class=\"wvv-card-label\">Installation simple</p>\n      <p class=\"wvv-card-desc\">Une prise secteur, une connexion Wi-Fi 2.4 GHz, et votre alarme est opérationnelle.</p>\n    </div>\n\n    <div class=\"wvv-card\">\n      <div class=\"wvv-card-icon\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"7\" width=\"17\" height=\"10\" rx=\"2\"></rect><line x1=\"22\" y1=\"10.5\" x2=\"22\" y2=\"13.5\"></line><line x1=\"6\" y1=\"10\" x2=\"6\" y2=\"14\"></line><line x1=\"9\" y1=\"10\" x2=\"9\" y2=\"14\"></line></svg>\n      </div>\n      <p class=\"wvv-card-label\">Batterie de secours intégrée</p>\n      <p class=\"wvv-card-desc\">Votre système reste actif même en cas de coupure de courant.</p>\n    </div>\n\n    <div class=\"wvv-card\">\n      <div class=\"wvv-card-icon\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.7 6.3a1 1 0 0 0-1.4 0l-6 6a1 1 0 0 0 0 1.4l3 3a1 1 0 0 0 1.4 0l6-6a1 1 0 0 0 0-1.4l-3-3z\"></path><path d=\"M9 8l7 7\"></path><path d=\"M5 20l3-1 8-8\"></path></svg>\n      </div>\n      <p class=\"wvv-card-label\">Système évolutif</p>\n      <p class=\"wvv-card-desc\">Jusqu'à 90 accessoires compatibles selon vos besoins.</p>\n    </div>\n\n  </div>\n</div>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "custom_liquid_V3TkXD": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<style>\n  .dcb-banner {\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif;\n    background: #000000;\n    border-radius: 24px;\n    padding: 64px 48px;\n    margin: 0 auto;\n    max-width: 1160px;\n    text-align: center;\n    box-sizing: border-box;\n  }\n  .dcb-banner * { box-sizing: border-box; }\n\n  .dcb-tag {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    padding: 6px 16px;\n    border-radius: 980px;\n    background: rgba(255,255,255,0.08);\n    color: #ffffff;\n    font-size: 12px;\n    font-weight: 500;\n  }\n\n  .dcb-title {\n    margin: 22px auto 12px;\n    max-width: 620px;\n    font-size: clamp(26px, 3.6vw, 38px);\n    font-weight: 600;\n    line-height: 1.1;\n    color: #ffffff;\n    letter-spacing: -0.02em;\n  }\n\n  .dcb-subtitle {\n    margin: 0 auto;\n    max-width: 480px;\n    font-size: 15px;\n    line-height: 1.55;\n    color: rgba(255,255,255,0.6);\n  }\n\n  .dcb-ctas {\n    margin-top: 34px;\n    display: flex;\n    justify-content: center;\n    flex-wrap: wrap;\n    gap: 14px;\n  }\n\n  .dcb-btn {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    padding: 14px 28px;\n    border-radius: 980px;\n    font-size: 15px;\n    font-weight: 500;\n    text-decoration: none;\n    transition: opacity 0.2s ease, transform 0.2s ease;\n  }\n\n  .dcb-btn svg {\n    width: 16px;\n    height: 16px;\n    stroke: currentColor;\n    fill: none;\n    stroke-width: 2.2;\n    transition: transform 0.2s ease;\n  }\n\n  .dcb-btn:hover svg {\n    transform: translateX(3px);\n  }\n\n  .dcb-btn--primary {\n    background: #ffffff;\n    color: #1d1d1f;\n  }\n\n  .dcb-btn--primary:hover {\n    opacity: 0.85;\n    color: #1d1d1f;\n    transform: translateY(-1px);\n    text-decoration: none;\n  }\n\n  .dcb-btn--secondary {\n    background: transparent;\n    color: #ffffff;\n    border: 1px solid rgba(255,255,255,0.3);\n  }\n\n  .dcb-btn--secondary:hover {\n    border-color: rgba(255,255,255,0.6);\n    color: #ffffff;\n    transform: translateY(-1px);\n    text-decoration: none;\n  }\n\n  @media (max-width: 640px) {\n    .dcb-banner { padding: 48px 24px; border-radius: 18px; }\n    .dcb-ctas { flex-direction: column; align-items: stretch; }\n    .dcb-btn { justify-content: center; }\n  }\n</style>\n\n<section class=\"dcb-banner\">\n  <span class=\"dcb-tag\">\n    <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M22 11.08V12a10 10 0 1 1-5.93-9.14\"/><polyline points=\"22 4 12 14.01 9 11.01\"/></svg>\n    Sans abonnement · Sans engagement\n  </span>\n  <h2 class=\"dcb-title\">Prêt à passer à l'action ?</h2>\n  <p class=\"dcb-subtitle\">Choisissez un pack prêt à poser ou laissez notre configurateur composer le système parfait pour votre logement, en 2 minutes.</p>\n  <div class=\"dcb-ctas\">\n    <a href=\"https://daewoo-security.fr/pages/pack-alarmes?_pos=1&_psq=pack&_ss=e&_v=1.0\" class=\"dcb-btn dcb-btn--primary\">\n      Voir les packs\n      <svg viewBox=\"0 0 24 24\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><polyline points=\"12 5 19 12 12 19\"/></svg>\n    </a>\n    <a href=\"https://daewoo-security.fr/pages/configurateur_2\" class=\"dcb-btn dcb-btn--secondary\">\n      Configurer mon système\n      <svg viewBox=\"0 0 24 24\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><polyline points=\"12 5 19 12 12 19\"/></svg>\n    </a>\n  </div>\n</section>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "faq_WhihPD": {
+      "type": "custom-liquid",
+      "settings": {
+        "liquid": "{% comment %} ── FAQ Détails produit Vigilia — accordéon (même design que la FAQ de la page caméras) ── {% endcomment %}\n\n<section class=\"daewoo-faq\">\n  <div class=\"daewoo-faq__wrap\">\n    <p class=\"daewoo-faq__eyebrow\">Caractéristiques</p>\n    <h2 class=\"daewoo-faq__title\">Détails produit</h2>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Connectivité\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <h6>Connexion</h6>\n        <p>Wi-Fi 2.4 GHz</p>\n        <h6>Connexion GSM</h6>\n        <p>(carte SIM – en option) Non disponible pour Vigilia WiFi</p>\n        <h6>Notification en temps réel via application mobile</h6>\n        <p>Envoi de SMS (via GSM | Nécessite une carte Sim) - <em>Non disponible sur la Vigilia Wifi</em></p>\n        <h6>Compatibilité assistants vocaux</h6>\n        <p>(Google Home / Alexa)</p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Alimentation &amp; Autonomie\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <h6>Batterie de secours intégrée</h6>\n        <p>Autonomie de 4 heures</p>\n        <h6>Fonctionnalité GSM</h6>\n        <p>Fonctionnement même en cas de coupure de WiFi (Nécessite une carte Sim non fournie)</p>\n        <p><em>Non disponible pour Vigilia WiFi</em></p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Commande &amp; pilotage\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <h6>Contrôle à distance</h6>\n        <p>via l'application Daewoo Home Connect</p>\n        <h6>Notifications push ou SMS</h6>\n        <p>en cas d'alerte, recevez une notification sur votre téléphone ou un SMS (Nécessite une carte Sim)</p>\n        <h6>Activation/désactivation à distance</h6>\n        <h6>Création de scénarios personnalisés</h6>\n        <p>Sur l'application directement, en quelques minutes</p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Évolutivité &amp; compatibilité\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <h6>Système évolutif</h6>\n        <p>Ajoutez jusqu'à 60 accessoires et autant de caméras que vous le souhaitez.</p>\n        <h6>Compatibilité avec tous les accessoires</h6>\n        <p>Détecteurs, claviers, télécommandes, badges, sirènes, etc. (suivre les compatibilités Vigilia/Touch).<br>Caméras et Maison Connectée : compatible toutes gammes.</p>\n        <h6>Système 100&nbsp;% personnalisable</h6>\n        <p>Selon vos besoins — achetez ce qui est nécessaire et complétez au fur et à mesure.</p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Sécurité &amp; détection\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <h6>Sirène intégrée</h6>\n        <p>Vigilia = 85 dB</p>\n        <h6>Détection d'arrachement</h6>\n        <p>(centrale arrachée = alerte)</p>\n        <h6>Communication cryptée entre centrale et accessoires</h6>\n        <h6>Modes de surveillance</h6>\n        <p>Total, Partiel (Maison), Désarmée</p>\n        <p>Fonction SOS en cas d'agression au domicile</p>\n        <h6>Programmation de scénarios et délais personnalisés</h6>\n        <p>Programmation de scénarios et temporisation (pour entrée ou sortie du domicile)</p>\n      </div>\n    </details>\n\n  </div>\n</section>\n\n<style>\n  .daewoo-faq {\n    --bg:    #f5f5f7;\n    --navy:  #1d1d1f;\n    --blue:  #0071e3;\n    --line:  rgba(13,27,62,0.12);\n    --muted: rgba(13,27,62,0.72);\n\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif;\n    background: var(--bg);\n    padding: 64px 20px 72px;\n  }\n  .daewoo-faq * { box-sizing: border-box; }\n  .daewoo-faq h2, .daewoo-faq h6, .daewoo-faq p, .daewoo-faq summary, .daewoo-faq a {\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif !important;\n    text-transform: none !important; letter-spacing: normal !important; font-style: normal !important;\n  }\n  .daewoo-faq h2::first-letter, .daewoo-faq p::first-letter {\n    font-size: inherit !important; font-weight: inherit !important; float: none !important;\n  }\n\n  .daewoo-faq__wrap { max-width: 820px; margin: 0 auto; }\n  .daewoo-faq__eyebrow {\n    color: var(--blue) !important; font-size: 14px !important; font-weight: 700 !important;\n    letter-spacing: 0.08em !important; text-transform: uppercase !important; margin: 0 0 8px !important; text-align: center;\n  }\n  .daewoo-faq__title {\n    color: var(--navy) !important; font-size: clamp(26px, 3.6vw, 38px) !important;\n    font-weight: 600 !important; line-height: 1.2 !important; margin: 0 0 32px !important; text-align: center;\n  }\n\n  .daewoo-faq__item {\n    background: #fff; border: 1px solid var(--line); border-radius: 16px;\n    margin-bottom: 12px; overflow: hidden;\n    transition: box-shadow .2s ease, border-color .2s ease;\n  }\n  .daewoo-faq__item[open] { border-color: var(--blue); box-shadow: 0 10px 30px rgba(13,27,62,0.08); }\n\n  .daewoo-faq__q {\n    list-style: none; cursor: pointer;\n    display: flex; align-items: center; justify-content: space-between; gap: 16px;\n    padding: 20px 22px;\n    color: var(--navy) !important; font-size: 16px !important; font-weight: 600 !important; line-height: 1.35 !important;\n  }\n  .daewoo-faq__q::-webkit-details-marker { display: none; }\n  .daewoo-faq__chev {\n    width: 22px; height: 22px; color: var(--blue); flex-shrink: 0;\n    transition: transform .25s ease;\n  }\n  .daewoo-faq__item[open] .daewoo-faq__chev { transform: rotate(180deg); }\n\n  .daewoo-faq__a { padding: 0 22px 20px; }\n  .daewoo-faq__a h6 {\n    color: var(--navy) !important; font-size: 13.5px !important; font-weight: 700 !important;\n    margin: 14px 0 4px !important; line-height: 1.4 !important;\n  }\n  .daewoo-faq__a h6:first-child { margin-top: 0 !important; }\n  .daewoo-faq__a p { color: var(--muted) !important; font-size: 15px !important; line-height: 1.65 !important; margin: 0 0 12px !important; font-weight: 400 !important; }\n  .daewoo-faq__a p:last-child { margin-bottom: 0 !important; }\n  .daewoo-faq__a a { color: var(--blue) !important; font-weight: 600 !important; text-decoration: underline; }\n  .daewoo-faq__a strong { color: var(--navy) !important; font-weight: 700 !important; }\n\n  @media (prefers-reduced-motion: reduce) {\n    .daewoo-faq__chev, .daewoo-faq__item { transition: none; }\n  }\n  @media (max-width: 768px) {\n    .daewoo-faq { padding: 44px 16px 52px; }\n    .daewoo-faq__q { padding: 16px 16px; font-size: 15px !important; }\n    .daewoo-faq__a { padding: 0 16px 16px; }\n    .daewoo-faq__a p { font-size: 14px !important; }\n  }\n</style>\n\n{% comment %} ── Données structurées SEO ── {% endcomment %}\n<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\"@type\":\"Question\",\"name\":\"Connectivité de la centrale Vigilia\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Connexion Wi-Fi 2.4 GHz. Connexion GSM par carte SIM en option (non disponible pour Vigilia WiFi). Notifications en temps réel via l'application mobile, envoi de SMS via GSM. Compatible avec les assistants vocaux Google Home et Alexa.\"}},\n    {\"@type\":\"Question\",\"name\":\"Alimentation et autonomie de la centrale Vigilia\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Batterie de secours intégrée avec 4 heures d'autonomie. Sur la version GSM, le système continue de fonctionner même en cas de coupure de Wi-Fi.\"}},\n    {\"@type\":\"Question\",\"name\":\"Commande et pilotage de la centrale Vigilia\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Contrôle à distance via l'application Daewoo Home Connect, notifications push ou SMS en cas d'alerte, activation/désactivation à distance et création de scénarios personnalisés directement depuis l'application.\"}},\n    {\"@type\":\"Question\",\"name\":\"Évolutivité et compatibilité de la centrale Vigilia\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Système évolutif jusqu'à 60 accessoires et un nombre illimité de caméras, compatible avec tous les accessoires des gammes Vigilia/Touch, et 100% personnalisable selon les besoins.\"}},\n    {\"@type\":\"Question\",\"name\":\"Sécurité et détection de la centrale Vigilia\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Sirène intégrée de 85 dB, détection d'arrachement de la centrale, communication cryptée entre la centrale et les accessoires, modes de surveillance Total/Partiel/Désarmée, fonction SOS et programmation de scénarios avec temporisation.\"}}\n  ]\n}\n</script>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "faq_3JfRmP": {
+      "type": "custom-liquid",
+      "settings": {
+        "liquid": "{% comment %} ── FAQ générale Vigilia — accordéon (même design que la FAQ de la page caméras) ── {% endcomment %}\n\n<section class=\"daewoo-faq\">\n  <div class=\"daewoo-faq__wrap\">\n    <p class=\"daewoo-faq__eyebrow\">Questions fréquentes</p>\n    <h2 class=\"daewoo-faq__title\">Tout ce qu'il faut savoir avant de commander</h2>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Est-ce que je peux installer le système moi-même ?\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <p>Oui, tout a été conçu pour une installation simple et rapide, sans technicien. Branchez la centrale sur une prise, fixez les capteurs fournis, et suivez les étapes dans l'application Daewoo Home Connect. En moins de 30 minutes, votre système est opérationnel.</p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Est-ce que la caméra est bien incluse dans le pack ?\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <p>Oui, le kit de départ Daewoo Vigilia inclut <strong>la centrale, 2 contacteurs de porte/détecteurs de vibration, 1 détecteur de mouvement, 1 télécommande et 2 badges RFID</strong>, mais également <strong>la caméra IP506P</strong> avec fonction Vie Privée.</p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Que se passe-t-il en cas de coupure de courant ?\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <p>En cas de <strong>coupure de courant</strong>, la centrale dispose d'une <strong>batterie de secours</strong> qui prend le relais et lui permet de continuer à fonctionner pendant 4 heures environ. Si votre box internet est également coupée, sur le modèle Vigilia Wifi, la centrale ne sera plus accessible et fonctionnera uniquement localement (déclenchement et sirène, mais pas de notification). Si vous optez pour le modèle Vigilia Wifi et GSM et que vous installez une carte Sim, vous recevrez alors des notifications par SMS en cas de panne de Wifi.</p>\n        <p>Merci de noter que dans tous les cas, <strong>sans Wifi ou sans électricité</strong>, la caméra <strong>IP506 incluse ne sera pas accessible</strong>.</p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Est-ce que le système déclenche l'alarme avant une effraction ?\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <p>Oui. Grâce aux <strong>détecteurs de vibration</strong>, le système peut déclencher l'alerte <strong>dès qu'une tentative d'intrusion est détectée</strong> (avant même l'ouverture de la porte ou de la fenêtre). Vous pouvez également ajouter à ce système d'alarme un détecteur de mouvement pour <a href=\"/products/detecteur-de-mouvement-exterieur-wmo301\">l'extérieur WMO301</a> ou bien des <a href=\"/products/daewoo-barrieres-infrarouge-pour-alarme-am301-am302\">barrières infrarouge BIR301</a>.</p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Mon enfant peut-il l'utiliser facilement ?\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <p>Oui. Grâce aux <strong>badges RFID</strong> et aux <strong>télécommandes</strong>, même un enfant peut activer ou désactiver l'alarme sans avoir besoin d'un smartphone. Le badge RFID se passe simplement sur la centrale pour la désarmer, et vous pouvez également <strong>paramétrer une temporisation</strong> pour avoir le temps de rentrer avant de passer le badge ou de taper le code sur la centrale.</p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Est-ce que je peux ajouter des accessoires plus tard ?\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <p>Oui, le système est <strong>évolutif jusqu'à 60 accessoires</strong>, ce qui est largement suffisant pour n'importe quelle maison. Vous pouvez également ajouter autant de caméras ou de périphériques pour rendre votre maison connectée (prises, interrupteurs...) sur votre application Daewoo Home Connect. Vous contrôlez tous vos appareils sur une seule application mobile.</p>\n      </div>\n    </details>\n\n    <details class=\"daewoo-faq__item\">\n      <summary class=\"daewoo-faq__q\">\n        Est-ce que mes caméras sont privées ?\n        <svg class=\"daewoo-faq__chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n      </summary>\n      <div class=\"daewoo-faq__a\">\n        <p>De manière générale, grâce au système Daewoo, vous êtes <strong>le seul à avoir accès à vos caméras</strong>. Aucune autre personne, comme dans un centre de télésurveillance, ne peut accéder à vos caméras. De plus, la <strong>caméra IP506P</strong> livrée dans ce pack apporte un <strong>confort supplémentaire</strong> en se refermant sur elle-même si vous activez le mode Vie Privée.</p>\n      </div>\n    </details>\n\n    \n\n    \n\n    <p class=\"daewoo-faq__footnote\">Vous n'avez pas trouvé votre réponse&nbsp;? Consultez notre page <a href=\"/pages/assistance-1\">Assistance</a> ou <a href=\"/pages/contact\">contactez-nous</a>.</p>\n\n  </div>\n</section>\n\n<style>\n  .daewoo-faq {\n    --bg:    #f5f5f7;\n    --navy:  #1d1d1f;\n    --blue:  #0071e3;\n    --line:  rgba(13,27,62,0.12);\n    --muted: rgba(13,27,62,0.72);\n\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif;\n    background: var(--bg);\n    padding: 64px 20px 72px;\n  }\n  .daewoo-faq * { box-sizing: border-box; }\n  .daewoo-faq h2, .daewoo-faq p, .daewoo-faq summary, .daewoo-faq a {\n    font-family: -apple-system, BlinkMacSystemFont, \"SF Pro Display\", \"Segoe UI\", Helvetica, Arial, sans-serif !important;\n    text-transform: none !important; letter-spacing: normal !important; font-style: normal !important;\n  }\n  .daewoo-faq h2::first-letter, .daewoo-faq p::first-letter {\n    font-size: inherit !important; font-weight: inherit !important; float: none !important;\n  }\n\n  .daewoo-faq__wrap { max-width: 820px; margin: 0 auto; }\n  .daewoo-faq__eyebrow {\n    color: var(--blue) !important; font-size: 14px !important; font-weight: 700 !important;\n    letter-spacing: 0.08em !important; text-transform: uppercase !important; margin: 0 0 8px !important; text-align: center;\n  }\n  .daewoo-faq__title {\n    color: var(--navy) !important; font-size: clamp(26px, 3.6vw, 38px) !important;\n    font-weight: 600 !important; line-height: 1.2 !important; margin: 0 0 32px !important; text-align: center;\n  }\n\n  .daewoo-faq__item {\n    background: #fff; border: 1px solid var(--line); border-radius: 16px;\n    margin-bottom: 12px; overflow: hidden;\n    transition: box-shadow .2s ease, border-color .2s ease;\n  }\n  .daewoo-faq__item[open] { border-color: var(--blue); box-shadow: 0 10px 30px rgba(13,27,62,0.08); }\n\n  .daewoo-faq__q {\n    list-style: none; cursor: pointer;\n    display: flex; align-items: center; justify-content: space-between; gap: 16px;\n    padding: 20px 22px;\n    color: var(--navy) !important; font-size: 16px !important; font-weight: 600 !important; line-height: 1.35 !important;\n  }\n  .daewoo-faq__q::-webkit-details-marker { display: none; }\n  .daewoo-faq__chev {\n    width: 22px; height: 22px; color: var(--blue); flex-shrink: 0;\n    transition: transform .25s ease;\n  }\n  .daewoo-faq__item[open] .daewoo-faq__chev { transform: rotate(180deg); }\n\n  .daewoo-faq__a { padding: 0 22px 20px; }\n  .daewoo-faq__a p { color: var(--muted) !important; font-size: 15px !important; line-height: 1.65 !important; margin: 0 0 12px !important; font-weight: 400 !important; }\n  .daewoo-faq__a p:last-child { margin-bottom: 0 !important; }\n  .daewoo-faq__a a { color: var(--blue) !important; font-weight: 600 !important; text-decoration: underline; }\n  .daewoo-faq__a strong { color: var(--navy) !important; font-weight: 700 !important; }\n\n  .daewoo-faq__footnote {\n    margin: 24px 0 0 !important; text-align: center; font-size: 14px !important;\n    color: var(--muted) !important; font-weight: 400 !important;\n  }\n  .daewoo-faq__footnote a { color: var(--blue) !important; font-weight: 600 !important; text-decoration: underline; }\n\n  @media (prefers-reduced-motion: reduce) {\n    .daewoo-faq__chev, .daewoo-faq__item { transition: none; }\n  }\n  @media (max-width: 768px) {\n    .daewoo-faq { padding: 44px 16px 52px; }\n    .daewoo-faq__q { padding: 16px 16px; font-size: 15px !important; }\n    .daewoo-faq__a { padding: 0 16px 16px; }\n    .daewoo-faq__a p { font-size: 14px !important; }\n  }\n</style>\n\n{% comment %} ── Données structurées SEO ── {% endcomment %}\n<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\"@type\":\"Question\",\"name\":\"Est-ce que je peux installer le système moi-même ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Oui, l'installation est simple et rapide, sans technicien : branchez la centrale, fixez les capteurs fournis et suivez les étapes de l'application Daewoo Home Connect. En moins de 30 minutes le système est opérationnel.\"}},\n    {\"@type\":\"Question\",\"name\":\"Est-ce que la caméra est bien incluse dans le pack ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Oui, le kit de départ Daewoo Vigilia inclut la centrale, 2 contacteurs de porte/détecteurs de vibration, 1 détecteur de mouvement, 1 télécommande, 2 badges RFID et la caméra IP506P avec fonction Vie Privée.\"}},\n    {\"@type\":\"Question\",\"name\":\"Que se passe-t-il en cas de coupure de courant ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"La centrale bascule sur sa batterie de secours pour environ 4 heures. Sans Wi-Fi ou sans électricité, la caméra IP506 incluse n'est en revanche pas accessible.\"}},\n    {\"@type\":\"Question\",\"name\":\"Est-ce que le système déclenche l'alarme avant une effraction ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Oui, les détecteurs de vibration déclenchent l'alerte dès qu'une tentative d'intrusion est détectée, avant même l'ouverture de la porte ou de la fenêtre.\"}},\n    {\"@type\":\"Question\",\"name\":\"Mon enfant peut-il l'utiliser facilement ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Oui, grâce aux badges RFID et aux télécommandes, un enfant peut activer ou désactiver l'alarme sans smartphone, avec une temporisation réglable.\"}},\n    {\"@type\":\"Question\",\"name\":\"Est-ce que je peux ajouter des accessoires plus tard ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Oui, le système est évolutif jusqu'à 60 accessoires et un nombre illimité de caméras ou périphériques connectés.\"}},\n    {\"@type\":\"Question\",\"name\":\"Est-ce que mes caméras sont privées ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Oui, seul le propriétaire a accès à ses caméras ; la caméra IP506P peut en plus se refermer physiquement en mode Vie Privée.\"}}\n  ]\n}\n</script>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "custom_liquid_dEYpkg": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "name": "t:sections.custom-liquid.name",
+      "settings": {
+        "liquid": "<style>\n  .fd-banner {\n    font-family: sans-serif;\n    background: #FFFFFF;\n    overflow: hidden;\n    position: relative;\n    border-radius: 10px;\n    min-height: 80px;\n    display: flex;\n    align-items: stretch;\n    border: 1px solid #E8E8E8;\n    margin: 12px 0;\n  }\n  .fd-left-bar { width: 10px; background: #002395; flex-shrink: 0; }\n  .fd-right-bar { width: 10px; background: #ED2939; flex-shrink: 0; }\n  .fd-badge {\n    background: #002395;\n    color: #fff;\n    padding: 0 18px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    flex-shrink: 0;\n    min-width: 90px;\n    text-align: center;\n    gap: 3px;\n  }\n  .fd-badge .fd-flag { font-size: 26px; line-height: 1; }\n  .fd-badge span { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.9; }\n  .fd-main {\n    flex: 1;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    gap: 16px;\n    padding: 16px 24px;\n  }\n  .fd-left { display: flex; flex-direction: column; gap: 4px; }\n  .fd-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; color: #002395; text-transform: uppercase; margin: 0; }\n  .fd-headline { font-size: 28px; color: #111; letter-spacing: 0.03em; line-height: 1; margin: 0; display: flex; align-items: baseline; gap: 10px; }\n  .fd-headline .fd-percent { color: #ED2939; font-size: 40px; font-weight: 700; }\n  .fd-sub { font-size: 12px; color: #888; margin: 0; }\n  .fd-divider { width: 1px; background: #E8E8E8; align-self: stretch; margin: 12px 0; }\n  .fd-timer-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; padding: 0 8px; }\n  .fd-timer-label { font-size: 9px; font-weight: 600; letter-spacing: 0.2em; color: #aaa; text-transform: uppercase; }\n  .fd-timer { display: flex; gap: 4px; align-items: center; }\n  .fd-tick { display: flex; flex-direction: column; align-items: center; gap: 2px; }\n  .fd-tick-num { font-size: 20px; font-weight: 700; color: #002395; line-height: 1; background: #EEF2FF; border-radius: 4px; padding: 2px 6px; min-width: 34px; text-align: center; }\n  .fd-tick-label { font-size: 8px; color: #bbb; letter-spacing: 0.12em; text-transform: uppercase; }\n  .fd-sep { font-size: 18px; color: #ccc; line-height: 1; margin-bottom: 10px; }\n  .fd-btn {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #002395;\n    color: #fff !important;\n    font-size: 13px;\n    font-weight: 600;\n    letter-spacing: 0.04em;\n    text-decoration: none !important;\n    padding: 11px 20px;\n    border-radius: 6px;\n    border: none;\n    cursor: pointer;\n    flex-shrink: 0;\n    white-space: nowrap;\n    transition: background 0.15s, transform 0.1s;\n  }\n  .fd-btn:hover { background: #001a6e; transform: scale(1.02); }\n  .fd-btn svg { width: 14px; height: 14px; flex-shrink: 0; }\n  @keyframes fd-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }\n  .fd-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #ED2939; display: inline-block; animation: fd-pulse 1s ease-in-out infinite; margin-right: 5px; vertical-align: middle; }\n  .fd-tricolor-bar { height: 4px; background: linear-gradient(to right, #002395 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #ED2939 66.6%); position: absolute; top: 0; left: 0; right: 0; }\n  @media (max-width: 768px) {\n    .fd-timer-wrap, .fd-divider { display: none; }\n    .fd-main { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px; }\n    .fd-headline { font-size: 20px; }\n    .fd-headline .fd-percent { font-size: 28px; }\n    .fd-btn { width: 100%; justify-content: center; }\n  }\n</style>\n\n<div class=\"fd-banner\">\n  <div class=\"fd-tricolor-bar\"></div>\n  <div class=\"fd-left-bar\"></div>\n  <div class=\"fd-badge\">\n    <div class=\"fd-flag\">🇫🇷</div>\n    <span>French<br>Days</span>\n  </div>\n  <div class=\"fd-main\">\n    <div class=\"fd-left\">\n      <p class=\"fd-eyebrow\"><span class=\"fd-live-dot\"></span>Offre exclusive · Packs Alarmes</p>\n      <div class=\"fd-headline\">\n        <span class=\"fd-percent\">-5%</span>\n        <span>de remise supplémentaire</span>\n      </div>\n      <p class=\"fd-sub\">Sur tous les packs alarmes Daewoo Security — offre à durée limitée</p>\n    </div>\n    <div class=\"fd-divider\"></div>\n    <div class=\"fd-timer-wrap\">\n      <span class=\"fd-timer-label\">Temps restant</span>\n      <div class=\"fd-timer\">\n        <div class=\"fd-tick\">\n          <span class=\"fd-tick-num\" id=\"fd-h\">00</span>\n          <span class=\"fd-tick-label\">heures</span>\n        </div>\n        <span class=\"fd-sep\">:</span>\n        <div class=\"fd-tick\">\n          <span class=\"fd-tick-num\" id=\"fd-m\">00</span>\n          <span class=\"fd-tick-label\">min</span>\n        </div>\n        <span class=\"fd-sep\">:</span>\n        <div class=\"fd-tick\">\n          <span class=\"fd-tick-num\" id=\"fd-s\">00</span>\n          <span class=\"fd-tick-label\">sec</span>\n        </div>\n      </div>\n    </div>\n    <div class=\"fd-divider\"></div>\n    <a class=\"fd-btn\" href=\"https://daewoo-security.fr/pages/pack-alarmes?_pos=1&_psq=pack&_ss=e&_v=1.0\">\n      Voir les packs\n      <svg viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n        <path d=\"M1 7h12M8 2l5 5-5 5\" stroke=\"white\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n      </svg>\n    </a>\n  </div>\n  <div class=\"fd-right-bar\"></div>\n</div>\n\n<script>\n  (function() {\n    var endDate = new Date('2026-05-05T23:59:59');\n    function pad(n) { return String(n).padStart(2, '0'); }\n    function fdTick() {\n      var diff = endDate - new Date();\n      if (diff <= 0) {\n        document.getElementById('fd-h').textContent = '00';\n        document.getElementById('fd-m').textContent = '00';\n        document.getElementById('fd-s').textContent = '00';\n        return;\n      }\n      document.getElementById('fd-h').textContent = pad(Math.floor(diff / 3600000));\n      document.getElementById('fd-m').textContent = pad(Math.floor((diff % 3600000) / 60000));\n      document.getElementById('fd-s').textContent = pad(Math.floor((diff % 60000) / 1000));\n    }\n    fdTick();\n    setInterval(fdTick, 1000);\n  })();\n</script>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    },
+    "main-collection-banner": {
+      "type": "main-collection-banner",
+      "blocks": {
+        "breadcrumb": {
+          "type": "breadcrumb",
+          "settings": {
+            "show_collections_link": true,
+            "show_collection_title": true
+          }
+        },
+        "title": {
+          "type": "title",
+          "disabled": true,
+          "settings": {
+            "title_size": "title-md"
+          }
+        },
+        "description_39qBgn": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "text_font": "body",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_line_height": 1.6,
+            "text_letter_spacing": 0,
+            "text_capitalize": false,
+            "secondary_color": false
+          }
+        }
+      },
+      "block_order": [
+        "breadcrumb",
+        "title",
+        "description_39qBgn"
+      ],
+      "disabled": true,
+      "settings": {
+        "transparent_header": true,
+        "show_image": false,
+        "image_height": "700px",
+        "content_position": "md:items-end md:justify-start",
+        "text_alignment": "left",
+        "image_height_mobile": "auto",
+        "content_position_mobile": "items-end justify-start",
+        "text_alignment_mobile": "left",
+        "color_text": "#ffffff",
+        "color_background": "",
+        "gradient_background": "",
+        "color_overlay": "#171717",
+        "overlay_opacity": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "full_width": true,
+        "rounded": false,
+        "enable_parallax": true,
+        "parallax_direction": "vertical"
+      }
+    },
+    "reveal_video_with_text_overlay_q7KxVw": {
+      "type": "reveal-video-with-text-overlay",
+      "blocks": {
+        "heading_HkaMrA": {
+          "type": "heading",
+          "settings": {
+            "heading": "Installation facile",
+            "heading_size": "title-lg tracking-heading",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "highlighted_reveal": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_HkaMrA"
+      ],
+      "disabled": true,
+      "name": "t:sections.reveal-video-with-text-overlay.name",
+      "settings": {
+        "video_url": "https://www.youtube.com/watch?v=UyaTVrO8gxE",
+        "description": "",
+        "content_width": "small",
+        "content_position": "md:items-end md:justify-start",
+        "text_alignment": "left",
+        "video_url_mobile": "",
+        "content_position_mobile": "items-end justify-start",
+        "text_alignment_mobile": "left",
+        "color_text": "#ffffff",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "color_overlay": "#171717",
+        "overlay_opacity": 20,
+        "enable_parallax": false
+      }
+    },
+    "main-collection": {
+      "type": "main-collection",
+      "blocks": {
+        "subcollections": {
+          "type": "subcollections",
+          "settings": {
+            "menu": "tous-les-accessoires",
+            "show_count": true
+          }
+        },
+        "promotion-1": {
+          "type": "promotion",
+          "settings": {
+            "position": 8,
+            "column_size": "1",
+            "row_size": "1",
+            "content_position": "md:items-center",
+            "text_alignment": "center",
+            "content_layout": "default",
+            "subheading": "",
+            "heading": "Example heading",
+            "heading_size": "title-xl tracking-heading",
+            "content": "<p>Share information about your brand with your customers.</p>",
+            "button_label": "Shop now",
+            "button_link": "",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true,
+            "content_position_mobile": "items-center",
+            "text_alignment_mobile": "center",
+            "direction": "left",
+            "speed": 20,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle",
+            "color_text": "#ffffff",
+            "color_background": "#171717",
+            "gradient_background": "",
+            "color_highlight": "",
+            "gradient_highlight": "",
+            "color_button_text": "#171717",
+            "color_button_background": "#ffffff",
+            "color_button_gradient": "",
+            "color_overlay": "#171717",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "subcollections",
+        "promotion-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "products_per_page": 36,
+        "columns": 4,
+        "columns_mobile": "2",
+        "pagination": "paginated",
+        "enable_filtering": true,
+        "filter_type": "drawer",
+        "filter_collapsed": false,
+        "filter_color_swatches": true,
+        "enable_sorting": true,
+        "show_on_model": false,
+        "buttons_style": "secondary",
+        "padding_top": 40,
+        "padding_bottom": 100,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_VGyMwR",
+    "daewoo_panel_showcase",
+    "daewoo_vigilia_evolution",
+    "daewoo_app_showcase",
+    "daewoo_scenarios_showcase",
+    "image_with_text_Fhj8Um",
+    "17537033312cec849b",
+    "custom_liquid_Fg3wQW",
+    "apps_MpwGBR",
+    "custom_liquid_f6eqiw",
+    "custom_liquid_eVqR3c",
+    "custom_liquid_V3TkXD",
+    "faq_WhihPD",
+    "faq_3JfRmP",
+    "custom_liquid_dEYpkg",
+    "main-collection-banner",
+    "reveal_video_with_text_overlay_q7KxVw",
+    "main-collection"
+  ]
+}

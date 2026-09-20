@@ -1310,6 +1310,19 @@
     "productGroupID": {{ wifi_variant.sku | json }},
     "variesBy": ["https://schema.org/name"],
     "brand": { "@type": "Brand", "name": "Daewoo Security" },
+    {%- comment -%}
+      La note et le nombre d'avis sont exactement ceux affichés plus haut
+      dans la page : dans Judge.me les avis sont regroupés par gamme, et
+      c'est le groupe Vigilia qui alimente ces deux chiffres. Google exige
+      que la note balisée soit visible sur la page — elle l'est, dans le
+      bandeau de confiance et dans la section avis.
+    {%- endcomment -%}
+    {%- if has_rating %}"aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ rating_value | json }},
+      "bestRating": {{ rating_max | json }},
+      "reviewCount": {{ rating_count | json }}
+    },{% endif %}
     "image": [{{ hero_image | image_url: width: 1200 | json }}],
     "url": {{ ld_product_url | json }},
     "hasVariant": [
@@ -1323,7 +1336,8 @@
           "@type": "Offer",
           "priceCurrency": {{ cart.currency.iso_code | json }},
           "price": {{ ld_wifi_price | json }},
-          "availability": "https://schema.org/{% if wifi_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "availability": "https://schema.org/{% if wifi_variant.available %}InStock{% else %}OutOfStock{% endif %}"
+          {%- render 'pv-ld-offre' -%},
           "url": {{ ld_product_url | append: '?variant=' | append: wifi_variant.id | json }}
         }
       },
@@ -1337,7 +1351,8 @@
           "@type": "Offer",
           "priceCurrency": {{ cart.currency.iso_code | json }},
           "price": {{ ld_gsm_price | json }},
-          "availability": "https://schema.org/{% if gsm_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "availability": "https://schema.org/{% if gsm_variant.available %}InStock{% else %}OutOfStock{% endif %}"
+          {%- render 'pv-ld-offre' -%},
           "url": {{ ld_product_url | append: '?variant=' | append: gsm_variant.id | json }}
         }
       }

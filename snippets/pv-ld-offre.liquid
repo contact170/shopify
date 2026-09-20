@@ -1,0 +1,43 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════════
+  snippets/pv-ld-offre.liquid — Daewoo Security, 20/09/2026
+
+  Fragment JSON-LD commun à toutes les offres des pages de pack : validité
+  du prix, état, vendeur, politique de retour et conditions de livraison.
+  Rendu À L'INTÉRIEUR d'un objet "offers", juste après "availability" —
+  il commence donc par une virgule et n'émet rien d'autre que des paires
+  clé/valeur JSON.
+
+  Les valeurs reprennent celles déjà déclarées par les pages Élite, pour
+  que les deux gammes racontent la même chose à Google.
+
+  Livraison à 0 € : le franco est acquis dès 50 € et tous les packs
+  dépassent ce seuil, la déclaration est donc exacte sur ces pages. Elle
+  ne le serait PAS sur une fiche accessoire à 27,90 € — ne pas rendre ce
+  fragment ailleurs que sur un pack sans revoir shippingRate.
+
+  Délai : 0 à 2 jours de préparation + 2 à 3 jours de transport. C'est ce
+  qu'annonce l'accueil ; le configurateur affiche encore « 48h », qui ne
+  correspond ni à l'un ni à l'autre. À trancher côté métier.
+  ══════════════════════════════════════════════════════════════════════════
+{%- endcomment -%},
+          "priceValidUntil": "{{ 'now' | date: '%Y' | plus: 1 }}-12-31",
+          "itemCondition": "https://schema.org/NewCondition",
+          "seller": { "@type": "Organization", "name": "Daewoo Security", "url": {{ shop.url | json }} },
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "FR",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 14,
+            "returnMethod": "https://schema.org/ReturnByMail"
+          },
+          "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "EUR" },
+            "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" },
+            "deliveryTime": {
+              "@type": "ShippingDeliveryTime",
+              "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 2, "unitCode": "DAY" },
+              "transitTime": { "@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY" }
+            }
+          }
