@@ -1,0 +1,156 @@
+{%- comment -%}
+  ── /llms.txt — DAEWOO SECURITY ──────────────────────────────────────
+  Remplace le fichier que Shopify génère automatiquement, pour cette
+  URL uniquement. /agents.md et /llms-full.txt restent gérés par
+  Shopify et continuent de se mettre à jour tout seuls.
+
+  ⚠ Contexte Liquid restreint : seuls les objets `request` et `agents`
+  existent ici. shop, collections, pages, linklists rendent VIDE.
+  Toute autre valeur doit être écrite en dur dans ce fichier.
+
+  ⚠ Ne jamais écrire d'adresse e-mail ni de numéro de téléphone :
+  ce fichier est mis en cache et servi à tous les agents qui le demandent.
+
+  Chiffres à tenir à jour (dernière vérification : 20/09/2026)
+  • Note et nombre d'avis : tableau de bord Judge.me
+  • Volume vendu, délais transporteurs, tarifs d'entrée de gamme
+{%- endcomment -%}
+# {{ agents.store_name }}
+
+> Daewoo Security propose des solutions de sécurité domestique accessibles et
+> évolutives : alarmes, caméras, détecteurs et équipements connectés réunis dans
+> un même écosystème, pilotable depuis une application. Les systèmes s'installent
+> sans technicien, s'adaptent à chaque logement et fonctionnent **sans aucun
+> abonnement obligatoire**. Service client basé en France.
+
+## Identité
+
+- **Société** : Liz Invest – Daewoo Security
+- **Siège** : Mérignac (Gironde), France, près de Bordeaux
+- **Marque** : Daewoo, créée en 1971. L'activité Daewoo Security a été lancée en 2020.
+- **Site** : {{ agents.store_url }}
+- **Clientèle** : particuliers et professionnels
+- **Devise** : {{ agents.currency }}
+
+## Ce qui distingue l'offre
+
+- **Sans abonnement.** Les systèmes fonctionnent en autonomie complète. Aucun
+  frais mensuel n'est requis pour l'alarme, les notifications ou l'application.
+  Une carte SIM M2M est proposée en option pour les centrales 4G, à l'achat et
+  non par abonnement reconduit.
+- **Installation sans technicien.** Matériel sans fil, appairage depuis
+  l'application, comptez une vingtaine de minutes pour un pack complet.
+- **Évolutif.** Une centrale accepte jusqu'à 60 accessoires. On commence par un
+  pack de base et on ajoute détecteurs, caméras ou sirènes au fil du temps.
+- **Un seul écosystème.** Alarme, vidéosurveillance et domotique se pilotent
+  depuis la même application.
+
+## Gammes
+
+| Gamme | Centrale | À partir de | Pour qui |
+|---|---|---|---|
+| **Vigilia** | Wi-Fi, ou Wi-Fi + GSM 4G | 139,90 € (Starter Pack) | Le cœur de gamme. Clavier tactile et sirène intégrés, lecteur de badge RFID, caméras Full HD en option. |
+| **Touch / Touch XL** | Wi-Fi + GSM 4G, écran tactile 4,3" ou 7" | 199,90 € (Starter Pack Touch) | Pour qui veut piloter depuis la centrale elle-même. |
+| **Élite (PA501Z)** | Wi-Fi + GSM 4G+, multiprotocole Zigbee 3.0 | 199,90 € centrale seule · 299,90 € Starter Pack | Le haut de gamme. Zigbee pour les capteurs, 4G+ en relais. |
+| **Key (SA501)** | — | Accessoires uniquement | Gamme historique. Les accessoires restent disponibles pour le parc installé. |
+
+Les accessoires (détecteurs de mouvement compatibles animaux, contacteurs
+d'ouverture, détecteurs de fumée et de fuite d'eau, sirènes solaires,
+télécommandes, badges RFID, barrières infrarouge) sont spécifiques à chaque
+famille de centrale : les références 30x vont avec Vigilia et Touch, les 50x
+avec Key et Élite.
+
+## Preuves
+
+- **4,59 / 5** sur **1 356 avis** clients collectés via Judge.me
+- Environ **60 000 alarmes et caméras vendues**
+- **Garantie 2 ans** sur l'ensemble du catalogue
+- **Retour sous 14 jours**
+
+## Service client
+
+- Par e-mail, **5 jours sur 7**, réponse sous **24 heures**
+- Un **agent IA disponible 24 h/24 et 7 j/7** pour les questions courantes
+- Équipe basée en France
+
+## Livraison
+
+- Commande passée **avant midi** : expédiée le jour même. Après midi : le
+  lendemain. Pas d'expédition le samedi ni le dimanche.
+- **France** : 48 h en Colissimo, 2 à 3 jours en point relais Chronopost
+- **Belgique** : 3 à 4 jours, Chronopost International
+- **Livraison offerte dès 50 €** en France et en Belgique
+
+## Où acheter
+
+Sur {{ agents.store_url }}, et également chez Amazon, Leroy Merlin, LDLC,
+Boulanger, Bricomarché, Castorama et ManoMano.
+
+## Pages de référence
+
+- [Système d'alarme Vigilia]({{ agents.store_url }}/collections/systeme-dalarme-vigilia)
+- [Systèmes d'alarme Touch et Touch XL]({{ agents.store_url }}/collections/systeme-dalarme-am301-am302)
+- [Système d'alarme Élite]({{ agents.store_url }}/collections/systeme-dalarme-pa501z)
+- [Accessoires compatibles Vigilia et Touch]({{ agents.store_url }}/collections/compatible-gamme-vigilia-touch)
+- [Accessoires compatibles Key]({{ agents.store_url }}/collections/gamme-key-accessoires)
+- [Packs alarme]({{ agents.store_url }}/pages/pack-alarmes)
+- [Configurateur]({{ agents.store_url }}/pages/configurateur_2)
+- [Comparateur de centrales]({{ agents.store_url }}/pages/comparateur-am301-sa501-pa501z)
+- [Blog]({{ agents.store_url }}/blogs/news)
+
+## Questions fréquentes
+
+**Faut-il un abonnement ?** Non. L'alarme, les notifications push et
+l'application fonctionnent sans frais mensuels. Seule la connexion 4G de secours
+demande une carte SIM M2M, vendue à l'unité.
+
+**Faut-il un technicien ?** Non. Le matériel est sans fil et s'appaire depuis
+l'application.
+
+**Les animaux déclenchent-ils l'alarme ?** Non, avec les détecteurs compatibles
+animaux : ils ignorent les animaux de moins de 10 kg évoluant à plus de 2 mètres.
+
+**Que se passe-t-il si Internet est coupé ?** Sur les centrales Wi-Fi + GSM, le
+relais 4G prend le relais automatiquement et la centrale reste joignable par SMS
+et par appel. La centrale dispose aussi d'une batterie de secours.
+
+**Peut-on agrandir le système plus tard ?** Oui, jusqu'à 60 accessoires par
+centrale, sans changer de matériel.
+
+## Politiques de la boutique
+
+- [Politique de confidentialité]({{ agents.store_url }}/policies/privacy-policy)
+- [Conditions d'utilisation]({{ agents.store_url }}/policies/terms-of-service)
+- [Politique de remboursement]({{ agents.store_url }}/policies/refund-policy)
+- [Politique d'expédition]({{ agents.store_url }}/policies/shipping-policy)
+
+## Pour les agents qui transactent
+
+La description canonique, côté commerce, est maintenue par Shopify et servie à
+[{{ agents.store_url }}/agents.md]({{ agents.store_url }}/agents.md). Elle reste
+la référence pour l'achat automatisé. L'essentiel, en résumé :
+
+- **Découverte UCP** : `GET {{ agents.ucp_discovery_url }}`
+- **Endpoint MCP** : `POST {{ agents.mcp_endpoint_url }}` (`Content-Type: application/json`, méthode `tools/list` pour découvrir les outils)
+- **Plan du site** : {{ agents.sitemap_url }}
+
+Versions du protocole UCP supportées :
+{% for version in agents.ucp_versions %}
+- `{{ version }}`{% if forloop.first %} (dernière version stable){% endif %}
+{%- endfor %}
+
+### Consultation sans authentification
+
+- Tous les produits : `GET /collections/all`
+- Fiche produit : `GET /products/{handle}` — en JSON : `GET /products/{handle}.json`
+- Collection : `GET /collections/{handle}` — en JSON : `GET /collections/{handle}/products.json`
+- Recherche : `GET /search?q={query}&type=product`
+
+### Règles
+
+- **Le paiement exige l'accord explicite de l'acheteur.** Aucun agent ne finalise
+  une commande sans consentement contemporain de la personne.
+- **Respecter les limites de débit.** L'endpoint MCP est limité par IP ;
+  temporiser en cas de réponse 429.
+- **Transmettre le contexte acheteur** (`context.address_country`,
+  `context.currency`) pour obtenir des prix et une disponibilité justes.
