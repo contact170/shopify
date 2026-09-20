@@ -57,6 +57,26 @@
 .pv-sticky__toggle{display:none;}
 @media (min-width:640px){.pv-sticky__toggle{display:block;}}
 
+/* ---- fil d'Ariane ----
+   Le fil d'Ariane du thème est masqué sous 1024 px. Celui-ci reste
+   affiché sur mobile : c'est là qu'un visiteur arrivé par une recherche
+   a le plus besoin de savoir où il est. */
+.pv-bread{padding:20px 24px 0;font-size:13px;color:var(--pv-gray);}
+.pv-bread ol{
+  list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px;
+}
+.pv-bread li{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+.pv-bread li + li::before{content:"›";color:var(--pv-line);}
+.pv-bread a{color:var(--pv-gray);text-decoration:none;}
+.pv-bread a:hover{color:var(--pv-navy);text-decoration:underline;text-underline-offset:2px;}
+.pv-bread li[aria-current]{
+  color:var(--pv-ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(100%,420px);
+}
+@media (max-width:699px){
+  .pv-bread{padding-top:14px;font-size:12.5px;}
+  .pv-bread li[aria-current]{max-width:60vw;}
+}
+
 /* ---- rythme des sections ---- */
 .pv-section{padding:72px 0;}
 .pv-section--alt{background:var(--pv-bg-alt);}

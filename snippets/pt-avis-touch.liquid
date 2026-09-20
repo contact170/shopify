@@ -7,6 +7,10 @@
                                               rendues côté serveur donc
                                               lisibles sans JavaScript et
                                               indexables ;
+    render 'pt-avis-touch', mode: 'ld'      → les mêmes avis en objets
+                                              Review du JSON-LD, ce que
+                                              lisent les moteurs
+                                              génératifs ;
     render 'pt-avis-touch'                  → le même contenu en JSON,
                                               pour la fenêtre « tous les
                                               avis », construite à
@@ -53,7 +57,9 @@
   assign avis = tout | split: FIN
 -%}
 
-{%- if mode == "cartes" -%}
+{%- if mode == "ld" -%}
+{% for enr in avis %}{% assign ch = enr | split: SEP %}{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":{{ ch[0] | plus: 0 }},"bestRating":5},"author":{"@type":"Person","name":{{ ch[1] | json }}},"reviewBody":{{ ch[3] | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}
+{%- elsif mode == "cartes" -%}
   {%- for enr in avis -%}
     {%- assign ch = enr | split: SEP -%}
     {%- assign n = ch[0] | plus: 0 -%}

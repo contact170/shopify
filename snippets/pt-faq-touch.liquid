@@ -1,0 +1,59 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════
+  QUESTIONS FRÉQUENTES — GAMME TOUCH / TOUCH XL
+  ──────────────────────────────────────────────────────────────────────
+  Source unique pour les deux rendus :
+    render 'pt-faq-touch', mode: 'html', autonomie: autonomie
+        → les accordéons <details> visibles ;
+    render 'pt-faq-touch', mode: 'ld', autonomie: autonomie
+        → les entrées Question / Answer du JSON-LD FAQPage.
+
+  Pourquoi une source unique : sur la page d'accueil, la réponse visible
+  sur la livraison et son jumeau JSON-LD avaient divergé, chacun
+  annonçant un délai différent. Écrire le texte deux fois, c'est
+  s'exposer à ce que l'un des deux vieillisse seul. Ici il n'existe
+  qu'une fois.
+
+  Le balisage FAQPage ne produit plus d'extrait enrichi pour un site
+  marchand depuis que Google l'a réservé aux sites institutionnels et de
+  santé. Il reste utile : c'est ce que lisent les moteurs génératifs pour
+  répondre à une question sur le produit.
+
+  Format : question ~|~ réponse, séparées par ~~~.
+  Le jeton {AUTONOMIE} est remplacé par la valeur passée en paramètre,
+  qui diffère entre Touch (4 heures) et Touch XL (20 heures).
+  ══════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+{%- liquid
+  assign SEP = "~|~"
+  assign FIN = "~~~"
+  assign auto = autonomie | default: "plusieurs heures"
+
+  assign q1 = "Faut-il un abonnement ?~|~Non. L'alarme, les notifications, le pilotage à distance et la levée de doute vidéo fonctionnent sans frais mensuels. Seule la connexion 4G de secours demande une carte SIM M2M, vendue à l'unité et sans reconduction."
+  assign q2 = "Quelle différence entre Touch et Touch XL ?~|~La taille de l'écran et l'autonomie de la batterie. La Touch AM301 a un écran tactile de 4,3 pouces et environ 4 heures de batterie de secours ; la Touch XL AM302 monte à 7 pouces et environ 20 heures. Les accessoires, les caméras, l'application et les fonctions sont identiques : les deux centrales acceptent la même gamme radio."
+  assign q3 = "Faut-il un technicien pour l'installer ?~|~Non. Tout le matériel est sans fil et s'appaire depuis l'application Daewoo Home Connect. Comptez une trentaine de minutes pour un pack complet. Un conseil tiré des retours clients : nommez chaque accessoire au moment de l'appairage, c'est le moment prévu pour le faire."
+  assign q4 = "Que se passe-t-il si Internet est coupé ?~|~La centrale continue de fonctionner en local : la détection et les sirènes restent actives. Avec une carte SIM M2M, elle bascule sur le réseau 4G et continue d'alerter par SMS et par appel. Sa batterie de secours prend le relais du secteur pendant {AUTONOMIE}."
+  assign q5 = "Les animaux déclenchent-ils l'alarme ?~|~Non, avec les détecteurs de mouvement compatibles animaux fournis dans les packs : ils ignorent les animaux de moins de 12 kg évoluant au sol."
+  assign q6 = "Puis-je agrandir le système plus tard ?~|~Oui, jusqu'à 90 accessoires par centrale, sans changer de matériel. La gamme radio est commune aux centrales Touch et Vigilia : les références 30x sont compatibles avec les deux."
+  assign q7 = "Où sont enregistrées les vidéos ?~|~Sur une carte micro SD placée dans la caméra, chez vous. Aucun hébergement distant n'est imposé, et donc aucun abonnement de stockage."
+  assign q8 = "Sous combien de temps suis-je livré ?~|~Toute commande passée avant midi est expédiée le jour même, les autres le lendemain. Pas d'expédition le samedi ni le dimanche. Comptez ensuite 48 heures en Colissimo ou 2 à 3 jours en point relais Chronopost. Pour la Belgique, 3 à 4 jours en Chronopost International."
+
+  assign tout = q1 | append: FIN | append: q2 | append: FIN | append: q3 | append: FIN | append: q4 | append: FIN | append: q5 | append: FIN | append: q6 | append: FIN | append: q7 | append: FIN | append: q8
+  assign tout = tout | replace: "{AUTONOMIE}", auto
+  assign questions = tout | split: FIN
+-%}
+
+{%- if mode == "ld" -%}
+{% for enr in questions %}{% assign ch = enr | split: SEP %}{"@type":"Question","name":{{ ch[0] | json }},"acceptedAnswer":{"@type":"Answer","text":{{ ch[1] | json }}}}{% unless forloop.last %},{% endunless %}{% endfor %}
+{%- else -%}
+  {%- for enr in questions -%}
+    {%- assign ch = enr | split: SEP -%}
+    <details>
+      <summary>{{ ch[0] }}
+        <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      </summary>
+      <p class="pv-faq__a">{{ ch[1] }}</p>
+    </details>
+  {%- endfor -%}
+{%- endif -%}

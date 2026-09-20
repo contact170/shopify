@@ -218,6 +218,26 @@
     </button>
   </div>
 
+  {%- comment -%}
+    ── fil d'Ariane ──
+    Le snippet product-breadcrumb du thème est réservé au desktop
+    (hidden lg:flex), dépend d'un objet block et n'émet aucun balisage.
+    Celui-ci s'affiche sur mobile aussi, et son pendant BreadcrumbList
+    plus bas décrit exactement le même chemin.
+  {%- endcomment -%}
+  {%- liquid
+    assign col_touch = collections["systeme-dalarme-am301-am302"]
+    assign col_titre = col_touch.title | default: "Systèmes d'alarme Touch et Touch XL"
+    assign col_url = col_touch.url | default: "/collections/systeme-dalarme-am301-am302"
+  -%}
+  <nav class="pv-wrap pv-bread" aria-label="Fil d'Ariane">
+    <ol>
+      <li><a href="{{ routes.root_url }}">Accueil</a></li>
+      <li><a href="{{ col_url }}">{{ col_titre }}</a></li>
+      <li aria-current="page">{{ product.title }}</li>
+    </ol>
+  </nav>
+
   {%- comment -%} ── hero ── {%- endcomment -%}
   <section class="pv-hero">
     <div class="pv-wrap">
@@ -926,97 +946,7 @@ Compatible Amazon Alexa et Google Home.</dd>
     <div class="pv-wrap">
       <div class="pv-faq pv-reveal">
         <h2>Questions fréquentes</h2>
-
-        <details>
-          <summary>Faut-il un abonnement&nbsp;?
-            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </summary>
-          <p class="pv-faq__a">
-            Non. L'alarme, les notifications, le pilotage à distance et la levée de
-            doute vidéo fonctionnent sans frais mensuels. Seule la connexion 4G de
-            secours demande une carte SIM M2M, vendue à l'unité et sans reconduction.
-          </p>
-        </details>
-
-        <details>
-          <summary>Quelle différence entre Touch et Touch XL&nbsp;?
-            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </summary>
-          <p class="pv-faq__a">
-            La taille de l'écran et l'autonomie de la batterie. La Touch AM301 a un
-            écran tactile de 4,3 pouces et environ 4 heures de batterie de secours ;
-            la Touch XL AM302 monte à 7 pouces et environ 20 heures. Les accessoires,
-            les caméras, l'application et les fonctions sont identiques : les deux
-            centrales acceptent la même gamme radio.
-          </p>
-        </details>
-
-        <details>
-          <summary>Faut-il un technicien pour l'installer&nbsp;?
-            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </summary>
-          <p class="pv-faq__a">
-            Non. Tout le matériel est sans fil et s'appaire depuis l'application.
-            Comptez une trentaine de minutes pour un pack complet. Un conseil tiré
-            des retours clients : nommez chaque accessoire au moment de l'appairage,
-            c'est le moment prévu pour le faire.
-          </p>
-        </details>
-
-        <details>
-          <summary>Que se passe-t-il si Internet est coupé&nbsp;?
-            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </summary>
-          <p class="pv-faq__a">
-            La centrale continue de fonctionner en local : la détection et les
-            sirènes restent actives. Avec une carte SIM M2M, elle bascule sur le
-            réseau 4G et continue d'alerter par SMS et par appel. Sa batterie de
-            secours prend le relais du secteur pendant {{ autonomie }}.
-          </p>
-        </details>
-
-        <details>
-          <summary>Les animaux déclenchent-ils l'alarme&nbsp;?
-            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </summary>
-          <p class="pv-faq__a">
-            Non, avec les détecteurs de mouvement compatibles animaux fournis dans
-            les packs : ils ignorent les animaux de moins de 12 kg évoluant au sol.
-          </p>
-        </details>
-
-        <details>
-          <summary>Puis-je agrandir le système plus tard&nbsp;?
-            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </summary>
-          <p class="pv-faq__a">
-            Oui, jusqu'à 90 accessoires par centrale, sans changer de matériel. La
-            gamme radio est commune aux centrales Touch et Vigilia : les références
-            30x sont compatibles avec les deux.
-          </p>
-        </details>
-
-        <details>
-          <summary>Où sont enregistrées les vidéos&nbsp;?
-            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </summary>
-          <p class="pv-faq__a">
-            Sur une carte micro SD placée dans la caméra, chez vous. Aucun
-            hébergement distant n'est imposé, et donc aucun abonnement de stockage.
-          </p>
-        </details>
-
-        <details>
-          <summary>Sous combien de temps suis-je livré&nbsp;?
-            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </summary>
-          <p class="pv-faq__a">
-            Toute commande passée avant midi est expédiée le jour même, les autres le
-            lendemain — pas d'expédition le samedi ni le dimanche. Comptez ensuite
-            48 heures en Colissimo ou 2 à 3 jours en point relais Chronopost. Pour la
-            Belgique, 3 à 4 jours en Chronopost International.
-          </p>
-        </details>
+        {%- render 'pt-faq-touch', mode: 'html', autonomie: autonomie -%}
       </div>
     </div>
   </section>
@@ -1148,10 +1078,24 @@ Compatible Amazon Alexa et Google Home.</dd>
     "@type": "Offer",
     "priceCurrency": {{ cart.currency.iso_code | json }},
     "price": {{ prix_ld | json }},
-    "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}"
+    "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}",
+    "seller": { "@type": "Organization", "name": "Daewoo Security" }
     {%- render 'pv-ld-offre' -%},
     "url": {{ url_produit | json }}
   },
+  {%- comment -%}
+    Les avis repris ici sont ceux affichés dans le carrousel, mot pour
+    mot : même source, snippets/pt-avis-touch.liquid. Baliser un avis qui
+    ne figure pas sur la page est proscrit par Google.
+  {%- endcomment -%}
+  "review": [{%- render 'pt-avis-touch', mode: 'ld' -%}],
+  {%- if jumeau != blank and jumeau.available %}
+  "isSimilarTo": {
+    "@type": "Product",
+    "name": {{ jumeau.title | json }},
+    "url": {{ shop.url | append: jumeau.url | json }}
+  },
+  {%- endif %}
   "additionalProperty": [
     { "@type": "PropertyValue", "name": "Écran", "value": {{ "Tactile " | append: pouces | append: " (centrale " | append: ref_centrale | append: ")" | json }} },
     { "@type": "PropertyValue", "name": "Connectivité", "value": "Wi-Fi 2,4 GHz, relais GSM 4G en option par carte SIM M2M" },
@@ -1164,6 +1108,33 @@ Compatible Amazon Alexa et Google Home.</dd>
     {%- endif -%},
     { "@type": "PropertyValue", "name": "Abonnement", "value": "Aucun abonnement requis" }
   ]
+}
+</script>
+
+{%- comment -%}
+  Le chemin décrit ici est exactement celui affiché en haut de page.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": {{ col_titre | json }}, "item": {{ shop.url | append: col_url | json }} },
+    { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ url_produit | json }} }
+  ]
+}
+</script>
+
+{%- comment -%}
+  Mêmes questions et mêmes réponses que les accordéons plus haut : le
+  texte n'existe qu'une fois, dans snippets/pt-faq-touch.liquid.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "FAQPage",
+  "mainEntity": [{%- render 'pt-faq-touch', mode: 'ld', autonomie: autonomie -%}]
 }
 </script>
 
