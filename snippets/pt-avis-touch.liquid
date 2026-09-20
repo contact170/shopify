@@ -2,66 +2,130 @@
   ══════════════════════════════════════════════════════════════════════
   AVIS CLIENTS — GAMME TOUCH / TOUCH XL
   ──────────────────────────────────────────────────────────────────────
-  Source unique pour les deux usages de la page :
-    render 'pt-avis-touch', mode: 'cartes'  → les cartes du carrousel,
-                                              rendues côté serveur donc
-                                              lisibles sans JavaScript et
-                                              indexables ;
-    render 'pt-avis-touch', mode: 'ld'      → les mêmes avis en objets
-                                              Review du JSON-LD, ce que
-                                              lisent les moteurs
-                                              génératifs ;
-    render 'pt-avis-touch'                  → le même contenu en JSON,
-                                              pour la fenêtre « tous les
-                                              avis », construite à
-                                              l'ouverture seulement.
-  Les données ne sont écrites qu'une fois : le tableau ci-dessous. Le
-  filtre | json se charge de l'échappement, il n'y a donc pas de JSON à
-  tenir à la main.
+  Source unique pour les trois usages de la page :
+    render 'pt-avis-touch', mode: 'cartes', limite: 8
+        → les cartes du carrousel, rendues côté serveur donc lisibles
+          sans JavaScript et indexables ;
+    render 'pt-avis-touch', mode: 'ld', limite: 10
+        → les mêmes avis en objets Review du JSON-LD ;
+    render 'pt-avis-touch'
+        → la liste complète en JSON, pour la fenêtre « tous les avis »,
+          construite à l'ouverture seulement.
+  Le paramètre « limite » évite de charger 59 cartes dans le HTML alors
+  que personne ne fait défiler le carrousel jusqu'au bout.
 
-  Ces avis sont RÉELS. Ils viennent du métachamp judgeme.widget des
-  fiches Touch, c'est-à-dire de Judge.me. Ce métachamp n'expose que les
-  premiers avis de chaque fiche : après dédoublonnage sur les 13 pages de
-  la gamme, 7 avis distincts sont disponibles.
+  PROVENANCE
+  Export Judge.me du 20/09/2026 : 1 049 avis publiés, toutes gammes.
+  Filtre appliqué : les fiches du cœur de gamme Touch, c'est-à-dire les
+  centrales et les packs — Starter Pack AM301 et AM302, configurateurs
+  Touch, pack AM340, offres exclusives Touch XL, centrale AM302 seule.
+  Les accessoires 30x (télécommandes, contacteurs, détecteurs) en sont
+  exclus : ils relèvent du groupe « Accessoires » de Judge.me, pas du
+  groupe Touch.
+  73 avis correspondent, 59 sont retenus après retrait des textes de
+  moins de 45 caractères, des doublons, et des « avis » qui ne font que
+  répéter le titre du produit.
 
-  Judge.me compte 44 avis sur le groupe Touch, note moyenne 4,52. C'est
-  ce chiffre-là qui est affiché comme agrégat et balisé en JSON-LD, pas
-  la moyenne des 7 avis présents ici : on annonce la note réelle du
-  groupe et on en montre un extrait.
+  Ces 59 avis donnent 4,46 / 5. Ce n'est PAS le chiffre affiché sur la
+  page : l'agrégat vient du métachamp reviews.rating, calculé par
+  Judge.me et donc toujours à jour. On annonce la note officielle de la
+  gamme, et on en montre une sélection.
 
-  Pour en afficher davantage : exporter les avis Touch depuis Judge.me
-  (Commentaires › Exporter) et ajouter des enregistrements au même
-  format. Ne jamais inventer d'avis.
+  NOMS — DONNÉES PERSONNELLES
+  Format identique au widget Judge.me : prénom suivi de l'initiale.
+  Vérifié sur six avis dont le rendu public était connu (ERIC RISPOLI →
+  « ERIC R. », Joël Martin → « Joël M. »). Quatre ajustements :
+    • un « NOM Prénom » saisi à l'envers est remis à l'endroit plutôt que
+      de publier le patronyme en entier ;
+    • quatre clients avaient saisi leur ADRESSE E-MAIL en guise de nom :
+      ils deviennent « Client vérifié » ;
+    • un nom collé (« michelHardy ») est coupé sur la majuscule ;
+    • le client que Judge.me affiche « Anonyme » reste « Client vérifié ».
+  Aucune adresse e-mail ni adresse IP du fichier source n'est reprise.
 
-  Format : note ~|~ auteur ~|~ date ~|~ texte, enregistrements séparés
-  par ~~~. Ces séparateurs sont volontairement improbables dans un texte
-  d'avis.
+  MISE À JOUR
+  Réexporter depuis Judge.me (Commentaires › Exporter) et régénérer.
+  Ne jamais inventer ni retoucher un avis : les textes ci-dessous sont
+  verbatim, fautes d'orthographe comprises.
 
-  Dernière synchronisation : 20/09/2026
+  Format : note ~|~ auteur ~|~ date ~|~ texte, un avis par ligne,
+  séparés par ~~~. Aucun texte ne contient ces séquences.
   ══════════════════════════════════════════════════════════════════════
 {%- endcomment -%}
 
 {%- liquid
   assign SEP = "~|~"
   assign FIN = "~~~"
-
-  assign a1 = "5~|~Joël M.~|~août 2026~|~Très content d'avoir trouvé cette alarme facile à installer, fonctionnelle et fiable vu tous les essais que j'ai effectués. Cette alarme a un très bon rapport qualité-prix même hors promotion. On peut changer facilement le numéro de téléphone des personnes qui peuvent effectuer les vérifications en cas de déclenchement quand on part en voyage. C'est rassurant. L'application fonctionne aussi très bien sur le smartphone pour activer et désactiver l'alarme."
-  assign a2 = "5~|~Client vérifié~|~septembre 2026~|~Je ne dépose généralement jamais d'avis. Je tiens ici à le faire pour souligner la qualité de la relation client, de l'avant-vente jusqu'au SAV. Une réponse rapide du SAV à la première difficulté, et surtout un assistant ultra performant. Ajoutez à cela la qualité du matériel, la simplicité d'utilisation, les nombreux paramétrages possibles, notamment via le mode scène, et l'ergonomie de l'application : vous avez en main un système qui s'adapte parfaitement à vos besoins. J'ai installé plusieurs marques d'alarme sans centre de télésurveillance ; je recommande de loin la solution Daewoo, fiable et adaptable."
-  assign a3 = "5~|~Gérard L.~|~septembre 2026~|~Système facile à installer. Configuration des éléments avec simplicité. Dans le pack que j'ai choisi j'aurais préféré un détecteur de porte à la place des deux télécommandes qui pour moi ne sont pas utiles. À voir dans le long terme le fonctionnement et la durabilité."
-  assign a4 = "4~|~Françoise S.~|~août 2026~|~Alarme facile à installer, prix raisonnable."
-  assign a5 = "4~|~JJ N.~|~août 2026~|~Alarme moderne. L'installation est un peu fastidieuse avec toutes les options d'accessoires. Pour l'installation, des schémas et des photos seraient un plus."
-  assign a6 = "4~|~Christian R.~|~juillet 2026~|~Centrale facile à configurer. Un peu moins simple à associer avec la caméra intérieure."
-  assign a7 = "4~|~Eric R.~|~novembre 2023~|~Les appairages ne se font pas forcément du premier coup, ne pas hésiter à désinstaller et recommencer. Les scénarios semblent simples mais je galère un peu à les faire fonctionner. Le service Daewoo répond à mes questions. Sinon ça fonctionne bien."
-
-  assign tout = a1 | append: FIN | append: a2 | append: FIN | append: a3 | append: FIN | append: a4 | append: FIN | append: a5 | append: FIN | append: a6 | append: FIN | append: a7
-  assign avis = tout | split: FIN
+  assign limite = limite | default: 999
 -%}
+{%- capture pt_donnees -%}
+5~|~Gérard L.~|~septembre 2026~|~Système facile à installer. Configuration des éléments avec simplicité. Dans le pack que j’ai choisi j’aurais préféré un détecteur de porte à la place des 2 télécommandes qui pour moi ne sont pas utiles. À voir dans le long terme le fonctionnement et la durabilité.~~~
+5~|~Client vérifié~|~septembre 2026~|~Je ne dépose généralement jamais d'avis. Je tiens ici à le faire pour souligner la qualité de la relation client, de l'avant-vente jusqu'au SAV. Un petit geste commercial obtenu sur l'achat de ce pack assorti de quelques accessoires supplémentaires, une réponse rapide du SAV à la première difficulté et surtout un assistant IA ultra performant. Si vous n'y trouvez pas votre réponse, c'est que vous vous trompez de question ! Ajouter à cela la qualité du matériel, la simplicité d'utilisation, les nombreux paramétrages possibles, notamment via le mode "scène" et l'ergonomie de l'application pour faire tout cela et vous avez un main un système qui s'adapte parfaitement à vos besoins. J'ai installé plusieurs marques d'alarme sans centre de télésurveillance, chez moi, pour de la famille, .... je recommande de loin la solution DEAWOO, peut-être un peu plus chère, mais fiable et adaptable. J'aurais un petit bémol toutefois, lorsque le particulier s'oriente sur ce type de solution et contourne les gros acteurs du marché qui vendent de la télésurveillance, dont nous n'avons pas besoin, ce n'est pas pour faire derrière du stockage d'images/vidéos sur un cloud et se retrouver avec des abonnements et solutions qui dépendent d'un tiers. Je trouve donc dommage et contraire à l'esprit même de ce type de solution que les caméras ne soient pas compatibles avec les normes permettant de traiter le flux vidéo et les images sur des serveurs NAS personnels.~~~
+5~|~Joël M.~|~août 2026~|~Très content d'avoir trouvé cette alarme facile à installer, fonctionnelle et fiable vu tous les essais que j'ai effectués. Ce qui n'est pas précisé dans le mode d'emploi c'est que c'est au moment de l'appairage qu'il faut renommer chaque dispositif car on ne peut pas le faire plus tard. A chaque déclanchement on reçoit bien une notification avec le nom du dispositif concerné. De plus cette alarme a un très bon rapport qualité/prix même hors promotion. On peut changer facilement le numéro de téléphone des personnes qui peuvent effectuer les vérifications en cas de déclanchement quand on part en voyage. C'est rassurant. L'application fonctionne aussi très bien sur le smartphone pour activer/désactiver l'alarme. Pour les autres fonctions je ne me prononcerais pas car je ne les utilise pas. Pour les fonctions de base, ça marche donc très bien et c'est là l'essentiel.~~~
+4~|~JJ N.~|~août 2026~|~Alarme moderne. L’installation est un peu fastidieuse avec toutes les options d’accessoires. Pour l’installation des schémas/photos seraient un plus~~~
+5~|~Jonathan C.~|~juillet 2026~|~Bon produit avec la configuration on j aussi ce nous avons besoin avec forcément un prix intéressant livraison ultra rapide~~~
+4~|~Christian R.~|~juillet 2026~|~Bonjour Centrale facile a configurer Un peu moins simple a associer la caméra intérieur~~~
+4~|~Mustapha O.~|~juin 2026~|~Système facile a poser, intuitif.la camera peut etre intégrée au système mais necessite son armement de manière autonome. A voir dans le temps autonomie des contacteurs.~~~
+4~|~Catherine M.~|~juin 2026~|~Visiblement une très bonne alarme de qualité. J'enlève une étoile pour la sirène interne trop faible et les bips absents lors de la mise en alarme et l'entrée dans la maison.~~~
+5~|~Eric V.~|~mai 2026~|~super système touch XL 7 plus camera intérieur et extérieur SAV super réactif petit problème de télécommande résolu en moins de 5 minutes~~~
+4~|~Nicolas A.~|~avril 2026~|~Très satisfait de mon achat, je retire une étoile pour l'absence de logiciel sur PC et un incompatibilité totale (volontaire ?) avec les NAS Synology et leur logiciel Surveillance Station. Sur ces 2 points là c'est dommage. J'espère qu'à l'avenir cela puisse évoluer. Si j'avais su cela peut être que j'aurais cherché autre chose.~~~
+4~|~Henri M.~|~avril 2026~|~Une fois installé fonctionne très bien , quelques difficultés à la mise en route. La carte Sim difficile à installer, la petite pièce en métal m'est resté dans les mains, suis arrivé à la remettre. le détecteur extérieur: les supports en plastique ont cassés j'ai mis du scotch sur les deux pièces , j'ai du les serrer trop fort ( pas plus que ceux à l'intérieur),on arrive pas a trouver les pièce détachées .Pour le reste nikel, l'IA sur le site m'a bien aidé.~~~
+4~|~Jacques R.~|~avril 2026~|~Pack complet la caméra d'intérieur n'est pas nécessaire à mon avis. Par contre j'ai eu des difficultés à l'installation pourquoi être obligé de changer le mot de passe de 26 à 19 caractères ce qui implique de revoir tous les codes des appareils liés à la box. La notice de la n'est pas explicite~~~
+5~|~Patrice V.~|~mars 2026~|~Système polyvalent et très fiable, facile à installer grâce aux vidéos explicatives~~~
+5~|~Fabrice P.~|~mars 2026~|~Ce qui est idéal pour protéger un appartement voire une petite maison. Je l'ai simplement complété avec des "détecteur ouverture et vibration". L'installation est très facile grâce aux modes d'emploi, aux video sur la chaine Youtube et par l'application très pratique. Et il a été livré très rapidement.~~~
+5~|~René G.~|~février 2026~|~Installation facile Fonctionnetrèsbien Service client présent et reactif~~~
+4~|~Dominique J.~|~février 2026~|~Bon système de sécurité simple à installer en suivant scrupuleusement et patiemment la notice et la vidéo disponibles sur internet. Ne pas sauter d'étapes sinon vous risquez de devoir tout recommencer en "restaurant" le système.~~~
+4~|~Berndt~|~janvier 2026~|~Installation pas évidente, heureusement l'aide en ligne est excellente~~~
+4~|~Rodolphe P.~|~janvier 2026~|~Très bon système d’alarme Quelques petites ameliorations à apporter mais pas grand chose qui rendrait se système d’alarme vraiment au top En tout cas un service client vraiment parfait~~~
+5~|~Pierre G.~|~janvier 2026~|~Livraison rapide et produits conformes aux descriptions. Installation plutôt facile malgré de notices un peu trop sommaires. Excellente réactivité du SAV sur un détecteur non opérationnel Bon fonctionnement~~~
+4~|~Celine M.~|~janvier 2026~|~Très bien. Dommage que 2 capteurs de vibration ne fonctionnaient pas. Heureusement que nous sommes habitués s à refaire des soudures.~~~
+4~|~Jean-pierre G.~|~janvier 2026~|~une alarme très bon marcher mise en place des éléments très bien, jusqu'à la mise en pace du clavier qui n ai pas dans la liste du clavier un peu déroutant, mais plutôt dans le contrôleur et sonnette . petit poing a amélioré pour moi (la télécommande n'a pas de cache boutons, elle s'allume a moindre pression .~~~
+5~|~Christian N.~|~décembre 2025~|~Très bon matériel facile à installer et à configurer. Le service après vente est hyper réactif.~~~
+5~|~Richard H.~|~décembre 2025~|~Les télécommandes gagneraient à être moins sensibles pour éviter les déclenchements intempestifs Sinon parfait facile d'installation et hot line au top~~~
+3~|~Michel H.~|~octobre 2025~|~J'ai reçu ce matériel bien emballé. Etc,...mais en ce qui concerne le document de mise en route je le trouve succinct !! Et pour certains paramètres j'ai trouvé sur le site d'Amazon des explications bien plus pointues~~~
+5~|~Yves H.~|~octobre 2025~|~La centrale TOUCH XL (7") est complète et très simple d'utilisation. Son fonctionnement au quotidien ne pose aucun problème. Le paramétrage des différents accessoires (caméras, contacteurs, détecteurs de mouvements...) est d'une grande simplicité. Je suis très satisfait de cette acquisition.~~~
+4~|~Philippe M.~|~septembre 2025~|~Très bon matériel mais manque d'infos pour remplacer pile dans les détecteurs d'ouvertures, ni d'explications sur les raccordements filaires de détecteurs. Étant électronicien, et ayant donc des connaissances de base, j'ai solutionné ces problèmes, mais pour un utilisateur lambda cela ne sera pas facile.~~~
+5~|~Via A.~|~septembre 2025~|~Facile à installer, dommage que les detecteurs vendus ne soient que des simples et pas des 2 en 1. Le service après vente sont réactifs, après 2 semaines d'utilisation je recommande.~~~
+5~|~Luc M.~|~septembre 2025~|~Très satisfait pour la centrale parcours intuitif et fonctionnel. Un bémol concernant l'introduction de la carte SIM dans son logement difficile à réaliser.~~~
+5~|~Ihissane A.~|~septembre 2025~|~Bonjour je suis très content d'avoir connaître le matériel des alarmes franchement Je suis content et aussi p Je veux faire la publicités a mayotte on a besoin de bons matériels d'alarme comme c'est que je viens d'acheter c'est bon matériel pas trop cher bon c'est ça qui est bien merci beaucoup et à bientôt j'achèterai encore 2 pour en mener à Mayotte~~~
+4~|~Serge B.~|~septembre 2025~|~Réception des équipements très rapidement. Un petit problème de déclenchement intempestif du détecteur de mouvement d'une caméra. En attente d'information du service de dépannage Daewoo.~~~
+5~|~Philippe~|~septembre 2025~|~Super, simple et efficace, installation rapide~~~
+4~|~Jerome S.~|~juillet 2025~|~Bon materiel dans l'ensemble, apparaillage aisé, ergonomie de la tablette bien conçue. Quelques points de mécontentements toutefois : impossible de renommer les capteurs sans l'application et une connexion wifi, dommage pour l'utilisation avec carte sim. Plus génant, les capteurs exterieurs réagissent aux animaux donc inutilisables....enfin, grosses déceptions pour les accessoires achetés en supplementaires : ils sont vendus plus chers et donc le sentiment d'etre pris pour un pigeon...~~~
+5~|~Luis L.~|~juin 2025~|~Bonjour facilité d'usage et programmation. voir la dureté des piles sensor de mouvement dommage que on ne peut couper la détection quand on est a la maison~~~
+4~|~Christophe P.~|~mai 2025~|~La centrale les éléments intérieurs ainsi que les détecteurs sont très qualitatifs. Par contre j’ai dû renvoyer les deux sirènes solaires, elles avaient un niveau de 90 D B. J’ai commandé par ailleurs une sirène filaire, on dirait un peu un jouet d’enfants mais elle sonne un peu plus fort, je pense que il faudrait vraiment améliorer les sirènes, d’autant plus que le reste du matériel est très qualitatif. Dommage.~~~
+5~|~Isabelle S.~|~mai 2025~|~Facile à installer, et tout fonctionne parfaitement. Je recommande pour sécuriser une habitation complète.~~~
+4~|~Monique M.~|~mai 2025~|~Tout à été pensé pour une installation facile et rapide. L'application est simple et efficace. Seul bémol, les télécommandes qui sont beaucoup trop sensibles (plusieurs déclenchements sans la semaine) existe-t-il un cache pour protéger les boutons ?~~~
+5~|~Client vérifié~|~avril 2025~|~Pack alarme conforme à la description et évolutive~~~
+4~|~Thomas Y.~|~mars 2025~|~Bon produit ,facile à installer. Cam moyenne. Ne détecte pas toujours. Si l'on passe trop vite elle ne déclenche pas . Cam sur prise secteur.~~~
+4~|~Client vérifié~|~mars 2025~|~Asser facile à poser et configurer. Il me reste à configurer la sirène extérieure. Bon produit~~~
+5~|~Michaël R.~|~mars 2025~|~Reçu les articles bien conditionnés, avec notice très claire et concise. Cela a été facile à installer et à configurer avec l'application. Pas eu besoin du support de Daewoo mais il est indiqué qu'on peu les contacter si besoin ce qui était rassurant. J'achèterai certainement de nouveaux accessoires pour agrandir le kit de base.~~~
+5~|~Client vérifié~|~mars 2025~|~Dans un premier temps nous avons été très satisfait de la rapidité de traitement de la commande et la qualité de l'expédition . Les composants semblent être de bonne qualité, à voir à l'usage. Mais ceci n'est que l'approche matériel; Notre grande satisfaction est le contact avec l'assistance technique. La compétence et la disponibilité est un exemple du genre. Et c'est à ce titre que nous recommanderions vivement votre marque. Encore merci~~~
+3~|~Serge K.~|~février 2025~|~L’alarme est très bien, nous en sommes contents. Par contre il n’est pas possible de régler le clavier au niveau sonore. De plus il y a un bruit strident quand on met où quand on enlève l’alarme, c’est très désagréable et on ne peut pas régler ou retirer ce son. De plus je trouve que la sirène n’est pas assez forte. Mais dans l’ensemble c’est un produit très correct.~~~
+4~|~Jean-Pierre P.~|~février 2025~|~Configuration relativement simple. Bien suivre les notifications données.~~~
+5~|~Client vérifié~|~février 2025~|~Bon matériel simple à mettre en œuvre. Un bémol tout de même : les documentations sont très succinctes, en particulier pour l'extender EX010 où l'on a pas de clés pour décoder les voyants et où l'on trouve des imprécisions voire des erreurs. Heureusement la chaînes YouTube comble une partie des lacunes. Cette difficulté passée, le matériel semble très performant et répond parfaitement à mes besoins. (à confirmer avec l'usage)~~~
+5~|~Stephanie T.~|~janvier 2025~|~Un kit ultra facile à installer, je recommande cette alarme pour sa fiabilité mais aussi pour son côté facilité d’installation avec la chaîne YouTube proposé pour l installation~~~
+4~|~Richard M.~|~décembre 2024~|~bonne alarme en général mais dommage que le voyant de l'alarme extérieure clignote en permanence et ne s'éteint pas quand l'alarme est désarmée~~~
+5~|~Céline G.~|~décembre 2024~|~Alarme complète, facile à installer, prix intéressant comparé à la concurrence, à voir pour la fiabilité, cela fait un mois Je recommande cette marque sans souci~~~
+5~|~Olivier L.~|~décembre 2024~|~Le pack alarme AM302 est tres facile à installer. Lecran est suffisamment larrge pour bien voir les fonctionnalités. Un seul defaut le prix des accessoires qui restent légèrement plus chers que la concurrence~~~
+4~|~Gilles B.~|~novembre 2024~|~Recue rapidement 2/3j. Installation facile . Tâtonnement sur les badges RFID finalement assez simple .L alarme n'apparaît pas sur l'application smartphone.. il manque un schéma général sur l'appli indiquant le statut des capteurs d ouverture ouvert/fermé.... Très bonne portée adaptation d un capteur sur porte garage. Facilité de joindre si pb l'assurance efficace. A recommander.~~~
+5~|~ALAIN S.~|~octobre 2024~|~Site à l'écoute et compétent. Le service commercial est de bon conseil. Quant au service technique, celui-ci a été particulièrement patient et compétent pour me régler les détails d'installation de certains accessoires que je ne maitrisais pas malgré les informations précises du site. Enfin, suite à une télécommande qui ne voulait pas être reconnue par la centrale, les services concernés m'en ont renvoyé une très rapidement. Ancien abonné d'un système de télésurveillance connu, je ne regrette absolument pas mon achat. Merci à cette société.~~~
+4~|~JEROME J.~|~octobre 2024~|~je cherchais une alarme très personnalisable au niveau des équipements, DAEWOO propose une large gamme d'équipement à un prix compétitif. La partie software est facile de prise en main. les plus : la prise en main pour la configuration, des tutos guident bien. La grande gamme des produits pour les systèmes AM301/302. Les capteurs sont très réactifs. le système de clavier RFID c'est top, les télécommandes ce n'est pas pratique au quotidien. La partie logiciel permet un paramétrage assez complet et notamment la partie scénario. les moins : un problème de conception pour la sirène filaire où la fiche est coudée et ne permet pas le passage dans un trou de câble, j'ai été obligé de dessouder, passer le câble dans le mur extérieur et de resouder, Avec la caméra extérieure filaire, la fiche est droite ! La mise en place entre l'application mobile et l'écran de commande n'est pas intuitive, on jongle entre les deux, cela reste simple. Une remarque qui n'est pas un point négatif, malgré le grand choix d'équipement, dans le scénario, on voit le pilotage avec la météo, la température, je ne vois pas comment le coupler, une sonde compatible ? Globalement, elle remplace largement mon alarme de 10 ans qui était au bout de sa vie par un système bien plus complet, à voir la fiabilité dans le temps, je recommande.~~~
+3~|~Donovan A.~|~septembre 2024~|~Je suis mitigé, le matériel semble de qualité, la connexion entre les appareils se fait très facilement ainsi que l'utilisation de ceux ci. Cependant malgré le faites que les détecteurs soit prévu pour les animaux ils font malgré tous sonné l'alarme systématiquement malgré plusieurs orientation. C'est assez dérangeant..~~~
+5~|~DANIEL P.~|~avril 2024~|~Produit fidèle au descriptif, notice d'installation et d'utilisation claire. Contact avec l'entreprise performant et de qualité. Très bon conseil~~~
+4~|~Christophe M.~|~janvier 2024~|~Bon matériel, mais programmation compliqué pour des novices ! Mais service assistance par Tph compétent , patient et sympa et professionnel .~~~
+4~|~ERIC R.~|~novembre 2023~|~Les appairages ne se font pas forcément du 1er coup, ne pas hésiter à désinstaller et recommencer. Les scénarios semblent simples mais je galère un peu à les faire fonctionner. Le service Daewoo répond à mes questions et je suis train d'essayer mais pour l'instant je n'arrive pas à faire que si ma caméra détecte un mouvement elle déclenche l'alarme et m'envoie une notification. Les notifications sont lues sur l'application mais je n'ai pas de son sur mon smartphone. Bref un peu complexe, pourtant je ne suis pas trop emprunté d'habitude. Sinon ça fonctionne bien.~~~
+5~|~Claude T.~|~août 2023~|~Commande d un pack AM301 le dimanche et reçu le mercredi. Installation hyper facile, connexion encore plus simple. Ne pas hésiter éventuellement à visionner les tutos sur YouTube pour les détails, ce qui facilite grandement l'installation en qu'à de doute. Application Smartphone très bien faite, rien à redire. Dommage que les boutons des télécommandes soient un peu trop sensibles. Je vais acheter un clavier et utiliser les badges RFID. Alarme en remplacement d'une autre marque gardée 5 ans et je recommande. Bravo DAEWOO~~~
+5~|~Mathieu W.~|~juillet 2023~|~Très bonne alarme, en français , facile à installer . L’application est simple et efficace. Produit de qualité , parfait~~~
+5~|~Aucune H.~|~juin 2023~|~Le service SAV + Service commercial sont vraiment au top. J'ai réfléchis plusieurs semaines avant de passer commande, le service commercial à répondu à l'ensemble de mes questions et ma TRES BIEN conseillé et aiguillé dans mon besoin. Je n'ai rien à dire, le matériel est fiable et cohérent à mes attentes. Les différents services (SAV, Commercial, etc) ont toujours répondu à mes mails, malgré le droit à la déconnexion le soir et le week-end, les équipes répondent. Du moins, quand ils le peuvent en liant vie privée et vie professionnel. Ce genre de prestation est rare de nos jours, c'est agréable de voir que des entreprises et des conseillés sont proactifs et répondent présents même après la vente. J'ai eu des difficultés lors de l'association avec la centrale et 1 ou 2 équipements, les équipent ont sût m'accompagné et m'expliquer clairement les différents protocoles pour les associations.~~~
+4~|~Yves M.~|~juin 2023~|~Satisfait de cette alarme, facile à installer. Une étoile en moins pour la sirène extérieure solaire qui est vraiment trop faible, manque de puissance,de décibels.
+{%- endcapture -%}
+{%- assign avis = pt_donnees | strip | split: FIN -%}
 
 {%- if mode == "ld" -%}
-{% for enr in avis %}{% assign ch = enr | split: SEP %}{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":{{ ch[0] | plus: 0 }},"bestRating":5},"author":{"@type":"Person","name":{{ ch[1] | json }}},"reviewBody":{{ ch[3] | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}
+{% for enr in avis limit: limite %}{% assign ch = enr | strip | split: SEP %}{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":{{ ch[0] | plus: 0 }},"bestRating":5},"author":{"@type":"Person","name":{{ ch[1] | json }}},"reviewBody":{{ ch[3] | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}
 {%- elsif mode == "cartes" -%}
-  {%- for enr in avis -%}
-    {%- assign ch = enr | split: SEP -%}
+  {%- for enr in avis limit: limite -%}
+    {%- assign ch = enr | strip | split: SEP -%}
     {%- assign n = ch[0] | plus: 0 -%}
     <article class="pv-review-card">
       <div class="pv-review-card__stars" aria-label="{{ n }} étoiles sur 5">
@@ -78,5 +142,5 @@
     </article>
   {%- endfor -%}
 {%- else -%}
-[{% for enr in avis %}{% assign ch = enr | split: SEP %}{"r":{{ ch[0] | plus: 0 }},"n":{{ ch[1] | json }},"d":{{ ch[2] | json }},"t":{{ ch[3] | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+[{% for enr in avis limit: limite %}{% assign ch = enr | strip | split: SEP %}{"r":{{ ch[0] | plus: 0 }},"n":{{ ch[1] | json }},"d":{{ ch[2] | json }},"t":{{ ch[3] | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
 {%- endif -%}

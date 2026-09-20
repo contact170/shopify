@@ -887,14 +887,14 @@ Compatible Amazon Alexa et Google Home.</dd>
         lit la même source, mais n'est construite qu'à l'ouverture.
       {%- endcomment -%}
       <div class="pv-reviews__track pv-reveal">
-        {%- render 'pt-avis-touch', mode: 'cartes' -%}
+        {%- render 'pt-avis-touch', mode: 'cartes', limite: 8 -%}
       </div>
 
       <script type="application/json" data-dw-reviews-json>{%- render 'pt-avis-touch' -%}</script>
 
       <div style="text-align:center">
         <button type="button" class="pv-reviews__all-btn" data-dw-modal-open="avis">
-          Lire tous les avis
+          Lire d'autres avis clients
         </button>
       </div>
     </div>
@@ -1000,9 +1000,13 @@ Compatible Amazon Alexa et Google Home.</dd>
       <button type="button" class="pv-modal__close" data-dw-modal-close aria-label="Fermer">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
-      <h3>Avis clients — gamme Touch</h3>
+      <h3>Avis clients — gamme Touch et Touch XL</h3>
       {%- if a_une_note -%}
-        <p>Note moyenne {{ note_affichee }}/5 sur {{ nb_avis }} avis collectés par Judge.me.</p>
+        <p>
+          Note moyenne {{ note_affichee }}/5 sur {{ nb_avis }} avis collectés par
+          Judge.me. Voici une sélection d'avis récents sur la gamme, reproduits
+          tels qu'ils ont été déposés.
+        </p>
       {%- endif -%}
       <div class="pv-all-reviews" data-dw-reviews-list>
         <p class="pv-all-reviews__loading">Chargement des avis…</p>
@@ -1088,7 +1092,7 @@ Compatible Amazon Alexa et Google Home.</dd>
     mot : même source, snippets/pt-avis-touch.liquid. Baliser un avis qui
     ne figure pas sur la page est proscrit par Google.
   {%- endcomment -%}
-  "review": [{%- render 'pt-avis-touch', mode: 'ld' -%}],
+  "review": [{%- render 'pt-avis-touch', mode: 'ld', limite: 10 -%}],
   {%- if jumeau != blank and jumeau.available %}
   "isSimilarTo": {
     "@type": "Product",
