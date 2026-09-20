@@ -246,6 +246,8 @@
     /* ---- hero ---- */
     .pv-hero{padding:96px 0 56px;text-align:center;}
     .pv-hero h1{font-size:clamp(34px,6vw,60px);max-width:900px;margin:0 auto;}
+    .pv .pv-hero__tagline{font-size:clamp(18px,2.6vw,26px);color:var(--pv-navy);max-width:820px;margin:14px auto 0;font-weight:500;font-style:italic;text-align:center;}
+    .pv .pv-hero__summary{font-size:14px;color:var(--pv-gray);max-width:660px;margin:12px auto 0;line-height:1.5;text-align:center;}
     .pv .pv-hero__sub{
       font-size:clamp(17px,2.2vw,22px);color:var(--pv-gray);
       max-width:660px;margin:22px auto 0;line-height:1.5;font-weight:400;text-align:center;
@@ -611,10 +613,8 @@
     <div class="pv-wrap">
       <span class="pv-eyebrow">Daewoo Security · Pack Vigilia</span>
       <h1>Toute votre maison protégée.<br>Intérieur, extérieur, jour et nuit.</h1>
-      <p class="pv-hero__sub">
-        Alarme connectée, caméra intérieure et sirène solaire 110&nbsp;dB réunies dans un seul pack évolutif.
-        Installation en 20 minutes, sans technicien, sans abonnement.
-      </p>
+      <p class="pv-hero__tagline">L'offre exclusive du pack Vigilia, caméra intérieure et sirène solaire comprises.</p>
+      <p class="pv-hero__summary">Ce pack comprend une centrale Vigilia, une caméra intérieure, une sirène extérieure solaire et cinq autres accessoires, soit huit éléments au total.</p>
       {%- if hero_image -%}
         <div class="pv-hero__media pv-reveal">
           {{ hero_image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '600,900,1200', alt: product.title }}
@@ -633,6 +633,11 @@
         </div>
         {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
       </div>
+      <p class="pv-hero__sub">
+        Alarme connectée, caméra intérieure et sirène solaire 110&nbsp;dB réunies dans un seul pack évolutif.
+        Installation en 20 minutes, sans technicien, sans abonnement.
+      </p>
+
       <div class="pv-hero__trust">
         <span>🔒 Sans abonnement</span>
         <span>📷 Caméra intérieure incluse</span>
