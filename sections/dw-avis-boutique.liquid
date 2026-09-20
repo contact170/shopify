@@ -1,0 +1,81 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════
+  SECTION — AVIS DE BOUTIQUE (page d'accueil)
+  ──────────────────────────────────────────────────────────────────────
+  Rendue CÔTÉ SERVEUR, contrairement au carrousel Judge.me situé plus bas
+  sur la page : le texte est dans le HTML, donc lisible sans JavaScript
+  et indexable. Les deux se complètent — celui-ci parle du service, de la
+  livraison et du SAV, l'autre des produits.
+
+  S'appuie sur assets/dw-socle.css et assets/dw-socle.js, déjà utilisés
+  par les pages gamme et donc déjà en cache pour un visiteur qui vient
+  d'une fiche produit.
+
+  Les données viennent de snippets/dw-avis-boutique.liquid, qui documente
+  leur provenance et le traitement des avis importés de Google.
+  ══════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+{{ 'dw-socle.css' | asset_url | stylesheet_tag }}
+
+<div class="pv" data-dw-page>
+  <section class="pv-section{% if section.settings.fond_gris %} pv-section--alt{% endif %}">
+    <div class="pv-wrap">
+      <div class="pv-reviews__head pv-reveal">
+        {%- if section.settings.surtitre != blank -%}
+          <span class="pv-eyebrow">{{ section.settings.surtitre }}</span>
+        {%- endif -%}
+        <h2>{{ section.settings.titre }}</h2>
+        {%- if section.settings.intro != blank -%}
+          <p class="pv-reviews__summary">{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="pv-reviews__track pv-reveal">
+        {%- render 'dw-avis-boutique', mode: 'cartes', limite: section.settings.nb_cartes -%}
+      </div>
+
+      <script type="application/json" data-dw-reviews-json>{%- render 'dw-avis-boutique' -%}</script>
+
+      <div style="text-align:center">
+        <button type="button" class="pv-reviews__all-btn" data-dw-modal-open="avis">
+          {{ section.settings.libelle_bouton }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <dialog class="pv-modal pv-modal--reviews" data-dw-modal="avis">
+    <div class="pv-modal__inner">
+      <button type="button" class="pv-modal__close" data-dw-modal-close aria-label="Fermer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <h3>{{ section.settings.titre_fenetre }}</h3>
+      <p>
+        Avis déposés sur le site et sur notre fiche Google, reproduits tels
+        qu'ils ont été écrits.
+      </p>
+      <div class="pv-all-reviews" data-dw-reviews-list>
+        <p class="pv-all-reviews__loading">Chargement des avis…</p>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<script src="{{ 'dw-socle.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Avis de boutique",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Le service, vu par nos clients" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Ils ont commandé, installé, et appelé le SAV" },
+    { "type": "text", "id": "intro", "label": "Phrase d'introduction", "default": "Des avis sur la commande, la livraison et le service après-vente — pas sur un produit en particulier." },
+    { "type": "range", "id": "nb_cartes", "label": "Cartes affichées dans le carrousel", "min": 4, "max": 20, "step": 1, "default": 10 },
+    { "type": "text", "id": "libelle_bouton", "label": "Libellé du bouton", "default": "Lire d'autres avis" },
+    { "type": "text", "id": "titre_fenetre", "label": "Titre de la fenêtre", "default": "Ce que disent nos clients du service" },
+    { "type": "checkbox", "id": "fond_gris", "label": "Fond gris clair", "default": true }
+  ],
+  "presets": [{ "name": "Avis de boutique" }]
+}
+{% endschema %}

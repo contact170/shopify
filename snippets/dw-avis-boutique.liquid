@@ -1,0 +1,119 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════
+  AVIS DE BOUTIQUE — service, livraison et SAV
+  ──────────────────────────────────────────────────────────────────────
+  Source unique pour les deux rendus :
+    render 'dw-avis-boutique', mode: 'cartes', limite: 10
+    render 'dw-avis-boutique'                     → la liste en JSON
+
+  CES AVIS NE PARLENT PAS D'UN PRODUIT. Dans l'export Judge.me, ce sont
+  les seuls dont la colonne product_handle est vide : ils portent sur la
+  société — la commande, la livraison, le service après-vente, le
+  conseil. C'est précisément ce qu'un visiteur hésitant cherche sur une
+  page d'accueil, et ce que le carrousel Judge.me installé plus bas ne
+  montre pas, puisqu'il affiche des avis produit.
+
+  48 avis retenus sur 67 disponibles, les plus récents d'abord.
+  Moyenne 4.77 — 43 × 5 étoiles, 3 × 4, 2 × 1.
+  Les avis négatifs ne sont pas écartés : les retirer donnerait une
+  vitrine que personne ne croit.
+
+  AUCUNE NOTE MOYENNE N'EST BALISÉE À PARTIR DE CES AVIS. Google refuse
+  les notes qu'un site s'attribue à lui-même (self-serving reviews) : les
+  étoiles dans les résultats de recherche se jouent sur les fiches
+  produit, via le balisage Product, pas ici.
+
+  ── PROVENANCE ────────────────────────────────────────────────────────
+  Export Judge.me du 20/09/2026. 36 de ces avis viennent de la fiche
+  Google Business, importés par Judge.me, et 12 ont été déposés sur
+  le site.
+
+  Judge.me accole une traduction automatique anglaise aux avis importés
+  de Google, et anonymise leur auteur en « Google reviewer ». Le texte
+  conservé ici est la partie française, celle que le client a écrite ;
+  la traduction produite par la machine est retirée. Ces avis sont
+  signés « Client Google », ce qui dit d'où ils viennent.
+
+  Textes VERBATIM, fautes comprises. Ne jamais en retoucher un.
+  Format : note ~|~ auteur ~|~ date ~|~ ville ~|~ texte, séparés par ~~~.
+  ══════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+{%- liquid
+  assign SEP = "~|~"
+  assign FIN = "~~~"
+  assign limite = limite | default: 999
+-%}
+{%- capture dw_donnees -%}
+4~|~Olivier C.~|~septembre 2026~|~~|~Installation pas si simple et attention, la sirène extérieure qui m'a été vendue ne peut être installée sur la centrale Vigilia. Un conseil aurait été bienvenu.~~~
+5~|~Jean-Yves D.~|~mai 2026~|~~|~Matériel reçu rapidement. Mise en oeuvre simple et donc rapide. La documentation est plus complète sur le site mais la documentation fournie permet néanmoins de paramétrer la centrale et les accessoires.~~~
+4~|~Philippe G.~|~mai 2026~|~Freyming-Merlebach~|~Bon système d'alarme (élite) facilement paramètré, mais perfectible au niveau des notifications. Les sms ne sont pas illimités et donc insuffants sans payer de supplément mensuel. C'est le cas s'il y a plus d'un utilisateur.~~~
+5~|~Hedy L.~|~avril 2026~|~Sabran~|~Comme toujours, livraison rapide, mise en fonctionnement simple et rapide. Rendu excellent~~~
+5~|~Christophe M.~|~février 2026~|~Conflans-Sainte-Honorine~|~Alarme Touch AM301 commandé, livré sous 3 jours, installée en 2 jours. Et quand il y a un doute, le support via chat répond très vite, très bien et est très aimable - je ne pense pas que ce soit un IA, c'est tés bien comme cela. Bref, je recommande les yeux femés~~~
+1~|~Pierre~|~novembre 2025~|~Lillebonne~|~En cas de détection d'alarme , l'alarme vous soumet une notification non paramétrable ,la même que lors de l'activation . Pas d'appel pas de SMS , si vous souhaité ces options il faut prendre un abonnement . Alors que cas de coupure secteur l'application émet une sonnerie qui vous alerte . Dans la présentation commercial l'alarme est décrite sans abonnements .Alors que vous êtes obligé de prendre un abonnement si vous voulez être correctement alerté.~~~
+5~|~Client Google~|~septembre 2025~|~~|~Acquéreur récent du système d'alarme connecté Daewoo AM 301 je ne peux qu'être satisfait de cet achat qui fonctionne parfaitement depuis quelques jours. L'installation intuitive demande quelques heures mais la réactivité du service Daewoo permet de franchir rapidement toutes les étapes. Je recommande.~~~
+5~|~Client Google~|~septembre 2025~|~~|~Personnel très disponible en cas de problème d'installation ou de fonctionnement. Réponse rapide et efficace.~~~
+5~|~Client Google~|~août 2025~|~~|~Le service technique est au top et en plus il est très prompt à répondre. Je recommande les produits Daewoo.~~~
+5~|~Client Google~|~août 2025~|~~|~Demande d'info pour reconnecter mes caméras a la centrale. Contact très réactif et informations reçues très ludiques Merci beaucoup~~~
+5~|~Client Google~|~juillet 2025~|~~|~Il y a un an,j'ai acheté un système SA 501 pour ma résidence secondaire et un système PA501 Z pour ma résidence principale, avec camerasW509MW, IP506P, IF501, ainsi que les détecteurs de mouvement, détecteurs de vibration, contacteurs de porte et détecteurs de fumée. L'installation est facile, j'ai eu un petit problème avec les cartes SD qui a été résolu rapidement par le SAV Daewoo. J'ai fait appel au service commercial pour quelques conseils. Le service est disponible et professionnel. Les produits sont fiables et le service impeccable. Je recommande vivement.~~~
+5~|~Client Google~|~juin 2025~|~~|~Parfait j ai eu plusieurs problème pour mes scenarios et camera qui ne fonctionnais plus le service client ma aide rapidement a pris vraiment le temps de repondre a tous mes mails jusqu'à trouver la solution. Au top merci~~~
+5~|~Client Google~|~juin 2025~|~~|~Achat de mon matériel en 2021 (alarme et domotique de volet roulant). J'en suis toujours très satisfait. Pendant l'installation, les techniciens sont toujours à votre écoute. Et 4 ans après mon achat, ils répondent toujoursà nos questions avec sympathie. Recommande les yeux fermés ++++++~~~
+5~|~Client Google~|~juin 2025~|~~|~Pack Pa501 reçu, parfaitement conditionné pour éviter tout tracas lors de la réception. Aucune connaissance particulière dans ce domaine mais installation et prise en main très aisé et facile (un peu moins pour la sirène extérieure mais avec de la réflexion ça me fait). Une équipe commerciale au top du top et surtout disponible et réactif!! Bravo à eux!!! Merci au service commercial !~~~
+5~|~Client Google~|~juin 2025~|~~|~Très bonne prise en compte de mon problème. Malgré plusieurs tentatives pour résoudre le pb, le niveau 1 à passé le sujet au niveau 2 qui a solutionné le lendemain. Merci pour l'implication du niveau 1qui à fait preuve de beaucoup de patience et su me guider.~~~
+5~|~Client Google~|~mai 2025~|~~|~Super satisfait des caméras belles images, facile d installation capte super bien le Wi-Fi Ps je viens de recommander Et un ami aussi il cherchait des caméras top 👍🏻👍🏻👍🏻👍🏻👍🏻~~~
+5~|~Client Google~|~mai 2025~|~~|~J'ai créé un pack sur mesure à l'aide de leur configurateur très intuitif et attendu le colis qui est arrivé très rapidement : le matériel est très simple à installer et facile à paramétrer, l'application est conviviale et le SAV très réactif et à l'écoute. Je recommande !~~~
+5~|~Client Google~|~mai 2025~|~~|~Au début quelques caméras de surveillances Deawoo, puis un Kit complet d'alarme Daewoo. Suite problème avec un contacteur d'ouverture, le SAV s'est montré efficace et très réactif...~~~
+5~|~Client Google~|~mai 2025~|~~|~Suite a une panne sur mon NVR Daewoo, le service aprés vente a été particulièrement efficase et rapide. Le soutien par E-mail a également été très performent et suivi.~~~
+5~|~Client Google~|~mai 2025~|~~|~Système d’alarme facile à installer et à gérer soi-même - prix abordable - sans abonnement - performant et évolutif - et pour certains modèles il combine même les fonctionnalités domotiques et la vidéosurveillance - pilotez votre alarme et les automations de votre domicile en quelques clics à partir de votre smartphone - service d’assistance réactif et efficace toujours prêt à répondre à vos questions - je recommande !~~~
+5~|~Client Google~|~mai 2025~|~~|~J’ai acheté sur le site même une installation caméras, contacteurs de portes, détecteur de mouvement, contacteur porte de garage et détecteurs de vibrations. Installation claire et rapide même pour des novices. Tout fonctionne parfaitement, conseils si nécessaire par leur chat ou par mails. Rapidité de réponses très claires. Je recommande vivement.~~~
+5~|~Client Google~|~mai 2025~|~~|~J ai contacté le service après vente suite aux intempéries celui m a répondu rapidement et m a envoyé les pièces détachées encore merci pour le geste commercial je recommande👍👍👍👍👍~~~
+5~|~Client Google~|~mai 2025~|~~|~Les produits sont sobres et s'intègrent discrètement dans la maison. L'application est assez simple à prendre en main, on peut facilement y ajouter les différents appareils et mettre en place de scénarios. Elle manque cependant un peu de possibilités de paramétrage si on souhaite personnaliser des fonctions. Les photos enregistrées par les caméras ont une qualité assez basse alors que les vidéos sont très bien. Le service support est très réactif, à l'écoute et efficace en cas de problématiques, merci à eux pour l'aide aux réglages!~~~
+5~|~Client Google~|~mai 2025~|~~|~L’alarme que j’ai acheté en ligne ainsi que tous les éléments additionnels sont de très grande qualité. L’installation est facile, tout correspond à ce qui est présenté sur le site Internet. Le rapport qualité prix est vraiment top. Mais ce qui m’a le plus agréablement surpris , c’est la qualité du service après-vente. Par mail ou par WhatsApp, les réponses sont immédiates et l’accompagnement est vraiment de qualité. Ce qui est très rare aujourd’hui avec les ventes en ligne.~~~
+5~|~Client Google~|~avril 2025~|~~|~Je recommande vivement cette société, j'ai acheté chez eux du matériel de la gamme PA501Z, esthétique, performant et d'un bon rapport qualité/prix et facile à installer. Leur service assistance est très performant et très à l'écoute.~~~
+5~|~Client Google~|~avril 2025~|~~|~Le matériel DAEWOO est fiable, facile à installer et en cas de panne de réseau ou autre vous êtes assistés par le SAV jusqu'au bout .Félicitations à l'équipe et mille fois merci.~~~
+5~|~Client Google~|~avril 2025~|~~|~SAV tres efficace et réactif pour une fonctionnalité qui n'existait pas, il l'ont ajouté en qq heures .... Parfait~~~
+5~|~Client Google~|~avril 2025~|~~|~Nous ne connaissions pas la marque mais avons décidé de commander des caméras solaires pour l'extérieur de la maison et des caméras filaires et autres accessoires pour l'intérieur. Ravis de ces achats, nous avons décidé de compléter la gamme avec le NVR, que nous n'avons pas encore testé. Service client plus que réactif puisque lorsque nous les contactons (par mail), retour dans les moins de 24h. Application intéressante et intuitive.~~~
+5~|~Client Google~|~avril 2025~|~~|~Excellent produit, reçu rapidement, facile à installer. J'ai eu un soucis de connexion de ma camera avec Alexa, vite résolu par le support. Encore merci pour votre réactivité. Je recommande.~~~
+5~|~Client Google~|~avril 2025~|~~|~Système d'alarme simple, évolutif et intuitif. L'application smartphone et la centrale d'alarme sont faciles d'utilisation. Pour ma part, j'ai rencontré quelques petits problèmes à l'installation, le service après vente est très réactif. Les questions posées par mail font l'objet d'une réponse en quelques minutes.~~~
+5~|~Client Google~|~avril 2025~|~~|~Après un problème sur la centrale, la réponse du SAV a été parfaite, je recommande Daewoo pour son professionnalisme !~~~
+5~|~Client Google~|~mars 2025~|~~|~Daewoo Pack Alarme AM311 Livraison rapide, installation et connexion très facile. Il y avait un petit soucis avec la caméra extérieur. Le SAV est très réactif, j'ai reçu le nécessaire 2 jours après et tout est opérationnel. Je recommande chaudement.~~~
+5~|~Client Google~|~mars 2025~|~~|~Alarme Daewoo qui fonctionne très bien pour l'instant, j'espère que cela va durer et que les piles ne s'épuiseront pas trop vite. Très bon point pour les conseilers sur le tchat. Un très bon point également pour le SAV qui est très réactif et donne de très claires explications.~~~
+5~|~Client Google~|~mars 2025~|~~|~Très contente de mon achat Installation très rapide malgré une mise à jour qui ne s'est pas faite correctement au démarrage .... problème résolu très rapidement grâce au service après vente très réactif et à l'écoute du client en quelques minutes le SAV m'a répondu et dépanné Je conseille sans aucun soucis~~~
+5~|~Client Google~|~mars 2025~|~~|~Alarme parfaitement fonctionnelle et système connecté avec l’application très intuitif. J’espère dans le futur plus de fonctionnalités lié à l’écosystème Apple. Concernant le service client, réponse quasi immédiate par email pour le moindre soucis. Je recommande sans hésiter la marque~~~
+5~|~Client Google~|~mars 2025~|~~|~Très content de mon achat. Le système est facile à installer, et après plusieurs jours d’utilisation, tout semble très fiable (capteurs, détection camera, etc). La portée de la centrale est bonne. Enfin, j'avais une question car je n'arrivais pas à trouver comment paramétrer un scenario dans l’application, et le support a trouvé une solution en a peine une heure ! Je recommande sans hésitation.~~~
+5~|~Client Google~|~mars 2025~|~~|~J'ai composé mon système d'alarme S501 et suis très satisfait de sa qualité et de sa mise en service assez simple. Quelques petits soucis réglés rapidement avec le SAV . Mes demandes faites par mail sont traitées de manière rapide et efficace~~~
+5~|~Client Google~|~mars 2025~|~~|~Je possède une alarme SA 501 et j'ai complété mon équipement par un détecteur de fumée WSD501 auprès de l’Importateur à MERIGNAC. Livraison rapide. Entièrement satisfait du produit.~~~
+5~|~Client Google~|~janvier 2025~|~~|~Service technique après vente au top ! Modifications des scripts afin d'obtenir des fonctions personalisées. Encore bravo et merci !~~~
+5~|~E.g~|~janvier 2025~|~~|~Pour une maison 180 m2 1 étage avec garage . livraison rapide PACK AM313 | Alarme Daewoo Wifi / GSM 4G à écran tactile +Caméra IP501. - installation simple grâce au vidéo. - Alarme solaire extérieur niveau sonore bas. - Petit souci batterie hs détecteurs de vibration WVD301, rien bien méchant. - Autonomie de la gestion de l'alarme avec mon téléphone. -1 mois d'utilisation très satisfait.~~~
+1~|~Client Google~|~août 2024~|~~|~Après plusieurs email et des captures d'écran concernant mon problème. L'alarme s501 qui se déclenche même si celle-ci n'est pas armée. J'ai essayé de tout réinstaller mais ça ne fonctionne pas. Je suis très déçu du service qui ne m'ont jamais répondu. Alarme achetée en 2021 + de 400€ et déjà bonne pour la poubelle~~~
+5~|~Client Google~|~juin 2024~|~~|~Bons produits qui ne nécessitent pas d'abonnement et assurent une bonne protection. Très facile d'installation. Service commercial et client au top !~~~
+5~|~Client Google~|~juin 2024~|~~|~Sav au top que ce soit pour une question technique ou un souci de matériel. Communication des plus simples et faciles! Bravo!~~~
+4~|~Lucette~|~février 2024~|~Martignas-sur-Jalle~|~J'ai installé moi-même, pas trop compliqué mais ça prend un peu de temps pour comprendre le fonctionnement, c'est la première fois pour moi que j'installe cela et j'y suis arrivée ! A savoir la fréquence 2.4 Ghz sera votre fréquence wifi par défaut si vous voulez voir ce qu'il se passe chez vous quand vous êtes à l'extérieur et pour manipuler votre dispositif chez vous aussi. Il faut comprendre comment faire chez votre fournisseur wifi. Donc tous les appareils connectés de votre maison seront dessus. Autrement il faut passer d'une fréquence à l'autre pour voir vos appareils connectés en 5Ghz (ordinateur, imprimante en wifi, électroménager, panneaux solaires...). Tout fonctionne bien et s'installe bien avec ajout de matériel rapide lorsque vous êtes sur la centrale dans l'application. Le capteur solaire des caméras est à bien étudier pour l'emplacement pour que la recharge se fasse (vous pouvez connecter un câble sur l'électricité si besoin en cas de batterie faible mais pas pratique). On peut voir en direct les caméras sur l'application mais dès qu'on met une carte SD dedans pour pouvoir enregistrer ça ne fonctionne pas (le cryptage de la caméra met échec, je pense que c'est parce qu'il faut acheter un cloud pour l'enregistrement, ce que je ne vais pas faire !). Installer les caméras pas trop loin de la centrale autrement ça ne capte pas le wifi faire un essai sans percer votre façade ! Je n'ai pas encore installé les capteurs portes et vibration (voir si les scotchs tiennent) mais juste les capteurs de mouvements intérieurs mais ils sont à viser et ça fonctionne. Le détecteur fumée OK et la sirène ext est solaire OK. Piles pour détecteurs mouvement intérieurs, capteurs vibration et portes, détecteur de fumée, à voir si ce n'est pas trop énergivore. Sirène ext, caméras ext solaires. Caméra int IP506P sur secteur ainsi que la centrale PA501Z Zigbee (si vous connectez en RJ45, votre wifi doit quand même être sur du 2.4 Ggz). Voilà pour mes commentaires tout cela me parait de qualité et fonctionne bien. Dans l'application on peut tout gérer, armement, désarmement, paramétrage des dispositifs, vision de votre maison aves les caméras, faire sonner les alarmes int et ext et émettre du son via les cameras W509MW, et bien d'autres choses... Je mets 4 étoiles à cause du problème de carte SD dans les caméras mais peut-être que Daewoo va me répondre à ce sujet ? J'ai peut-être pas bien compris...~~~
+5~|~Philippe~|~février 2024~|~Valenciennes~|~achat d un système AM 302 + camera Reçu 3 jours aprés mise en service trés facile grace à une assistance qui vous répond (par mail ) tout de suite ,vraiment satisfait matériel de bonne qualité ,fonctionne trés trés bien Merci encore pour le SAV Je recommande~~~
+5~|~Steve P.~|~février 2024~|~Wanze~|~Société très professionnel qui propose du matériel de très grande qualité. Système très facile à installer. Jumelage des accessoires en toute simplicité. Application fluide et facile à utiliser. Service après vente très réactif. Service technique très réactif et surtout compétent. Très rare de trouver ce genre de société à notre époque. Une pépite dans son domaine, je recommande fortement. Si une sixième étoile était possible à attribuer, ce serait sans hésiter.~~~
+5~|~Dede~|~février 2024~|~Yzeure~|~Caméra solaire achetée il y a qq mois. La batterie se vide et ne se recharge pas… le service sav me dit que la caméra n’est pas assez exposée au soleil. Je la démonte et je réoriente… pas mieux. Pour résumer ne pas acheter ce type de produit sauf pour la deco…~~~
+5~|~Malcom C.~|~février 2024~|~~|~Kit alarme SA501 Facile d’utilisation et fonctionne très bien. Je suis ravie de les avoir choisis !
+{%- endcapture -%}
+{%- assign avis = dw_donnees | strip | split: FIN -%}
+
+{%- if mode == "cartes" -%}
+  {%- for enr in avis limit: limite -%}
+    {%- assign ch = enr | strip | split: SEP -%}
+    {%- assign n = ch[0] | plus: 0 -%}
+    <article class="pv-review-card">
+      <div class="pv-review-card__stars" aria-label="{{ n }} étoiles sur 5">
+        <span aria-hidden="true">
+          {%- for i in (1..5) -%}{% if i <= n %}★{% else %}☆{% endif %}{%- endfor -%}
+        </span>
+      </div>
+      <p class="pv-review-card__text">{{ ch[4] | truncate: 280 }}</p>
+      <div class="pv-review-card__meta">
+        <span class="pv-review-card__name">{{ ch[1] }}</span>
+        <span class="pv-review-card__dot" aria-hidden="true"></span>
+        <span>{% if ch[3] != blank %}{{ ch[3] }} · {% endif %}{{ ch[2] }}</span>
+      </div>
+    </article>
+  {%- endfor -%}
+{%- else -%}
+[{% for enr in avis limit: limite %}{% assign ch = enr | strip | split: SEP %}{"r":{{ ch[0] | plus: 0 }},"n":{{ ch[1] | json }},"d":{{ ch[2] | json }},"c":{{ ch[3] | json }},"t":{{ ch[4] | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+{%- endif -%}

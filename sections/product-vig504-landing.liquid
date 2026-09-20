@@ -173,11 +173,27 @@
   # fork (average 4.6: 47 five-star, 16 four-star, 3 three-star, 2
   # two-star) — genuinely applicable here since these are reviews of the
   # Vigilia alarm and its accessories, not a specific SKU.
-  assign rating_value = 4.6
-  assign rating_max = 5
-  assign rating_count = 68
-  assign has_rating = true
-  assign rating_pct = rating_value | times: 100.0 | divided_by: rating_max
+  # ── Note client ───────────────────────────────────────────────────
+  # Lue sur le metachamp Judge.me, et non ecrite en dur : elle se
+  # recalcule a chaque nouvel avis. Les valeurs 4,6 sur 68 avis qui
+  # figuraient ici ne correspondaient plus a ce que compte Judge.me
+  # (4,65 sur 23 au 20/09/2026), et c'est ce chiffre-la qui partait
+  # dans le balisage aggregateRating.
+  # Si le metachamp est vide, has_rating passe a false et toute la
+  # mecanique d'affichage et de balisage s'efface d'elle-meme.
+  assign pv_note = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value | plus: 0
+  if pv_note != blank and rating_count > 0
+    assign has_rating = true
+    assign rating_value = pv_note.rating | times: 1.0 | round: 2
+    assign rating_max = pv_note.scale_max | times: 1.0
+    assign rating_pct = rating_value | times: 100.0 | divided_by: rating_max
+  else
+    assign has_rating = false
+    assign rating_value = 0
+    assign rating_max = 5
+    assign rating_pct = 0
+  endif
   assign reviews_anchor = 'PVReviews-' | append: section.id
 -%}
 
