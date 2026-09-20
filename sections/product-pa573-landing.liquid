@@ -2038,27 +2038,8 @@
       "url": {{ shop.url | append: product.url | json }},
       "priceCurrency": {{ cart.currency.iso_code | json }},
       "price": {{ variant.price | divided_by: 100.0 | json }},
-      "priceValidUntil": "{{ 'now' | date: '%Y' | plus: 1 }}-12-31",
-      "itemCondition": "https://schema.org/NewCondition",
-      "availability": {% if variant.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
-      "seller": { "@type": "Organization", "name": "Daewoo Security", "url": {{ shop.url | json }} },
-      "hasMerchantReturnPolicy": {
-        "@type": "MerchantReturnPolicy",
-        "applicableCountry": "FR",
-        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-        "merchantReturnDays": 14,
-        "returnMethod": "https://schema.org/ReturnByMail"
-      },
-      "shippingDetails": {
-        "@type": "OfferShippingDetails",
-        "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "EUR" },
-        "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" },
-        "deliveryTime": {
-          "@type": "ShippingDeliveryTime",
-          "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 2, "unitCode": "DAY" },
-          "transitTime": { "@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY" }
-        }
-      }
+      "availability": {% if variant.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %}
+      {%- render 'pv-ld-offre' -%}
     }
   }
   </script>

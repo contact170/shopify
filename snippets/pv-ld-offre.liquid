@@ -8,17 +8,25 @@
   il commence donc par une virgule et n'émet rien d'autre que des paires
   clé/valeur JSON.
 
-  Les valeurs reprennent celles déjà déclarées par les pages Élite, pour
-  que les deux gammes racontent la même chose à Google.
+  ── Les délais déclarés, et d'où ils viennent ──
 
-  Livraison à 0 € : le franco est acquis dès 50 € et tous les packs
-  dépassent ce seuil, la déclaration est donc exacte sur ces pages. Elle
-  ne le serait PAS sur une fiche accessoire à 27,90 € — ne pas rendre ce
-  fragment ailleurs que sur un pack sans revoir shippingRate.
+  Préparation (handlingTime) 0 à 1 jour : une commande passée avant midi
+  part le jour même, les autres le lendemain. Pas d'expédition le samedi
+  ni le dimanche, d'où le businessDays limité au lundi-vendredi — sans
+  lui, Google compterait le week-end dans le délai annoncé.
 
-  Délai : 0 à 2 jours de préparation + 2 à 3 jours de transport. C'est ce
-  qu'annonce l'accueil ; le configurateur affiche encore « 48h », qui ne
-  correspond ni à l'un ni à l'autre. À trancher côté métier.
+  Transport France 2 à 3 jours : 48 h en Colissimo (délai annoncé par La
+  Poste), 2 à 3 jours pour une livraison en point relais Chronopost.
+  La fourchette couvre les deux, c'est la seule façon de rester exact
+  quel que soit le mode choisi au panier.
+
+  Transport Belgique 3 à 4 jours : Chronopost International.
+
+  Livraison à 0 € : le franco est acquis dès 50 € en France comme en
+  Belgique, et tous les packs dépassent ce seuil — la déclaration est
+  donc exacte sur ces pages. Elle ne le serait PAS sur une fiche
+  accessoire à 27,90 € : ne pas rendre ce fragment ailleurs que sur un
+  pack sans revoir shippingRate.
   ══════════════════════════════════════════════════════════════════════════
 {%- endcomment -%},
           "priceValidUntil": "{{ 'now' | date: '%Y' | plus: 1 }}-12-31",
@@ -31,13 +39,45 @@
             "merchantReturnDays": 14,
             "returnMethod": "https://schema.org/ReturnByMail"
           },
-          "shippingDetails": {
-            "@type": "OfferShippingDetails",
-            "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "EUR" },
-            "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" },
-            "deliveryTime": {
-              "@type": "ShippingDeliveryTime",
-              "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 2, "unitCode": "DAY" },
-              "transitTime": { "@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY" }
+          "shippingDetails": [
+            {
+              "@type": "OfferShippingDetails",
+              "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "EUR" },
+              "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 1, "unitCode": "DAY" },
+                "transitTime": { "@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY" },
+                "businessDays": {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": [
+                    "https://schema.org/Monday",
+                    "https://schema.org/Tuesday",
+                    "https://schema.org/Wednesday",
+                    "https://schema.org/Thursday",
+                    "https://schema.org/Friday"
+                  ]
+                }
+              }
+            },
+            {
+              "@type": "OfferShippingDetails",
+              "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "EUR" },
+              "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "BE" },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 1, "unitCode": "DAY" },
+                "transitTime": { "@type": "QuantitativeValue", "minValue": 3, "maxValue": 4, "unitCode": "DAY" },
+                "businessDays": {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": [
+                    "https://schema.org/Monday",
+                    "https://schema.org/Tuesday",
+                    "https://schema.org/Wednesday",
+                    "https://schema.org/Thursday",
+                    "https://schema.org/Friday"
+                  ]
+                }
+              }
             }
-          }
+          ]
