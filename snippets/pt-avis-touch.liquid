@@ -1,0 +1,76 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════
+  AVIS CLIENTS — GAMME TOUCH / TOUCH XL
+  ──────────────────────────────────────────────────────────────────────
+  Source unique pour les deux usages de la page :
+    render 'pt-avis-touch', mode: 'cartes'  → les cartes du carrousel,
+                                              rendues côté serveur donc
+                                              lisibles sans JavaScript et
+                                              indexables ;
+    render 'pt-avis-touch'                  → le même contenu en JSON,
+                                              pour la fenêtre « tous les
+                                              avis », construite à
+                                              l'ouverture seulement.
+  Les données ne sont écrites qu'une fois : le tableau ci-dessous. Le
+  filtre | json se charge de l'échappement, il n'y a donc pas de JSON à
+  tenir à la main.
+
+  Ces avis sont RÉELS. Ils viennent du métachamp judgeme.widget des
+  fiches Touch, c'est-à-dire de Judge.me. Ce métachamp n'expose que les
+  premiers avis de chaque fiche : après dédoublonnage sur les 13 pages de
+  la gamme, 7 avis distincts sont disponibles.
+
+  Judge.me compte 44 avis sur le groupe Touch, note moyenne 4,52. C'est
+  ce chiffre-là qui est affiché comme agrégat et balisé en JSON-LD, pas
+  la moyenne des 7 avis présents ici : on annonce la note réelle du
+  groupe et on en montre un extrait.
+
+  Pour en afficher davantage : exporter les avis Touch depuis Judge.me
+  (Commentaires › Exporter) et ajouter des enregistrements au même
+  format. Ne jamais inventer d'avis.
+
+  Format : note ~|~ auteur ~|~ date ~|~ texte, enregistrements séparés
+  par ~~~. Ces séparateurs sont volontairement improbables dans un texte
+  d'avis.
+
+  Dernière synchronisation : 20/09/2026
+  ══════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+{%- liquid
+  assign SEP = "~|~"
+  assign FIN = "~~~"
+
+  assign a1 = "5~|~Joël M.~|~août 2026~|~Très content d'avoir trouvé cette alarme facile à installer, fonctionnelle et fiable vu tous les essais que j'ai effectués. Cette alarme a un très bon rapport qualité-prix même hors promotion. On peut changer facilement le numéro de téléphone des personnes qui peuvent effectuer les vérifications en cas de déclenchement quand on part en voyage. C'est rassurant. L'application fonctionne aussi très bien sur le smartphone pour activer et désactiver l'alarme."
+  assign a2 = "5~|~Client vérifié~|~septembre 2026~|~Je ne dépose généralement jamais d'avis. Je tiens ici à le faire pour souligner la qualité de la relation client, de l'avant-vente jusqu'au SAV. Une réponse rapide du SAV à la première difficulté, et surtout un assistant ultra performant. Ajoutez à cela la qualité du matériel, la simplicité d'utilisation, les nombreux paramétrages possibles, notamment via le mode scène, et l'ergonomie de l'application : vous avez en main un système qui s'adapte parfaitement à vos besoins. J'ai installé plusieurs marques d'alarme sans centre de télésurveillance ; je recommande de loin la solution Daewoo, fiable et adaptable."
+  assign a3 = "5~|~Gérard L.~|~septembre 2026~|~Système facile à installer. Configuration des éléments avec simplicité. Dans le pack que j'ai choisi j'aurais préféré un détecteur de porte à la place des deux télécommandes qui pour moi ne sont pas utiles. À voir dans le long terme le fonctionnement et la durabilité."
+  assign a4 = "4~|~Françoise S.~|~août 2026~|~Alarme facile à installer, prix raisonnable."
+  assign a5 = "4~|~JJ N.~|~août 2026~|~Alarme moderne. L'installation est un peu fastidieuse avec toutes les options d'accessoires. Pour l'installation, des schémas et des photos seraient un plus."
+  assign a6 = "4~|~Christian R.~|~juillet 2026~|~Centrale facile à configurer. Un peu moins simple à associer avec la caméra intérieure."
+  assign a7 = "4~|~Eric R.~|~novembre 2023~|~Les appairages ne se font pas forcément du premier coup, ne pas hésiter à désinstaller et recommencer. Les scénarios semblent simples mais je galère un peu à les faire fonctionner. Le service Daewoo répond à mes questions. Sinon ça fonctionne bien."
+
+  assign tout = a1 | append: FIN | append: a2 | append: FIN | append: a3 | append: FIN | append: a4 | append: FIN | append: a5 | append: FIN | append: a6 | append: FIN | append: a7
+  assign avis = tout | split: FIN
+-%}
+
+{%- if mode == "cartes" -%}
+  {%- for enr in avis -%}
+    {%- assign ch = enr | split: SEP -%}
+    {%- assign n = ch[0] | plus: 0 -%}
+    <article class="pv-review-card">
+      <div class="pv-review-card__stars" aria-label="{{ n }} étoiles sur 5">
+        <span aria-hidden="true">
+          {%- for i in (1..5) -%}{% if i <= n %}★{% else %}☆{% endif %}{%- endfor -%}
+        </span>
+      </div>
+      <p class="pv-review-card__text">{{ ch[3] | truncate: 260 }}</p>
+      <div class="pv-review-card__meta">
+        <span class="pv-review-card__name">{{ ch[1] }}</span>
+        <span class="pv-review-card__dot" aria-hidden="true"></span>
+        <span>{{ ch[2] }}</span>
+      </div>
+    </article>
+  {%- endfor -%}
+{%- else -%}
+[{% for enr in avis %}{% assign ch = enr | split: SEP %}{"r":{{ ch[0] | plus: 0 }},"n":{{ ch[1] | json }},"d":{{ ch[2] | json }},"t":{{ ch[3] | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+{%- endif -%}

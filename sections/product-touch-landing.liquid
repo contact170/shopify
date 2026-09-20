@@ -1,0 +1,1175 @@
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════
+  PAGE GAMME TOUCH / TOUCH XL — section unique et paramétrée
+  ──────────────────────────────────────────────────────────────────────
+  Une seule section sert les 13 pages de la gamme : les 9 packs, le
+  Starter Pack, les deux centrales vendues seules et l'offre exclusive.
+  Vigilia a 10 sections quasi identiques, Élite en a 8 de 143 Ko : tout
+  changement de gamme s'y répète autant de fois qu'il y a de fichiers.
+  Ici, ce qui distingue une page d'une autre vient des métachamps
+  produit, donc du back-office.
+
+  Métachamps lus (tous facultatifs, la page se dégrade proprement) :
+    custom.modele_centrale       ["Touch"] ou ["Touch XL"]
+    custom.nb_accessoires        entier
+    custom.cameras_exterieures   entier
+    custom.contenu_du_pack       une ligne par article, deux formes
+                                 acceptées :
+                                   « 4 × Contacteurs WDV301 | précision »
+                                   « • 1 centrale d'alarme »
+                                 une ligne sans quantité devient une note
+    custom.accroche              phrase sous le titre
+    custom.titre_page            remplace le H1 si renseigné
+    custom.securite_detection    bloc « En résumé »
+    custom.connectivite          idem
+    custom.alimentation_autonomie idem
+    custom.note_compatibilite    idem
+    custom.conseil_quantite      encart d'avertissement (centrales seules)
+    reviews.rating / rating_count  note Judge.me du groupe Touch
+
+  Les styles et les comportements viennent de assets/dw-socle.css et
+  assets/dw-socle.js, partagés avec les autres pages gamme.
+
+  Choix des images : par FRAGMENT DE NOM DE FICHIER, jamais par position.
+  Les photos ont déjà été réordonnées une fois en back-office, ce qui
+  avait interverti les illustrations sur les pages Vigilia. Une règle
+  fondée sur le nom y est insensible.
+  ══════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign photo = product.featured_image
+
+  # ── Modèle de centrale et caractéristiques d'écran ─────────────────
+  # La différence structurante de la gamme est là : taille de l'écran et
+  # autonomie de la batterie. On la déduit du métachamp, et à défaut du
+  # titre ou de la référence, pour que la page reste juste même sur une
+  # fiche dont le métachamp n'est pas encore renseigné.
+  assign modele = product.metafields.custom.modele_centrale.value | join: ""
+  if modele == blank
+    assign sonde = product.title | append: " " | append: v.sku | append: " " | append: v.title | upcase
+    if sonde contains "XL" or sonde contains "AM302" or sonde contains "AM35"
+      assign modele = "Touch XL"
+    else
+      assign modele = "Touch"
+    endif
+  endif
+
+  if modele == "Touch XL"
+    assign pouces = "7 pouces"
+    assign pouces_court = "7''"
+    assign ref_centrale = "AM302"
+    assign autonomie = "environ 20 heures"
+    assign handle_centrale = "centrale-am302"
+    assign handle_autre_centrale = "centrale-touch-am301-avec-ecran-tactile-4-3"
+    assign autre_modele = "Touch"
+    assign autre_pouces = "4,3 pouces"
+  else
+    assign pouces = "4,3 pouces"
+    assign pouces_court = "4,3''"
+    assign ref_centrale = "AM301"
+    assign autonomie = "environ 4 heures"
+    assign handle_centrale = "centrale-touch-am301-avec-ecran-tactile-4-3"
+    assign handle_autre_centrale = "centrale-am302"
+    assign autre_modele = "Touch XL"
+    assign autre_pouces = "7 pouces"
+  endif
+
+  # ── Sélection des images par nom de fichier ────────────────────────
+  assign img_ecran = blank
+  assign img_app = blank
+  assign img_gsm = blank
+  assign img_abo = blank
+  assign img_alexa = blank
+  assign img_distance = blank
+  assign img_pourquoi = blank
+  for im in product.images
+    if im.src contains "centrale_photo_principale" and img_ecran == blank
+      assign img_ecran = im
+    endif
+    if im.src contains "pilotage_distance" and img_app == blank
+      assign img_app = im
+    endif
+    if im.src contains "protection_GSM" and img_gsm == blank
+      assign img_gsm = im
+    endif
+    if im.src contains "comparaison_abonnement" and img_abo == blank
+      assign img_abo = im
+    endif
+    if im.src contains "Alexa_Google_Home" and img_alexa == blank
+      assign img_alexa = im
+    endif
+    if im.src contains "securite_distance" and img_distance == blank
+      assign img_distance = im
+    endif
+    if im.src contains "pourquoi" and img_pourquoi == blank
+      assign img_pourquoi = im
+    endif
+  endfor
+
+  # Les fiches pack ne portent pas de photo de centrale : on va chercher
+  # celle de la centrale correspondante, qui montre le bon écran.
+  assign fiche_centrale = all_products[handle_centrale]
+  if img_ecran == blank and fiche_centrale != blank
+    assign img_ecran = fiche_centrale.featured_image
+  endif
+  if img_app == blank
+    assign img_app = img_distance
+  endif
+  if img_app == blank
+    assign img_app = photo
+  endif
+  if img_ecran == blank
+    assign img_ecran = photo
+  endif
+
+  # ── Contenu du pack ────────────────────────────────────────────────
+  assign contenu_brut = product.metafields.custom.contenu_du_pack.value | default: ""
+  assign lignes_contenu = contenu_brut | strip | newline_to_br | split: "<br />"
+
+  # ── Note Judge.me ──────────────────────────────────────────────────
+  assign note = product.metafields.reviews.rating.value
+  assign nb_avis = product.metafields.reviews.rating_count.value | plus: 0
+  if note != blank and nb_avis > 0
+    assign a_une_note = true
+    assign note_valeur = note.rating | times: 1.0
+    assign note_max = note.scale_max | times: 1.0
+    assign note_pct = note_valeur | divided_by: note_max | times: 100
+    assign note_affichee = note_valeur | round: 2 | replace: ".", ","
+  else
+    assign a_une_note = false
+  endif
+
+  # ── Le pack équivalent dans l'autre taille d'écran ─────────────────
+  # AM340↔AM350, AM341↔AM351, AM342↔AM352, AM343↔AM353.
+  assign handle_jumeau = ""
+  case v.sku
+    when "AM340"
+      assign handle_jumeau = "alarme-maison-sans-fil-avec-ecran-tactile-7-am350-livree-avec-1-camera-et-9-accessoires-sans-abonnement-application-gratuite"
+    when "AM341"
+      assign handle_jumeau = "alarme-maison-sans-fil-avec-ecran-tactile-7-am351-livree-avec-2-cameras-full-hd-et-12-accessoires-sans-abonnement-application-gratuite"
+    when "AM342"
+      assign handle_jumeau = "alarme-maison-sans-fil-avec-ecran-tactile-7-am352-1-camera-exterieure-autonome-et-1-interieure-et-15-accessoires-sans-abonnement"
+    when "AM343"
+      assign handle_jumeau = "alarme-maison-sans-fil-avec-ecran-tactile-7-am353-1-camera-exterieure-autonome-et-1-interieure-et-17-accessoires-sans-abonnement"
+    when "AM350"
+      assign handle_jumeau = "alarme-maison-wifi-gsm-sans-fil-touch-am340-sans-abonnement-kit-complet-avec-camera-full-hd-controle-smartphone"
+    when "AM351"
+      assign handle_jumeau = "alarme-maison-wifi-gsm-sans-fil-touch-am341-sans-abonnement-kit-complet-avec-cameras-full-hd-interieure-exterieure"
+    when "AM352"
+      assign handle_jumeau = "alarme-maison-wifi-gsm-sans-fil-touch-am342-sans-abonnement-kit-complet-avec-cameras-full-hd-interieures-exterieures-autonomes"
+    when "AM353"
+      assign handle_jumeau = "alarme-maison-wifi-gsm-sans-fil-touch-am343-sans-abonnement"
+  endcase
+  assign jumeau = blank
+  if handle_jumeau != blank
+    assign jumeau = all_products[handle_jumeau]
+  endif
+
+  assign configurateur = all_products["configurateur-kit-touch-am301"]
+
+  # ── Titre et accroche ──────────────────────────────────────────────
+  assign titre = product.metafields.custom.titre_page | default: product.title
+  assign accroche = product.metafields.custom.accroche
+
+  # ── Compteurs ──────────────────────────────────────────────────────
+  assign nb_acc = product.metafields.custom.nb_accessoires.value | plus: 0
+  assign nb_cam_ext = product.metafields.custom.cameras_exterieures.value | plus: 0
+
+  assign multi_versions = false
+  if product.variants.size > 1
+    assign multi_versions = true
+  endif
+-%}
+
+{{ 'dw-socle.css' | asset_url | stylesheet_tag }}
+
+<div class="pv" data-dw-page data-dw-prix-centimes="{{ v.price }}">
+
+  {%- comment -%}
+    Un seul formulaire caché, partagé par tous les boutons d'ajout au
+    panier de la page : le bouton du hero, celui du bandeau, celui de la
+    barre collante et celui du bas pointent tous ici. Évite d'avoir
+    quatre formulaires à tenir synchronisés.
+  {%- endcomment -%}
+  {%- form 'product', product, id: 'PTForm', class: 'pv-visually-hidden' -%}
+    <input type="hidden" name="id" value="{{ v.id }}" id="PVVariantId-{{ section.id }}" data-dw-variant-id>
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit" tabindex="-1" aria-hidden="true">Ajouter au panier</button>
+  {%- endform -%}
+
+  {%- comment -%} ── barre d'achat collante ── {%- endcomment -%}
+  <div class="pv-sticky" data-dw-sticky>
+    <div class="pv-sticky__info">
+      <div class="pv-sticky__thumb">
+        {%- if photo -%}{{ photo | image_url: width: 80 | image_tag: loading: 'lazy', widths: '80,160', alt: '' }}{%- endif -%}
+      </div>
+      <div class="pv-sticky__text">
+        <div class="pv-sticky__name">{{ product.title }}</div>
+        <div class="pv-sticky__price">
+          <span class="pv-price-compare{% if v.compare_at_price > v.price %} is-visible{% endif %}">{{ v.compare_at_price | money }}</span>
+          <span class="pv-price-amount">{{ v.price | money }}</span>
+        </div>
+      </div>
+    </div>
+    <button type="submit" form="PTForm" class="pv-btn pv-btn--primary pv-btn--sm">
+      <span class="pv-btn__text">Ajouter au panier</span>
+    </button>
+  </div>
+
+  {%- comment -%} ── hero ── {%- endcomment -%}
+  <section class="pv-hero">
+    <div class="pv-wrap">
+      <span class="pv-eyebrow" data-dw-swap="eyebrow">Gamme {{ modele }} · écran tactile {{ pouces }}</span>
+      <h1>{{ titre }}</h1>
+      {%- if accroche != blank -%}
+        <p class="pv-hero__tagline">{{ accroche }}</p>
+      {%- else -%}
+        <p class="pv-hero__tagline">Tout se pilote depuis l'écran, ou depuis une seule application.</p>
+      {%- endif -%}
+
+      {%- if multi_versions -%}
+        <div class="pv-hero__cta">
+          <div class="pv-toggle pv-hero__toggle" role="group" aria-label="Taille de l'écran">
+            {%- for var in product.variants -%}
+              {%- assign est_xl = false -%}
+              {%- assign sonde_var = var.title | append: " " | append: var.sku | upcase -%}
+              {%- if sonde_var contains "XL" or sonde_var contains "AM302" -%}{%- assign est_xl = true -%}{%- endif -%}
+              <button type="button" class="pv-toggle__btn{% if var.id == v.id %} is-selected{% endif %}"
+                      data-dw-variant="{{ var.id }}"
+                      data-pv-connectivity="{{ var.id }}"
+                      aria-pressed="{% if var.id == v.id %}true{% else %}false{% endif %}">
+                {% if est_xl %}Touch XL — 7 pouces{% else %}Touch — 4,3 pouces{% endif %}
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="pv-hero__cta" data-dw-sticky-anchor>
+        <p class="pv-hero__price">
+          <span class="pv-price-compare{% if v.compare_at_price > v.price %} is-visible{% endif %}">{{ v.compare_at_price | money }}</span>
+          <strong class="pv-price-amount">{{ v.price | money }}</strong>
+          — soit <strong>0&nbsp;€/mois</strong>, à vie
+        </p>
+        <button type="submit" form="PTForm" class="pv-btn pv-btn--primary">
+          <span class="btn-fill"></span>
+          <span class="pv-btn__text">Ajouter au panier</span>
+        </button>
+        {%- if a_une_note -%}
+          <a href="#pt-avis" class="pv-rating-badge pv-hero__rating">
+            <span class="pv-rating-badge__stars" aria-hidden="true">
+              <span class="pv-rating-badge__stars-bg">★★★★★</span>
+              <span class="pv-rating-badge__stars-fg" style="width:{{ note_pct }}%">★★★★★</span>
+            </span>
+            <span class="pv-rating-badge__score">{{ note_affichee }}/5</span>
+            <span class="pv-rating-badge__sep">·</span>
+            <span class="pv-rating-badge__count">{{ nb_avis }} avis</span>
+            <svg class="pv-rating-badge__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="pv-hero__media" data-dw-hero>
+        {%- comment -%}
+          Image LCP de la page : chargée sans attendre, priorité haute, et
+          preload pour déclencher les Early Hints. image_tag pose lui-même
+          width et height, ce qui réserve la place et évite le décalage à
+          l'affichage.
+        {%- endcomment -%}
+        {%- if photo -%}
+          {{ photo | image_url: width: 1200 | image_tag:
+             loading: 'eager', fetchpriority: 'high', preload: true,
+             widths: '480,640,900,1200', sizes: '(min-width:700px) 640px, 92vw',
+             alt: product.title }}
+        {%- endif -%}
+        {%- if product.images.size > 1 -%}
+          <div class="pv-thumbs">
+            {%- for im in product.images limit: 7 -%}
+              <button type="button" class="pv-thumbs__item{% if forloop.first %} is-active{% endif %}"
+                      data-dw-thumb
+                      data-full="{{ im | image_url: width: 1200 }}"
+                      data-full-srcset="{{ im | image_url: width: 640 }} 640w, {{ im | image_url: width: 900 }} 900w, {{ im | image_url: width: 1200 }} 1200w"
+                      aria-label="Voir la photo {{ forloop.index }}">
+                {{ im | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── bandeau de réassurance ── {%- endcomment -%}
+  <div class="pv-wrap">
+    <div class="pv-strip">
+      <span class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        Sans abonnement
+      </span>
+      <span class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+        Une seule application
+      </span>
+      <span class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+        Support en France
+      </span>
+      <span class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+        Expédié sous 24&nbsp;h
+      </span>
+      <span class="pv-strip__item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"></path><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Garantie 2 ans
+      </span>
+    </div>
+  </div>
+
+  {%- comment -%}
+    ── libellés des deux tailles d'écran ──
+    Sur le Starter Pack, la taille de l'écran EST l'option produit : les
+    deux variantes sont Touch 4,3'' et Touch XL 7''. Les textes du bloc
+    « écran » doivent donc suivre le choix du visiteur, sinon la page
+    annoncerait 4,3 pouces alors qu'il a sélectionné le 7 pouces. Ces
+    valeurs alimentent les attributs data-dw-swap lus par dw-socle.js.
+    Sur les pages à variante unique, elles ne servent pas.
+  {%- endcomment -%}
+  {%- liquid
+    assign fiche_c_touch = all_products["centrale-touch-am301-avec-ecran-tactile-4-3"]
+    assign fiche_c_xl = all_products["centrale-am302"]
+    assign img_c_touch = ""
+    assign img_c_xl = ""
+    if fiche_c_touch.featured_image
+      assign img_c_touch = fiche_c_touch.featured_image | image_url: width: 900
+    endif
+    if fiche_c_xl.featured_image
+      assign img_c_xl = fiche_c_xl.featured_image | image_url: width: 900
+    endif
+    assign titre_ecran_touch = "L'état du système, sur l'écran, sans sortir le téléphone."
+    assign titre_ecran_xl = "Sept pouces. Tout se lit d'un coup d'œil."
+    assign texte_ecran_touch = "La centrale AM301 porte un écran tactile de 4,3 pouces et un guide vocal : armer, désarmer et lire l'historique se font directement dessus, sans application. Sa batterie de secours tient environ 4 heures en cas de coupure de courant."
+    assign texte_ecran_xl = "La centrale AM302 affiche l'ensemble du système sur un écran de 7 pouces : zones armées, journal des alertes, état de chaque accessoire. Sa batterie de secours tient environ 20 heures, de quoi traverser une coupure de courant sans y penser."
+  -%}
+
+  {%- comment -%}
+    ── données des variantes ──
+    Ce bloc sert DEUX consommateurs :
+      • assets/dw-socle.js, via [data-dw-variant-data] ;
+      • assets/pv-accessoires.js, qui cherche un script dont l'identifiant
+        commence par « PVData- » et un champ « PVVariantId- ».
+    Le second est le sélecteur d'accessoires déjà en service sur Vigilia.
+    Porter les deux ancrages permet de le réutiliser ici sans le modifier,
+    donc sans risquer de casser les pages Vigilia.
+  {%- endcomment -%}
+  <script type="application/json" id="PVData-{{ section.id }}" data-dw-variant-data>
+  {
+    {%- for var in product.variants -%}
+      {%- assign a_barre = false -%}
+      {%- if var.compare_at_price > var.price -%}{%- assign a_barre = true -%}{%- endif -%}
+      "{{ var.id }}": {
+        "key": {{ var.id | json }},
+        "sku": {{ var.sku | json }},
+        "price": {{ var.price | money | json }},
+        "priceCents": {{ var.price }},
+        "compare": {{ var.compare_at_price | money | json }},
+        "hasCompare": {{ a_barre | json }},
+        "titreVersion": {{ var.title | json }},
+        {%- assign sonde_v = var.title | append: " " | append: var.sku | upcase -%}
+        {%- assign v_xl = false -%}
+        {%- if sonde_v contains "XL" or sonde_v contains "AM302" or sonde_v contains "AM35" -%}{%- assign v_xl = true -%}{%- endif -%}
+        {%- if v_xl -%}
+        "eyebrow": "Gamme Touch XL · écran tactile 7 pouces",
+        "specCentrale": "Touch XL AM302 — écran tactile 7 pouces",
+        "tailleEcran": "Écran tactile 7 pouces",
+        "titreEcran": {{ titre_ecran_xl | json }},
+        "texteEcran": {{ texte_ecran_xl | json }},
+        "imgEcran": {{ img_c_xl | json }},
+        "imgEcranAlt": "Centrale Daewoo Touch XL avec écran tactile 7 pouces"
+        {%- else -%}
+        "eyebrow": "Gamme Touch · écran tactile 4,3 pouces",
+        "specCentrale": "Touch AM301 — écran tactile 4,3 pouces",
+        "tailleEcran": "Écran tactile 4,3 pouces",
+        "titreEcran": {{ titre_ecran_touch | json }},
+        "texteEcran": {{ texte_ecran_touch | json }},
+        "imgEcran": {{ img_c_touch | json }},
+        "imgEcranAlt": "Centrale Daewoo Touch avec écran tactile 4,3 pouces"
+        {%- endif -%}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  }
+  </script>
+
+  {%- comment -%}
+    ══════════════════════════════════════════════════════════════════
+    L'ÉCRAN — l'argument qui sépare Touch de Touch XL
+    La photo vient de la fiche de la centrale correspondante quand la
+    fiche du pack n'en porte pas : c'est le seul endroit où l'on voit
+    vraiment la taille de l'écran.
+    ══════════════════════════════════════════════════════════════════
+  {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-screen pv-reveal">
+        <div class="pv-screen__body">
+          <span class="pv-screen__size" data-dw-swap="tailleEcran">Écran tactile {{ pouces }}</span>
+          <h2 data-dw-swap="titreEcran">
+            {%- if modele == "Touch XL" -%}
+              Sept pouces. Tout se lit d'un coup d'œil.
+            {%- else -%}
+              L'état du système, sur l'écran, sans sortir le téléphone.
+            {%- endif -%}
+          </h2>
+          <p class="pv-screen__text" data-dw-swap="texteEcran">
+            {%- if modele == "Touch XL" -%}
+              La centrale {{ ref_centrale }} affiche l'ensemble du système sur un écran
+              de 7&nbsp;pouces : zones armées, journal des alertes, état de chaque
+              accessoire. Sa batterie de secours tient {{ autonomie }}, de quoi
+              traverser une coupure de courant sans y penser.
+            {%- else -%}
+              La centrale {{ ref_centrale }} porte un écran tactile de 4,3&nbsp;pouces et un
+              guide vocal : armer, désarmer et lire l'historique se font
+              directement dessus, sans application. Sa batterie de secours tient
+              {{ autonomie }} en cas de coupure de courant.
+            {%- endif -%}
+          </p>
+          <ul>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Quatre façons d'armer : l'écran, l'application, la télécommande ou le badge RFID</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Mode Maison : protection partielle pendant que vous êtes chez vous</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Sirène intégrée à la centrale, et batterie de secours de {{ autonomie }}</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Jusqu'à 90 accessoires de la gamme radio Touch et Vigilia</span>
+            </li>
+          </ul>
+          {%- if jumeau != blank and jumeau.available -%}
+            <a class="pv-screen__switch" href="{{ jumeau.url }}">
+              Le même pack avec l'écran {{ autre_pouces }} ({{ autre_modele }}) — {{ jumeau.price | money }}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          {%- elsif multi_versions -%}
+            <p class="pv-screen__switch" style="border:none;padding:0;">
+              Les deux tailles d'écran sont proposées plus haut, au même endroit.
+            </p>
+          {%- endif -%}
+        </div>
+        {%- comment -%}
+          Le marqueur est posé sur le conteneur, pas passé à image_tag :
+          le filtre ne documente pas les attributs à tirets.
+        {%- endcomment -%}
+        <div class="pv-screen__media" data-dw-swap-img="imgEcran">
+          {%- if img_ecran -%}
+            {{ img_ecran | image_url: width: 900 | image_tag:
+               loading: 'lazy',
+               widths: '380,560,900', sizes: '(min-width:900px) 480px, 90vw',
+               alt: 'Centrale Daewoo ' | append: modele | append: ' avec écran tactile ' | append: pouces }}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%}
+    ══════════════════════════════════════════════════════════════════
+    UNE SEULE APPLICATION — alarme, caméras et domotique au même endroit
+    C'est l'argument différenciant de la gamme face aux systèmes qui
+    imposent une application par type d'équipement.
+    ══════════════════════════════════════════════════════════════════
+  {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-app__head pv-reveal">
+        <span class="pv-eyebrow">Daewoo Home Connect</span>
+        <h2>Une seule application pour tout le logement</h2>
+        <p>
+          L'alarme, les caméras et les équipements connectés se pilotent depuis la
+          même application. Pas un compte par marque, pas une application par
+          appareil : une liste unique, et des scénarios qui les font travailler
+          ensemble.
+        </p>
+      </div>
+
+      <div class="pv-app pv-reveal">
+        <div class="pv-app__media">
+          {%- if img_app -%}
+            {{ img_app | image_url: width: 840 | image_tag:
+               loading: 'lazy',
+               widths: '380,560,840', sizes: '(min-width:900px) 420px, 90vw',
+               alt: "Application Daewoo Home Connect pilotant l'alarme et les caméras" }}
+          {%- endif -%}
+        </div>
+
+        <div>
+          <div class="pv-app__pillars">
+            <div class="pv-app__pillar">
+              <span class="pv-app__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </span>
+              <div>
+                <h3>L'alarme</h3>
+                <p>
+                  Armement total ou partiel, état de chaque détecteur, journal des
+                  événements et notification immédiate en cas de déclenchement.
+                </p>
+              </div>
+            </div>
+
+            <div class="pv-app__pillar">
+              <span class="pv-app__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2"></rect></svg>
+              </span>
+              <div>
+                <h3>Les caméras</h3>
+                <p>
+                  Image en direct, levée de doute au moment de l'alerte, historique
+                  et audio bidirectionnel — dans la même liste que les détecteurs.
+                </p>
+              </div>
+            </div>
+
+            <div class="pv-app__pillar">
+              <span class="pv-app__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              </span>
+              <div>
+                <h3>La domotique</h3>
+                <p>
+                  Prises connectées, modules de volet roulant, éclairages : les
+                  mêmes scénarios peuvent allumer une lampe quand un détecteur
+                  s'active.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p class="pv-app__footer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>
+              L'application est gratuite et le reste. Aucun abonnement n'est requis
+              pour les notifications, le pilotage à distance ni la levée de doute
+              vidéo. Compatible Amazon Alexa et Google Home.
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%}
+    ── contenu du pack ──
+    Deux formats de métachamp acceptés, décrits en tête de fichier. Une
+    ligne sans quantité en tête est traitée comme une note de bas de bloc
+    (« Piles, visserie et notices inclus »), pas comme un article.
+  {%- endcomment -%}
+  {%- if lignes_contenu.size > 0 and contenu_brut != blank -%}
+    <section class="pv-section">
+      <div class="pv-wrap">
+        <div class="pv-contents__head pv-reveal">
+          <span class="pv-eyebrow">Dans la boîte</span>
+          <h2>Tout ce qu'il faut, dans un seul carton</h2>
+          <p>
+            {%- if nb_acc > 0 -%}
+              La centrale {{ modele }}, {{ nb_acc }} accessoires
+              {%- if nb_cam_ext > 0 %}, dont la protection extérieure{% endif %},
+              et de quoi installer l'ensemble sans rien acheter d'autre.
+            {%- else -%}
+              De quoi installer l'ensemble sans rien acheter d'autre.
+            {%- endif -%}
+          </p>
+        </div>
+
+        <div class="pv-contents__grid pv-reveal">
+          {%- assign notes = "" -%}
+          {%- for ligne_brute in lignes_contenu -%}
+            {%- liquid
+              assign ligne = ligne_brute | strip_html | strip
+              if ligne == blank
+                continue
+              endif
+              if ligne contains "•"
+                assign ligne = ligne | replace_first: "•", "" | strip
+              endif
+
+              assign qte = ""
+              assign nom = ligne
+              assign precision = ""
+
+              if ligne contains "|"
+                assign morceaux = ligne | split: "|"
+                assign nom = morceaux[0] | strip
+                assign precision = morceaux[1] | strip
+              endif
+
+              assign premier = nom | slice: 0
+              if nom contains "×"
+                assign deux = nom | split: "×"
+                assign qte = deux[0] | strip
+                assign nom = deux[1] | strip
+              elsif "0123456789" contains premier
+                assign mots = nom | split: " "
+                assign qte = mots[0] | strip
+                assign nom = nom | remove_first: mots[0] | strip
+              endif
+            -%}
+            {%- if qte == blank -%}
+              {%- assign notes = notes | append: nom | append: " " -%}
+            {%- else -%}
+              <div class="pv-contents__item">
+                <span class="pv-contents__qty">{{ qte }}&times;</span>
+                <div>
+                  <div class="pv-contents__name">{{ nom }}</div>
+                  {%- if precision != blank -%}
+                    <div class="pv-contents__desc">{{ precision }}</div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if notes != blank -%}
+          <p class="pv-contents__note pv-reveal">{{ notes | strip }}</p>
+        {%- endif -%}
+
+        {%- if product.metafields.custom.conseil_quantite != blank -%}
+          <p class="pv-contents__note pv-reveal">{{ product.metafields.custom.conseil_quantite }}</p>
+        {%- endif -%}
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- comment -%} ── protection GSM ── {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-feature pv-reveal">
+        <div class="pv-feature__media">
+          {%- if img_gsm -%}
+            {{ img_gsm | image_url: width: 1000 | image_tag:
+               loading: 'lazy', widths: '400,700,1000',
+               sizes: '(min-width:900px) 500px, 90vw',
+               alt: "Relais 4G d'une alarme Daewoo en cas de coupure Internet" }}
+          {%- endif -%}
+        </div>
+        <div class="pv-feature__body">
+          <span class="pv-feature__num">CONTINUITÉ</span>
+          <h2>Elle reste joignable, même sans Internet.</h2>
+          <p class="pv-feature__text">
+            La centrale se connecte en Wi-Fi. En option, une carte SIM M2M lui
+            ouvre un second chemin : si la box tombe ou si la ligne est coupée,
+            elle bascule sur le réseau 4G et continue d'alerter par SMS et par
+            appel.
+          </p>
+          <ul>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Bascule automatique, sans manipulation de votre part</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Batterie de secours intégrée : {{ autonomie }} d'autonomie</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>La carte SIM M2M s'achète à l'unité, sans reconduction</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── sans abonnement ── {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-feature pv-feature--reverse pv-reveal">
+        <div class="pv-feature__media">
+          {%- if img_abo -%}
+            {{ img_abo | image_url: width: 1000 | image_tag:
+               loading: 'lazy', widths: '400,700,1000',
+               sizes: '(min-width:900px) 500px, 90vw',
+               alt: "Alarme Daewoo sans abonnement comparée aux offres avec abonnement" }}
+          {%- endif -%}
+        </div>
+        <div class="pv-feature__body">
+          <span class="pv-feature__num">ZÉRO FRAIS MENSUEL</span>
+          <h2>Vous achetez le système. Il est à vous.</h2>
+          <p class="pv-feature__text">
+            Les offres avec télésurveillance se paient tous les mois, à vie, et le
+            matériel reste souvent celui du prestataire. Ici, le système vous
+            appartient dès l'achat : l'alarme, les notifications, le pilotage à
+            distance et la levée de doute vidéo ne coûtent rien de plus.
+          </p>
+          <ul>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Pas d'engagement, pas de résiliation à négocier</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Enregistrement vidéo sur carte micro SD, chez vous</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Seule la SIM 4G de secours est facturée, et seulement si vous la voulez</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── bandeau d'appel intermédiaire ── {%- endcomment -%}
+  <div class="pv-wrap">
+    <div class="pv-band pv-reveal">
+      <h2>Protégez votre logement dès aujourd'hui</h2>
+      <p>Installation en une trentaine de minutes, sans technicien et sans travaux.</p>
+      <button type="submit" form="PTForm" class="pv-btn">
+        <span class="btn-fill"></span>
+        <span class="pv-btn__text">
+          Ajouter au panier — <span class="pv-price-amount">{{ v.price | money }}</span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%}
+    ── accessoires ──
+    Le sélecteur des pages Vigilia, réutilisé tel quel : la gamme radio
+    30x est commune à Touch et à Vigilia, et le snippet lit prix, photo et
+    disponibilité sur les fiches à chaque affichage. Rien à dupliquer.
+  {%- endcomment -%}
+  {%- assign a_barre_courant = false -%}
+  {%- if v.compare_at_price > v.price -%}{%- assign a_barre_courant = true -%}{%- endif -%}
+  {%- render 'pv-accessoires',
+      form_id: 'PTForm',
+      variant: v,
+      variant_has_compare: a_barre_courant,
+      pack_name: product.title -%}
+
+  {%- comment -%} ── en résumé ── {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-specs__head pv-reveal">
+        <span class="pv-eyebrow">Caractéristiques</span>
+        <h2>En résumé</h2>
+      </div>
+      <dl class="pv-specs__grid pv-reveal">
+        <div class="pv-specs__item">
+          <dt>Référence</dt>
+          <dd class="pv-ref">{{ v.sku | default: product.title }}</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Centrale</dt>
+          <dd data-dw-swap="specCentrale">{{ modele }} {{ ref_centrale }} — écran tactile {{ pouces }}</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Connectivité</dt>
+          <dd>{% if product.metafields.custom.connectivite != blank %}{{ product.metafields.custom.connectivite }}{% else %}Wi-Fi 2,4 GHz pour le pilotage à distance.
+Relais GSM 4G en option, par carte SIM M2M.{% endif %}</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Alimentation</dt>
+          <dd>{% if product.metafields.custom.alimentation_autonomie != blank %}{{ product.metafields.custom.alimentation_autonomie }}{% else %}Secteur, avec batterie de secours intégrée : {{ autonomie }} d'autonomie en cas de coupure.{% endif %}</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Détection</dt>
+          <dd>{% if product.metafields.custom.securite_detection != blank %}{{ product.metafields.custom.securite_detection }}{% else %}Sirène intégrée à la centrale.
+Détecteurs de mouvement compatibles animaux.
+Mode Maison pour une protection partielle.{% endif %}</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Évolutivité</dt>
+          <dd>{% if product.metafields.custom.note_compatibilite != blank %}{{ product.metafields.custom.note_compatibilite }}{% else %}Jusqu'à 90 accessoires de la gamme radio Touch et Vigilia : détecteurs, contacteurs, sirènes, claviers, badges et télécommandes.{% endif %}</dd>
+        </div>
+        {%- if nb_acc > 0 -%}
+          <div class="pv-specs__item">
+            <dt>Accessoires fournis</dt>
+            <dd>{{ nb_acc }} accessoires livrés avec la centrale</dd>
+          </div>
+        {%- endif -%}
+        <div class="pv-specs__item">
+          <dt>Application</dt>
+          <dd>Daewoo Home Connect — alarme, caméras et domotique.
+Compatible Amazon Alexa et Google Home.</dd>
+        </div>
+        <div class="pv-specs__item">
+          <dt>Abonnement</dt>
+          <dd>Aucun. L'application, les notifications et le pilotage à distance sont gratuits, à vie.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  {%- comment -%} ── garanties ── {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-guarantee pv-reveal">
+        <div class="pv-guarantee__item">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"></path><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <h3>Garantie 2 ans</h3>
+          <p>Sur l'ensemble du matériel, pièces comprises.</p>
+        </div>
+        <div class="pv-guarantee__item">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <h3>Expédié sous 24&nbsp;h</h3>
+          <p>Le jour même avant midi, sinon le lendemain. Hors week-end.</p>
+        </div>
+        <div class="pv-guarantee__item">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          <h3>Retour sous 14 jours</h3>
+          <p>Changement d'avis remboursé, sans justification.</p>
+        </div>
+        <div class="pv-guarantee__item">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <h3>Sans abonnement</h3>
+          <p>Aucun frais mensuel, jamais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%}
+    ── avis ──
+    Le carrousel et la fenêtre « tous les avis » lisent la même liste. La
+    note et le nombre affichés sont ceux du groupe Touch dans Judge.me,
+    pas la moyenne des avis présents ici : c'est la note réelle de la
+    gamme, et c'est elle qui est balisée en JSON-LD.
+  {%- endcomment -%}
+  <section class="pv-section" id="pt-avis">
+    <div class="pv-wrap">
+      <div class="pv-reviews__head pv-reveal">
+        <span class="pv-eyebrow">Avis clients</span>
+        <h2>Ce qu'en disent nos clients</h2>
+        {%- if a_une_note -%}
+          <span class="pv-reviews__summary">
+            <span class="pv-rating-badge__stars" aria-hidden="true">
+              <span class="pv-rating-badge__stars-bg">★★★★★</span>
+              <span class="pv-rating-badge__stars-fg" style="width:{{ note_pct }}%">★★★★★</span>
+            </span>
+            <strong>{{ note_affichee }}/5</strong> sur {{ nb_avis }} avis vérifiés
+          </span>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%}
+        Les cartes sont rendues côté serveur : le contenu reste lisible
+        sans JavaScript et reste indexable. La fenêtre « tous les avis »
+        lit la même source, mais n'est construite qu'à l'ouverture.
+      {%- endcomment -%}
+      <div class="pv-reviews__track pv-reveal">
+        {%- render 'pt-avis-touch', mode: 'cartes' -%}
+      </div>
+
+      <script type="application/json" data-dw-reviews-json>{%- render 'pt-avis-touch' -%}</script>
+
+      <div style="text-align:center">
+        <button type="button" class="pv-reviews__all-btn" data-dw-modal-open="avis">
+          Lire tous les avis
+        </button>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── ventes croisées ── {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-crosssell__head pv-reveal">
+        <h2>Pas tout à fait la bonne configuration&nbsp;?</h2>
+        <p>Deux façons d'ajuster : changer de taille d'écran, ou composer votre pack pièce par pièce.</p>
+      </div>
+      <div class="pv-crosssell__grid pv-reveal">
+        {%- if jumeau != blank and jumeau.available -%}
+          <a class="pv-crosssell__card pv-crosssell__card--photo" href="{{ jumeau.url }}">
+            {%- if jumeau.featured_image -%}
+                {{ jumeau.featured_image | image_url: width: 600 | image_tag:
+                   loading: 'lazy', class: 'pv-crosssell__photo', alt: jumeau.title }}
+            {%- endif -%}
+            <div class="pv-crosssell__body">
+              <h3>Le même pack en {{ autre_pouces }}</h3>
+              <p>{{ jumeau.title }}</p>
+              <span class="pv-crosssell__price">{{ jumeau.price | money }}<span>TTC</span></span>
+              <span class="pv-btn pv-btn--ghost pv-btn--sm"><span class="pv-btn__text">Voir ce pack</span></span>
+            </div>
+          </a>
+        {%- endif -%}
+
+        {%- if configurateur != blank and configurateur.available -%}
+          <a class="pv-crosssell__card pv-crosssell__card--photo" href="{{ configurateur.url }}">
+            {%- if configurateur.featured_image -%}
+                {{ configurateur.featured_image | image_url: width: 600 | image_tag:
+                   loading: 'lazy', class: 'pv-crosssell__photo', alt: 'Configurateur de pack Touch' }}
+            {%- endif -%}
+            <div class="pv-crosssell__body">
+              <h3>Composez votre pack sur mesure</h3>
+              <p>Vous choisissez la centrale, puis chaque accessoire, un par un.</p>
+              <span class="pv-crosssell__price">dès {{ configurateur.price | money }}<span>TTC</span></span>
+              <span class="pv-btn pv-btn--ghost pv-btn--sm"><span class="pv-btn__text">Ouvrir le configurateur</span></span>
+            </div>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── questions fréquentes ── {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-faq pv-reveal">
+        <h2>Questions fréquentes</h2>
+
+        <details>
+          <summary>Faut-il un abonnement&nbsp;?
+            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </summary>
+          <p class="pv-faq__a">
+            Non. L'alarme, les notifications, le pilotage à distance et la levée de
+            doute vidéo fonctionnent sans frais mensuels. Seule la connexion 4G de
+            secours demande une carte SIM M2M, vendue à l'unité et sans reconduction.
+          </p>
+        </details>
+
+        <details>
+          <summary>Quelle différence entre Touch et Touch XL&nbsp;?
+            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </summary>
+          <p class="pv-faq__a">
+            La taille de l'écran et l'autonomie de la batterie. La Touch AM301 a un
+            écran tactile de 4,3 pouces et environ 4 heures de batterie de secours ;
+            la Touch XL AM302 monte à 7 pouces et environ 20 heures. Les accessoires,
+            les caméras, l'application et les fonctions sont identiques : les deux
+            centrales acceptent la même gamme radio.
+          </p>
+        </details>
+
+        <details>
+          <summary>Faut-il un technicien pour l'installer&nbsp;?
+            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </summary>
+          <p class="pv-faq__a">
+            Non. Tout le matériel est sans fil et s'appaire depuis l'application.
+            Comptez une trentaine de minutes pour un pack complet. Un conseil tiré
+            des retours clients : nommez chaque accessoire au moment de l'appairage,
+            c'est le moment prévu pour le faire.
+          </p>
+        </details>
+
+        <details>
+          <summary>Que se passe-t-il si Internet est coupé&nbsp;?
+            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </summary>
+          <p class="pv-faq__a">
+            La centrale continue de fonctionner en local : la détection et les
+            sirènes restent actives. Avec une carte SIM M2M, elle bascule sur le
+            réseau 4G et continue d'alerter par SMS et par appel. Sa batterie de
+            secours prend le relais du secteur pendant {{ autonomie }}.
+          </p>
+        </details>
+
+        <details>
+          <summary>Les animaux déclenchent-ils l'alarme&nbsp;?
+            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </summary>
+          <p class="pv-faq__a">
+            Non, avec les détecteurs de mouvement compatibles animaux fournis dans
+            les packs : ils ignorent les animaux de moins de 12 kg évoluant au sol.
+          </p>
+        </details>
+
+        <details>
+          <summary>Puis-je agrandir le système plus tard&nbsp;?
+            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </summary>
+          <p class="pv-faq__a">
+            Oui, jusqu'à 90 accessoires par centrale, sans changer de matériel. La
+            gamme radio est commune aux centrales Touch et Vigilia : les références
+            30x sont compatibles avec les deux.
+          </p>
+        </details>
+
+        <details>
+          <summary>Où sont enregistrées les vidéos&nbsp;?
+            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </summary>
+          <p class="pv-faq__a">
+            Sur une carte micro SD placée dans la caméra, chez vous. Aucun
+            hébergement distant n'est imposé, et donc aucun abonnement de stockage.
+          </p>
+        </details>
+
+        <details>
+          <summary>Sous combien de temps suis-je livré&nbsp;?
+            <svg class="pv-faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </summary>
+          <p class="pv-faq__a">
+            Toute commande passée avant midi est expédiée le jour même, les autres le
+            lendemain — pas d'expédition le samedi ni le dimanche. Comptez ensuite
+            48 heures en Colissimo ou 2 à 3 jours en point relais Chronopost. Pour la
+            Belgique, 3 à 4 jours en Chronopost International.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── prise de rendez-vous ── {%- endcomment -%}
+  <section class="pv-section pv-section--alt">
+    <div class="pv-wrap">
+      <div class="pv-appt pv-reveal">
+        <div>
+          <p class="pv-appt__eyebrow">Une question avant de commander&nbsp;?</p>
+          <h3>Parlez à un conseiller Daewoo Security</h3>
+          <p class="pv-appt__sub">
+            Notre équipe est en France et répond sous 24 heures, 5 jours sur 7. Un
+            assistant est également disponible à toute heure sur le site.
+          </p>
+        </div>
+        <a href="/pages/contact" class="pv-btn pv-btn--ghost">
+          <span class="pv-btn__text">Nous écrire</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── appel final ── {%- endcomment -%}
+  <section class="pv-section">
+    <div class="pv-wrap">
+      <div class="pv-final pv-reveal">
+        <h2>{{ product.title }}</h2>
+        <p>
+          Centrale {{ modele }} à écran {{ pouces }}, une seule application pour
+          l'alarme, les caméras et la domotique, et aucun frais mensuel.
+        </p>
+        <div class="pv-final__ctas">
+          <button type="submit" form="PTForm" class="pv-btn pv-btn--primary">
+            <span class="btn-fill"></span>
+            <span class="pv-btn__text">
+              Ajouter au panier — <span class="pv-price-amount">{{ v.price | money }}</span>
+            </span>
+          </button>
+        </div>
+        <p class="pv-final__legal">
+          Garantie 2 ans · Retour sous 14 jours · Expédié sous 24&nbsp;h · Sans abonnement
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── fenêtre : tous les avis ── {%- endcomment -%}
+  <dialog class="pv-modal pv-modal--reviews" data-dw-modal="avis">
+    <div class="pv-modal__inner">
+      <button type="button" class="pv-modal__close" data-dw-modal-close aria-label="Fermer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <h3>Avis clients — gamme Touch</h3>
+      {%- if a_une_note -%}
+        <p>Note moyenne {{ note_affichee }}/5 sur {{ nb_avis }} avis collectés par Judge.me.</p>
+      {%- endif -%}
+      <div class="pv-all-reviews" data-dw-reviews-list>
+        <p class="pv-all-reviews__loading">Chargement des avis…</p>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<script src="{{ 'dw-socle.js' | asset_url }}" defer="defer"></script>
+
+{%- comment -%}
+  ══════════════════════════════════════════════════════════════════════
+  DONNÉES STRUCTURÉES
+  ──────────────────────────────────────────────────────────────────────
+  La note et le nombre d'avis balisés sont EXACTEMENT ceux affichés plus
+  haut dans la page (bandeau du hero et section avis) : Google exige que
+  la note balisée soit visible. Dans Judge.me les avis sont regroupés par
+  gamme, et c'est le groupe Touch qui alimente ces deux chiffres.
+
+  Les conditions de livraison et de retour sont mutualisées dans
+  snippets/pv-ld-offre.liquid, partagé avec Vigilia et Élite : un seul
+  endroit à corriger le jour où un transporteur change.
+  ══════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+{%- liquid
+  assign url_produit = shop.url | append: product.url
+  assign prix_ld = v.price | divided_by: 100.0
+  assign img_ld = photo | default: img_ecran
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 400 | json }},
+  "sku": {{ v.sku | json }},
+  "mpn": {{ v.sku | json }},
+  "brand": { "@type": "Brand", "name": "Daewoo Security" },
+  "category": "Systèmes d'alarme pour la maison",
+  {%- if a_une_note %}
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ note_valeur | json }},
+    "bestRating": {{ note_max | json }},
+    "reviewCount": {{ nb_avis | json }}
+  },
+  {%- endif %}
+  {%- if img_ld %}
+  "image": [{{ img_ld | image_url: width: 1200 | json }}],
+  {%- endif %}
+  "url": {{ url_produit | json }},
+  {%- if multi_versions %}
+  "hasVariant": [
+    {%- for var in product.variants %}
+    {
+      "@type": "Product",
+      "name": {{ product.title | append: " — " | append: var.title | json }},
+      "sku": {{ var.sku | json }},
+      "url": {{ url_produit | append: "?variant=" | append: var.id | json }},
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "price": {{ var.price | divided_by: 100.0 | json }},
+        "availability": "https://schema.org/{% if var.available %}InStock{% else %}OutOfStock{% endif %}"
+        {%- render 'pv-ld-offre' -%},
+        "url": {{ url_produit | append: "?variant=" | append: var.id | json }}
+      }
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor %}
+  ],
+  {%- endif %}
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": {{ prix_ld | json }},
+    "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}"
+    {%- render 'pv-ld-offre' -%},
+    "url": {{ url_produit | json }}
+  },
+  "additionalProperty": [
+    { "@type": "PropertyValue", "name": "Écran", "value": {{ "Tactile " | append: pouces | append: " (centrale " | append: ref_centrale | append: ")" | json }} },
+    { "@type": "PropertyValue", "name": "Connectivité", "value": "Wi-Fi 2,4 GHz, relais GSM 4G en option par carte SIM M2M" },
+    { "@type": "PropertyValue", "name": "Autonomie", "value": {{ "Batterie de secours intégrée, " | append: autonomie | json }} },
+    { "@type": "PropertyValue", "name": "Application", "value": "Daewoo Home Connect — alarme, caméras et domotique dans une seule application" },
+    { "@type": "PropertyValue", "name": "Assistants vocaux", "value": "Amazon Alexa et Google Home" },
+    { "@type": "PropertyValue", "name": "Capacité d'accessoires", "value": "Jusqu'à 90 accessoires de la gamme radio Touch et Vigilia" }
+    {%- if nb_acc > 0 -%},
+    { "@type": "PropertyValue", "name": "Accessoires fournis", "value": {{ nb_acc | append: " accessoires livrés avec la centrale" | json }} }
+    {%- endif -%},
+    { "@type": "PropertyValue", "name": "Abonnement", "value": "Aucun abonnement requis" }
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Page gamme Touch",
+  "settings": []
+}
+{% endschema %}
