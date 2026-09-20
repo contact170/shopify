@@ -101,6 +101,28 @@
 .pv-videos{margin:4px 0 32px;}
 @media (max-width:699px){.pv-videos{margin:0 0 24px;}}
 
+/* ---- autres packs de la gamme ----
+   Liste de liens compacte : ce qui compte ici c'est le maillage interne,
+   pas une deuxième grille d'images à télécharger. */
+.pv-autres{margin-top:44px;}
+.pv-autres h3{font-size:16px;font-weight:600;color:var(--pv-ink);margin:0 0 14px;text-align:center;}
+.pv-autres ul{
+  list-style:none;margin:0;padding:0;
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+}
+.pv-autres a{
+  display:inline-flex;align-items:baseline;gap:8px;
+  padding:8px 14px;border:1px solid var(--pv-line);border-radius:999px;
+  background:#fff;color:var(--pv-ink);text-decoration:none;font-size:13px;
+  transition:border-color .15s ease,color .15s ease;
+}
+.pv-autres a:hover{border-color:var(--pv-navy);color:var(--pv-navy);}
+.pv-autres__prix{color:var(--pv-gray);font-size:12px;white-space:nowrap;}
+@media (max-width:699px){
+  .pv-autres ul{justify-content:flex-start;}
+  .pv-autres a{font-size:12.5px;padding:7px 12px;}
+}
+
 /* ---- rythme des sections ---- */
 .pv-section{padding:72px 0;}
 .pv-section--alt{background:var(--pv-bg-alt);}

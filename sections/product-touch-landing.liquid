@@ -935,7 +935,7 @@ Compatible Amazon Alexa et Google Home.</dd>
     <div class="pv-wrap">
       <div class="pv-crosssell__head pv-reveal">
         <h2>Pas tout à fait la bonne configuration&nbsp;?</h2>
-        <p>Deux façons d'ajuster : changer de taille d'écran, ou composer votre pack pièce par pièce.</p>
+        <p>Changer de taille d'écran, composer votre pack pièce par pièce, ou comparer avec les autres packs de la gamme.</p>
       </div>
       <div class="pv-crosssell__grid pv-reveal">
         {%- if jumeau != blank and jumeau.available -%}
@@ -968,6 +968,34 @@ Compatible Amazon Alexa et Google Home.</dd>
           </a>
         {%- endif -%}
       </div>
+
+      {%- comment -%}
+        ── les autres packs de la gamme ──
+        Sans ce bloc, huit des onze pages Touch n'avaient aucun lien
+        entrant depuis le site : la page de gamme n'en met que trois en
+        avant, et les packs ne figuraient dans aucune collection client.
+        La liste se construit sur la collection, elle suit donc le
+        catalogue sans maintenance. Le pack courant et son jumeau, déjà
+        présenté juste au-dessus, en sont retirés.
+      {%- endcomment -%}
+      {%- assign autres_packs = col_touch.products | where: "available", true -%}
+      {%- if autres_packs.size > 1 -%}
+        <div class="pv-autres pv-reveal">
+          <h3>Les autres packs de la gamme Touch</h3>
+          <ul>
+            {%- for p in autres_packs limit: 14 -%}
+              {%- unless p.id == product.id or p.id == jumeau.id -%}
+                <li>
+                  <a href="{{ p.url }}">
+                    <span>{{ p.metafields.custom.titre_page | default: p.title | truncate: 56 }}</span>
+                    <span class="pv-autres__prix">{{ p.price | money }}</span>
+                  </a>
+                </li>
+              {%- endunless -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
     </div>
   </section>
 
