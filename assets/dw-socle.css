@@ -60,22 +60,46 @@
 /* ---- fil d'Ariane ----
    Le fil d'Ariane du thème est masqué sous 1024 px. Celui-ci reste
    affiché sur mobile : c'est là qu'un visiteur arrivé par une recherche
-   a le plus besoin de savoir où il est. */
-.pv-bread{padding:20px 24px 0;font-size:13px;color:var(--pv-gray);}
+   a le plus besoin de savoir où il est.
+   Le padding vertical s'écrit avec .pv devant : .pv .pv-wrap (0,2,0)
+   l'emporte sinon sur .pv-bread (0,1,0) et écrase l'espacement. */
+.pv .pv-bread{padding-top:18px;padding-bottom:0;}
+.pv-bread{font-size:12px;line-height:1.5;color:var(--pv-gray);}
 .pv-bread ol{
-  list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px;
+  list-style:none;margin:0;padding:0;
+  display:flex;flex-wrap:nowrap;align-items:center;min-width:0;
 }
-.pv-bread li{display:inline-flex;align-items:center;gap:6px;min-width:0;}
-.pv-bread li + li::before{content:"›";color:var(--pv-line);}
-.pv-bread a{color:var(--pv-gray);text-decoration:none;}
-.pv-bread a:hover{color:var(--pv-navy);text-decoration:underline;text-underline-offset:2px;}
-.pv-bread li[aria-current]{
-  color:var(--pv-ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(100%,420px);
+/* Chaque maillon est un bloc tronquable. text-overflow n'agit que sur un
+   conteneur de bloc, jamais sur un conteneur flex : c'est ce qui coupait
+   le titre en plein milieu d'un mot, sans les points de suspension. */
+.pv-bread li{
+  min-width:0;flex:0 1 auto;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
+.pv-bread li:first-child{flex:0 0 auto;}
+.pv-bread li + li::before{content:"/";margin:0 7px;color:var(--pv-line);}
+.pv-bread a{
+  color:var(--pv-gray);
+  text-decoration:underline;text-decoration-color:var(--pv-line);
+  text-decoration-thickness:1px;text-underline-offset:3px;
+  transition:color .15s ease,text-decoration-color .15s ease;
+}
+.pv-bread a:hover{color:var(--pv-navy);text-decoration-color:var(--pv-navy);}
+.pv-bread li[aria-current]{color:var(--pv-ink);}
 @media (max-width:699px){
-  .pv-bread{padding-top:14px;font-size:12.5px;}
-  .pv-bread li[aria-current]{max-width:60vw;}
+  .pv .pv-bread{padding-top:12px;}
+  .pv-bread{font-size:11.5px;}
+  /* Une seule ligne tient sur un écran de téléphone : on garde le parent
+     direct, le logo de l'en-tête ramenant déjà à l'accueil. */
+  .pv-bread li:first-child,
+  .pv-bread li:nth-child(2)::before{display:none;}
 }
+
+/* ---- vidéos clients (blocs d'application) ----
+   Le carrousel apporte ses propres styles : on ne règle ici que sa
+   respiration entre le titre du bloc avis et les cartes d'avis. */
+.pv-videos{margin:4px 0 32px;}
+@media (max-width:699px){.pv-videos{margin:0 0 24px;}}
 
 /* ---- rythme des sections ---- */
 .pv-section{padding:72px 0;}

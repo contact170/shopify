@@ -227,7 +227,13 @@
   {%- endcomment -%}
   {%- liquid
     assign col_touch = collections["systeme-dalarme-am301-am302"]
-    assign col_titre = col_touch.title | default: "Systèmes d'alarme Touch et Touch XL"
+    comment
+      Le titre de collection ("Systèmes d'alarme TOUCH / TOUCH XL") contient
+      lui-même une barre oblique, qui entrerait en collision avec le séparateur.
+      Le fil d'Ariane porte donc un libellé court, repris à l'identique dans le
+      BreadcrumbList plus bas pour que balisage et affichage disent la même chose.
+    endcomment
+    assign col_titre = "Alarmes Touch et Touch XL"
     assign col_url = col_touch.url | default: "/collections/systeme-dalarme-am301-am302"
   -%}
   <nav class="pv-wrap pv-bread" aria-label="Fil d'Ariane">
@@ -882,6 +888,23 @@ Compatible Amazon Alexa et Google Home.</dd>
       </div>
 
       {%- comment -%}
+        Emplacement des blocs d'application, occupé aujourd'hui par le
+        carrousel vidéo Moast. Il ouvre la preuve sociale : les vidéos
+        d'abord, les avis écrits juste en dessous. Si aucun bloc n'est
+        ajouté au modèle, rien ne s'affiche et la page reste identique.
+      {%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="pv-videos pv-reveal">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when '@app' -%}
+                {%- render block -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%}
         Les cartes sont rendues côté serveur : le contenu reste lisible
         sans JavaScript et reste indexable. La fenêtre « tous les avis »
         lit la même source, mais n'est construite qu'à l'ouverture.
@@ -1145,6 +1168,9 @@ Compatible Amazon Alexa et Google Home.</dd>
 {% schema %}
 {
   "name": "Page gamme Touch",
-  "settings": []
+  "settings": [],
+  "blocks": [
+    { "type": "@app" }
+  ]
 }
 {% endschema %}
