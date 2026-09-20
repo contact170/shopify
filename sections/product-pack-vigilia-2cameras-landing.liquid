@@ -160,12 +160,15 @@
   # dans le balisage aggregateRating.
   # Si le metachamp est vide, has_rating passe a false et toute la
   # mecanique d'affichage et de balisage s'efface d'elle-meme.
-  assign pv_note = product.metafields.reviews.rating.value
-  assign rating_count = product.metafields.reviews.rating_count.value | plus: 0
-  if pv_note != blank and rating_count > 0
+  capture pv_stats
+    render 'pv-avis-vigilia', mode: 'stats'
+  endcapture
+  assign pv_ch = pv_stats | strip | split: "~|~"
+  assign rating_count = pv_ch[0] | plus: 0
+  if rating_count > 0
     assign has_rating = true
-    assign rating_value = pv_note.rating | times: 1.0 | round: 2
-    assign rating_max = pv_note.scale_max | times: 1.0
+    assign rating_value = pv_ch[1] | times: 1.0 | round: 2
+    assign rating_max = 5.0
     assign rating_pct = rating_value | times: 100.0 | divided_by: rating_max
   else
     assign has_rating = false

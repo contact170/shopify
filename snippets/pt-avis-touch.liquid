@@ -121,7 +121,27 @@
 {%- endcapture -%}
 {%- assign avis = pt_donnees | strip | split: FIN -%}
 
-{%- if mode == "ld" -%}
+{%- comment -%}
+  Mode "stats" : le nombre d'avis et leur moyenne, calculés sur la liste
+  ci-dessus et non lus sur un métachamp. La note affichée ne peut donc
+  plus diverger des avis effectivement publiés sur la page — ce
+  qu'exigent à la fois Google et l'article L111-7-2 du Code de la
+  consommation. Sortie : nombre ~|~ moyenne.
+{%- endcomment -%}
+{%- if mode == "stats" -%}
+{%- assign somme = 0 -%}
+{%- for enr in avis -%}
+  {%- assign ch = enr | strip | split: SEP -%}
+  {%- assign somme = somme | plus: ch[0] -%}
+{%- endfor -%}
+{%- assign total = avis.size -%}
+{%- if total > 0 -%}
+  {%- assign moyenne = somme | times: 1.0 | divided_by: total | round: 2 -%}
+{%- else -%}
+  {%- assign moyenne = 0 -%}
+{%- endif -%}
+{{ total }}{{ SEP }}{{ moyenne }}
+{%- elsif mode == "ld" -%}
 {% for enr in avis limit: limite %}{% assign ch = enr | strip | split: SEP %}{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":{{ ch[0] | plus: 0 }},"bestRating":5},"author":{"@type":"Person","name":{{ ch[1] | json }}},"reviewBody":{{ ch[3] | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}
 {%- elsif mode == "cartes" -%}
   {%- for enr in avis limit: limite -%}

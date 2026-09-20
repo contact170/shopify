@@ -128,13 +128,20 @@
   assign contenu_brut = product.metafields.custom.contenu_du_pack.value | default: ""
   assign lignes_contenu = contenu_brut | strip | newline_to_br | split: "<br />"
 
-  # ── Note Judge.me ──────────────────────────────────────────────────
-  assign note = product.metafields.reviews.rating.value
-  assign nb_avis = product.metafields.reviews.rating_count.value | plus: 0
-  if note != blank and nb_avis > 0
+  # ── Note client ──────────────────────────────────────────────
+  # Nombre et moyenne calculés par le snippet sur la liste exacte qui
+  # s'affiche plus bas. Le métachamp Judge.me décrit un autre périmètre :
+  # s'en servir ici annonçait 4,56 sur 50 avis alors que la page en
+  # présente 59. Le même chiffre alimente l'affichage et le balisage.
+  capture pt_stats
+    render 'pt-avis-touch', mode: 'stats'
+  endcapture
+  assign pt_ch = pt_stats | strip | split: "~|~"
+  assign nb_avis = pt_ch[0] | plus: 0
+  if nb_avis > 0
     assign a_une_note = true
-    assign note_valeur = note.rating | times: 1.0
-    assign note_max = note.scale_max | times: 1.0
+    assign note_valeur = pt_ch[1] | times: 1.0
+    assign note_max = 5.0
     assign note_pct = note_valeur | divided_by: note_max | times: 100
     assign note_affichee = note_valeur | round: 2 | replace: ".", ","
   else

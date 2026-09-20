@@ -50,7 +50,15 @@
   Ne jamais retoucher un texte d'avis.
   ══════════════════════════════════════════════════════════════════════════
 {%- endcomment -%}
-    [
+
+{%- comment -%}
+  Le JSON est capturé avant d'être émis : le mode "stats" peut ainsi
+  compter les avis et calculer leur moyenne à partir de cette liste-là,
+  au lieu de lire un métachamp qui décrit autre chose. La note affichée
+  ne peut plus diverger des avis publiés sur la page.
+  Sortie du mode "stats" : nombre ~|~ moyenne.
+{%- endcomment -%}
+{%- capture pv_json -%}    [
       {"r":5,"t":"très bien, rapport qualité prix excellent je fait de la pub sur ce produit dans mon entourage.","n":"Franck P.","c":"Marignane","d":"septembre 2026"},
       {"r":5,"t":"La batterie tient très bien (toujours à 100%) après plusieurs dizaines d'heures de fonctionnement. L'image est propre de jour comme de nuit. Système de fixation simple et permettant de régler la zone de surveillance. Juste un petit problème avec les scénarii, la caméra ne réagit pas comme les autres. Je vais surement en acheter une autre","n":"Yoann V.","c":"Cercottes","d":"septembre 2026"},
       {"r":4,"t":"Installation plus difficile qu'indiquée mais correspond vraiment à notre attente ! Matériel qui semble de qualité et performant","n":"Laurent G.","c":"Grenoble","d":"septembre 2026"},
@@ -135,4 +143,23 @@
       {"r":5,"t":"Très satisfait de cette nouvelle caméra pour sa qualité d'image et de connexion Wifi avec un suivi de mouvement performant","n":"Eric C.","c":"Novalaise","d":"octobre 2024"},
       {"r":5,"t":"Très satisfait des produits qui fonctionnent très bien, sauf les télécommandes qui sont à mon goût trop sensibles et se déclenchent trop facilement dans la poche. j'ai eu besoin d'aide pour l'installation et j'ai eu toutes les solutions par mail pour résoudre mes petits problèmes très facilement et très rapidement. Merci encore pour le SAV Je recommande","n":"Jean C.","c":"Limoges","d":"janvier 2024"},
       {"r":4,"t":"Installation facile après que le technicien m'ai expliqué que une fois la sirène configurée, elle n'apparaît pas dans les éléments connectés sur la centrale M302 alors qu'elle l'est !","n":"Patrick B.","c":"","d":"janvier 2024"}
-    ]
+    ]{%- endcapture -%}
+
+{%- if mode == "stats" -%}
+{%- assign blocs = pv_json | split: '{"r":' -%}
+{%- assign somme = 0 -%}
+{%- assign total = 0 -%}
+{%- for b in blocs offset: 1 -%}
+  {%- assign n = b | slice: 0 | plus: 0 -%}
+  {%- assign somme = somme | plus: n -%}
+  {%- assign total = total | plus: 1 -%}
+{%- endfor -%}
+{%- if total > 0 -%}
+  {%- assign moyenne = somme | times: 1.0 | divided_by: total | round: 2 -%}
+{%- else -%}
+  {%- assign moyenne = 0 -%}
+{%- endif -%}
+{{ total }}~|~{{ moyenne }}
+{%- else -%}
+{{ pv_json }}
+{%- endif -%}
