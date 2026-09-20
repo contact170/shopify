@@ -1,83 +1,138 @@
 {%- comment -%}
   ══════════════════════════════════════════════════════════════════════════
-  snippets/pv-avis-vigilia.liquid — Daewoo Security, 19/09/2026
+  snippets/pv-avis-vigilia.liquid — Daewoo Security
+  Régénéré le 20/09/2026 depuis l'export Judge.me.
 
-  Le jeu d'avis clients de la gamme Vigilia, affiché par les dix pages de
-  pack. Il était recopié à l'identique dans chacune d'elles : 12 Ko par
-  fichier, dix endroits à corriger pour un avis à retirer, et quatre de
-  ces fichiers devenus trop lourds pour être réécrits par l'API.
+  Sert de corps au <script type="application/json" id="PVAllReviews-…"> de
+  chacune des dix pages Vigilia : ne rien émettre d'autre que le JSON.
 
-  Sert de corps au <script type="application/json" id="PVAllReviews-…">
-  de chaque section : ne rien émettre d'autre que le JSON.
+  ── POURQUOI CETTE RÉGÉNÉRATION ───────────────────────────────────────────
+  La version précédente contenait 68 avis. Ils étaient réels, mais RÉÉCRITS :
+  orthographe corrigée, ponctuation ajoutée, phrases reformulées, et pour
+  l'un d'eux une phrase entière retirée. Trois cas relevés sur l'export :
+
+    original  « En fait j'ai mis 3 étoiles, mais elle est installée que
+                depuis deu jours […] un flash cilgnatant »
+    affiché   « En fait j'ai mis 3 étoiles au départ, mais elle est
+                installée que depuis deux jours […] un flash clignotant »
+
+    original  « le service après vente et sans faille. Le seul bémol, la
+                résolution des photos prise par les caméras sont floues »
+    affiché   « le service après-vente est sans faille. Le seul bémol : la
+                résolution des photos prises par les caméras est floue »
+
+    original  se terminait par « Ne pas hésiter à prendre cette carte SIM
+                M to M pour Daewoo Security » — phrase absente de la page.
+
+  Le Code de la consommation (art. L111-7-2 et D111-16 à D111-19) permet de
+  refuser la publication d'un avis, pas d'en modifier le contenu. Les textes
+  ci-dessous sont donc VERBATIM, fautes d'orthographe comprises.
+
+  ── PÉRIMÈTRE ─────────────────────────────────────────────────────────────
+  Gamme Vigilia et accessoires de la gamme radio 30x livrés dans ses packs :
+  sirènes, contacteurs, détecteurs, télécommandes, badges, claviers, ainsi
+  que les caméras IP506P, EP506, W503 et W512MW et la carte SIM M2M. Les
+  références 50x (Key et Élite) en sont exclues.
+
+  84 avis retenus, moyenne 4,45. Écartés : les doublons et les
+  textes de moins de 80 caractères, qui ne disent rien de plus qu'une note
+  (« Très bien. », « Bonne portée. ») et alourdiraient les dix pages pour
+  rien.
+
+  ── NOMS ──────────────────────────────────────────────────────────────────
+  Format public de Judge.me : prénom suivi de l'initiale. Les clients ayant
+  saisi une adresse e-mail en guise de nom deviennent « Client vérifié ».
+  La ville vient de la colonne location de l'export, conservée seulement
+  pour la France, la Belgique et la Suisse. Aucune adresse e-mail ni IP.
+
+  ── MISE À JOUR ───────────────────────────────────────────────────────────
+  Réexporter depuis Judge.me (Commentaires › Exporter) et régénérer.
+  Ne jamais retoucher un texte d'avis.
   ══════════════════════════════════════════════════════════════════════════
 {%- endcomment -%}
     [
-      {"r":4,"t":"Installation facile après que le technicien m'ai expliqué que une fois la sirène configurée, elle n'apparaît pas dans les éléments connectés sur la centrale M302 alors qu'elle l'est !","n":"Patrick B.","c":"","d":"janvier 2024"},
-      {"r":5,"t":"Très satisfait des produits qui fonctionnent très bien, sauf les télécommandes qui sont à mon goût trop sensibles et se déclenchent trop facilement dans la poche. J'ai eu besoin d'aide pour l'installation et j'ai eu toutes les solutions par mail pour résoudre mes petits problèmes très facilement et très rapidement. Merci encore pour le SAV, je recommande.","n":"Jean Claude C.","c":"Limoges","d":"janvier 2024"},
-      {"r":3,"t":"J'ai commandé deux détecteurs anti-vibration pour la centrale d'alarme, j'ai reçu ma commande très rapidement, par contre un détecteur sur les deux reste allumé en rouge, après contrôle la pile était à remplacer... Dommage que ce ne soit pas contrôlé avant l'envoi.","n":"Vincent F.","c":"","d":"septembre 2024"},
-      {"r":5,"t":"Achetée après que je ne puisse plus communiquer avec la centrale alarme via la carte SIM d'un célèbre fournisseur d'accès. Après avoir validé mon compte sur le site, un numéro à 14 chiffres m'a été communiqué. Le service client au téléphone est très réactif et aimable.","n":"Frédéric G.","c":"Marignane","d":"novembre 2024"},
-      {"r":4,"t":"J'ai acheté ce contacteur pour protéger ma porte d'entrée en remplacement d'un détecteur volumétrique que j'ai été obligé de mettre à l'arrêt car il me faisait à chaque détection des perturbations sur la réception de la télévision TNT, problème que j'ai signalé au service support. Le détecteur de porte, lui, marche bien.","n":"Jacky T.","c":"Châtellerault","d":"novembre 2024"},
-      {"r":5,"t":"Carte SIM Machine to Machine : elle a permis le dialogue entre la centrale d'alarme Daewoo et mon téléphone portable. Le processus de validation est très clair et rend la carte opérationnelle très rapidement. L'option à 72€/an est intéressante, avec une plateforme AFONE pour répondre aux questions.","n":"Lucien S.","c":"","d":"décembre 2024"},
-      {"r":4,"t":"Rapide à installer et à mettre en fonction. Restera à voir la durée des piles mais très satisfait de mon achat.","n":"Sébastien G.","c":"Uccle","d":"janvier 2025"},
-      {"r":5,"t":"Une sirène qui fait son travail, petite mais puissante. Pas de risque de ne pas l'entendre, et pour un prix tout à fait correct.","n":"Guy V.","c":"Verviers","d":"janvier 2025"},
-      {"r":5,"t":"RAS.","n":"Patrick J.","c":"Massy","d":"février 2025"},
-      {"r":5,"t":"Sirène très sonore et facile à installer. Association avec la centrale AM302 bien expliquée. Dommage qu'il ne soit pas possible de couper la lumière clignotante en dehors des périodes où la sirène se met en mode alarme.","n":"Brigitte T.","c":"Villeparisis","d":"février 2025"},
-      {"r":2,"t":"Bon fonctionnement mais il manque une protection sur les boutons, trop sensible sur un trousseau de clés.","n":"Client vérifié","c":"","d":"mars 2025"},
-      {"r":4,"t":"Ce capteur est plus fiable que le WDS301 car limité par la distance. Le gros reproche est qu'il n'est pas prévu pour transmettre la position de la porte (ouvert/fermé) sur la centrale AM302 comme le WDS301, qui lui affiche un signal d'ouverture.","n":"Client vérifié","c":"Elbeuf","d":"avril 2025"},
-      {"r":5,"t":"Simple à installer, fonctionne parfaitement.","n":"Laurent K.","c":"Illkirch-Graffenstaden","d":"avril 2025"},
-      {"r":4,"t":"Utile et rapide à mettre en œuvre.","n":"Patrick A.","c":"Lormont","d":"mai 2025"},
-      {"r":5,"t":"Bonne portée.","n":"Jean Marc G.","c":"Corbeil-Essonnes","d":"mai 2025"},
-      {"r":4,"t":"La sirène fonctionne bien, le son est très bien, mais on dirait un petit peu un jouet pour enfants, dommage que ce ne soit pas un peu plus volumineux.","n":"Christophe P.","c":"Fontenay-Trésigny","d":"mai 2025"},
-      {"r":5,"t":"Fonctionne parfaitement, très qualitatif.","n":"Christophe P.","c":"Fontenay-Trésigny","d":"mai 2025"},
-      {"r":5,"t":"Excellent, très bien comme accessoires.","n":"Véronique","c":"Rouen","d":"août 2025"},
-      {"r":5,"t":"Très bon, on apprécie beaucoup.","n":"Véronique","c":"Rouen","d":"août 2025"},
-      {"r":5,"t":"Facile à installer, excellent produit.","n":"Marie Pierre","c":"Limoges","d":"août 2025"},
-      {"r":5,"t":"Excellent produit.","n":"Marie Pierre","c":"Limoges","d":"août 2025"},
-      {"r":5,"t":"Parfait pour compléter mon système d'alarme, convient aussi bien pour une baie coulissante qu'en ouverture à la française. Facile à installer et à configurer.","n":"Olivier B.","c":"Jallais","d":"septembre 2025"},
-      {"r":5,"t":"Pas d'appel intempestif. Qualité des images caméras.","n":"Christian C.","c":"Braine-l'Alleud","d":"septembre 2025"},
-      {"r":3,"t":"Problème d'appareillage avec la centrale. Équipement retourné au SAV pour vérification.","n":"Serge B.","c":"Limoges","d":"septembre 2025"},
-      {"r":4,"t":"Très bien, la seule chose importante c'est qu'il n'est pas expliqué que pour paramétrer les contacteurs il faut enlever le capot et appuyer sur le bouton on.","n":"Client vérifié","c":"","d":"octobre 2025"},
-      {"r":5,"t":"Très bien.","n":"Yoland B.","c":"Voreppe","d":"novembre 2025"},
-      {"r":4,"t":"Le produit est facile à installer, attention DAEWOO ne précise pas que le modèle avec carte SIM nécessite un abonnement. Excellent service clients et service technique qui répondent très rapidement.","n":"JJB","c":"Boulogne-Billancourt","d":"novembre 2025"},
-      {"r":4,"t":"Bonne télécommande, plus pratique que celle par défaut fournie avec la station.","n":"Jean-Pierre S.","c":"","d":"décembre 2025"},
-      {"r":5,"t":"Facilité d'installation.","n":"Patrick D.","c":"Angoulême","d":"décembre 2025"},
-      {"r":5,"t":"Ras, bon produit, je recommande.","n":"Christophe J.","c":"Virsac","d":"décembre 2025"},
-      {"r":5,"t":"Super, facile installé.","n":"TAM Flexibles","c":"Nîmes","d":"janvier 2026"},
-      {"r":5,"t":"Matériel fiable et très facile à installer.","n":"Carole M.","c":"Toulouse","d":"janvier 2026"},
-      {"r":5,"t":"Très performant.","n":"Philippe C.","c":"Carcassonne","d":"janvier 2026"},
-      {"r":5,"t":"Cette petite télécommande est très pratique et a un look super sympa, très bien en guise de porte-clé, à recommander.","n":"Philippe Z.","c":"Montlhéry","d":"janvier 2026"},
-      {"r":3,"t":"Quel dommage que sur la notice de vos contacteurs de porte vous ayez omis le plus important pour la mise en service ! Ce petit interrupteur noir, quasiment invisible, n'est notifié nulle part, c'est ballot.","n":"Velasco J.","c":"Paris","d":"janvier 2026"},
-      {"r":5,"t":"Installé en toute simplicité, pack sécurité complet et à un prix raisonnable. Merci.","n":"Pierre P.","c":"Marseille","d":"janvier 2026"},
-      {"r":5,"t":"Tous fonctionnent bien.","n":"Jan Z.","c":"Nancy","d":"janvier 2026"},
-      {"r":5,"t":"En fait j'ai mis 3 étoiles au départ, mais elle est installée que depuis deux jours, je verrai dans le temps. J'apprécie le fait qu'il y a un flash clignotant lorsque l'alarme est active, c'est bien visible de la rue.","n":"Berndt","c":"Maule","d":"février 2026"},
-      {"r":5,"t":"Je le conseillerai à mes amis.","n":"Francois T.","c":"Blagnac","d":"février 2026"},
+      {"r":5,"t":"très bien, rapport qualité prix excellent je fait de la pub sur ce produit dans mon entourage.","n":"Franck P.","c":"Marignane","d":"septembre 2026"},
+      {"r":5,"t":"La batterie tient très bien (toujours à 100%) après plusieurs dizaines d'heures de fonctionnement. L'image est propre de jour comme de nuit. Système de fixation simple et permettant de régler la zone de surveillance. Juste un petit problème avec les scénarii, la caméra ne réagit pas comme les autres. Je vais surement en acheter une autre","n":"Yoann V.","c":"Cercottes","d":"septembre 2026"},
+      {"r":4,"t":"Installation plus difficile qu'indiquée mais correspond vraiment à notre attente ! Matériel qui semble de qualité et performant","n":"Laurent G.","c":"Grenoble","d":"septembre 2026"},
+      {"r":4,"t":"Le matériel est de bonne qualité, l'application est intuitive et permet de nombreuses personnalisations. J' ai pris la version gsm, cependant la carte sim n' est pas reconnu même sans code pin. Le service technique est réactif.","n":"Yoann V.","c":"Gidy","d":"septembre 2026"},
+      {"r":5,"t":"Installation rapide et facile. Le pack est bien construit. Il faut juste penser à prendre une sirène pour ceux qui souhaitent en installer une.","n":"Christophe N.","c":"Chelles","d":"août 2026"},
+      {"r":5,"t":"Facile à installer et la reconnaissance par le boitier principal est rapide. La sonnerie est suffisamment puissante sans toutefois devenir insupportable pour le voisinage au quotidien","n":"Christophe N.","c":"Chelles","d":"août 2026"},
+      {"r":4,"t":"La configuration n'est pas très explicite dans la notice, mais grace au service client, j'ai rapidement eu les bonnes infos pour le mettre en place.","n":"Christophe N.","c":"Chelles","d":"août 2026"},
+      {"r":5,"t":"Peu encombrante Boutons protégés par un clapet évitant un déclenchement intempestif Parfait","n":"Philippe S.","c":"Villefranche-sur-Saône","d":"août 2026"},
+      {"r":3,"t":"En 1 année d'utilisation 2 capteurs en panne, j'ai pu les réparer en refaisant les soudures du support de pile.","n":"Eric N.","c":"Meulan-en-Yvelines","d":"août 2026"},
+      {"r":5,"t":"Pour l'instant tres bonne alarme pour un appartement Seulement 1 semaine en utilisation wifi Installation rapide et facile","n":"Stephenson G.","c":"","d":"août 2026"},
+      {"r":4,"t":"La qualité de l’image est bonne. La batterie (sans panneau solaire) à perdue 14% en 10 jours sans être sollicité tout les jours, ce qui donne en théorie que 70 jours d’autonomie. Le fait qu’un petit enregistrement de 10s se fait lorsqu’une détection est faite est bien venue car la photo prise par la caméra est un peu tardive. Je trouve dommage que l’activation du buzzer et l’enregistrement sur carte SD ne peut pas être inclu lors d’une création de scène. Le gros avantage de cette caméra est sa taille (petite et discrète). Pour l’instant je n’est pas eu de faute sur la détection humaine.","n":"Philippe D.","c":"Dunkirk","d":"août 2026"},
+      {"r":4,"t":"Installation facile, correspondant à la description,le matériel a l'air de qualité et j'espère qu'il fonctionnera parfaitement de longue année.","n":"Jean S.","c":"","d":"août 2026"},
+      {"r":4,"t":"Pas mal. Un schéma d’installation pour chaque configuration serait pas mal. Heureusement que les personnes de l’assistance sont réactives et connaissent leur boulot. Bravo à eux!","n":"JJ N.","c":"Velaux","d":"août 2026"},
+      {"r":5,"t":"Facile à appairer. J'en ai installé deux, une dans le couloir de la maison, branchée sur une prise dédiée en hauteur, et une dans le garage, branchée sur une prise aussi. Les essais sont concluants, elle fonctionne très bien dans le garage, même instantanément malgré la distance","n":"Joël M.","c":"Villelaure","d":"août 2026"},
+      {"r":5,"t":"Facile à appairer, le vibrateur est facile à régler et le dispositif est facile à coller. Bien sûr il faut faire différents essais pour bien comprendre où se trouve la position optimale. Il fonctionne très bien sur les dépendances qui sont proches de la maison mais ça représente néanmoins une certaine distance avec la centrale. Très satisfait du","n":"Joël M.","c":"Villelaure","d":"août 2026"},
+      {"r":4,"t":"Très bonne caméra extérieure, Très vite installée et connectée. J'en ai commandé 2 exemplaires pour remplacer les W501 défectueuses. Daewoo annonce que les W503 remplacent les W501 dont la fabrication a cessée. Malheureusement, la W503 est équipée de USB-C. La panneau solaire qui était fourni avec la W501 n'est donc plus compatible avec la W503. Je conseille vivement l'insertion de adaptateur USB-C 》Micro USB . Cela fonctionne très bien. Je regrette que Daewoo ne fournisse pas cette solution afin d'épargner l'achat d'un nouveau panneau solaire.","n":"Philippe M.","c":"","d":"août 2026"},
+      {"r":5,"t":"Pour avoir les anciennes générations je peux dire qu'il y a eu énormément de progrès sur l'image connectivité. La batterie se rechange rapidement même sans soleil. Top.","n":"Francois M.","c":"","d":"août 2026"},
+      {"r":4,"t":"Avec le kit j 'ai acheté en complément la sirène extérieur WOS305 ,il est regrettable sur ce produit que l'on ne puisse pas interdire l'allumage des leds lors de l'activation des fonctions Armer ou Mode Maison de la centrale. J'ai été contacté rapidement par le service d'assistance et celui-ci ma donné la solution ( paramétrage de la fonction) pour couper les leds lors de l'activation des fonctions Armer ou Mode Maison de la centrale. Réactivité au top Merci pour le conseil","n":"PASCAL H.","c":"","d":"août 2026"},
+      {"r":5,"t":"1 mois de fonctionnement et tout fonctionne correctement. Facile à installer. Bonne résolution de la vidéo. La recharge solaire via les panneaux avec un fonctionnement en continu maintient un taux de charge > 80%. Pleinement satisfait de mes 2 caméras. Je prévois d'en racheter l'année prochaine pour couvrir tous les angles de la maison.","n":"DAVID B.","c":"Lyon","d":"août 2026"},
+      {"r":5,"t":"Bonjour, Bonjour Je ne peux me prononcer que sur le contacteur cars j’en ai déjà. En fait je suis toujours en attente de la commande, car elle est toujours bloquée sur Lyon Salutations","n":"Douadi A.","c":"","d":"août 2026"},
+      {"r":5,"t":"Le support par IA est un modèle du genre. Les possibilités de cette caméra sont multiples et complètes, l'installation est un jeu d'enfant.","n":"Benard A.","c":"Annemasse","d":"juillet 2026"},
+      {"r":5,"t":"Excellente acquisition, facile à appairer, design superbe, format mini et j'apprécie beaucoup le volet glissant recouvrant les touches empêchant toute manœuvre involontaire.","n":"Luc M.","c":"","d":"juillet 2026"},
+      {"r":5,"t":"Très satisfait de mon achat de 2 télécommandes WRC305 fonctionnent parfaitement super design.","n":"Luc M.","c":"","d":"juin 2026"},
+      {"r":4,"t":"Problème de piles malgré que la télécommande est neuve. Sinon les produits général sont impeccables.","n":"Tony D.","c":"Castelnau-sur-Gupie","d":"juin 2026"},
+      {"r":5,"t":"Ensemble suffisant pour sécuriser mon logement Facile a mettre en œuvre avec l'application","n":"Jean J.","c":"Gouzeaucourt","d":"juin 2026"},
+      {"r":5,"t":"Très bon produit facile a installer. Franck L'IA est très bien réponse précise a toute les questions","n":"Christophe C.","c":"Lorient","d":"juin 2026"},
+      {"r":4,"t":"Élément de base qui fonctionne bien. Peu élaboré sur la question des fixations mais correct. Par contre la documentation papier de la gamme Vigilia est mauvaise: pas d'informations essentielles. La documentation web est meilleure mais il faut lire la fin pour les indications de mise en service. Corriger aussi les termes sur la centrale: armé au lieu de Armer!...confusion","n":"Michel N.","c":"Saint-Orens-de-Gameville","d":"juin 2026"},
+      {"r":5,"t":"Sirène extérieure avec panneau solaire WOS305S | Compatible Touch/Vigilia (AM30x)","n":"Hervé D.","c":"Lille","d":"juin 2026"},
+      {"r":4,"t":"Je suis tout a fait ravi de cette alarme Facile à programmer et a installer, et le service après vente et sans faille. Le seul bémol, la résolution des photos prise par les caméras sont floues lors de leurs agrandissements mais dans l ensemble, je conseille vivement aux personnes voulant se procurer une alarme de ne pas hésiter de choisir Daewoo security.","n":"Tony D.","c":"","d":"juin 2026"},
+      {"r":5,"t":"bien mais peut-etre commercialiser des cales de differentes epaisseurs en option pour l,installation","n":"Laurent L.","c":"Rezé","d":"juin 2026"},
+      {"r":4,"t":"installation facile, bonne qualité de l'image, configuration simple sur le portable, ... Mais voila avoir un logiciel sur PC serai pas du luxe et le rendre compatible avec les NAS Synology pour leur logiciel Surveillance Station serai un grand plus. Quand je vois la liste des cameras compatibles avec Station Surveillance (longue comme le bras) je ne comprend pas pourquoi Daewoo n'en fait pas parti. Je l'espère dans un future mise à jour. Le savoir à l'avance m'aurais fait réfléchir avant d'acheter, meme si Daewoo reste un trés bon investissement.","n":"Nicolas A.","c":"Aubenas","d":"mai 2026"},
+      {"r":4,"t":"Montage sans problème à l'exception de la synchronisation de la sirène WOS305 (appui sur le symbole engrenage) qui doit être synchronisée dans la minute qui suit l'allumage. Cette contrainte n'est mentionnée nulle part. Il m'a fallu interroger la hot-line pour obtenir l'information","n":"Joel L.","c":"La Rochelle","d":"avril 2026"},
+      {"r":5,"t":"Alarme très bien application fluide et très simple d'utilisation Seul petit bémol une puce sur l ensemble du coffret ne fonctionne pas","n":"Vincent R.","c":"","d":"avril 2026"},
+      {"r":5,"t":"Configurateur | Caméra intérieure rotative Daewoo IP506P - Wifi | Full HD | Vie Privée","n":"Manuela M.","c":"Paris","d":"mars 2026"},
+      {"r":3,"t":"Ce qui est dommage c’est que quand on ouvre , ça apparaît pas sur la centrale d’alarme comme quoi la porte est ouverte les anciens contacteur de porte a affiché la porte ouverte","n":"Michel G.","c":"Grenoble","d":"mars 2026"},
+      {"r":5,"t":"Pour le moment tout est positif dans le choix de la caméra...le montage..et a priori le fonctionnement.","n":"Fabrice M.","c":"Hénin-Beaumont","d":"mars 2026"},
+      {"r":5,"t":"Bonne camera filaire, installée avec alimentation régulée séparée 12v et RJ45 de 20M. Réglée avec sensibilité faible pour éviter les déclenchements intempestifs. Bonne détection des formes humaines. Marche bien aussi la nuit avec IR.","n":"JJ D.","c":"Rueil-Malmaison","d":"mars 2026"},
+      {"r":5,"t":"Contacteur facile à installer (Collant double-face performant fourni) et réglages relativement simples.","n":"Dominique J.","c":"Saint-Nazaire","d":"février 2026"},
+      {"r":3,"t":"Elle est bien pour être posée sur une étagère ou un meuble, mais n'est pas vraiment prévue pour être fixée sur un mur, la rotation est très limitée et du coup on a du mal à la positionner pour une vision optimale. Le réglage et la configuration ne sont pas intuitives et évidentes, heureusement l'assistance via le site Daewoo est parfaite","n":"Berndt","c":"Asnières-sur-Seine","d":"février 2026"},
       {"r":5,"t":"Ce petit badge est hyper pratique, peu encombrant avec mes clés et plutôt joli, je le recommande sans hésiter.","n":"Philippe Z.","c":"Montlhéry","d":"février 2026"},
-      {"r":5,"t":"C'est une super alarme.","n":"Michel C.","c":"Istres","d":"février 2026"},
-      {"r":4,"t":"Facile à installer et à utiliser.","n":"Stephane G.","c":"Nice","d":"février 2026"},
-      {"r":5,"t":"Parfait, il fait le travail.","n":"Christophe H.","c":"Kédange-sur-Canner","d":"février 2026"},
-      {"r":2,"t":"J'ai été obligé de reprendre les soudures du système de batterie.","n":"Dominique B.","c":"Moussac","d":"février 2026"},
-      {"r":5,"t":"Commande reçue très rapidement, facile d'installation, je recommande fortement.","n":"Fabien D.","c":"Issoire","d":"mars 2026"},
-      {"r":5,"t":"Une fois la prise en main de l'application fait, c'est top 👍","n":"Stephane B.","c":"Parmilieu","d":"mars 2026"},
-      {"r":5,"t":"Parfait, réception et installation rapide.","n":"Berndt","c":"Maule","d":"mars 2026"},
-      {"r":5,"t":"Alarme très bien, application fluide et très simple d'utilisation. Seul petit bémol, une puce sur l'ensemble du coffret ne fonctionne pas.","n":"Vincent R.","c":"","d":"avril 2026"},
-      {"r":4,"t":"Montage sans problème à l'exception de la synchronisation de la sirène WOS305 (appui sur le symbole engrenage) qui doit être synchronisée dans la minute qui suit l'allumage. Cette contrainte n'est mentionnée nulle part, il m'a fallu interroger la hotline pour obtenir l'information.","n":"Joel L.","c":"La Rochelle","d":"avril 2026"},
-      {"r":5,"t":"Correspond à mon attente.","n":"Eric B.","c":"Marseille","d":"avril 2026"},
-      {"r":5,"t":"Très satisfait, montage facile, livraison rapide, je recommande vivement.","n":"Jean M.","c":"La Motte","d":"avril 2026"},
-      {"r":4,"t":"Mériterait un peu plus d'explications en vidéo.","n":"Eric B.","c":"Anglet","d":"mai 2026"},
-      {"r":5,"t":"Très bon produit, facile à mettre en place.","n":"Cedric J.","c":"","d":"juin 2026"},
-      {"r":5,"t":"Bien, mais peut-être commercialiser des cales de différentes épaisseurs en option pour l'installation.","n":"Laurent L.","c":"Rezé","d":"juin 2026"},
-      {"r":4,"t":"Je suis tout à fait ravi de cette alarme. Facile à programmer et à installer, et le service après-vente est sans faille. Le seul bémol : la résolution des photos prises par les caméras est floue lors de leur agrandissement. Mais dans l'ensemble, je conseille vivement Daewoo Security.","n":"Tony D.","c":"","d":"juin 2026"},
-      {"r":4,"t":"Élément de base qui fonctionne bien. Peu élaboré sur la question des fixations mais correct. La documentation papier de la gamme Vigilia est en revanche mauvaise : il manque des informations essentielles. La documentation web est meilleure mais il faut lire jusqu'au bout pour les indications de mise en service.","n":"Michel N.","c":"Saint-Orens-de-Gameville","d":"juin 2026"},
-      {"r":5,"t":"Très bon produit, facile à installer. Le support répond très bien et de façon précise à toutes les questions.","n":"Christophe C.","c":"Lorient","d":"juin 2026"},
-      {"r":5,"t":"Facile d'emploi.","n":"Christian K.","c":"Hénin-Beaumont","d":"juin 2026"},
-      {"r":5,"t":"Ensemble suffisant pour sécuriser mon logement. Facile à mettre en œuvre avec l'application.","n":"Jean-Marie J.","c":"Gouzeaucourt","d":"juin 2026"},
-      {"r":5,"t":"Super.","n":"Nadia D.","c":"Châteauroux","d":"juin 2026"},
-      {"r":5,"t":"Je recommande.","n":"Nadia D.","c":"Châteauroux","d":"juin 2026"},
-      {"r":4,"t":"Problème de piles malgré que la télécommande soit neuve. Sinon les produits en général sont impeccables.","n":"Tony D.","c":"Castelnau-sur-Gupie","d":"juin 2026"},
-      {"r":5,"t":"C'est parfait.","n":"Philippe B.","c":"Marlenheim","d":"juin 2026"},
-      {"r":5,"t":"Excellente acquisition, facile à appairer, design superbe, format mini, et j'apprécie beaucoup le volet glissant recouvrant les touches qui empêche toute manœuvre involontaire.","n":"Jean Luc M.","c":"","d":"juillet 2026"},
-      {"r":5,"t":"Bien. Dommage qu'il n'y ait pas de LED quand il charge.","n":"Michael S.","c":"Étrépagny","d":"juillet 2026"},
-      {"r":4,"t":"Bien.","n":"Christian R.","c":"Le Neubourg","d":"juillet 2026"},
-      {"r":5,"t":"Pour l'instant rien à redire, facile à installer, facile à faire fonctionner, top.","n":"Angeline B.","c":"Montmélian","d":"juillet 2026"},
-      {"r":5,"t":"Je ne peux me prononcer que sur le contacteur, car je l'ai déjà utilisé. Ma commande était toujours en attente, bloquée en transit à Lyon.","n":"Douadi A.","c":"","d":"août 2026"}
+      {"r":4,"t":"Bonne qualité d'image de cette caméra mais le suivi de mouvement est parfois très aléatoire au point que nous avons préféré déconnecter cette fonction.","n":"Dominique J.","c":"Saint-Nazaire","d":"février 2026"},
+      {"r":5,"t":"En fait j'ai mis 3 étoiles, mais elle est installée que depuis deu jours, je verrai dans le temps.J'apprécie le fait qu'il y a un flash cilgnatant lorsque l'alarme est active, c'est bien visible de la rue.","n":"Berndt","c":"Maule","d":"février 2026"},
+      {"r":5,"t":"Installé en toute simplicité pack sécurité complet t a un prix raisonnable. Merci.","n":"Pierre P.","c":"Marseille","d":"janvier 2026"},
+      {"r":5,"t":"Nous sommes totalement satisfaits et surpris de la qualité de ce matériel de sécurité excellente au niveau de l'image restituée ainsi que la simplicité de son fonctionnement sans oublier la réactivité des commandes.","n":"Claudette L.","c":"Caudry","d":"janvier 2026"},
+      {"r":3,"t":"Quel dommage que sur la notice de vos contacteur de porte vous aillez omis le plus important pour la mise en service ! Ce petit interrupteur noir quasiment invisible n’est notifié nulle part , c’est ballot","n":"Velasco J.","c":"Paris","d":"janvier 2026"},
+      {"r":5,"t":"Cette petite télécommande est très pratique et a un look super sympa, très bien en guise de porte-clé, à recommander.","n":"Philippe Z.","c":"Montlhéry","d":"janvier 2026"},
+      {"r":4,"t":"Fonctionne parfaitement, facile à installer et couvre une grande surface de balayage et de plus l'image est nette. Appréciable de pouvoir faire tourner la caméra directement du portable. Une question, je me demande pourquoi on ne peut pas éteindre la veilleuse (qui éclaire peu il est vrai). En plus du câble de branchement au secteur il y a deux autres câbles connectés avec la caméra dont un avec un port usb. Ils ne gênent pas, mais je n'en ai pas vu l’intérêt,,, Mais un autre acheteur appréciera peut-être ces possibilités de branchement autre avec ces câbles.","n":"Jean G.","c":"Marsilly","d":"décembre 2025"},
+      {"r":3,"t":"j'ai 3 reproches pour les wdv301 : -j'ai du fabriquer des épaisseurs avec mon imprimante 3D pour les mettre(porte, fenêtre et baie vitrée) -La doc n'est pas claire notamment pour le réglage de la sensitivité. -Obligé de régler la sensitivité au \"5\" (sensibilité minimum) sinon quand on referme la porte ou la fenêtre, la fibration engendrée affiche l'icône d'effraction sur l'écran d'accueil de l'alarme (am302). Le seul moyen de faire disparaitre l'icône est de ré-ouvrir et refermer doucement la porte ou la fenêtre pour ne pas engendrer de vibrations. Tous les capteurs ont donc été mis sur \"5\"","n":"Frank D.","c":"Leuze","d":"décembre 2025"},
+      {"r":4,"t":"Très bonne image de jour, vision infrarouge correcte qui peut être améliorée en allumant les leds La rotation gérée par l'application manque un peu de finesse. la détection de forme humaine fonctionne, pas de décrochage du Wifi (2,4 Ghz uniquement). Ce qui pèche, c'est la qualité de fabrication perçue, la caméra ne résistera à aucun coup porté par un voleur.","n":"THIERRY C.","c":"Nozay","d":"décembre 2025"},
+      {"r":5,"t":"Très fine et facile d'installation. Et le réglage du niveau sonore est un plus je recommande","n":"Client vérifié","c":"Lille","d":"décembre 2025"},
+      {"r":4,"t":"Le produit est facile à installer, attention DAEWOO ne précise pas que le modèle avec carte SIM nécessite un abonnement. Excellent service clients et service technique qui répondent très rapidement.","n":"JJB","c":"Boulogne-Billancourt","d":"novembre 2025"},
+      {"r":5,"t":"Ce pack est parfait pour un bon démarrage surtout si on a un logement \"basique\" et si il faut rajouter des éléments, cela est tout a fait possible","n":"Client vérifié","c":"Noyelles-sous-Lens","d":"novembre 2025"},
+      {"r":3,"t":"Dommage que l'on n'ait pas acces a toutes les fonctions de la camera, on aurait pu faire des scenario interessany","n":"Client vérifié","c":"","d":"novembre 2025"},
+      {"r":5,"t":"Pour la caméra et très bien suivre les mouvements voilà c'est pas mal ça marchait très bien sans problème on paie aussi créer scénario entre l'alarme et caméra ça permet de désactiver l'alarme en même temps avec la caméra ou activer l'alarme en même temps avec la caméras","n":"Ihissane A.","c":"Nantes","d":"octobre 2025"},
+      {"r":4,"t":"Très bien, la seule chose importante et qu'il n'est pas expliqué que pour paramétrer les contacteurs il faut enlever le capot et appuyer sur le bouton on","n":"Client vérifié","c":"","d":"octobre 2025"},
+      {"r":5,"t":"Parfait pour compléter mon système d'alarme, convient aussi bien pour une baie coulissante qu'en ouverture à la française. Facile à installer et à configurer","n":"Olivier B.","c":"Jallais","d":"septembre 2025"},
+      {"r":4,"t":"Je suis très satisfait de mon achat. Très facile à installer. Bonne qualité d'images.","n":"Patrick C.","c":"Wavre","d":"septembre 2025"},
+      {"r":4,"t":"Fonctionne bien mais la mise en œuvre est compliqué car la documentation concernant les raccordements ne correspond pas a celui de la caméra. D'autre par faire un raccordement secteur avec une prise me parait inadéquate. Coupure de l'alimentation trop facile.","n":"Joseph P.","c":"Vulaines-sur-Seine","d":"septembre 2025"},
+      {"r":4,"t":"Le produit correspond a mes attentes, je trouve juste le bruit lors des rotation de la caméra un peu dérangeant","n":"De N.","c":"Brussels","d":"août 2025"},
+      {"r":5,"t":"Tres bon produit,il me reste a decouvrir encore toutes les possibilites,mais net progfres technique par rapport a mes cameras 502","n":"Robert","c":"","d":"août 2025"},
+      {"r":4,"t":"La sirène fonctionne bien le son est très bien, mais on dirait un petit peu un jouet pour enfants, dommage que ce ne soit pas un peu plus volumineux","n":"Christophe P.","c":"Fontenay-Trésigny","d":"mai 2025"},
+      {"r":4,"t":"Très bonne caméra avec une excellente définition, mais le câble d'alimentation est un peu court pour une installation extérieure","n":"Gilbert N.","c":"Dinard","d":"mai 2025"},
+      {"r":5,"t":"Facile à installer, fonctionne parfaitement. Je recommande pour sécuriser l’entrée de votre porte de garage.","n":"Isabelle S.","c":"Musson","d":"mai 2025"},
+      {"r":5,"t":"Bonjour seul re proche mettre les autocollants pour avertir d une alarme plus solides si vous en avez envoyez moi deux","n":"Luis L.","c":"Verviers","d":"mai 2025"},
+      {"r":5,"t":"la sirène solaire est parfaitement compatible avec la centrale AM302. Appairage facile et installation rapide. Ne pas oublier de charger la batterie quelques heures avant de l'installer.","n":"Claude V.","c":"Aubervilliers","d":"avril 2025"},
+      {"r":4,"t":"Ce capteur est plus fiable que le WDS301 car limité par la distance . Le gros reproche est qu'il n'est pas prévu pour transmettre la position de la porte (ouvert/fermé) sur la centrale AM302 comme le WDS301 qui lui affiche un signal d'ouverture.","n":"Client vérifié","c":"Elbeuf","d":"avril 2025"},
+      {"r":5,"t":"La caméra EP506 a eu une vraie évolution par rapport à en l'ancienne version . Je suis très content de mon achat et des nouvelles fonctions qu'elle a","n":"Dominique G.","c":"Lyon","d":"mars 2025"},
+      {"r":2,"t":"Bon fonctionnement mes il manque une protection sur les boutons ,trop sensible Sur un trousseau de clefs","n":"Client vérifié","c":"","d":"mars 2025"},
+      {"r":4,"t":"Très discrète cette caméra permet de visionner la pièce grâce à son système rotatif. Image nette sauf lorsque le mouvement est rapide.","n":"Brigitte T.","c":"Villeparisis","d":"février 2025"},
+      {"r":5,"t":"Sirène très sonore et facile à installer. Association avec la centrale AM302 bien expliquée. Dommage qu'il ne soit pas possible de couper la lumière clignotante en dehors des périodes où la sirène se met en mode alarme.","n":"Brigitte T.","c":"Villeparisis","d":"février 2025"},
+      {"r":5,"t":"une sirène qui fait son travail, petite mais puissante. Pas de risque de ne pas l'entendre et pour un prix tout à fait correct","n":"Guy V.","c":"Verviers","d":"janvier 2025"},
+      {"r":4,"t":"Rapide à installer et à mettre en fonction. Restera à voir la durée des piles mais très satisfait de mon achat.","n":"Sébastien G.","c":"Uccle","d":"janvier 2025"},
+      {"r":5,"t":"Un moyen de se protéger efficacement pour un prix très modéré. A conseiller si vous ne voulez pas vous ruiner dans des systèmes coûteux mais néanmoins efficace","n":"Guy V.","c":"Verviers","d":"janvier 2025"},
+      {"r":5,"t":"Carte SIM Machine to Machine ( M to M ) a permis le dialogue entre la Centrale d'alarme Daewoo et le téléphone portable. Le processus de validation de la carte SIM est très clair et rend opérationnel la carte très rapidement . L'option d'acquisition à 72€/an est intéressante sachant qu'il y a une plate-forme AFONE pour répondre aux questions. Ne pas hésiter à prendre cette carte SIM M to M pour Daewoo Security","n":"Lucien S.","c":"","d":"décembre 2024"},
+      {"r":4,"t":"j'ai acheté ce contacteur pour protéger ma porte d'entrée en remplacement d'un détecteur volumétrique que j'ai été obligé de mettre sur arrêt car il me faisait à chaque détection des perturbations sur la réception de la télévision TNT, problème que j'ai signalé à votre service support. le détecteur de porte lui marche bien. cordialement","n":"Jacky T.","c":"Châtellerault","d":"novembre 2024"},
+      {"r":4,"t":"La caméra est petite, semble être de bonne qualité, les images sont correctes, Par contre l'utilisation n'est pas intuitive.","n":"Christian B.","c":"Sully-sur-Loire","d":"novembre 2024"},
+      {"r":4,"t":"bonne camera seul hic 2 tomber en panne au bout de 15 jours , sav très réactif et réparer rapidement seul point négatif les frais de retour en garantie soit a notre charge","n":"Dany B.","c":"Rouen","d":"novembre 2024"},
+      {"r":5,"t":"Achetée après que je ne puisse plus communiquer avec la centrale alarme via la carte Sim d'un célèbre fournisseur d'accès (peut-être désactivée car les fournisseurs d'accès n'aiment pas que des cartes Sim servent à cela). Après avoir validé votre compte sur le site, un numéro à 14 chiffres vous sera communiqué. Le service client au téléphone est très réactif et aimable.","n":"Frédéric G.","c":"Marignane","d":"novembre 2024"},
+      {"r":5,"t":"La caméra à un look robot avec un beau blanc mat stormtrooper. Je m’en sert en rotation pour surveiller le salon et le jardin. La fonction infrarouge est très utile et donne un résultat tout à fait clair. La réactivité est bonne (taux de rafraîchissement et rotation gauche droite ou haut bas). L’appli est très bien aussi (zoom facile et commandes claires). Top ! Le suivi des personnes présentes est ok. Je n’ai pas testé l’enregistrement de mon côté. La fonction vie privée est bien, la caméra s’oriente vers le bas et devient plus discrète elle même aussi. Très content de cet achat.","n":"Vérot","c":"Pineuilh","d":"novembre 2024"},
+      {"r":5,"t":"Très bien mais je pense que si à l'intérieur de la sirène la connexion aurait pu être prévu. cela aurait été plus esthétique que pour la connexion existante.","n":"Denis A.","c":"Marseille","d":"octobre 2024"},
+      {"r":4,"t":"Bonne qualité d'image, même de nuit. Bonne détection des individus, les alertes message sur portable suive bien. Des bugs de temps en temps (caméra bloquée en position arrière), il suffit de la débrancher et rebrancher pour que tout reparte.","n":"Fabrice L.","c":"Paris","d":"octobre 2024"},
+      {"r":5,"t":"Très satisfait de cette nouvelle caméra pour sa qualité d'image et de connexion Wifi avec un suivi de mouvement performant","n":"Eric C.","c":"Novalaise","d":"octobre 2024"},
+      {"r":5,"t":"Très satisfait des produits qui fonctionnent très bien, sauf les télécommandes qui sont à mon goût trop sensibles et se déclenchent trop facilement dans la poche. j'ai eu besoin d'aide pour l'installation et j'ai eu toutes les solutions par mail pour résoudre mes petits problèmes très facilement et très rapidement. Merci encore pour le SAV Je recommande","n":"Jean C.","c":"Limoges","d":"janvier 2024"},
+      {"r":4,"t":"Installation facile après que le technicien m'ai expliqué que une fois la sirène configurée, elle n'apparaît pas dans les éléments connectés sur la centrale M302 alors qu'elle l'est !","n":"Patrick B.","c":"","d":"janvier 2024"}
     ]
