@@ -119,12 +119,14 @@
   # à côté d'un paragraphe, une photo se lit, une infographie se subit.
   assign pv_cam_photo = false
   assign pv_cam_info = false
+  assign pv_sirene_trouvee = false
   for img in gallery
     if img.src contains 'Securite_a_Distance'
       assign pv_img_detection = img
     endif
     if img.src contains 'wos305' or img.src contains 'WOS305'
       assign pv_img_sirene = img
+      assign pv_sirene_trouvee = true
     endif
     if img.src contains 'IP506P'
       assign pv_cam_photo = img
@@ -141,6 +143,17 @@
   if pv_cam_photo
     assign pv_img_camera = pv_cam_photo
   endif
+
+  # La sirène extérieure n'a pas de photo dans le jeu d'images du pack :
+  # on emprunte celle de sa propre fiche produit — la photo principale,
+  # donc celle qui suivra si elle est remplacée en back-office. Le modèle
+  # est celui réellement livré dans CE pack, pas un modèle générique.
+  unless pv_sirene_trouvee
+    assign pv_fiche_sirene = all_products['sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire']
+    if pv_fiche_sirene.featured_image
+      assign pv_img_sirene = pv_fiche_sirene.featured_image
+    endif
+  endunless
 
   # Les numéros d'encart sont propres à cette page, le sens est partagé.
   assign feat_image_1 = pv_img_detection
