@@ -39,7 +39,11 @@
 
 {%- liquid
   assign v = product.selected_or_first_available_variant
-  assign photo = product.featured_image
+  # La photo d'ouverture suit la variante : chaque variante porte la
+  # sienne dans Shopify (AM301 et AM302 ont deux visuels distincts).
+  # Sans cela, arriver sur l'URL de la variante AM301 affichait deja celle de
+  # l'AM302, qui est l'image mise en avant de la fiche.
+  assign photo = v.image | default: product.featured_image
 
   # ── Modèle de centrale et caractéristiques d'écran ─────────────────
   # La différence structurante de la gamme est là : taille de l'écran et
@@ -304,7 +308,7 @@
         {%- endif -%}
       </div>
 
-      <div class="pv-hero__media" data-dw-hero>
+      <div class="pv-hero__media" data-dw-hero data-dw-swap-img="photo">
         {%- comment -%}
           Image LCP de la page : chargée sans attendre, priorité haute, et
           preload pour déclencher les Early Hints. image_tag pose lui-même
@@ -320,7 +324,7 @@
         {%- if product.images.size > 1 -%}
           <div class="pv-thumbs">
             {%- for im in product.images limit: 7 -%}
-              <button type="button" class="pv-thumbs__item{% if forloop.first %} is-active{% endif %}"
+              <button type="button" class="pv-thumbs__item{% if im.id == photo.id %} is-active{% endif %}"
                       data-dw-thumb
                       data-full="{{ im | image_url: width: 1200 }}"
                       data-full-srcset="{{ im | image_url: width: 640 }} 640w, {{ im | image_url: width: 900 }} 900w, {{ im | image_url: width: 1200 }} 1200w"
@@ -409,6 +413,13 @@
         "compare": {{ var.compare_at_price | money | json }},
         "hasCompare": {{ a_barre | json }},
         "titreVersion": {{ var.title | json }},
+        {%- assign photo_var = var.image | default: product.featured_image -%}
+        {%- if photo_var -%}
+        "photo": {{ photo_var | image_url: width: 1200 | json }},
+        "photoSrcset": "{{ photo_var | image_url: width: 480 }} 480w, {{ photo_var | image_url: width: 640 }} 640w, {{ photo_var | image_url: width: 900 }} 900w, {{ photo_var | image_url: width: 1200 }} 1200w",
+        "photoSizes": "(min-width:700px) 640px, 92vw",
+        "photoAlt": {{ photo_var.alt | default: product.title | json }},
+        {%- endif -%}
         {%- assign sonde_v = var.title | append: " " | append: var.sku | upcase -%}
         {%- assign v_xl = false -%}
         {%- if sonde_v contains "XL" or sonde_v contains "AM302" or sonde_v contains "AM35" -%}{%- assign v_xl = true -%}{%- endif -%}

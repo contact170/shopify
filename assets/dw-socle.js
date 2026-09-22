@@ -157,8 +157,17 @@
            filtre image_tag, qui ne documente pas les attributs à tirets. */
         var img = el.tagName === 'IMG' ? el : el.querySelector('img');
         if (!img) return;
-        img.removeAttribute('srcset');
-        img.removeAttribute('sizes');
+        /* Le srcset de depart decrit l'ancienne image : le laisser en place
+           ferait gagner le navigateur contre le nouveau src. On le remplace
+           quand la variante en fournit un, on le retire sinon. */
+        var jeu = d[champ + 'Srcset'];
+        if (jeu) {
+          img.srcset = jeu;
+          img.sizes = d[champ + 'Sizes'] || img.sizes || '';
+        } else {
+          img.removeAttribute('srcset');
+          img.removeAttribute('sizes');
+        }
         img.src = d[champ];
         var alt = d[champ + 'Alt'];
         if (alt != null) img.alt = alt;
