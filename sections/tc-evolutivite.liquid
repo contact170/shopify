@@ -41,48 +41,45 @@
 </style>
 
 {%- liquid
-  # Les huit tarifs de cette grille etaient ecrits en dur. Ils sont lus
-  # sur les fiches, les valeurs ecrites ne servant plus que de secours.
+  # Les huit tarifs de cette grille etaient lus par huit requetes
+  # all_products distinctes. Shopify en plafonne vingt par page, et
+  # au-dela les prix retombent en silence sur les valeurs de secours.
+  # On passe donc par la collection, qui ne coute qu'une requete et
+  # rend la marge aux autres sections de la page.
+  #
+  # Les huit references y figurent toutes et sont actives (verifie le
+  # 22/09/2026). La collection en compte 28, sous la limite de 50 que
+  # Liquid renvoie sans pagination. Les montants ci-dessous restent le
+  # secours si une reference en sortait.
   assign prix_wdv301 = '39,90 €'
-  assign p = all_products['contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302']
-  if p != blank
-    assign prix_wdv301 = p.price | money
-  endif
   assign prix_wmo301 = '79,90 €'
-  assign p = all_products['detecteur-de-mouvement-exterieur-wmo301']
-  if p != blank
-    assign prix_wmo301 = p.price | money
-  endif
   assign prix_bir301 = '89,90 €'
-  assign p = all_products['daewoo-barrieres-infrarouge-pour-alarme-am301-am302']
-  if p != blank
-    assign prix_bir301 = p.price | money
-  endif
   assign prix_wos305s = '129,90 €'
-  assign p = all_products['sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire']
-  if p != blank
-    assign prix_wos305s = p.price | money
-  endif
   assign prix_wke301 = '49,90 €'
-  assign p = all_products['clavier-wke301-avec-2-badges-rfid']
-  if p != blank
-    assign prix_wke301 = p.price | money
-  endif
   assign prix_wsd301 = '39,90 €'
-  assign p = all_products['detecteur-de-fumee-wsd301']
-  if p != blank
-    assign prix_wsd301 = p.price | money
-  endif
   assign prix_wwf301 = '39,90 €'
-  assign p = all_products['detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302']
-  if p != blank
-    assign prix_wwf301 = p.price | money
-  endif
   assign prix_ext301 = '99,90 €'
-  assign p = all_products['amplificateur-de-signal-radio-compatible-avec-la-gamme-am301']
-  if p != blank
-    assign prix_ext301 = p.price | money
-  endif
+
+  for p in collections['compatible-gamme-vigilia-touch'].products
+    case p.handle
+      when 'contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302'
+        assign prix_wdv301 = p.price | money
+      when 'detecteur-de-mouvement-exterieur-wmo301'
+        assign prix_wmo301 = p.price | money
+      when 'daewoo-barrieres-infrarouge-pour-alarme-am301-am302'
+        assign prix_bir301 = p.price | money
+      when 'sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire'
+        assign prix_wos305s = p.price | money
+      when 'clavier-wke301-avec-2-badges-rfid'
+        assign prix_wke301 = p.price | money
+      when 'detecteur-de-fumee-wsd301'
+        assign prix_wsd301 = p.price | money
+      when 'detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302'
+        assign prix_wwf301 = p.price | money
+      when 'amplificateur-de-signal-radio-compatible-avec-la-gamme-am301'
+        assign prix_ext301 = p.price | money
+    endcase
+  endfor
 -%}
 
 <section class="tce">
@@ -97,35 +94,35 @@
 
     <div class="tce-grid">
       <a class="tce-item" href="https://daewoo-security.fr/products/contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302">
-        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WDV301Final2-min.png?v=1747823021" alt="Contacteur d'ouverture et vibration WDV301" loading="lazy"></span>
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WDV301Final2-min.png?v=1747823021&width=128" alt="Contacteur d'ouverture et vibration WDV301" loading="lazy"></span>
         <span class="tce-txt"><span class="tce-ref">WDV301</span><span class="tce-nm">Contacteur ouverture + vibration</span><span class="tce-pr">{{ prix_wdv301 }}</span></span>
       </a>
       <a class="tce-item" href="https://daewoo-security.fr/products/detecteur-de-mouvement-exterieur-wmo301">
-        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_25_0a09f10a-cf4e-43ff-ba3d-f05a97ba314c.png?v=1756734623" alt="Détecteur de mouvement extérieur WMO301" loading="lazy"></span>
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_25_0a09f10a-cf4e-43ff-ba3d-f05a97ba314c.png?v=1756734623&width=128" alt="Détecteur de mouvement extérieur WMO301" loading="lazy"></span>
         <span class="tce-txt"><span class="tce-ref">WMO301</span><span class="tce-nm">Détecteur de mouvement extérieur</span><span class="tce-pr">{{ prix_wmo301 }}</span></span>
       </a>
       <a class="tce-item" href="https://daewoo-security.fr/products/daewoo-barrieres-infrarouge-pour-alarme-am301-am302">
-        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_24_0144937c-33bd-4969-96f3-d986d20dfebe.png?v=1756734406" alt="Barrières infrarouge BIR301" loading="lazy"></span>
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_24_0144937c-33bd-4969-96f3-d986d20dfebe.png?v=1756734406&width=128" alt="Barrières infrarouge BIR301" loading="lazy"></span>
         <span class="tce-txt"><span class="tce-ref">BIR301</span><span class="tce-nm">Barrières infrarouge extérieures</span><span class="tce-pr">{{ prix_bir301 }}</span></span>
       </a>
       <a class="tce-item" href="https://daewoo-security.fr/products/sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire">
-        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/ChatGPTImage1sept.2025_12_16_05.png?v=1756721812" alt="Sirène extérieure solaire WOS305S" loading="lazy"></span>
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/ChatGPTImage1sept.2025_12_16_05.png?v=1756721812&width=128" alt="Sirène extérieure solaire WOS305S" loading="lazy"></span>
         <span class="tce-txt"><span class="tce-ref">WOS305S</span><span class="tce-nm">Sirène extérieure solaire</span><span class="tce-pr">{{ prix_wos305s }}</span></span>
       </a>
       <a class="tce-item" href="https://daewoo-security.fr/products/clavier-wke301-avec-2-badges-rfid">
-        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/clavier-additionel-wke301-avec-2-badges-rfid-pour-alarme-daewoo-am301-962636.png?v=1676987571" alt="Clavier déporté WKE301 avec badges RFID" loading="lazy"></span>
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/clavier-additionel-wke301-avec-2-badges-rfid-pour-alarme-daewoo-am301-962636.png?v=1676987571&width=128" alt="Clavier déporté WKE301 avec badges RFID" loading="lazy"></span>
         <span class="tce-txt"><span class="tce-ref">WKE301</span><span class="tce-nm">Clavier déporté + 2 badges RFID</span><span class="tce-pr">{{ prix_wke301 }}</span></span>
       </a>
       <a class="tce-item" href="https://daewoo-security.fr/products/detecteur-de-fumee-wsd301">
-        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/detecteur-de-fumee-wsd301-pour-alarme-daewoo-am301-275128.jpg?v=1676987571" alt="Détecteur de fumée connecté WSD301" loading="lazy"></span>
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/detecteur-de-fumee-wsd301-pour-alarme-daewoo-am301-275128.jpg?v=1676987571&width=128" alt="Détecteur de fumée connecté WSD301" loading="lazy"></span>
         <span class="tce-txt"><span class="tce-ref">WSD301</span><span class="tce-nm">Détecteur de fumée connecté</span><span class="tce-pr">{{ prix_wsd301 }}</span></span>
       </a>
       <a class="tce-item" href="https://daewoo-security.fr/products/detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302">
-        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/AnyConv.com__WWF301-3.webp?v=1714986421" alt="Détecteur de fuite d'eau WWF301" loading="lazy"></span>
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/AnyConv.com__WWF301-3.webp?v=1714986421&width=128" alt="Détecteur de fuite d'eau WWF301" loading="lazy"></span>
         <span class="tce-txt"><span class="tce-ref">WWF301</span><span class="tce-nm">Détecteur de fuite d'eau</span><span class="tce-pr">{{ prix_wwf301 }}</span></span>
       </a>
       <a class="tce-item" href="https://daewoo-security.fr/products/amplificateur-de-signal-radio-compatible-avec-la-gamme-am301">
-        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/amplificateur-de-signal-radio-compatible-avec-la-gamme-am301-840357.webp?v=1706873682" alt="Amplificateur de signal radio EXT301" loading="lazy"></span>
+        <span class="tce-thumb"><img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/products/amplificateur-de-signal-radio-compatible-avec-la-gamme-am301-840357.webp?v=1706873682&width=128" alt="Amplificateur de signal radio EXT301" loading="lazy"></span>
         <span class="tce-txt"><span class="tce-ref">EXT301</span><span class="tce-nm">Amplificateur de signal radio</span><span class="tce-pr">{{ prix_ext301 }}</span></span>
       </a>
     </div>
