@@ -204,10 +204,25 @@
     barre collante et celui du bas pointent tous ici. Évite d'avoir
     quatre formulaires à tenir synchronisés.
   {%- endcomment -%}
-  {%- form 'product', product, id: 'PTForm', class: 'pv-visually-hidden' -%}
+  {%- comment -%}
+    is: 'product-form' accroche l'element ProductForm du theme, qui
+    intercepte l'envoi, ajoute au panier en arriere-plan et ouvre le
+    tiroir lateral. Sans lui, le formulaire partait en POST classique et
+    Shopify redirigeait vers la page /cart : c'est ce qui se passait ici.
+    Meme declaration que les sections Vigilia et Elite.
+
+    ProductForm cherche son propre bouton d'envoi avec
+    this.querySelector('[type="submit"]'). Tous les vrais boutons de la
+    page vivant hors de ce formulaire (rattaches par form="PTForm"),
+    cette recherche renverrait null et echouerait avant l'appel au
+    panier : le bouton muet ci-dessous la garde valide.
+  {%- endcomment -%}
+  {%- form 'product', product, id: 'PTForm', data-type: 'add-to-cart-form', is: 'product-form', class: 'pv-visually-hidden' -%}
     <input type="hidden" name="id" value="{{ v.id }}" id="PVVariantId-{{ section.id }}" data-dw-variant-id>
     <input type="hidden" name="quantity" value="1">
-    <button type="submit" tabindex="-1" aria-hidden="true">Ajouter au panier</button>
+    <button type="submit" name="add" tabindex="-1" aria-hidden="true"></button>
+    <div class="product-form__error-message alert alert--error" role="alert" hidden
+         style="position:fixed;left:16px;right:16px;bottom:84px;z-index:70;background:#fff;border:1px solid #e11d48;color:#e11d48;padding:12px 16px;border-radius:12px;font-size:14px;"></div>
   {%- endform -%}
 
   {%- comment -%} ── barre d'achat collante ── {%- endcomment -%}
@@ -224,7 +239,7 @@
         </div>
       </div>
     </div>
-    <button type="submit" form="PTForm" class="pv-btn pv-btn--primary pv-btn--sm">
+    <button type="submit" name="add" form="PTForm" class="pv-btn pv-btn--primary pv-btn--sm">
       <span class="pv-btn__text">Ajouter au panier</span>
     </button>
   </div>
@@ -290,7 +305,7 @@
           <strong class="pv-price-amount">{{ v.price | money }}</strong>
           — soit <strong>0&nbsp;€/mois</strong>, à vie
         </p>
-        <button type="submit" form="PTForm" class="pv-btn pv-btn--primary">
+        <button type="submit" name="add" form="PTForm" class="pv-btn pv-btn--primary">
           <span class="btn-fill"></span>
           <span class="pv-btn__text">Ajouter au panier</span>
         </button>
@@ -777,7 +792,7 @@
     <div class="pv-band pv-reveal">
       <h2>Protégez votre logement dès aujourd'hui</h2>
       <p>Installation en une trentaine de minutes, sans technicien et sans travaux.</p>
-      <button type="submit" form="PTForm" class="pv-btn">
+      <button type="submit" name="add" form="PTForm" class="pv-btn">
         <span class="btn-fill"></span>
         <span class="pv-btn__text">
           Ajouter au panier — <span class="pv-price-amount">{{ v.price | money }}</span>
@@ -1049,7 +1064,7 @@ Compatible Amazon Alexa et Google Home.</dd>
           l'alarme, les caméras et la domotique, et aucun frais mensuel.
         </p>
         <div class="pv-final__ctas">
-          <button type="submit" form="PTForm" class="pv-btn pv-btn--primary">
+          <button type="submit" name="add" form="PTForm" class="pv-btn pv-btn--primary">
             <span class="btn-fill"></span>
             <span class="pv-btn__text">
               Ajouter au panier — <span class="pv-price-amount">{{ v.price | money }}</span>
