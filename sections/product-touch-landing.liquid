@@ -195,7 +195,11 @@
     assign jumeau = all_products[handle_jumeau]
   endif
 
-  assign configurateur = all_products["configurateur-kit-touch-am301"]
+  # Il n'existe qu'un seul configurateur : la page /pages/configurateur_2.
+  # Les fiches produit « configurateur » ne sont pas des destinations
+  # client. La carte ci-dessous emprunte donc son visuel et son prix
+  # plancher a la centrale seule, deja chargee plus haut (fiche_centrale),
+  # ce qui n'ajoute aucune requete.
 
   # ── Titre et accroche ──────────────────────────────────────────────
   assign titre = product.metafields.custom.titre_page | default: product.title
@@ -1002,20 +1006,21 @@ Compatible Amazon Alexa et Google Home.</dd>
           </a>
         {%- endif -%}
 
-        {%- if configurateur != blank and configurateur.available -%}
-          <a class="pv-crosssell__card pv-crosssell__card--photo" href="{{ configurateur.url }}">
-            {%- if configurateur.featured_image -%}
-                {{ configurateur.featured_image | image_url: width: 600 | image_tag:
-                   loading: 'lazy', class: 'pv-crosssell__photo', alt: 'Configurateur de pack Touch' }}
+        {%- assign alt_config = "Centrale Daewoo " | append: modele | append: " seule, point de départ d'un pack sur mesure" -%}
+        <a class="pv-crosssell__card pv-crosssell__card--photo" href="/pages/configurateur_2">
+          {%- if fiche_centrale != blank and fiche_centrale.featured_image -%}
+              {{ fiche_centrale.featured_image | image_url: width: 600 | image_tag:
+                 loading: 'lazy', class: 'pv-crosssell__photo', alt: alt_config }}
+          {%- endif -%}
+          <div class="pv-crosssell__body">
+            <h3>Composez votre pack sur mesure</h3>
+            <p>Vous choisissez la centrale, puis chaque accessoire, un par un.</p>
+            {%- if fiche_centrale != blank and fiche_centrale.available -%}
+              <span class="pv-crosssell__price">dès {{ fiche_centrale.price | money }}<span>TTC</span></span>
             {%- endif -%}
-            <div class="pv-crosssell__body">
-              <h3>Composez votre pack sur mesure</h3>
-              <p>Vous choisissez la centrale, puis chaque accessoire, un par un.</p>
-              <span class="pv-crosssell__price">dès {{ configurateur.price | money }}<span>TTC</span></span>
-              <span class="pv-btn pv-btn--ghost pv-btn--sm"><span class="pv-btn__text">Ouvrir le configurateur</span></span>
-            </div>
-          </a>
-        {%- endif -%}
+            <span class="pv-btn pv-btn--ghost pv-btn--sm"><span class="pv-btn__text">Ouvrir le configurateur</span></span>
+          </div>
+        </a>
       </div>
 
       {%- comment -%}
