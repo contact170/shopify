@@ -123,6 +123,19 @@
   .pv-autres a{font-size:12.5px;padding:7px 12px;}
 }
 
+/* ---- bloc image + texte : nuance et absence d'image ----
+   pv-feature--sans-media : tous les packs ne portent pas les visuels de
+   toutes les rubriques. Plutot qu'une demi-colonne vide, le texte occupe
+   alors toute la largeur. */
+.pv-feature__note{
+  margin-top:14px;padding-left:14px;
+  border-left:2px solid var(--pv-line);
+  color:var(--pv-gray);font-size:14.5px;line-height:1.55;max-width:480px;
+}
+.pv-feature--sans-media{grid-template-columns:1fr;}
+.pv-feature--sans-media .pv-feature__text,
+.pv-feature--sans-media .pv-feature__note{max-width:720px;}
+
 /* ---- rythme des sections ---- */
 .pv-section{padding:72px 0;}
 .pv-section--alt{background:var(--pv-bg-alt);}

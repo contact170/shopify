@@ -81,6 +81,13 @@
   endif
 
   # ── Sélection des images par nom de fichier ────────────────────────
+  # Attention : ces variables valent « blank », qui est un objet vide et
+  # non nil. En Liquid, seuls nil et false sont faux, donc « if img_gsm »
+  # laissait passer une variable restée vide et image_url renvoyait
+  # « invalid url input » en clair sur la page. Toutes les gardes de cette
+  # section testent donc « != blank ».
+  # Le Starter Pack est le seul pack à porter un jeu d'images plus ancien
+  # (Wifi_CarteSim, Application_Daewoo…) : d'où les motifs alternatifs.
   assign img_ecran = blank
   assign img_app = blank
   assign img_gsm = blank
@@ -92,23 +99,33 @@
     if im.src contains "centrale_photo_principale" and img_ecran == blank
       assign img_ecran = im
     endif
-    if im.src contains "pilotage_distance" and img_app == blank
-      assign img_app = im
+    if im.src contains "pilotage_distance" or im.src contains "Application_Daewoo"
+      if img_app == blank
+        assign img_app = im
+      endif
     endif
-    if im.src contains "protection_GSM" and img_gsm == blank
-      assign img_gsm = im
+    if im.src contains "protection_GSM" or im.src contains "CarteSim"
+      if img_gsm == blank
+        assign img_gsm = im
+      endif
     endif
     if im.src contains "comparaison_abonnement" and img_abo == blank
       assign img_abo = im
     endif
-    if im.src contains "Alexa_Google_Home" and img_alexa == blank
-      assign img_alexa = im
+    if im.src contains "Alexa_Google_Home" or im.src contains "Google_Alexa"
+      if img_alexa == blank
+        assign img_alexa = im
+      endif
     endif
-    if im.src contains "securite_distance" and img_distance == blank
-      assign img_distance = im
+    if im.src contains "securite_distance" or im.src contains "Application_Distance"
+      if img_distance == blank
+        assign img_distance = im
+      endif
     endif
-    if im.src contains "pourquoi" and img_pourquoi == blank
-      assign img_pourquoi = im
+    if im.src contains "pourquoi" or im.src contains "Avantages_Daewoo"
+      if img_pourquoi == blank
+        assign img_pourquoi = im
+      endif
     endif
   endfor
 
@@ -527,7 +544,7 @@
           le filtre ne documente pas les attributs à tirets.
         {%- endcomment -%}
         <div class="pv-screen__media" data-dw-swap-img="imgEcran">
-          {%- if img_ecran -%}
+          {%- if img_ecran != blank -%}
             {{ img_ecran | image_url: width: 900 | image_tag:
                loading: 'lazy',
                widths: '380,560,900', sizes: '(min-width:900px) 480px, 90vw',
@@ -560,7 +577,7 @@
 
       <div class="pv-app pv-reveal">
         <div class="pv-app__media">
-          {%- if img_app -%}
+          {%- if img_app != blank -%}
             {{ img_app | image_url: width: 840 | image_tag:
                loading: 'lazy',
                widths: '380,560,840', sizes: '(min-width:900px) 420px, 90vw',
@@ -710,23 +727,29 @@
   {%- comment -%} ── protection GSM ── {%- endcomment -%}
   <section class="pv-section pv-section--alt">
     <div class="pv-wrap">
-      <div class="pv-feature pv-reveal">
-        <div class="pv-feature__media">
-          {%- if img_gsm -%}
+      <div class="pv-feature{% if img_gsm == blank %} pv-feature--sans-media{% endif %} pv-reveal">
+        {%- if img_gsm != blank -%}
+          <div class="pv-feature__media">
             {{ img_gsm | image_url: width: 1000 | image_tag:
                loading: 'lazy', widths: '400,700,1000',
                sizes: '(min-width:900px) 500px, 90vw',
                alt: "Relais 4G d'une alarme Daewoo en cas de coupure Internet" }}
-          {%- endif -%}
-        </div>
+          </div>
+        {%- endif -%}
         <div class="pv-feature__body">
           <span class="pv-feature__num">CONTINUITÉ</span>
           <h2>Elle reste joignable, même sans Internet.</h2>
           <p class="pv-feature__text">
             La centrale se connecte en Wi-Fi. En option, une carte SIM M2M lui
-            ouvre un second chemin : si la box tombe ou si la ligne est coupée,
-            elle bascule sur le réseau 4G et continue d'alerter par SMS et par
-            appel.
+            ouvre un second chemin : si votre box tombe en panne ou si la ligne
+            est coupée, elle bascule sur le réseau 4G et continue d'alerter par
+            SMS et par appel.
+          </p>
+          <p class="pv-feature__note">
+            À noter : le relais 4G transmet les alertes de l'alarme, pas le flux
+            vidéo. Les caméras, elles, ont besoin d'Internet pour fonctionner :
+            pendant une coupure, vous êtes averti mais vous ne pouvez pas les
+            consulter à distance.
           </p>
           <ul>
             <li>
@@ -750,15 +773,15 @@
   {%- comment -%} ── sans abonnement ── {%- endcomment -%}
   <section class="pv-section">
     <div class="pv-wrap">
-      <div class="pv-feature pv-feature--reverse pv-reveal">
-        <div class="pv-feature__media">
-          {%- if img_abo -%}
+      <div class="pv-feature pv-feature--reverse{% if img_abo == blank %} pv-feature--sans-media{% endif %} pv-reveal">
+        {%- if img_abo != blank -%}
+          <div class="pv-feature__media">
             {{ img_abo | image_url: width: 1000 | image_tag:
                loading: 'lazy', widths: '400,700,1000',
                sizes: '(min-width:900px) 500px, 90vw',
                alt: "Alarme Daewoo sans abonnement comparée aux offres avec abonnement" }}
-          {%- endif -%}
-        </div>
+          </div>
+        {%- endif -%}
         <div class="pv-feature__body">
           <span class="pv-feature__num">ZÉRO FRAIS MENSUEL</span>
           <h2>Vous achetez le système. Il est à vous.</h2>
