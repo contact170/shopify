@@ -463,6 +463,9 @@
         "eyebrow": "Gamme Touch XL · écran tactile 7 pouces",
         "specCentrale": "Touch XL AM302 — écran tactile 7 pouces",
         "tailleEcran": "Écran tactile 7 pouces",
+        "pucePile": "Sirène intégrée à la centrale, et batterie de secours d'environ 20 heures",
+        "pucePileGsm": "Batterie de secours intégrée : environ 20 heures d'autonomie",
+        "specAlim": "Secteur, avec batterie de secours intégrée : environ 20 heures d'autonomie en cas de coupure.",
         "titreEcran": {{ titre_ecran_xl | json }},
         "texteEcran": {{ texte_ecran_xl | json }},
         "imgEcran": {{ img_c_xl | json }},
@@ -471,6 +474,9 @@
         "eyebrow": "Gamme Touch · écran tactile 4,3 pouces",
         "specCentrale": "Touch AM301 — écran tactile 4,3 pouces",
         "tailleEcran": "Écran tactile 4,3 pouces",
+        "pucePile": "Sirène intégrée à la centrale, et batterie de secours d'environ 4 heures",
+        "pucePileGsm": "Batterie de secours intégrée : environ 4 heures d'autonomie",
+        "specAlim": "Secteur, avec batterie de secours intégrée : environ 4 heures d'autonomie en cas de coupure.",
         "titreEcran": {{ titre_ecran_touch | json }},
         "texteEcran": {{ texte_ecran_touch | json }},
         "imgEcran": {{ img_c_touch | json }},
@@ -515,9 +521,15 @@
             {%- endif -%}
           </p>
           <ul>
+            {%- comment -%}
+              Les centrales AM301 et AM302 n'ont PAS de lecteur de badges
+              integre : il faut y ajouter le clavier deporte WKE301. Seule la
+              centrale Vigilia porte le lecteur d'origine. Annoncer le badge
+              comme un mode d'armement de la centrale etait donc faux.
+            {%- endcomment -%}
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Quatre façons d'armer : l'écran, l'application, la télécommande ou le badge RFID</span>
+              <span>Trois façons d'armer : l'écran de la centrale, l'application ou la télécommande</span>
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -525,7 +537,11 @@
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Sirène intégrée à la centrale, et batterie de secours de {{ autonomie }}</span>
+              <span>Badge RFID en option : le clavier déporté WKE301 ajoute la lecture de badges</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span data-dw-swap="pucePile">Sirène intégrée à la centrale, et batterie de secours d'{{ autonomie }}</span>
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -762,7 +778,7 @@
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Batterie de secours intégrée : {{ autonomie }} d'autonomie</span>
+              <span data-dw-swap="pucePileGsm">Batterie de secours intégrée : {{ autonomie }} d'autonomie</span>
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -865,7 +881,7 @@ Relais GSM 4G en option, par carte SIM M2M.{% endif %}</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Alimentation</dt>
-          <dd>{% if product.metafields.custom.alimentation_autonomie != blank %}{{ product.metafields.custom.alimentation_autonomie }}{% else %}Secteur, avec batterie de secours intégrée : {{ autonomie }} d'autonomie en cas de coupure.{% endif %}</dd>
+          <dd{% if product.metafields.custom.alimentation_autonomie == blank %} data-dw-swap="specAlim"{% endif %}>{% if product.metafields.custom.alimentation_autonomie != blank %}{{ product.metafields.custom.alimentation_autonomie }}{% else %}Secteur, avec batterie de secours intégrée : {{ autonomie }} d'autonomie en cas de coupure.{% endif %}</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Détection</dt>
