@@ -1,0 +1,12 @@
+<meta name="viewport" content="width=device-width,initial-scale=1">{%- if settings.favicon != blank -%}<link rel="shortcut icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}" type="image/png">{%- endif -%}{%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}{% render "vital" %}<meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="theme-color" content="{{ settings.color_button_background }}"><link rel="canonical" href="{{ canonical_url }}">{%- comment -%}
+  ── Ajout 24/09/2026 ──
+  Les fiches « Configurateur | … » sont des doublons des vraies fiches
+  produit : le configurateur les ajoute au panier par identifiant de
+  variante, elles ne sont pas des destinations client. Elles doivent
+  rester publiees, sans quoi /cart/add.js les refuse, mais elles n'ont
+  rien a faire dans l'index de Google, ou elles concurrencent la vraie
+  fiche du meme article. On les repere au titre ou au handle, pour que
+  les prochaines soient couvertes sans intervention.
+  « follow » est conserve : les liens sortants gardent leur valeur.
+  Pour annuler : supprimer ce bloc.
+{%- endcomment -%}{%- if request.page_type == 'product' -%}{%- assign dw_t = product.title | upcase | slice: 0, 13 -%}{%- assign dw_h = product.handle | slice: 0, 13 -%}{%- if dw_t == 'CONFIGURATEUR' or dw_h == 'configurateur' -%}<meta name="robots" content="noindex,follow">{%- endif -%}{%- endif -%}<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin><script>document.documentElement.classList.replace('no-js','js');document.documentElement.classList.add(('ontouchstart' in window)||navigator.maxTouchPoints>0?'touch':'no-touch')</script><title>{{- page_title -}}{%- if current_tags -%}{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}{%- endif -%}{%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}{%- if request.page_type == 'password' -%}{{- shop.name -}}{%- else -%}{%- unless page_title contains 'Daewoo' %} | Daewoo{% endunless -%}{%- endif -%}</title>
