@@ -197,9 +197,12 @@
 
   # Il n'existe qu'un seul configurateur : la page /pages/configurateur_2.
   # Les fiches produit « configurateur » ne sont pas des destinations
-  # client. La carte ci-dessous emprunte donc son visuel et son prix
-  # plancher a la centrale seule, deja chargee plus haut (fiche_centrale),
-  # ce qui n'ajoute aucune requete.
+  # client. La carte ci-dessous emprunte son visuel a la centrale seule
+  # (fiche_centrale, deja chargee plus haut), mais son prix plancher au
+  # Starter Pack : le configurateur ne part pas de la centrale nue, il
+  # part du pack de base, et annoncer le prix de la centrale seule
+  # promettait un point de depart qui n'existe pas.
+  assign fiche_starter = all_products["alarme-daewoo-wifi-gsm-4g-starter-pack-am301"]
 
   # ── Titre et accroche ──────────────────────────────────────────────
   assign titre = product.metafields.custom.titre_page | default: product.title
@@ -1030,9 +1033,9 @@ Compatible Amazon Alexa et Google Home.</dd>
           {%- endif -%}
           <div class="pv-crosssell__body">
             <h3>Composez votre pack sur mesure</h3>
-            <p>Vous choisissez la centrale, puis chaque accessoire, un par un.</p>
-            {%- if fiche_centrale != blank and fiche_centrale.available -%}
-              <span class="pv-crosssell__price">dès {{ fiche_centrale.price | money }}<span>TTC</span></span>
+            <p>Vous partez du pack de base, puis vous ajoutez chaque accessoire, un par un.</p>
+            {%- if fiche_starter != blank and fiche_starter.available -%}
+              <span class="pv-crosssell__price">dès {{ fiche_starter.price | money }}<span>TTC</span></span>
             {%- endif -%}
             <span class="pv-btn pv-btn--ghost pv-btn--sm"><span class="pv-btn__text">Ouvrir le configurateur</span></span>
           </div>
