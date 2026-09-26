@@ -1,96 +1,83 @@
-{{ 'dw-home.css' | asset_url | stylesheet_tag }}
+{% render 'dw-home-head' %}
 
 {%- liquid
-  assign hero_product = section.settings.hero_product
-  assign hero_image = section.settings.image
-  assign hero_image_mobile = section.settings.image_mobile | default: hero_image
-  if hero_image == blank and hero_product != blank
-    assign hero_image = hero_product.featured_image
-    assign hero_image_mobile = hero_product.featured_image
-  endif
+  assign produit_appel = section.settings.hero_product
+  assign lien_1 = section.settings.cta_1_link | default: '#dwh-packs'
+  assign notifs = section.blocks | where: 'type', 'notification'
+  assign rassurances = section.blocks | where: 'type', 'trust'
 -%}
 
 <div class="dwh" id="dwh-hero-{{ section.id }}">
-  <section class="dwh-hero" aria-labelledby="dwh-hero-title-{{ section.id }}">
-    {%- if section.settings.promo_text != blank -%}
-      {%- if section.settings.promo_link != blank -%}
-        <a class="dwh-hero__promo" href="{{ section.settings.promo_link }}">{{ section.settings.promo_text }}</a>
-      {%- else -%}
-        <p class="dwh-hero__promo">{{ section.settings.promo_text }}</p>
-      {%- endif -%}
-    {%- endif -%}
-
-    <div class="dwh-hero__grid">
-      <div class="dwh-hero__content">
-        <h1 class="dwh-hero__title" id="dwh-hero-title-{{ section.id }}">{{ section.settings.title }}</h1>
-        {%- if section.settings.subtitle != blank -%}
-          <p class="dwh-hero__sub">{{ section.settings.subtitle }}</p>
+  <section class="dwh-hero dwh-sombre" aria-labelledby="dwh-h1-{{ section.id }}">
+    <div class="dwh-hero__grille">
+      <div class="dwh-hero__texte">
+        {%- if section.settings.etat != blank -%}
+          <p class="dwh-etat">{{ section.settings.etat }}</p>
         {%- endif -%}
-
-        <ul class="dwh-check dwh-hero__bullets">
-          {%- if section.settings.bullet_1 != blank -%}<li>{{ section.settings.bullet_1 }}</li>{%- endif -%}
-          {%- if section.settings.bullet_2 != blank -%}<li>{{ section.settings.bullet_2 }}</li>{%- endif -%}
-          {%- if section.settings.bullet_3 != blank -%}<li>{{ section.settings.bullet_3 }}</li>{%- endif -%}
-        </ul>
-
-        <div class="dwh-btns">
-          <a class="dwh-btn dwh-btn--primary" href="{{ section.settings.cta_1_link | default: '#dwh-packs' }}">
-            {{ section.settings.cta_1_label }}
-            {% render 'dw-home-icon', icon: 'arrow' %}
-          </a>
-          {%- if section.settings.cta_2_label != blank -%}
-            <a class="dwh-btn dwh-btn--ghost" href="{{ section.settings.cta_2_link }}">{{ section.settings.cta_2_label }}</a>
-          {%- endif -%}
-        </div>
-
-        {%- if section.settings.proof != blank -%}
-          <p class="dwh-hero__proof">
-            <span class="dwh-stars" aria-hidden="true">★★★★★</span>
-            {{ section.settings.proof }}
+        <h1 class="dwh-titre" id="dwh-h1-{{ section.id }}">{{ section.settings.title }}</h1>
+        {%- if produit_appel != blank -%}
+          <p class="dwh-hero__prix">
+            {{ section.settings.prix_avant }} <strong>{{ produit_appel.price_min | money }}</strong>
+            · <span class="dwh-zero">0&nbsp;€ par mois, à vie</span>
           </p>
         {%- endif -%}
       </div>
 
-      {%- if hero_image != blank -%}
-        <div class="dwh-hero__media">
-          <picture>
-            <source
-              media="(max-width: 749px)"
-              srcset="{{ hero_image_mobile | image_url: width: 500 }} 500w, {{ hero_image_mobile | image_url: width: 750 }} 750w, {{ hero_image_mobile | image_url: width: 1000 }} 1000w"
-              sizes="100vw"
-            >
-            {{
-              hero_image
-              | image_url: width: 1200
-              | image_tag:
-                widths: '600, 900, 1200',
-                sizes: '(min-width: 750px) 50vw, 100vw',
-                loading: 'eager',
-                fetchpriority: 'high',
-                alt: section.settings.image_alt
-            }}
-          </picture>
-          {%- if hero_product != blank and section.settings.show_price_tag -%}
-            <div class="dwh-hero__price-tag">
-              {{ section.settings.price_tag_label }}
-              <strong>{{ hero_product.price_min | money }}</strong>
-            </div>
-          {%- endif -%}
-        </div>
+      {%- if notifs.size > 0 -%}
+        <figure class="dwh-ecran" aria-label="{{ section.settings.ecran_label | escape }}">
+          <div class="dwh-ecran__heure" aria-hidden="true">
+            <b>{{ section.settings.ecran_heure }}</b>
+            {%- liquid
+              assign jours = 'dimanche,lundi,mardi,mercredi,jeudi,vendredi,samedi' | split: ','
+              assign mois = 'janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre' | split: ','
+              assign i_jour = 'now' | date: '%w' | plus: 0
+              assign i_mois = 'now' | date: '%m' | plus: 0 | minus: 1
+            -%}
+            <span>{{ jours[i_jour] }} {{ 'now' | date: '%-d' }} {{ mois[i_mois] }}</span>
+          </div>
+          <ul class="dwh-notifs">
+            {%- for block in notifs -%}
+              <li class="dwh-notif{% if block.settings.style == 'ok' %} dwh-notif--ok{% endif %}" {{ block.shopify_attributes }}>
+                <span class="dwh-notif__app" aria-hidden="true">{% render 'dw-home-icon', icon: block.settings.icon %}</span>
+                <span class="dwh-notif__txt">
+                  <span class="dwh-notif__titre">{{ block.settings.title }}</span>
+                  <span class="dwh-notif__corps">{{ block.settings.text }}</span>
+                </span>
+                <span class="dwh-notif__quand">{{ block.settings.time }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </figure>
       {%- endif -%}
+
+      <div class="dwh-hero__actions">
+        <a class="dwh-btn dwh-btn--bleu" href="{{ lien_1 }}">
+          {{ section.settings.cta_1_label }}
+          {% render 'dw-home-icon', icon: 'arrow' %}
+        </a>
+        {%- if section.settings.cta_2_label != blank -%}
+          <a class="dwh-lien" href="{{ section.settings.cta_2_link }}">
+            {{ section.settings.cta_2_label }}
+            {% render 'dw-home-icon', icon: 'arrow' %}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.proof != blank -%}
+          <p class="dwh-hero__preuve">
+            <span class="dwh-etoiles" aria-hidden="true">★★★★★</span>
+            {{ section.settings.proof }}
+          </p>
+        {%- endif -%}
+      </div>
     </div>
   </section>
 
-  {%- if section.blocks.size > 0 -%}
-    <div class="dwh-trustbar">
-      <ul class="dwh-trustbar__list">
-        {%- for block in section.blocks -%}
-          <li class="dwh-trustbar__item" {{ block.shopify_attributes }}>
-            <span class="dwh-trustbar__icon">{% render 'dw-home-icon', icon: block.settings.icon %}</span>
-            <span>
-              {{ block.settings.title }}
-              {%- if block.settings.text != blank -%}<small>{{ block.settings.text }}</small>{%- endif -%}
-            </span>
+  {%- if rassurances.size > 0 -%}
+    <div class="dwh-rassure">
+      <ul class="dwh-rassure__liste">
+        {%- for block in rassurances -%}
+          <li class="dwh-rassure__item" {{ block.shopify_attributes }}>
+            {% render 'dw-home-icon', icon: block.settings.icon %}
+            {{ block.settings.title }}
           </li>
         {%- endfor -%}
       </ul>
@@ -98,33 +85,33 @@
   {%- endif -%}
 
   {%- if section.settings.enable_sticky -%}
-    <div class="dwh-sticky" data-dwh-sticky aria-hidden="true">
-      <a class="dwh-btn dwh-btn--primary" href="{{ section.settings.cta_1_link | default: '#dwh-packs' }}" tabindex="-1">{{ section.settings.sticky_label_1 }}</a>
-      <a class="dwh-btn dwh-btn--ghost-dark" href="{{ section.settings.cta_2_link }}" tabindex="-1">{{ section.settings.sticky_label_2 }}</a>
+    <div class="dwh-collant" data-dwh-collant aria-hidden="true">
+      <a class="dwh-btn dwh-btn--bleu" href="{{ lien_1 }}" tabindex="-1">{{ section.settings.sticky_label_1 }}</a>
+      <a class="dwh-btn dwh-btn--contour" href="{{ section.settings.cta_2_link }}" tabindex="-1">{{ section.settings.sticky_label_2 }}</a>
     </div>
     <script>
       (function () {
         function init() {
-          var root = document.getElementById('dwh-hero-{{ section.id }}');
-          if (!root || !('IntersectionObserver' in window)) return;
-          var hero = root.querySelector('.dwh-hero');
-          var bar = root.querySelector('[data-dwh-sticky]');
-          var heroGone = false;
-          var blockers = new Set();
+          var racine = document.getElementById('dwh-hero-{{ section.id }}');
+          if (!racine || !('IntersectionObserver' in window)) return;
+          var hero = racine.querySelector('.dwh-hero');
+          var barre = racine.querySelector('[data-dwh-collant]');
+          var heroPasse = false;
+          var masques = new Set();
 
-          function update() {
-            var show = heroGone && blockers.size === 0;
-            bar.classList.toggle('is-visible', show);
-            bar.setAttribute('aria-hidden', show ? 'false' : 'true');
-            bar.querySelectorAll('a').forEach(function (a) { a.tabIndex = show ? 0 : -1; });
+          function maj() {
+            var visible = heroPasse && masques.size === 0;
+            barre.classList.toggle('est-visible', visible);
+            barre.setAttribute('aria-hidden', visible ? 'false' : 'true');
+            barre.querySelectorAll('a').forEach(function (a) { a.tabIndex = visible ? 0 : -1; });
           }
 
-          new IntersectionObserver(function (e) { heroGone = !e[0].isIntersecting; update(); }).observe(hero);
+          new IntersectionObserver(function (e) { heroPasse = !e[0].isIntersecting; maj(); }).observe(hero);
 
-          // La barre se masque quand les packs, le CTA final ou le footer sont à l'écran (inutile en doublon).
-          var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) { en.isIntersecting ? blockers.add(en.target) : blockers.delete(en.target); });
-            update();
+          // Inutile en doublon : on la cache sur les packs, le CTA final et le footer.
+          var io = new IntersectionObserver(function (entrees) {
+            entrees.forEach(function (e) { e.isIntersecting ? masques.add(e.target) : masques.delete(e.target); });
+            maj();
           }, { rootMargin: '-35% 0px -35% 0px' });
           document.querySelectorAll('#dwh-packs, .dwh-final, footer, .footer').forEach(function (el) { io.observe(el); });
         }
@@ -139,57 +126,64 @@
 {
   "name": "Home V2 · Hero",
   "tag": "div",
-  "class": "dwh-section-hero",
   "settings": [
-    { "type": "header", "content": "Bandeau promo (optionnel)" },
-    { "type": "inline_richtext", "id": "promo_text", "label": "Texte promo", "info": "Laisser vide pour masquer. Utilisez le gras pour mettre en avant la remise." },
-    { "type": "url", "id": "promo_link", "label": "Lien du bandeau" },
-    { "type": "header", "content": "Message principal" },
-    { "type": "inline_richtext", "id": "title", "label": "Titre (H1)", "default": "L'alarme maison <em>sans abonnement</em> que vous installez en 10 minutes", "info": "L'italique s'affiche en bleu clair." },
-    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Alarme et caméras pilotées depuis votre smartphone. Vous payez une seule fois, c'est tout." },
-    { "type": "text", "id": "bullet_1", "label": "Argument 1", "default": "0 € par mois, à vie" },
-    { "type": "text", "id": "bullet_2", "label": "Argument 2", "default": "Sans fil, sans technicien, sans travaux" },
-    { "type": "text", "id": "bullet_3", "label": "Argument 3", "default": "Alertes instantanées sur votre téléphone" },
+    { "type": "text", "id": "etat", "label": "Pastille au-dessus du titre", "default": "Sans abonnement, à vie" },
+    { "type": "inline_richtext", "id": "title", "label": "Titre (H1)", "default": "Votre alarme maison, sans abonnement. <em>Posée par vous, pilotée depuis votre téléphone.</em>", "info": "La partie en italique s'affiche en gris clair." },
+    { "type": "product", "id": "hero_product", "label": "Produit d'appel (prix « à partir de »)" },
+    { "type": "text", "id": "prix_avant", "label": "Texte avant le prix", "default": "Système complet dès" },
+    { "type": "header", "content": "Écran de téléphone" },
+    { "type": "text", "id": "ecran_heure", "label": "Heure affichée", "default": "14:32" },
+    { "type": "text", "id": "ecran_label", "label": "Description pour l'accessibilité", "default": "Exemple de notifications reçues sur votre téléphone" },
     { "type": "header", "content": "Boutons" },
-    { "type": "text", "id": "cta_1_label", "label": "Bouton principal", "default": "Trouver mon pack" },
-    { "type": "url", "id": "cta_1_link", "label": "Lien bouton principal", "info": "Vide = descend jusqu'à la section Packs." },
-    { "type": "text", "id": "cta_2_label", "label": "Bouton secondaire", "default": "Composer mon alarme" },
-    { "type": "url", "id": "cta_2_link", "label": "Lien bouton secondaire", "default": "/pages/configurateur_2" },
-    { "type": "text", "id": "proof", "label": "Preuve sociale", "default": "4,6/5 · 900+ avis · 60 000 foyers équipés" },
-    { "type": "header", "content": "Visuel" },
-    { "type": "image_picker", "id": "image", "label": "Image desktop", "info": "Idéalement une photo en situation (maison, famille, smartphone). Vide = image du produit ci-dessous." },
-    { "type": "image_picker", "id": "image_mobile", "label": "Image mobile (4:3 conseillé)" },
-    { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image", "default": "Alarme maison sans fil Daewoo Security avec application smartphone" },
-    { "type": "product", "id": "hero_product", "label": "Produit d'appel (étiquette prix)" },
-    { "type": "checkbox", "id": "show_price_tag", "label": "Afficher l'étiquette « à partir de »", "default": true },
-    { "type": "text", "id": "price_tag_label", "label": "Texte de l'étiquette", "default": "Pack alarme dès" },
+    { "type": "text", "id": "cta_1_label", "label": "Bouton principal", "default": "Choisir mon pack" },
+    { "type": "url", "id": "cta_1_link", "label": "Lien du bouton principal", "info": "Vide = descend jusqu'aux packs." },
+    { "type": "text", "id": "cta_2_label", "label": "Lien secondaire", "default": "Je ne sais pas : guidez-moi en 2 min" },
+    { "type": "url", "id": "cta_2_link", "label": "URL du lien secondaire", "default": "/pages/configurateur_2" },
+    { "type": "text", "id": "proof", "label": "Preuve sociale", "default": "4,6/5 · 1 356 avis clients" },
     { "type": "header", "content": "Barre d'action collante (mobile)" },
-    { "type": "checkbox", "id": "enable_sticky", "label": "Afficher la barre en bas d'écran après le hero", "default": true },
+    { "type": "checkbox", "id": "enable_sticky", "label": "Afficher la barre en bas d'écran", "default": true },
     { "type": "text", "id": "sticky_label_1", "label": "Bouton 1", "default": "Voir les packs" },
-    { "type": "text", "id": "sticky_label_2", "label": "Bouton 2", "default": "Configurer" }
+    { "type": "text", "id": "sticky_label_2", "label": "Bouton 2", "default": "Me guider" }
   ],
   "blocks": [
+    {
+      "type": "notification",
+      "name": "Notification",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icône", "default": "shield",
+          "options": [
+            { "value": "shield", "label": "Bouclier" },
+            { "value": "motion", "label": "Mouvement" },
+            { "value": "camera", "label": "Caméra" },
+            { "value": "bell", "label": "Sirène" },
+            { "value": "euro", "label": "Euro" }
+          ]
+        },
+        { "type": "select", "id": "style", "label": "Couleur de l'icône", "default": "marque", "options": [ { "value": "marque", "label": "Bleu nuit" }, { "value": "ok", "label": "Vert (protégé, 0 €)" } ] },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Alarme activée" },
+        { "type": "text", "id": "text", "label": "Texte", "default": "Maison protégée" },
+        { "type": "text", "id": "time", "label": "Moment", "default": "maintenant" }
+      ]
+    },
     {
       "type": "trust",
       "name": "Réassurance",
       "limit": 4,
       "settings": [
         {
-          "type": "select",
-          "id": "icon",
-          "label": "Icône",
-          "default": "shield",
+          "type": "select", "id": "icon", "label": "Icône", "default": "box",
           "options": [
-            { "value": "euro", "label": "Euro" },
-            { "value": "truck", "label": "Livraison" },
+            { "value": "box", "label": "Colis" },
             { "value": "badge", "label": "Garantie" },
+            { "value": "return", "label": "Retour" },
             { "value": "support", "label": "Support" },
-            { "value": "shield", "label": "Bouclier" },
-            { "value": "phone", "label": "Smartphone" }
+            { "value": "calendar", "label": "Ancienneté" },
+            { "value": "euro", "label": "Euro" }
           ]
         },
-        { "type": "text", "id": "title", "label": "Titre", "default": "Garantie 2 ans" },
-        { "type": "text", "id": "text", "label": "Sous-texte" }
+        { "type": "text", "id": "title", "label": "Texte", "default": "Expédié sous 24 h" }
       ]
     }
   ],
@@ -197,10 +191,13 @@
     {
       "name": "Home V2 · Hero",
       "blocks": [
-        { "type": "trust", "settings": { "icon": "euro", "title": "0 € d'abonnement", "text": "Paiement unique" } },
-        { "type": "trust", "settings": { "icon": "truck", "title": "Livraison offerte", "text": "Expédié sous 48 h" } },
-        { "type": "trust", "settings": { "icon": "badge", "title": "Garantie 2 ans", "text": "14 j pour changer d'avis" } },
-        { "type": "trust", "settings": { "icon": "support", "title": "SAV en France", "text": "Basé à Mérignac" } }
+        { "type": "notification", "settings": { "icon": "motion", "title": "Mouvement détecté · Jardin", "text": "Touchez pour voir la caméra en direct", "time": "maintenant" } },
+        { "type": "notification", "settings": { "icon": "shield", "style": "ok", "title": "Alarme activée", "text": "Maison protégée · tous les détecteurs actifs", "time": "08:12" } },
+        { "type": "notification", "settings": { "icon": "euro", "style": "ok", "title": "Votre abonnement ce mois-ci : 0,00 €", "text": "Comme le mois dernier. Et le suivant.", "time": "le 1er" } },
+        { "type": "trust", "settings": { "icon": "box", "title": "Expédié sous 24 h" } },
+        { "type": "trust", "settings": { "icon": "badge", "title": "Garantie 2 ans" } },
+        { "type": "trust", "settings": { "icon": "return", "title": "Retour sous 14 jours" } },
+        { "type": "trust", "settings": { "icon": "support", "title": "Support en France" } }
       ]
     }
   ]

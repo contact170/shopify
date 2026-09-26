@@ -1,0 +1,8 @@
+{%- comment -%}
+  Styles et police de la home V2. Appelé en tête de chaque section dw-home-* :
+  le navigateur ne télécharge les fichiers qu'une seule fois.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
+{{ 'dw-home.css' | asset_url | stylesheet_tag }}

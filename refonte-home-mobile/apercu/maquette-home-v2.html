@@ -1,668 +1,681 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap" rel="stylesheet">
 <style>:root{--font-body-family:Poppins,sans-serif;--font-heading-family:Poppins,sans-serif}body{margin:0;background:#fff}/* ==========================================================================
-   Daewoo Security — Home V2 (mobile first)
-   Toutes les classes sont préfixées .dwh pour ne rien casser dans le thème.
+   Daewoo Security — Home V2 « premium », mobile first
+   Toutes les classes sont préfixées .dwh : aucun impact sur le reste du thème.
+
+   Palette
+     Nuit       #0B1530  fonds sombres (hero, calcul, CTA final)
+     Encre      #0C1E4A  texte, couleur de marque
+     Porcelaine #F4F6FB  fonds clairs alternés
+     Bleu       #1552D6  actions
+     Protégé    #16A765  réservé au « 0 € » et à l'état « armé »
+     Brume      #9FB0D6  texte secondaire sur fond sombre
    ========================================================================== */
 
 .dwh {
-  --dwh-navy: #0c1e4a;
-  --dwh-blue: #1a4fab;
-  --dwh-blue-soft: #e8efff;
-  --dwh-cyan: #48cae4;
-  --dwh-green: #1a8a3e;
-  --dwh-green-soft: #e3f6e8;
-  --dwh-red: #e11d48;
-  --dwh-text: #0c1e4a;
-  --dwh-muted: #5b6485;
-  --dwh-line: #e3e6f0;
-  --dwh-bg: #ffffff;
-  --dwh-bg-alt: #f2f3ff;
-  --dwh-radius: 16px;
-  --dwh-radius-sm: 12px;
-  --dwh-shadow: 0 8px 24px rgba(12, 30, 74, 0.08);
-  --dwh-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --nuit: #0b1530;
+  --encre: #0c1e4a;
+  --porcelaine: #f4f6fb;
+  --bleu: #1552d6;
+  --bleu-hover: #0f45ba;
+  --protege: #16a765;
+  --protege-doux: #e4f5ec;
+  --brume: #9fb0d6;
+  --gris: #5a6582;
+  --trait: #e2e6f0;
+  --trait-sombre: rgba(255, 255, 255, 0.1);
 
-  font-family: var(--font-body-family, 'Poppins', sans-serif);
-  color: var(--dwh-text);
+  --f-display: 'Instrument Sans', var(--font-heading-family, 'Poppins'), sans-serif;
+  --f-texte: 'Instrument Sans', var(--font-body-family, 'Poppins'), sans-serif;
+  --f-systeme: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --r-l: 24px;
+  --r-m: 16px;
+  --r-s: 12px;
+
+  font-family: var(--f-texte);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--encre);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-.dwh *,
-.dwh *::before,
-.dwh *::after { box-sizing: border-box; }
+.dwh *, .dwh *::before, .dwh *::after { box-sizing: border-box; }
+.dwh :where(h1, h2, h3, p, ul, ol, figure) { margin: 0; }
+.dwh :where(ul, ol) { padding: 0; list-style: none; }
+.dwh img { display: block; max-width: 100%; }
+:where(.dwh) a { color: inherit; }
+.dwh :focus-visible { outline: 2px solid var(--bleu); outline-offset: 3px; border-radius: 6px; }
+.dwh-sombre :focus-visible { outline-color: #fff; }
 
-.dwh-section { padding: 48px 16px; background: var(--dwh-bg); }
-.dwh-section--alt { background: var(--dwh-bg-alt); }
-.dwh-section--navy { background: var(--dwh-navy); color: #fff; }
-.dwh-wrap { max-width: 1120px; margin: 0 auto; }
+/* ---------- Mise en page ---------- */
+.dwh-bloc { padding: 56px 20px; background: #fff; }
+.dwh-bloc--porcelaine { background: var(--porcelaine); }
+.dwh-sombre { background: var(--nuit); color: #fff; }
+.dwh-large { max-width: 1160px; margin: 0 auto; }
 
-/* ---------- Typo ---------- */
-.dwh-eyebrow {
-  display: inline-block;
-  font-size: 12px;
+/* ---------- Typographie ---------- */
+.dwh-surtitre {
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--dwh-blue);
-  margin: 0 0 8px;
+  letter-spacing: 0.02em;
+  color: var(--bleu);
+  margin-bottom: 10px;
 }
-.dwh-section--navy .dwh-eyebrow { color: var(--dwh-cyan); }
-.dwh-h2 {
-  font-family: var(--font-heading-family, inherit);
-  font-size: clamp(24px, 6.4vw, 36px);
-  line-height: 1.15;
+.dwh-sombre .dwh-surtitre { color: var(--brume); }
+.dwh-titre {
+  font-family: var(--f-display);
+  font-stretch: 88%;
+  font-variation-settings: 'wdth' 88;
+  font-size: clamp(30px, 8vw, 48px);
+  line-height: 1.04;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  margin: 0 0 12px;
-  color: inherit;
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
-.dwh-lead {
-  font-size: 16px;
-  line-height: 1.55;
-  color: var(--dwh-muted);
-  margin: 0 0 24px;
-  max-width: 560px;
+.dwh-titre em { font-style: normal; color: var(--gris); }
+.dwh-sombre .dwh-titre em,
+.dwh-hero .dwh-titre em { color: var(--brume); }
+.dwh-chapo {
+  margin-top: 14px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--gris);
+  max-width: 34em;
+  text-wrap: pretty;
 }
-.dwh-section--navy .dwh-lead { color: rgba(255, 255, 255, 0.72); }
-.dwh-head { margin-bottom: 24px; }
-.dwh-head--center { text-align: center; }
-.dwh-head--center .dwh-lead { margin-left: auto; margin-right: auto; }
+.dwh-sombre .dwh-chapo { color: var(--brume); }
+.dwh-entete { margin-bottom: 28px; }
 
 /* ---------- Boutons ---------- */
 .dwh-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
-  min-height: 54px;
+  min-height: 56px;
   padding: 14px 24px;
-  border-radius: 999px;
-  font-family: var(--font-button-family, inherit);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.2;
+  border: 0;
+  border-radius: 14px;
+  font: 600 17px/1.2 var(--f-texte);
   text-decoration: none;
   text-align: center;
-  border: 2px solid transparent;
   cursor: pointer;
-  transition: transform 160ms var(--dwh-ease), background-color 200ms ease, box-shadow 200ms ease;
   -webkit-tap-highlight-color: transparent;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, box-shadow 200ms ease;
 }
 .dwh-btn:active { transform: scale(0.97); }
-.dwh-btn--primary { background: var(--dwh-blue); color: #fff; box-shadow: 0 8px 20px rgba(26, 79, 171, 0.28); }
-.dwh-btn--light { background: #fff; color: var(--dwh-navy); }
-.dwh-btn--ghost { background: transparent; color: inherit; border-color: currentColor; }
-.dwh-btn--ghost-dark { background: transparent; color: var(--dwh-navy); border-color: var(--dwh-line); }
 .dwh-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.dwh-btn--bleu { background: var(--bleu); color: #fff; box-shadow: 0 1px 0 rgba(255,255,255,.18) inset, 0 10px 24px -8px rgba(21, 82, 214, 0.6); }
+.dwh-btn--blanc { background: #fff; color: var(--encre); }
+.dwh-btn--contour { background: transparent; color: var(--encre); box-shadow: inset 0 0 0 1.5px var(--trait); }
+.dwh-btn small { display: block; font-size: 13px; font-weight: 500; opacity: 0.8; }
 @media (hover: hover) and (pointer: fine) {
-  .dwh-btn--primary:hover { background: #163f8a; }
-  .dwh-btn--ghost-dark:hover { border-color: var(--dwh-navy); }
+  .dwh-btn--bleu:hover { background: var(--bleu-hover); }
+  .dwh-btn--contour:hover { box-shadow: inset 0 0 0 1.5px var(--encre); }
 }
-.dwh-btns { display: grid; gap: 10px; }
-.dwh-link {
-  color: var(--dwh-blue);
+.dwh-lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: var(--bleu);
+  text-decoration: none;
+  padding: 10px 0;
 }
-.dwh-section--navy .dwh-link { color: #fff; }
+.dwh-lien svg { width: 16px; height: 16px; transition: transform 200ms var(--ease-out); }
+.dwh-sombre .dwh-lien { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .dwh-lien:hover svg { transform: translateX(3px); } }
 
-/* ---------- Icônes / puces ---------- */
-.dwh-check {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 8px;
-}
-.dwh-check li {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 15px;
-  line-height: 1.4;
-}
-.dwh-check li::before {
+.dwh-puces { display: grid; gap: 10px; }
+.dwh-puces li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.4; }
+.dwh-puces li::before {
   content: "";
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   margin-top: 1px;
-  border-radius: 50%;
-  background: var(--dwh-green-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%231a8a3e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 10.5l3 3 6-7'/%3E%3C/svg%3E") center / 14px no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='%2316a765' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 9.5l3.2 3.2L14 5.8'/%3E%3C/svg%3E") center / contain no-repeat;
 }
-.dwh-stars { color: #f5a623; letter-spacing: 1px; }
 
 /* ==========================================================================
-   1. HERO
+   1. HERO — signature : l'écran verrouillé et ses notifications
    ========================================================================== */
 .dwh-hero {
-  background: linear-gradient(160deg, var(--dwh-navy) 0%, #143a86 100%);
-  color: #fff;
-  padding: 20px 16px 28px;
+  position: relative;
   overflow: hidden;
+  padding: 28px 20px 32px;
+  background:
+    radial-gradient(120% 60% at 50% 100%, rgba(21, 82, 214, 0.35) 0%, transparent 60%),
+    var(--nuit);
+  color: #fff;
 }
-.dwh-hero__promo {
+.dwh-hero__grille { display: grid; gap: 22px; max-width: 1160px; margin: 0 auto; }
+.dwh-etat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 14px;
+}
+.dwh-etat::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--protege);
+  box-shadow: 0 0 0 4px rgba(22, 167, 101, 0.22);
+}
+.dwh-hero .dwh-titre { font-size: clamp(32px, 8.6vw, 60px); }
+.dwh-hero__prix {
+  margin-top: 14px;
+  font-size: 16px;
+  color: var(--brume);
+}
+.dwh-hero__prix strong { color: #fff; font-weight: 600; }
+.dwh-hero__prix .dwh-zero { color: #4fd79a; font-weight: 600; white-space: nowrap; }
+.dwh-hero__actions { display: grid; gap: 4px; justify-items: center; }
+.dwh-hero__preuve {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #fff;
-  text-decoration: none;
-  margin: 0 auto 20px;
-  width: fit-content;
-  max-width: 100%;
-}
-.dwh-hero__promo b { color: var(--dwh-cyan); }
-.dwh-hero__grid { display: grid; gap: 20px; }
-.dwh-hero__title {
-  font-family: var(--font-heading-family, inherit);
-  font-size: clamp(30px, 8.6vw, 54px);
-  line-height: 1.08;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin: 0 0 14px;
-  text-wrap: balance;
-}
-.dwh-hero__title em { font-style: normal; color: var(--dwh-cyan); }
-.dwh-hero__sub {
-  font-size: 16px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 18px;
-}
-.dwh-hero__media {
-  position: relative;
-  border-radius: var(--dwh-radius);
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.06);
-  aspect-ratio: 4 / 3;
-}
-.dwh-hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.dwh-hero__price-tag {
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
-  background: #fff;
-  color: var(--dwh-navy);
-  border-radius: 12px;
-  padding: 8px 12px;
-  font-size: 12px;
-  line-height: 1.3;
-  box-shadow: var(--dwh-shadow);
-}
-.dwh-hero__price-tag strong { display: block; font-size: 18px; }
-.dwh-hero__bullets { margin: 0 0 20px; }
-.dwh-hero__bullets li { color: #fff; }
-.dwh-hero__bullets li::before { background-color: rgba(72, 202, 228, 0.18); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2348cae4' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 10.5l3 3 6-7'/%3E%3C/svg%3E"); }
-.dwh-hero__proof {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
   flex-wrap: wrap;
-  margin-top: 14px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  color: var(--brume);
 }
-.dwh-hero__proof strong { color: #fff; }
+.dwh-hero__preuve strong { color: #fff; font-weight: 600; }
+.dwh-etoiles { color: #ffc93c; letter-spacing: 1px; font-size: 13px; }
 
-/* Barre de réassurance sous le hero */
-.dwh-trustbar {
-  background: #fff;
-  border-bottom: 1px solid var(--dwh-line);
-  padding: 14px 0;
+/* Écran verrouillé */
+.dwh-ecran {
+  position: relative;
+  border-radius: 28px;
+  padding: 18px 12px 14px;
+  background:
+    radial-gradient(90% 70% at 20% 0%, rgba(120, 150, 230, 0.35), transparent 60%),
+    radial-gradient(80% 80% at 100% 100%, rgba(21, 82, 214, 0.45), transparent 60%),
+    #16224a;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+  font-family: var(--f-systeme);
 }
-.dwh-trustbar__list {
-  list-style: none;
-  margin: 0;
-  padding: 0 16px;
+.dwh-ecran__heure {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 14px;
+}
+.dwh-ecran__heure b { display: block; font-size: 44px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+.dwh-ecran__heure span { font-size: 13px; opacity: 0.8; }
+.dwh-notifs { display: grid; gap: 8px; }
+.dwh-notif {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  max-width: 1120px;
-  margin: 0 auto;
-}
-.dwh-trustbar__item {
-  display: flex;
-  align-items: center;
+  grid-template-columns: 34px 1fr auto;
   gap: 10px;
-  font-size: 13px;
-  line-height: 1.25;
-  font-weight: 500;
+  align-items: start;
+  padding: 11px 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  backdrop-filter: blur(20px) saturate(1.6);
+  color: #0b1530;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.98);
+  animation: dwh-notif 520ms var(--ease-out) forwards;
 }
-.dwh-trustbar__icon {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--dwh-blue-soft);
-  color: var(--dwh-blue);
+.dwh-notif:nth-child(1) { animation-delay: 250ms; }
+.dwh-notif:nth-child(2) { animation-delay: 650ms; }
+.dwh-notif:nth-child(3) { animation-delay: 1050ms; }
+.dwh-notif:nth-child(4) { animation-delay: 1450ms; }
+@keyframes dwh-notif { to { opacity: 1; transform: none; } }
+.dwh-notif__app {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--encre);
+  color: #fff;
   display: grid;
   place-items: center;
 }
-.dwh-trustbar__icon svg { width: 20px; height: 20px; }
-.dwh-trustbar__item small { display: block; color: var(--dwh-muted); font-weight: 400; font-size: 12px; }
+.dwh-notif__app svg { width: 18px; height: 18px; }
+.dwh-notif--ok .dwh-notif__app { background: var(--protege); }
+.dwh-notif__txt { min-width: 0; }
+.dwh-notif__titre { display: block; font-size: 14px; font-weight: 600; line-height: 1.25; }
+.dwh-notif__corps { display: block; font-size: 13px; line-height: 1.3; color: #3a4460; margin-top: 1px; }
+.dwh-notif__quand { font-size: 12px; color: #5a6582; white-space: nowrap; padding-top: 1px; }
 
-/* CTA collant mobile */
-.dwh-sticky {
+/* Barre de réassurance */
+.dwh-rassure { background: #fff; border-bottom: 1px solid var(--trait); }
+.dwh-rassure__liste {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+.dwh-rassure__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+.dwh-rassure__item:nth-child(odd) { border-right: 1px solid var(--trait); }
+.dwh-rassure__item:nth-child(-n + 2) { border-bottom: 1px solid var(--trait); }
+.dwh-rassure__item svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--bleu); }
+
+/* Barre d'action collante (mobile) */
+.dwh-collant {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: auto 0 0 0;
   z-index: 40;
   display: flex;
   gap: 8px;
   padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-  background: rgba(255, 255, 255, 0.96);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid var(--dwh-line);
-  box-shadow: 0 -6px 20px rgba(12, 30, 74, 0.08);
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border-top: 1px solid var(--trait);
   transform: translateY(110%);
-  transition: transform 280ms var(--dwh-ease);
+  transition: transform 300ms var(--ease-out);
 }
-.dwh-sticky.is-visible { transform: translateY(0); }
-.dwh-sticky .dwh-btn { min-height: 48px; font-size: 15px; padding: 10px 14px; }
-.dwh-sticky .dwh-btn--primary { flex: 1.4; }
-.dwh-sticky .dwh-btn--ghost-dark { flex: 1; }
+.dwh-collant.est-visible { transform: none; }
+.dwh-collant .dwh-btn { min-height: 48px; font-size: 15px; padding: 10px 12px; border-radius: 12px; }
+.dwh-collant .dwh-btn--bleu { flex: 1.5; }
+.dwh-collant .dwh-btn--contour { flex: 1; }
 
 /* ==========================================================================
-   2. COMMENT ÇA MARCHE
+   2. PACKS — choix guidé par logement
    ========================================================================== */
-.dwh-steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.dwh-selecteur {
+  position: relative;
   display: grid;
-  gap: 12px;
-  counter-reset: dwh-step;
-}
-.dwh-step {
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 14px;
-  align-items: start;
-  background: #fff;
-  border: 1px solid var(--dwh-line);
-  border-radius: var(--dwh-radius);
-  padding: 16px;
-}
-.dwh-step__num {
-  counter-increment: dwh-step;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--dwh-navy);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  font-size: 18px;
-}
-.dwh-step__num::before { content: counter(dwh-step); }
-.dwh-step h3 { font-size: 17px; line-height: 1.3; margin: 2px 0 4px; font-weight: 600; }
-.dwh-step p { font-size: 14px; line-height: 1.5; margin: 0; color: var(--dwh-muted); }
-
-/* ==========================================================================
-   3. PACKS (choix guidé par logement)
-   ========================================================================== */
-.dwh-tabs {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: 4px;
+  grid-template-columns: repeat(var(--n, 3), 1fr);
   padding: 4px;
-  background: #fff;
-  border: 1px solid var(--dwh-line);
-  border-radius: 999px;
-  margin: 0 0 16px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  background: var(--porcelaine);
 }
-.dwh-tab {
+.dwh-selecteur__curseur {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / var(--n, 3));
+  border-radius: 11px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(12, 30, 74, 0.08), 0 4px 12px -4px rgba(12, 30, 74, 0.12);
+  transform: translateX(calc(100% * var(--i, 0)));
+  transition: transform 260ms var(--ease-in-out);
+}
+.dwh-onglet {
+  position: relative;
+  z-index: 1;
   appearance: none;
   border: 0;
-  background: transparent;
-  border-radius: 999px;
-  min-height: 44px;
-  padding: 6px 8px;
-  font: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--dwh-muted);
+  background: none;
+  min-height: 52px;
+  padding: 6px 4px;
+  font: 600 14px/1.15 var(--f-texte);
+  color: var(--gris);
   cursor: pointer;
-  line-height: 1.15;
-  white-space: nowrap;
-  transition: background-color 200ms ease, color 200ms ease;
   -webkit-tap-highlight-color: transparent;
+  transition: color 200ms ease;
 }
-.dwh-tab small { display: block; font-weight: 400; font-size: 11px; opacity: 0.8; }
-.dwh-tab[aria-selected="true"] { background: var(--dwh-navy); color: #fff; }
+.dwh-onglet small { display: block; margin-top: 2px; font-size: 11.5px; font-weight: 500; opacity: 0.85; }
+.dwh-onglet[aria-selected="true"] { color: var(--encre); }
 
 .dwh-packs { display: grid; gap: 16px; }
-/* Sans JS : toutes les cartes sont visibles. Avec JS : une seule à la fois sur mobile. */
-.dwh-packs.is-enhanced .dwh-pack[hidden] { display: none; }
-
+.dwh-packs.est-pilote .dwh-pack[hidden] { display: none; }
 .dwh-pack {
-  background: #fff;
-  border: 2px solid var(--dwh-line);
-  border-radius: 20px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  animation: dwh-in 280ms var(--dwh-ease) both;
+  border-radius: var(--r-l);
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--trait);
+  overflow: hidden;
 }
-.dwh-pack--featured { border-color: var(--dwh-blue); }
-@keyframes dwh-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: none; }
-}
-.dwh-pack__media {
+.dwh-packs.est-pilote .dwh-pack { animation: dwh-apparait 280ms var(--ease-out); }
+@keyframes dwh-apparait { from { opacity: 0; transform: translateY(6px); } }
+.dwh-pack--vedette { box-shadow: 0 0 0 2px var(--encre); }
+.dwh-pack__visuel {
   position: relative;
   display: block;
   aspect-ratio: 16 / 10;
-  background: #f6f7fb;
+  background: linear-gradient(180deg, #fff 0%, var(--porcelaine) 100%);
 }
-.dwh-pack__media img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.dwh-pack__visuel img { width: 100%; height: 100%; object-fit: contain; padding: 12px; }
 .dwh-pack__badge {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  background: var(--dwh-blue);
+  top: 14px;
+  left: 14px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: var(--encre);
   color: #fff;
   font-size: 12px;
   font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 999px;
 }
-.dwh-pack__for {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #fff;
-  color: var(--dwh-navy);
-  font-size: 12px;
+.dwh-pack__corps { display: flex; flex-direction: column; gap: 16px; padding: 20px; flex: 1; }
+.dwh-pack__gamme { font-size: 13px; font-weight: 600; color: var(--bleu); }
+.dwh-pack__nom {
+  font-family: var(--f-display);
+  font-variation-settings: 'wdth' 88;
+  font-stretch: 88%;
+  font-size: 26px;
+  line-height: 1.1;
   font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(12, 30, 74, 0.1);
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+  letter-spacing: -0.02em;
+  margin-top: 2px;
 }
-.dwh-pack__for svg { width: 14px; height: 14px; }
-.dwh-pack__body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
-.dwh-pack__range { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dwh-blue); margin: 0; }
-.dwh-pack__title { font-size: 20px; line-height: 1.25; font-weight: 600; margin: 2px 0 0; }
-.dwh-pack__desc { font-size: 14px; line-height: 1.5; color: var(--dwh-muted); margin: 0; }
-.dwh-pack__price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.dwh-pack__price-now { font-size: 26px; font-weight: 700; color: var(--dwh-navy); }
-.dwh-pack__price-from { font-size: 13px; color: var(--dwh-muted); }
-.dwh-pack__price-was { font-size: 15px; color: var(--dwh-muted); text-decoration: line-through; }
-.dwh-pack__price-save { font-size: 12px; font-weight: 700; color: #fff; background: var(--dwh-red); padding: 3px 8px; border-radius: 6px; }
-.dwh-pack__alma { font-size: 13px; color: var(--dwh-muted); margin: -8px 0 0; }
-.dwh-pack__alma b { color: var(--dwh-navy); }
-.dwh-pack__cta { margin-top: auto; }
-
-.dwh-alt {
-  margin-top: 16px;
-  display: grid;
+.dwh-pack__pour { font-size: 15px; color: var(--gris); margin-top: 6px; }
+.dwh-pack__prix {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
   gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--trait);
+  margin-top: auto;
 }
-.dwh-alt__card {
+.dwh-pack__montant { font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.dwh-pack__des { display: block; font-size: 13px; font-weight: 500; color: var(--gris); margin-bottom: 4px; }
+.dwh-pack__barre { font-size: 15px; color: var(--gris); text-decoration: line-through; margin-left: 6px; }
+.dwh-pack__mois {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--protege-doux);
+  color: #0d7a48;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.dwh-pack__alma { font-size: 13px; color: var(--gris); margin-top: -8px; }
+
+.dwh-autres { display: grid; gap: 10px; margin-top: 24px; }
+.dwh-autre {
   display: grid;
-  grid-template-columns: 48px 1fr 20px;
+  grid-template-columns: 44px 1fr 18px;
   gap: 14px;
   align-items: center;
   padding: 16px;
-  border-radius: var(--dwh-radius);
+  border-radius: var(--r-m);
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--trait);
   text-decoration: none;
-  color: var(--dwh-navy);
-  background: #fff;
-  border: 1px solid var(--dwh-line);
-  transition: transform 160ms var(--dwh-ease), border-color 200ms ease;
+  transition: transform 160ms var(--ease-out), box-shadow 200ms ease;
 }
-.dwh-alt__card:active { transform: scale(0.98); }
-.dwh-alt__card--strong { background: var(--dwh-navy); color: #fff; border-color: var(--dwh-navy); }
-.dwh-alt__icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: var(--dwh-blue-soft);
-  color: var(--dwh-blue);
-  display: grid;
-  place-items: center;
-}
-.dwh-alt__card--strong .dwh-alt__icon { background: rgba(255, 255, 255, 0.12); color: var(--dwh-cyan); }
-.dwh-alt__icon svg { width: 24px; height: 24px; }
-.dwh-alt__title { display: block; font-size: 16px; font-weight: 600; line-height: 1.3; }
-.dwh-alt__text { display: block; font-size: 13px; line-height: 1.4; opacity: 0.75; margin-top: 2px; }
-.dwh-alt__arrow { width: 20px; height: 20px; opacity: 0.6; }
-.dwh-compare-link { text-align: center; margin: 18px 0 0; font-size: 14px; }
-
-/* ==========================================================================
-   4. ÉCONOMIES (sans abonnement)
-   ========================================================================== */
-.dwh-savings { display: grid; gap: 12px; }
-.dwh-savings__col {
-  border-radius: var(--dwh-radius);
-  padding: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.04);
-}
-.dwh-savings__col--us { background: #fff; color: var(--dwh-navy); border-color: #fff; }
-.dwh-savings__label { font-size: 13px; font-weight: 600; margin: 0 0 6px; opacity: 0.8; }
-.dwh-savings__big { font-size: 32px; line-height: 1.1; font-weight: 700; margin: 0; }
-.dwh-savings__big small { font-size: 15px; font-weight: 500; opacity: 0.75; }
-.dwh-savings__note { font-size: 13px; line-height: 1.45; margin: 8px 0 0; opacity: 0.75; }
-.dwh-savings__col--us .dwh-savings__big { color: var(--dwh-green); }
-.dwh-savings__foot { font-size: 12px; opacity: 0.6; margin: 14px 0 0; }
-
-/* ==========================================================================
-   5. RÉASSURANCE / POURQUOI NOUS
-   ========================================================================== */
-.dwh-proof-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 20px;
-}
-.dwh-proof-stat {
-  background: #fff;
-  border: 1px solid var(--dwh-line);
-  border-radius: var(--dwh-radius-sm);
-  padding: 14px 8px;
-  text-align: center;
-}
-.dwh-proof-stat strong { display: block; font-size: 22px; line-height: 1.1; color: var(--dwh-navy); }
-.dwh-proof-stat span { display: block; font-size: 12px; line-height: 1.3; color: var(--dwh-muted); margin-top: 4px; }
-.dwh-features { display: grid; gap: 10px; }
-.dwh-feature {
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 14px;
-  align-items: start;
-  background: #fff;
-  border-radius: var(--dwh-radius);
-  padding: 16px;
-  border: 1px solid var(--dwh-line);
-}
-.dwh-feature__icon {
+.dwh-autre:active { transform: scale(0.98); }
+@media (hover: hover) and (pointer: fine) { .dwh-autre:hover { box-shadow: 0 0 0 1px var(--encre); } }
+.dwh-autre--fort { background: var(--nuit); color: #fff; box-shadow: none; }
+.dwh-autre__ico {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: var(--dwh-blue-soft);
-  color: var(--dwh-blue);
   display: grid;
   place-items: center;
+  background: var(--porcelaine);
+  color: var(--encre);
 }
-.dwh-feature__icon svg { width: 22px; height: 22px; }
-.dwh-feature h3 { font-size: 16px; line-height: 1.3; margin: 2px 0 4px; font-weight: 600; }
-.dwh-feature p { font-size: 14px; line-height: 1.5; color: var(--dwh-muted); margin: 0; }
+.dwh-autre--fort .dwh-autre__ico { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.dwh-autre__ico svg { width: 22px; height: 22px; }
+.dwh-autre__titre { display: block; font-weight: 600; font-size: 16px; line-height: 1.25; }
+.dwh-autre__texte { display: block; font-size: 14px; line-height: 1.35; color: var(--gris); margin-top: 2px; }
+.dwh-autre--fort .dwh-autre__texte { color: var(--brume); }
+.dwh-autre > svg { width: 18px; height: 18px; opacity: 0.5; }
+.dwh-comparer { text-align: center; margin-top: 12px; }
+
+/* ==========================================================================
+   3. COMMENT ÇA MARCHE — une vraie séquence, donc numérotée
+   ========================================================================== */
+.dwh-etapes { position: relative; display: grid; gap: 26px; counter-reset: etape; }
+.dwh-etapes::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 17px;
+  width: 2px;
+  background: linear-gradient(var(--trait), var(--trait)) ;
+}
+.dwh-etape { position: relative; display: grid; grid-template-columns: 36px 1fr; gap: 16px; }
+.dwh-etape::before {
+  counter-increment: etape;
+  content: counter(etape);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--encre);
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 0 0 6px var(--porcelaine);
+}
+.dwh-etape h3 { font-size: 18px; line-height: 1.3; font-weight: 600; margin-top: 6px; }
+.dwh-etape p { font-size: 15px; color: var(--gris); margin-top: 4px; }
+
+/* ==========================================================================
+   4. LE CALCUL — sans abonnement
+   ========================================================================== */
+.dwh-calcul { display: grid; gap: 22px; margin-top: 8px; }
+.dwh-ligne__tete { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+.dwh-ligne__nom { font-size: 15px; color: var(--brume); }
+.dwh-ligne__val { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.dwh-ligne--nous .dwh-ligne__nom { color: #fff; font-weight: 600; }
+.dwh-ligne--nous .dwh-ligne__val { color: #4fd79a; }
+.dwh-jauge { height: 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+.dwh-jauge__rempli {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #6d7fae, #9fb0d6);
+  transform-origin: left center;
+  transform: scaleX(var(--p, 1));
+  transition: transform 1100ms var(--ease-out);
+}
+.dwh-ligne--nous .dwh-jauge__rempli { background: #4fd79a; }
+.dwh-calcul.attend .dwh-jauge__rempli { transform: scaleX(0); }
+.dwh-calcul__note { font-size: 15px; line-height: 1.5; color: var(--brume); }
+.dwh-calcul__note strong { color: #fff; font-weight: 600; }
+.dwh-mention { font-size: 12px; color: rgba(159, 176, 214, 0.7); margin-top: 20px; }
+
+/* ==========================================================================
+   5. POURQUOI NOUS
+   ========================================================================== */
+.dwh-atouts { display: grid; border-top: 1px solid var(--trait); }
+.dwh-atout {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--trait);
+}
+.dwh-atout svg { width: 24px; height: 24px; color: var(--bleu); margin-top: 1px; }
+.dwh-atout h3 { font-size: 17px; line-height: 1.3; font-weight: 600; }
+.dwh-atout p { font-size: 15px; color: var(--gris); margin-top: 4px; }
 
 /* ==========================================================================
    6. FAQ
    ========================================================================== */
-.dwh-faq { display: grid; gap: 8px; }
-.dwh-faq details {
-  background: #fff;
-  border: 1px solid var(--dwh-line);
-  border-radius: var(--dwh-radius-sm);
-  overflow: hidden;
-}
+.dwh-faq { border-top: 1px solid var(--trait); }
+.dwh-faq details { border-bottom: 1px solid var(--trait); }
 .dwh-faq summary {
-  list-style: none;
-  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
-  min-height: 56px;
-  font-size: 15px;
+  gap: 16px;
+  padding: 18px 0;
+  min-height: 60px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.35;
+  cursor: pointer;
+  list-style: none;
   -webkit-tap-highlight-color: transparent;
 }
 .dwh-faq summary::-webkit-details-marker { display: none; }
 .dwh-faq summary::after {
   content: "";
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--dwh-bg-alt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230c1e4a' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M12 7v10M7 12h10'/%3E%3C/svg%3E") center / 16px no-repeat;
-  transition: transform 200ms var(--dwh-ease);
+  width: 20px;
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%230c1e4a' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M10 4v12M4 10h12'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform 220ms var(--ease-out);
 }
 .dwh-faq details[open] summary::after { transform: rotate(45deg); }
-.dwh-faq__answer { padding: 0 16px 16px; font-size: 14px; line-height: 1.6; color: var(--dwh-muted); }
-.dwh-faq__answer p { margin: 0 0 8px; }
-.dwh-faq__answer p:last-child { margin: 0; }
-.dwh-faq__more { text-align: center; margin: 18px 0 0; font-size: 14px; }
+.dwh-faq__rep { padding: 0 0 20px; font-size: 15px; line-height: 1.6; color: var(--gris); }
+.dwh-faq__rep p + p { margin-top: 10px; }
+.dwh-faq__rep strong { color: var(--encre); font-weight: 600; }
+.dwh-faq__rep a { color: var(--bleu); font-weight: 600; }
+.dwh-faq__plus { margin-top: 20px; font-size: 15px; color: var(--gris); }
 
 /* ==========================================================================
    7. CTA FINAL
    ========================================================================== */
 .dwh-final { text-align: center; }
-.dwh-final .dwh-lead { margin-left: auto; margin-right: auto; }
-.dwh-final__meta {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  margin-top: 16px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-/* Place réservée au CTA collant pour ne pas masquer le footer */
-.dwh-sticky-spacer { height: 76px; }
+.dwh-final .dwh-chapo { margin-left: auto; margin-right: auto; }
+.dwh-final__actions { display: grid; gap: 4px; justify-items: center; max-width: 420px; margin: 28px auto 0; }
+.dwh-final__mentions { margin-top: 18px; font-size: 13px; color: var(--brume); }
+.dwh-espace-collant { height: 80px; background: var(--nuit); }
 
 /* ==========================================================================
-   Tablette / desktop
+   Tablette et ordinateur
    ========================================================================== */
 @media (min-width: 750px) {
-  .dwh-section { padding: 72px 24px; }
-  .dwh-btns { grid-auto-flow: column; justify-content: start; }
-  .dwh-btn { width: auto; }
-  .dwh-hero { padding: 32px 24px 56px; }
-  .dwh-hero__grid { grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; max-width: 1120px; margin: 0 auto; }
-  .dwh-hero__media { order: 2; aspect-ratio: 1 / 1; }
-  .dwh-hero__proof { justify-content: flex-start; }
-  .dwh-trustbar__list { grid-template-columns: repeat(4, 1fr); }
-  .dwh-steps { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .dwh-step { grid-template-columns: 1fr; }
-  .dwh-tabs { display: none; }
+  .dwh-bloc { padding: 88px 32px; }
+  .dwh-hero { padding: 64px 32px 72px; }
+  .dwh-hero__grille { grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center; }
+  .dwh-hero__texte { grid-row: 1; }
+  .dwh-ecran { grid-column: 2; grid-row: 1 / span 2; max-width: 400px; justify-self: end; width: 100%; padding: 28px 16px 20px; }
+  .dwh-hero__actions { justify-items: start; }
+  .dwh-hero__actions .dwh-btn { width: auto; padding-inline: 32px; }
+  .dwh-hero__preuve { justify-content: flex-start; }
+  .dwh-rassure__liste { grid-template-columns: repeat(4, 1fr); }
+  .dwh-rassure__item { justify-content: center; border: 0 !important; }
+  .dwh-rassure__item + .dwh-rassure__item { border-left: 1px solid var(--trait) !important; }
+  .dwh-selecteur { display: none; }
   .dwh-packs { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
-  .dwh-pack__media { aspect-ratio: 4 / 3; }
-  .dwh-packs.is-enhanced .dwh-pack[hidden] { display: flex; }
-  .dwh-alt { grid-template-columns: repeat(3, 1fr); }
-  .dwh-savings { grid-template-columns: 1fr 1fr; }
-  .dwh-proof-stats { max-width: 640px; margin-left: auto; margin-right: auto; }
-  .dwh-features { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  .dwh-faq { max-width: 760px; margin: 0 auto; }
-  .dwh-final .dwh-btns { justify-content: center; }
-  .dwh-sticky, .dwh-sticky-spacer { display: none; }
+  .dwh-packs.est-pilote .dwh-pack[hidden] { display: flex; }
+  .dwh-packs.est-pilote .dwh-pack { animation: none; }
+  .dwh-pack__visuel { aspect-ratio: 4 / 3; }
+  .dwh-autres { grid-template-columns: repeat(3, 1fr); }
+  .dwh-deux { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 72px; align-items: start; }
+  .dwh-deux .dwh-entete { position: sticky; top: 120px; }
+  .dwh-etapes { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .dwh-etapes::before { top: 17px; bottom: auto; left: 18px; right: 18px; width: auto; height: 2px; }
+  .dwh-etape { grid-template-columns: 1fr; gap: 14px; }
+  .dwh-calcul { max-width: 760px; }
+  .dwh-atouts { grid-template-columns: 1fr 1fr; column-gap: 40px; border-top: 0; }
+  .dwh-final__actions { grid-template-columns: auto auto; justify-content: center; gap: 16px; align-items: center; max-width: none; }
+  .dwh-final__actions .dwh-btn { width: auto; padding-inline: 32px; }
+  .dwh-collant, .dwh-espace-collant { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dwh *, .dwh-sticky { animation: none !important; transition: none !important; }
+  .dwh-notif { animation: none; opacity: 1; transform: none; }
+  .dwh-packs.est-pilote .dwh-pack { animation: none; }
+  .dwh-selecteur__curseur, .dwh-jauge__rempli, .dwh-collant { transition: none; }
+  .dwh-calcul.attend .dwh-jauge__rempli { transform: scaleX(var(--p, 1)); }
 }
-</style></head><body><header style="position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid #e3e6f0;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-family:Poppins;color:#0c1e4a"><span style="font-size:22px">☰</span><b>DAEWOO SECURITY</b><span>🛒</span></header><div class="dwh" id="dwh-hero-hero">
-  <section class="dwh-hero" aria-labelledby="dwh-hero-title-hero"><div class="dwh-hero__grid">
-      <div class="dwh-hero__content">
-        <h1 class="dwh-hero__title" id="dwh-hero-title-hero">L'alarme maison <em>sans abonnement</em> que vous installez en 10 minutes</h1><p class="dwh-hero__sub">Alarme et caméras pilotées depuis votre smartphone. Vous payez une seule fois, c'est tout.</p><ul class="dwh-check dwh-hero__bullets"><li>0 € par mois, à vie</li><li>Sans fil, sans technicien, sans travaux</li><li>Alertes instantanées sur votre téléphone</li></ul>
+</style></head><body><header style="position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid #e3e6f0;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-family:Poppins;color:#0c1e4a"><span style="font-size:22px">☰</span><b>DAEWOO SECURITY</b><span>🛒</span></header><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
 
-        <div class="dwh-btns">
-          <a class="dwh-btn dwh-btn--primary" href="#dwh-packs">
-            Trouver mon pack
+<div class="dwh" id="dwh-hero-dwh_hero">
+  <section class="dwh-hero" aria-labelledby="dwh-h1-dwh_hero">
+    <div class="dwh-hero__grille">
+      <div class="dwh-hero__texte"><p class="dwh-etat">Sans abonnement, à vie</p><h1 class="dwh-titre" id="dwh-h1-dwh_hero">Votre alarme maison, sans abonnement. <em>Posée par vous, pilotée depuis votre téléphone.</em></h1><p class="dwh-hero__prix">
+            Système complet dès <strong>139,90 €</strong>
+            · <span class="dwh-zero">0&nbsp;€ par mois, à vie</span>
+          </p></div><figure class="dwh-ecran" aria-label="Exemple de notifications reçues sur votre téléphone">
+          <div class="dwh-ecran__heure" aria-hidden="true">
+            <b>14:32</b><span>samedi 26 septembre</span>
+          </div>
+          <ul class="dwh-notifs"><li class="dwh-notif" >
+                <span class="dwh-notif__app" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="2"/><path d="M8 8a5.6 5.6 0 0 0 0 8M16 8a5.6 5.6 0 0 1 0 8M5 5a9.9 9.9 0 0 0 0 14M19 5a9.9 9.9 0 0 1 0 14"/></svg></span>
+                <span class="dwh-notif__txt">
+                  <span class="dwh-notif__titre">Mouvement détecté · Jardin</span>
+                  <span class="dwh-notif__corps">Touchez pour voir la caméra en direct</span>
+                </span>
+                <span class="dwh-notif__quand">maintenant</span>
+              </li><li class="dwh-notif dwh-notif--ok" >
+                <span class="dwh-notif__app" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
+                <span class="dwh-notif__txt">
+                  <span class="dwh-notif__titre">Alarme activée</span>
+                  <span class="dwh-notif__corps">Maison protégée · tous les détecteurs actifs</span>
+                </span>
+                <span class="dwh-notif__quand">08:12</span>
+              </li><li class="dwh-notif dwh-notif--ok" >
+                <span class="dwh-notif__app" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 6.5A7 7 0 1 0 17 17.5"/><path d="M4 10h9M4 14h9"/></svg></span>
+                <span class="dwh-notif__txt">
+                  <span class="dwh-notif__titre">Votre abonnement ce mois-ci : 0,00 €</span>
+                  <span class="dwh-notif__corps">Comme le mois dernier. Et le suivant.</span>
+                </span>
+                <span class="dwh-notif__quand">le 1er</span>
+              </li></ul>
+        </figure><div class="dwh-hero__actions">
+        <a class="dwh-btn dwh-btn--bleu" href="#dwh-packs">
+          Choisir mon pack
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a><a class="dwh-lien" href="/pages/configurateur_2">
+            Je ne sais pas : guidez-moi en 2 min
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a><a class="dwh-btn dwh-btn--ghost" href="/pages/configurateur_2">Composer mon alarme</a></div><p class="dwh-hero__proof">
-            <span class="dwh-stars" aria-hidden="true">★★★★★</span>
-            4,6/5 · 900+ avis · 60 000 foyers équipés
-          </p></div><div class="dwh-hero__media">
-          <picture>
-            <source
-              media="(max-width: 749px)"
-              srcset="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPhoto%20%28photo%20produit%29%3C/text%3E%3C/svg%3E 500w, data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPhoto%20%28photo%20produit%29%3C/text%3E%3C/svg%3E 750w, data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPhoto%20%28photo%20produit%29%3C/text%3E%3C/svg%3E 1000w"
-              sizes="100vw"
-            >
-            <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPhoto%20%28photo%20produit%29%3C/text%3E%3C/svg%3E" sizes="(min-width: 750px) 50vw, 100vw" loading="eager" fetchpriority="high" alt="Alarme maison sans fil Daewoo Security avec application smartphone">
-          </picture><div class="dwh-hero__price-tag">
-              Pack alarme dès
-              <strong>139,90 €</strong>
-            </div></div></div>
-  </section><div class="dwh-trustbar">
-      <ul class="dwh-trustbar__list"><li class="dwh-trustbar__item" >
-            <span class="dwh-trustbar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 6.5A7 7 0 1 0 17 17.5"/><path d="M4 10h9M4 14h9"/></svg></span>
-            <span>
-              0 € d'abonnement<small>Paiement unique</small></span>
-          </li><li class="dwh-trustbar__item" >
-            <span class="dwh-trustbar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span>
-            <span>
-              Livraison offerte<small>Expédié sous 48 h</small></span>
-          </li><li class="dwh-trustbar__item" >
-            <span class="dwh-trustbar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/></svg></span>
-            <span>
-              Garantie 2 ans<small>14 j pour changer d'avis</small></span>
-          </li><li class="dwh-trustbar__item" >
-            <span class="dwh-trustbar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M19 19c0 1.5-2 2.5-5 2.5"/></svg></span>
-            <span>
-              SAV en France<small>Basé à Mérignac</small></span>
+          </a><p class="dwh-hero__preuve">
+            <span class="dwh-etoiles" aria-hidden="true">★★★★★</span>
+            4,6/5 · 1 356 avis clients
+          </p></div>
+    </div>
+  </section><div class="dwh-rassure">
+      <ul class="dwh-rassure__liste"><li class="dwh-rassure__item" >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5L12 12l9-4.5M12 12v9"/></svg>
+            Expédié sous 24 h
+          </li><li class="dwh-rassure__item" >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/></svg>
+            Garantie 2 ans
+          </li><li class="dwh-rassure__item" >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 9h11a5 5 0 0 1 0 10H9"/><path d="M8 5L4 9l4 4"/></svg>
+            Retour sous 14 jours
+          </li><li class="dwh-rassure__item" >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M19 19c0 1.5-2 2.5-5 2.5"/></svg>
+            Support en France
           </li></ul>
-    </div><div class="dwh-sticky" data-dwh-sticky aria-hidden="true">
-      <a class="dwh-btn dwh-btn--primary" href="#dwh-packs" tabindex="-1">Voir les packs</a>
-      <a class="dwh-btn dwh-btn--ghost-dark" href="/pages/configurateur_2" tabindex="-1">Configurer</a>
+    </div><div class="dwh-collant" data-dwh-collant aria-hidden="true">
+      <a class="dwh-btn dwh-btn--bleu" href="#dwh-packs" tabindex="-1">Voir les packs</a>
+      <a class="dwh-btn dwh-btn--contour" href="/pages/configurateur_2" tabindex="-1">Me guider</a>
     </div>
     <script>
       (function () {
         function init() {
-          var root = document.getElementById('dwh-hero-hero');
-          if (!root || !('IntersectionObserver' in window)) return;
-          var hero = root.querySelector('.dwh-hero');
-          var bar = root.querySelector('[data-dwh-sticky]');
-          var heroGone = false;
-          var blockers = new Set();
+          var racine = document.getElementById('dwh-hero-dwh_hero');
+          if (!racine || !('IntersectionObserver' in window)) return;
+          var hero = racine.querySelector('.dwh-hero');
+          var barre = racine.querySelector('[data-dwh-collant]');
+          var heroPasse = false;
+          var masques = new Set();
 
-          function update() {
-            var show = heroGone && blockers.size === 0;
-            bar.classList.toggle('is-visible', show);
-            bar.setAttribute('aria-hidden', show ? 'false' : 'true');
-            bar.querySelectorAll('a').forEach(function (a) { a.tabIndex = show ? 0 : -1; });
+          function maj() {
+            var visible = heroPasse && masques.size === 0;
+            barre.classList.toggle('est-visible', visible);
+            barre.setAttribute('aria-hidden', visible ? 'false' : 'true');
+            barre.querySelectorAll('a').forEach(function (a) { a.tabIndex = visible ? 0 : -1; });
           }
 
-          new IntersectionObserver(function (e) { heroGone = !e[0].isIntersecting; update(); }).observe(hero);
+          new IntersectionObserver(function (e) { heroPasse = !e[0].isIntersecting; maj(); }).observe(hero);
 
-          // La barre se masque quand les packs, le CTA final ou le footer sont à l'écran (inutile en doublon).
-          var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) { en.isIntersecting ? blockers.add(en.target) : blockers.delete(en.target); });
-            update();
+          // Inutile en doublon : on la cache sur les packs, le CTA final et le footer.
+          var io = new IntersectionObserver(function (entrees) {
+            entrees.forEach(function (e) { e.isIntersecting ? masques.add(e.target) : masques.delete(e.target); });
+            maj();
           }, { rootMargin: '-35% 0px -35% 0px' });
           document.querySelectorAll('#dwh-packs, .dwh-final, footer, .footer').forEach(function (el) { io.observe(el); });
         }
@@ -671,96 +684,84 @@
       })();
     </script></div>
 
-
-
-<div class="dwh">
-  <section class="dwh-section dwh-section--alt" aria-labelledby="dwh-steps-steps">
-    <div class="dwh-wrap">
-      <div class="dwh-head dwh-head--center"><p class="dwh-eyebrow">Simple comme 1, 2, 3</p><h2 class="dwh-h2" id="dwh-steps-steps">Protégé dès ce soir, sans technicien</h2></div>
-
-      <ol class="dwh-steps"><li class="dwh-step" >
-            <span class="dwh-step__num" aria-hidden="true"></span>
-            <div>
-              <h3>Choisissez votre pack</h3>
-              <p>Selon votre logement, ou composez-le vous-même en 2 minutes avec notre configurateur.</p>
-            </div>
-          </li><li class="dwh-step" >
-            <span class="dwh-step__num" aria-hidden="true"></span>
-            <div>
-              <h3>Installez-le en 10 minutes</h3>
-              <p>Tout est sans fil : on colle les détecteurs, on branche la centrale, l'application vous guide pas à pas.</p>
-            </div>
-          </li><li class="dwh-step" >
-            <span class="dwh-step__num" aria-hidden="true"></span>
-            <div>
-              <h3>Pilotez tout depuis votre téléphone</h3>
-              <p>Armez, désarmez, regardez vos caméras et recevez une alerte à la moindre intrusion. Sans payer d'abonnement.</p>
-            </div>
-          </li></ol>
-    </div>
-  </section>
-</div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
 
 <div class="dwh" id="dwh-packs">
-  <section class="dwh-section" aria-labelledby="dwh-packs-title-packs">
-    <div class="dwh-wrap">
-      <div class="dwh-head dwh-head--center"><p class="dwh-eyebrow">Nos packs prêts à installer</p><h2 class="dwh-h2" id="dwh-packs-title-packs">Quel est votre logement ?</h2><p class="dwh-lead">Nos experts ont composé un pack pour chaque situation. Tout est inclus pour démarrer.</p></div><div class="dwh-tabs" role="tablist" aria-label="Quel est votre logement ?" data-dwh-tabs hidden><button
+  <section class="dwh-bloc" aria-labelledby="dwh-packs-titre-dwh_packs">
+    <div class="dwh-large">
+      <div class="dwh-entete"><p class="dwh-surtitre">Packs complets, prêts à poser</p><h2 class="dwh-titre" id="dwh-packs-titre-dwh_packs">Quel est votre logement ?</h2><p class="dwh-chapo">Choisissez, on vous montre le pack adapté. Tout est dans la boîte pour démarrer, et vous l'agrandirez quand vous voudrez.</p></div><div
+          class="dwh-selecteur"
+          role="tablist"
+          aria-label="Type de logement"
+          style="--n: 3; --i: 1;"
+          data-dwh-selecteur
+          hidden
+        >
+          <span class="dwh-selecteur__curseur" aria-hidden="true"></span><button
               type="button"
-              class="dwh-tab"
+              class="dwh-onglet"
               role="tab"
-              id="dwh-tab-p1"
+              id="dwh-onglet-p1"
               aria-controls="dwh-pack-p1"
               aria-selected="false"
               tabindex="-1"
             >
-              Appartement<small>Studio à T3</small></button><button
+              Appartement<small>studio à T3</small></button><button
               type="button"
-              class="dwh-tab"
+              class="dwh-onglet"
               role="tab"
-              id="dwh-tab-p2"
+              id="dwh-onglet-p2"
               aria-controls="dwh-pack-p2"
               aria-selected="true"
               tabindex="0"
             >
-              Maison<small>4 à 6 pièces</small></button><button
+              Maison<small>avec jardin</small></button><button
               type="button"
-              class="dwh-tab"
+              class="dwh-onglet"
               role="tab"
-              id="dwh-tab-p3"
+              id="dwh-onglet-p3"
               aria-controls="dwh-pack-p3"
               aria-selected="false"
               tabindex="-1"
             >
-              Grande maison<small>Villa, dépendances</small></button></div><div class="dwh-packs" data-dwh-packs><article
+              Grande maison<small>villa, dépendances</small></button></div><div class="dwh-packs" data-dwh-packs><article
             class="dwh-pack"
             id="dwh-pack-p1"
             role="tabpanel"
-            aria-labelledby="dwh-tab-p1"
-            data-index="0"
+            aria-labelledby="dwh-onglet-p1"
             
           >
-            <a class="dwh-pack__media" href="#" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPack%20Vigilia%20%28photo%20produit%29%3C/text%3E%3C/svg%3E" sizes="(min-width: 750px) 33vw, 100vw" loading="lazy" alt="Pack Vigilia"><span class="dwh-pack__for"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Appartement</span></a>
+            <a class="dwh-pack__visuel" href="#" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPack%20Vigilia%20%28photo%20produit%29%3C/text%3E%3C/svg%3E" sizes="(min-width: 750px) 33vw, 100vw" loading="lazy" alt="Pack Vigilia"></a>
 
-            <div class="dwh-pack__body">
-              <div><p class="dwh-pack__range">Gamme Vigilia</p><h3 class="dwh-pack__title">Pack Vigilia</h3>
-              </div><p class="dwh-pack__desc">Simple et compact, idéal pour un appartement ou une petite maison.</p><ul class="dwh-check"><li>Wi-Fi, ou Wi-Fi + 4G (Vigilia +)</li><li>Batterie de secours intégrée</li><li>Évolutif : jusqu'à 90 accessoires</li></ul><div class="dwh-pack__price"><span class="dwh-pack__price-from">dès</span><span class="dwh-pack__price-now">139,90 €</span></div><p class="dwh-pack__alma">ou <b>4 × 34,97 €</b> sans frais</p><a class="dwh-btn dwh-btn--ghost-dark dwh-pack__cta" href="#">
+            <div class="dwh-pack__corps">
+              <div><p class="dwh-pack__gamme">Gamme Vigilia</p><h3 class="dwh-pack__nom">Pack Vigilia</h3><p class="dwh-pack__pour">Simple et compact : l'essentiel pour protéger un appartement ou une petite maison.</p></div>
+
+              <ul class="dwh-puces"><li>Wi-Fi, ou Wi-Fi + 4G avec Vigilia +</li><li>Batterie de secours en cas de coupure</li><li>Évolutif : jusqu'à 60 accessoires</li></ul><div class="dwh-pack__prix">
+                  <div><span class="dwh-pack__des">à partir de</span><span class="dwh-pack__montant">139,90 €</span></div>
+                  <span class="dwh-pack__mois">0&nbsp;€/mois</span>
+                </div><p class="dwh-pack__alma">ou 4 × 34,97 € sans frais</p><a class="dwh-btn dwh-btn--contour" href="#">
                 Voir ce pack
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
             </div>
           </article><article
-            class="dwh-pack dwh-pack--featured"
+            class="dwh-pack dwh-pack--vedette"
             id="dwh-pack-p2"
             role="tabpanel"
-            aria-labelledby="dwh-tab-p2"
-            data-index="1"
+            aria-labelledby="dwh-onglet-p2"
             
           >
-            <a class="dwh-pack__media" href="#" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPack%20Touch%20%28photo%20produit%29%3C/text%3E%3C/svg%3E" sizes="(min-width: 750px) 33vw, 100vw" loading="lazy" alt="Pack Touch"><span class="dwh-pack__badge">Le plus choisi</span><span class="dwh-pack__for"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Maison</span></a>
+            <a class="dwh-pack__visuel" href="#" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPack%20Touch%20%28photo%20produit%29%3C/text%3E%3C/svg%3E" sizes="(min-width: 750px) 33vw, 100vw" loading="lazy" alt="Pack Touch"><span class="dwh-pack__badge">Le plus choisi</span></a>
 
-            <div class="dwh-pack__body">
-              <div><p class="dwh-pack__range">Gamme Touch</p><h3 class="dwh-pack__title">Pack Touch</h3>
-              </div><p class="dwh-pack__desc">Une centrale à écran tactile pour tout piloter, chez vous comme à distance.</p><ul class="dwh-check"><li>Écran tactile 4,3" ou 7"</li><li>Wi-Fi + 4G en option</li><li>Batterie de 4 h à 20 h</li></ul><div class="dwh-pack__price"><span class="dwh-pack__price-from">dès</span><span class="dwh-pack__price-now">199,90 €</span></div><p class="dwh-pack__alma">ou <b>4 × 49,97 €</b> sans frais</p><a class="dwh-btn dwh-btn--primary dwh-pack__cta" href="#">
+            <div class="dwh-pack__corps">
+              <div><p class="dwh-pack__gamme">Gamme Touch</p><h3 class="dwh-pack__nom">Pack Touch</h3><p class="dwh-pack__pour">Une centrale à écran tactile pour tout piloter, chez vous comme à distance.</p></div>
+
+              <ul class="dwh-puces"><li>Écran tactile 4,3" ou 7"</li><li>Wi-Fi + 4G (carte SIM non incluse)</li><li>Batterie de secours de 4 h à 20 h</li></ul><div class="dwh-pack__prix">
+                  <div><span class="dwh-pack__des">à partir de</span><span class="dwh-pack__montant">199,90 €</span></div>
+                  <span class="dwh-pack__mois">0&nbsp;€/mois</span>
+                </div><p class="dwh-pack__alma">ou 4 × 49,97 € sans frais</p><a class="dwh-btn dwh-btn--bleu" href="#">
                 Voir ce pack
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
@@ -769,177 +770,254 @@
             class="dwh-pack"
             id="dwh-pack-p3"
             role="tabpanel"
-            aria-labelledby="dwh-tab-p3"
-            data-index="2"
+            aria-labelledby="dwh-onglet-p3"
             
           >
-            <a class="dwh-pack__media" href="#" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPack%20%C3%89lite%20%28photo%20produit%29%3C/text%3E%3C/svg%3E" sizes="(min-width: 750px) 33vw, 100vw" loading="lazy" alt="Pack Élite"><span class="dwh-pack__for"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Grande maison</span></a>
+            <a class="dwh-pack__visuel" href="#" tabindex="-1" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20300%22%3E%3Crect%20width%3D%22400%22%20height%3D%22300%22%20fill%3D%22%23e9ecf6%22/%3E%3Crect%20x%3D%22150%22%20y%3D%2280%22%20width%3D%22100%22%20height%3D%22120%22%20rx%3D%2214%22%20fill%3D%22%23c9d3ee%22/%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22125%22%20r%3D%2218%22%20fill%3D%22%231a4fab%22%20opacity%3D%22.5%22/%3E%3Ctext%20x%3D%22200%22%20y%3D%22240%22%20font-family%3D%22Poppins%2Csans-serif%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%235b6485%22%3EPack%20%C3%89lite%20%28photo%20produit%29%3C/text%3E%3C/svg%3E" sizes="(min-width: 750px) 33vw, 100vw" loading="lazy" alt="Pack Élite"></a>
 
-            <div class="dwh-pack__body">
-              <div><p class="dwh-pack__range">Gamme Élite</p><h3 class="dwh-pack__title">Pack Élite</h3>
-              </div><p class="dwh-pack__desc">Notre système le plus robuste, pensé pour les grandes surfaces.</p><ul class="dwh-check"><li>Triple connexion : Ethernet, Wi-Fi, 4G</li><li>Zigbee 3.0 : portée étendue</li><li>Batterie de secours 12 h</li></ul><div class="dwh-pack__price"><span class="dwh-pack__price-now">299,90 €</span></div><p class="dwh-pack__alma">ou <b>4 × 74,97 €</b> sans frais</p><a class="dwh-btn dwh-btn--ghost-dark dwh-pack__cta" href="#">
+            <div class="dwh-pack__corps">
+              <div><p class="dwh-pack__gamme">Gamme Élite</p><h3 class="dwh-pack__nom">Pack Élite</h3><p class="dwh-pack__pour">Notre système le plus robuste, pour les grandes surfaces et les exigences pro.</p></div>
+
+              <ul class="dwh-puces"><li>Triple connexion : Ethernet, Wi-Fi, 4G</li><li>Zigbee 3.0 : réseau maillé longue portée</li><li>Batterie de secours 12 h</li></ul><div class="dwh-pack__prix">
+                  <div><span class="dwh-pack__montant">299,90 €</span></div>
+                  <span class="dwh-pack__mois">0&nbsp;€/mois</span>
+                </div><p class="dwh-pack__alma">ou 4 × 74,97 € sans frais</p><a class="dwh-btn dwh-btn--contour" href="#">
                 Voir ce pack
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
             </div>
           </article></div>
 
-      <div class="dwh-alt"><a class="dwh-alt__card dwh-alt__card--strong" href="/pages/configurateur_2">
-            <span class="dwh-alt__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>
+      <div class="dwh-autres"><a class="dwh-autre dwh-autre--fort" href="/pages/configurateur_2">
+            <span class="dwh-autre__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>
             <span>
-              <span class="dwh-alt__title">Composer mon alarme sur-mesure</span>
-              <span class="dwh-alt__text">2 minutes · remise appliquée automatiquement</span>
+              <span class="dwh-autre__titre">Composer mon alarme sur mesure</span>
+              <span class="dwh-autre__texte">Quelques questions, on vous propose le système adapté</span>
             </span>
-            <span class="dwh-alt__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a><a class="dwh-alt__card" href="/pages/trouver-mon-alarme-quiz">
-            <span class="dwh-alt__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><circle cx="12" cy="17" r=".8" fill="currentColor"/></svg></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a><a class="dwh-autre" href="/pages/trouver-mon-alarme-quiz">
+            <span class="dwh-autre__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><circle cx="12" cy="17" r=".8" fill="currentColor"/></svg></span>
             <span>
-              <span class="dwh-alt__title">Je ne sais pas quoi choisir</span>
-              <span class="dwh-alt__text">Répondez à quelques questions, on vous conseille</span>
+              <span class="dwh-autre__titre">Je ne sais pas quoi choisir</span>
+              <span class="dwh-autre__texte">Répondez au quiz, on vous conseille</span>
             </span>
-            <span class="dwh-alt__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a><a class="dwh-alt__card" href="/products/camera-w512mw-exterieure-rotative-1440p-avec-panneau-solaire">
-            <span class="dwh-alt__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M16 10.5l5-3v9l-5-3"/></svg></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a><a class="dwh-autre" href="/products/camera-w512mw-exterieure-rotative-1440p-avec-panneau-solaire">
+            <span class="dwh-autre__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M16 10.5l5-3v9l-5-3"/></svg></span>
             <span>
-              <span class="dwh-alt__title">Juste une caméra ?</span>
-              <span class="dwh-alt__text">Notre best-seller : caméra extérieure solaire, sans fil</span>
+              <span class="dwh-autre__titre">Juste une caméra ?</span>
+              <span class="dwh-autre__texte">Notre best-seller : caméra extérieure solaire, sans fil</span>
             </span>
-            <span class="dwh-alt__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a></div><p class="dwh-compare-link"><a class="dwh-link" href="/pages/comparateur-am301-sa501-pa501z">Comparer les 3 gammes en détail</a></p></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a></div><p class="dwh-comparer">
+          <a class="dwh-lien" href="/pages/comparateur-am301-sa501-pa501z">Comparer les 3 gammes en détail <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </p></div>
   </section>
 </div>
 
 <script>
   (function () {
-    var root = document.getElementById('dwh-packs');
-    if (!root) return;
-    var tabs = root.querySelector('[data-dwh-tabs]');
-    var wrap = root.querySelector('[data-dwh-packs]');
-    if (!tabs || !wrap) return;
-    var buttons = Array.prototype.slice.call(tabs.querySelectorAll('[role="tab"]'));
-    var panels = Array.prototype.slice.call(wrap.querySelectorAll('[role="tabpanel"]'));
+    var racine = document.getElementById('dwh-packs');
+    if (!racine) return;
+    var selecteur = racine.querySelector('[data-dwh-selecteur]');
+    var liste = racine.querySelector('[data-dwh-packs]');
+    if (!selecteur || !liste) return;
+    var onglets = Array.prototype.slice.call(selecteur.querySelectorAll('[role="tab"]'));
+    var panneaux = Array.prototype.slice.call(liste.querySelectorAll('[role="tabpanel"]'));
 
-    function select(i, focus) {
-      buttons.forEach(function (b, j) {
-        var on = i === j;
-        b.setAttribute('aria-selected', on ? 'true' : 'false');
-        b.tabIndex = on ? 0 : -1;
-        panels[j].hidden = !on;
+    function choisir(i, focus) {
+      selecteur.style.setProperty('--i', i);
+      onglets.forEach(function (o, j) {
+        var actif = i === j;
+        o.setAttribute('aria-selected', actif ? 'true' : 'false');
+        o.tabIndex = actif ? 0 : -1;
+        panneaux[j].hidden = !actif;
       });
-      if (focus) buttons[i].focus();
+      if (focus) onglets[i].focus();
     }
 
-    buttons.forEach(function (b, i) {
-      b.addEventListener('click', function () { select(i); });
-      b.addEventListener('keydown', function (e) {
-        var n = buttons.length;
-        if (e.key === 'ArrowRight') { e.preventDefault(); select((i + 1) % n, true); }
-        if (e.key === 'ArrowLeft') { e.preventDefault(); select((i - 1 + n) % n, true); }
+    onglets.forEach(function (o, i) {
+      o.addEventListener('click', function () { choisir(i); });
+      o.addEventListener('keydown', function (e) {
+        var n = onglets.length;
+        if (e.key === 'ArrowRight') { e.preventDefault(); choisir((i + 1) % n, true); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); choisir((i - 1 + n) % n, true); }
       });
     });
 
-    tabs.hidden = false;
-    wrap.classList.add('is-enhanced');
-    select(1);
+    selecteur.hidden = false;
+    liste.classList.add('est-pilote');
+    choisir(1);
   })();
 </script>
 
 
-<div class="dwh">
-  <section class="dwh-section dwh-section--navy" aria-labelledby="dwh-savings-savings">
-    <div class="dwh-wrap">
-      <div class="dwh-head dwh-head--center"><p class="dwh-eyebrow">Zéro abonnement, vraiment</p><h2 class="dwh-h2" id="dwh-savings-savings">Payez une fois. Soyez protégé pour toujours.</h2><p class="dwh-lead">Pas de contrat, pas d'engagement, pas de mauvaise surprise sur votre relevé bancaire.</p></div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
 
-      <div class="dwh-savings">
-        <div class="dwh-savings__col">
-          <p class="dwh-savings__label">Alarme avec télésurveillance</p>
-          <p class="dwh-savings__big">35 €<small> / mois*</small></p>
-          <p class="dwh-savings__note">Soit environ <strong>1260 €</strong> sur 3 ans. Avec un engagement souvent de 24 à 48 mois.</p>
-        </div>
-        <div class="dwh-savings__col dwh-savings__col--us">
-          <p class="dwh-savings__label">Alarme Daewoo Security</p>
-          <p class="dwh-savings__big">0 €<small> / mois</small></p>
-          <p class="dwh-savings__note">Vous achetez le matériel une seule fois, il vous appartient. Application et alertes gratuites, à vie.</p>
-        </div>
-      </div><div class="dwh-btns" style="margin-top:20px;justify-content:center">
-          <a class="dwh-btn dwh-btn--light" href="#dwh-packs">Voir les packs</a>
-        </div><p class="dwh-savings__foot">*Tarif mensuel indicatif des offres de télésurveillance grand public en France.</p></div>
+
+
+<div class="dwh">
+  <section class="dwh-bloc dwh-bloc--porcelaine" aria-labelledby="dwh-etapes-dwh_etapes">
+    <div class="dwh-large">
+      <div class="dwh-entete"><p class="dwh-surtitre">Comment ça marche</p><h2 class="dwh-titre" id="dwh-etapes-dwh_etapes">Protégé ce soir, sans technicien.</h2></div>
+
+      <ol class="dwh-etapes"><li class="dwh-etape" >
+            <div>
+              <h3>Vous recevez un pack complet</h3>
+              <p>Expédié sous 24 h. Centrale, détecteurs, sirène : tout est dans la boîte.</p>
+            </div>
+          </li><li class="dwh-etape" >
+            <div>
+              <h3>Vous l'installez en moins de 30 minutes</h3>
+              <p>Sans perçage ni câblage : tout se fixe en adhésif. Vous scannez un QR code, l'application vous guide.</p>
+            </div>
+          </li><li class="dwh-etape" >
+            <div>
+              <h3>Vous êtes prévenu où que vous soyez</h3>
+              <p>Une intrusion ? La sirène retentit et vous recevez une alerte sur votre téléphone, avec la caméra en direct.</p>
+            </div>
+          </li></ol>
+    </div>
   </section>
 </div>
 
-<div style="padding:40px 16px;text-align:center;background:#fff;font-family:Poppins;color:#0c1e4a"><div style="border:2px dashed #c9cfe3;border-radius:16px;padding:32px 16px"><b>Avis clients Judge.me</b><br><span style="color:#5b6485;font-size:14px">(carrousel existant conservé tel quel)</span><br><span style="color:#f5a623;font-size:22px">★★★★★</span></div></div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
 
 <div class="dwh">
-  <section class="dwh-section dwh-section--alt" aria-labelledby="dwh-why-why">
-    <div class="dwh-wrap">
-      <div class="dwh-head dwh-head--center"><p class="dwh-eyebrow">Depuis 2015</p><h2 class="dwh-h2" id="dwh-why-why">Une marque française qui reste à vos côtés</h2></div>
+  <section class="dwh-bloc dwh-sombre" aria-labelledby="dwh-calcul-dwh_calcul">
+    <div class="dwh-large dwh-deux">
+      <div class="dwh-entete"><p class="dwh-surtitre">Le calcul est vite fait</p><h2 class="dwh-titre" id="dwh-calcul-dwh_calcul">Achetez une fois. Protégé à vie.</h2><p class="dwh-chapo">Pas de contrat, pas d'engagement, pas de prélèvement chaque mois. Le matériel est à vous, et il vous suit si vous déménagez.</p></div>
 
-      <div class="dwh-proof-stats"><div class="dwh-proof-stat">
-              <strong>60 000+</strong>
-              <span>foyers équipés</span>
-            </div><div class="dwh-proof-stat">
-              <strong>4,6/5</strong>
-              <span>900+ avis clients</span>
-            </div><div class="dwh-proof-stat">
-              <strong>10 min</strong>
-              <span>pour installer</span>
-            </div></div>
+      <div>
+        <div class="dwh-calcul attend" data-dwh-calcul>
+          <p class="dwh-surtitre" style="margin:0">Abonnements payés en 3 ans</p>
 
-      <div class="dwh-features"><div class="dwh-feature" >
-            <span class="dwh-feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M19 19c0 1.5-2 2.5-5 2.5"/></svg></span>
-            <div>
-              <h3>Un SAV en France, à Mérignac</h3>
-              <p>Une vraie équipe répond à vos questions avant et après l'achat. Pas de plateforme à l'étranger.</p>
+          <div class="dwh-ligne">
+            <div class="dwh-ligne__tete">
+              <span class="dwh-ligne__nom">Alarme avec télésurveillance</span>
+              <span class="dwh-ligne__val">1260&nbsp;€*</span>
             </div>
-          </div><div class="dwh-feature" >
-            <span class="dwh-feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3l18 18"/><path d="M8.5 16.5a5 5 0 0 1 7 0M5 13a10 10 0 0 1 5-2.7M14.5 10.4A10 10 0 0 1 19 13M2 9.5a15 15 0 0 1 4.5-2.8M11 6a15 15 0 0 1 11 3.5"/><circle cx="12" cy="20" r=".8" fill="currentColor"/></svg></span>
-            <div>
-              <h3>Wi-Fi coupé ? Toujours protégé</h3>
-              <p>Batterie de secours intégrée et option 4G : l'alarme reste active même sans internet.</p>
+            <div class="dwh-jauge" aria-hidden="true"><div class="dwh-jauge__rempli" style="--p: 1"></div></div>
+          </div>
+
+          <div class="dwh-ligne dwh-ligne--nous">
+            <div class="dwh-ligne__tete">
+              <span class="dwh-ligne__nom">Daewoo Security</span>
+              <span class="dwh-ligne__val">0&nbsp;€</span>
             </div>
-          </div><div class="dwh-feature" >
-            <span class="dwh-feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="10" r="2"/><circle cx="10" cy="5.5" r="2"/><circle cx="14" cy="5.5" r="2"/><circle cx="18" cy="10" r="2"/><path d="M12 11c-3 0-6 4.5-6 7a2.5 2.5 0 0 0 3.5 2.2c1.6-.7 3.4-.7 5 0A2.5 2.5 0 0 0 18 18c0-2.5-3-7-6-7z"/></svg></span>
-            <div>
-              <h3>Compatible avec vos animaux</h3>
-              <p>Des détecteurs qui font la différence entre votre chien et un intrus : pas de fausses alertes.</p>
-            </div>
-          </div><div class="dwh-feature" >
-            <span class="dwh-feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18h2"/></svg></span>
-            <div>
-              <h3>Une seule app gratuite</h3>
-              <p>Alarme, caméras et domotique réunies dans une application iOS et Android, sans frais.</p>
-            </div>
-          </div></div><p class="dwh-faq__more"><a class="dwh-link" href="/pages/a-propos">En savoir plus sur Daewoo Security</a></p></div>
+            <div class="dwh-jauge" aria-hidden="true"><div class="dwh-jauge__rempli" style="--p: 0.012"></div></div>
+          </div>
+
+          <p class="dwh-calcul__note">Notifications, sirène et pilotage à distance depuis l'application Daewoo Home Connect : inclus, sans frais mensuels.</p>
+        </div><p style="margin-top:24px"><a class="dwh-lien" href="#dwh-packs">Voir les packs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p><p class="dwh-mention">*Sur la base d'un abonnement de télésurveillance à 35 € par mois, tarif indicatif constaté en France.</p></div>
+    </div>
   </section>
 </div>
 
+<script>
+  (function () {
+    var calcul = document.currentScript && document.currentScript.previousElementSibling
+      ? document.currentScript.previousElementSibling.querySelector('[data-dwh-calcul]')
+      : null;
+    if (!calcul) return;
+    if (!('IntersectionObserver' in window)) { calcul.classList.remove('attend'); return; }
+    var io = new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { calcul.classList.remove('attend'); io.disconnect(); }
+    }, { rootMargin: '0px 0px -25% 0px' });
+    io.observe(calcul);
+  })();
+</script>
+
+<div style="padding:40px 16px;text-align:center;background:#fff;font-family:Poppins;color:#0c1e4a"><div style="border:2px dashed #c9cfe3;border-radius:16px;padding:32px 16px"><b>Ce qu'en disent nos clients — 1 356 avis vérifiés</b><br><span style="color:#5b6485;font-size:14px">(carrousel Judge.me existant, conservé tel quel)</span><br><span style="color:#f5a623;font-size:22px">★★★★★</span></div></div><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
+
 
 
 <div class="dwh">
-  <section class="dwh-section" aria-labelledby="dwh-faq-faq">
-    <div class="dwh-wrap">
-      <div class="dwh-head dwh-head--center"><p class="dwh-eyebrow">Vos questions</p><h2 class="dwh-h2" id="dwh-faq-faq">Tout ce qu'on nous demande avant d'acheter</h2>
+  <section class="dwh-bloc" aria-labelledby="dwh-atouts-dwh_atouts">
+    <div class="dwh-large dwh-deux">
+      <div class="dwh-entete"><p class="dwh-surtitre">Pourquoi Daewoo Security</p><h2 class="dwh-titre" id="dwh-atouts-dwh_atouts">Une marque connue depuis 1971. Une équipe en France.</h2><p class="dwh-chapo">Plus de 60 000 alarmes et caméras vendues. Et quelqu'un pour vous répondre, avant comme après l'achat.</p></div>
+
+      <div>
+        <ul class="dwh-atouts"><li class="dwh-atout" >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>
+              <div>
+                <h3>Une vraie dissuasion</h3>
+                <p>En cas d'intrusion, la sirène de 110 dB retentit et vous êtes prévenu immédiatement sur votre téléphone.</p>
+              </div>
+            </li><li class="dwh-atout" >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3l18 18"/><path d="M8.5 16.5a5 5 0 0 1 7 0M5 13a10 10 0 0 1 5-2.7M14.5 10.4A10 10 0 0 1 19 13M2 9.5a15 15 0 0 1 4.5-2.8M11 6a15 15 0 0 1 11 3.5"/><circle cx="12" cy="20" r=".8" fill="currentColor"/></svg>
+              <div>
+                <h3>Coupure de courant ? Rien ne s'arrête</h3>
+                <p>La centrale passe sur sa batterie de secours, de 4 h à 20 h selon le modèle.</p>
+              </div>
+            </li><li class="dwh-atout" >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="10" r="2"/><circle cx="10" cy="5.5" r="2"/><circle cx="14" cy="5.5" r="2"/><circle cx="18" cy="10" r="2"/><path d="M12 11c-3 0-6 4.5-6 7a2.5 2.5 0 0 0 3.5 2.2c1.6-.7 3.4-.7 5 0A2.5 2.5 0 0 0 18 18c0-2.5-3-7-6-7z"/></svg>
+              <div>
+                <h3>Pensé pour les animaux</h3>
+                <p>Les détecteurs de mouvement ignorent les animaux jusqu'à 10 kg.</p>
+              </div>
+            </li><li class="dwh-atout" >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 10.5L10 5l7 5.5"/><path d="M5 9.5V19h10v-3"/><path d="M15 12h6M18 9l3 3-3 3"/></svg>
+              <div>
+                <h3>Il vous suit si vous déménagez</h3>
+                <p>Sans fil et sans contrat : idéal aussi pour les locataires.</p>
+              </div>
+            </li></ul><p style="margin-top:12px"><a class="dwh-lien" href="/pages/a-propos">Qui sommes-nous <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p></div>
+    </div>
+  </section>
+</div>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
+
+
+
+<div class="dwh">
+  <section class="dwh-bloc dwh-bloc--porcelaine" aria-labelledby="dwh-faq-dwh_faq">
+    <div class="dwh-large dwh-deux">
+      <div class="dwh-entete"><p class="dwh-surtitre">Questions fréquentes</p><h2 class="dwh-titre" id="dwh-faq-dwh_faq">Tout savoir avant de vous équiper.</h2>
       </div>
 
-      <div class="dwh-faq"><details >
-            <summary>Y a-t-il vraiment aucun abonnement ?</summary>
-            <div class="dwh-faq__answer"><p>Oui. Vous payez le matériel une seule fois. L'application, les notifications et le visionnage de vos caméras en direct sont gratuits, à vie. Seule l'option 4G nécessite une carte SIM, que vous choisissez librement.</p></div>
-          </details><details >
-            <summary>Est-ce que je peux l'installer moi-même ?</summary>
-            <div class="dwh-faq__answer"><p>Oui, en 10 minutes environ. Tout est sans fil : les détecteurs se fixent avec l'adhésif fourni, la centrale se branche sur une prise et l'application vous guide étape par étape.</p></div>
-          </details><details >
-            <summary>Que se passe-t-il si le Wi-Fi ou le courant est coupé ?</summary>
-            <div class="dwh-faq__answer"><p>La centrale dispose d'une batterie de secours et continue de fonctionner. Avec l'option 4G, vous recevez les alertes même sans internet.</p></div>
-          </details><details >
-            <summary>J'ai un chien ou un chat, ça va déclencher l'alarme ?</summary>
-            <div class="dwh-faq__answer"><p>Non, si vous utilisez nos détecteurs compatibles animaux : ils ignorent les mouvements de vos animaux et réagissent uniquement à une présence humaine.</p></div>
-          </details><details >
-            <summary>Je peux ajouter des détecteurs ou des caméras plus tard ?</summary>
-            <div class="dwh-faq__answer"><p>Oui, tous nos systèmes sont évolutifs. Vous ajoutez des accessoires quand vous le souhaitez, directement depuis l'application.</p></div>
-          </details><details >
-            <summary>Et si ça ne me convient pas ?</summary>
-            <div class="dwh-faq__answer"><p>Vous avez 14 jours pour changer d'avis et votre système est garanti 2 ans. Notre SAV, basé à Mérignac, vous accompagne avant et après l'achat.</p></div>
-          </details></div><p class="dwh-faq__more">Une autre question ? <a class="dwh-link" href="/pages/contact">Contactez notre équipe</a></p></div>
+      <div>
+        <div class="dwh-faq"><details >
+              <summary>Vos alarmes fonctionnent-elles vraiment sans aucun abonnement ?</summary>
+              <div class="dwh-faq__rep"><p>Oui, à 100 %. Vous achetez le matériel une fois et il est à vous : notifications sur smartphone, sirène, pilotage à distance via l'application <strong>Daewoo Home Connect</strong> — <strong>sans le moindre frais mensuel, à vie</strong>. Contrairement aux systèmes avec télésurveillance, il n'y a pas de contrat qui vous engage.</p></div>
+            </details><details >
+              <summary>Que se passe-t-il en cas de coupure de courant ou de Wi-Fi ?</summary>
+              <div class="dwh-faq__rep"><p><strong>Coupure de courant :</strong> la centrale bascule automatiquement sur sa <strong>batterie de secours</strong> — de <strong>4 h d'autonomie</strong> (Vigilia et Touch) jusqu'à <strong>20 h</strong> (Touch XL).</p> <p><strong>Coupure de Wi-Fi :</strong> la sirène locale reste active et dissuade l'intrus. Sur tous nos modèles — <strong>hors Vigilia Wi-Fi</strong> — il suffit d'insérer une <strong>carte SIM (non incluse)</strong> : le système bascule alors sur le <strong>réseau GSM</strong> et la centrale continue de vous alerter, même sans box (les caméras, elles, nécessitent le Wi-Fi). La Vigilia Wi-Fi, elle, fonctionne uniquement en Wi-Fi.</p></div>
+            </details><details >
+              <summary>L'installation est-elle compliquée ? Faut-il un professionnel ?</summary>
+              <div class="dwh-faq__rep"><p>Non, tout est prévu pour être <strong>posé soi-même en quelques minutes</strong>, sans perçage ni câblage : les éléments sont sans fil et se fixent en adhésif. Vous scannez un QR code, l'appli vous guide pas à pas. <strong>Aucun électricien ni installateur nécessaire</strong> — et donc aucun frais d'installation.</p></div>
+            </details><details >
+              <summary>Comment suis-je prévenu en cas d'intrusion ?</summary>
+              <div class="dwh-faq__rep"><p>Dès qu'un détecteur se déclenche : la <strong>sirène extérieure de 110 dB</strong> retentit pour faire fuir l'intrus et alerter le voisinage, et vous recevez <strong>immédiatement une notification</strong> sur votre téléphone. Avec une caméra, vous accédez à l'image en direct pour lever le doute et, si besoin, prévenir vos proches ou les autorités.</p></div>
+            </details><details >
+              <summary>J'ai un animal de compagnie : vais-je avoir des fausses alertes ?</summary>
+              <div class="dwh-faq__rep"><p>Les détecteurs de mouvement sont conçus pour <strong>ignorer les petits animaux jusqu'à 10 kg</strong>. Vous pouvez aussi ajuster la sensibilité et créer des zones dans l'appli pour éviter les déclenchements intempestifs.</p></div>
+            </details><details >
+              <summary>Puis-je emporter mon alarme si je déménage ?</summary>
+              <div class="dwh-faq__rep"><p>Absolument. Le système étant sans fil et sans abonnement, il vous suit&nbsp;: vous <strong>décrochez les éléments et les réinstallez chez vous</strong> en quelques minutes. Idéal aussi pour les <strong>locataires</strong>.</p></div>
+            </details><details >
+              <summary>Puis-je faire évoluer mon système et ajouter des accessoires ?</summary>
+              <div class="dwh-faq__rep"><p>Oui, nos systèmes sont <strong>évolutifs</strong>&nbsp;: vous pouvez ajouter à tout moment des détecteurs de porte/fenêtre, de mouvement, des caméras ou des télécommandes selon la taille de votre logement. Commencez petit, complétez plus tard.</p></div>
+            </details><details >
+              <summary>Quelle garantie et quel service après-vente ?</summary>
+              <div class="dwh-faq__rep"><p>Nos produits sont <strong>garantis 2 ans</strong> et notre <strong>support client est basé en France</strong> pour vous accompagner avant et après l'achat. Daewoo est une marque reconnue depuis 1971, gage de sérieux et de pérennité.</p></div>
+            </details><details >
+              <summary>Livraison, retour et remboursement : comment ça marche ?</summary>
+              <div class="dwh-faq__rep"><p><strong>Expédition le jour même</strong> pour toute commande passée avant midi, le lendemain ensuite (pas d'expédition le samedi ni le dimanche). Comptez ensuite <strong>48 h en Colissimo</strong> ou <strong>2 à 3 jours en point relais Chronopost</strong> — 3 à 4 jours pour la Belgique. Vous disposez d'un <strong>délai de rétractation de 14 jours</strong> pour changer d'avis et être remboursé. Un doute avant de commander ? Notre équipe vous conseille.</p></div>
+            </details><details >
+              <summary>Je ne sais pas quel pack choisir. Comment m'aider ?</summary>
+              <div class="dwh-faq__rep"><p>Deux options&nbsp;: utilisez notre <a href="/pages/configurateur_2">configurateur</a> — quelques questions et on vous propose le système adapté à votre logement — ou parcourez directement nos <a href="/pages/pack-alarmes">packs prêts à poser</a>.</p></div>
+            </details></div><p class="dwh-faq__plus">Une autre question ? <a class="dwh-lien" href="/pages/contact">Écrivez à notre équipe</a></p></div>
+    </div>
   </section>
 </div><script type="application/ld+json">
     {
@@ -947,39 +1025,62 @@
       "@type": "FAQPage",
       "mainEntity": [{
             "@type": "Question",
-            "name": "Y a-t-il vraiment aucun abonnement ?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Oui. Vous payez le matériel une seule fois. L'application, les notifications et le visionnage de vos caméras en direct sont gratuits, à vie. Seule l'option 4G nécessite une carte SIM, que vous choisissez librement." }
+            "name": "Vos alarmes fonctionnent-elles vraiment sans aucun abonnement ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Oui, à 100 %. Vous achetez le matériel une fois et il est à vous : notifications sur smartphone, sirène, pilotage à distance via l'application Daewoo Home Connect — sans le moindre frais mensuel, à vie. Contrairement aux systèmes avec télésurveillance, il n'y a pas de contrat qui vous engage." }
           },{
             "@type": "Question",
-            "name": "Est-ce que je peux l'installer moi-même ?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Oui, en 10 minutes environ. Tout est sans fil : les détecteurs se fixent avec l'adhésif fourni, la centrale se branche sur une prise et l'application vous guide étape par étape." }
+            "name": "Que se passe-t-il en cas de coupure de courant ou de Wi-Fi ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Coupure de courant : la centrale bascule automatiquement sur sa batterie de secours — de 4 h d'autonomie (Vigilia et Touch) jusqu'à 20 h (Touch XL). Coupure de Wi-Fi : la sirène locale reste active et dissuade l'intrus. Sur tous nos modèles — hors Vigilia Wi-Fi — il suffit d'insérer une carte SIM (non incluse) : le système bascule alors sur le réseau GSM et la centrale continue de vous alerter, même sans box (les caméras, elles, nécessitent le Wi-Fi). La Vigilia Wi-Fi, elle, fonctionne uniquement en Wi-Fi." }
           },{
             "@type": "Question",
-            "name": "Que se passe-t-il si le Wi-Fi ou le courant est coupé ?",
-            "acceptedAnswer": { "@type": "Answer", "text": "La centrale dispose d'une batterie de secours et continue de fonctionner. Avec l'option 4G, vous recevez les alertes même sans internet." }
+            "name": "L'installation est-elle compliquée ? Faut-il un professionnel ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Non, tout est prévu pour être posé soi-même en quelques minutes, sans perçage ni câblage : les éléments sont sans fil et se fixent en adhésif. Vous scannez un QR code, l'appli vous guide pas à pas. Aucun électricien ni installateur nécessaire — et donc aucun frais d'installation." }
           },{
             "@type": "Question",
-            "name": "J'ai un chien ou un chat, ça va déclencher l'alarme ?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Non, si vous utilisez nos détecteurs compatibles animaux : ils ignorent les mouvements de vos animaux et réagissent uniquement à une présence humaine." }
+            "name": "Comment suis-je prévenu en cas d'intrusion ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Dès qu'un détecteur se déclenche : la sirène extérieure de 110 dB retentit pour faire fuir l'intrus et alerter le voisinage, et vous recevez immédiatement une notification sur votre téléphone. Avec une caméra, vous accédez à l'image en direct pour lever le doute et, si besoin, prévenir vos proches ou les autorités." }
           },{
             "@type": "Question",
-            "name": "Je peux ajouter des détecteurs ou des caméras plus tard ?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Oui, tous nos systèmes sont évolutifs. Vous ajoutez des accessoires quand vous le souhaitez, directement depuis l'application." }
+            "name": "J'ai un animal de compagnie : vais-je avoir des fausses alertes ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Les détecteurs de mouvement sont conçus pour ignorer les petits animaux jusqu'à 10 kg. Vous pouvez aussi ajuster la sensibilité et créer des zones dans l'appli pour éviter les déclenchements intempestifs." }
           },{
             "@type": "Question",
-            "name": "Et si ça ne me convient pas ?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Vous avez 14 jours pour changer d'avis et votre système est garanti 2 ans. Notre SAV, basé à Mérignac, vous accompagne avant et après l'achat." }
+            "name": "Puis-je emporter mon alarme si je déménage ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Absolument. Le système étant sans fil et sans abonnement, il vous suit&nbsp;: vous décrochez les éléments et les réinstallez chez vous en quelques minutes. Idéal aussi pour les locataires." }
+          },{
+            "@type": "Question",
+            "name": "Puis-je faire évoluer mon système et ajouter des accessoires ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Oui, nos systèmes sont évolutifs&nbsp;: vous pouvez ajouter à tout moment des détecteurs de porte/fenêtre, de mouvement, des caméras ou des télécommandes selon la taille de votre logement. Commencez petit, complétez plus tard." }
+          },{
+            "@type": "Question",
+            "name": "Quelle garantie et quel service après-vente ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Nos produits sont garantis 2 ans et notre support client est basé en France pour vous accompagner avant et après l'achat. Daewoo est une marque reconnue depuis 1971, gage de sérieux et de pérennité." }
+          },{
+            "@type": "Question",
+            "name": "Livraison, retour et remboursement : comment ça marche ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Expédition le jour même pour toute commande passée avant midi, le lendemain ensuite (pas d'expédition le samedi ni le dimanche). Comptez ensuite 48 h en Colissimo ou 2 à 3 jours en point relais Chronopost — 3 à 4 jours pour la Belgique. Vous disposez d'un délai de rétractation de 14 jours pour changer d'avis et être remboursé. Un doute avant de commander ? Notre équipe vous conseille." }
+          },{
+            "@type": "Question",
+            "name": "Je ne sais pas quel pack choisir. Comment m'aider ?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Deux options&nbsp;: utilisez notre configurateur — quelques questions et on vous propose le système adapté à votre logement — ou parcourez directement nos packs prêts à poser." }
           }]
     }
-  </script>
+  </script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
+
+
 
 <div class="dwh">
-  <section class="dwh-section dwh-section--navy dwh-final" aria-labelledby="dwh-final-final">
-    <div class="dwh-wrap">
-      <h2 class="dwh-h2" id="dwh-final-final">Prêt à protéger votre logement ?</h2><p class="dwh-lead">Choisissez un pack prêt à l'emploi ou composez votre alarme en 2 minutes.</p><div class="dwh-btns">
-        <a class="dwh-btn dwh-btn--light" href="#dwh-packs">Voir les packs</a><a class="dwh-btn dwh-btn--ghost" href="/pages/configurateur_2">Composer mon alarme</a></div><p class="dwh-final__meta">Livraison offerte · Garantie 2 ans · Paiement en 4× sans frais</p></div>
+  <section class="dwh-bloc dwh-sombre dwh-final" aria-labelledby="dwh-final-dwh_final">
+    <div class="dwh-large">
+      <h2 class="dwh-titre" id="dwh-final-dwh_final">Prêt à protéger votre maison ?</h2><p class="dwh-chapo">Un pack complet, posé par vous ce soir. Et plus jamais d'abonnement.</p><div class="dwh-final__actions">
+        <a class="dwh-btn dwh-btn--blanc" href="#dwh-packs">
+          Choisir mon pack
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a><a class="dwh-lien" href="/pages/configurateur_2">ou me faire guider en 2 min <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div><p class="dwh-final__mentions">Expédié sous 24 h · Garantie 2 ans · Retour sous 14 jours</p></div>
   </section>
-  <div class="dwh-sticky-spacer" aria-hidden="true"></div>
+  <div class="dwh-espace-collant" aria-hidden="true"></div>
 </div>
 
 <footer style="background:#0c1e4a;color:#fff;padding:40px 16px;font-family:Poppins;text-align:center">Footer du thème</footer></body></html>

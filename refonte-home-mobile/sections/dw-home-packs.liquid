@@ -1,35 +1,43 @@
-{{ 'dw-home.css' | asset_url | stylesheet_tag }}
+{% render 'dw-home-head' %}
 
 {%- liquid
-  assign active_index = 0
+  assign actif = 0
   for block in section.blocks
     if block.settings.featured
-      assign active_index = forloop.index0
+      assign actif = forloop.index0
       break
     endif
   endfor
 -%}
 
 <div class="dwh" id="dwh-packs">
-  <section class="dwh-section{% if section.settings.alt_bg %} dwh-section--alt{% endif %}" aria-labelledby="dwh-packs-title-{{ section.id }}">
-    <div class="dwh-wrap">
-      <div class="dwh-head dwh-head--center">
-        {%- if section.settings.eyebrow != blank -%}<p class="dwh-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
-        <h2 class="dwh-h2" id="dwh-packs-title-{{ section.id }}">{{ section.settings.title }}</h2>
-        {%- if section.settings.text != blank -%}<p class="dwh-lead">{{ section.settings.text }}</p>{%- endif -%}
+  <section class="dwh-bloc" aria-labelledby="dwh-packs-titre-{{ section.id }}">
+    <div class="dwh-large">
+      <div class="dwh-entete">
+        {%- if section.settings.eyebrow != blank -%}<p class="dwh-surtitre">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="dwh-titre" id="dwh-packs-titre-{{ section.id }}">{{ section.settings.title }}</h2>
+        {%- if section.settings.text != blank -%}<p class="dwh-chapo">{{ section.settings.text }}</p>{%- endif -%}
       </div>
 
       {%- if section.blocks.size > 1 -%}
-        <div class="dwh-tabs" role="tablist" aria-label="{{ section.settings.title | escape }}" data-dwh-tabs hidden>
+        <div
+          class="dwh-selecteur"
+          role="tablist"
+          aria-label="Type de logement"
+          style="--n: {{ section.blocks.size }}; --i: {{ actif }};"
+          data-dwh-selecteur
+          hidden
+        >
+          <span class="dwh-selecteur__curseur" aria-hidden="true"></span>
           {%- for block in section.blocks -%}
             <button
               type="button"
-              class="dwh-tab"
+              class="dwh-onglet"
               role="tab"
-              id="dwh-tab-{{ block.id }}"
+              id="dwh-onglet-{{ block.id }}"
               aria-controls="dwh-pack-{{ block.id }}"
-              aria-selected="{% if forloop.index0 == active_index %}true{% else %}false{% endif %}"
-              tabindex="{% if forloop.index0 == active_index %}0{% else %}-1{% endif %}"
+              aria-selected="{% if forloop.index0 == actif %}true{% else %}false{% endif %}"
+              tabindex="{% if forloop.index0 == actif %}0{% else %}-1{% endif %}"
             >
               {{ block.settings.tab_label }}
               {%- if block.settings.tab_sub != blank -%}<small>{{ block.settings.tab_sub }}</small>{%- endif -%}
@@ -42,61 +50,56 @@
         {%- for block in section.blocks -%}
           {%- liquid
             assign p = block.settings.product
-            assign title = block.settings.title | default: p.title
+            assign nom = block.settings.title | default: p.title
             assign url = p.url | default: '#'
-            assign img = block.settings.image | default: p.featured_image
+            assign visuel = block.settings.image | default: p.featured_image
           -%}
           <article
-            class="dwh-pack{% if block.settings.featured %} dwh-pack--featured{% endif %}"
+            class="dwh-pack{% if block.settings.featured %} dwh-pack--vedette{% endif %}"
             id="dwh-pack-{{ block.id }}"
             role="tabpanel"
-            aria-labelledby="dwh-tab-{{ block.id }}"
-            data-index="{{ forloop.index0 }}"
+            aria-labelledby="dwh-onglet-{{ block.id }}"
             {{ block.shopify_attributes }}
           >
-            <a class="dwh-pack__media" href="{{ url }}" tabindex="-1" aria-hidden="true">
-              {%- if img != blank -%}
-                {{
-                  img
-                  | image_url: width: 800
-                  | image_tag: widths: '400, 600, 800', sizes: '(min-width: 750px) 33vw, 100vw', loading: 'lazy', alt: title
-                }}
+            <a class="dwh-pack__visuel" href="{{ url }}" tabindex="-1" aria-hidden="true">
+              {%- if visuel != blank -%}
+                {{ visuel | image_url: width: 900 | image_tag: widths: '450, 700, 900', sizes: '(min-width: 750px) 33vw, 100vw', loading: 'lazy', alt: nom }}
               {%- else -%}
                 {{ 'product-1' | placeholder_svg_tag }}
               {%- endif -%}
               {%- if block.settings.badge != blank -%}<span class="dwh-pack__badge">{{ block.settings.badge }}</span>{%- endif -%}
-              {%- if block.settings.tab_label != blank -%}<span class="dwh-pack__for">{% render 'dw-home-icon', icon: 'home' %}{{ block.settings.tab_label }}</span>{%- endif -%}
             </a>
 
-            <div class="dwh-pack__body">
+            <div class="dwh-pack__corps">
               <div>
-                {%- if block.settings.range != blank -%}<p class="dwh-pack__range">{{ block.settings.range }}</p>{%- endif -%}
-                <h3 class="dwh-pack__title">{{ title }}</h3>
+                {%- if block.settings.range != blank -%}<p class="dwh-pack__gamme">{{ block.settings.range }}</p>{%- endif -%}
+                <h3 class="dwh-pack__nom">{{ nom }}</h3>
+                {%- if block.settings.description != blank -%}<p class="dwh-pack__pour">{{ block.settings.description }}</p>{%- endif -%}
               </div>
-              {%- if block.settings.description != blank -%}<p class="dwh-pack__desc">{{ block.settings.description }}</p>{%- endif -%}
 
-              <ul class="dwh-check">
+              <ul class="dwh-puces">
                 {%- if block.settings.bullet_1 != blank -%}<li>{{ block.settings.bullet_1 }}</li>{%- endif -%}
                 {%- if block.settings.bullet_2 != blank -%}<li>{{ block.settings.bullet_2 }}</li>{%- endif -%}
                 {%- if block.settings.bullet_3 != blank -%}<li>{{ block.settings.bullet_3 }}</li>{%- endif -%}
               </ul>
 
               {%- if p != blank -%}
-                <div class="dwh-pack__price">
-                  {%- if p.price_varies -%}<span class="dwh-pack__price-from">dès</span>{%- endif -%}
-                  <span class="dwh-pack__price-now">{{ p.price_min | money }}</span>
-                  {%- if p.compare_at_price_min > p.price_min -%}
-                    <span class="dwh-pack__price-was">{{ p.compare_at_price_min | money }}</span>
-                    {%- assign save = p.compare_at_price_min | minus: p.price_min | times: 100 | divided_by: p.compare_at_price_min -%}
-                    <span class="dwh-pack__price-save">−{{ save }} %</span>
-                  {%- endif -%}
+                <div class="dwh-pack__prix">
+                  <div>
+                    {%- if p.price_varies -%}<span class="dwh-pack__des">à partir de</span>{%- endif -%}
+                    <span class="dwh-pack__montant">{{ p.price_min | money }}</span>
+                    {%- if p.compare_at_price_min > p.price_min -%}
+                      <span class="dwh-pack__barre">{{ p.compare_at_price_min | money }}</span>
+                    {%- endif -%}
+                  </div>
+                  <span class="dwh-pack__mois">0&nbsp;€/mois</span>
                 </div>
                 {%- if section.settings.show_alma and p.price_min >= 5000 -%}
-                  <p class="dwh-pack__alma">ou <b>4 × {{ p.price_min | divided_by: 4 | money }}</b> sans frais</p>
+                  <p class="dwh-pack__alma">ou 4 × {{ p.price_min | divided_by: 4 | money }} sans frais</p>
                 {%- endif -%}
               {%- endif -%}
 
-              <a class="dwh-btn {% if block.settings.featured %}dwh-btn--primary{% else %}dwh-btn--ghost-dark{% endif %} dwh-pack__cta" href="{{ url }}">
+              <a class="dwh-btn {% if block.settings.featured %}dwh-btn--bleu{% else %}dwh-btn--contour{% endif %}" href="{{ url }}">
                 {{ block.settings.cta_label | default: 'Voir ce pack' }}
                 {% render 'dw-home-icon', icon: 'arrow' %}
               </a>
@@ -105,41 +108,43 @@
         {%- endfor -%}
       </div>
 
-      <div class="dwh-alt">
+      <div class="dwh-autres">
         {%- if section.settings.config_title != blank -%}
-          <a class="dwh-alt__card dwh-alt__card--strong" href="{{ section.settings.config_link }}">
-            <span class="dwh-alt__icon">{% render 'dw-home-icon', icon: 'sliders' %}</span>
+          <a class="dwh-autre dwh-autre--fort" href="{{ section.settings.config_link }}">
+            <span class="dwh-autre__ico">{% render 'dw-home-icon', icon: 'sliders' %}</span>
             <span>
-              <span class="dwh-alt__title">{{ section.settings.config_title }}</span>
-              <span class="dwh-alt__text">{{ section.settings.config_text }}</span>
+              <span class="dwh-autre__titre">{{ section.settings.config_title }}</span>
+              <span class="dwh-autre__texte">{{ section.settings.config_text }}</span>
             </span>
-            <span class="dwh-alt__arrow">{% render 'dw-home-icon', icon: 'arrow' %}</span>
+            {% render 'dw-home-icon', icon: 'arrow' %}
           </a>
         {%- endif -%}
         {%- if section.settings.quiz_title != blank -%}
-          <a class="dwh-alt__card" href="{{ section.settings.quiz_link }}">
-            <span class="dwh-alt__icon">{% render 'dw-home-icon', icon: 'quiz' %}</span>
+          <a class="dwh-autre" href="{{ section.settings.quiz_link }}">
+            <span class="dwh-autre__ico">{% render 'dw-home-icon', icon: 'quiz' %}</span>
             <span>
-              <span class="dwh-alt__title">{{ section.settings.quiz_title }}</span>
-              <span class="dwh-alt__text">{{ section.settings.quiz_text }}</span>
+              <span class="dwh-autre__titre">{{ section.settings.quiz_title }}</span>
+              <span class="dwh-autre__texte">{{ section.settings.quiz_text }}</span>
             </span>
-            <span class="dwh-alt__arrow">{% render 'dw-home-icon', icon: 'arrow' %}</span>
+            {% render 'dw-home-icon', icon: 'arrow' %}
           </a>
         {%- endif -%}
         {%- if section.settings.extra_title != blank -%}
-          <a class="dwh-alt__card" href="{{ section.settings.extra_link }}">
-            <span class="dwh-alt__icon">{% render 'dw-home-icon', icon: 'camera' %}</span>
+          <a class="dwh-autre" href="{{ section.settings.extra_link }}">
+            <span class="dwh-autre__ico">{% render 'dw-home-icon', icon: 'camera' %}</span>
             <span>
-              <span class="dwh-alt__title">{{ section.settings.extra_title }}</span>
-              <span class="dwh-alt__text">{{ section.settings.extra_text }}</span>
+              <span class="dwh-autre__titre">{{ section.settings.extra_title }}</span>
+              <span class="dwh-autre__texte">{{ section.settings.extra_text }}</span>
             </span>
-            <span class="dwh-alt__arrow">{% render 'dw-home-icon', icon: 'arrow' %}</span>
+            {% render 'dw-home-icon', icon: 'arrow' %}
           </a>
         {%- endif -%}
       </div>
 
       {%- if section.settings.compare_label != blank -%}
-        <p class="dwh-compare-link"><a class="dwh-link" href="{{ section.settings.compare_link }}">{{ section.settings.compare_label }}</a></p>
+        <p class="dwh-comparer">
+          <a class="dwh-lien" href="{{ section.settings.compare_link }}">{{ section.settings.compare_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a>
+        </p>
       {%- endif -%}
     </div>
   </section>
@@ -147,36 +152,37 @@
 
 <script>
   (function () {
-    var root = document.getElementById('dwh-packs');
-    if (!root) return;
-    var tabs = root.querySelector('[data-dwh-tabs]');
-    var wrap = root.querySelector('[data-dwh-packs]');
-    if (!tabs || !wrap) return;
-    var buttons = Array.prototype.slice.call(tabs.querySelectorAll('[role="tab"]'));
-    var panels = Array.prototype.slice.call(wrap.querySelectorAll('[role="tabpanel"]'));
+    var racine = document.getElementById('dwh-packs');
+    if (!racine) return;
+    var selecteur = racine.querySelector('[data-dwh-selecteur]');
+    var liste = racine.querySelector('[data-dwh-packs]');
+    if (!selecteur || !liste) return;
+    var onglets = Array.prototype.slice.call(selecteur.querySelectorAll('[role="tab"]'));
+    var panneaux = Array.prototype.slice.call(liste.querySelectorAll('[role="tabpanel"]'));
 
-    function select(i, focus) {
-      buttons.forEach(function (b, j) {
-        var on = i === j;
-        b.setAttribute('aria-selected', on ? 'true' : 'false');
-        b.tabIndex = on ? 0 : -1;
-        panels[j].hidden = !on;
+    function choisir(i, focus) {
+      selecteur.style.setProperty('--i', i);
+      onglets.forEach(function (o, j) {
+        var actif = i === j;
+        o.setAttribute('aria-selected', actif ? 'true' : 'false');
+        o.tabIndex = actif ? 0 : -1;
+        panneaux[j].hidden = !actif;
       });
-      if (focus) buttons[i].focus();
+      if (focus) onglets[i].focus();
     }
 
-    buttons.forEach(function (b, i) {
-      b.addEventListener('click', function () { select(i); });
-      b.addEventListener('keydown', function (e) {
-        var n = buttons.length;
-        if (e.key === 'ArrowRight') { e.preventDefault(); select((i + 1) % n, true); }
-        if (e.key === 'ArrowLeft') { e.preventDefault(); select((i - 1 + n) % n, true); }
+    onglets.forEach(function (o, i) {
+      o.addEventListener('click', function () { choisir(i); });
+      o.addEventListener('keydown', function (e) {
+        var n = onglets.length;
+        if (e.key === 'ArrowRight') { e.preventDefault(); choisir((i + 1) % n, true); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); choisir((i - 1 + n) % n, true); }
       });
     });
 
-    tabs.hidden = false;
-    wrap.classList.add('is-enhanced');
-    select({{ active_index }});
+    selecteur.hidden = false;
+    liste.classList.add('est-pilote');
+    choisir({{ actif }});
   })();
 </script>
 
@@ -185,18 +191,17 @@
   "name": "Home V2 · Packs guidés",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Nos packs prêts à installer" },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Packs complets, prêts à poser" },
     { "type": "text", "id": "title", "label": "Titre", "default": "Quel est votre logement ?" },
-    { "type": "textarea", "id": "text", "label": "Texte", "default": "Nos experts ont composé un pack pour chaque situation. Tout est inclus, rien à ajouter pour démarrer." },
-    { "type": "checkbox", "id": "alt_bg", "label": "Fond bleuté", "default": false },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Choisissez, on vous montre le pack adapté. Tout est dans la boîte pour démarrer, et vous l'agrandirez quand vous voudrez." },
     { "type": "checkbox", "id": "show_alma", "label": "Afficher le paiement en 4× (Alma)", "default": true },
     { "type": "header", "content": "Carte configurateur" },
-    { "type": "text", "id": "config_title", "label": "Titre", "default": "Composer mon alarme sur-mesure" },
-    { "type": "text", "id": "config_text", "label": "Texte", "default": "2 minutes · remise appliquée automatiquement" },
+    { "type": "text", "id": "config_title", "label": "Titre", "default": "Composer mon alarme sur mesure" },
+    { "type": "text", "id": "config_text", "label": "Texte", "default": "Quelques questions, on vous propose le système adapté" },
     { "type": "url", "id": "config_link", "label": "Lien", "default": "/pages/configurateur_2" },
     { "type": "header", "content": "Carte quiz" },
     { "type": "text", "id": "quiz_title", "label": "Titre", "default": "Je ne sais pas quoi choisir" },
-    { "type": "text", "id": "quiz_text", "label": "Texte", "default": "Répondez à quelques questions, on vous conseille" },
+    { "type": "text", "id": "quiz_text", "label": "Texte", "default": "Répondez au quiz, on vous conseille" },
     { "type": "url", "id": "quiz_link", "label": "Lien", "default": "/pages/trouver-mon-alarme-quiz" },
     { "type": "header", "content": "Carte caméra seule" },
     { "type": "text", "id": "extra_title", "label": "Titre", "default": "Juste une caméra ?" },
@@ -213,12 +218,12 @@
       "limit": 3,
       "settings": [
         { "type": "text", "id": "tab_label", "label": "Type de logement (onglet)", "default": "Maison" },
-        { "type": "text", "id": "tab_sub", "label": "Précision (sous l'onglet)", "default": "4 à 6 pièces" },
+        { "type": "text", "id": "tab_sub", "label": "Précision sous l'onglet", "default": "avec jardin" },
         { "type": "product", "id": "product", "label": "Produit" },
         { "type": "checkbox", "id": "featured", "label": "Pack mis en avant (ouvert par défaut)", "default": false },
-        { "type": "text", "id": "badge", "label": "Badge", "info": "Ex. : Le plus vendu" },
+        { "type": "text", "id": "badge", "label": "Badge", "info": "Ex. : Le plus choisi" },
         { "type": "text", "id": "range", "label": "Gamme", "default": "Gamme Touch" },
-        { "type": "text", "id": "title", "label": "Titre court", "info": "Vide = titre du produit. Conseillé : un titre court et clair." },
+        { "type": "text", "id": "title", "label": "Nom court", "info": "Vide = titre du produit." },
         { "type": "textarea", "id": "description", "label": "Pour qui ?" },
         { "type": "image_picker", "id": "image", "label": "Image (facultatif)", "info": "Vide = image principale du produit." },
         { "type": "text", "id": "bullet_1", "label": "Point fort 1" },
@@ -232,9 +237,9 @@
     {
       "name": "Home V2 · Packs guidés",
       "blocks": [
-        { "type": "pack", "settings": { "tab_label": "Appartement", "tab_sub": "Studio à T3", "range": "Gamme Vigilia" } },
-        { "type": "pack", "settings": { "tab_label": "Maison", "tab_sub": "4 à 6 pièces", "range": "Gamme Touch", "featured": true, "badge": "Le plus choisi" } },
-        { "type": "pack", "settings": { "tab_label": "Grande maison", "tab_sub": "Villa, dépendances", "range": "Gamme Élite" } }
+        { "type": "pack", "settings": { "tab_label": "Appartement", "tab_sub": "studio à T3", "range": "Gamme Vigilia" } },
+        { "type": "pack", "settings": { "tab_label": "Maison", "tab_sub": "avec jardin", "range": "Gamme Touch", "featured": true, "badge": "Le plus choisi" } },
+        { "type": "pack", "settings": { "tab_label": "Grande maison", "tab_sub": "villa, dépendances", "range": "Gamme Élite" } }
       ]
     }
   ]

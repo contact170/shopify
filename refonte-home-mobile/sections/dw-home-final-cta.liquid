@@ -1,22 +1,25 @@
-{{ 'dw-home.css' | asset_url | stylesheet_tag }}
+{% render 'dw-home-head' %}
 
 <div class="dwh">
-  <section class="dwh-section dwh-section--navy dwh-final" aria-labelledby="dwh-final-{{ section.id }}">
-    <div class="dwh-wrap">
-      <h2 class="dwh-h2" id="dwh-final-{{ section.id }}">{{ section.settings.title }}</h2>
-      {%- if section.settings.text != blank -%}<p class="dwh-lead">{{ section.settings.text }}</p>{%- endif -%}
-      <div class="dwh-btns">
-        <a class="dwh-btn dwh-btn--light" href="{{ section.settings.cta_1_link | default: '#dwh-packs' }}">{{ section.settings.cta_1_label }}</a>
+  <section class="dwh-bloc dwh-sombre dwh-final" aria-labelledby="dwh-final-{{ section.id }}">
+    <div class="dwh-large">
+      <h2 class="dwh-titre" id="dwh-final-{{ section.id }}">{{ section.settings.title }}</h2>
+      {%- if section.settings.text != blank -%}<p class="dwh-chapo">{{ section.settings.text }}</p>{%- endif -%}
+      <div class="dwh-final__actions">
+        <a class="dwh-btn dwh-btn--blanc" href="{{ section.settings.cta_1_link | default: '#dwh-packs' }}">
+          {{ section.settings.cta_1_label }}
+          {% render 'dw-home-icon', icon: 'arrow' %}
+        </a>
         {%- if section.settings.cta_2_label != blank -%}
-          <a class="dwh-btn dwh-btn--ghost" href="{{ section.settings.cta_2_link }}">{{ section.settings.cta_2_label }}</a>
+          <a class="dwh-lien" href="{{ section.settings.cta_2_link }}">{{ section.settings.cta_2_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a>
         {%- endif -%}
       </div>
       {%- if section.settings.meta != blank -%}
-        <p class="dwh-final__meta">{{ section.settings.meta }}</p>
+        <p class="dwh-final__mentions">{{ section.settings.meta }}</p>
       {%- endif -%}
     </div>
   </section>
-  <div class="dwh-sticky-spacer" aria-hidden="true"></div>
+  <div class="dwh-espace-collant" aria-hidden="true"></div>
 </div>
 
 {% schema %}
@@ -24,13 +27,13 @@
   "name": "Home V2 · Appel à l'action final",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "title", "label": "Titre", "default": "Prêt à protéger votre logement ?" },
-    { "type": "textarea", "id": "text", "label": "Texte", "default": "Choisissez un pack prêt à l'emploi ou composez votre alarme en 2 minutes." },
-    { "type": "text", "id": "cta_1_label", "label": "Bouton principal", "default": "Voir les packs" },
-    { "type": "url", "id": "cta_1_link", "label": "Lien", "info": "Vide = remonte à la section Packs." },
-    { "type": "text", "id": "cta_2_label", "label": "Bouton secondaire", "default": "Composer mon alarme" },
-    { "type": "url", "id": "cta_2_link", "label": "Lien", "default": "/pages/configurateur_2" },
-    { "type": "text", "id": "meta", "label": "Mentions", "default": "Livraison offerte · Garantie 2 ans · Paiement en 4× sans frais" }
+    { "type": "text", "id": "title", "label": "Titre", "default": "Prêt à protéger votre maison ?" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Un pack complet, posé par vous ce soir. Et plus jamais d'abonnement." },
+    { "type": "text", "id": "cta_1_label", "label": "Bouton principal", "default": "Choisir mon pack" },
+    { "type": "url", "id": "cta_1_link", "label": "Lien", "info": "Vide = remonte aux packs." },
+    { "type": "text", "id": "cta_2_label", "label": "Lien secondaire", "default": "ou me faire guider en 2 min" },
+    { "type": "url", "id": "cta_2_link", "label": "URL", "default": "/pages/configurateur_2" },
+    { "type": "text", "id": "meta", "label": "Mentions", "default": "Expédié sous 24 h · Garantie 2 ans · Retour sous 14 jours" }
   ],
   "presets": [{ "name": "Home V2 · Appel à l'action final" }]
 }

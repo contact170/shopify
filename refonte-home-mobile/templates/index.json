@@ -1,123 +1,110 @@
 {
   "sections": {
-    "hero": {
+    "dwh_hero": {
       "type": "dw-home-hero",
       "blocks": {
-        "t1": {
-          "type": "trust",
+        "b1": {
+          "type": "notification",
+          "settings": {
+            "icon": "motion",
+            "style": "marque",
+            "title": "Mouvement détecté · Jardin",
+            "text": "Touchez pour voir la caméra en direct",
+            "time": "maintenant"
+          }
+        },
+        "b2": {
+          "type": "notification",
+          "settings": {
+            "icon": "shield",
+            "style": "ok",
+            "title": "Alarme activée",
+            "text": "Maison protégée · tous les détecteurs actifs",
+            "time": "08:12"
+          }
+        },
+        "b3": {
+          "type": "notification",
           "settings": {
             "icon": "euro",
-            "title": "0 € d'abonnement",
-            "text": "Paiement unique"
+            "style": "ok",
+            "title": "Votre abonnement ce mois-ci : 0,00 €",
+            "text": "Comme le mois dernier. Et le suivant.",
+            "time": "le 1er"
           }
         },
-        "t2": {
+        "b4": {
           "type": "trust",
           "settings": {
-            "icon": "truck",
-            "title": "Livraison offerte",
-            "text": "Expédié sous 48 h"
+            "icon": "box",
+            "title": "Expédié sous 24 h"
           }
         },
-        "t3": {
+        "b5": {
           "type": "trust",
           "settings": {
             "icon": "badge",
-            "title": "Garantie 2 ans",
-            "text": "14 j pour changer d'avis"
+            "title": "Garantie 2 ans"
           }
         },
-        "t4": {
+        "b6": {
+          "type": "trust",
+          "settings": {
+            "icon": "return",
+            "title": "Retour sous 14 jours"
+          }
+        },
+        "b7": {
           "type": "trust",
           "settings": {
             "icon": "support",
-            "title": "SAV en France",
-            "text": "Basé à Mérignac"
+            "title": "Support en France"
           }
         }
       },
       "block_order": [
-        "t1",
-        "t2",
-        "t3",
-        "t4"
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7"
       ],
       "settings": {
-        "promo_text": "",
-        "promo_link": "",
-        "title": "L'alarme maison <em>sans abonnement</em> que vous installez en 10 minutes",
-        "subtitle": "Alarme et caméras pilotées depuis votre smartphone. Vous payez une seule fois, c'est tout.",
-        "bullet_1": "0 € par mois, à vie",
-        "bullet_2": "Sans fil, sans technicien, sans travaux",
-        "bullet_3": "Alertes instantanées sur votre téléphone",
-        "cta_1_label": "Trouver mon pack",
-        "cta_1_link": "",
-        "cta_2_label": "Composer mon alarme",
-        "cta_2_link": "/pages/configurateur_2",
-        "proof": "4,6/5 · 900+ avis · 60 000 foyers équipés",
-        "image_alt": "Alarme maison sans fil Daewoo Security avec application smartphone",
+        "etat": "Sans abonnement, à vie",
+        "title": "Votre alarme maison, sans abonnement. <em>Posée par vous, pilotée depuis votre téléphone.</em>",
         "hero_product": "daewoo-vigilia-starter-pack",
-        "show_price_tag": true,
-        "price_tag_label": "Pack alarme dès",
+        "prix_avant": "Système complet dès",
+        "ecran_heure": "14:32",
+        "ecran_label": "Exemple de notifications reçues sur votre téléphone",
+        "cta_1_label": "Choisir mon pack",
+        "cta_1_link": "",
+        "cta_2_label": "Je ne sais pas : guidez-moi en 2 min",
+        "cta_2_link": "/pages/configurateur_2",
+        "proof": "4,6/5 · 1 356 avis clients",
         "enable_sticky": true,
         "sticky_label_1": "Voir les packs",
-        "sticky_label_2": "Configurer"
+        "sticky_label_2": "Me guider"
       }
     },
-    "steps": {
-      "type": "dw-home-steps",
-      "blocks": {
-        "s1": {
-          "type": "step",
-          "settings": {
-            "title": "Choisissez votre pack",
-            "text": "Selon votre logement, ou composez-le vous-même en 2 minutes avec notre configurateur."
-          }
-        },
-        "s2": {
-          "type": "step",
-          "settings": {
-            "title": "Installez-le en 10 minutes",
-            "text": "Tout est sans fil : on colle les détecteurs, on branche la centrale, l'application vous guide pas à pas."
-          }
-        },
-        "s3": {
-          "type": "step",
-          "settings": {
-            "title": "Pilotez tout depuis votre téléphone",
-            "text": "Armez, désarmez, regardez vos caméras et recevez une alerte à la moindre intrusion. Sans payer d'abonnement."
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3"
-      ],
-      "settings": {
-        "eyebrow": "Simple comme 1, 2, 3",
-        "title": "Protégé dès ce soir, sans technicien",
-        "text": "",
-        "alt_bg": true
-      }
-    },
-    "packs": {
+    "dwh_packs": {
       "type": "dw-home-packs",
       "blocks": {
         "p1": {
           "type": "pack",
           "settings": {
             "tab_label": "Appartement",
-            "tab_sub": "Studio à T3",
+            "tab_sub": "studio à T3",
             "product": "daewoo-vigilia-starter-pack",
             "featured": false,
             "badge": "",
             "range": "Gamme Vigilia",
             "title": "Pack Vigilia",
-            "description": "Simple et compact, idéal pour un appartement ou une petite maison.",
-            "bullet_1": "Wi-Fi, ou Wi-Fi + 4G (Vigilia +)",
-            "bullet_2": "Batterie de secours intégrée",
-            "bullet_3": "Évolutif : jusqu'à 90 accessoires",
+            "description": "Simple et compact : l'essentiel pour protéger un appartement ou une petite maison.",
+            "bullet_1": "Wi-Fi, ou Wi-Fi + 4G avec Vigilia +",
+            "bullet_2": "Batterie de secours en cas de coupure",
+            "bullet_3": "Évolutif : jusqu'à 60 accessoires",
             "cta_label": "Voir ce pack"
           }
         },
@@ -125,7 +112,7 @@
           "type": "pack",
           "settings": {
             "tab_label": "Maison",
-            "tab_sub": "4 à 6 pièces",
+            "tab_sub": "avec jardin",
             "product": "alarme-daewoo-wifi-gsm-4g-starter-pack-am301",
             "featured": true,
             "badge": "Le plus choisi",
@@ -133,8 +120,8 @@
             "title": "Pack Touch",
             "description": "Une centrale à écran tactile pour tout piloter, chez vous comme à distance.",
             "bullet_1": "Écran tactile 4,3\" ou 7\"",
-            "bullet_2": "Wi-Fi + 4G en option",
-            "bullet_3": "Batterie de 4 h à 20 h",
+            "bullet_2": "Wi-Fi + 4G (carte SIM non incluse)",
+            "bullet_3": "Batterie de secours de 4 h à 20 h",
             "cta_label": "Voir ce pack"
           }
         },
@@ -142,15 +129,15 @@
           "type": "pack",
           "settings": {
             "tab_label": "Grande maison",
-            "tab_sub": "Villa, dépendances",
+            "tab_sub": "villa, dépendances",
             "product": "starter-pack-elite-daewoo",
             "featured": false,
             "badge": "",
             "range": "Gamme Élite",
             "title": "Pack Élite",
-            "description": "Notre système le plus robuste, pensé pour les grandes surfaces.",
+            "description": "Notre système le plus robuste, pour les grandes surfaces et les exigences pro.",
             "bullet_1": "Triple connexion : Ethernet, Wi-Fi, 4G",
-            "bullet_2": "Zigbee 3.0 : portée étendue",
+            "bullet_2": "Zigbee 3.0 : réseau maillé longue portée",
             "bullet_3": "Batterie de secours 12 h",
             "cta_label": "Voir ce pack"
           }
@@ -162,16 +149,15 @@
         "p3"
       ],
       "settings": {
-        "eyebrow": "Nos packs prêts à installer",
+        "eyebrow": "Packs complets, prêts à poser",
         "title": "Quel est votre logement ?",
-        "text": "Nos experts ont composé un pack pour chaque situation. Tout est inclus pour démarrer.",
-        "alt_bg": false,
+        "text": "Choisissez, on vous montre le pack adapté. Tout est dans la boîte pour démarrer, et vous l'agrandirez quand vous voudrez.",
         "show_alma": true,
-        "config_title": "Composer mon alarme sur-mesure",
-        "config_text": "2 minutes · remise appliquée automatiquement",
+        "config_title": "Composer mon alarme sur mesure",
+        "config_text": "Quelques questions, on vous propose le système adapté",
         "config_link": "/pages/configurateur_2",
         "quiz_title": "Je ne sais pas quoi choisir",
-        "quiz_text": "Répondez à quelques questions, on vous conseille",
+        "quiz_text": "Répondez au quiz, on vous conseille",
         "quiz_link": "/pages/trouver-mon-alarme-quiz",
         "extra_title": "Juste une caméra ?",
         "extra_text": "Notre best-seller : caméra extérieure solaire, sans fil",
@@ -180,35 +166,99 @@
         "compare_link": "/pages/comparateur-am301-sa501-pa501z"
       }
     },
-    "savings": {
-      "type": "dw-home-savings",
-      "settings": {
-        "eyebrow": "Zéro abonnement, vraiment",
-        "title": "Payez une fois. Soyez protégé pour toujours.",
-        "text": "Pas de contrat, pas d'engagement, pas de mauvaise surprise sur votre relevé bancaire.",
-        "them_label": "Alarme avec télésurveillance",
-        "competitor_monthly": 35,
-        "years": 3,
-        "them_note": "Avec un engagement souvent de 24 à 48 mois.",
-        "us_label": "Alarme Daewoo Security",
-        "us_note": "Vous achetez le matériel une seule fois, il vous appartient. Application et alertes gratuites, à vie.",
-        "cta_label": "Voir les packs",
-        "cta_link": "",
-        "footnote": "*Tarif mensuel indicatif des offres de télésurveillance grand public en France."
-      }
-    },
-    "reviews": {
-      "type": "apps",
+    "dwh_etapes": {
+      "type": "dw-home-steps",
       "blocks": {
-        "judge_me_reviews_featured_carousel_CnyXEM": {
-          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "e1": {
+          "type": "step",
           "settings": {
-            "maxwidth": 1080
+            "title": "Vous recevez un pack complet",
+            "text": "Expédié sous 24 h. Centrale, détecteurs, sirène : tout est dans la boîte."
+          }
+        },
+        "e2": {
+          "type": "step",
+          "settings": {
+            "title": "Vous l'installez en moins de 30 minutes",
+            "text": "Sans perçage ni câblage : tout se fixe en adhésif. Vous scannez un QR code, l'application vous guide."
+          }
+        },
+        "e3": {
+          "type": "step",
+          "settings": {
+            "title": "Vous êtes prévenu où que vous soyez",
+            "text": "Une intrusion ? La sirène retentit et vous recevez une alerte sur votre téléphone, avec la caméra en direct."
           }
         }
       },
       "block_order": [
-        "judge_me_reviews_featured_carousel_CnyXEM"
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "settings": {
+        "eyebrow": "Comment ça marche",
+        "title": "Protégé ce soir, sans technicien.",
+        "text": ""
+      }
+    },
+    "dwh_calcul": {
+      "type": "dw-home-savings",
+      "settings": {
+        "eyebrow": "Le calcul est vite fait",
+        "title": "Achetez une fois. Protégé à vie.",
+        "text": "Pas de contrat, pas d'engagement, pas de prélèvement chaque mois. Le matériel est à vous, et il vous suit si vous déménagez.",
+        "them_label": "Alarme avec télésurveillance",
+        "competitor_monthly": 35,
+        "years": 3,
+        "us_label": "Daewoo Security",
+        "us_note": "Notifications, sirène et pilotage à distance depuis l'application Daewoo Home Connect : inclus, sans frais mensuels.",
+        "cta_label": "Voir les packs",
+        "cta_link": "",
+        "footnote": "*Sur la base d'un abonnement de télésurveillance à [mensuel] € par mois, tarif indicatif constaté en France."
+      }
+    },
+    "apps_Kaizci": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_cards_carousel_WPqDVG": {
+          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "show_sample_reviews": true,
+            "reviews_selection": "featured_reviews",
+            "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
+            "star_rating": "4_to_5_star",
+            "show_review_media": true,
+            "display_order": "most_recent",
+            "no_image_fallback": "product_image",
+            "max_reviews": 10,
+            "review_length": "small",
+            "text_size": "small",
+            "image_ratio": "0.75",
+            "reviews_shown": 4,
+            "show_reviewer_name": true,
+            "show_product_name": true,
+            "hide_arrows_mobile": true,
+            "arrows_position": "sides",
+            "max_width": 1100,
+            "corner_styling": "soft",
+            "header_text_color": "#000000",
+            "text_color": "#000000",
+            "card_color": "#f9f9f9",
+            "stars_color": "",
+            "arrows_color": "#000000",
+            "transition_speed": 5,
+            "header_text": "Ce qu'en disent nos clients — 1 356 avis vérifiés",
+            "show_average_rating": true,
+            "rating_display": "default"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_cards_carousel_WPqDVG"
       ],
       "settings": {
         "color_text": "",
@@ -219,113 +269,134 @@
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 48,
-        "padding_bottom": 48,
+        "padding_top": 56,
+        "padding_bottom": 56,
         "divider": false,
         "full_width": false,
         "rounded": false
       }
     },
-    "why": {
+    "dwh_atouts": {
       "type": "dw-home-why",
       "blocks": {
-        "f1": {
+        "a1": {
           "type": "feature",
           "settings": {
-            "icon": "support",
-            "title": "Un SAV en France, à Mérignac",
-            "text": "Une vraie équipe répond à vos questions avant et après l'achat. Pas de plateforme à l'étranger."
+            "icon": "bell",
+            "title": "Une vraie dissuasion",
+            "text": "En cas d'intrusion, la sirène de 110 dB retentit et vous êtes prévenu immédiatement sur votre téléphone."
           }
         },
-        "f2": {
+        "a2": {
           "type": "feature",
           "settings": {
             "icon": "wifi-off",
-            "title": "Wi-Fi coupé ? Toujours protégé",
-            "text": "Batterie de secours intégrée et option 4G : l'alarme reste active même sans internet."
+            "title": "Coupure de courant ? Rien ne s'arrête",
+            "text": "La centrale passe sur sa batterie de secours, de 4 h à 20 h selon le modèle."
           }
         },
-        "f3": {
+        "a3": {
           "type": "feature",
           "settings": {
             "icon": "paw",
-            "title": "Compatible avec vos animaux",
-            "text": "Des détecteurs qui font la différence entre votre chien et un intrus : pas de fausses alertes."
+            "title": "Pensé pour les animaux",
+            "text": "Les détecteurs de mouvement ignorent les animaux jusqu'à 10 kg."
           }
         },
-        "f4": {
+        "a4": {
           "type": "feature",
           "settings": {
-            "icon": "phone",
-            "title": "Une seule app gratuite",
-            "text": "Alarme, caméras et domotique réunies dans une application iOS et Android, sans frais."
+            "icon": "move",
+            "title": "Il vous suit si vous déménagez",
+            "text": "Sans fil et sans contrat : idéal aussi pour les locataires."
           }
         }
       },
       "block_order": [
-        "f1",
-        "f2",
-        "f3",
-        "f4"
+        "a1",
+        "a2",
+        "a3",
+        "a4"
       ],
       "settings": {
-        "eyebrow": "Depuis 2015",
-        "title": "Une marque française qui reste à vos côtés",
-        "text": "",
-        "alt_bg": true,
-        "stat_1_num": "60 000+",
-        "stat_1_label": "foyers équipés",
-        "stat_2_num": "4,6/5",
-        "stat_2_label": "900+ avis clients",
-        "stat_3_num": "10 min",
-        "stat_3_label": "pour installer",
-        "link_label": "En savoir plus sur Daewoo Security",
+        "eyebrow": "Pourquoi Daewoo Security",
+        "title": "Une marque connue depuis 1971. Une équipe en France.",
+        "text": "Plus de 60 000 alarmes et caméras vendues. Et quelqu'un pour vous répondre, avant comme après l'achat.",
+        "link_label": "Qui sommes-nous",
         "link": "/pages/a-propos"
       }
     },
-    "faq": {
+    "dwh_faq": {
       "type": "dw-home-faq",
       "blocks": {
         "q1": {
           "type": "qa",
           "settings": {
-            "question": "Y a-t-il vraiment aucun abonnement ?",
-            "answer": "<p>Oui. Vous payez le matériel une seule fois. L'application, les notifications et le visionnage de vos caméras en direct sont gratuits, à vie. Seule l'option 4G nécessite une carte SIM, que vous choisissez librement.</p>"
+            "question": "Vos alarmes fonctionnent-elles vraiment sans aucun abonnement ?",
+            "answer": "<p>Oui, à 100 %. Vous achetez le matériel une fois et il est à vous : notifications sur smartphone, sirène, pilotage à distance via l'application <strong>Daewoo Home Connect</strong> — <strong>sans le moindre frais mensuel, à vie</strong>. Contrairement aux systèmes avec télésurveillance, il n'y a pas de contrat qui vous engage.</p>"
           }
         },
         "q2": {
           "type": "qa",
           "settings": {
-            "question": "Est-ce que je peux l'installer moi-même ?",
-            "answer": "<p>Oui, en 10 minutes environ. Tout est sans fil : les détecteurs se fixent avec l'adhésif fourni, la centrale se branche sur une prise et l'application vous guide étape par étape.</p>"
+            "question": "Que se passe-t-il en cas de coupure de courant ou de Wi-Fi ?",
+            "answer": "<p><strong>Coupure de courant :</strong> la centrale bascule automatiquement sur sa <strong>batterie de secours</strong> — de <strong>4 h d'autonomie</strong> (Vigilia et Touch) jusqu'à <strong>20 h</strong> (Touch XL).</p> <p><strong>Coupure de Wi-Fi :</strong> la sirène locale reste active et dissuade l'intrus. Sur tous nos modèles — <strong>hors Vigilia Wi-Fi</strong> — il suffit d'insérer une <strong>carte SIM (non incluse)</strong> : le système bascule alors sur le <strong>réseau GSM</strong> et la centrale continue de vous alerter, même sans box (les caméras, elles, nécessitent le Wi-Fi). La Vigilia Wi-Fi, elle, fonctionne uniquement en Wi-Fi.</p>"
           }
         },
         "q3": {
           "type": "qa",
           "settings": {
-            "question": "Que se passe-t-il si le Wi-Fi ou le courant est coupé ?",
-            "answer": "<p>La centrale dispose d'une batterie de secours et continue de fonctionner. Avec l'option 4G, vous recevez les alertes même sans internet.</p>"
+            "question": "L'installation est-elle compliquée ? Faut-il un professionnel ?",
+            "answer": "<p>Non, tout est prévu pour être <strong>posé soi-même en quelques minutes</strong>, sans perçage ni câblage : les éléments sont sans fil et se fixent en adhésif. Vous scannez un QR code, l'appli vous guide pas à pas. <strong>Aucun électricien ni installateur nécessaire</strong> — et donc aucun frais d'installation.</p>"
           }
         },
         "q4": {
           "type": "qa",
           "settings": {
-            "question": "J'ai un chien ou un chat, ça va déclencher l'alarme ?",
-            "answer": "<p>Non, si vous utilisez nos détecteurs compatibles animaux : ils ignorent les mouvements de vos animaux et réagissent uniquement à une présence humaine.</p>"
+            "question": "Comment suis-je prévenu en cas d'intrusion ?",
+            "answer": "<p>Dès qu'un détecteur se déclenche : la <strong>sirène extérieure de 110 dB</strong> retentit pour faire fuir l'intrus et alerter le voisinage, et vous recevez <strong>immédiatement une notification</strong> sur votre téléphone. Avec une caméra, vous accédez à l'image en direct pour lever le doute et, si besoin, prévenir vos proches ou les autorités.</p>"
           }
         },
         "q5": {
           "type": "qa",
           "settings": {
-            "question": "Je peux ajouter des détecteurs ou des caméras plus tard ?",
-            "answer": "<p>Oui, tous nos systèmes sont évolutifs. Vous ajoutez des accessoires quand vous le souhaitez, directement depuis l'application.</p>"
+            "question": "J'ai un animal de compagnie : vais-je avoir des fausses alertes ?",
+            "answer": "<p>Les détecteurs de mouvement sont conçus pour <strong>ignorer les petits animaux jusqu'à 10 kg</strong>. Vous pouvez aussi ajuster la sensibilité et créer des zones dans l'appli pour éviter les déclenchements intempestifs.</p>"
           }
         },
         "q6": {
           "type": "qa",
           "settings": {
-            "question": "Et si ça ne me convient pas ?",
-            "answer": "<p>Vous avez 14 jours pour changer d'avis et votre système est garanti 2 ans. Notre SAV, basé à Mérignac, vous accompagne avant et après l'achat.</p>"
+            "question": "Puis-je emporter mon alarme si je déménage ?",
+            "answer": "<p>Absolument. Le système étant sans fil et sans abonnement, il vous suit&nbsp;: vous <strong>décrochez les éléments et les réinstallez chez vous</strong> en quelques minutes. Idéal aussi pour les <strong>locataires</strong>.</p>"
+          }
+        },
+        "q7": {
+          "type": "qa",
+          "settings": {
+            "question": "Puis-je faire évoluer mon système et ajouter des accessoires ?",
+            "answer": "<p>Oui, nos systèmes sont <strong>évolutifs</strong>&nbsp;: vous pouvez ajouter à tout moment des détecteurs de porte/fenêtre, de mouvement, des caméras ou des télécommandes selon la taille de votre logement. Commencez petit, complétez plus tard.</p>"
+          }
+        },
+        "q8": {
+          "type": "qa",
+          "settings": {
+            "question": "Quelle garantie et quel service après-vente ?",
+            "answer": "<p>Nos produits sont <strong>garantis 2 ans</strong> et notre <strong>support client est basé en France</strong> pour vous accompagner avant et après l'achat. Daewoo est une marque reconnue depuis 1971, gage de sérieux et de pérennité.</p>"
+          }
+        },
+        "q9": {
+          "type": "qa",
+          "settings": {
+            "question": "Livraison, retour et remboursement : comment ça marche ?",
+            "answer": "<p><strong>Expédition le jour même</strong> pour toute commande passée avant midi, le lendemain ensuite (pas d'expédition le samedi ni le dimanche). Comptez ensuite <strong>48 h en Colissimo</strong> ou <strong>2 à 3 jours en point relais Chronopost</strong> — 3 à 4 jours pour la Belgique. Vous disposez d'un <strong>délai de rétractation de 14 jours</strong> pour changer d'avis et être remboursé. Un doute avant de commander ? Notre équipe vous conseille.</p>"
+          }
+        },
+        "q10": {
+          "type": "qa",
+          "settings": {
+            "question": "Je ne sais pas quel pack choisir. Comment m'aider ?",
+            "answer": "<p>Deux options&nbsp;: utilisez notre <a href=\"/pages/configurateur_2\">configurateur</a> — quelques questions et on vous propose le système adapté à votre logement — ou parcourez directement nos <a href=\"/pages/pack-alarmes\">packs prêts à poser</a>.</p>"
           }
         }
       },
@@ -335,39 +406,42 @@
         "q3",
         "q4",
         "q5",
-        "q6"
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
       ],
       "settings": {
-        "eyebrow": "Vos questions",
-        "title": "Tout ce qu'on nous demande avant d'acheter",
-        "alt_bg": false,
+        "eyebrow": "Questions fréquentes",
+        "title": "Tout savoir avant de vous équiper.",
         "schema_markup": true,
         "more_text": "Une autre question ?",
-        "more_label": "Contactez notre équipe",
+        "more_label": "Écrivez à notre équipe",
         "more_link": "/pages/contact"
       }
     },
-    "final": {
+    "dwh_final": {
       "type": "dw-home-final-cta",
       "settings": {
-        "title": "Prêt à protéger votre logement ?",
-        "text": "Choisissez un pack prêt à l'emploi ou composez votre alarme en 2 minutes.",
-        "cta_1_label": "Voir les packs",
+        "title": "Prêt à protéger votre maison ?",
+        "text": "Un pack complet, posé par vous ce soir. Et plus jamais d'abonnement.",
+        "cta_1_label": "Choisir mon pack",
         "cta_1_link": "",
-        "cta_2_label": "Composer mon alarme",
+        "cta_2_label": "ou me faire guider en 2 min",
         "cta_2_link": "/pages/configurateur_2",
-        "meta": "Livraison offerte · Garantie 2 ans · Paiement en 4× sans frais"
+        "meta": "Expédié sous 24 h · Garantie 2 ans · Retour sous 14 jours"
       }
     }
   },
   "order": [
-    "hero",
-    "steps",
-    "packs",
-    "savings",
-    "reviews",
-    "why",
-    "faq",
-    "final"
+    "dwh_hero",
+    "dwh_packs",
+    "dwh_etapes",
+    "dwh_calcul",
+    "apps_Kaizci",
+    "dwh_atouts",
+    "dwh_faq",
+    "dwh_final"
   ]
 }
