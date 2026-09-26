@@ -37,7 +37,7 @@
       </div>
 
       {%- if notifs.size > 0 -%}
-        <figure class="dwh-scene" aria-label="{{ section.settings.ecran_label | escape }}">
+        <figure class="dwh-scene{% if section.settings.centrale_image != blank %} dwh-scene--centrale{% endif %}" aria-label="{{ section.settings.ecran_label | escape }}">
           <div class="dwh-tel">
             <div class="dwh-tel__ecran">
               <div class="dwh-tel__ilot" aria-hidden="true"></div>
@@ -69,6 +69,18 @@
               </ul>
             </div>
           </div>
+          {%- if section.settings.centrale_image != blank -%}
+            <div class="dwh-centrale">
+              <div class="dwh-centrale__photo">
+                {{ section.settings.centrale_image | image_url: width: 300 | image_tag: widths: '150, 200, 300', sizes: '92px', loading: 'eager', alt: section.settings.centrale_nom }}
+              </div>
+              <div>
+                <span class="dwh-centrale__label">{{ section.settings.centrale_label }}</span>
+                <span class="dwh-centrale__nom">{{ section.settings.centrale_nom }}</span>
+                {%- if section.settings.centrale_etat != blank -%}<span class="dwh-centrale__etat">{{ section.settings.centrale_etat }}</span>{%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
         </figure>
       {%- endif -%}
     </div>
@@ -136,6 +148,11 @@
     { "type": "header", "content": "Écran de téléphone" },
     { "type": "text", "id": "ecran_heure", "label": "Heure affichée", "default": "14:32" },
     { "type": "text", "id": "ecran_label", "label": "Description pour l'accessibilité", "default": "Exemple de notifications reçues sur votre téléphone" },
+    { "type": "header", "content": "Centrale (carte sous le téléphone)" },
+    { "type": "image_picker", "id": "centrale_image", "label": "Photo de la centrale", "info": "Vide = la carte n'apparaît pas. Idéal : photo sur fond blanc ou détourée." },
+    { "type": "text", "id": "centrale_label", "label": "Petit texte", "default": "Connectée à votre téléphone" },
+    { "type": "text", "id": "centrale_nom", "label": "Nom", "default": "Centrale Daewoo Touch" },
+    { "type": "text", "id": "centrale_etat", "label": "État", "default": "Alarme armée" },
     { "type": "header", "content": "Boutons" },
     { "type": "text", "id": "cta_1_label", "label": "Bouton principal", "default": "Choisir mon pack" },
     { "type": "url", "id": "cta_1_link", "label": "Lien du bouton principal", "info": "Vide = descend jusqu'aux packs." },
