@@ -4,10 +4,29 @@
   assign mensuel = section.settings.competitor_monthly
   assign mois = section.settings.years | times: 12
   assign total = mensuel | times: mois
+  assign p = section.settings.us_product
+  assign economie = 0
+  if p != blank
+    assign economie = total | times: 100 | minus: p.price_min | divided_by: 100
+  endif
+
+  # Montants avec espace des milliers (1 260 plutôt que 1260).
+  assign total_txt = total | append: ''
+  if total >= 1000
+    assign milliers = total | divided_by: 1000
+    assign reste = total | modulo: 1000 | prepend: '00' | slice: -3, 3
+    assign total_txt = milliers | append: '&nbsp;' | append: reste
+  endif
+  assign economie_txt = economie | append: ''
+  if economie >= 1000
+    assign milliers = economie | divided_by: 1000
+    assign reste = economie | modulo: 1000 | prepend: '00' | slice: -3, 3
+    assign economie_txt = milliers | append: '&nbsp;' | append: reste
+  endif
 -%}
 
 <div class="dwh">
-  <section class="dwh-bloc dwh-sombre" aria-labelledby="dwh-calcul-{{ section.id }}">
+  <section class="dwh-bloc" aria-labelledby="dwh-calcul-{{ section.id }}">
     <div class="dwh-large dwh-deux">
       <div class="dwh-entete">
         {%- if section.settings.eyebrow != blank -%}<p class="dwh-surtitre">{{ section.settings.eyebrow }}</p>{%- endif -%}
@@ -16,52 +35,54 @@
       </div>
 
       <div>
-        <div class="dwh-calcul attend" data-dwh-calcul>
-          <p class="dwh-surtitre" style="margin:0">Abonnements payés en {{ section.settings.years }} ans</p>
-
-          <div class="dwh-ligne">
-            <div class="dwh-ligne__tete">
-              <span class="dwh-ligne__nom">{{ section.settings.them_label }}</span>
-              <span class="dwh-ligne__val">{{ total }}&nbsp;€*</span>
-            </div>
-            <div class="dwh-jauge" aria-hidden="true"><div class="dwh-jauge__rempli" style="--p: 1"></div></div>
+        <div class="dwh-duel">
+          {%- comment -%} Avec abonnement : on paie tous les mois {%- endcomment -%}
+          <div class="dwh-duel__carte dwh-duel__carte--eux">
+            <p class="dwh-duel__nom">{{ section.settings.them_label }}</p>
+            <p class="dwh-duel__prix">{{ mensuel }}&nbsp;€<small>/mois*</small></p>
+            <p class="dwh-duel__detail">
+              Soit <b>{{ total_txt }}&nbsp;€</b> au bout de {{ section.settings.years }}&nbsp;ans.
+              {{ section.settings.them_note }}
+            </p>
           </div>
 
-          <div class="dwh-ligne dwh-ligne--nous">
-            <div class="dwh-ligne__tete">
-              <span class="dwh-ligne__nom">{{ section.settings.us_label }}</span>
-              <span class="dwh-ligne__val">0&nbsp;€</span>
-            </div>
-            <div class="dwh-jauge" aria-hidden="true"><div class="dwh-jauge__rempli" style="--p: 0.012"></div></div>
-          </div>
+          <span class="dwh-duel__vs" aria-hidden="true">ou</span>
 
-          <p class="dwh-calcul__note">{{ section.settings.us_note }}</p>
+          {%- comment -%} Daewoo : on paie le matériel une seule fois {%- endcomment -%}
+          <div class="dwh-duel__carte dwh-duel__carte--nous">
+            <p class="dwh-duel__nom">{{ section.settings.us_label }}</p>
+            <p class="dwh-duel__prix">0&nbsp;€<small>/mois</small></p>
+            <p class="dwh-duel__detail">
+              {%- if p != blank -%}
+                Vous payez seulement le matériel, <b>dès {{ p.price_min | money }}</b>, une seule fois.
+              {%- endif %}
+              {{ section.settings.us_note }}
+            </p>
+            <ul class="dwh-duel__puces">
+              {%- if section.settings.us_point_1 != blank -%}<li>{% render 'dw-home-icon', icon: 'check' %}{{ section.settings.us_point_1 }}</li>{%- endif -%}
+              {%- if section.settings.us_point_2 != blank -%}<li>{% render 'dw-home-icon', icon: 'check' %}{{ section.settings.us_point_2 }}</li>{%- endif -%}
+              {%- if section.settings.us_point_3 != blank -%}<li>{% render 'dw-home-icon', icon: 'check' %}{{ section.settings.us_point_3 }}</li>{%- endif -%}
+            </ul>
+          </div>
         </div>
 
+        {%- if economie > 0 and section.settings.saving_text != blank -%}
+          <p class="dwh-duel__bilan">
+            {% render 'dw-home-icon', icon: 'euro' %}
+            <span>{{ section.settings.saving_text | replace: '[economie]', economie_txt | replace: '[ans]', section.settings.years | replace: ' €', '&nbsp;€' }}</span>
+          </p>
+        {%- endif -%}
+
         {%- if section.settings.cta_label != blank -%}
-          <p style="margin-top:24px"><a class="dwh-lien" href="{{ section.settings.cta_link | default: '#dwh-packs' }}">{{ section.settings.cta_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a></p>
+          <p class="dwh-duel__action"><a class="dwh-lien" href="{{ section.settings.cta_link | default: '#dwh-packs' }}">{{ section.settings.cta_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a></p>
         {%- endif -%}
         {%- if section.settings.footnote != blank -%}
-          <p class="dwh-mention">{{ section.settings.footnote | replace: '[mensuel]', mensuel }}</p>
+          <p class="dwh-duel__mention">{{ section.settings.footnote | replace: '[mensuel]', mensuel }}</p>
         {%- endif -%}
       </div>
     </div>
   </section>
 </div>
-
-<script>
-  (function () {
-    var calcul = document.currentScript && document.currentScript.previousElementSibling
-      ? document.currentScript.previousElementSibling.querySelector('[data-dwh-calcul]')
-      : null;
-    if (!calcul) return;
-    if (!('IntersectionObserver' in window)) { calcul.classList.remove('attend'); return; }
-    var io = new IntersectionObserver(function (e) {
-      if (e[0].isIntersecting) { calcul.classList.remove('attend'); io.disconnect(); }
-    }, { rootMargin: '0px 0px -25% 0px' });
-    io.observe(calcul);
-  })();
-</script>
 
 {% schema %}
 {
@@ -69,15 +90,24 @@
   "tag": "div",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Le calcul est vite fait" },
-    { "type": "text", "id": "title", "label": "Titre", "default": "Achetez une fois. Protégé à vie." },
-    { "type": "textarea", "id": "text", "label": "Texte", "default": "Pas de contrat, pas d'engagement, pas de prélèvement chaque mois. Le matériel est à vous, et il vous suit si vous déménagez." },
-    { "type": "text", "id": "them_label", "label": "Ligne concurrence", "default": "Alarme avec télésurveillance" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Payez une fois. Plus jamais d'abonnement." },
+    { "type": "textarea", "id": "text", "label": "Texte" },
+    { "type": "header", "content": "Carte « avec abonnement »" },
+    { "type": "text", "id": "them_label", "label": "Titre", "default": "Alarme avec télésurveillance" },
     { "type": "range", "id": "competitor_monthly", "label": "Prix mensuel de référence (€)", "min": 10, "max": 80, "step": 1, "default": 35, "info": "À vérifier avant mise en ligne." },
-    { "type": "range", "id": "years", "label": "Durée (ans)", "min": 1, "max": 5, "step": 1, "default": 3 },
-    { "type": "text", "id": "us_label", "label": "Ligne Daewoo", "default": "Daewoo Security" },
-    { "type": "textarea", "id": "us_note", "label": "Note sous le calcul", "default": "Notifications, sirène et pilotage à distance depuis l'application Daewoo Home Connect : inclus, sans frais mensuels." },
-    { "type": "text", "id": "cta_label", "label": "Lien", "default": "Voir les packs" },
-    { "type": "url", "id": "cta_link", "label": "URL du lien" },
+    { "type": "range", "id": "years", "label": "Durée du calcul (ans)", "min": 1, "max": 5, "step": 1, "default": 3 },
+    { "type": "text", "id": "them_note", "label": "Phrase après le total", "default": "Et les prélèvements continuent." },
+    { "type": "header", "content": "Carte Daewoo" },
+    { "type": "text", "id": "us_label", "label": "Titre", "default": "Alarme Daewoo" },
+    { "type": "product", "id": "us_product", "label": "Pack le moins cher (prix « dès » et calcul de l'économie)" },
+    { "type": "textarea", "id": "us_note", "label": "Texte", "default": "Notifications, sirène et application inclus." },
+    { "type": "text", "id": "us_point_1", "label": "Point 1", "default": "Sans contrat ni engagement" },
+    { "type": "text", "id": "us_point_2", "label": "Point 2", "default": "Le matériel est à vous" },
+    { "type": "text", "id": "us_point_3", "label": "Point 3", "default": "Il vous suit si vous déménagez" },
+    { "type": "header", "content": "Bilan" },
+    { "type": "text", "id": "saving_text", "label": "Phrase d'économie", "default": "Sur [ans] ans, vous gardez jusqu'à [economie] € dans votre poche.", "info": "[economie] = total des abonnements moins le prix du pack. [ans] = durée." },
+    { "type": "text", "id": "cta_label", "label": "Lien", "default": "Trouver mon alarme" },
+    { "type": "url", "id": "cta_link", "label": "URL du lien", "info": "Vide = remonte au quiz." },
     { "type": "text", "id": "footnote", "label": "Mention", "default": "*Sur la base d'un abonnement de télésurveillance à [mensuel] € par mois, tarif indicatif constaté en France.", "info": "[mensuel] est remplacé par le prix mensuel ci-dessus." }
   ],
   "presets": [{ "name": "Home V2 · Sans abonnement" }]

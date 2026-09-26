@@ -1,5 +1,6 @@
 /* ==========================================================================
-   Home V2 — Quiz « Quelle alarme est faite pour vous ? »
+   Home V2 — compléments : quiz « Quelle alarme est faite pour vous ? »
+   et comparatif « sans abonnement ».
    Complète dw-home.css (chargé juste avant) : mêmes variables, classes .dwh.
    ==========================================================================
    2. QUIZ — trois questions, une réponse par tap, une recommandation
@@ -130,11 +131,81 @@
 .dwh-quiz__direct { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--trait); font-size: 15px; color: var(--gris); text-align: center; }
 .dwh-quiz__direct .dwh-lien { padding: 6px 0; }
 
+.dwh-reco__raison { padding: 14px 16px; border-radius: 16px; background: #fff; box-shadow: inset 3px 0 0 var(--bleu); }
+.dwh-reco__raison b { display: block; font-size: 13px; font-weight: 600; color: var(--bleu); margin-bottom: 4px; }
+.dwh-reco__raison p { font-size: 15px; line-height: 1.5; color: var(--encre); }
+
 .dwh-liens--secours { margin-top: 0; }
 .dwh-liens--secours b { color: var(--encre); }
 .dwh-liens[hidden] { display: none; }
 
+/* ==========================================================================
+   4. SANS ABONNEMENT — deux cartes côte à côte, un bilan chiffré
+   ========================================================================== */
+.dwh-duel { display: grid; }
+.dwh-duel__carte { padding: 22px 20px; border-radius: 24px; }
+.dwh-duel__carte--eux { background: var(--porcelaine); color: var(--gris); }
+.dwh-duel__carte--nous { background: var(--nuit); color: #fff; box-shadow: 0 24px 48px -24px rgba(10, 19, 48, 0.55); }
+.dwh-duel__nom { font-size: 15px; font-weight: 600; }
+.dwh-duel__carte--nous .dwh-duel__nom { color: var(--brume); }
+.dwh-duel__prix {
+  margin-top: 6px;
+  font-family: var(--f-display);
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--encre);
+}
+.dwh-duel__carte--nous .dwh-duel__prix { font-size: 56px; color: var(--protege-clair); }
+.dwh-duel__prix small { font-family: var(--f-texte); font-size: 16px; font-weight: 500; letter-spacing: 0; color: var(--gris); margin-left: 2px; }
+.dwh-duel__carte--nous .dwh-duel__prix small { color: var(--brume); }
+.dwh-duel__detail { margin-top: 12px; font-size: 15px; line-height: 1.5; }
+.dwh-duel__detail b { font-weight: 600; color: var(--encre); }
+.dwh-duel__carte--nous .dwh-duel__detail { color: var(--brume); }
+.dwh-duel__carte--nous .dwh-duel__detail b { color: #fff; }
+.dwh-duel__puces { display: grid; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.12); }
+.dwh-duel__puces li { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; }
+.dwh-duel__puces svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--protege-clair); }
+.dwh-duel__vs {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -12px 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 5px #fff, 0 6px 16px -6px rgba(12, 30, 74, 0.35);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gris);
+}
+.dwh-duel__bilan {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: var(--protege-doux);
+  color: #0d7a48;
+  font-size: 17px;
+  line-height: 1.35;
+  font-weight: 600;
+  text-wrap: pretty;
+}
+.dwh-duel__bilan svg { width: 26px; height: 26px; flex-shrink: 0; }
+.dwh-duel__action { margin-top: 12px; }
+.dwh-duel__mention { margin-top: 8px; font-size: 12px; line-height: 1.5; color: var(--gris); }
+
 @media (min-width: 750px) {
+  .dwh-duel { grid-template-columns: 1fr auto 1fr; align-items: stretch; }
+  .dwh-duel__vs { align-self: center; margin: 0 -14px; }
+
   #dwh-packs .dwh-entete { text-align: center; }
   #dwh-packs .dwh-chapo { margin-inline: auto; }
   .dwh-quiz { max-width: 720px; margin: 0 auto; padding: 28px 32px 32px; }

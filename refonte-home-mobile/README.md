@@ -33,11 +33,12 @@ La home concentre 62 % des entrées mobiles et presque aucune vente.
 2. **Réassurance :** expédié sous 24 h, garantie 2 ans, retour sous 14 jours, support en France
 3. **Quiz « Quelle alarme est faite pour vous ? »** (section `dw-home-packs`, styles `dw-home-quiz.css`) : une réponse par tap, bouton retour et barre de progression
    - Q1 : une alarme complète ou une caméra seule (la caméra mène directement à la W512MW)
-   - Q2 : piloter au clavier ou au badge (Vigilia), sur un écran tactile (Touch), performance maximale (Élite), ou « je ne sais pas encore » (la centrale cochée « conseillée » : Touch)
+   - Q2 : piloter au clavier ou au badge (Vigilia), sur un écran tactile (Touch), performance maximale (Élite), ou « je ne sais pas encore »
+   - « Je ne sais pas encore » ajoute deux questions de conseil : contrainte particulière (grand terrain, dépendances, Internet instable → Élite), puis qui utilisera l'alarme (toute la famille → Vigilia, surtout des adultes → Touch). Le résultat affiche alors un encadré « Pourquoi on vous la conseille » qui reprend les réponses du client. Le lien entre réponses et centrale se règle par le champ « Profil » de chaque bloc « Centrale ».
    - Q3 : un pack prêt à poser (collection de la gamme) ou « je compose moi-même » (configurateur)
    - Résultat : photo, pourquoi elle correspond, 3 points forts, prix « dès » en direct, 0 €/mois, un bouton principal et l'autre formule en lien secondaire
    - Mesure : un événement `dwh_quiz_resultat` est envoyé dans le `dataLayer` (GTM/GA4) avec les réponses
-4. **Le calcul :** abonnements payés en 3 ans, télésurveillance contre Daewoo
+4. **Sans abonnement :** deux cartes claires, « Alarme avec télésurveillance 35 €/mois » contre « Alarme Daewoo 0 €/mois (matériel dès 139,90 €, une seule fois) », puis le bilan honnête : « Sur 3 ans, vous gardez jusqu'à 1 120 € » (abonnements moins le prix du pack, calculé automatiquement)
 5. **Avis Judge.me** (réglages actuels conservés)
 6. **Pourquoi Daewoo :** marque depuis 1971, sirène 110 dB, batterie de secours, animaux jusqu'à 10 kg, déménagement
 7. **FAQ :** vos 10 questions actuelles, avec les données structurées pour le SEO
