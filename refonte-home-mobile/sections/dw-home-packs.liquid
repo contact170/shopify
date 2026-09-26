@@ -108,9 +108,9 @@
         {%- endfor -%}
       </div>
 
-      <div class="dwh-autres">
+      <div class="dwh-bas-packs">
         {%- if section.settings.config_title != blank -%}
-          <a class="dwh-autre dwh-autre--fort" href="{{ section.settings.config_link }}">
+          <a class="dwh-autre" href="{{ section.settings.config_link }}">
             <span class="dwh-autre__ico">{% render 'dw-home-icon', icon: 'sliders' %}</span>
             <span>
               <span class="dwh-autre__titre">{{ section.settings.config_title }}</span>
@@ -119,33 +119,19 @@
             {% render 'dw-home-icon', icon: 'arrow' %}
           </a>
         {%- endif -%}
-        {%- if section.settings.quiz_title != blank -%}
-          <a class="dwh-autre" href="{{ section.settings.quiz_link }}">
-            <span class="dwh-autre__ico">{% render 'dw-home-icon', icon: 'quiz' %}</span>
-            <span>
-              <span class="dwh-autre__titre">{{ section.settings.quiz_title }}</span>
-              <span class="dwh-autre__texte">{{ section.settings.quiz_text }}</span>
-            </span>
-            {% render 'dw-home-icon', icon: 'arrow' %}
-          </a>
-        {%- endif -%}
-        {%- if section.settings.extra_title != blank -%}
-          <a class="dwh-autre" href="{{ section.settings.extra_link }}">
-            <span class="dwh-autre__ico">{% render 'dw-home-icon', icon: 'camera' %}</span>
-            <span>
-              <span class="dwh-autre__titre">{{ section.settings.extra_title }}</span>
-              <span class="dwh-autre__texte">{{ section.settings.extra_text }}</span>
-            </span>
-            {% render 'dw-home-icon', icon: 'arrow' %}
-          </a>
-        {%- endif -%}
-      </div>
 
-      {%- if section.settings.compare_label != blank -%}
-        <p class="dwh-comparer">
-          <a class="dwh-lien" href="{{ section.settings.compare_link }}">{{ section.settings.compare_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a>
-        </p>
-      {%- endif -%}
+        <nav class="dwh-liens" aria-label="Autres façons de choisir">
+          {%- if section.settings.quiz_title != blank -%}
+            <a href="{{ section.settings.quiz_link }}"><span><b>{{ section.settings.quiz_title }}</b> · {{ section.settings.quiz_text }}</span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
+          {%- endif -%}
+          {%- if section.settings.extra_title != blank -%}
+            <a href="{{ section.settings.extra_link }}"><span><b>{{ section.settings.extra_title }}</b> · {{ section.settings.extra_text }}</span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
+          {%- endif -%}
+          {%- if section.settings.compare_label != blank -%}
+            <a href="{{ section.settings.compare_link }}"><span><b>{{ section.settings.compare_label }}</b></span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
+          {%- endif -%}
+        </nav>
+      </div>
     </div>
   </section>
 </div>

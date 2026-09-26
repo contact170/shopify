@@ -11,63 +11,66 @@
   <section class="dwh-hero dwh-sombre" aria-labelledby="dwh-h1-{{ section.id }}">
     <div class="dwh-hero__grille">
       <div class="dwh-hero__texte">
-        {%- if section.settings.etat != blank -%}
-          <p class="dwh-etat">{{ section.settings.etat }}</p>
+        {%- if section.settings.proof != blank -%}
+          <p class="dwh-hero__note"><span class="dwh-etoiles" aria-hidden="true">★★★★★</span> {{ section.settings.proof }}</p>
         {%- endif -%}
         <h1 class="dwh-titre" id="dwh-h1-{{ section.id }}">{{ section.settings.title }}</h1>
-        {%- if produit_appel != blank -%}
-          <p class="dwh-hero__prix">
-            {{ section.settings.prix_avant }} <strong>{{ produit_appel.price_min | money }}</strong>
-            · <span class="dwh-zero">0&nbsp;€ par mois, à vie</span>
-          </p>
-        {%- endif -%}
+
+        <div class="dwh-hero__actions">
+          <a class="dwh-btn dwh-btn--bleu" href="{{ lien_1 }}">
+            {{ section.settings.cta_1_label }}
+            {% render 'dw-home-icon', icon: 'arrow' %}
+          </a>
+          {%- if section.settings.cta_2_label != blank -%}
+            <a class="dwh-lien" href="{{ section.settings.cta_2_link }}">
+              {{ section.settings.cta_2_label }}
+              {% render 'dw-home-icon', icon: 'arrow' %}
+            </a>
+          {%- endif -%}
+          {%- if produit_appel != blank -%}
+            <p class="dwh-hero__prix">
+              {{ section.settings.prix_avant }} <strong>{{ produit_appel.price_min | money }}</strong>
+              · <span class="dwh-zero">0&nbsp;€ par mois, à vie</span>
+            </p>
+          {%- endif -%}
+        </div>
       </div>
 
       {%- if notifs.size > 0 -%}
-        <figure class="dwh-ecran" aria-label="{{ section.settings.ecran_label | escape }}">
-          <div class="dwh-ecran__heure" aria-hidden="true">
-            <b>{{ section.settings.ecran_heure }}</b>
-            {%- liquid
-              assign jours = 'dimanche,lundi,mardi,mercredi,jeudi,vendredi,samedi' | split: ','
-              assign mois = 'janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre' | split: ','
-              assign i_jour = 'now' | date: '%w' | plus: 0
-              assign i_mois = 'now' | date: '%m' | plus: 0 | minus: 1
-            -%}
-            <span>{{ jours[i_jour] }} {{ 'now' | date: '%-d' }} {{ mois[i_mois] }}</span>
+        <figure class="dwh-scene" aria-label="{{ section.settings.ecran_label | escape }}">
+          <div class="dwh-tel">
+            <div class="dwh-tel__ecran">
+              <div class="dwh-tel__ilot" aria-hidden="true"></div>
+              <div class="dwh-tel__statut" aria-hidden="true">
+                <span>{{ section.settings.ecran_heure }}</span>
+                <svg viewBox="0 0 64 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/><path d="M29 3.2a9 9 0 0 1 11 0l-1.3 1.5a7 7 0 0 0-8.4 0zM31.5 6.3a5 5 0 0 1 6 0L34.5 10z"/><rect x="44" y="1" width="17" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/><rect x="45.6" y="2.6" width="12" height="6.8" rx="1.6"/><rect x="62" y="4" width="1.6" height="4" rx=".8" opacity=".5"/></svg>
+              </div>
+              <div class="dwh-tel__heure" aria-hidden="true">
+                {%- liquid
+                  assign jours = 'dimanche,lundi,mardi,mercredi,jeudi,vendredi,samedi' | split: ','
+                  assign mois = 'janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre' | split: ','
+                  assign i_jour = 'now' | date: '%w' | plus: 0
+                  assign i_mois = 'now' | date: '%m' | plus: 0 | minus: 1
+                -%}
+                <span>{{ jours[i_jour] | capitalize }} {{ 'now' | date: '%-d' }} {{ mois[i_mois] }}</span>
+                <b>{{ section.settings.ecran_heure }}</b>
+              </div>
+              <ul class="dwh-notifs">
+                {%- for block in notifs -%}
+                  <li class="dwh-notif{% if block.settings.style == 'ok' %} dwh-notif--ok{% endif %}" {{ block.shopify_attributes }}>
+                    <span class="dwh-notif__app" aria-hidden="true">{% render 'dw-home-icon', icon: block.settings.icon %}</span>
+                    <span class="dwh-notif__txt">
+                      <span class="dwh-notif__titre">{{ block.settings.title }}</span>
+                      <span class="dwh-notif__corps">{{ block.settings.text }}</span>
+                    </span>
+                    <span class="dwh-notif__quand">{{ block.settings.time }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
           </div>
-          <ul class="dwh-notifs">
-            {%- for block in notifs -%}
-              <li class="dwh-notif{% if block.settings.style == 'ok' %} dwh-notif--ok{% endif %}" {{ block.shopify_attributes }}>
-                <span class="dwh-notif__app" aria-hidden="true">{% render 'dw-home-icon', icon: block.settings.icon %}</span>
-                <span class="dwh-notif__txt">
-                  <span class="dwh-notif__titre">{{ block.settings.title }}</span>
-                  <span class="dwh-notif__corps">{{ block.settings.text }}</span>
-                </span>
-                <span class="dwh-notif__quand">{{ block.settings.time }}</span>
-              </li>
-            {%- endfor -%}
-          </ul>
         </figure>
       {%- endif -%}
-
-      <div class="dwh-hero__actions">
-        <a class="dwh-btn dwh-btn--bleu" href="{{ lien_1 }}">
-          {{ section.settings.cta_1_label }}
-          {% render 'dw-home-icon', icon: 'arrow' %}
-        </a>
-        {%- if section.settings.cta_2_label != blank -%}
-          <a class="dwh-lien" href="{{ section.settings.cta_2_link }}">
-            {{ section.settings.cta_2_label }}
-            {% render 'dw-home-icon', icon: 'arrow' %}
-          </a>
-        {%- endif -%}
-        {%- if section.settings.proof != blank -%}
-          <p class="dwh-hero__preuve">
-            <span class="dwh-etoiles" aria-hidden="true">★★★★★</span>
-            {{ section.settings.proof }}
-          </p>
-        {%- endif -%}
-      </div>
     </div>
   </section>
 
@@ -127,8 +130,7 @@
   "name": "Home V2 · Hero",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "etat", "label": "Pastille au-dessus du titre", "default": "Sans abonnement, à vie" },
-    { "type": "inline_richtext", "id": "title", "label": "Titre (H1)", "default": "Votre alarme maison, sans abonnement. <em>Posée par vous, pilotée depuis votre téléphone.</em>", "info": "La partie en italique s'affiche en gris clair." },
+    { "type": "inline_richtext", "id": "title", "label": "Titre (H1)", "default": "L'alarme maison sans abonnement. <em>Vous l'installez, elle vous prévient.</em>", "info": "La partie en italique s'affiche sur une 2e ligne, en bleu clair." },
     { "type": "product", "id": "hero_product", "label": "Produit d'appel (prix « à partir de »)" },
     { "type": "text", "id": "prix_avant", "label": "Texte avant le prix", "default": "Système complet dès" },
     { "type": "header", "content": "Écran de téléphone" },
@@ -139,7 +141,7 @@
     { "type": "url", "id": "cta_1_link", "label": "Lien du bouton principal", "info": "Vide = descend jusqu'aux packs." },
     { "type": "text", "id": "cta_2_label", "label": "Lien secondaire", "default": "Je ne sais pas : guidez-moi en 2 min" },
     { "type": "url", "id": "cta_2_link", "label": "URL du lien secondaire" },
-    { "type": "text", "id": "proof", "label": "Preuve sociale", "default": "4,6/5 · 1 356 avis clients" },
+    { "type": "text", "id": "proof", "label": "Avis (au-dessus du titre)", "default": "4,6/5 · 1 356 avis clients" },
     { "type": "header", "content": "Barre d'action collante (mobile)" },
     { "type": "checkbox", "id": "enable_sticky", "label": "Afficher la barre en bas d'écran", "default": true },
     { "type": "text", "id": "sticky_label_1", "label": "Bouton 1", "default": "Voir les packs" },
@@ -193,7 +195,7 @@
       "blocks": [
         { "type": "notification", "settings": { "icon": "motion", "title": "Mouvement détecté · Jardin", "text": "Touchez pour voir la caméra en direct", "time": "maintenant" } },
         { "type": "notification", "settings": { "icon": "shield", "style": "ok", "title": "Alarme activée", "text": "Maison protégée · tous les détecteurs actifs", "time": "08:12" } },
-        { "type": "notification", "settings": { "icon": "euro", "style": "ok", "title": "Votre abonnement ce mois-ci : 0,00 €", "text": "Comme le mois dernier. Et le suivant.", "time": "le 1er" } },
+        { "type": "notification", "settings": { "icon": "euro", "style": "ok", "title": "Abonnement du mois : 0,00 €", "text": "Comme le mois dernier. Et le suivant.", "time": "le 1er" } },
         { "type": "trust", "settings": { "icon": "box", "title": "Expédié sous 24 h" } },
         { "type": "trust", "settings": { "icon": "badge", "title": "Garantie 2 ans" } },
         { "type": "trust", "settings": { "icon": "return", "title": "Retour sous 14 jours" } },

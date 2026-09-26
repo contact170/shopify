@@ -3,6 +3,16 @@
 <div class="dwh">
   <section class="dwh-bloc dwh-sombre dwh-final" aria-labelledby="dwh-final-{{ section.id }}">
     <div class="dwh-large">
+      {%- if section.settings.notif_title != blank -%}
+        <div class="dwh-notif dwh-notif--ok dwh-final__notif" aria-hidden="true">
+          <span class="dwh-notif__app">{% render 'dw-home-icon', icon: 'shield' %}</span>
+          <span class="dwh-notif__txt">
+            <span class="dwh-notif__titre">{{ section.settings.notif_title }}</span>
+            <span class="dwh-notif__corps">{{ section.settings.notif_text }}</span>
+          </span>
+          <span class="dwh-notif__quand">maintenant</span>
+        </div>
+      {%- endif -%}
       <h2 class="dwh-titre" id="dwh-final-{{ section.id }}">{{ section.settings.title }}</h2>
       {%- if section.settings.text != blank -%}<p class="dwh-chapo">{{ section.settings.text }}</p>{%- endif -%}
       <div class="dwh-final__actions">
@@ -27,6 +37,8 @@
   "name": "V2 · Appel à l'action",
   "tag": "div",
   "settings": [
+    { "type": "text", "id": "notif_title", "label": "Notification (titre)", "default": "Alarme activée" },
+    { "type": "text", "id": "notif_text", "label": "Notification (texte)", "default": "Votre maison est protégée" },
     { "type": "text", "id": "title", "label": "Titre", "default": "Prêt à protéger votre maison ?" },
     { "type": "textarea", "id": "text", "label": "Texte", "default": "Un pack complet, posé par vous ce soir. Et plus jamais d'abonnement." },
     { "type": "text", "id": "cta_1_label", "label": "Bouton principal", "default": "Choisir mon pack" },
