@@ -14,41 +14,37 @@
 La home concentre 62 % des entrées mobiles et presque aucune vente.
 ⚠️ Sur ces 11 220 sessions, **10 050 sont en « direct »** (0,06 % de conversion). Le trafic Google Search qui arrive sur la même home convertit à 1,09 %. Une partie du problème vient donc de la **qualité ou du suivi du trafic** (publicités sans UTM, navigateurs intégrés à Facebook ou Instagram, bots), pas seulement de la page. À analyser en parallèle.
 
-## Structure de la nouvelle home (environ 7 écrans mobiles au lieu de ~18 sections)
+## Version installée : « premium » (26/09/2026)
 
-1. **Hero** : promesse en une phrase, 3 bénéfices, 2 boutons (packs / configurateur), note clients, prix d'appel
-2. **Barre de réassurance** : 0 € d'abonnement, livraison offerte, garantie 2 ans, SAV en France
-3. **Comment ça marche** : 3 étapes
-4. **Packs guidés par logement** : onglets Appartement / Maison / Grande maison (un seul pack affiché à la fois sur mobile), puis les 3 portes de sortie : configurateur, quiz, caméra seule (best-seller W512MW), plus le lien vers le comparatif
-5. **Sans abonnement** : comparaison chiffrée avec la télésurveillance
-6. **Avis clients** : le carrousel Judge.me actuel, conservé
-7. **Pourquoi nous** : chiffres clés, SAV Mérignac, Wi-Fi coupé, animaux, application gratuite
-8. **FAQ** : 6 objections fréquentes, avec les données structurées FAQ pour le SEO
-9. **Appel à l'action final**
-10. **Barre d'action collante sur mobile** : elle apparaît après le hero et se masque sur les packs, le CTA final et le footer
+**Déjà installée** sur le thème non publié **« Copie de Version finale 26092026 »**. Le thème en ligne n'a pas été touché.
 
-Les prix sont **lus en direct** dans Shopify (produits choisis dans l'éditeur), avec le paiement en 4× calculé automatiquement.
-Aucune police externe n'est chargée (Poppins du thème) : la page est plus légère que l'actuelle.
+- **Aperçu sur téléphone :** https://daewoo-security.fr/?preview_theme_id=204490637652
+- **Éditeur :** Shopify › Boutique en ligne › Thèmes › « Copie de Version finale 26092026 » › Personnaliser
+- La home d'origine de la copie est sauvegardée dans `sauvegarde-copie-26092026/index.json.original`
 
-## Installation sur une copie du thème (sans risque)
+### Direction artistique
+- **Signature :** un écran de téléphone verrouillé, avec les notifications de l'alarme (mouvement détecté, alarme activée, « Votre abonnement ce mois-ci : 0,00 € »). En 3 secondes, le client comprend : il est prévenu sur son téléphone, sans abonnement.
+- **Typographie :** Instrument Sans (titres serrés, plus premium), police système du téléphone pour les notifications.
+- **Couleurs :** nuit #0B1530, encre #0C1E4A, porcelaine #F4F6FB, bleu action #1552D6, vert « protégé » #16A765 réservé au 0 €.
+- **Mouvement utile uniquement :** arrivée des notifications, curseur du sélecteur de logement, barres du calcul d'économies. Tout est désactivé si le téléphone demande moins d'animations.
 
-1. Shopify › Boutique en ligne › Thèmes › thème publié › **⋯ › Dupliquer**. Renommez la copie, par exemple « Home V2 – TEST ».
-2. Sur la **copie** : ⋯ › **Modifier le code**, puis ajoutez :
-   - `assets/dw-home.css`
-   - `snippets/dw-home-icon.liquid`
-   - les 7 fichiers `sections/dw-home-*.liquid`
-3. Dans la copie, ouvrez `templates/index.json`, **sauvegardez son contenu** (copier-coller dans un fichier), puis remplacez-le par `templates/index.json` de ce dossier.
-   Le bloc d'avis Judge.me y est déjà repris.
-4. Ouvrez l'éditeur de la copie :
-   - vérifiez les 3 produits des packs (et changez-les si besoin, par exemple pour des packs plus complets)
-   - ajoutez une **photo en situation** dans le hero (pour l'instant c'est l'image produit qui s'affiche) : c'est le levier visuel le plus fort
-   - remplissez le bandeau promo si une offre est en cours
-5. Utilisez **Aperçu › Partager l'aperçu** pour tester sur votre téléphone.
+### Parcours (mobile)
+1. **Accroche :** « Votre alarme maison, sans abonnement. Posée par vous, pilotée depuis votre téléphone. » + prix d'appel en direct + bouton « Choisir mon pack » + « Je ne sais pas : guidez-moi en 2 min »
+2. **Réassurance :** expédié sous 24 h, garantie 2 ans, retour sous 14 jours, support en France
+3. **Quel est votre logement ?** Appartement / Maison / Grande maison, puis 1 pack adapté (prix en direct, 0 €/mois, 4× sans frais), configurateur, quiz, caméra seule, comparatif
+4. **Comment ça marche** en 3 étapes
+5. **Le calcul :** abonnements payés en 3 ans, télésurveillance contre Daewoo
+6. **Avis Judge.me** (réglages actuels conservés)
+7. **Pourquoi Daewoo :** marque depuis 1971, sirène 110 dB, batterie de secours, animaux jusqu'à 10 kg, déménagement
+8. **FAQ :** vos 10 questions actuelles, avec les données structurées pour le SEO
+9. **Appel à l'action final** + barre de boutons collante en bas d'écran sur mobile
+
+Tous les textes, produits et liens se modifient dans l'éditeur, sans toucher au code.
 
 ## À vérifier avant la mise en ligne
 
 - [ ] Le **tarif de 35 €/mois** de la télésurveillance (section « Sans abonnement »), modifiable dans l'éditeur
-- [ ] La note « 4,6/5 · 900+ avis » et le chiffre « 60 000 foyers » : sont-ils toujours d'actualité ?
+- [ ] La note « 4,6/5 · 1 356 avis » (reprise de votre hero actuel) est-elle à jour ?
 - [ ] Les liens `/pages/configurateur_2`, `/pages/trouver-mon-alarme-quiz`, `/pages/comparateur-am301-sa501-pa501z`, `/pages/contact`
 - [ ] La barre collante ne doit pas chevaucher le widget de chat (en bas à droite) : à tester sur la copie
 - [ ] Les montants Alma (4× sans frais) doivent correspondre à votre contrat

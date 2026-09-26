@@ -48,136 +48,18 @@
   "name": "Home V2 · FAQ",
   "tag": "div",
   "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Sur-titre",
-      "default": "Questions fréquentes"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Titre",
-      "default": "Tout savoir avant de vous équiper."
-    },
-    {
-      "type": "checkbox",
-      "id": "schema_markup",
-      "label": "Données structurées FAQ (SEO)",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "more_text",
-      "label": "Texte bas de section",
-      "default": "Une autre question ?"
-    },
-    {
-      "type": "text",
-      "id": "more_label",
-      "label": "Lien",
-      "default": "Écrivez à notre équipe"
-    },
-    {
-      "type": "url",
-      "id": "more_link",
-      "label": "URL"
-    }
+    {"type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Questions fréquentes"},
+    {"type": "text", "id": "title", "label": "Titre", "default": "Tout savoir avant de vous équiper."},
+    {"type": "checkbox", "id": "schema_markup", "label": "Données structurées FAQ (SEO)", "default": true},
+    {"type": "text", "id": "more_text", "label": "Texte bas de section", "default": "Une autre question ?"},
+    {"type": "text", "id": "more_label", "label": "Lien", "default": "Écrivez à notre équipe"},
+    {"type": "url", "id": "more_link", "label": "URL"}
   ],
   "blocks": [
-    {
-      "type": "qa",
-      "name": "Question",
-      "settings": [
-        {
-          "type": "text",
-          "id": "question",
-          "label": "Question"
-        },
-        {
-          "type": "richtext",
-          "id": "answer",
-          "label": "Réponse"
-        }
-      ]
-    }
+    {"type": "qa", "name": "Question", "settings": [{"type": "text", "id": "question", "label": "Question"}, {"type": "richtext", "id": "answer", "label": "Réponse"}]}
   ],
   "presets": [
-    {
-      "name": "Home V2 · FAQ",
-      "blocks": [
-        {
-          "type": "qa",
-          "settings": {
-            "question": "Vos alarmes fonctionnent-elles vraiment sans aucun abonnement ?",
-            "answer": "<p>Oui, à 100 %. Vous achetez le matériel une fois et il est à vous : notifications sur smartphone, sirène, pilotage à distance via l'application <strong>Daewoo Home Connect</strong> — <strong>sans le moindre frais mensuel, à vie</strong>. Contrairement aux systèmes avec télésurveillance, il n'y a pas de contrat qui vous engage.</p>"
-          }
-        },
-        {
-          "type": "qa",
-          "settings": {
-            "question": "Que se passe-t-il en cas de coupure de courant ou de Wi-Fi ?",
-            "answer": "<p><strong>Coupure de courant :</strong> la centrale bascule automatiquement sur sa <strong>batterie de secours</strong> — de <strong>4 h d'autonomie</strong> (Vigilia et Touch) jusqu'à <strong>20 h</strong> (Touch XL).</p> <p><strong>Coupure de Wi-Fi :</strong> la sirène locale reste active et dissuade l'intrus. Sur tous nos modèles — <strong>hors Vigilia Wi-Fi</strong> — il suffit d'insérer une <strong>carte SIM (non incluse)</strong> : le système bascule alors sur le <strong>réseau GSM</strong> et la centrale continue de vous alerter, même sans box (les caméras, elles, nécessitent le Wi-Fi). La Vigilia Wi-Fi, elle, fonctionne uniquement en Wi-Fi.</p>"
-          }
-        },
-        {
-          "type": "qa",
-          "settings": {
-            "question": "L'installation est-elle compliquée ? Faut-il un professionnel ?",
-            "answer": "<p>Non, tout est prévu pour être <strong>posé soi-même en quelques minutes</strong>, sans perçage ni câblage : les éléments sont sans fil et se fixent en adhésif. Vous scannez un QR code, l'appli vous guide pas à pas. <strong>Aucun électricien ni installateur nécessaire</strong> — et donc aucun frais d'installation.</p>"
-          }
-        },
-        {
-          "type": "qa",
-          "settings": {
-            "question": "Comment suis-je prévenu en cas d'intrusion ?",
-            "answer": "<p>Dès qu'un détecteur se déclenche : la <strong>sirène extérieure de 110 dB</strong> retentit pour faire fuir l'intrus et alerter le voisinage, et vous recevez <strong>immédiatement une notification</strong> sur votre téléphone. Avec une caméra, vous accédez à l'image en direct pour lever le doute et, si besoin, prévenir vos proches ou les autorités.</p>"
-          }
-        },
-        {
-          "type": "qa",
-          "settings": {
-            "question": "J'ai un animal de compagnie : vais-je avoir des fausses alertes ?",
-            "answer": "<p>Les détecteurs de mouvement sont conçus pour <strong>ignorer les petits animaux jusqu'à 10 kg</strong>. Vous pouvez aussi ajuster la sensibilité et créer des zones dans l'appli pour éviter les déclenchements intempestifs.</p>"
-          }
-        },
-        {
-          "type": "qa",
-          "settings": {
-            "question": "Puis-je emporter mon alarme si je déménage ?",
-            "answer": "<p>Absolument. Le système étant sans fil et sans abonnement, il vous suit&nbsp;: vous <strong>décrochez les éléments et les réinstallez chez vous</strong> en quelques minutes. Idéal aussi pour les <strong>locataires</strong>.</p>"
-          }
-        },
-        {
-          "type": "qa",
-          "settings": {
-            "question": "Puis-je faire évoluer mon système et ajouter des accessoires ?",
-            "answer": "<p>Oui, nos systèmes sont <strong>évolutifs</strong>&nbsp;: vous pouvez ajouter à tout moment des détecteurs de porte/fenêtre, de mouvement, des caméras ou des télécommandes selon la taille de votre logement. Commencez petit, complétez plus tard.</p>"
-          }
-        },
-        {
-          "type": "qa",
-          "settings": {
-            "question": "Quelle garantie et quel service après-vente ?",
-            "answer": "<p>Nos produits sont <strong>garantis 2 ans</strong> et notre <strong>support client est basé en France</strong> pour vous accompagner avant et après l'achat. Daewoo est une marque reconnue depuis 1971, gage de sérieux et de pérennité.</p>"
-          }
-        },
-        {
-          "type": "qa",
-          "settings": {
-            "question": "Livraison, retour et remboursement : comment ça marche ?",
-            "answer": "<p><strong>Expédition le jour même</strong> pour toute commande passée avant midi, le lendemain ensuite (pas d'expédition le samedi ni le dimanche). Comptez ensuite <strong>48 h en Colissimo</strong> ou <strong>2 à 3 jours en point relais Chronopost</strong> — 3 à 4 jours pour la Belgique. Vous disposez d'un <strong>délai de rétractation de 14 jours</strong> pour changer d'avis et être remboursé. Un doute avant de commander ? Notre équipe vous conseille.</p>"
-          }
-        },
-        {
-          "type": "qa",
-          "settings": {
-            "question": "Je ne sais pas quel pack choisir. Comment m'aider ?",
-            "answer": "<p>Deux options&nbsp;: utilisez notre <a href=\"/pages/configurateur_2\">configurateur</a> — quelques questions et on vous propose le système adapté à votre logement — ou parcourez directement nos <a href=\"/pages/pack-alarmes\">packs prêts à poser</a>.</p>"
-          }
-        }
-      ]
-    }
+    {"name": "Home V2 · FAQ", "blocks": [{"type": "qa", "settings": {"question": "Vos alarmes fonctionnent-elles vraiment sans abonnement ?", "answer": "<p>Oui : vous achetez le matériel une fois, il est à vous.</p>"}}]}
   ]
 }
 {% endschema %}
