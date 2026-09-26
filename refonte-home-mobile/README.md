@@ -29,15 +29,19 @@ La home concentre 62 % des entrées mobiles et presque aucune vente.
 - **Mouvement utile uniquement :** arrivée des notifications, curseur du sélecteur de logement, barres du calcul d'économies. Tout est désactivé si le téléphone demande moins d'animations.
 
 ### Parcours (mobile)
-1. **Accroche :** « Votre alarme maison, sans abonnement. Posée par vous, pilotée depuis votre téléphone. » + prix d'appel en direct + bouton « Choisir mon pack » + « Je ne sais pas : guidez-moi en 2 min »
+1. **Accroche :** « L'alarme maison sans abonnement. Vous l'installez, elle vous prévient. » + prix d'appel en direct + bouton « Trouver mon alarme en 3 clics » + lien « Déjà décidé ? Voir tous les packs »
 2. **Réassurance :** expédié sous 24 h, garantie 2 ans, retour sous 14 jours, support en France
-3. **Quel est votre logement ?** Appartement / Maison / Grande maison, puis 1 pack adapté (prix en direct, 0 €/mois, 4× sans frais), configurateur, quiz, caméra seule, comparatif
-4. **Comment ça marche** en 3 étapes
-5. **Le calcul :** abonnements payés en 3 ans, télésurveillance contre Daewoo
-6. **Avis Judge.me** (réglages actuels conservés)
-7. **Pourquoi Daewoo :** marque depuis 1971, sirène 110 dB, batterie de secours, animaux jusqu'à 10 kg, déménagement
-8. **FAQ :** vos 10 questions actuelles, avec les données structurées pour le SEO
-9. **Appel à l'action final** + barre de boutons collante en bas d'écran sur mobile
+3. **Quiz « Quelle alarme est faite pour vous ? »** (section `dw-home-packs`, styles `dw-home-quiz.css`) : une réponse par tap, bouton retour et barre de progression
+   - Q1 : une alarme complète ou une caméra seule (la caméra mène directement à la W512MW)
+   - Q2 : piloter au clavier ou au badge (Vigilia), sur un écran tactile (Touch), performance maximale (Élite), ou « je ne sais pas encore » (la centrale cochée « conseillée » : Touch)
+   - Q3 : un pack prêt à poser (collection de la gamme) ou « je compose moi-même » (configurateur)
+   - Résultat : photo, pourquoi elle correspond, 3 points forts, prix « dès » en direct, 0 €/mois, un bouton principal et l'autre formule en lien secondaire
+   - Mesure : un événement `dwh_quiz_resultat` est envoyé dans le `dataLayer` (GTM/GA4) avec les réponses
+4. **Le calcul :** abonnements payés en 3 ans, télésurveillance contre Daewoo
+5. **Avis Judge.me** (réglages actuels conservés)
+6. **Pourquoi Daewoo :** marque depuis 1971, sirène 110 dB, batterie de secours, animaux jusqu'à 10 kg, déménagement
+7. **FAQ :** vos 10 questions actuelles, avec les données structurées pour le SEO
+8. **Appel à l'action final** + barre de boutons collante en bas d'écran sur mobile
 
 Tous les textes, produits et liens se modifient dans l'éditeur, sans toucher au code.
 
@@ -45,9 +49,10 @@ Tous les textes, produits et liens se modifient dans l'éditeur, sans toucher au
 
 - [ ] Le **tarif de 35 €/mois** de la télésurveillance (section « Sans abonnement »), modifiable dans l'éditeur
 - [ ] La note « 4,6/5 · 1 356 avis » (reprise de votre hero actuel) est-elle à jour ?
-- [ ] Les liens `/pages/configurateur_2`, `/pages/trouver-mon-alarme-quiz`, `/pages/comparateur-am301-sa501-pa501z`, `/pages/contact`
+- [ ] Les liens `/pages/configurateur_2`, `/pages/pack-alarmes`, `/pages/comparateur-am301-sa501-pa501z`, `/pages/contact`
 - [ ] La barre collante ne doit pas chevaucher le widget de chat (en bas à droite) : à tester sur la copie
-- [ ] Les montants Alma (4× sans frais) doivent correspondre à votre contrat
+- [ ] Le configurateur (« Je compose moi-même ») ne présélectionne pas la gamme choisie dans le quiz : un lien sur mesure par gamme peut être renseigné dans chaque bloc « Centrale »
+- [ ] Nettoyage avant mise en ligne : les anciens styles du sélecteur (onglets, cartes de gamme) restent dans `dw-home.css` sans être utilisés
 
 ## Comment décider (test)
 

@@ -1,159 +1,223 @@
 {% render 'dw-home-head' %}
 
 {%- liquid
-  assign actif = 0
+  assign conseil = section.blocks.first
   for block in section.blocks
     if block.settings.featured
-      assign actif = forloop.index0
+      assign conseil = block
       break
     endif
   endfor
-  assign gamme_active = section.blocks[actif]
+  assign cam = section.settings.camera_product
+  assign cam_visuel = section.settings.camera_image | default: cam.featured_image
+  assign cam_lien = section.settings.camera_link | default: cam.url
 -%}
 
 <div class="dwh" id="dwh-packs">
-  <section class="dwh-bloc dwh-bloc--porcelaine" aria-labelledby="dwh-parcours-titre-{{ section.id }}">
+  <section class="dwh-bloc dwh-bloc--porcelaine" aria-labelledby="dwh-quiz-titre-{{ section.id }}">
     <div class="dwh-large">
       <div class="dwh-entete">
         {%- if section.settings.eyebrow != blank -%}<p class="dwh-surtitre">{{ section.settings.eyebrow }}</p>{%- endif -%}
-        <h2 class="dwh-titre" id="dwh-parcours-titre-{{ section.id }}">{{ section.settings.title }}</h2>
+        <h2 class="dwh-titre" id="dwh-quiz-titre-{{ section.id }}">{{ section.settings.title }}</h2>
         {%- if section.settings.text != blank -%}<p class="dwh-chapo">{{ section.settings.text }}</p>{%- endif -%}
       </div>
 
-      <ol class="dwh-parcours">
-        {%- comment -%} Étape 1 : la centrale {%- endcomment -%}
-        <li class="dwh-parcours__etape">
-          <div class="dwh-parcours__tete">
-            <span class="dwh-parcours__num" aria-hidden="true">1</span>
-            <div>
-              <h3 class="dwh-parcours__titre">{{ section.settings.step1_title }}</h3>
-              {%- if section.settings.step1_text != blank -%}<p class="dwh-parcours__texte">{{ section.settings.step1_text }}</p>{%- endif -%}
-            </div>
-          </div>
+      {%- comment -%} Quiz : révélé par le script. Sans JS, la liste de secours ci-dessous reste visible. {%- endcomment -%}
+      <div
+        class="dwh-quiz"
+        data-dwh-quiz
+        data-conseil="{{ conseil.id }}"
+        data-surtitre-choix="{{ section.settings.result_eyebrow | escape }}"
+        data-surtitre-conseil="{{ section.settings.advice_eyebrow | escape }}"
+        hidden
+      >
+        <div class="dwh-quiz__haut">
+          <button type="button" class="dwh-quiz__retour" data-retour hidden>
+            {% render 'dw-home-icon', icon: 'retour' %}<span>Retour</span>
+          </button>
+          <span class="dwh-quiz__compte" data-compte aria-live="polite"></span>
+        </div>
+        <div class="dwh-quiz__progres" aria-hidden="true"><span data-progres></span></div>
 
-          {%- if section.blocks.size > 1 -%}
-            <div
-              class="dwh-selecteur"
-              role="tablist"
-              aria-label="{{ section.settings.step1_title | escape }}"
-              style="--n: {{ section.blocks.size }}; --i: {{ actif }};"
-              data-dwh-selecteur
+        {%- comment -%} Question 1 : alarme ou caméra {%- endcomment -%}
+        <div class="dwh-quiz__ecran" data-ecran="besoin" data-rang="1">
+          <h3 class="dwh-quiz__question" tabindex="-1">{{ section.settings.q1_title }}</h3>
+          <div class="dwh-quiz__choix">
+            <button type="button" class="dwh-choix" data-aller="pilotage">
+              <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'shield' %}</span>
+              <span class="dwh-choix__txt"><b>{{ section.settings.q1_alarm_label }}</b><small>{{ section.settings.q1_alarm_sub }}</small></span>
+              {% render 'dw-home-icon', icon: 'arrow' %}
+            </button>
+            {%- if section.settings.camera_label != blank -%}
+              <button type="button" class="dwh-choix" data-reco="camera">
+                <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'camera' %}</span>
+                <span class="dwh-choix__txt"><b>{{ section.settings.camera_label }}</b><small>{{ section.settings.camera_sub }}</small></span>
+                {% render 'dw-home-icon', icon: 'arrow' %}
+              </button>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- comment -%} Question 2 : façon de piloter l'alarme = la gamme {%- endcomment -%}
+        <div class="dwh-quiz__ecran" data-ecran="pilotage" data-rang="2" hidden>
+          <h3 class="dwh-quiz__question" tabindex="-1">{{ section.settings.q2_title }}</h3>
+          <div class="dwh-quiz__choix">
+            {%- for block in section.blocks -%}
+              <button type="button" class="dwh-choix" data-gamme="{{ block.id }}" {{ block.shopify_attributes }}>
+                <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: block.settings.quiz_icon %}</span>
+                <span class="dwh-choix__txt"><b>{{ block.settings.quiz_label }}</b><small>{{ block.settings.quiz_sub }}</small></span>
+                {% render 'dw-home-icon', icon: 'arrow' %}
+              </button>
+            {%- endfor -%}
+            {%- if section.settings.q2_unsure_label != blank -%}
+              <button type="button" class="dwh-choix dwh-choix--discret" data-gamme="conseil">
+                <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'question' %}</span>
+                <span class="dwh-choix__txt"><b>{{ section.settings.q2_unsure_label }}</b><small>{{ section.settings.q2_unsure_sub }}</small></span>
+                {% render 'dw-home-icon', icon: 'arrow' %}
+              </button>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- comment -%} Question 3 : pack tout prêt ou sur mesure {%- endcomment -%}
+        <div class="dwh-quiz__ecran" data-ecran="formule" data-rang="3" hidden>
+          <h3 class="dwh-quiz__question" tabindex="-1">{{ section.settings.q3_title }}</h3>
+          <div class="dwh-quiz__choix">
+            <button type="button" class="dwh-choix" data-formule="pack">
+              <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'box' %}</span>
+              <span class="dwh-choix__txt"><b>{{ section.settings.q3_pack_label }}</b><small>{{ section.settings.q3_pack_sub }}</small></span>
+              {% render 'dw-home-icon', icon: 'arrow' %}
+            </button>
+            <button type="button" class="dwh-choix" data-formule="config">
+              <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'sliders' %}</span>
+              <span class="dwh-choix__txt"><b>{{ section.settings.q3_config_label }}</b><small>{{ section.settings.q3_config_sub }}</small></span>
+              {% render 'dw-home-icon', icon: 'arrow' %}
+            </button>
+          </div>
+        </div>
+
+        {%- comment -%} Résultat {%- endcomment -%}
+        <div class="dwh-quiz__ecran" data-ecran="resultat" hidden>
+          <h3 class="dwh-quiz__question dwh-quiz__question--resultat" tabindex="-1">{{ section.settings.result_title }}</h3>
+
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign p = block.settings.product
+              assign visuel = block.settings.image | default: p.featured_image
+              assign lien_pack = block.settings.packs_link | default: section.settings.all_packs_link
+              assign lien_config = block.settings.config_link | default: section.settings.config_link
+            -%}
+            <article
+              class="dwh-reco"
+              data-reco-id="{{ block.id }}"
+              data-lien-pack="{{ lien_pack }}"
+              data-lien-config="{{ lien_config }}"
+              data-nom="{{ block.settings.tab_label | escape }}"
               hidden
             >
-              <span class="dwh-selecteur__curseur" aria-hidden="true"></span>
-              {%- for block in section.blocks -%}
-                <button
-                  type="button"
-                  class="dwh-onglet"
-                  role="tab"
-                  id="dwh-onglet-{{ block.id }}"
-                  aria-controls="dwh-pack-{{ block.id }}"
-                  aria-selected="{% if forloop.index0 == actif %}true{% else %}false{% endif %}"
-                  tabindex="{% if forloop.index0 == actif %}0{% else %}-1{% endif %}"
-                  data-nom="{{ block.settings.tab_label | escape }}"
-                  data-lien="{{ block.settings.packs_link | default: section.settings.pack_link }}"
-                >
-                  {{ block.settings.tab_label }}
-                  {%- if block.settings.tab_sub != blank -%}<small>{{ block.settings.tab_sub }}</small>{%- endif -%}
-                </button>
-              {%- endfor -%}
-            </div>
+              <div class="dwh-reco__visuel">
+                {%- if visuel != blank -%}
+                  {{ visuel | image_url: width: 700 | image_tag: widths: '350, 500, 700', sizes: '(min-width: 750px) 40vw, 90vw', loading: 'lazy', alt: block.settings.title }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag }}
+                {%- endif -%}
+                {%- if block.settings.badge != blank -%}<span class="dwh-pack__badge">{{ block.settings.badge }}</span>{%- endif -%}
+              </div>
+              <div class="dwh-reco__corps">
+                <p class="dwh-reco__surtitre" data-surtitre></p>
+                <h4 class="dwh-reco__nom">{{ block.settings.title }}</h4>
+                {%- if block.settings.description != blank -%}<p class="dwh-reco__pour">{{ block.settings.description }}</p>{%- endif -%}
+                <ul class="dwh-puces">
+                  {%- if block.settings.bullet_1 != blank -%}<li>{{ block.settings.bullet_1 }}</li>{%- endif -%}
+                  {%- if block.settings.bullet_2 != blank -%}<li>{{ block.settings.bullet_2 }}</li>{%- endif -%}
+                  {%- if block.settings.bullet_3 != blank -%}<li>{{ block.settings.bullet_3 }}</li>{%- endif -%}
+                </ul>
+                {%- if p != blank -%}
+                  <div class="dwh-pack__prix">
+                    <div>
+                      <span class="dwh-pack__des">{{ section.settings.price_label }}</span>
+                      <span class="dwh-pack__montant">{{ p.price_min | money }}</span>
+                    </div>
+                    <span class="dwh-pack__mois">0&nbsp;€/mois</span>
+                  </div>
+                {%- endif -%}
+                <a class="dwh-btn dwh-btn--bleu" href="{{ lien_pack }}" data-cta>
+                  <span data-cta-texte>{{ section.settings.cta_pack }} {{ block.settings.tab_label }}</span>
+                  {% render 'dw-home-icon', icon: 'arrow' %}
+                </a>
+                <a class="dwh-reco__autre" href="{{ lien_config }}" data-autre>{{ section.settings.alt_config }}</a>
+              </div>
+            </article>
+          {%- endfor -%}
+
+          {%- if section.settings.camera_label != blank -%}
+            <article class="dwh-reco" data-reco-id="camera" hidden>
+              <div class="dwh-reco__visuel">
+                {%- if cam_visuel != blank -%}
+                  {{ cam_visuel | image_url: width: 700 | image_tag: widths: '350, 500, 700', sizes: '(min-width: 750px) 40vw, 90vw', loading: 'lazy', alt: section.settings.camera_title }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag }}
+                {%- endif -%}
+                {%- if section.settings.camera_badge != blank -%}<span class="dwh-pack__badge">{{ section.settings.camera_badge }}</span>{%- endif -%}
+              </div>
+              <div class="dwh-reco__corps">
+                <p class="dwh-reco__surtitre">{{ section.settings.camera_eyebrow }}</p>
+                <h4 class="dwh-reco__nom">{{ section.settings.camera_title }}</h4>
+                {%- if section.settings.camera_text != blank -%}<p class="dwh-reco__pour">{{ section.settings.camera_text }}</p>{%- endif -%}
+                <ul class="dwh-puces">
+                  {%- if section.settings.camera_bullet_1 != blank -%}<li>{{ section.settings.camera_bullet_1 }}</li>{%- endif -%}
+                  {%- if section.settings.camera_bullet_2 != blank -%}<li>{{ section.settings.camera_bullet_2 }}</li>{%- endif -%}
+                  {%- if section.settings.camera_bullet_3 != blank -%}<li>{{ section.settings.camera_bullet_3 }}</li>{%- endif -%}
+                </ul>
+                {%- if cam != blank -%}
+                  <div class="dwh-pack__prix">
+                    <div>
+                      <span class="dwh-pack__des">{{ section.settings.camera_price_label }}</span>
+                      <span class="dwh-pack__montant">{{ cam.price_min | money }}</span>
+                    </div>
+                    <span class="dwh-pack__mois">0&nbsp;€/mois</span>
+                  </div>
+                {%- endif -%}
+                <a class="dwh-btn dwh-btn--bleu" href="{{ cam_lien }}">
+                  {{ section.settings.camera_cta }}
+                  {% render 'dw-home-icon', icon: 'arrow' %}
+                </a>
+                {%- if section.settings.camera_all_label != blank -%}
+                  <a class="dwh-reco__autre" href="{{ section.settings.camera_all_link }}">{{ section.settings.camera_all_label }}</a>
+                {%- endif -%}
+              </div>
+            </article>
           {%- endif -%}
 
-          <div class="dwh-packs" data-dwh-packs>
-            {%- for block in section.blocks -%}
-              {%- liquid
-                assign p = block.settings.product
-                assign visuel = block.settings.image | default: p.featured_image
-                assign lien = block.settings.packs_link | default: section.settings.pack_link
-              -%}
-              <article
-                class="dwh-gamme"
-                id="dwh-pack-{{ block.id }}"
-                role="tabpanel"
-                aria-labelledby="dwh-onglet-{{ block.id }}"
-                {{ block.shopify_attributes }}
-              >
-                <div class="dwh-gamme__visuel">
-                  {%- if visuel != blank -%}
-                    {{ visuel | image_url: width: 700 | image_tag: widths: '350, 500, 700', sizes: '(min-width: 750px) 40vw, 100vw', loading: 'lazy', alt: block.settings.title }}
-                  {%- else -%}
-                    {{ 'product-1' | placeholder_svg_tag }}
-                  {%- endif -%}
-                  {%- if block.settings.badge != blank -%}<span class="dwh-pack__badge">{{ block.settings.badge }}</span>{%- endif -%}
-                </div>
-                <div class="dwh-gamme__corps">
-                  <h4 class="dwh-gamme__nom">{{ block.settings.title }}</h4>
-                  {%- if block.settings.description != blank -%}<p class="dwh-gamme__pour">{{ block.settings.description }}</p>{%- endif -%}
-                  <ul class="dwh-puces">
-                    {%- if block.settings.bullet_1 != blank -%}<li>{{ block.settings.bullet_1 }}</li>{%- endif -%}
-                    {%- if block.settings.bullet_2 != blank -%}<li>{{ block.settings.bullet_2 }}</li>{%- endif -%}
-                    {%- if block.settings.bullet_3 != blank -%}<li>{{ block.settings.bullet_3 }}</li>{%- endif -%}
-                  </ul>
-                  {%- if p != blank -%}
-                    <div class="dwh-pack__prix">
-                      <div>
-                        <span class="dwh-pack__des">{{ section.settings.price_label }}</span>
-                        <span class="dwh-pack__montant">{{ p.price_min | money }}</span>
-                      </div>
-                      <span class="dwh-pack__mois">0&nbsp;€/mois</span>
-                    </div>
-                  {%- endif -%}
-                  <a class="dwh-lien" href="{{ lien }}">{{ section.settings.range_link_label }} {{ block.settings.tab_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a>
-                </div>
-              </article>
-            {%- endfor -%}
+          <div class="dwh-quiz__fin">
+            {%- if section.settings.compare_label != blank -%}
+              <a class="dwh-lien" href="{{ section.settings.compare_link }}" data-comparer>{{ section.settings.compare_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a>
+            {%- endif -%}
+            <button type="button" class="dwh-quiz__recommencer" data-recommencer>{{ section.settings.restart_label }}</button>
           </div>
-        </li>
+        </div>
+      </div>
 
-        {%- comment -%} Étape 2 : la formule {%- endcomment -%}
-        <li class="dwh-parcours__etape">
-          <div class="dwh-parcours__tete">
-            <span class="dwh-parcours__num" aria-hidden="true">2</span>
-            <div>
-              <h3 class="dwh-parcours__titre">{{ section.settings.step2_title }}</h3>
-              {%- if section.settings.step2_text != blank -%}<p class="dwh-parcours__texte">{{ section.settings.step2_text }}</p>{%- endif -%}
-            </div>
-          </div>
-          <div class="dwh-formules">
-            <a class="dwh-formule dwh-formule--pack" href="{{ gamme_active.settings.packs_link | default: section.settings.pack_link }}" data-dwh-lien-packs>
-              <span class="dwh-formule__tag">{{ section.settings.pack_tag }}</span>
-              <span class="dwh-formule__titre">{{ section.settings.pack_title }}</span>
-              <span class="dwh-formule__texte">{{ section.settings.pack_text }}</span>
-              <span class="dwh-formule__cta">{{ section.settings.pack_cta }} <span data-dwh-nom-gamme>{{ gamme_active.settings.tab_label }}</span> {% render 'dw-home-icon', icon: 'arrow' %}</span>
-            </a>
-            <a class="dwh-formule" href="{{ section.settings.config_link }}">
-              <span class="dwh-formule__tag">{{ section.settings.config_tag }}</span>
-              <span class="dwh-formule__titre">{{ section.settings.config_title }}</span>
-              <span class="dwh-formule__texte">{{ section.settings.config_text }}</span>
-              <span class="dwh-formule__cta">{{ section.settings.config_cta }} {% render 'dw-home-icon', icon: 'arrow' %}</span>
-            </a>
-          </div>
-        </li>
-
-        {%- comment -%} Étape 3 : réception et installation {%- endcomment -%}
-        <li class="dwh-parcours__etape">
-          <div class="dwh-parcours__tete">
-            <span class="dwh-parcours__num" aria-hidden="true">3</span>
-            <div>
-              <h3 class="dwh-parcours__titre">{{ section.settings.step3_title }}</h3>
-              {%- if section.settings.step3_text != blank -%}<p class="dwh-parcours__texte">{{ section.settings.step3_text }}</p>{%- endif -%}
-            </div>
-          </div>
-        </li>
-      </ol>
-
-      <nav class="dwh-liens" aria-label="Besoin d'aide pour choisir">
-        {%- if section.settings.quiz_title != blank -%}
-          <a href="{{ section.settings.quiz_link }}"><span><b>{{ section.settings.quiz_title }}</b> · {{ section.settings.quiz_text }}</span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
-        {%- endif -%}
-        {%- if section.settings.compare_label != blank -%}
-          <a href="{{ section.settings.compare_link }}"><span><b>{{ section.settings.compare_label }}</b></span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
-        {%- endif -%}
-        {%- if section.settings.extra_title != blank -%}
-          <a href="{{ section.settings.extra_link }}"><span><b>{{ section.settings.extra_title }}</b> · {{ section.settings.extra_text }}</span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
-        {%- endif -%}
+      {%- comment -%} Secours sans JavaScript : un lien par gamme {%- endcomment -%}
+      <nav class="dwh-liens dwh-liens--secours" data-dwh-secours aria-label="{{ section.settings.title | escape }}">
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.packs_link | default: section.settings.all_packs_link }}"><span><b>{{ block.settings.title }}</b> · {{ block.settings.quiz_label }}</span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
+        {%- endfor -%}
       </nav>
+
+      {%- if section.settings.reassure_text != blank -%}
+        <p class="dwh-quiz__rassure">
+          {% render 'dw-home-icon', icon: 'truck' %}
+          <span>{{ section.settings.reassure_text }}</span>
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.all_packs_label != blank -%}
+        <p class="dwh-quiz__direct">
+          {{ section.settings.all_packs_intro }}
+          <a class="dwh-lien" href="{{ section.settings.all_packs_link }}">{{ section.settings.all_packs_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a>
+        </p>
+      {%- endif -%}
     </div>
   </section>
 </div>
@@ -161,82 +225,172 @@
 <script>
   (function () {
     var racine = document.getElementById('dwh-packs');
-    if (!racine) return;
-    var selecteur = racine.querySelector('[data-dwh-selecteur]');
-    var liste = racine.querySelector('[data-dwh-packs]');
-    if (!selecteur || !liste) return;
-    var onglets = Array.prototype.slice.call(selecteur.querySelectorAll('[role="tab"]'));
-    var panneaux = Array.prototype.slice.call(liste.querySelectorAll('[role="tabpanel"]'));
-    var lienPacks = racine.querySelector('[data-dwh-lien-packs]');
-    var nomGamme = racine.querySelector('[data-dwh-nom-gamme]');
+    var quiz = racine && racine.querySelector('[data-dwh-quiz]');
+    if (!quiz) return;
 
-    function choisir(i, focus) {
-      selecteur.style.setProperty('--i', i);
-      onglets.forEach(function (o, j) {
-        var actif = i === j;
-        o.setAttribute('aria-selected', actif ? 'true' : 'false');
-        o.tabIndex = actif ? 0 : -1;
-        panneaux[j].hidden = !actif;
-      });
-      // L'étape 2 suit la centrale choisie à l'étape 1.
-      if (lienPacks && onglets[i].dataset.lien) lienPacks.href = onglets[i].dataset.lien;
-      if (nomGamme) nomGamme.textContent = onglets[i].dataset.nom;
-      if (focus) onglets[i].focus();
+    var ecrans = {};
+    Array.prototype.forEach.call(quiz.querySelectorAll('[data-ecran]'), function (e) { ecrans[e.dataset.ecran] = e; });
+    var recos = Array.prototype.slice.call(quiz.querySelectorAll('[data-reco-id]'));
+    var retour = quiz.querySelector('[data-retour]');
+    var compte = quiz.querySelector('[data-compte]');
+    var progres = quiz.querySelector('[data-progres]');
+    var comparer = quiz.querySelector('[data-comparer]');
+    var textes = {
+      pack: {{ section.settings.cta_pack | json }},
+      config: {{ section.settings.cta_config | json }},
+      autrePack: {{ section.settings.alt_pack | json }},
+      autreConfig: {{ section.settings.alt_config | json }},
+      resultat: {{ section.settings.result_count | json }}
+    };
+    var historique = [];
+    var reponses = {};
+    var courant = 'besoin';
+
+    function suivre(evenement, donnees) {
+      // Mesure du quiz dans GA4 / GTM si présent (sans effet sinon).
+      window.dataLayer = window.dataLayer || [];
+      donnees.event = evenement;
+      window.dataLayer.push(donnees);
     }
 
-    onglets.forEach(function (o, i) {
-      o.addEventListener('click', function () { choisir(i); });
-      o.addEventListener('keydown', function (e) {
-        var n = onglets.length;
-        if (e.key === 'ArrowRight') { e.preventDefault(); choisir((i + 1) % n, true); }
-        if (e.key === 'ArrowLeft') { e.preventDefault(); choisir((i - 1 + n) % n, true); }
+    function afficher(nom, recul, initial) {
+      Object.keys(ecrans).forEach(function (k) { ecrans[k].hidden = k !== nom; });
+      var rang = ecrans[nom].dataset.rang;
+      compte.textContent = rang ? 'Question ' + rang + ' sur 3' : textes.resultat;
+      progres.style.transform = 'scaleX(' + (rang ? rang / 3 : 1) + ')';
+      retour.hidden = historique.length === 0;
+      quiz.classList.toggle('est-recule', !!recul);
+      // Le quiz reste en vue quand sa hauteur change.
+      if (initial) return;
+      var haut = quiz.getBoundingClientRect().top;
+      if (haut < 0) window.scrollBy({ top: haut - 90, behavior: 'smooth' });
+      var titre = ecrans[nom].querySelector('.dwh-quiz__question');
+      if (titre && historique.length) titre.focus({ preventScroll: true });
+    }
+
+    function aller(nom) {
+      historique.push(courant);
+      courant = nom;
+      afficher(nom);
+    }
+
+    function montrerResultat() {
+      var id = reponses.gamme === 'conseil' ? quiz.dataset.conseil : reponses.gamme;
+      if (reponses.besoin === 'camera') id = 'camera';
+      recos.forEach(function (r) {
+        var actif = r.dataset.recoId === id;
+        r.hidden = !actif;
+        if (!actif || id === 'camera') return;
+        var surMesure = reponses.formule === 'config';
+        var cta = r.querySelector('[data-cta]');
+        var autre = r.querySelector('[data-autre]');
+        cta.href = surMesure ? r.dataset.lienConfig : r.dataset.lienPack;
+        cta.querySelector('[data-cta-texte]').textContent = (surMesure ? textes.config : textes.pack) + ' ' + r.dataset.nom;
+        autre.href = surMesure ? r.dataset.lienPack : r.dataset.lienConfig;
+        autre.textContent = surMesure ? textes.autrePack : textes.autreConfig;
+        r.querySelector('[data-surtitre]').textContent = reponses.gamme === 'conseil' ? quiz.dataset.surtitreConseil : quiz.dataset.surtitreChoix;
       });
+      if (comparer) comparer.hidden = id === 'camera';
+      var choisie = recos.filter(function (r) { return !r.hidden; })[0];
+      var nomGamme = id === 'camera' ? 'camera' : (choisie && choisie.dataset.nom);
+      aller('resultat');
+      suivre('dwh_quiz_resultat', { dwh_besoin: reponses.besoin, dwh_gamme: nomGamme, dwh_conseil: reponses.gamme === 'conseil', dwh_formule: reponses.formule || '' });
+    }
+
+    quiz.addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (!b) return;
+      if (b.hasAttribute('data-retour')) {
+        var precedent = historique.pop();
+        if (!precedent) return;
+        courant = precedent;
+        afficher(precedent, true);
+      } else if (b.hasAttribute('data-recommencer')) {
+        historique = [];
+        reponses = {};
+        courant = 'besoin';
+        afficher('besoin', true);
+        ecrans.besoin.querySelector('.dwh-quiz__question').focus({ preventScroll: true });
+      } else if (b.dataset.aller) {
+        reponses.besoin = 'alarme';
+        aller(b.dataset.aller);
+      } else if (b.dataset.reco === 'camera') {
+        reponses = { besoin: 'camera' };
+        montrerResultat();
+      } else if (b.dataset.gamme) {
+        reponses.gamme = b.dataset.gamme;
+        aller('formule');
+      } else if (b.dataset.formule) {
+        reponses.formule = b.dataset.formule;
+        montrerResultat();
+      }
     });
 
-    selecteur.hidden = false;
-    liste.classList.add('est-pilote');
-    choisir({{ actif }});
+    afficher('besoin', false, true);
+    quiz.hidden = false;
+    var secours = racine.querySelector('[data-dwh-secours]');
+    if (secours) secours.hidden = true;
   })();
 </script>
 
 {% schema %}
 {
-  "name": "Home V2 · Parcours achat",
+  "name": "Home V2 · Quiz alarme",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Votre alarme en 3 étapes" },
-    { "type": "text", "id": "title", "label": "Titre", "default": "Comment choisir votre alarme ?" },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "3 questions, 20 secondes" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Quelle alarme est faite pour vous ?" },
     { "type": "textarea", "id": "text", "label": "Texte" },
-    { "type": "header", "content": "Étape 1 · Centrale" },
-    { "type": "text", "id": "step1_title", "label": "Titre", "default": "Choisissez votre centrale" },
-    { "type": "textarea", "id": "step1_text", "label": "Texte", "default": "C'est le cœur de votre alarme. Nos 3 gammes protègent aussi bien un appartement qu'une grande maison : choisissez selon votre façon de l'utiliser." },
+    { "type": "header", "content": "Question 1 · Besoin" },
+    { "type": "text", "id": "q1_title", "label": "Question", "default": "Que cherchez-vous ?" },
+    { "type": "text", "id": "q1_alarm_label", "label": "Réponse alarme", "default": "Une alarme complète" },
+    { "type": "text", "id": "q1_alarm_sub", "label": "Réponse alarme · précision", "default": "Centrale, détecteurs et sirène" },
+    { "type": "header", "content": "Question 2 · Pilotage", "info": "Une réponse par bloc « Centrale »." },
+    { "type": "text", "id": "q2_title", "label": "Question", "default": "Comment préférez-vous utiliser votre alarme ?" },
+    { "type": "text", "id": "q2_unsure_label", "label": "Réponse « je ne sais pas »", "default": "Je ne sais pas encore" },
+    { "type": "text", "id": "q2_unsure_sub", "label": "Précision", "default": "On vous conseille" },
+    { "type": "header", "content": "Question 3 · Formule" },
+    { "type": "text", "id": "q3_title", "label": "Question", "default": "Comment voulez-vous la commander ?" },
+    { "type": "text", "id": "q3_pack_label", "label": "Réponse pack", "default": "Un pack prêt à poser" },
+    { "type": "text", "id": "q3_pack_sub", "label": "Précision", "default": "Tout est dans la boîte" },
+    { "type": "text", "id": "q3_config_label", "label": "Réponse sur mesure", "default": "Je compose moi-même" },
+    { "type": "text", "id": "q3_config_sub", "label": "Précision", "default": "Je choisis chaque accessoire" },
+    { "type": "url", "id": "config_link", "label": "Lien « sur mesure » par défaut" },
+    { "type": "header", "content": "Résultat" },
+    { "type": "text", "id": "result_title", "label": "Titre", "default": "Votre alarme idéale" },
+    { "type": "text", "id": "result_count", "label": "Compteur", "default": "Votre résultat" },
+    { "type": "text", "id": "result_eyebrow", "label": "Sur-titre (choix du client)", "default": "Faite pour vous" },
+    { "type": "text", "id": "advice_eyebrow", "label": "Sur-titre (« je ne sais pas »)", "default": "Notre conseil · la plus choisie" },
     { "type": "text", "id": "price_label", "label": "Texte avant le prix", "default": "Packs dès" },
-    { "type": "text", "id": "range_link_label", "label": "Lien sous chaque centrale", "default": "Tout voir en" },
-    { "type": "header", "content": "Étape 2 · Formule" },
-    { "type": "text", "id": "step2_title", "label": "Titre", "default": "Choisissez votre formule" },
-    { "type": "textarea", "id": "step2_text", "label": "Texte" },
-    { "type": "text", "id": "pack_tag", "label": "Pack · étiquette", "default": "Le plus simple" },
-    { "type": "text", "id": "pack_title", "label": "Pack · titre", "default": "Un pack prêt à poser" },
-    { "type": "textarea", "id": "pack_text", "label": "Pack · texte", "default": "Centrale, détecteurs et sirène : tout est dans la boîte. Du pack de départ au pack complet avec caméras." },
-    { "type": "text", "id": "pack_cta", "label": "Pack · bouton", "default": "Voir les packs" },
-    { "type": "url", "id": "pack_link", "label": "Pack · lien par défaut" },
-    { "type": "text", "id": "config_tag", "label": "Sur mesure · étiquette", "default": "Le plus précis" },
-    { "type": "text", "id": "config_title", "label": "Sur mesure · titre", "default": "Un système sur mesure" },
-    { "type": "textarea", "id": "config_text", "label": "Sur mesure · texte", "default": "Répondez à quelques questions sur votre logement : on vous propose la centrale et les accessoires adaptés." },
-    { "type": "text", "id": "config_cta", "label": "Sur mesure · bouton", "default": "Composer mon alarme" },
-    { "type": "url", "id": "config_link", "label": "Sur mesure · lien" },
-    { "type": "header", "content": "Étape 3 · Réception" },
-    { "type": "text", "id": "step3_title", "label": "Titre", "default": "Recevez-la et installez-la vous-même" },
-    { "type": "textarea", "id": "step3_text", "label": "Texte", "default": "Expédiée sous 24 h. Installation en moins de 30 minutes, sans perçage ni technicien : l'application vous guide pas à pas." },
-    { "type": "header", "content": "Liens d'aide" },
-    { "type": "text", "id": "quiz_title", "label": "Quiz · titre", "default": "Encore un doute ?" },
-    { "type": "text", "id": "quiz_text", "label": "Quiz · texte", "default": "Faites le quiz" },
-    { "type": "url", "id": "quiz_link", "label": "Quiz · lien" },
-    { "type": "text", "id": "compare_label", "label": "Comparatif · texte", "default": "Comparer les 3 centrales en détail" },
+    { "type": "text", "id": "cta_pack", "label": "Bouton si pack", "default": "Voir les packs" },
+    { "type": "text", "id": "cta_config", "label": "Bouton si sur mesure", "default": "Composer mon alarme" },
+    { "type": "text", "id": "alt_config", "label": "Lien secondaire vers le sur mesure", "default": "ou composer la mienne sur mesure" },
+    { "type": "text", "id": "alt_pack", "label": "Lien secondaire vers les packs", "default": "ou voir les packs tout prêts" },
+    { "type": "text", "id": "compare_label", "label": "Comparatif · texte", "default": "Comparer les 3 centrales" },
     { "type": "url", "id": "compare_link", "label": "Comparatif · lien" },
-    { "type": "text", "id": "extra_title", "label": "Caméra · titre", "default": "Juste une caméra ?" },
-    { "type": "text", "id": "extra_text", "label": "Caméra · texte", "default": "La caméra solaire, notre best-seller" },
-    { "type": "url", "id": "extra_link", "label": "Caméra · lien" }
+    { "type": "text", "id": "restart_label", "label": "Recommencer", "default": "Recommencer le quiz" },
+    { "type": "header", "content": "Caméra seule" },
+    { "type": "text", "id": "camera_label", "label": "Réponse caméra (vide = masquée)", "default": "Une caméra seule" },
+    { "type": "text", "id": "camera_sub", "label": "Précision", "default": "Surveiller sans installer d'alarme" },
+    { "type": "product", "id": "camera_product", "label": "Caméra recommandée" },
+    { "type": "image_picker", "id": "camera_image", "label": "Photo (sinon celle du produit)" },
+    { "type": "text", "id": "camera_badge", "label": "Badge" },
+    { "type": "text", "id": "camera_eyebrow", "label": "Sur-titre", "default": "Notre best-seller" },
+    { "type": "text", "id": "camera_title", "label": "Nom", "default": "Caméra solaire W512MW" },
+    { "type": "textarea", "id": "camera_text", "label": "Texte" },
+    { "type": "text", "id": "camera_bullet_1", "label": "Point fort 1" },
+    { "type": "text", "id": "camera_bullet_2", "label": "Point fort 2" },
+    { "type": "text", "id": "camera_bullet_3", "label": "Point fort 3" },
+    { "type": "text", "id": "camera_price_label", "label": "Texte avant le prix", "default": "Prix" },
+    { "type": "text", "id": "camera_cta", "label": "Bouton", "default": "Voir la caméra" },
+    { "type": "url", "id": "camera_link", "label": "Lien du bouton (sinon fiche produit)" },
+    { "type": "text", "id": "camera_all_label", "label": "Lien secondaire", "default": "ou voir toutes nos caméras" },
+    { "type": "url", "id": "camera_all_link", "label": "URL" },
+    { "type": "header", "content": "Bas de section" },
+    { "type": "text", "id": "reassure_text", "label": "Réassurance", "default": "Expédiée sous 24 h · installée en 30 min, sans perçage ni technicien" },
+    { "type": "text", "id": "all_packs_intro", "label": "Texte « déjà décidé »", "default": "Vous savez déjà ce que vous voulez ?" },
+    { "type": "text", "id": "all_packs_label", "label": "Lien « déjà décidé »", "default": "Voir tous les packs" },
+    { "type": "url", "id": "all_packs_link", "label": "URL (aussi lien par défaut des gammes)" }
   ],
   "blocks": [
     {
@@ -244,28 +398,38 @@
       "name": "Centrale",
       "limit": 4,
       "settings": [
-        { "type": "text", "id": "tab_label", "label": "Nom court (onglet)", "default": "Touch" },
-        { "type": "text", "id": "tab_sub", "label": "Précision sous l'onglet", "default": "écran tactile" },
-        { "type": "checkbox", "id": "featured", "label": "Ouverte par défaut", "default": false },
+        { "type": "text", "id": "tab_label", "label": "Nom court", "default": "Touch" },
+        { "type": "checkbox", "id": "featured", "label": "Conseillée si « je ne sais pas »", "default": false },
+        { "type": "header", "content": "Réponse dans le quiz" },
+        { "type": "select", "id": "quiz_icon", "label": "Icône", "default": "ecran", "options": [
+          { "value": "clavier", "label": "Clavier" },
+          { "value": "ecran", "label": "Écran tactile" },
+          { "value": "eclair", "label": "Performance" },
+          { "value": "phone", "label": "Smartphone" }
+        ] },
+        { "type": "text", "id": "quiz_label", "label": "Réponse", "default": "Avec un écran tactile" },
+        { "type": "text", "id": "quiz_sub", "label": "Précision" },
+        { "type": "header", "content": "Carte résultat" },
         { "type": "text", "id": "badge", "label": "Badge", "info": "Ex. : Le plus choisi" },
         { "type": "image_picker", "id": "image", "label": "Photo de la centrale" },
         { "type": "text", "id": "title", "label": "Nom complet", "default": "Centrale Touch" },
-        { "type": "textarea", "id": "description", "label": "Idéal si…" },
+        { "type": "textarea", "id": "description", "label": "Pourquoi elle vous correspond" },
         { "type": "text", "id": "bullet_1", "label": "Point fort 1" },
         { "type": "text", "id": "bullet_2", "label": "Point fort 2" },
         { "type": "text", "id": "bullet_3", "label": "Point fort 3" },
         { "type": "product", "id": "product", "label": "Pack de départ (pour le prix « dès »)" },
-        { "type": "url", "id": "packs_link", "label": "Lien vers les packs de cette gamme" }
+        { "type": "url", "id": "packs_link", "label": "Lien vers les packs de cette gamme" },
+        { "type": "url", "id": "config_link", "label": "Lien sur mesure de cette gamme (sinon lien par défaut)" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Home V2 · Parcours achat",
+      "name": "Home V2 · Quiz alarme",
       "blocks": [
-        { "type": "gamme", "settings": { "tab_label": "Vigilia", "tab_sub": "clavier & appli", "title": "Centrale Vigilia" } },
-        { "type": "gamme", "settings": { "tab_label": "Touch", "tab_sub": "écran tactile", "title": "Centrale Touch", "featured": true, "badge": "Le plus choisi" } },
-        { "type": "gamme", "settings": { "tab_label": "Élite", "tab_sub": "la plus complète", "title": "Centrale Élite" } }
+        { "type": "gamme", "settings": { "tab_label": "Vigilia", "title": "Centrale Vigilia", "quiz_icon": "clavier", "quiz_label": "Avec un clavier et des badges" } },
+        { "type": "gamme", "settings": { "tab_label": "Touch", "title": "Centrale Touch", "quiz_icon": "ecran", "quiz_label": "Avec un écran tactile", "featured": true, "badge": "Le plus choisi" } },
+        { "type": "gamme", "settings": { "tab_label": "Élite", "title": "Centrale Élite", "quiz_icon": "eclair", "quiz_label": "Performance maximale" } }
       ]
     }
   ]

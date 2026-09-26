@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Home V2 — Quiz « Quelle alarme est faite pour vous ? »
+   Complète dw-home.css (chargé juste avant) : mêmes variables, classes .dwh.
+   ==========================================================================
+   2. QUIZ — trois questions, une réponse par tap, une recommandation
+   ========================================================================== */
+@keyframes dwh-recule { from { opacity: 0; transform: translateX(-12px); } }
+@keyframes dwh-avance { from { opacity: 0; transform: translateX(12px); } }
+
+.dwh-quiz {
+  position: relative;
+  padding: 18px 16px 20px;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: var(--ombre);
+}
+.dwh-quiz[hidden], .dwh-quiz [hidden] { display: none !important; }
+.dwh-quiz__haut { display: flex; align-items: center; justify-content: space-between; min-height: 36px; padding: 0 4px; }
+.dwh-quiz__retour {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: -8px;
+  padding: 8px 10px 8px 4px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font: 600 14px/1 var(--f-texte);
+  color: var(--encre);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.dwh-quiz__retour svg { width: 18px; height: 18px; }
+.dwh-quiz__compte { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--gris); font-variant-numeric: tabular-nums; }
+.dwh-quiz__progres { height: 4px; margin: 10px 4px 22px; border-radius: 999px; background: var(--porcelaine); overflow: hidden; }
+.dwh-quiz__progres span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--bleu);
+  transform-origin: left center;
+  transform: scaleX(0.333);
+  transition: transform 360ms var(--ease-out);
+}
+.dwh-quiz__ecran { animation: dwh-avance 320ms var(--ease-out); }
+.dwh-quiz.est-recule .dwh-quiz__ecran { animation-name: dwh-recule; }
+.dwh-quiz__question {
+  padding: 0 4px;
+  margin: 0 0 18px;
+  font-family: var(--f-display);
+  font-size: 24px;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  outline: none;
+  text-wrap: balance;
+}
+.dwh-quiz__choix { display: grid; gap: 10px; }
+
+.dwh-choix {
+  display: grid;
+  grid-template-columns: 48px 1fr 18px;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  min-height: 76px;
+  padding: 12px 16px 12px 12px;
+  border: 1.5px solid var(--trait);
+  border-radius: 20px;
+  background: #fff;
+  font: inherit;
+  color: var(--encre);
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 160ms var(--ease-out), border-color 200ms ease, background-color 200ms ease;
+}
+.dwh-choix:active { transform: scale(0.98); border-color: var(--bleu); background: #f3f6fe; }
+.dwh-choix:focus-visible { outline: 2px solid var(--bleu); outline-offset: 2px; }
+.dwh-choix__ico { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: #edf2fd; color: var(--bleu); }
+.dwh-choix__ico svg { width: 24px; height: 24px; }
+.dwh-choix__txt b { display: block; font-size: 16px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; }
+.dwh-choix__txt small { display: block; margin-top: 3px; font-size: 14px; line-height: 1.35; color: var(--gris); }
+.dwh-choix > svg { width: 18px; height: 18px; color: var(--bleu); opacity: 0.5; transition: transform 200ms var(--ease-out), opacity 200ms ease; }
+.dwh-choix--discret { border-style: dashed; }
+.dwh-choix--discret .dwh-choix__ico { background: var(--porcelaine); color: var(--gris); }
+@media (hover: hover) and (pointer: fine) {
+  .dwh-choix:hover { border-color: var(--bleu); }
+  .dwh-choix:hover > svg { opacity: 1; transform: translateX(3px); }
+  .dwh-quiz__retour:hover { background: var(--porcelaine); }
+}
+
+/* Carte résultat */
+.dwh-quiz__question--resultat { font-size: 15px; font-family: var(--f-texte); font-weight: 600; letter-spacing: 0; color: var(--gris); margin-bottom: 12px; }
+.dwh-reco { display: flex; flex-direction: column; border-radius: 22px; background: var(--porcelaine); overflow: hidden; }
+.dwh-reco__visuel { position: relative; aspect-ratio: 16 / 9; background: radial-gradient(70% 70% at 50% 45%, #ffffff 0%, #eef1f8 100%); }
+.dwh-reco__visuel img, .dwh-reco__visuel svg { width: 100%; height: 100%; object-fit: contain; padding: 18px; mix-blend-mode: multiply; }
+.dwh-pack__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--encre);
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px -4px rgba(12, 30, 74, 0.25);
+}
+.dwh-reco__corps { display: flex; flex-direction: column; gap: 14px; padding: 20px 18px 18px; }
+.dwh-reco__surtitre { display: inline-flex; align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: var(--protege-doux); color: #0d7a48; font-size: 12.5px; font-weight: 600; }
+.dwh-reco__surtitre:empty { display: none; }
+.dwh-reco__nom { font-family: var(--f-display); font-variation-settings: 'wdth' 88; font-stretch: 88%; font-size: 28px; line-height: 1.05; font-weight: 600; letter-spacing: -0.025em; margin: -4px 0 0; }
+.dwh-reco__pour { font-size: 15px; line-height: 1.5; color: var(--gris); }
+.dwh-reco .dwh-btn { margin-top: 4px; }
+.dwh-reco__autre { align-self: center; padding: 6px 8px; font-size: 14px; font-weight: 500; color: var(--gris); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(90, 101, 130, 0.4); }
+
+.dwh-pack__prix { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding-top: 16px; border-top: 1px solid var(--trait); margin-top: 2px; }
+.dwh-pack__montant { font-size: 32px; font-weight: 600; line-height: 1; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+.dwh-pack__des { display: block; font-size: 13px; font-weight: 500; color: var(--gris); margin-bottom: 6px; }
+.dwh-pack__mois { flex-shrink: 0; padding: 6px 12px; border-radius: 999px; background: var(--protege-doux); color: #0d7a48; font-size: 13px; font-weight: 600; white-space: nowrap; }
+
+.dwh-quiz__fin { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; margin-top: 14px; padding: 0 4px; }
+.dwh-quiz__fin .dwh-lien { font-size: 15px; }
+.dwh-quiz__recommencer { padding: 10px 0; border: 0; background: none; font: 500 14px/1.2 var(--f-texte); color: var(--gris); cursor: pointer; }
+
+/* Sous le quiz */
+.dwh-quiz__rassure { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 22px; font-size: 14px; line-height: 1.4; color: var(--gris); text-align: left; }
+.dwh-quiz__rassure svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--protege); }
+.dwh-quiz__direct { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--trait); font-size: 15px; color: var(--gris); text-align: center; }
+.dwh-quiz__direct .dwh-lien { padding: 6px 0; }
+
+.dwh-liens--secours { margin-top: 0; }
+.dwh-liens--secours b { color: var(--encre); }
+.dwh-liens[hidden] { display: none; }
+
+@media (min-width: 750px) {
+  #dwh-packs .dwh-entete { text-align: center; }
+  #dwh-packs .dwh-chapo { margin-inline: auto; }
+  .dwh-quiz { max-width: 720px; margin: 0 auto; padding: 28px 32px 32px; }
+  .dwh-quiz__question { font-size: 30px; }
+  .dwh-quiz__choix { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dwh-reco { flex-direction: row; }
+  .dwh-reco__visuel { flex: 0 0 42%; aspect-ratio: auto; min-height: 320px; }
+  .dwh-reco__corps { padding: 28px; justify-content: center; }
+  .dwh-reco .dwh-btn { width: auto; align-self: flex-start; padding-inline: 32px; }
+  .dwh-reco__autre { align-self: flex-start; padding-left: 0; }
+  .dwh-liens--secours { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dwh-quiz__ecran { animation: none; }
+  .dwh-quiz__progres span { transition: none; }
+}
