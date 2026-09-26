@@ -146,9 +146,10 @@
   overflow: hidden;
   padding: 36px 20px 0;
   background:
-    radial-gradient(70% 45% at 50% 78%, rgba(40, 96, 230, 0.45) 0%, transparent 70%),
-    linear-gradient(180deg, #0a1330 0%, #0b1638 100%);
-  color: #fff;
+    radial-gradient(60% 38% at 50% 78%, rgba(21, 82, 214, 0.20) 0%, transparent 70%),
+    radial-gradient(80% 50% at 50% 0%, #ffffff 0%, transparent 70%),
+    linear-gradient(180deg, #f6f8fd 0%, #e8eefb 100%);
+  color: var(--encre);
   text-align: center;
 }
 .dwh-hero__grille { display: grid; gap: 28px; max-width: 1120px; margin: 0 auto; }
@@ -157,16 +158,16 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: var(--brume);
+  color: var(--gris);
   margin-bottom: 18px;
 }
-.dwh-hero__note strong { color: #fff; font-weight: 600; }
+.dwh-hero__note strong { color: var(--encre); font-weight: 600; }
 .dwh-hero .dwh-titre { font-size: clamp(36px, 10vw, 64px); }
-.dwh-hero .dwh-titre em { display: block; margin-top: 6px; }
+.dwh-hero .dwh-titre em { display: block; margin-top: 6px; color: #7282ad; }
 .dwh-hero__actions { display: grid; gap: 2px; justify-items: center; margin-top: 26px; }
-.dwh-hero__prix { margin-top: 6px; font-size: 14px; color: var(--brume); }
-.dwh-hero__prix strong { color: #fff; font-weight: 600; }
-.dwh-hero__prix .dwh-zero { color: var(--protege-clair); font-weight: 600; white-space: nowrap; }
+.dwh-hero__prix { margin-top: 6px; font-size: 14px; color: var(--gris); }
+.dwh-hero__prix strong { color: var(--encre); font-weight: 600; }
+.dwh-hero__prix .dwh-zero { color: var(--protege); font-weight: 600; white-space: nowrap; }
 
 /* Scène : le téléphone sort du bas de l'écran */
 .dwh-scene {
@@ -201,7 +202,7 @@
   background: #fff;
   color: var(--encre);
   text-align: left;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 30px 60px -18px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 0 1px rgba(12, 30, 74, 0.06), 0 28px 50px -18px rgba(12, 30, 74, 0.35);
   transform: translateX(-50%);
   opacity: 0;
   animation: dwh-centrale 600ms var(--ease-out) 1700ms forwards;
@@ -243,8 +244,8 @@
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.14),
     0 0 0 1px rgba(0, 0, 0, 0.5),
-    0 50px 90px -30px rgba(0, 0, 0, 0.8),
-    0 0 120px -20px rgba(40, 96, 230, 0.45);
+    0 50px 80px -30px rgba(12, 30, 74, 0.55),
+    0 0 100px -30px rgba(21, 82, 214, 0.45);
 }
 .dwh-tel__ecran {
   position: relative;
@@ -444,6 +445,79 @@
 .dwh-pack__mois { flex-shrink: 0; padding: 6px 12px; border-radius: 999px; background: var(--protege-doux); color: #0d7a48; font-size: 13px; font-weight: 600; white-space: nowrap; }
 .dwh-pack__alma { font-size: 13px; color: var(--gris); margin-top: -10px; }
 
+/* Parcours d'achat en 3 étapes (une vraie séquence : numérotée) */
+.dwh-parcours { position: relative; display: grid; gap: 36px; counter-reset: none; }
+.dwh-parcours::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 17px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--bleu) 0%, rgba(21, 82, 214, 0.15) 100%);
+}
+.dwh-parcours__etape { position: relative; }
+.dwh-parcours__tete { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; margin-bottom: 18px; }
+.dwh-parcours__num {
+  position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--bleu);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 0 0 0 6px var(--porcelaine);
+}
+.dwh-parcours__titre { font-size: 21px; line-height: 1.2; font-weight: 600; letter-spacing: -0.015em; margin-top: 5px; }
+.dwh-parcours__texte { font-size: 15px; line-height: 1.5; color: var(--gris); margin-top: 6px; }
+.dwh-parcours__etape > :not(.dwh-parcours__tete) { margin-left: 50px; }
+
+.dwh-gamme {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: var(--ombre);
+  overflow: hidden;
+}
+.dwh-packs.est-pilote .dwh-gamme { animation: dwh-apparait 300ms var(--ease-out); }
+.dwh-packs.est-pilote .dwh-gamme[hidden] { display: none; }
+.dwh-gamme__visuel { position: relative; aspect-ratio: 16 / 11; background: radial-gradient(70% 70% at 50% 45%, #ffffff 0%, #eef1f8 100%); }
+.dwh-gamme__visuel img { width: 100%; height: 100%; object-fit: contain; padding: 18px; mix-blend-mode: multiply; }
+.dwh-gamme__corps { display: flex; flex-direction: column; gap: 14px; padding: 20px; }
+.dwh-gamme__nom { font-family: var(--f-display); font-variation-settings: 'wdth' 88; font-stretch: 88%; font-size: 26px; line-height: 1.05; font-weight: 600; letter-spacing: -0.025em; margin: 0; }
+.dwh-gamme__pour { font-size: 15px; line-height: 1.5; color: var(--gris); }
+.dwh-gamme .dwh-pack__prix { margin-top: 4px; }
+.dwh-gamme .dwh-lien { padding: 4px 0 0; }
+
+.dwh-formules { display: grid; gap: 12px; }
+.dwh-formule {
+  display: grid;
+  gap: 6px;
+  padding: 20px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: var(--ombre);
+  text-decoration: none;
+  color: var(--encre);
+  transition: transform 160ms var(--ease-out), box-shadow 200ms ease;
+}
+.dwh-formule:active { transform: scale(0.98); }
+.dwh-formule--pack { background: var(--nuit); color: #fff; }
+.dwh-formule__tag { justify-self: start; padding: 4px 10px; border-radius: 999px; background: var(--porcelaine); color: var(--bleu); font-size: 12px; font-weight: 600; }
+.dwh-formule--pack .dwh-formule__tag { background: rgba(255, 255, 255, 0.12); color: #fff; }
+.dwh-formule__titre { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin-top: 4px; }
+.dwh-formule__texte { font-size: 15px; line-height: 1.5; color: var(--gris); }
+.dwh-formule--pack .dwh-formule__texte { color: var(--brume); }
+.dwh-formule__cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-weight: 600; color: var(--bleu); }
+.dwh-formule--pack .dwh-formule__cta { color: #fff; }
+.dwh-formule__cta svg { width: 16px; height: 16px; }
+@media (hover: hover) and (pointer: fine) { .dwh-formule:hover { transform: translateY(-2px); } }
+
 /* Alternative principale (configurateur) + liens secondaires */
 .dwh-autre {
   display: grid;
@@ -464,7 +538,7 @@
 .dwh-autre__titre { display: block; font-weight: 600; font-size: 16px; line-height: 1.25; }
 .dwh-autre__texte { display: block; font-size: 14px; line-height: 1.35; color: var(--brume); margin-top: 2px; }
 .dwh-autre > svg { width: 18px; height: 18px; opacity: 0.6; }
-.dwh-liens { display: grid; margin-top: 12px; border-top: 1px solid var(--trait); }
+.dwh-liens { display: grid; margin-top: 40px; border-top: 1px solid var(--trait); }
 .dwh-liens a {
   display: flex;
   justify-content: space-between;
@@ -604,10 +678,13 @@
   @keyframes dwh-centrale-d { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   .dwh-tel { width: 320px; }
   .dwh-rassure__liste { grid-template-columns: repeat(4, 1fr); justify-items: center; }
-  .dwh-selecteur { display: none; }
-  .dwh-packs { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
-  .dwh-packs.est-pilote .dwh-pack[hidden] { display: flex; }
-  .dwh-packs.est-pilote .dwh-pack { animation: none; }
+  .dwh-selecteur { max-width: 560px; }
+  .dwh-gamme { flex-direction: row; }
+  .dwh-gamme__visuel { flex: 0 0 44%; aspect-ratio: auto; min-height: 340px; }
+  .dwh-gamme__corps { padding: 32px; justify-content: center; }
+  .dwh-formules { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .dwh-parcours::before { left: 17px; }
+  .dwh-liens { grid-template-columns: repeat(3, 1fr); column-gap: 24px; border-top: 0; }
   .dwh-bas-packs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-top: 8px; }
   .dwh-deux { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 72px; align-items: start; }
   .dwh-deux .dwh-entete { position: sticky; top: 120px; }
@@ -623,7 +700,7 @@
 @media (prefers-reduced-motion: reduce) {
   .dwh-notif { animation: none; opacity: 1; transform: none; }
   .dwh-centrale { animation: none; opacity: 1; }
-  .dwh-packs.est-pilote .dwh-pack { animation: none; }
+  .dwh-packs.est-pilote .dwh-pack, .dwh-packs.est-pilote .dwh-gamme { animation: none; }
   .dwh-selecteur__curseur, .dwh-jauge__rempli, .dwh-collant { transition: none; }
   .dwh-calcul.attend .dwh-jauge__rempli { transform: scaleX(var(--p, 1)); }
 }

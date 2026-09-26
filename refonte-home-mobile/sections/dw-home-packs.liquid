@@ -8,130 +8,152 @@
       break
     endif
   endfor
+  assign gamme_active = section.blocks[actif]
 -%}
 
 <div class="dwh" id="dwh-packs">
-  <section class="dwh-bloc" aria-labelledby="dwh-packs-titre-{{ section.id }}">
+  <section class="dwh-bloc dwh-bloc--porcelaine" aria-labelledby="dwh-parcours-titre-{{ section.id }}">
     <div class="dwh-large">
       <div class="dwh-entete">
         {%- if section.settings.eyebrow != blank -%}<p class="dwh-surtitre">{{ section.settings.eyebrow }}</p>{%- endif -%}
-        <h2 class="dwh-titre" id="dwh-packs-titre-{{ section.id }}">{{ section.settings.title }}</h2>
+        <h2 class="dwh-titre" id="dwh-parcours-titre-{{ section.id }}">{{ section.settings.title }}</h2>
         {%- if section.settings.text != blank -%}<p class="dwh-chapo">{{ section.settings.text }}</p>{%- endif -%}
       </div>
 
-      {%- if section.blocks.size > 1 -%}
-        <div
-          class="dwh-selecteur"
-          role="tablist"
-          aria-label="Type de logement"
-          style="--n: {{ section.blocks.size }}; --i: {{ actif }};"
-          data-dwh-selecteur
-          hidden
-        >
-          <span class="dwh-selecteur__curseur" aria-hidden="true"></span>
-          {%- for block in section.blocks -%}
-            <button
-              type="button"
-              class="dwh-onglet"
-              role="tab"
-              id="dwh-onglet-{{ block.id }}"
-              aria-controls="dwh-pack-{{ block.id }}"
-              aria-selected="{% if forloop.index0 == actif %}true{% else %}false{% endif %}"
-              tabindex="{% if forloop.index0 == actif %}0{% else %}-1{% endif %}"
-            >
-              {{ block.settings.tab_label }}
-              {%- if block.settings.tab_sub != blank -%}<small>{{ block.settings.tab_sub }}</small>{%- endif -%}
-            </button>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-
-      <div class="dwh-packs" data-dwh-packs>
-        {%- for block in section.blocks -%}
-          {%- liquid
-            assign p = block.settings.product
-            assign nom = block.settings.title | default: p.title
-            assign url = p.url | default: '#'
-            assign visuel = block.settings.image | default: p.featured_image
-          -%}
-          <article
-            class="dwh-pack{% if block.settings.featured %} dwh-pack--vedette{% endif %}"
-            id="dwh-pack-{{ block.id }}"
-            role="tabpanel"
-            aria-labelledby="dwh-onglet-{{ block.id }}"
-            {{ block.shopify_attributes }}
-          >
-            <a class="dwh-pack__visuel" href="{{ url }}" tabindex="-1" aria-hidden="true">
-              {%- if visuel != blank -%}
-                {{ visuel | image_url: width: 900 | image_tag: widths: '450, 700, 900', sizes: '(min-width: 750px) 33vw, 100vw', loading: 'lazy', alt: nom }}
-              {%- else -%}
-                {{ 'product-1' | placeholder_svg_tag }}
-              {%- endif -%}
-              {%- if block.settings.badge != blank -%}<span class="dwh-pack__badge">{{ block.settings.badge }}</span>{%- endif -%}
-            </a>
-
-            <div class="dwh-pack__corps">
-              <div>
-                {%- if block.settings.range != blank -%}<p class="dwh-pack__gamme">{{ block.settings.range }}</p>{%- endif -%}
-                <h3 class="dwh-pack__nom">{{ nom }}</h3>
-                {%- if block.settings.description != blank -%}<p class="dwh-pack__pour">{{ block.settings.description }}</p>{%- endif -%}
-              </div>
-
-              <ul class="dwh-puces">
-                {%- if block.settings.bullet_1 != blank -%}<li>{{ block.settings.bullet_1 }}</li>{%- endif -%}
-                {%- if block.settings.bullet_2 != blank -%}<li>{{ block.settings.bullet_2 }}</li>{%- endif -%}
-                {%- if block.settings.bullet_3 != blank -%}<li>{{ block.settings.bullet_3 }}</li>{%- endif -%}
-              </ul>
-
-              {%- if p != blank -%}
-                <div class="dwh-pack__prix">
-                  <div>
-                    {%- if p.price_varies -%}<span class="dwh-pack__des">à partir de</span>{%- endif -%}
-                    <span class="dwh-pack__montant">{{ p.price_min | money }}</span>
-                    {%- if p.compare_at_price_min > p.price_min -%}
-                      <span class="dwh-pack__barre">{{ p.compare_at_price_min | money }}</span>
-                    {%- endif -%}
-                  </div>
-                  <span class="dwh-pack__mois">0&nbsp;€/mois</span>
-                </div>
-                {%- if section.settings.show_alma and p.price_min >= 5000 -%}
-                  <p class="dwh-pack__alma">ou 4 × {{ p.price_min | divided_by: 4 | money }} sans frais</p>
-                {%- endif -%}
-              {%- endif -%}
-
-              <a class="dwh-btn {% if block.settings.featured %}dwh-btn--bleu{% else %}dwh-btn--contour{% endif %}" href="{{ url }}">
-                {{ block.settings.cta_label | default: 'Voir ce pack' }}
-                {% render 'dw-home-icon', icon: 'arrow' %}
-              </a>
+      <ol class="dwh-parcours">
+        {%- comment -%} Étape 1 : la centrale {%- endcomment -%}
+        <li class="dwh-parcours__etape">
+          <div class="dwh-parcours__tete">
+            <span class="dwh-parcours__num" aria-hidden="true">1</span>
+            <div>
+              <h3 class="dwh-parcours__titre">{{ section.settings.step1_title }}</h3>
+              {%- if section.settings.step1_text != blank -%}<p class="dwh-parcours__texte">{{ section.settings.step1_text }}</p>{%- endif -%}
             </div>
-          </article>
-        {%- endfor -%}
-      </div>
+          </div>
 
-      <div class="dwh-bas-packs">
-        {%- if section.settings.config_title != blank -%}
-          <a class="dwh-autre" href="{{ section.settings.config_link }}">
-            <span class="dwh-autre__ico">{% render 'dw-home-icon', icon: 'sliders' %}</span>
-            <span>
-              <span class="dwh-autre__titre">{{ section.settings.config_title }}</span>
-              <span class="dwh-autre__texte">{{ section.settings.config_text }}</span>
-            </span>
-            {% render 'dw-home-icon', icon: 'arrow' %}
-          </a>
+          {%- if section.blocks.size > 1 -%}
+            <div
+              class="dwh-selecteur"
+              role="tablist"
+              aria-label="{{ section.settings.step1_title | escape }}"
+              style="--n: {{ section.blocks.size }}; --i: {{ actif }};"
+              data-dwh-selecteur
+              hidden
+            >
+              <span class="dwh-selecteur__curseur" aria-hidden="true"></span>
+              {%- for block in section.blocks -%}
+                <button
+                  type="button"
+                  class="dwh-onglet"
+                  role="tab"
+                  id="dwh-onglet-{{ block.id }}"
+                  aria-controls="dwh-pack-{{ block.id }}"
+                  aria-selected="{% if forloop.index0 == actif %}true{% else %}false{% endif %}"
+                  tabindex="{% if forloop.index0 == actif %}0{% else %}-1{% endif %}"
+                  data-nom="{{ block.settings.tab_label | escape }}"
+                  data-lien="{{ block.settings.packs_link | default: section.settings.pack_link }}"
+                >
+                  {{ block.settings.tab_label }}
+                  {%- if block.settings.tab_sub != blank -%}<small>{{ block.settings.tab_sub }}</small>{%- endif -%}
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <div class="dwh-packs" data-dwh-packs>
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign p = block.settings.product
+                assign visuel = block.settings.image | default: p.featured_image
+                assign lien = block.settings.packs_link | default: section.settings.pack_link
+              -%}
+              <article
+                class="dwh-gamme"
+                id="dwh-pack-{{ block.id }}"
+                role="tabpanel"
+                aria-labelledby="dwh-onglet-{{ block.id }}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="dwh-gamme__visuel">
+                  {%- if visuel != blank -%}
+                    {{ visuel | image_url: width: 700 | image_tag: widths: '350, 500, 700', sizes: '(min-width: 750px) 40vw, 100vw', loading: 'lazy', alt: block.settings.title }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  {%- endif -%}
+                  {%- if block.settings.badge != blank -%}<span class="dwh-pack__badge">{{ block.settings.badge }}</span>{%- endif -%}
+                </div>
+                <div class="dwh-gamme__corps">
+                  <h4 class="dwh-gamme__nom">{{ block.settings.title }}</h4>
+                  {%- if block.settings.description != blank -%}<p class="dwh-gamme__pour">{{ block.settings.description }}</p>{%- endif -%}
+                  <ul class="dwh-puces">
+                    {%- if block.settings.bullet_1 != blank -%}<li>{{ block.settings.bullet_1 }}</li>{%- endif -%}
+                    {%- if block.settings.bullet_2 != blank -%}<li>{{ block.settings.bullet_2 }}</li>{%- endif -%}
+                    {%- if block.settings.bullet_3 != blank -%}<li>{{ block.settings.bullet_3 }}</li>{%- endif -%}
+                  </ul>
+                  {%- if p != blank -%}
+                    <div class="dwh-pack__prix">
+                      <div>
+                        <span class="dwh-pack__des">{{ section.settings.price_label }}</span>
+                        <span class="dwh-pack__montant">{{ p.price_min | money }}</span>
+                      </div>
+                      <span class="dwh-pack__mois">0&nbsp;€/mois</span>
+                    </div>
+                  {%- endif -%}
+                  <a class="dwh-lien" href="{{ lien }}">{{ section.settings.range_link_label }} {{ block.settings.tab_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a>
+                </div>
+              </article>
+            {%- endfor -%}
+          </div>
+        </li>
+
+        {%- comment -%} Étape 2 : la formule {%- endcomment -%}
+        <li class="dwh-parcours__etape">
+          <div class="dwh-parcours__tete">
+            <span class="dwh-parcours__num" aria-hidden="true">2</span>
+            <div>
+              <h3 class="dwh-parcours__titre">{{ section.settings.step2_title }}</h3>
+              {%- if section.settings.step2_text != blank -%}<p class="dwh-parcours__texte">{{ section.settings.step2_text }}</p>{%- endif -%}
+            </div>
+          </div>
+          <div class="dwh-formules">
+            <a class="dwh-formule dwh-formule--pack" href="{{ gamme_active.settings.packs_link | default: section.settings.pack_link }}" data-dwh-lien-packs>
+              <span class="dwh-formule__tag">{{ section.settings.pack_tag }}</span>
+              <span class="dwh-formule__titre">{{ section.settings.pack_title }}</span>
+              <span class="dwh-formule__texte">{{ section.settings.pack_text }}</span>
+              <span class="dwh-formule__cta">{{ section.settings.pack_cta }} <span data-dwh-nom-gamme>{{ gamme_active.settings.tab_label }}</span> {% render 'dw-home-icon', icon: 'arrow' %}</span>
+            </a>
+            <a class="dwh-formule" href="{{ section.settings.config_link }}">
+              <span class="dwh-formule__tag">{{ section.settings.config_tag }}</span>
+              <span class="dwh-formule__titre">{{ section.settings.config_title }}</span>
+              <span class="dwh-formule__texte">{{ section.settings.config_text }}</span>
+              <span class="dwh-formule__cta">{{ section.settings.config_cta }} {% render 'dw-home-icon', icon: 'arrow' %}</span>
+            </a>
+          </div>
+        </li>
+
+        {%- comment -%} Étape 3 : réception et installation {%- endcomment -%}
+        <li class="dwh-parcours__etape">
+          <div class="dwh-parcours__tete">
+            <span class="dwh-parcours__num" aria-hidden="true">3</span>
+            <div>
+              <h3 class="dwh-parcours__titre">{{ section.settings.step3_title }}</h3>
+              {%- if section.settings.step3_text != blank -%}<p class="dwh-parcours__texte">{{ section.settings.step3_text }}</p>{%- endif -%}
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <nav class="dwh-liens" aria-label="Besoin d'aide pour choisir">
+        {%- if section.settings.quiz_title != blank -%}
+          <a href="{{ section.settings.quiz_link }}"><span><b>{{ section.settings.quiz_title }}</b> · {{ section.settings.quiz_text }}</span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
         {%- endif -%}
-
-        <nav class="dwh-liens" aria-label="Autres façons de choisir">
-          {%- if section.settings.quiz_title != blank -%}
-            <a href="{{ section.settings.quiz_link }}"><span><b>{{ section.settings.quiz_title }}</b> · {{ section.settings.quiz_text }}</span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
-          {%- endif -%}
-          {%- if section.settings.extra_title != blank -%}
-            <a href="{{ section.settings.extra_link }}"><span><b>{{ section.settings.extra_title }}</b> · {{ section.settings.extra_text }}</span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
-          {%- endif -%}
-          {%- if section.settings.compare_label != blank -%}
-            <a href="{{ section.settings.compare_link }}"><span><b>{{ section.settings.compare_label }}</b></span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
-          {%- endif -%}
-        </nav>
-      </div>
+        {%- if section.settings.compare_label != blank -%}
+          <a href="{{ section.settings.compare_link }}"><span><b>{{ section.settings.compare_label }}</b></span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
+        {%- endif -%}
+        {%- if section.settings.extra_title != blank -%}
+          <a href="{{ section.settings.extra_link }}"><span><b>{{ section.settings.extra_title }}</b> · {{ section.settings.extra_text }}</span>{% render 'dw-home-icon', icon: 'arrow' %}</a>
+        {%- endif -%}
+      </nav>
     </div>
   </section>
 </div>
@@ -145,6 +167,8 @@
     if (!selecteur || !liste) return;
     var onglets = Array.prototype.slice.call(selecteur.querySelectorAll('[role="tab"]'));
     var panneaux = Array.prototype.slice.call(liste.querySelectorAll('[role="tabpanel"]'));
+    var lienPacks = racine.querySelector('[data-dwh-lien-packs]');
+    var nomGamme = racine.querySelector('[data-dwh-nom-gamme]');
 
     function choisir(i, focus) {
       selecteur.style.setProperty('--i', i);
@@ -154,6 +178,9 @@
         o.tabIndex = actif ? 0 : -1;
         panneaux[j].hidden = !actif;
       });
+      // L'étape 2 suit la centrale choisie à l'étape 1.
+      if (lienPacks && onglets[i].dataset.lien) lienPacks.href = onglets[i].dataset.lien;
+      if (nomGamme) nomGamme.textContent = onglets[i].dataset.nom;
       if (focus) onglets[i].focus();
     }
 
@@ -174,58 +201,71 @@
 
 {% schema %}
 {
-  "name": "Home V2 · Packs guidés",
+  "name": "Home V2 · Parcours achat",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Packs complets, prêts à poser" },
-    { "type": "text", "id": "title", "label": "Titre", "default": "Quel est votre logement ?" },
-    { "type": "textarea", "id": "text", "label": "Texte", "default": "Choisissez, on vous montre le pack adapté. Tout est dans la boîte pour démarrer, et vous l'agrandirez quand vous voudrez." },
-    { "type": "checkbox", "id": "show_alma", "label": "Afficher le paiement en 4× (Alma)", "default": true },
-    { "type": "header", "content": "Carte configurateur" },
-    { "type": "text", "id": "config_title", "label": "Titre", "default": "Composer mon alarme sur mesure" },
-    { "type": "text", "id": "config_text", "label": "Texte", "default": "Quelques questions, on vous propose le système adapté" },
-    { "type": "url", "id": "config_link", "label": "Lien" },
-    { "type": "header", "content": "Carte quiz" },
-    { "type": "text", "id": "quiz_title", "label": "Titre", "default": "Je ne sais pas quoi choisir" },
-    { "type": "text", "id": "quiz_text", "label": "Texte", "default": "Répondez au quiz, on vous conseille" },
-    { "type": "url", "id": "quiz_link", "label": "Lien" },
-    { "type": "header", "content": "Carte caméra seule" },
-    { "type": "text", "id": "extra_title", "label": "Titre", "default": "Juste une caméra ?" },
-    { "type": "text", "id": "extra_text", "label": "Texte", "default": "Notre best-seller : caméra extérieure solaire, sans fil" },
-    { "type": "url", "id": "extra_link", "label": "Lien" },
-    { "type": "header", "content": "Lien comparatif" },
-    { "type": "text", "id": "compare_label", "label": "Texte", "default": "Comparer les 3 gammes en détail" },
-    { "type": "url", "id": "compare_link", "label": "Lien" }
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Votre alarme en 3 étapes" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Comment choisir votre alarme ?" },
+    { "type": "textarea", "id": "text", "label": "Texte" },
+    { "type": "header", "content": "Étape 1 · Centrale" },
+    { "type": "text", "id": "step1_title", "label": "Titre", "default": "Choisissez votre centrale" },
+    { "type": "textarea", "id": "step1_text", "label": "Texte", "default": "C'est le cœur de votre alarme. Nos 3 gammes protègent aussi bien un appartement qu'une grande maison : choisissez selon votre façon de l'utiliser." },
+    { "type": "text", "id": "price_label", "label": "Texte avant le prix", "default": "Packs dès" },
+    { "type": "text", "id": "range_link_label", "label": "Lien sous chaque centrale", "default": "Tout voir en" },
+    { "type": "header", "content": "Étape 2 · Formule" },
+    { "type": "text", "id": "step2_title", "label": "Titre", "default": "Choisissez votre formule" },
+    { "type": "textarea", "id": "step2_text", "label": "Texte" },
+    { "type": "text", "id": "pack_tag", "label": "Pack · étiquette", "default": "Le plus simple" },
+    { "type": "text", "id": "pack_title", "label": "Pack · titre", "default": "Un pack prêt à poser" },
+    { "type": "textarea", "id": "pack_text", "label": "Pack · texte", "default": "Centrale, détecteurs et sirène : tout est dans la boîte. Du pack de départ au pack complet avec caméras." },
+    { "type": "text", "id": "pack_cta", "label": "Pack · bouton", "default": "Voir les packs" },
+    { "type": "url", "id": "pack_link", "label": "Pack · lien par défaut" },
+    { "type": "text", "id": "config_tag", "label": "Sur mesure · étiquette", "default": "Le plus précis" },
+    { "type": "text", "id": "config_title", "label": "Sur mesure · titre", "default": "Un système sur mesure" },
+    { "type": "textarea", "id": "config_text", "label": "Sur mesure · texte", "default": "Répondez à quelques questions sur votre logement : on vous propose la centrale et les accessoires adaptés." },
+    { "type": "text", "id": "config_cta", "label": "Sur mesure · bouton", "default": "Composer mon alarme" },
+    { "type": "url", "id": "config_link", "label": "Sur mesure · lien" },
+    { "type": "header", "content": "Étape 3 · Réception" },
+    { "type": "text", "id": "step3_title", "label": "Titre", "default": "Recevez-la et installez-la vous-même" },
+    { "type": "textarea", "id": "step3_text", "label": "Texte", "default": "Expédiée sous 24 h. Installation en moins de 30 minutes, sans perçage ni technicien : l'application vous guide pas à pas." },
+    { "type": "header", "content": "Liens d'aide" },
+    { "type": "text", "id": "quiz_title", "label": "Quiz · titre", "default": "Encore un doute ?" },
+    { "type": "text", "id": "quiz_text", "label": "Quiz · texte", "default": "Faites le quiz" },
+    { "type": "url", "id": "quiz_link", "label": "Quiz · lien" },
+    { "type": "text", "id": "compare_label", "label": "Comparatif · texte", "default": "Comparer les 3 centrales en détail" },
+    { "type": "url", "id": "compare_link", "label": "Comparatif · lien" },
+    { "type": "text", "id": "extra_title", "label": "Caméra · titre", "default": "Juste une caméra ?" },
+    { "type": "text", "id": "extra_text", "label": "Caméra · texte", "default": "La caméra solaire, notre best-seller" },
+    { "type": "url", "id": "extra_link", "label": "Caméra · lien" }
   ],
   "blocks": [
     {
-      "type": "pack",
-      "name": "Pack",
-      "limit": 3,
+      "type": "gamme",
+      "name": "Centrale",
+      "limit": 4,
       "settings": [
-        { "type": "text", "id": "tab_label", "label": "Type de logement (onglet)", "default": "Maison" },
-        { "type": "text", "id": "tab_sub", "label": "Précision sous l'onglet", "default": "avec jardin" },
-        { "type": "product", "id": "product", "label": "Produit" },
-        { "type": "checkbox", "id": "featured", "label": "Pack mis en avant (ouvert par défaut)", "default": false },
+        { "type": "text", "id": "tab_label", "label": "Nom court (onglet)", "default": "Touch" },
+        { "type": "text", "id": "tab_sub", "label": "Précision sous l'onglet", "default": "écran tactile" },
+        { "type": "checkbox", "id": "featured", "label": "Ouverte par défaut", "default": false },
         { "type": "text", "id": "badge", "label": "Badge", "info": "Ex. : Le plus choisi" },
-        { "type": "text", "id": "range", "label": "Gamme", "default": "Gamme Touch" },
-        { "type": "text", "id": "title", "label": "Nom court", "info": "Vide = titre du produit." },
-        { "type": "textarea", "id": "description", "label": "Pour qui ?" },
-        { "type": "image_picker", "id": "image", "label": "Image (facultatif)", "info": "Vide = image principale du produit." },
+        { "type": "image_picker", "id": "image", "label": "Photo de la centrale" },
+        { "type": "text", "id": "title", "label": "Nom complet", "default": "Centrale Touch" },
+        { "type": "textarea", "id": "description", "label": "Idéal si…" },
         { "type": "text", "id": "bullet_1", "label": "Point fort 1" },
         { "type": "text", "id": "bullet_2", "label": "Point fort 2" },
         { "type": "text", "id": "bullet_3", "label": "Point fort 3" },
-        { "type": "text", "id": "cta_label", "label": "Texte du bouton", "default": "Voir ce pack" }
+        { "type": "product", "id": "product", "label": "Pack de départ (pour le prix « dès »)" },
+        { "type": "url", "id": "packs_link", "label": "Lien vers les packs de cette gamme" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Home V2 · Packs guidés",
+      "name": "Home V2 · Parcours achat",
       "blocks": [
-        { "type": "pack", "settings": { "tab_label": "Appartement", "tab_sub": "studio à T3", "range": "Gamme Vigilia" } },
-        { "type": "pack", "settings": { "tab_label": "Maison", "tab_sub": "avec jardin", "range": "Gamme Touch", "featured": true, "badge": "Le plus choisi" } },
-        { "type": "pack", "settings": { "tab_label": "Grande maison", "tab_sub": "villa, dépendances", "range": "Gamme Élite" } }
+        { "type": "gamme", "settings": { "tab_label": "Vigilia", "tab_sub": "clavier & appli", "title": "Centrale Vigilia" } },
+        { "type": "gamme", "settings": { "tab_label": "Touch", "tab_sub": "écran tactile", "title": "Centrale Touch", "featured": true, "badge": "Le plus choisi" } },
+        { "type": "gamme", "settings": { "tab_label": "Élite", "tab_sub": "la plus complète", "title": "Centrale Élite" } }
       ]
     }
   ]
