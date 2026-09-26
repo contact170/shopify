@@ -1,0 +1,82 @@
+{{ 'dw-home.css' | asset_url | stylesheet_tag }}
+
+<div class="dwh">
+  <section class="dwh-section{% if section.settings.alt_bg %} dwh-section--alt{% endif %}" aria-labelledby="dwh-faq-{{ section.id }}">
+    <div class="dwh-wrap">
+      <div class="dwh-head dwh-head--center">
+        {%- if section.settings.eyebrow != blank -%}<p class="dwh-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="dwh-h2" id="dwh-faq-{{ section.id }}">{{ section.settings.title }}</h2>
+      </div>
+
+      <div class="dwh-faq">
+        {%- for block in section.blocks -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question }}</summary>
+            <div class="dwh-faq__answer">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.more_label != blank -%}
+        <p class="dwh-faq__more">{{ section.settings.more_text }} <a class="dwh-link" href="{{ section.settings.more_link }}">{{ section.settings.more_label }}</a></p>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{%- if section.settings.schema_markup and section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Home V2 · FAQ",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Vos questions" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Tout ce qu'on nous demande avant d'acheter" },
+    { "type": "checkbox", "id": "alt_bg", "label": "Fond bleuté", "default": false },
+    { "type": "checkbox", "id": "schema_markup", "label": "Données structurées FAQ (SEO)", "default": true },
+    { "type": "text", "id": "more_text", "label": "Texte bas de section", "default": "Une autre question ?" },
+    { "type": "text", "id": "more_label", "label": "Lien", "default": "Contactez notre équipe" },
+    { "type": "url", "id": "more_link", "label": "URL", "default": "/pages/contact" }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Réponse" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home V2 · FAQ",
+      "blocks": [
+        { "type": "qa", "settings": { "question": "Y a-t-il vraiment aucun abonnement ?", "answer": "<p>Oui. Vous payez le matériel une seule fois. L'application, les notifications et le visionnage de vos caméras en direct sont gratuits, à vie. Seule l'option 4G nécessite une carte SIM, que vous choisissez librement.</p>" } },
+        { "type": "qa", "settings": { "question": "Est-ce que je peux l'installer moi-même ?", "answer": "<p>Oui, en 10 minutes environ. Tout est sans fil : les détecteurs se fixent avec l'adhésif fourni, la centrale se branche sur une prise et l'application vous guide étape par étape.</p>" } },
+        { "type": "qa", "settings": { "question": "Que se passe-t-il si le Wi-Fi ou le courant est coupé ?", "answer": "<p>La centrale dispose d'une batterie de secours et continue de fonctionner. Avec l'option 4G, vous recevez les alertes même sans internet.</p>" } },
+        { "type": "qa", "settings": { "question": "J'ai un chien ou un chat, ça va déclencher l'alarme ?", "answer": "<p>Non, si vous utilisez nos détecteurs compatibles animaux : ils ignorent les mouvements de vos animaux et réagissent uniquement à une présence humaine.</p>" } },
+        { "type": "qa", "settings": { "question": "Je peux ajouter des détecteurs ou des caméras plus tard ?", "answer": "<p>Oui, tous nos systèmes sont évolutifs. Vous ajoutez des accessoires quand vous le souhaitez, directement depuis l'application.</p>" } },
+        { "type": "qa", "settings": { "question": "Et si ça ne me convient pas ?", "answer": "<p>Vous avez 14 jours pour changer d'avis et votre système est garanti 2 ans. Notre SAV, basé à Mérignac, vous accompagne avant et après l'achat.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
