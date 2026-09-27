@@ -294,7 +294,8 @@
       config: {{ section.settings.cta_config | json }},
       autrePack: {{ section.settings.alt_pack | json }},
       autreConfig: {{ section.settings.alt_config | json }},
-      resultat: {{ section.settings.result_count | json }}
+      resultat: {{ section.settings.result_count | json }},
+      comparaison: {{ section.settings.compare_count | json }}
     };
     var historique = [];
     var reponses = {};
@@ -312,12 +313,20 @@
       // En revenant en arrière, on oublie les réponses données après cet écran.
       if (nom === 'pilotage') { delete reponses.gamme; delete reponses.comparaison; }
       if (nom === 'comparaison') { delete reponses.gamme; reponses.comparaison = true; }
-      // « Je ne sais pas » ajoute l'écran de comparaison au parcours.
-      var total = reponses.comparaison ? 4 : 3;
-      var rang = historique.length + 1;
-      var question = nom !== 'resultat';
-      compte.textContent = question ? 'Question ' + rang + ' sur ' + total : textes.resultat;
-      progres.style.transform = 'scaleX(' + (question ? rang / total : 1) + ')';
+      // Le quiz compte toujours 3 questions : l'écran de comparaison (« Je ne sais pas »)
+      // est une aide au choix, il n'est pas compté comme une question.
+      var total = 3;
+      var rang = historique.filter(function (e) { return e !== 'comparaison'; }).length + 1;
+      if (nom === 'resultat') {
+        compte.textContent = textes.resultat;
+        progres.style.transform = 'scaleX(1)';
+      } else if (nom === 'comparaison') {
+        compte.textContent = textes.comparaison;
+        progres.style.transform = 'scaleX(' + (rang - 1) / total + ')';
+      } else {
+        compte.textContent = 'Question ' + rang + ' sur ' + total;
+        progres.style.transform = 'scaleX(' + rang / total + ')';
+      }
       retour.hidden = historique.length === 0;
       quiz.classList.toggle('est-recule', !!recul);
       // Le quiz reste en vue quand sa hauteur change.
@@ -351,7 +360,7 @@
         r.querySelector('[data-surtitre]').textContent = quiz.dataset.surtitreChoix;
       });
       if (comparer) comparer.hidden = id === 'camera';
-      // « Votre alarme idéale » ou « Votre caméra idéale » selon la réponse 1.
+      // Titre du résultat : version alarme ou version caméra selon la réponse 1.
       titreResultat.textContent = id === 'camera' ? titreResultat.dataset.titreCamera : titreResultat.dataset.titreAlarme;
       var choisie = recos.filter(function (r) { return !r.hidden; })[0];
       var nomGamme = id === 'camera' ? 'camera' : (choisie && choisie.dataset.nom);
@@ -410,8 +419,8 @@
     { "type": "textarea", "id": "text", "label": "Texte" },
     { "type": "header", "content": "Question 1 · Besoin" },
     { "type": "text", "id": "q1_title", "label": "Question", "default": "Que cherchez-vous ?" },
-    { "type": "text", "id": "q1_alarm_label", "label": "Réponse alarme", "default": "Une alarme complète" },
-    { "type": "text", "id": "q1_alarm_sub", "label": "Réponse alarme · précision", "default": "Centrale, détecteurs et sirène" },
+    { "type": "text", "id": "q1_alarm_label", "label": "Réponse alarme", "default": "Une alarme, avec ou sans caméras" },
+    { "type": "text", "id": "q1_alarm_sub", "label": "Réponse alarme · précision", "default": "Je veux protéger mon logement" },
     { "type": "header", "content": "Question 2 · Pilotage", "info": "Une réponse par bloc « Centrale »." },
     { "type": "text", "id": "q2_title", "label": "Question", "default": "En partant de chez vous, comment voulez-vous activer l'alarme ?" },
     { "type": "text", "id": "q2_text", "label": "Précision sous la question", "default": "Toutes se pilotent aussi depuis l'application." },
@@ -439,6 +448,7 @@
     { "type": "header", "content": "Résultat" },
     { "type": "text", "id": "result_title", "label": "Titre", "default": "Votre alarme idéale" },
     { "type": "text", "id": "result_count", "label": "Compteur", "default": "Votre résultat" },
+    { "type": "text", "id": "compare_count", "label": "Compteur de l'écran de comparaison", "default": "Les 3 centrales" },
     { "type": "text", "id": "result_eyebrow", "label": "Sur-titre (choix du client)", "default": "Faite pour vous" },
     { "type": "text", "id": "price_label", "label": "Texte avant le prix", "default": "Packs dès" },
     { "type": "text", "id": "cta_pack", "label": "Bouton si pack", "default": "Voir les packs" },
@@ -451,7 +461,7 @@
     { "type": "header", "content": "Caméra seule" },
     { "type": "text", "id": "camera_label", "label": "Réponse caméra (vide = masquée)", "default": "Une caméra seule" },
     { "type": "text", "id": "camera_sub", "label": "Précision", "default": "Surveiller sans installer d'alarme" },
-    { "type": "text", "id": "camera_result_title", "label": "Titre du résultat", "default": "Votre caméra idéale" },
+    { "type": "text", "id": "camera_result_title", "label": "Titre du résultat", "default": "Notre caméra extérieure la plus choisie" },
     { "type": "product", "id": "camera_product", "label": "Caméra recommandée" },
     { "type": "image_picker", "id": "camera_image", "label": "Photo (sinon celle du produit)" },
     { "type": "text", "id": "camera_badge", "label": "Badge" },

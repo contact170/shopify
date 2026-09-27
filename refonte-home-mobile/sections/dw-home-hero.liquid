@@ -11,8 +11,30 @@
   <section class="dwh-hero" aria-labelledby="dwh-h1-{{ section.id }}">
     <div class="dwh-hero__grille">
       <div class="dwh-hero__texte">
-        {%- if section.settings.proof != blank -%}
-          <p class="dwh-hero__note"><span class="dwh-etoiles" aria-hidden="true">★★★★★</span> {{ section.settings.proof }}</p>
+        {%- comment -%}[note] et [avis] sont remplacés par les chiffres Judge.me du moment (toujours à jour).{%- endcomment -%}
+        {%- liquid
+          assign preuve = section.settings.proof
+          assign avis_brut = shop.metafields.judgeme.all_reviews_count.value | default: shop.metafields.judgeme.all_reviews_count
+          assign note_brute = shop.metafields.judgeme.all_reviews_rating.value | default: shop.metafields.judgeme.all_reviews_rating
+          assign nb_avis = avis_brut | plus: 0
+          if nb_avis >= 1000
+            assign milliers = nb_avis | divided_by: 1000
+            assign reste = nb_avis | modulo: 1000 | plus: 1000 | append: '' | slice: 1, 3
+            assign avis_txt = milliers | append: '&#8239;' | append: reste
+          else
+            assign avis_txt = nb_avis | append: ''
+          endif
+          assign note_txt = note_brute | plus: 0 | round: 1 | append: '' | replace: '.', ','
+          if nb_avis == 0
+            if preuve contains '[avis]' or preuve contains '[note]'
+              assign preuve = blank
+            endif
+          else
+            assign preuve = preuve | replace: '[avis]', avis_txt | replace: '[note]', note_txt
+          endif
+        -%}
+        {%- if preuve != blank -%}
+          <p class="dwh-hero__note"><span class="dwh-etoiles" aria-hidden="true">★★★★★</span> {{ preuve }}</p>
         {%- endif -%}
         <h1 class="dwh-titre" id="dwh-h1-{{ section.id }}">{{ section.settings.title }}</h1>
 
@@ -158,7 +180,7 @@
     { "type": "url", "id": "cta_1_link", "label": "Lien du bouton principal", "info": "Vide = descend jusqu'aux packs." },
     { "type": "text", "id": "cta_2_label", "label": "Lien secondaire", "default": "Je ne sais pas : guidez-moi en 2 min" },
     { "type": "url", "id": "cta_2_link", "label": "URL du lien secondaire" },
-    { "type": "text", "id": "proof", "label": "Avis (au-dessus du titre)", "default": "4,6/5 · 1 356 avis clients" },
+    { "type": "text", "id": "proof", "label": "Avis (au-dessus du titre)", "default": "[note]/5 · [avis] avis clients", "info": "[note] et [avis] affichent automatiquement la note et le nombre d'avis Judge.me." },
     { "type": "header", "content": "Barre d'action collante (mobile)" },
     { "type": "checkbox", "id": "enable_sticky", "label": "Afficher la barre en bas d'écran", "default": true },
     { "type": "text", "id": "sticky_label_1", "label": "Bouton 1", "default": "Voir les packs" },
