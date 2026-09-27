@@ -127,7 +127,13 @@
 
         {%- comment -%} Résultat {%- endcomment -%}
         <div class="dwh-quiz__ecran" data-ecran="resultat" hidden>
-          <h3 class="dwh-quiz__question dwh-quiz__question--resultat" tabindex="-1">{{ section.settings.result_title }}</h3>
+          <h3
+            class="dwh-quiz__question dwh-quiz__question--resultat"
+            tabindex="-1"
+            data-titre-resultat
+            data-titre-alarme="{{ section.settings.result_title | escape }}"
+            data-titre-camera="{{ section.settings.camera_result_title | default: section.settings.result_title | escape }}"
+          >{{ section.settings.result_title }}</h3>
 
           {%- for block in section.blocks -%}
             {%- liquid
@@ -264,6 +270,7 @@
     var compte = quiz.querySelector('[data-compte]');
     var progres = quiz.querySelector('[data-progres]');
     var comparer = quiz.querySelector('[data-comparer]');
+    var titreResultat = quiz.querySelector('[data-titre-resultat]');
     var textes = {
       pack: {{ section.settings.cta_pack | json }},
       config: {{ section.settings.cta_config | json }},
@@ -326,6 +333,8 @@
         r.querySelector('[data-surtitre]').textContent = quiz.dataset.surtitreChoix;
       });
       if (comparer) comparer.hidden = id === 'camera';
+      // « Votre alarme idéale » ou « Votre caméra idéale » selon la réponse 1.
+      titreResultat.textContent = id === 'camera' ? titreResultat.dataset.titreCamera : titreResultat.dataset.titreAlarme;
       var choisie = recos.filter(function (r) { return !r.hidden; })[0];
       var nomGamme = id === 'camera' ? 'camera' : (choisie && choisie.dataset.nom);
       aller('resultat');
@@ -413,6 +422,7 @@
     { "type": "header", "content": "Caméra seule" },
     { "type": "text", "id": "camera_label", "label": "Réponse caméra (vide = masquée)", "default": "Une caméra seule" },
     { "type": "text", "id": "camera_sub", "label": "Précision", "default": "Surveiller sans installer d'alarme" },
+    { "type": "text", "id": "camera_result_title", "label": "Titre du résultat", "default": "Votre caméra idéale" },
     { "type": "product", "id": "camera_product", "label": "Caméra recommandée" },
     { "type": "image_picker", "id": "camera_image", "label": "Photo (sinon celle du produit)" },
     { "type": "text", "id": "camera_badge", "label": "Badge" },
