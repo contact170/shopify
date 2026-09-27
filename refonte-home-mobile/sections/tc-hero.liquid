@@ -57,6 +57,7 @@
     .tc-trust-cell:nth-child(-n+2) { border-bottom:1px solid #eef1f7; }
   }
   @media (max-width:560px) {
+    .tc-ctas .tc-btn { flex:1 1 100%; justify-content:center; }
     .tc-trust-inner { grid-template-columns:1fr; }
     .tc-trust-cell { border-left:0; border-bottom:1px solid #eef1f7; padding:20px; }
   }
@@ -84,13 +85,18 @@
     <div>
       <span class="tc-eyebrow">Gamme Touch · AM301 &amp; AM302</span>
       <h1 class="tc-h1">L'alarme qui se pilote<br>du bout des <em>doigts</em>.</h1>
-      <p class="tc-lead">Deux centrales à écran tactile, une même promesse&nbsp;: tout comprendre en un coup d'œil, tout commander en un geste. Sans abonnement, sans technicien, sans perçage.</p>
+      <p class="tc-lead">Deux centrales à écran tactile, une même promesse&nbsp;: tout comprendre en un coup d'œil, tout commander en un geste. Sans abonnement, sans technicien.</p>
       <div class="tc-models">
         <span class="tc-chip is-blue"><b>TOUCH</b> <span>écran 4,3'' · {{ prix_touch }}</span></span>
         <span class="tc-chip is-gold"><b>TOUCH XL</b> <span>écran 7'' · {{ prix_touch_xl }}</span></span>
       </div>
       <div class="tc-ctas">
-        <a class="tc-btn tc-btn--main" href="#tc-duel">
+        {%- comment -%} La section des packs n'a pas d'ancre propre : on vise l'enveloppe Shopify de la section tc-packs du même modèle. {%- endcomment -%}
+        <a class="tc-btn tc-btn--main" href="#shopify-section-{{ section.id | replace: 'tc-hero', 'tc-packs' }}">
+          Voir les packs Touch
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a class="tc-btn tc-btn--ghost" href="#tc-duel">
           Comparer les 2 centrales
           <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
@@ -110,7 +116,7 @@
   <div class="tc-trust-inner">
     <div class="tc-trust-cell">
       <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      <span><span class="tc-trust-t">Installation en 30 min</span><span class="tc-trust-s">Sans câblage ni perçage</span></span>
+      <span><span class="tc-trust-t">Installation en 30 min</span><span class="tc-trust-s">Sans fil, sans technicien</span></span>
     </div>
     <div class="tc-trust-cell">
       <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
