@@ -131,9 +131,26 @@
 .dwh-quiz__direct { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--trait); font-size: 15px; color: var(--gris); text-align: center; }
 .dwh-quiz__direct .dwh-lien { padding: 6px 0; }
 
-.dwh-reco__raison { padding: 14px 16px; border-radius: 16px; background: #fff; box-shadow: inset 3px 0 0 var(--bleu); }
-.dwh-reco__raison b { display: block; font-size: 13px; font-weight: 600; color: var(--bleu); margin-bottom: 4px; }
-.dwh-reco__raison p { font-size: 15px; line-height: 1.5; color: var(--encre); }
+.dwh-quiz__aide { margin: -10px 4px 16px; font-size: 14px; line-height: 1.45; color: var(--gris); }
+
+/* « Je ne sais pas » : les centrales côte à côte */
+.dwh-comp { display: grid; gap: 10px; }
+.dwh-comp__carte { display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: start; padding: 12px; border: 1.5px solid var(--trait); border-radius: 18px; }
+.dwh-comp__img { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 14px; background: radial-gradient(70% 70% at 50% 45%, #ffffff 0%, #eef1f8 100%); overflow: hidden; color: var(--bleu); }
+.dwh-comp__img img { width: 100%; height: 100%; object-fit: contain; padding: 6px; mix-blend-mode: multiply; }
+.dwh-comp__img svg { width: 32px; height: 32px; }
+.dwh-comp__corps { min-width: 0; }
+.dwh-comp__nom { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; line-height: 1.3; }
+.dwh-comp__badge { padding: 2px 8px; border-radius: 999px; background: var(--protege-doux); color: #0d7a48; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
+.dwh-comp__pour { margin-top: 2px; font-size: 13.5px; line-height: 1.4; color: var(--gris); }
+.dwh-comp__bas { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; }
+.dwh-comp__prix { font-size: 13px; color: var(--gris); }
+.dwh-comp__prix b { font-size: 16px; font-weight: 600; color: var(--encre); font-variant-numeric: tabular-nums; }
+.dwh-comp__choisir { min-height: 40px; padding: 8px 18px; border: 0; border-radius: 999px; background: var(--bleu); color: #fff; font: 600 14px/1 var(--f-texte); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 160ms var(--ease-out); }
+.dwh-comp__choisir:active { transform: scale(0.96); }
+.dwh-comp__choisir:focus-visible { outline: 2px solid var(--bleu); outline-offset: 2px; }
+.dwh-comp__conseiller { margin-top: 12px; text-align: center; }
+.dwh-comp__conseiller .dwh-lien { font-size: 15px; }
 
 .dwh-liens--secours { margin-top: 0; }
 .dwh-liens--secours b { color: var(--encre); }
@@ -261,6 +278,9 @@
   .dwh-reco .dwh-btn { width: auto; align-self: flex-start; padding-inline: 32px; }
   .dwh-reco__autre { align-self: flex-start; padding-left: 0; }
   .dwh-liens--secours { grid-template-columns: 1fr; }
+  .dwh-comp { grid-template-columns: repeat(3, 1fr); }
+  .dwh-comp__carte { grid-template-columns: 1fr; justify-items: start; }
+  .dwh-comp__img { width: 100%; height: 120px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

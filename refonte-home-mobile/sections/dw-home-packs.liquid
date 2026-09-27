@@ -1,13 +1,6 @@
 {% render 'dw-home-head' %}
 
 {%- liquid
-  assign conseil = section.blocks.first
-  for block in section.blocks
-    if block.settings.featured
-      assign conseil = block
-      break
-    endif
-  endfor
   assign cam = section.settings.camera_product
   assign cam_visuel = section.settings.camera_image | default: cam.featured_image
   assign cam_lien = section.settings.camera_link | default: cam.url
@@ -26,9 +19,7 @@
       <div
         class="dwh-quiz"
         data-dwh-quiz
-        data-conseil="{{ conseil.id }}"
         data-surtitre-choix="{{ section.settings.result_eyebrow | escape }}"
-        data-surtitre-conseil="{{ section.settings.advice_eyebrow | escape }}"
         hidden
       >
         <div class="dwh-quiz__haut">
@@ -61,6 +52,7 @@
         {%- comment -%} Question 2 : façon de piloter l'alarme = la gamme {%- endcomment -%}
         <div class="dwh-quiz__ecran" data-ecran="pilotage" hidden>
           <h3 class="dwh-quiz__question" tabindex="-1">{{ section.settings.q2_title }}</h3>
+          {%- if section.settings.q2_text != blank -%}<p class="dwh-quiz__aide">{{ section.settings.q2_text }}</p>{%- endif -%}
           <div class="dwh-quiz__choix">
             {%- for block in section.blocks -%}
               <button type="button" class="dwh-choix" data-gamme="{{ block.id }}" {{ block.shopify_attributes }}>
@@ -70,7 +62,7 @@
               </button>
             {%- endfor -%}
             {%- if section.settings.q2_unsure_label != blank -%}
-              <button type="button" class="dwh-choix dwh-choix--discret" data-gamme="conseil">
+              <button type="button" class="dwh-choix dwh-choix--discret" data-aller="comparaison">
                 <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'question' %}</span>
                 <span class="dwh-choix__txt"><b>{{ section.settings.q2_unsure_label }}</b><small>{{ section.settings.q2_unsure_sub }}</small></span>
                 {% render 'dw-home-icon', icon: 'arrow' %}
@@ -79,37 +71,41 @@
           </div>
         </div>
 
-        {%- comment -%} « Je ne sais pas » : deux questions sur la situation du client {%- endcomment -%}
-        <div class="dwh-quiz__ecran" data-ecran="conseil1" hidden>
-          <h3 class="dwh-quiz__question" tabindex="-1">{{ section.settings.c1_title }}</h3>
-          <div class="dwh-quiz__choix">
-            <button type="button" class="dwh-choix" data-profil="performance">
-              <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'home' %}</span>
-              <span class="dwh-choix__txt"><b>{{ section.settings.c1_yes_label }}</b><small>{{ section.settings.c1_yes_sub }}</small></span>
-              {% render 'dw-home-icon', icon: 'arrow' %}
-            </button>
-            <button type="button" class="dwh-choix" data-aller="conseil2">
-              <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'check' %}</span>
-              <span class="dwh-choix__txt"><b>{{ section.settings.c1_no_label }}</b><small>{{ section.settings.c1_no_sub }}</small></span>
-              {% render 'dw-home-icon', icon: 'arrow' %}
-            </button>
+        {%- comment -%} « Je ne sais pas » : les centrales côte à côte, le client choisit en voyant {%- endcomment -%}
+        <div class="dwh-quiz__ecran" data-ecran="comparaison" hidden>
+          <h3 class="dwh-quiz__question" tabindex="-1">{{ section.settings.compare_title }}</h3>
+          {%- if section.settings.compare_text != blank -%}<p class="dwh-quiz__aide">{{ section.settings.compare_text }}</p>{%- endif -%}
+          <div class="dwh-comp">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign p = block.settings.product
+                assign visuel = block.settings.image | default: p.featured_image
+              -%}
+              <div class="dwh-comp__carte">
+                <span class="dwh-comp__img">
+                  {%- if visuel != blank -%}
+                    {{ visuel | image_url: width: 160 | image_tag: widths: '80, 160', sizes: '72px', loading: 'lazy', alt: block.settings.title }}
+                  {%- else -%}
+                    {% render 'dw-home-icon', icon: block.settings.quiz_icon %}
+                  {%- endif -%}
+                </span>
+                <div class="dwh-comp__corps">
+                  <p class="dwh-comp__nom">
+                    {{ block.settings.tab_label }}
+                    {%- if block.settings.badge != blank -%}<span class="dwh-comp__badge">{{ block.settings.badge }}</span>{%- endif -%}
+                  </p>
+                  {%- if block.settings.compare_text != blank -%}<p class="dwh-comp__pour">{{ block.settings.compare_text }}</p>{%- endif -%}
+                  <div class="dwh-comp__bas">
+                    {%- if p != blank -%}<span class="dwh-comp__prix">{{ section.settings.price_label }} <b>{{ p.price_min | money }}</b></span>{%- endif -%}
+                    <button type="button" class="dwh-comp__choisir" data-gamme="{{ block.id }}">{{ section.settings.compare_cta }}</button>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
           </div>
-        </div>
-
-        <div class="dwh-quiz__ecran" data-ecran="conseil2" hidden>
-          <h3 class="dwh-quiz__question" tabindex="-1">{{ section.settings.c2_title }}</h3>
-          <div class="dwh-quiz__choix">
-            <button type="button" class="dwh-choix" data-profil="famille">
-              <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'famille' %}</span>
-              <span class="dwh-choix__txt"><b>{{ section.settings.c2_family_label }}</b><small>{{ section.settings.c2_family_sub }}</small></span>
-              {% render 'dw-home-icon', icon: 'arrow' %}
-            </button>
-            <button type="button" class="dwh-choix" data-profil="ecran">
-              <span class="dwh-choix__ico">{% render 'dw-home-icon', icon: 'phone' %}</span>
-              <span class="dwh-choix__txt"><b>{{ section.settings.c2_adults_label }}</b><small>{{ section.settings.c2_adults_sub }}</small></span>
-              {% render 'dw-home-icon', icon: 'arrow' %}
-            </button>
-          </div>
+          {%- if section.settings.advisor_label != blank -%}
+            <p class="dwh-comp__conseiller"><a class="dwh-lien" href="{{ section.settings.advisor_link }}">{{ section.settings.advisor_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a></p>
+          {%- endif -%}
         </div>
 
         {%- comment -%} Question 3 : pack tout prêt ou sur mesure {%- endcomment -%}
@@ -146,7 +142,6 @@
               data-lien-pack="{{ lien_pack }}"
               data-lien-config="{{ lien_config }}"
               data-nom="{{ block.settings.tab_label | escape }}"
-              data-profil="{{ block.settings.profil }}"
               hidden
             >
               <div class="dwh-reco__visuel">
@@ -160,13 +155,7 @@
               <div class="dwh-reco__corps">
                 <p class="dwh-reco__surtitre" data-surtitre></p>
                 <h4 class="dwh-reco__nom">{{ block.settings.title }}</h4>
-                {%- if block.settings.raison != blank -%}
-                  <div class="dwh-reco__raison" data-raison hidden>
-                    <b>{{ section.settings.reason_title }}</b>
-                    <p>{{ block.settings.raison }}</p>
-                  </div>
-                {%- endif -%}
-                {%- if block.settings.description != blank -%}<p class="dwh-reco__pour" data-pour>{{ block.settings.description }}</p>{%- endif -%}
+                {%- if block.settings.description != blank -%}<p class="dwh-reco__pour">{{ block.settings.description }}</p>{%- endif -%}
                 <ul class="dwh-puces">
                   {%- if block.settings.bullet_1 != blank -%}<li>{{ block.settings.bullet_1 }}</li>{%- endif -%}
                   {%- if block.settings.bullet_2 != blank -%}<li>{{ block.settings.bullet_2 }}</li>{%- endif -%}
@@ -296,10 +285,10 @@
     function afficher(nom, recul, initial) {
       Object.keys(ecrans).forEach(function (k) { ecrans[k].hidden = k !== nom; });
       // En revenant en arrière, on oublie les réponses données après cet écran.
-      if (nom === 'pilotage') { delete reponses.gamme; delete reponses.profil; }
-      if (nom === 'conseil1') delete reponses.profil;
-      // « Je ne sais pas » ajoute une ou deux questions au parcours.
-      var total = reponses.gamme !== 'conseil' ? 3 : (reponses.profil === 'performance' ? 4 : 5);
+      if (nom === 'pilotage') { delete reponses.gamme; delete reponses.comparaison; }
+      if (nom === 'comparaison') { delete reponses.gamme; reponses.comparaison = true; }
+      // « Je ne sais pas » ajoute l'écran de comparaison au parcours.
+      var total = reponses.comparaison ? 4 : 3;
       var rang = historique.length + 1;
       var question = nom !== 'resultat';
       compte.textContent = question ? 'Question ' + rang + ' sur ' + total : textes.resultat;
@@ -321,12 +310,7 @@
     }
 
     function montrerResultat() {
-      var conseil = reponses.gamme === 'conseil';
       var id = reponses.gamme;
-      if (conseil) {
-        var profil = recos.filter(function (r) { return r.dataset.profil && r.dataset.profil === reponses.profil; })[0];
-        id = profil ? profil.dataset.recoId : quiz.dataset.conseil;
-      }
       if (reponses.besoin === 'camera') id = 'camera';
       recos.forEach(function (r) {
         var actif = r.dataset.recoId === id;
@@ -339,18 +323,13 @@
         cta.querySelector('[data-cta-texte]').textContent = (surMesure ? textes.config : textes.pack) + ' ' + r.dataset.nom;
         autre.href = surMesure ? r.dataset.lienPack : r.dataset.lienConfig;
         autre.textContent = surMesure ? textes.autrePack : textes.autreConfig;
-        r.querySelector('[data-surtitre]').textContent = conseil ? quiz.dataset.surtitreConseil : quiz.dataset.surtitreChoix;
-        // Après « je ne sais pas », on explique le choix à partir des réponses du client.
-        var raison = r.querySelector('[data-raison]');
-        var pour = r.querySelector('[data-pour]');
-        if (raison) raison.hidden = !conseil;
-        if (pour) pour.hidden = conseil && !!raison;
+        r.querySelector('[data-surtitre]').textContent = quiz.dataset.surtitreChoix;
       });
       if (comparer) comparer.hidden = id === 'camera';
       var choisie = recos.filter(function (r) { return !r.hidden; })[0];
       var nomGamme = id === 'camera' ? 'camera' : (choisie && choisie.dataset.nom);
       aller('resultat');
-      suivre('dwh_quiz_resultat', { dwh_besoin: reponses.besoin, dwh_gamme: nomGamme, dwh_conseil: conseil, dwh_profil: reponses.profil || '', dwh_formule: reponses.formule || '' });
+      suivre('dwh_quiz_resultat', { dwh_besoin: reponses.besoin, dwh_gamme: nomGamme, dwh_comparaison: !!reponses.comparaison, dwh_formule: reponses.formule || '' });
     }
 
     quiz.addEventListener('click', function (e) {
@@ -375,9 +354,6 @@
         montrerResultat();
       } else if (b.dataset.gamme) {
         reponses.gamme = b.dataset.gamme;
-        aller(b.dataset.gamme === 'conseil' ? 'conseil1' : 'formule');
-      } else if (b.dataset.profil) {
-        reponses.profil = b.dataset.profil;
         aller('formule');
       } else if (b.dataset.formule) {
         reponses.formule = b.dataset.formule;
@@ -405,21 +381,16 @@
     { "type": "text", "id": "q1_alarm_label", "label": "Réponse alarme", "default": "Une alarme complète" },
     { "type": "text", "id": "q1_alarm_sub", "label": "Réponse alarme · précision", "default": "Centrale, détecteurs et sirène" },
     { "type": "header", "content": "Question 2 · Pilotage", "info": "Une réponse par bloc « Centrale »." },
-    { "type": "text", "id": "q2_title", "label": "Question", "default": "Comment préférez-vous utiliser votre alarme ?" },
-    { "type": "text", "id": "q2_unsure_label", "label": "Réponse « je ne sais pas »", "default": "Je ne sais pas encore" },
-    { "type": "text", "id": "q2_unsure_sub", "label": "Précision", "default": "Deux questions pour vous conseiller" },
-    { "type": "header", "content": "« Je ne sais pas » · questions de conseil", "info": "La centrale conseillée dépend du « Profil » de chaque bloc « Centrale »." },
-    { "type": "text", "id": "c1_title", "label": "Question 1", "default": "Votre logement a-t-il une contrainte particulière ?" },
-    { "type": "text", "id": "c1_yes_label", "label": "Réponse oui (profil Performance)", "default": "Oui, un grand terrain ou des dépendances" },
-    { "type": "text", "id": "c1_yes_sub", "label": "Précision", "default": "Ou une connexion Internet instable" },
-    { "type": "text", "id": "c1_no_label", "label": "Réponse non", "default": "Non, rien de particulier" },
-    { "type": "text", "id": "c1_no_sub", "label": "Précision", "default": "Maison ou appartement, même grand" },
-    { "type": "text", "id": "c2_title", "label": "Question 2", "default": "Qui va utiliser l'alarme au quotidien ?" },
-    { "type": "text", "id": "c2_family_label", "label": "Réponse famille (profil Famille)", "default": "Toute la famille" },
-    { "type": "text", "id": "c2_family_sub", "label": "Précision", "default": "Enfants ou seniors compris" },
-    { "type": "text", "id": "c2_adults_label", "label": "Réponse adultes (profil Écran)", "default": "Surtout des adultes" },
-    { "type": "text", "id": "c2_adults_sub", "label": "Précision", "default": "À l'aise avec un écran ou un smartphone" },
-    { "type": "text", "id": "reason_title", "label": "Titre de l'argument", "default": "Pourquoi on vous la conseille" },
+    { "type": "text", "id": "q2_title", "label": "Question", "default": "En partant de chez vous, comment voulez-vous activer l'alarme ?" },
+    { "type": "text", "id": "q2_text", "label": "Précision sous la question", "default": "Toutes se pilotent aussi depuis l'application." },
+    { "type": "text", "id": "q2_unsure_label", "label": "Réponse « je ne sais pas »", "default": "Je ne sais pas, montrez-moi" },
+    { "type": "text", "id": "q2_unsure_sub", "label": "Précision", "default": "Les 3 centrales côte à côte" },
+    { "type": "header", "content": "« Je ne sais pas » · comparaison" },
+    { "type": "text", "id": "compare_title", "label": "Titre", "default": "Les 3 centrales, côte à côte" },
+    { "type": "textarea", "id": "compare_text", "label": "Texte", "default": "Toutes sont sans abonnement et protègent aussi bien un studio qu'une grande maison. Choisissez selon votre façon de vivre." },
+    { "type": "text", "id": "compare_cta", "label": "Bouton sous chaque centrale", "default": "Choisir" },
+    { "type": "text", "id": "advisor_label", "label": "Lien conseiller (vide = masqué)", "default": "Toujours un doute ? Parler à un conseiller" },
+    { "type": "url", "id": "advisor_link", "label": "Lien conseiller · URL" },
     { "type": "header", "content": "Question 3 · Formule" },
     { "type": "text", "id": "q3_title", "label": "Question", "default": "Comment voulez-vous la commander ?" },
     { "type": "text", "id": "q3_pack_label", "label": "Réponse pack", "default": "Un pack prêt à poser" },
@@ -431,7 +402,6 @@
     { "type": "text", "id": "result_title", "label": "Titre", "default": "Votre alarme idéale" },
     { "type": "text", "id": "result_count", "label": "Compteur", "default": "Votre résultat" },
     { "type": "text", "id": "result_eyebrow", "label": "Sur-titre (choix du client)", "default": "Faite pour vous" },
-    { "type": "text", "id": "advice_eyebrow", "label": "Sur-titre (« je ne sais pas »)", "default": "Notre conseil pour vous" },
     { "type": "text", "id": "price_label", "label": "Texte avant le prix", "default": "Packs dès" },
     { "type": "text", "id": "cta_pack", "label": "Bouton si pack", "default": "Voir les packs" },
     { "type": "text", "id": "cta_config", "label": "Bouton si sur mesure", "default": "Composer mon alarme" },
@@ -470,14 +440,6 @@
       "limit": 4,
       "settings": [
         { "type": "text", "id": "tab_label", "label": "Nom court", "default": "Touch" },
-        { "type": "checkbox", "id": "featured", "label": "Conseillée par défaut", "default": false, "info": "Si aucun profil ne correspond aux réponses." },
-        { "type": "select", "id": "profil", "label": "Profil conseillé après « je ne sais pas »", "default": "aucun", "options": [
-          { "value": "famille", "label": "Famille : simplicité au quotidien" },
-          { "value": "ecran", "label": "Écran : adultes à l'aise avec la technologie" },
-          { "value": "performance", "label": "Performance : grand terrain, connexion instable" },
-          { "value": "aucun", "label": "Aucun" }
-        ] },
-        { "type": "textarea", "id": "raison", "label": "Argument affiché après « je ne sais pas »" },
         { "type": "header", "content": "Réponse dans le quiz" },
         { "type": "select", "id": "quiz_icon", "label": "Icône", "default": "ecran", "options": [
           { "value": "clavier", "label": "Clavier" },
@@ -485,8 +447,9 @@
           { "value": "eclair", "label": "Performance" },
           { "value": "phone", "label": "Smartphone" }
         ] },
-        { "type": "text", "id": "quiz_label", "label": "Réponse", "default": "Avec un écran tactile" },
+        { "type": "text", "id": "quiz_label", "label": "Réponse", "default": "J'appuie sur un écran au mur" },
         { "type": "text", "id": "quiz_sub", "label": "Précision" },
+        { "type": "text", "id": "compare_text", "label": "Pour qui (écran de comparaison)" },
         { "type": "header", "content": "Carte résultat" },
         { "type": "text", "id": "badge", "label": "Badge", "info": "Ex. : Le plus choisi" },
         { "type": "image_picker", "id": "image", "label": "Photo de la centrale" },
@@ -505,9 +468,9 @@
     {
       "name": "Home V2 · Quiz alarme",
       "blocks": [
-        { "type": "gamme", "settings": { "tab_label": "Vigilia", "title": "Centrale Vigilia", "quiz_icon": "clavier", "quiz_label": "Avec un clavier et des badges" } },
-        { "type": "gamme", "settings": { "tab_label": "Touch", "title": "Centrale Touch", "quiz_icon": "ecran", "quiz_label": "Avec un écran tactile", "featured": true, "badge": "Le plus choisi" } },
-        { "type": "gamme", "settings": { "tab_label": "Élite", "title": "Centrale Élite", "quiz_icon": "eclair", "quiz_label": "Performance maximale" } }
+        { "type": "gamme", "settings": { "tab_label": "Vigilia", "title": "Centrale Vigilia", "quiz_icon": "clavier", "quiz_label": "Je passe un badge ou je tape un code", "badge": "Le plus vendu" } },
+        { "type": "gamme", "settings": { "tab_label": "Touch", "title": "Centrale Touch", "quiz_icon": "ecran", "quiz_label": "J'appuie sur un écran au mur" } },
+        { "type": "gamme", "settings": { "tab_label": "Élite", "title": "Centrale Élite", "quiz_icon": "phone", "quiz_label": "Je le fais depuis mon téléphone" } }
       ]
     }
   ]
