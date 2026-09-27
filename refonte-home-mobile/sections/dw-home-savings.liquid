@@ -2,12 +2,18 @@
 
 {%- liquid
   assign mensuel = section.settings.competitor_monthly
+  assign mensuel_max = section.settings.competitor_monthly_max
+  if mensuel_max < mensuel
+    assign mensuel_max = mensuel
+  endif
   assign mois = section.settings.years | times: 12
   assign total = mensuel | times: mois
+  assign total_max = mensuel_max | times: mois
   assign p = section.settings.us_product
+  # L'économie « jusqu'à » se calcule sur l'abonnement le plus cher.
   assign economie = 0
   if p != blank
-    assign economie = total | times: 100 | minus: p.price_min | divided_by: 100
+    assign economie = total_max | times: 100 | minus: p.price_min | divided_by: 100
   endif
 
   # Montants avec espace des milliers (1 260 plutôt que 1260).
@@ -16,6 +22,12 @@
     assign milliers = total | divided_by: 1000
     assign reste = total | modulo: 1000 | prepend: '00' | slice: -3, 3
     assign total_txt = milliers | append: '&nbsp;' | append: reste
+  endif
+  assign total_max_txt = total_max | append: ''
+  if total_max >= 1000
+    assign milliers = total_max | divided_by: 1000
+    assign reste = total_max | modulo: 1000 | prepend: '00' | slice: -3, 3
+    assign total_max_txt = milliers | append: '&nbsp;' | append: reste
   endif
   assign economie_txt = economie | append: ''
   if economie >= 1000
@@ -39,9 +51,12 @@
           {%- comment -%} Avec abonnement : on paie tous les mois {%- endcomment -%}
           <div class="dwh-duel__carte dwh-duel__carte--eux">
             <p class="dwh-duel__nom">{{ section.settings.them_label }}</p>
-            <p class="dwh-duel__prix">{{ mensuel }}&nbsp;€<small>/mois*</small></p>
+            <p class="dwh-duel__prix">
+              {%- if mensuel_max > mensuel -%}{{ mensuel }} à {{ mensuel_max }}&nbsp;€{%- else -%}{{ mensuel }}&nbsp;€{%- endif -%}
+              <small>/mois*</small>
+            </p>
             <p class="dwh-duel__detail">
-              Soit <b>{{ total_txt }}&nbsp;€</b> au bout de {{ section.settings.years }}&nbsp;ans.
+              Soit <b>{% if mensuel_max > mensuel %}{{ total_txt }} à {{ total_max_txt }}{% else %}{{ total_txt }}{% endif %}&nbsp;€</b> au bout de {{ section.settings.years }}&nbsp;ans.
               {{ section.settings.them_note }}
             </p>
           </div>
@@ -77,7 +92,8 @@
           <p class="dwh-duel__action"><a class="dwh-lien" href="{{ section.settings.cta_link | default: '#dwh-packs' }}">{{ section.settings.cta_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a></p>
         {%- endif -%}
         {%- if section.settings.footnote != blank -%}
-          <p class="dwh-duel__mention">{{ section.settings.footnote | replace: '[mensuel]', mensuel }}</p>
+          <p class="dwh-duel__mention">{%- if mensuel_max > mensuel -%}{%- capture fourchette -%}{{ mensuel }} à {{ mensuel_max }}{%- endcapture -%}{%- else -%}{%- assign fourchette = mensuel -%}{%- endif -%}
+            {{ section.settings.footnote | replace: '[mensuel]', fourchette | replace: ' €', '&nbsp;€' }}</p>
         {%- endif -%}
       </div>
     </div>
@@ -94,7 +110,8 @@
     { "type": "textarea", "id": "text", "label": "Texte" },
     { "type": "header", "content": "Carte « avec abonnement »" },
     { "type": "text", "id": "them_label", "label": "Titre", "default": "Alarme avec télésurveillance" },
-    { "type": "range", "id": "competitor_monthly", "label": "Prix mensuel de référence (€)", "min": 10, "max": 80, "step": 1, "default": 35, "info": "À vérifier avant mise en ligne." },
+    { "type": "range", "id": "competitor_monthly", "label": "Abonnement mensuel constaté · minimum (€)", "min": 10, "max": 80, "step": 1, "default": 35 },
+    { "type": "range", "id": "competitor_monthly_max", "label": "Abonnement mensuel constaté · maximum (€)", "min": 10, "max": 80, "step": 1, "default": 40, "info": "Même valeur que le minimum = un seul prix affiché. L'économie « jusqu'à » utilise le maximum." },
     { "type": "range", "id": "years", "label": "Durée du calcul (ans)", "min": 1, "max": 5, "step": 1, "default": 3 },
     { "type": "text", "id": "them_note", "label": "Phrase après le total", "default": "Et les prélèvements continuent." },
     { "type": "header", "content": "Carte Daewoo" },
@@ -108,7 +125,7 @@
     { "type": "text", "id": "saving_text", "label": "Phrase d'économie", "default": "Sur [ans] ans, vous gardez jusqu'à [economie] € dans votre poche.", "info": "[economie] = total des abonnements moins le prix du pack. [ans] = durée." },
     { "type": "text", "id": "cta_label", "label": "Lien", "default": "Trouver mon alarme" },
     { "type": "url", "id": "cta_link", "label": "URL du lien", "info": "Vide = remonte au quiz." },
-    { "type": "text", "id": "footnote", "label": "Mention", "default": "*Sur la base d'un abonnement de télésurveillance à [mensuel] € par mois, tarif indicatif constaté en France.", "info": "[mensuel] est remplacé par le prix mensuel ci-dessus." }
+    { "type": "text", "id": "footnote", "label": "Mention", "default": "*Abonnements de télésurveillance constatés en France : [mensuel] € par mois.", "info": "[mensuel] est remplacé par le prix (ou la fourchette) ci-dessus." }
   ],
   "presets": [{ "name": "Home V2 · Sans abonnement" }]
 }

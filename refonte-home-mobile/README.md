@@ -38,17 +38,18 @@ La home concentre 62 % des entrées mobiles et presque aucune vente.
    - Q3 : un pack prêt à poser (collection de la gamme) ou « je compose moi-même » (configurateur)
    - Résultat : photo, pourquoi elle correspond, 3 points forts, prix « dès » en direct, 0 €/mois, un bouton principal et l'autre formule en lien secondaire
    - Mesure : un événement `dwh_quiz_resultat` est envoyé dans le `dataLayer` (GTM/GA4) avec les réponses
-4. **Sans abonnement :** deux cartes claires, « Alarme avec télésurveillance 35 €/mois » contre « Alarme Daewoo 0 €/mois (matériel dès 139,90 €, une seule fois) », puis le bilan honnête : « Sur 3 ans, vous gardez jusqu'à 1 120 € » (abonnements moins le prix du pack, calculé automatiquement)
-5. **Avis Judge.me** (réglages actuels conservés)
-6. **Pourquoi Daewoo :** marque depuis 1971, sirène 110 dB, batterie de secours, animaux jusqu'à 10 kg, déménagement
-7. **FAQ :** vos 10 questions actuelles, avec les données structurées pour le SEO
-8. **Appel à l'action final** + barre de boutons collante en bas d'écran sur mobile
+4. **Packs vedettes** (section `dw-home-best`) : le Pack Vigilia (le plus vendu, 53 commandes sur 90 jours) et le Pack Vigilia Sécurité renforcée (2 caméras + sirène solaire), avec le contenu de la boîte, le prix en direct et le prix barré s'il existe. Produits, textes et contenus modifiables dans l'éditeur (jusqu'à 3 packs).
+5. **Bandeau configurateur** (section `dw-home-config`) : « Aucun pack ne vous correspond ? Composez le vôtre. » + les 5 étapes réelles du configurateur (logement, centrale, portes/fenêtres/pièces, options, prix en direct) + bouton vers `/pages/configurateur_2`.
+6. **Sans abonnement :** deux cartes claires, « Alarme avec télésurveillance 35 à 40 €/mois » contre « Alarme Daewoo 0 €/mois (matériel dès 139,90 €, une seule fois) », puis le bilan honnête : « Sur 3 ans, vous gardez jusqu'à 1 300 € » (abonnements moins le prix du pack, calculé automatiquement)
+7. **Avis Judge.me** (réglages actuels conservés)
+8. **Pourquoi Daewoo :** marque depuis 1971, sirène 110 dB, batterie de secours, animaux jusqu'à 10 kg, déménagement
+9. **FAQ :** vos 10 questions actuelles, avec les données structurées pour le SEO
+10. **Appel à l'action final** + barre de boutons collante en bas d'écran sur mobile
 
 Tous les textes, produits et liens se modifient dans l'éditeur, sans toucher au code.
 
 ## À vérifier avant la mise en ligne
 
-- [ ] Le **tarif de 35 €/mois** de la télésurveillance (section « Sans abonnement »), modifiable dans l'éditeur
 - [ ] La note « 4,6/5 · 1 356 avis » (reprise de votre hero actuel) est-elle à jour ?
 - [ ] Les liens `/pages/configurateur_2`, `/pages/pack-alarmes`, `/pages/comparateur-am301-sa501-pa501z`, `/pages/contact`
 - [ ] La barre collante ne doit pas chevaucher le widget de chat (en bas à droite) : à tester sur la copie

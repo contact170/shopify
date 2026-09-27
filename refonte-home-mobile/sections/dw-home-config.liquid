@@ -1,0 +1,62 @@
+{% render 'dw-home-head' %}
+
+<div class="dwh">
+  <section class="dwh-bloc dwh-bloc--porcelaine" aria-labelledby="dwh-config-{{ section.id }}">
+    <div class="dwh-large">
+      <div class="dwh-config">
+        <div class="dwh-config__texte">
+          {%- if section.settings.eyebrow != blank -%}<p class="dwh-config__puce">{% render 'dw-home-icon', icon: 'sliders' %}{{ section.settings.eyebrow }}</p>{%- endif -%}
+          <h2 class="dwh-titre" id="dwh-config-{{ section.id }}">{{ section.settings.title }}</h2>
+          {%- if section.settings.text != blank -%}<p class="dwh-chapo">{{ section.settings.text }}</p>{%- endif -%}
+        </div>
+
+        <ol class="dwh-config__etapes">
+          {%- for block in section.blocks -%}
+            <li class="dwh-config__etape" {{ block.shopify_attributes }}>
+              <span class="dwh-config__num" aria-hidden="true">{{ forloop.index }}</span>
+              <span>
+                <b>{{ block.settings.title }}</b>
+                {%- if block.settings.text != blank -%}<small>{{ block.settings.text }}</small>{%- endif -%}
+              </span>
+            </li>
+          {%- endfor -%}
+        </ol>
+
+        <div class="dwh-config__action">
+          <a class="dwh-btn dwh-btn--bleu" href="{{ section.settings.cta_link | default: '/pages/configurateur_2' }}">
+            {{ section.settings.cta_label }}
+            {% render 'dw-home-icon', icon: 'arrow' %}
+          </a>
+          {%- if section.settings.meta != blank -%}<p class="dwh-config__meta">{{ section.settings.meta }}</p>{%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Home V2 · Configurateur",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Pastille", "default": "Configurateur · 2 minutes" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Composez votre alarme pièce par pièce." },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Vous décrivez votre logement, on calcule le système adapté. Le prix s'affiche en direct et vous gardez la main sur chaque accessoire." },
+    { "type": "text", "id": "cta_label", "label": "Bouton", "default": "Composer mon alarme" },
+    { "type": "url", "id": "cta_link", "label": "Lien du bouton", "info": "Vide = /pages/configurateur_2" },
+    { "type": "text", "id": "meta", "label": "Mention sous le bouton", "default": "Gratuit et sans engagement · modifiable avant la commande" }
+  ],
+  "blocks": [
+    {
+      "type": "etape",
+      "name": "Étape",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre" },
+        { "type": "text", "id": "text", "label": "Précision" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Home V2 · Configurateur" }]
+}
+{% endschema %}
