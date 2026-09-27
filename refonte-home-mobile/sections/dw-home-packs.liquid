@@ -103,8 +103,26 @@
               </div>
             {%- endfor -%}
           </div>
-          {%- if section.settings.advisor_label != blank -%}
-            <p class="dwh-comp__conseiller"><a class="dwh-lien" href="{{ section.settings.advisor_link }}">{{ section.settings.advisor_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a></p>
+          {%- comment -%} Pour ceux qui hésitent encore : un rendez-vous d'appel, ou le téléphone {%- endcomment -%}
+          {%- if section.settings.advisor_label != blank or section.settings.phone_number != blank -%}
+            <div class="dwh-conseiller">
+              {%- if section.settings.advisor_title != blank -%}<p class="dwh-conseiller__titre">{{ section.settings.advisor_title }}</p>{%- endif -%}
+              {%- if section.settings.advisor_label != blank and section.settings.advisor_link != blank -%}
+                <a class="dwh-btn dwh-btn--contour dwh-conseiller__rdv" href="{{ section.settings.advisor_link }}" target="_blank" rel="noopener" data-dwh-contact="rendez-vous">
+                  {% render 'dw-home-icon', icon: 'calendar' %}
+                  {{ section.settings.advisor_label }}
+                </a>
+                {%- if section.settings.advisor_note != blank -%}<p class="dwh-conseiller__note">{{ section.settings.advisor_note }}</p>{%- endif -%}
+              {%- endif -%}
+              {%- if section.settings.phone_number != blank -%}
+                {%- assign tel = section.settings.phone_number | remove: ' ' | remove: '.' -%}
+                <p class="dwh-conseiller__tel">
+                  {{ section.settings.phone_intro }}
+                  <a href="tel:{{ tel }}" data-dwh-contact="telephone">{% render 'dw-home-icon', icon: 'phone' %}{{ section.settings.phone_number }}</a>
+                  {%- if section.settings.phone_hours != blank -%}<span>{{ section.settings.phone_hours }}</span>{%- endif -%}
+                </p>
+              {%- endif -%}
+            </div>
           {%- endif -%}
         </div>
 
@@ -341,6 +359,11 @@
       suivre('dwh_quiz_resultat', { dwh_besoin: reponses.besoin, dwh_gamme: nomGamme, dwh_comparaison: !!reponses.comparaison, dwh_formule: reponses.formule || '' });
     }
 
+    // Clics sur « Réserver un appel » et sur le numéro, pour comparer les deux canaux.
+    Array.prototype.forEach.call(quiz.querySelectorAll('[data-dwh-contact]'), function (a) {
+      a.addEventListener('click', function () { suivre('dwh_quiz_conseiller', { dwh_canal: a.dataset.dwhContact }); });
+    });
+
     quiz.addEventListener('click', function (e) {
       var b = e.target.closest('button');
       if (!b) return;
@@ -398,8 +421,14 @@
     { "type": "text", "id": "compare_title", "label": "Titre", "default": "Les 3 centrales, côte à côte" },
     { "type": "textarea", "id": "compare_text", "label": "Texte", "default": "Toutes sont sans abonnement et protègent aussi bien un studio qu'une grande maison. Choisissez selon votre façon de vivre." },
     { "type": "text", "id": "compare_cta", "label": "Bouton sous chaque centrale", "default": "Choisir" },
-    { "type": "text", "id": "advisor_label", "label": "Lien conseiller (vide = masqué)", "default": "Toujours un doute ? Parler à un conseiller" },
-    { "type": "url", "id": "advisor_link", "label": "Lien conseiller · URL" },
+    { "type": "header", "content": "« Je ne sais pas » · conseiller" },
+    { "type": "text", "id": "advisor_title", "label": "Titre", "default": "Un doute ? Un conseiller vous aide à choisir." },
+    { "type": "text", "id": "advisor_label", "label": "Bouton rendez-vous (vide = masqué)", "default": "Réserver un appel gratuit" },
+    { "type": "url", "id": "advisor_link", "label": "Lien de prise de rendez-vous (Calendly)" },
+    { "type": "text", "id": "advisor_note", "label": "Précision sous le bouton", "default": "Vous choisissez l'heure, on vous appelle." },
+    { "type": "text", "id": "phone_intro", "label": "Texte avant le numéro", "default": "ou par téléphone :" },
+    { "type": "text", "id": "phone_number", "label": "Numéro (vide = masqué)" },
+    { "type": "text", "id": "phone_hours", "label": "Horaires", "default": "du lundi au samedi, 9 h – 19 h" },
     { "type": "header", "content": "Question 3 · Formule" },
     { "type": "text", "id": "q3_title", "label": "Question", "default": "Comment voulez-vous la commander ?" },
     { "type": "text", "id": "q3_pack_label", "label": "Réponse pack", "default": "Un pack prêt à poser" },
@@ -438,7 +467,7 @@
     { "type": "text", "id": "camera_all_label", "label": "Lien secondaire", "default": "ou voir toutes nos caméras" },
     { "type": "url", "id": "camera_all_link", "label": "URL" },
     { "type": "header", "content": "Bas de section" },
-    { "type": "text", "id": "reassure_text", "label": "Réassurance", "default": "Expédiée sous 24 h · installée en 30 min, sans perçage ni technicien" },
+    { "type": "text", "id": "reassure_text", "label": "Réassurance", "default": "Expédiée sous 24 h · à installer vous-même en 30 min, sans technicien" },
     { "type": "text", "id": "all_packs_intro", "label": "Texte « déjà décidé »", "default": "Vous savez déjà ce que vous voulez ?" },
     { "type": "text", "id": "all_packs_label", "label": "Lien « déjà décidé »", "default": "Voir tous les packs" },
     { "type": "url", "id": "all_packs_link", "label": "URL (aussi lien par défaut des gammes)" }
