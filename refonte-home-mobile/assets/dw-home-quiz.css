@@ -136,8 +136,9 @@
 /* « Je ne sais pas » : les centrales côte à côte */
 .dwh-comp { display: grid; gap: 10px; }
 .dwh-comp__carte { display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: start; padding: 12px; border: 1.5px solid var(--trait); border-radius: 18px; }
+.dwh-comp__img, .dwh-comp__img img { border-radius: 14px; }
 .dwh-comp__img { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 14px; background: radial-gradient(70% 70% at 50% 45%, #ffffff 0%, #eef1f8 100%); overflow: hidden; color: var(--bleu); }
-.dwh-comp__img img { width: 100%; height: 100%; object-fit: contain; padding: 6px; mix-blend-mode: multiply; }
+.dwh-comp__img img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .dwh-comp__img svg { width: 32px; height: 32px; }
 .dwh-comp__corps { min-width: 0; }
 .dwh-comp__nom { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; line-height: 1.3; }
@@ -279,8 +280,10 @@
   .dwh-reco__autre { align-self: flex-start; padding-left: 0; }
   .dwh-liens--secours { grid-template-columns: 1fr; }
   .dwh-comp { grid-template-columns: repeat(3, 1fr); }
-  .dwh-comp__carte { grid-template-columns: 1fr; justify-items: start; }
-  .dwh-comp__img { width: 100%; height: 120px; }
+  .dwh-comp__carte { display: flex; flex-direction: column; gap: 14px; }
+  .dwh-comp__img { width: 100%; height: auto; aspect-ratio: 4 / 3; }
+  .dwh-comp__corps { display: flex; flex-direction: column; flex: 1; }
+  .dwh-comp__bas { margin-top: auto; padding-top: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

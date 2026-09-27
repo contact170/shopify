@@ -84,7 +84,7 @@
               <div class="dwh-comp__carte">
                 <span class="dwh-comp__img">
                   {%- if visuel != blank -%}
-                    {{ visuel | image_url: width: 160 | image_tag: widths: '80, 160', sizes: '72px', loading: 'lazy', alt: block.settings.title }}
+                    {{ visuel | image_url: width: 600 | image_tag: widths: '160, 320, 480, 600', sizes: '(min-width: 750px) 220px, 72px', loading: 'lazy', alt: block.settings.title }}
                   {%- else -%}
                     {% render 'dw-home-icon', icon: block.settings.quiz_icon %}
                   {%- endif -%}
