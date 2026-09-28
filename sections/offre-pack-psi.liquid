@@ -1,0 +1,579 @@
+{%- comment -%}
+  Offre spéciale « Pack Sécurité Intégrale » (PSI)
+  - Blocs « centrale » : 1 par pack (produit PSI-VIGILIA, PSI-VIGILIA+, PSI-AM301, PSI-AM302)
+  - Blocs « contenu » : composants du pack (option « badges RFID uniquement »)
+  - Blocs « fonction » : fonctions expliquées (option « uniquement si SIM »)
+  - Blocs « faq »
+  Présélection possible via l'URL : ?centrale=vigilia | vigilia-plus | am301 | am302
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign centrales = section.blocks | where: 'type', 'centrale'
+  assign contenus = section.blocks | where: 'type', 'contenu'
+  assign fonctions = section.blocks | where: 'type', 'fonction'
+  assign faqs = section.blocks | where: 'type', 'faq'
+  assign first = centrales | first
+-%}
+
+<style>
+  #psi-{{ sid }} {
+    --psi-accent: {{ section.settings.accent }};
+    --psi-dark: {{ section.settings.dark }};
+    --psi-soft: {{ section.settings.soft }};
+    --psi-ok: #1a8f4c;
+    color: var(--psi-dark);
+    font-size: 1.6rem;
+    line-height: 1.5;
+  }
+  #psi-{{ sid }} *, #psi-{{ sid }} *::before, #psi-{{ sid }} *::after { box-sizing: border-box; }
+  #psi-{{ sid }} .psi-wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+  #psi-{{ sid }} [hidden] { display: none !important; }
+
+  /* Bandeau urgence */
+  #psi-{{ sid }} .psi-topbar {
+    background: var(--psi-accent); color: #fff; text-align: center;
+    padding: 10px 16px; font-weight: 700; letter-spacing: .02em;
+    display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: center; align-items: center;
+  }
+  #psi-{{ sid }} .psi-count { display: inline-flex; gap: 6px; font-variant-numeric: tabular-nums; }
+  #psi-{{ sid }} .psi-count span {
+    background: rgba(0,0,0,.22); border-radius: 6px; padding: 2px 8px; min-width: 44px;
+  }
+  #psi-{{ sid }} .psi-count small { font-weight: 400; opacity: .85; margin-left: 2px; }
+
+  /* Hero */
+  #psi-{{ sid }} .psi-hero { padding: 32px 0 24px; }
+  #psi-{{ sid }} .psi-kicker {
+    display: inline-block; background: var(--psi-dark); color: #fff; border-radius: 999px;
+    padding: 4px 14px; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  }
+  #psi-{{ sid }} h1.psi-title { font-size: clamp(2.8rem, 5vw, 4.4rem); line-height: 1.1; margin: 12px 0 8px; }
+  #psi-{{ sid }} .psi-sub { font-size: 1.8rem; opacity: .85; margin: 0 0 24px; max-width: 760px; }
+
+  #psi-{{ sid }} .psi-grid { display: grid; gap: 32px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { #psi-{{ sid }} .psi-grid { grid-template-columns: 1.1fr 1fr; align-items: start; } }
+
+  #psi-{{ sid }} .psi-media {
+    position: relative; background: var(--psi-soft); border-radius: 16px; overflow: hidden; aspect-ratio: 1 / 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #psi-{{ sid }} .psi-media img { width: 100%; height: 100%; object-fit: contain; }
+  #psi-{{ sid }} .psi-badge-pct {
+    position: absolute; top: 16px; left: 16px; background: var(--psi-accent); color: #fff;
+    font-weight: 800; font-size: 2.2rem; border-radius: 12px; padding: 8px 14px; transform: rotate(-4deg);
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  }
+
+  /* Choix centrale */
+  #psi-{{ sid }} .psi-step { font-weight: 700; margin: 0 0 10px; }
+  #psi-{{ sid }} .psi-choices { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+  @media (min-width: 600px) { #psi-{{ sid }} .psi-choices { grid-template-columns: repeat(4, 1fr); } }
+  #psi-{{ sid }} .psi-choice {
+    appearance: none; cursor: pointer; border: 2px solid #d6dbe3; background: #fff; color: var(--psi-dark);
+    border-radius: 12px; padding: 12px 8px; text-align: center; font: inherit; line-height: 1.25;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .1s ease;
+  }
+  #psi-{{ sid }} .psi-choice:hover { border-color: var(--psi-dark); }
+  #psi-{{ sid }} .psi-choice:active { transform: scale(.98); }
+  #psi-{{ sid }} .psi-choice[aria-pressed="true"] {
+    border-color: var(--psi-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--psi-accent) 20%, transparent);
+  }
+  #psi-{{ sid }} .psi-choice strong { display: block; font-size: 1.7rem; }
+  #psi-{{ sid }} .psi-choice span { display: block; font-size: 1.4rem; opacity: .8; }
+
+  /* Prix */
+  #psi-{{ sid }} .psi-pricebox { background: var(--psi-soft); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  #psi-{{ sid }} .psi-ref { font-size: 1.4rem; opacity: .8; }
+  #psi-{{ sid }} .psi-ref s { font-weight: 600; }
+  #psi-{{ sid }} .psi-price { font-size: 4rem; font-weight: 800; line-height: 1.1; color: var(--psi-accent); }
+  #psi-{{ sid }} .psi-save {
+    display: inline-block; background: var(--psi-ok); color: #fff; border-radius: 6px;
+    padding: 2px 10px; font-weight: 700; font-size: 1.4rem; margin-top: 6px;
+  }
+  #psi-{{ sid }} .psi-nosub { margin-top: 10px; font-weight: 700; }
+  #psi-{{ sid }} .psi-desc { margin: 0 0 16px; }
+  #psi-{{ sid }} .psi-desc p { margin: 0 0 8px; }
+
+  #psi-{{ sid }} .psi-btn {
+    display: block; width: 100%; border: 0; cursor: pointer; border-radius: 12px; padding: 18px;
+    background: var(--psi-accent); color: #fff; font: inherit; font-size: 1.8rem; font-weight: 800; text-align: center;
+    text-decoration: none; transition: filter .15s ease, transform .1s ease;
+  }
+  #psi-{{ sid }} .psi-btn:hover { filter: brightness(1.08); }
+  #psi-{{ sid }} .psi-btn:active { transform: scale(.99); }
+  #psi-{{ sid }} .psi-btn[disabled] { background: #9aa3b0; cursor: not-allowed; }
+  #psi-{{ sid }} .psi-reassure { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 1.4rem; }
+  #psi-{{ sid }} .psi-reassure li::before { content: "✓ "; color: var(--psi-ok); font-weight: 800; }
+
+  /* Sections */
+  #psi-{{ sid }} .psi-block { padding: 40px 0; }
+  #psi-{{ sid }} .psi-block + .psi-block { border-top: 1px solid #e6e9ee; }
+  #psi-{{ sid }} h2.psi-h2 { font-size: clamp(2.4rem, 3.5vw, 3.2rem); margin: 0 0 8px; text-align: center; }
+  #psi-{{ sid }} .psi-lead { text-align: center; opacity: .8; margin: 0 auto 28px; max-width: 700px; }
+
+  /* Contenu */
+  #psi-{{ sid }} .psi-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; list-style: none; margin: 0; padding: 0; }
+  @media (min-width: 750px) { #psi-{{ sid }} .psi-items { grid-template-columns: repeat(4, 1fr); } }
+  #psi-{{ sid }} .psi-item { background: #fff; border: 1px solid #e6e9ee; border-radius: 14px; padding: 14px; text-align: center; position: relative; }
+  #psi-{{ sid }} .psi-item img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; margin-bottom: 8px; }
+  #psi-{{ sid }} .psi-qty {
+    position: absolute; top: 10px; left: 10px; background: var(--psi-dark); color: #fff;
+    border-radius: 999px; padding: 2px 10px; font-weight: 800; font-size: 1.4rem;
+  }
+  #psi-{{ sid }} .psi-item strong { display: block; font-size: 1.5rem; line-height: 1.3; }
+  #psi-{{ sid }} .psi-item small { display: block; opacity: .7; font-size: 1.3rem; }
+  #psi-{{ sid }} .psi-item--bonus { border-color: var(--psi-accent); }
+
+  /* Sans abonnement */
+  #psi-{{ sid }} .psi-nosub-band { background: var(--psi-dark); color: #fff; border-radius: 20px; padding: 32px 20px; text-align: center; }
+  #psi-{{ sid }} .psi-nosub-band .psi-big { font-size: clamp(3.2rem, 6vw, 5.6rem); font-weight: 800; line-height: 1; color: #fff; }
+  #psi-{{ sid }} .psi-nosub-band p { margin: 10px auto 0; max-width: 680px; opacity: .9; }
+
+  /* Fonctions */
+  #psi-{{ sid }} .psi-features { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 750px) { #psi-{{ sid }} .psi-features { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { #psi-{{ sid }} .psi-features { grid-template-columns: repeat(3, 1fr); } }
+  #psi-{{ sid }} .psi-feature { background: var(--psi-soft); border-radius: 16px; padding: 22px; }
+  #psi-{{ sid }} .psi-feature-ico { font-size: 3rem; line-height: 1; }
+  #psi-{{ sid }} .psi-feature-ico img { width: 48px; height: 48px; object-fit: contain; }
+  #psi-{{ sid }} .psi-feature h3 { margin: 10px 0 6px; font-size: 1.9rem; }
+  #psi-{{ sid }} .psi-feature p { margin: 0 0 6px; }
+
+  /* FAQ */
+  #psi-{{ sid }} .psi-faq { max-width: 800px; margin: 0 auto; }
+  #psi-{{ sid }} .psi-faq details { border-bottom: 1px solid #e6e9ee; padding: 14px 0; }
+  #psi-{{ sid }} .psi-faq summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  #psi-{{ sid }} .psi-faq summary::-webkit-details-marker { display: none; }
+  #psi-{{ sid }} .psi-faq summary::after { content: "+"; font-size: 2.2rem; line-height: 1; }
+  #psi-{{ sid }} .psi-faq details[open] summary::after { content: "–"; }
+  #psi-{{ sid }} .psi-faq .psi-faq-a { padding-top: 8px; }
+
+  /* Accessoires */
+  #psi-{{ sid }} .psi-acc { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  @media (min-width: 750px) { #psi-{{ sid }} .psi-acc { grid-template-columns: repeat(4, 1fr); } }
+  #psi-{{ sid }} .psi-acc-card { border: 1px solid #e6e9ee; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; background: #fff; }
+  #psi-{{ sid }} .psi-acc-card a { color: inherit; text-decoration: none; }
+  #psi-{{ sid }} .psi-acc-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; }
+  #psi-{{ sid }} .psi-acc-card .psi-acc-title { font-weight: 700; font-size: 1.5rem; line-height: 1.3; }
+  #psi-{{ sid }} .psi-acc-card .psi-acc-price { font-weight: 700; }
+  #psi-{{ sid }} .psi-acc-card form { margin-top: auto; }
+  #psi-{{ sid }} .psi-btn--sm { font-size: 1.4rem; padding: 10px; border-radius: 10px; background: var(--psi-dark); }
+
+  /* Barre mobile */
+  #psi-{{ sid }} .psi-sticky {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: #fff;
+    box-shadow: 0 -6px 20px rgba(0,0,0,.12); padding: 10px 16px; display: flex; gap: 12px; align-items: center;
+    transform: translateY(110%); transition: transform .25s ease;
+  }
+  #psi-{{ sid }} .psi-sticky.is-visible { transform: translateY(0); }
+  #psi-{{ sid }} .psi-sticky .psi-sticky-info { flex: 1; line-height: 1.2; }
+  #psi-{{ sid }} .psi-sticky .psi-sticky-info strong { color: var(--psi-accent); font-size: 2rem; }
+  #psi-{{ sid }} .psi-sticky .psi-btn { width: auto; padding: 12px 18px; font-size: 1.5rem; }
+  @media (min-width: 900px) { #psi-{{ sid }} .psi-sticky { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    #psi-{{ sid }} * { transition: none !important; }
+  }
+</style>
+
+<div id="psi-{{ sid }}" class="psi" data-psi-root>
+  {%- if section.settings.end_date != blank -%}
+    <div class="psi-topbar" data-psi-countdown data-end="{{ section.settings.end_date | escape }}">
+      <span data-psi-count-label>{{ section.settings.countdown_label }}</span>
+      <span class="psi-count" aria-live="off">
+        <span><b data-d>--</b><small>j</small></span>
+        <span><b data-h>--</b><small>h</small></span>
+        <span><b data-m>--</b><small>min</small></span>
+        <span><b data-s>--</b><small>s</small></span>
+      </span>
+      <span data-psi-ended hidden>{{ section.settings.ended_label }}</span>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ============ HERO + CHOIX ============ {%- endcomment -%}
+  <div class="psi-wrap psi-hero">
+    {%- if section.settings.kicker != blank -%}<span class="psi-kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+    <h1 class="psi-title">{{ section.settings.title }}</h1>
+    {%- if section.settings.subtitle != blank -%}<p class="psi-sub">{{ section.settings.subtitle }}</p>{%- endif -%}
+
+    <div class="psi-grid">
+      {%- comment -%} Visuel {%- endcomment -%}
+      <div>
+        {%- for block in centrales -%}
+          {%- liquid
+            assign p = block.settings.product
+            assign img = block.settings.image | default: p.featured_image
+          -%}
+          <div class="psi-media" data-psi-panel="{{ forloop.index0 }}" {% unless forloop.first %}hidden{% endunless %}>
+            {%- if img != blank -%}
+              {{ img | image_url: width: 1200 | image_tag: loading: 'eager', sizes: '(min-width: 900px) 600px, 100vw', alt: block.settings.label }}
+            {%- else -%}
+              {{ 'product-apparel-1' | placeholder_svg_tag }}
+            {%- endif -%}
+            {%- render 'psi-savings', block: block, mode: 'badge' -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Choix + prix + achat {%- endcomment -%}
+      <div>
+        <p class="psi-step">{{ section.settings.choose_label }}</p>
+        <div class="psi-choices" role="group" aria-label="{{ section.settings.choose_label | escape }}">
+          {%- for block in centrales -%}
+            <button type="button" class="psi-choice" data-psi-choice="{{ forloop.index0 }}"
+              data-slug="{{ block.settings.slug | default: block.settings.label | handleize }}"
+              data-sim="{{ block.settings.has_sim }}" data-rfid="{{ block.settings.has_rfid }}"
+              data-name="{{ block.settings.label | escape }}"
+              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>
+              <strong>{{ block.settings.label }}</strong>
+              {%- if block.settings.product != blank -%}<span>{{ block.settings.product.price | money }}</span>{%- endif -%}
+            </button>
+          {%- endfor -%}
+        </div>
+
+        {%- for block in centrales -%}
+          {%- assign p = block.settings.product -%}
+          {%- assign v = p.selected_or_first_available_variant -%}
+          <div data-psi-panel="{{ forloop.index0 }}" {% unless forloop.first %}hidden{% endunless %}>
+            <div class="psi-pricebox">
+              {%- render 'psi-savings', block: block, mode: 'ref' -%}
+              <div class="psi-price" data-psi-price>
+                {%- if p != blank -%}{{ p.price | money }}{%- else -%}—{%- endif -%}
+              </div>
+              {%- render 'psi-savings', block: block, mode: 'save' -%}
+              <div class="psi-nosub">{{ section.settings.nosub_short }}</div>
+            </div>
+
+            <div class="psi-desc rte">
+              {%- if block.settings.text != blank -%}
+                {{ block.settings.text }}
+              {%- elsif p != blank -%}
+                <p>{{ p.description | strip_html | truncatewords: 50 }}</p>
+              {%- endif -%}
+            </div>
+
+            {%- if p == blank -%}
+              <p><em>Sélectionnez le produit « {{ block.settings.label }} » dans l'éditeur de thème.</em></p>
+            {%- else -%}
+              <form method="post" action="{{ routes.cart_add_url }}" accept-charset="UTF-8" data-psi-form>
+                <input type="hidden" name="form_type" value="product">
+                <input type="hidden" name="utf8" value="✓">
+                <input type="hidden" name="id" value="{{ v.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="psi-btn" {% unless v.available %}disabled{% endunless %}>
+                  {%- if v.available -%}{{ section.settings.cta_label }}{%- else -%}Épuisé{%- endif -%}
+                </button>
+              </form>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+
+        {%- if section.settings.reassurance != blank -%}
+          <ul class="psi-reassure">
+            {%- assign reas = section.settings.reassurance | newline_to_br | split: '<br />' -%}
+            {%- for r in reas -%}{%- assign line = r | strip -%}{%- if line != blank -%}<li>{{ line }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ============ CONTENU DU PACK ============ {%- endcomment -%}
+  {%- if contenus.size > 0 -%}
+    <div class="psi-wrap psi-block">
+      <h2 class="psi-h2">{{ section.settings.contents_title }}</h2>
+      <p class="psi-lead">{{ section.settings.contents_lead }}</p>
+      <ul class="psi-items">
+        {%- for block in contenus -%}
+          <li class="psi-item{% if block.settings.rfid_only %} psi-item--bonus{% endif %}"
+            {% if block.settings.rfid_only %}data-psi-rfid-only{% unless first.settings.has_rfid %} hidden{% endunless %}{% endif %}
+            {{ block.shopify_attributes }}>
+            <span class="psi-qty">×{{ block.settings.qty }}</span>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.name }}
+            {%- endif -%}
+            <strong>
+              {%- if block.settings.name contains '{centrale}' -%}
+                {%- assign parts = block.settings.name | split: '{centrale}' -%}
+                {{ parts[0] }}<span data-psi-centrale-name>{{ first.settings.label }}</span>{{ parts[1] }}
+              {%- else -%}
+                {{ block.settings.name }}
+              {%- endif -%}
+            </strong>
+            {%- if block.settings.note != blank -%}<small>{{ block.settings.note }}</small>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ============ SANS ABONNEMENT ============ {%- endcomment -%}
+  <div class="psi-wrap psi-block">
+    <div class="psi-nosub-band">
+      <div class="psi-big">{{ section.settings.nosub_title }}</div>
+      <p>{{ section.settings.nosub_text }}</p>
+    </div>
+  </div>
+
+  {%- comment -%} ============ FONCTIONS ============ {%- endcomment -%}
+  {%- if fonctions.size > 0 -%}
+    <div class="psi-wrap psi-block">
+      <h2 class="psi-h2">{{ section.settings.features_title }}</h2>
+      <p class="psi-lead">{{ section.settings.features_lead }}</p>
+      <div class="psi-features">
+        {%- for block in fonctions -%}
+          <div class="psi-feature" {% if block.settings.sim_only %}data-psi-sim-only{% unless first.settings.has_sim %} hidden{% endunless %}{% endif %} {{ block.shopify_attributes }}>
+            <div class="psi-feature-ico" aria-hidden="true">
+              {%- if block.settings.icon_image != blank -%}
+                {{ block.settings.icon_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+              {%- else -%}
+                {{ block.settings.icon }}
+              {%- endif -%}
+            </div>
+            <h3>{{ block.settings.title }}</h3>
+            {{ block.settings.text }}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ============ FAQ ============ {%- endcomment -%}
+  {%- if faqs.size > 0 -%}
+    <div class="psi-wrap psi-block">
+      <h2 class="psi-h2">{{ section.settings.faq_title }}</h2>
+      <div class="psi-faq">
+        {%- for block in faqs -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question }}</summary>
+            <div class="psi-faq-a rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ============ ACCESSOIRES ============ {%- endcomment -%}
+  {%- assign coll = section.settings.accessories -%}
+  {%- if coll != blank and coll.products_count > 0 -%}
+    <div class="psi-wrap psi-block">
+      <h2 class="psi-h2">{{ section.settings.acc_title }}</h2>
+      <p class="psi-lead">{{ section.settings.acc_lead }}</p>
+      <div class="psi-acc">
+        {%- for product in coll.products limit: section.settings.acc_limit -%}
+          {%- assign av = product.selected_or_first_available_variant -%}
+          <div class="psi-acc-card">
+            <a href="{{ product.url }}">
+              {%- if product.featured_image -%}
+                {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: product.title }}
+              {%- endif -%}
+              <div class="psi-acc-title">{{ product.title }}</div>
+            </a>
+            <div class="psi-acc-price">{{ product.price | money }}</div>
+            <form method="post" action="{{ routes.cart_add_url }}" accept-charset="UTF-8">
+              <input type="hidden" name="form_type" value="product">
+              <input type="hidden" name="utf8" value="✓">
+              <input type="hidden" name="id" value="{{ av.id }}">
+              <input type="hidden" name="quantity" value="1">
+              <button type="submit" class="psi-btn psi-btn--sm" {% unless av.available %}disabled{% endunless %}>
+                {%- if av.available -%}+ Ajouter{%- else -%}Épuisé{%- endif -%}
+              </button>
+            </form>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ============ BARRE MOBILE ============ {%- endcomment -%}
+  {%- if centrales.size > 0 -%}
+    <div class="psi-sticky" data-psi-sticky aria-hidden="true">
+      <div class="psi-sticky-info">
+        <div data-psi-sticky-name>{{ section.settings.title | truncate: 40 }} · {{ first.settings.label }}</div>
+        <strong data-psi-sticky-price>{{ first.settings.product.price | money }}</strong>
+      </div>
+      <a href="#psi-{{ sid }}" class="psi-btn" data-psi-sticky-go tabindex="-1">Je profite de l'offre</a>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('psi-{{ sid }}');
+    if (!root) return;
+
+    /* ---------- Choix de la centrale ---------- */
+    var choices = root.querySelectorAll('[data-psi-choice]');
+    var panels = root.querySelectorAll('[data-psi-panel]');
+    var simOnly = root.querySelectorAll('[data-psi-sim-only]');
+    var rfidOnly = root.querySelectorAll('[data-psi-rfid-only]');
+    var names = root.querySelectorAll('[data-psi-centrale-name]');
+    var stickyName = root.querySelector('[data-psi-sticky-name]');
+    var stickyPrice = root.querySelector('[data-psi-sticky-price]');
+    var baseTitle = {{ section.settings.title | truncate: 40 | json }};
+
+    function select(i, updateUrl) {
+      var btn = choices[i];
+      if (!btn) return;
+      choices.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      panels.forEach(function (p) { p.hidden = p.getAttribute('data-psi-panel') !== String(i); });
+      var sim = btn.getAttribute('data-sim') === 'true';
+      var rfid = btn.getAttribute('data-rfid') === 'true';
+      simOnly.forEach(function (el) { el.hidden = !sim; });
+      rfidOnly.forEach(function (el) { el.hidden = !rfid; });
+      var name = btn.getAttribute('data-name');
+      names.forEach(function (el) { el.textContent = name; });
+      if (stickyName) stickyName.textContent = baseTitle + ' · ' + name;
+      if (stickyPrice) {
+        var price = root.querySelector('[data-psi-panel="' + i + '"] [data-psi-price]');
+        if (price) stickyPrice.textContent = price.textContent.trim();
+      }
+      if (updateUrl && window.history && history.replaceState) {
+        var url = new URL(window.location.href);
+        url.searchParams.set('centrale', btn.getAttribute('data-slug'));
+        history.replaceState(null, '', url.toString());
+      }
+    }
+
+    choices.forEach(function (btn, i) {
+      btn.addEventListener('click', function () { select(i, true); });
+    });
+
+    var wanted = new URLSearchParams(window.location.search).get('centrale');
+    if (wanted) {
+      choices.forEach(function (btn, i) { if (btn.getAttribute('data-slug') === wanted) select(i, false); });
+    }
+
+    /* ---------- Compte à rebours ---------- */
+    var cd = root.querySelector('[data-psi-countdown]');
+    if (cd) {
+      var end = Date.parse(cd.getAttribute('data-end'));
+      var d = cd.querySelector('[data-d]'), h = cd.querySelector('[data-h]'),
+          m = cd.querySelector('[data-m]'), s = cd.querySelector('[data-s]');
+      var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+      var tick = function () {
+        var left = end - Date.now();
+        if (isNaN(end) || left <= 0) {
+          cd.querySelector('.psi-count').hidden = true;
+          cd.querySelector('[data-psi-count-label]').hidden = true;
+          cd.querySelector('[data-psi-ended]').hidden = false;
+          return false;
+        }
+        var sec = Math.floor(left / 1000);
+        d.textContent = Math.floor(sec / 86400);
+        h.textContent = pad(Math.floor(sec % 86400 / 3600));
+        m.textContent = pad(Math.floor(sec % 3600 / 60));
+        s.textContent = pad(sec % 60);
+        return true;
+      };
+      if (tick()) { var t = setInterval(function () { if (!tick()) clearInterval(t); }, 1000); }
+    }
+
+    /* ---------- Barre d'achat mobile ---------- */
+    var sticky = root.querySelector('[data-psi-sticky]');
+    var firstForm = root.querySelector('[data-psi-form]');
+    if (sticky && firstForm && 'IntersectionObserver' in window) {
+      var hero = root.querySelector('.psi-hero');
+      new IntersectionObserver(function (entries) {
+        var show = !entries[0].isIntersecting;
+        sticky.classList.toggle('is-visible', show);
+        sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
+        sticky.querySelector('[data-psi-sticky-go]').tabIndex = show ? 0 : -1;
+      }).observe(hero);
+      sticky.querySelector('[data-psi-sticky-go]').addEventListener('click', function (e) {
+        e.preventDefault();
+        root.querySelector('.psi-choices').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Offre Pack PSI",
+  "tag": "section",
+  "class": "section-offre-psi",
+  "settings": [
+    { "type": "header", "content": "Offre & compte à rebours" },
+    { "type": "text", "id": "end_date", "label": "Fin de l'offre (format ISO)", "default": "2026-10-31T23:59:59+01:00", "info": "Heure de Paris : +01:00 en hiver, +02:00 en été. Laisser vide pour masquer le bandeau." },
+    { "type": "text", "id": "countdown_label", "label": "Texte du bandeau", "default": "⚡ Offre spéciale – se termine dans" },
+    { "type": "text", "id": "ended_label", "label": "Texte après la fin", "default": "L'offre spéciale est terminée" },
+    { "type": "header", "content": "En-tête" },
+    { "type": "text", "id": "kicker", "label": "Étiquette", "default": "Offre spéciale jusqu'au 31 octobre" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Pack Sécurité Intégrale" },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Alarme + 2 caméras + sirène solaire : tout pour protéger votre maison, prêt à installer soi-même. Et zéro abonnement." },
+    { "type": "text", "id": "choose_label", "label": "Texte au-dessus des boutons", "default": "1. Choisissez votre centrale" },
+    { "type": "text", "id": "cta_label", "label": "Bouton d'achat", "default": "J'en profite – Ajouter au panier" },
+    { "type": "text", "id": "nosub_short", "label": "Mention sous le prix", "default": "✓ 0 € d'abonnement, à vie" },
+    { "type": "textarea", "id": "reassurance", "label": "Réassurance (1 par ligne)", "default": "Livraison rapide depuis Bordeaux\nInstallation sans outil ni électricien\nSupport client en France\nPaiement sécurisé" },
+    { "type": "header", "content": "Contenu du pack" },
+    { "type": "text", "id": "contents_title", "label": "Titre", "default": "Tout ce qu'il y a dans le pack" },
+    { "type": "text", "id": "contents_lead", "label": "Introduction", "default": "Les mêmes équipements, quelle que soit la centrale choisie." },
+    { "type": "header", "content": "Sans abonnement" },
+    { "type": "text", "id": "nosub_title", "label": "Titre", "default": "0 € / mois. Pour toujours." },
+    { "type": "textarea", "id": "nosub_text", "label": "Texte", "default": "Vous achetez votre système une fois, il est à vous. Pas d'abonnement, pas d'engagement, pas de frais cachés : l'application et les alertes sont incluses." },
+    { "type": "header", "content": "Fonctions" },
+    { "type": "text", "id": "features_title", "label": "Titre", "default": "Simple au quotidien, redoutable pour les intrus" },
+    { "type": "text", "id": "features_lead", "label": "Introduction", "default": "Les fonctions essentielles, expliquées simplement." },
+    { "type": "header", "content": "FAQ" },
+    { "type": "text", "id": "faq_title", "label": "Titre", "default": "Vos questions" },
+    { "type": "header", "content": "Accessoires" },
+    { "type": "collection", "id": "accessories", "label": "Collection d'accessoires" },
+    { "type": "range", "id": "acc_limit", "label": "Nombre d'accessoires", "min": 4, "max": 16, "step": 4, "default": 8 },
+    { "type": "text", "id": "acc_title", "label": "Titre", "default": "Complétez votre installation" },
+    { "type": "text", "id": "acc_lead", "label": "Introduction", "default": "Une grande maison, un garage, un étage ? Ajoutez ce qu'il vous faut, tout est compatible avec votre centrale." },
+    { "type": "header", "content": "Couleurs" },
+    { "type": "color", "id": "accent", "label": "Couleur offre (urgence)", "default": "#D7141A" },
+    { "type": "color", "id": "dark", "label": "Couleur principale", "default": "#0B1F3A" },
+    { "type": "color", "id": "soft", "label": "Fond des encadrés", "default": "#F3F5F8" }
+  ],
+  "blocks": [
+    {
+      "type": "centrale",
+      "name": "Centrale / Pack",
+      "limit": 4,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produit pack" },
+        { "type": "text", "id": "label", "label": "Nom sur le bouton", "default": "Vigilia" },
+        { "type": "text", "id": "slug", "label": "Identifiant URL (?centrale=…)", "info": "Ex : vigilia, vigilia-plus, am301, am302" },
+        { "type": "image_picker", "id": "image", "label": "Visuel du pack", "info": "Par défaut : image du produit" },
+        { "type": "richtext", "id": "text", "label": "Descriptif", "info": "Par défaut : début de la description du produit" },
+        { "type": "text", "id": "ref_value", "label": "Valeur des éléments achetés séparément (€)", "info": "Ex : 456,79 – sert au prix barré et au % d'économie" },
+        { "type": "checkbox", "id": "has_sim", "label": "Carte SIM (affiche les fonctions SIM)", "default": true },
+        { "type": "checkbox", "id": "has_rfid", "label": "Badges RFID inclus", "default": false }
+      ]
+    },
+    {
+      "type": "contenu",
+      "name": "Élément du pack",
+      "settings": [
+        { "type": "number", "id": "qty", "label": "Quantité", "default": 1 },
+        { "type": "text", "id": "name", "label": "Nom", "default": "Élément", "info": "{centrale} est remplacé par le nom de la centrale choisie" },
+        { "type": "text", "id": "note", "label": "Référence / précision" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "checkbox", "id": "rfid_only", "label": "Uniquement si la centrale inclut les badges RFID", "default": false }
+      ]
+    },
+    {
+      "type": "fonction",
+      "name": "Fonction",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icône (emoji)", "default": "🛡️" },
+        { "type": "image_picker", "id": "icon_image", "label": "ou icône image" },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Fonction" },
+        { "type": "richtext", "id": "text", "label": "Texte" },
+        { "type": "checkbox", "id": "sim_only", "label": "Afficher uniquement pour les centrales avec SIM", "default": false }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Réponse" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Offre Pack PSI" } ]
+}
+{% endschema %}

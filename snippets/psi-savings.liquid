@@ -1,0 +1,29 @@
+{%- comment -%}
+  Affiche la valeur des éléments achetés séparément et l'économie réalisée.
+  Paramètres : block (bloc « centrale »), mode : 'ref' | 'save' | 'badge'
+  Valeur de référence : réglage du bloc (ex. « 456,79 »), sinon prix barré du produit.
+{%- endcomment -%}
+{%- liquid
+  assign p = block.settings.product
+  assign ref = 0
+  assign saving = 0
+  if p != blank
+    if block.settings.ref_value != blank
+      assign ref = block.settings.ref_value | remove: ' ' | remove: '€' | replace: ',', '.' | times: 100 | round
+    elsif p.compare_at_price > p.price
+      assign ref = p.compare_at_price
+    endif
+    assign saving = ref | minus: p.price
+  endif
+-%}
+{%- if saving > 0 -%}
+  {%- assign pct = saving | times: 100.0 | divided_by: ref | floor -%}
+  {%- case mode -%}
+    {%- when 'ref' -%}
+      <div class="psi-ref">Valeur des éléments achetés séparément : <s>{{ ref | money }}</s></div>
+    {%- when 'save' -%}
+      <span class="psi-save">Vous économisez {{ saving | money }}</span>
+    {%- when 'badge' -%}
+      <span class="psi-badge-pct">-{{ pct }}&nbsp;%</span>
+  {%- endcase -%}
+{%- endif -%}

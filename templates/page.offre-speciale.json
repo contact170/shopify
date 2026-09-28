@@ -1,0 +1,149 @@
+{
+  "sections": {
+    "offre": {
+      "type": "offre-pack-psi",
+      "blocks": {
+        "c_vigilia": {
+          "type": "centrale",
+          "settings": {
+            "label": "Vigilia",
+            "slug": "vigilia",
+            "text": "<p><strong>Vigilia – 100 % Wi-Fi.</strong> La centrale idéale pour démarrer : elle se connecte à votre box et vous alerte instantanément sur votre smartphone. Désarmement en un geste grâce aux <strong>2 badges RFID inclus</strong>.</p>",
+            "ref_value": "456,79",
+            "has_sim": false,
+            "has_rfid": true
+          }
+        },
+        "c_vigilia_plus": {
+          "type": "centrale",
+          "settings": {
+            "label": "Vigilia +",
+            "slug": "vigilia-plus",
+            "text": "<p><strong>Vigilia + – Wi-Fi + carte SIM.</strong> Double connexion : si internet est coupé, votre alarme continue de vous prévenir par SMS et appel grâce à la carte SIM.</p>",
+            "ref_value": "499,29",
+            "has_sim": true,
+            "has_rfid": false
+          }
+        },
+        "c_am301": {
+          "type": "centrale",
+          "settings": {
+            "label": "AM301",
+            "slug": "am301",
+            "text": "<p><strong>AM301 – Wi-Fi + carte SIM.</strong> Une centrale complète et polyvalente, pilotable depuis l'application, avec alertes SMS et appels via la carte SIM même sans internet.</p>",
+            "ref_value": "543,49",
+            "has_sim": true,
+            "has_rfid": false
+          }
+        },
+        "c_am302": {
+          "type": "centrale",
+          "settings": {
+            "label": "AM302",
+            "slug": "am302",
+            "text": "<p><strong>AM302 – Wi-Fi + carte SIM.</strong> Notre centrale haut de gamme, pour ceux qui veulent le meilleur de la protection Daewoo, sans abonnement.</p>",
+            "ref_value": "591,52",
+            "has_sim": true,
+            "has_rfid": false
+          }
+        },
+        "i_centrale": { "type": "contenu", "settings": { "qty": 1, "name": "Centrale {centrale}", "note": "Le cœur du système" } },
+        "i_wdv301": { "type": "contenu", "settings": { "qty": 4, "name": "Contacteurs d'ouverture", "note": "WDV301 – portes & fenêtres" } },
+        "i_wps305": { "type": "contenu", "settings": { "qty": 1, "name": "Détecteur de mouvement", "note": "WPS305" } },
+        "i_wrc305": { "type": "contenu", "settings": { "qty": 2, "name": "Télécommandes", "note": "WRC305" } },
+        "i_rfid": { "type": "contenu", "settings": { "qty": 2, "name": "Badges RFID", "note": "Inclus avec Vigilia", "rfid_only": true } },
+        "i_ip506p": { "type": "contenu", "settings": { "qty": 1, "name": "Caméra intérieure", "note": "IP506P" } },
+        "i_w512mw": { "type": "contenu", "settings": { "qty": 1, "name": "Caméra extérieure", "note": "W512MW" } },
+        "i_wos305s": { "type": "contenu", "settings": { "qty": 1, "name": "Sirène extérieure solaire", "note": "WOS305S" } },
+        "i_stickers": { "type": "contenu", "settings": { "qty": 2, "name": "Autocollants", "note": "« Maison sous surveillance »" } },
+        "f_maison": {
+          "type": "fonction",
+          "settings": {
+            "icon": "🏠",
+            "title": "Mode Maison",
+            "text": "<p>Vous êtes chez vous ? Activez le mode Maison : les portes et fenêtres restent protégées, mais vous circulez librement à l'intérieur sans déclencher le détecteur de mouvement. Idéal la nuit.</p>"
+          }
+        },
+        "f_tempo": {
+          "type": "fonction",
+          "settings": {
+            "icon": "⏱️",
+            "title": "Temporisation d'entrée et de sortie",
+            "text": "<p>Vous armez l'alarme et vous avez le temps de sortir. En rentrant, vous disposez de quelques secondes pour désarmer avant que la sirène ne se déclenche. Durée réglable depuis l'application.</p>"
+          }
+        },
+        "f_sim": {
+          "type": "fonction",
+          "settings": {
+            "icon": "📶",
+            "title": "Carte SIM : l'alerte passe toujours",
+            "text": "<p>Box internet en panne ou coupée par un cambrioleur ? La centrale utilise la carte SIM pour vous envoyer des SMS et vous appeler. Glissez simplement la SIM de l'opérateur de votre choix : un petit forfait suffit, <strong>aucun abonnement Daewoo</strong>.</p>",
+            "sim_only": true
+          }
+        },
+        "f_cameras": {
+          "type": "fonction",
+          "settings": {
+            "icon": "🎥",
+            "title": "2 caméras, intérieur & extérieur",
+            "text": "<p>Regardez chez vous en direct depuis votre smartphone, de jour comme de nuit. En cas d'alerte, vérifiez en un coup d'œil ce qui se passe avant d'agir.</p>"
+          }
+        },
+        "f_sirene": {
+          "type": "fonction",
+          "settings": {
+            "icon": "☀️",
+            "title": "Sirène solaire dissuasive",
+            "text": "<p>Visible depuis la rue et sans fil : elle se recharge au soleil et fait fuir l'intrus dès le déclenchement. Aucun câble à tirer.</p>"
+          }
+        },
+        "f_app": {
+          "type": "fonction",
+          "settings": {
+            "icon": "📱",
+            "title": "Tout depuis votre téléphone",
+            "text": "<p>Armez, désarmez, recevez les alertes et consultez l'historique où que vous soyez. Les télécommandes restent là pour toute la famille.</p>"
+          }
+        },
+        "q_install": {
+          "type": "faq",
+          "settings": {
+            "question": "Puis-je installer le pack moi-même ?",
+            "answer": "<p>Oui. Tous les éléments sont sans fil et déjà associés à la centrale. Comptez environ une heure : on fixe, on branche la centrale, on télécharge l'application.</p>"
+          }
+        },
+        "q_abo": {
+          "type": "faq",
+          "settings": {
+            "question": "Y a-t-il vraiment aucun abonnement ?",
+            "answer": "<p>Aucun. Vous payez le matériel une fois. L'application, les notifications et l'accès aux caméras sont gratuits, sans engagement.</p>"
+          }
+        },
+        "q_choix": {
+          "type": "faq",
+          "settings": {
+            "question": "Quelle centrale choisir ?",
+            "answer": "<p>Si votre connexion internet est fiable, la Vigilia suffit. Si vous voulez être alerté même en cas de coupure internet, choisissez une centrale avec carte SIM (Vigilia +, AM301 ou AM302). Un doute ? Contactez-nous, on vous conseille.</p>"
+          }
+        },
+        "q_ajout": {
+          "type": "faq",
+          "settings": {
+            "question": "Puis-je ajouter des détecteurs plus tard ?",
+            "answer": "<p>Bien sûr. Tous les accessoires présentés en bas de page sont compatibles et s'ajoutent en quelques minutes.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c_vigilia", "c_vigilia_plus", "c_am301", "c_am302",
+        "i_centrale", "i_wdv301", "i_wps305", "i_wrc305", "i_rfid", "i_ip506p", "i_w512mw", "i_wos305s", "i_stickers",
+        "f_maison", "f_tempo", "f_sim", "f_cameras", "f_sirene", "f_app",
+        "q_install", "q_abo", "q_choix", "q_ajout"
+      ],
+      "settings": {
+        "end_date": "2026-10-31T23:59:59+01:00"
+      }
+    }
+  },
+  "order": ["offre"]
+}
