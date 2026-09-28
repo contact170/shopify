@@ -1,0 +1,96 @@
+{%- comment -%}
+  Offre spéciale PSI : accessoires pour compléter le pack.
+  Ajout direct au panier (panier latéral du thème), sans quitter la page.
+{%- endcomment -%}
+{% render 'dw-home-head' %}
+{{ 'offre-psi.css' | asset_url | stylesheet_tag }}
+
+{%- assign produits = section.settings.products -%}
+{%- if produits == blank or produits.size == 0 -%}
+  {%- assign produits = section.settings.collection.products -%}
+{%- endif -%}
+
+<div class="dwh psi" id="psi-accessoires" data-psi-acc="{{ section.id }}">
+  <section class="dwh-bloc dwh-bloc--porcelaine" aria-labelledby="psi-acc-{{ section.id }}">
+    <div class="dwh-large">
+      <div class="dwh-entete">
+        {%- if section.settings.eyebrow != blank -%}<p class="dwh-surtitre">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="dwh-titre" id="psi-acc-{{ section.id }}">{{ section.settings.title }}</h2>
+        {%- if section.settings.text != blank -%}<p class="dwh-chapo">{{ section.settings.text }}</p>{%- endif -%}
+      </div>
+
+      <ul class="psi-acc">
+        {%- for produit in produits limit: section.settings.limit -%}
+          {%- assign v = produit.selected_or_first_available_variant -%}
+          <li class="psi-acc__carte">
+            <a class="psi-acc__visuel" href="{{ produit.url }}" tabindex="-1" aria-hidden="true">
+              {%- if produit.featured_image -%}
+                {{ produit.featured_image | image_url: width: 500 | image_tag: widths: '240, 360, 500', sizes: '(min-width: 750px) 25vw, 64vw', loading: 'lazy', alt: '' }}
+              {%- endif -%}
+            </a>
+            <div class="psi-acc__corps">
+              <a class="psi-acc__nom" href="{{ produit.url }}">{{ produit.title | split: ' | ' | first }}</a>
+              <form class="psi-acc__bas" method="post" action="{{ routes.cart_add_url }}" accept-charset="UTF-8" data-psi-acc-form>
+                <input type="hidden" name="form_type" value="product">
+                <input type="hidden" name="utf8" value="✓">
+                <input type="hidden" name="id" value="{{ v.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <span class="psi-acc__prix">{{ produit.price | money }}</span>
+                <button type="submit" class="psi-acc__ajout" {% unless v.available %}disabled{% endunless %} aria-label="{{ section.settings.add_label }} : {{ produit.title | split: ' | ' | first | escape }}">
+                  {%- if v.available -%}
+                    {% render 'dw-home-icon', icon: 'plus' %}<span data-texte>{{ section.settings.add_label }}</span>
+                  {%- else -%}
+                    Épuisé
+                  {%- endif -%}
+                </button>
+              </form>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.link_label != blank and section.settings.link != blank -%}
+        <p style="margin-top: 20px;"><a class="dwh-lien" href="{{ section.settings.link }}">{{ section.settings.link_label }} {% render 'dw-home-icon', icon: 'arrow' %}</a></p>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+<script>
+  (function () {
+    var racine = document.querySelector('[data-psi-acc="{{ section.id }}"]');
+    if (!racine) return;
+    var texteAjoute = {{ section.settings.added_label | json }};
+    racine.addEventListener('submit', function (e) {
+      var form = e.target.closest('[data-psi-acc-form]');
+      if (!form || typeof window.DaewooPsiAjouter !== 'function') return; // sinon, envoi classique vers le panier
+      e.preventDefault();
+      var bouton = form.querySelector('button');
+      window.DaewooPsiAjouter(form.querySelector('[name="id"]').value, bouton).then(function () {
+        bouton.classList.add('est-ajoute');
+        var t = bouton.querySelector('[data-texte]');
+        if (t) t.textContent = texteAjoute;
+      }).catch(function () {});
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Offre PSI · Accessoires",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Pour aller plus loin" },
+    { "type": "inline_richtext", "id": "title", "label": "Titre", "default": "Complétez votre installation. <em>Tout est compatible.</em>" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Une porte de garage, une baie vitrée, un étage de plus ? Ajoutez ce qu'il vous faut, il s'associe à votre centrale en quelques minutes." },
+    { "type": "product_list", "id": "products", "label": "Accessoires", "limit": 12 },
+    { "type": "collection", "id": "collection", "label": "ou collection", "info": "Utilisée seulement si aucun accessoire n'est choisi au-dessus." },
+    { "type": "range", "id": "limit", "label": "Nombre maximum", "min": 4, "max": 12, "step": 1, "default": 8 },
+    { "type": "text", "id": "add_label", "label": "Bouton", "default": "Ajouter" },
+    { "type": "text", "id": "added_label", "label": "Bouton après ajout", "default": "Ajouté" },
+    { "type": "text", "id": "link_label", "label": "Lien sous la liste", "default": "Voir tous les accessoires" },
+    { "type": "url", "id": "link", "label": "URL du lien" }
+  ],
+  "presets": [{ "name": "Offre PSI · Accessoires" }]
+}
+{% endschema %}
