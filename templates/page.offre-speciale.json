@@ -11,7 +11,8 @@
             "text": "<p><strong>Vigilia – 100 % Wi-Fi.</strong> La centrale idéale pour démarrer : elle se connecte à votre box et vous alerte instantanément sur votre smartphone. Désarmement en un geste grâce aux <strong>2 badges RFID inclus</strong>.</p>",
             "ref_value": "456,79",
             "has_sim": false,
-            "has_rfid": true
+            "has_rfid": true,
+            "product": "pack-securite-integrale-offre-speciale-vigilia-avec-2-cameras-et-sirene-solaire"
           }
         },
         "c_vigilia_plus": {
@@ -19,10 +20,11 @@
           "settings": {
             "label": "Vigilia +",
             "slug": "vigilia-plus",
-            "text": "<p><strong>Vigilia + – Wi-Fi + carte SIM.</strong> Double connexion : si internet est coupé, votre alarme continue de vous prévenir par SMS et appel grâce à la carte SIM.</p>",
+            "text": "<p><strong>Vigilia + – Wi-Fi + 4G.</strong> Double connexion : si internet est coupé, votre alarme continue de vous prévenir par SMS et appel grâce à la carte SIM 4G.</p>",
             "ref_value": "499,29",
             "has_sim": true,
-            "has_rfid": false
+            "has_rfid": false,
+            "product": "pack-securite-integrale-offre-speciale-vigilia-wifi-4g-avec-2-cameras-et-sirene-solaire-copie"
           }
         },
         "c_am301": {
@@ -30,10 +32,11 @@
           "settings": {
             "label": "AM301",
             "slug": "am301",
-            "text": "<p><strong>AM301 – Wi-Fi + carte SIM.</strong> Une centrale complète et polyvalente, pilotable depuis l'application, avec alertes SMS et appels via la carte SIM même sans internet.</p>",
+            "text": "<p><strong>Touch AM301 – Wi-Fi + 4G.</strong> Centrale à écran tactile : armez et désarmez directement sur la centrale ou depuis l'application, avec alertes SMS et appels via la carte SIM 4G même sans internet.</p>",
             "ref_value": "543,49",
             "has_sim": true,
-            "has_rfid": false
+            "has_rfid": false,
+            "product": "pack-securite-integrale-offre-speciale-touch-am301-wifi-4g-avec-2-cameras-et-sirene-solaire-copie-copie"
           }
         },
         "c_am302": {
@@ -41,21 +44,86 @@
           "settings": {
             "label": "AM302",
             "slug": "am302",
-            "text": "<p><strong>AM302 – Wi-Fi + carte SIM.</strong> Notre centrale haut de gamme, pour ceux qui veulent le meilleur de la protection Daewoo, sans abonnement.</p>",
+            "text": "<p><strong>Touch XL AM302 – Wi-Fi + 4G.</strong> La version grand écran tactile, notre centrale la plus confortable au quotidien, avec la double connexion Wi-Fi + 4G.</p>",
             "ref_value": "591,52",
             "has_sim": true,
-            "has_rfid": false
+            "has_rfid": false,
+            "product": "pack-securite-integrale-offre-speciale-touch-xl-am302-wifi-4g-avec-2-cameras-et-sirene-solaire-copie-copie-copie"
           }
         },
-        "i_centrale": { "type": "contenu", "settings": { "qty": 1, "name": "Centrale {centrale}", "note": "Le cœur du système" } },
-        "i_wdv301": { "type": "contenu", "settings": { "qty": 4, "name": "Contacteurs d'ouverture", "note": "WDV301 – portes & fenêtres" } },
-        "i_wps305": { "type": "contenu", "settings": { "qty": 1, "name": "Détecteur de mouvement", "note": "WPS305" } },
-        "i_wrc305": { "type": "contenu", "settings": { "qty": 2, "name": "Télécommandes", "note": "WRC305" } },
-        "i_rfid": { "type": "contenu", "settings": { "qty": 2, "name": "Badges RFID", "note": "Inclus avec Vigilia", "rfid_only": true } },
-        "i_ip506p": { "type": "contenu", "settings": { "qty": 1, "name": "Caméra intérieure", "note": "IP506P" } },
-        "i_w512mw": { "type": "contenu", "settings": { "qty": 1, "name": "Caméra extérieure", "note": "W512MW" } },
-        "i_wos305s": { "type": "contenu", "settings": { "qty": 1, "name": "Sirène extérieure solaire", "note": "WOS305S" } },
-        "i_stickers": { "type": "contenu", "settings": { "qty": 2, "name": "Autocollants", "note": "« Maison sous surveillance »" } },
+        "i_centrale": {
+          "type": "contenu",
+          "settings": {
+            "qty": 1,
+            "name": "Centrale {centrale}",
+            "note": "Le cœur du système"
+          }
+        },
+        "i_wdv301": {
+          "type": "contenu",
+          "settings": {
+            "qty": 4,
+            "name": "Contacteurs d'ouverture",
+            "note": "WDV301 – portes & fenêtres"
+          }
+        },
+        "i_wps305": {
+          "type": "contenu",
+          "settings": {
+            "qty": 1,
+            "name": "Détecteur de mouvement",
+            "note": "WPS305"
+          }
+        },
+        "i_wrc305": {
+          "type": "contenu",
+          "settings": {
+            "qty": 2,
+            "name": "Télécommandes",
+            "note": "WRC305"
+          }
+        },
+        "i_rfid": {
+          "type": "contenu",
+          "settings": {
+            "qty": 2,
+            "name": "Badges RFID",
+            "note": "Inclus avec Vigilia",
+            "rfid_only": true
+          }
+        },
+        "i_ip506p": {
+          "type": "contenu",
+          "settings": {
+            "qty": 1,
+            "name": "Caméra intérieure",
+            "note": "IP506P"
+          }
+        },
+        "i_w512mw": {
+          "type": "contenu",
+          "settings": {
+            "qty": 1,
+            "name": "Caméra extérieure",
+            "note": "W512MW"
+          }
+        },
+        "i_wos305s": {
+          "type": "contenu",
+          "settings": {
+            "qty": 1,
+            "name": "Sirène extérieure solaire",
+            "note": "WOS305S"
+          }
+        },
+        "i_stickers": {
+          "type": "contenu",
+          "settings": {
+            "qty": 2,
+            "name": "Autocollants",
+            "note": "« Maison sous surveillance »"
+          }
+        },
         "f_maison": {
           "type": "fonction",
           "settings": {
@@ -76,7 +144,7 @@
           "type": "fonction",
           "settings": {
             "icon": "📶",
-            "title": "Carte SIM : l'alerte passe toujours",
+            "title": "Carte SIM 4G : l'alerte passe toujours",
             "text": "<p>Box internet en panne ou coupée par un cambrioleur ? La centrale utilise la carte SIM pour vous envoyer des SMS et vous appeler. Glissez simplement la SIM de l'opérateur de votre choix : un petit forfait suffit, <strong>aucun abonnement Daewoo</strong>.</p>",
             "sim_only": true
           }
@@ -135,15 +203,36 @@
         }
       },
       "block_order": [
-        "c_vigilia", "c_vigilia_plus", "c_am301", "c_am302",
-        "i_centrale", "i_wdv301", "i_wps305", "i_wrc305", "i_rfid", "i_ip506p", "i_w512mw", "i_wos305s", "i_stickers",
-        "f_maison", "f_tempo", "f_sim", "f_cameras", "f_sirene", "f_app",
-        "q_install", "q_abo", "q_choix", "q_ajout"
+        "c_vigilia",
+        "c_vigilia_plus",
+        "c_am301",
+        "c_am302",
+        "i_centrale",
+        "i_wdv301",
+        "i_wps305",
+        "i_wrc305",
+        "i_rfid",
+        "i_ip506p",
+        "i_w512mw",
+        "i_wos305s",
+        "i_stickers",
+        "f_maison",
+        "f_tempo",
+        "f_sim",
+        "f_cameras",
+        "f_sirene",
+        "f_app",
+        "q_install",
+        "q_abo",
+        "q_choix",
+        "q_ajout"
       ],
       "settings": {
         "end_date": "2026-10-31T23:59:59+01:00"
       }
     }
   },
-  "order": ["offre"]
+  "order": [
+    "offre"
+  ]
 }

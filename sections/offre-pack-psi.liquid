@@ -13,7 +13,7 @@
   assign contenus = section.blocks | where: 'type', 'contenu'
   assign fonctions = section.blocks | where: 'type', 'fonction'
   assign faqs = section.blocks | where: 'type', 'faq'
-  assign first = centrales | first
+  assign c0 = centrales | first
 -%}
 
 <style>
@@ -286,7 +286,7 @@
       <ul class="psi-items">
         {%- for block in contenus -%}
           <li class="psi-item{% if block.settings.rfid_only %} psi-item--bonus{% endif %}"
-            {% if block.settings.rfid_only %}data-psi-rfid-only{% unless first.settings.has_rfid %} hidden{% endunless %}{% endif %}
+            {% if block.settings.rfid_only %}data-psi-rfid-only{% unless c0.settings.has_rfid %} hidden{% endunless %}{% endif %}
             {{ block.shopify_attributes }}>
             <span class="psi-qty">×{{ block.settings.qty }}</span>
             {%- if block.settings.image != blank -%}
@@ -295,7 +295,7 @@
             <strong>
               {%- if block.settings.name contains '{centrale}' -%}
                 {%- assign parts = block.settings.name | split: '{centrale}' -%}
-                {{ parts[0] }}<span data-psi-centrale-name>{{ first.settings.label }}</span>{{ parts[1] }}
+                {{ parts[0] }}<span data-psi-centrale-name>{{ c0.settings.label }}</span>{{ parts[1] }}
               {%- else -%}
                 {{ block.settings.name }}
               {%- endif -%}
@@ -322,7 +322,7 @@
       <p class="psi-lead">{{ section.settings.features_lead }}</p>
       <div class="psi-features">
         {%- for block in fonctions -%}
-          <div class="psi-feature" {% if block.settings.sim_only %}data-psi-sim-only{% unless first.settings.has_sim %} hidden{% endunless %}{% endif %} {{ block.shopify_attributes }}>
+          <div class="psi-feature" {% if block.settings.sim_only %}data-psi-sim-only{% unless c0.settings.has_sim %} hidden{% endunless %}{% endif %} {{ block.shopify_attributes }}>
             <div class="psi-feature-ico" aria-hidden="true">
               {%- if block.settings.icon_image != blank -%}
                 {{ block.settings.icon_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
@@ -389,8 +389,8 @@
   {%- if centrales.size > 0 -%}
     <div class="psi-sticky" data-psi-sticky aria-hidden="true">
       <div class="psi-sticky-info">
-        <div data-psi-sticky-name>{{ section.settings.title | truncate: 40 }} · {{ first.settings.label }}</div>
-        <strong data-psi-sticky-price>{{ first.settings.product.price | money }}</strong>
+        <div data-psi-sticky-name>{{ section.settings.title | truncate: 40 }} · {{ c0.settings.label }}</div>
+        <strong data-psi-sticky-price>{{ c0.settings.product.price | money }}</strong>
       </div>
       <a href="#psi-{{ sid }}" class="psi-btn" data-psi-sticky-go tabindex="-1">Je profite de l'offre</a>
     </div>
