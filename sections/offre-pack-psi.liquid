@@ -23,7 +23,7 @@
     --psi-soft: {{ section.settings.soft }};
     --psi-ok: #1a8f4c;
     color: var(--psi-dark);
-    font-size: 1.6rem;
+    font-size: 16px;
     line-height: 1.5;
   }
   #psi-{{ sid }} *, #psi-{{ sid }} *::before, #psi-{{ sid }} *::after { box-sizing: border-box; }
@@ -46,10 +46,10 @@
   #psi-{{ sid }} .psi-hero { padding: 32px 0 24px; }
   #psi-{{ sid }} .psi-kicker {
     display: inline-block; background: var(--psi-dark); color: #fff; border-radius: 999px;
-    padding: 4px 14px; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    padding: 4px 14px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
   }
-  #psi-{{ sid }} h1.psi-title { font-size: clamp(2.8rem, 5vw, 4.4rem); line-height: 1.1; margin: 12px 0 8px; }
-  #psi-{{ sid }} .psi-sub { font-size: 1.8rem; opacity: .85; margin: 0 0 24px; max-width: 760px; }
+  #psi-{{ sid }} h1.psi-title { font-size: clamp(28px, 5vw, 44px); line-height: 1.1; margin: 12px 0 8px; }
+  #psi-{{ sid }} .psi-sub { font-size: 18px; opacity: .85; margin: 0 0 24px; max-width: 760px; }
 
   #psi-{{ sid }} .psi-grid { display: grid; gap: 32px; grid-template-columns: 1fr; }
   @media (min-width: 900px) { #psi-{{ sid }} .psi-grid { grid-template-columns: 1.1fr 1fr; align-items: start; } }
@@ -61,7 +61,7 @@
   #psi-{{ sid }} .psi-media img { width: 100%; height: 100%; object-fit: contain; }
   #psi-{{ sid }} .psi-badge-pct {
     position: absolute; top: 16px; left: 16px; background: var(--psi-accent); color: #fff;
-    font-weight: 800; font-size: 2.2rem; border-radius: 12px; padding: 8px 14px; transform: rotate(-4deg);
+    font-weight: 800; font-size: 22px; border-radius: 12px; padding: 8px 14px; transform: rotate(-4deg);
     box-shadow: 0 6px 18px rgba(0,0,0,.18);
   }
 
@@ -79,17 +79,17 @@
   #psi-{{ sid }} .psi-choice[aria-pressed="true"] {
     border-color: var(--psi-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--psi-accent) 20%, transparent);
   }
-  #psi-{{ sid }} .psi-choice strong { display: block; font-size: 1.7rem; }
-  #psi-{{ sid }} .psi-choice span { display: block; font-size: 1.4rem; opacity: .8; }
+  #psi-{{ sid }} .psi-choice strong { display: block; font-size: 17px; }
+  #psi-{{ sid }} .psi-choice span { display: block; font-size: 14px; opacity: .8; }
 
   /* Prix */
   #psi-{{ sid }} .psi-pricebox { background: var(--psi-soft); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-  #psi-{{ sid }} .psi-ref { font-size: 1.4rem; opacity: .8; }
+  #psi-{{ sid }} .psi-ref { font-size: 14px; opacity: .8; }
   #psi-{{ sid }} .psi-ref s { font-weight: 600; }
-  #psi-{{ sid }} .psi-price { font-size: 4rem; font-weight: 800; line-height: 1.1; color: var(--psi-accent); }
+  #psi-{{ sid }} .psi-price { font-size: 40px; font-weight: 800; line-height: 1.1; color: var(--psi-accent); }
   #psi-{{ sid }} .psi-save {
     display: inline-block; background: var(--psi-ok); color: #fff; border-radius: 6px;
-    padding: 2px 10px; font-weight: 700; font-size: 1.4rem; margin-top: 6px;
+    padding: 2px 10px; font-weight: 700; font-size: 14px; margin-top: 6px;
   }
   #psi-{{ sid }} .psi-nosub { margin-top: 10px; font-weight: 700; }
   #psi-{{ sid }} .psi-desc { margin: 0 0 16px; }
@@ -97,19 +97,19 @@
 
   #psi-{{ sid }} .psi-btn {
     display: block; width: 100%; border: 0; cursor: pointer; border-radius: 12px; padding: 18px;
-    background: var(--psi-accent); color: #fff; font: inherit; font-size: 1.8rem; font-weight: 800; text-align: center;
+    background: var(--psi-accent); color: #fff; font: inherit; font-size: 18px; font-weight: 800; text-align: center;
     text-decoration: none; transition: filter .15s ease, transform .1s ease;
   }
   #psi-{{ sid }} .psi-btn:hover { filter: brightness(1.08); }
   #psi-{{ sid }} .psi-btn:active { transform: scale(.99); }
   #psi-{{ sid }} .psi-btn[disabled] { background: #9aa3b0; cursor: not-allowed; }
-  #psi-{{ sid }} .psi-reassure { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 1.4rem; }
+  #psi-{{ sid }} .psi-reassure { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 14px; }
   #psi-{{ sid }} .psi-reassure li::before { content: "✓ "; color: var(--psi-ok); font-weight: 800; }
 
   /* Sections */
   #psi-{{ sid }} .psi-block { padding: 40px 0; }
   #psi-{{ sid }} .psi-block + .psi-block { border-top: 1px solid #e6e9ee; }
-  #psi-{{ sid }} h2.psi-h2 { font-size: clamp(2.4rem, 3.5vw, 3.2rem); margin: 0 0 8px; text-align: center; }
+  #psi-{{ sid }} h2.psi-h2 { font-size: clamp(24px, 3.5vw, 32px); margin: 0 0 8px; text-align: center; }
   #psi-{{ sid }} .psi-lead { text-align: center; opacity: .8; margin: 0 auto 28px; max-width: 700px; }
 
   /* Contenu */
@@ -119,15 +119,15 @@
   #psi-{{ sid }} .psi-item img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; margin-bottom: 8px; }
   #psi-{{ sid }} .psi-qty {
     position: absolute; top: 10px; left: 10px; background: var(--psi-dark); color: #fff;
-    border-radius: 999px; padding: 2px 10px; font-weight: 800; font-size: 1.4rem;
+    border-radius: 999px; padding: 2px 10px; font-weight: 800; font-size: 14px;
   }
-  #psi-{{ sid }} .psi-item strong { display: block; font-size: 1.5rem; line-height: 1.3; }
-  #psi-{{ sid }} .psi-item small { display: block; opacity: .7; font-size: 1.3rem; }
+  #psi-{{ sid }} .psi-item strong { display: block; font-size: 15px; line-height: 1.3; }
+  #psi-{{ sid }} .psi-item small { display: block; opacity: .7; font-size: 13px; }
   #psi-{{ sid }} .psi-item--bonus { border-color: var(--psi-accent); }
 
   /* Sans abonnement */
   #psi-{{ sid }} .psi-nosub-band { background: var(--psi-dark); color: #fff; border-radius: 20px; padding: 32px 20px; text-align: center; }
-  #psi-{{ sid }} .psi-nosub-band .psi-big { font-size: clamp(3.2rem, 6vw, 5.6rem); font-weight: 800; line-height: 1; color: #fff; }
+  #psi-{{ sid }} .psi-nosub-band .psi-big { font-size: clamp(32px, 6vw, 56px); font-weight: 800; line-height: 1; color: #fff; }
   #psi-{{ sid }} .psi-nosub-band p { margin: 10px auto 0; max-width: 680px; opacity: .9; }
 
   /* Fonctions */
@@ -135,9 +135,9 @@
   @media (min-width: 750px) { #psi-{{ sid }} .psi-features { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1000px) { #psi-{{ sid }} .psi-features { grid-template-columns: repeat(3, 1fr); } }
   #psi-{{ sid }} .psi-feature { background: var(--psi-soft); border-radius: 16px; padding: 22px; }
-  #psi-{{ sid }} .psi-feature-ico { font-size: 3rem; line-height: 1; }
+  #psi-{{ sid }} .psi-feature-ico { font-size: 30px; line-height: 1; }
   #psi-{{ sid }} .psi-feature-ico img { width: 48px; height: 48px; object-fit: contain; }
-  #psi-{{ sid }} .psi-feature h3 { margin: 10px 0 6px; font-size: 1.9rem; }
+  #psi-{{ sid }} .psi-feature h3 { margin: 10px 0 6px; font-size: 19px; }
   #psi-{{ sid }} .psi-feature p { margin: 0 0 6px; }
 
   /* FAQ */
@@ -145,7 +145,7 @@
   #psi-{{ sid }} .psi-faq details { border-bottom: 1px solid #e6e9ee; padding: 14px 0; }
   #psi-{{ sid }} .psi-faq summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
   #psi-{{ sid }} .psi-faq summary::-webkit-details-marker { display: none; }
-  #psi-{{ sid }} .psi-faq summary::after { content: "+"; font-size: 2.2rem; line-height: 1; }
+  #psi-{{ sid }} .psi-faq summary::after { content: "+"; font-size: 22px; line-height: 1; }
   #psi-{{ sid }} .psi-faq details[open] summary::after { content: "–"; }
   #psi-{{ sid }} .psi-faq .psi-faq-a { padding-top: 8px; }
 
@@ -155,10 +155,10 @@
   #psi-{{ sid }} .psi-acc-card { border: 1px solid #e6e9ee; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; background: #fff; }
   #psi-{{ sid }} .psi-acc-card a { color: inherit; text-decoration: none; }
   #psi-{{ sid }} .psi-acc-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; }
-  #psi-{{ sid }} .psi-acc-card .psi-acc-title { font-weight: 700; font-size: 1.5rem; line-height: 1.3; }
+  #psi-{{ sid }} .psi-acc-card .psi-acc-title { font-weight: 700; font-size: 15px; line-height: 1.3; }
   #psi-{{ sid }} .psi-acc-card .psi-acc-price { font-weight: 700; }
   #psi-{{ sid }} .psi-acc-card form { margin-top: auto; }
-  #psi-{{ sid }} .psi-btn--sm { font-size: 1.4rem; padding: 10px; border-radius: 10px; background: var(--psi-dark); }
+  #psi-{{ sid }} .psi-btn--sm { font-size: 14px; padding: 10px; border-radius: 10px; background: var(--psi-dark); }
 
   /* Barre mobile */
   #psi-{{ sid }} .psi-sticky {
@@ -168,8 +168,8 @@
   }
   #psi-{{ sid }} .psi-sticky.is-visible { transform: translateY(0); }
   #psi-{{ sid }} .psi-sticky .psi-sticky-info { flex: 1; line-height: 1.2; }
-  #psi-{{ sid }} .psi-sticky .psi-sticky-info strong { color: var(--psi-accent); font-size: 2rem; }
-  #psi-{{ sid }} .psi-sticky .psi-btn { width: auto; padding: 12px 18px; font-size: 1.5rem; }
+  #psi-{{ sid }} .psi-sticky .psi-sticky-info strong { color: var(--psi-accent); font-size: 20px; }
+  #psi-{{ sid }} .psi-sticky .psi-btn { width: auto; padding: 12px 18px; font-size: 15px; }
   @media (min-width: 900px) { #psi-{{ sid }} .psi-sticky { display: none; } }
   @media (prefers-reduced-motion: reduce) {
     #psi-{{ sid }} * { transition: none !important; }
