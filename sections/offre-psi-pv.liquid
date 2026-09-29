@@ -1239,6 +1239,8 @@
       /* Avis : 8 avis de 4 ou 5 étoiles, textes verbatim, et la liste complète dans la modale */
       var avis = [];
       try { avis = JSON.parse(document.getElementById('PVAllReviews-{{ section.id }}').textContent); } catch (e) {}
+      /* Avis écartés sur cette page : ils portent sur un pack sans sirène, alors que celui-ci en contient une */
+      avis = avis.filter(function (a) { return !/prendre une sir[eè]ne/i.test(a.t || ''); });
       function carteAvis(a, classe) {
         var el = document.createElement('div');
         el.className = classe;
