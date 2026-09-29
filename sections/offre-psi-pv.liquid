@@ -420,7 +420,6 @@
     .psi-sim__detail{font-size:13px;line-height:1.4;color:var(--pv-gray);flex-grow:1;}
     .psi-sim__prix{font-size:22px;font-weight:700;color:var(--pv-navy);margin:6px 0 10px;}
     .psi-sim__btn{font-family:inherit;font-size:15px;font-weight:600;border-radius:999px;padding:11px 16px;cursor:pointer;background:transparent;color:var(--pv-navy);border:1.5px solid var(--pv-navy);transition:opacity .15s ease;}
-    .psi-sim__btn--plein{background:var(--pv-navy);color:#fff;}
     .psi-sim__btn[aria-busy="true"],.psi-sim__btn:disabled{opacity:.55;cursor:default;}
     @media (min-width:900px){.psi-sim{grid-template-columns:1fr 1.1fr;gap:32px;padding:32px;}}
     @media (max-width:699px){.psi-sim{margin-top:28px;padding:20px 16px;}.psi-sim__offre{padding:14px 12px;}.psi-sim__intro h3{font-size:18px;}}
@@ -790,7 +789,7 @@
                 <div class="psi-sim__nom">1 an prépayé</div>
                 <div class="psi-sim__detail">12 mois réglés d'avance, aucun prélèvement pendant 1 an</div>
                 <div class="psi-sim__prix">{{ sv.price | money }}</div>
-                <button type="button" class="psi-sim__btn psi-sim__btn--plein" data-psi-ajout="{{ sv.id }}" {% unless sv.available %}disabled{% endunless %}>{% if sv.available %}Ajouter{% else %}Épuisée{% endif %}</button>
+                <button type="button" class="psi-sim__btn" data-psi-ajout="{{ sv.id }}" {% unless sv.available %}disabled{% endunless %}>{% if sv.available %}Ajouter{% else %}Épuisée{% endif %}</button>
               </div>
             {%- endif -%}
           </div>
