@@ -214,6 +214,7 @@
     .pv-contents__grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--pv-line);border:1px solid var(--pv-line);border-radius:20px;overflow:hidden;}
     .pv-contents__item{background:#fff;padding:18px 20px;display:flex;gap:14px;align-items:center;}
     .pv-contents__photo{flex-shrink:0;width:56px;height:56px;border-radius:12px;background:var(--pv-bg-alt);overflow:hidden;}
+    .pv-contents__photo--icone{display:flex;align-items:center;justify-content:center;color:var(--pv-navy);}
     .pv-contents__photo img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;}
     .pv-contents__qty{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--pv-navy);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;}
     .pv-contents__qty--offert{background:var(--pv-success);}
@@ -595,9 +596,13 @@
         {%- for ligne in lignes -%}
           {%- assign c = ligne | split: '|' -%}
           {%- assign photo = all_products[c[3]].featured_image -%}
+          {%- if c[3] == 'autocollants-propriete-sous-video-surveillance-x10' -%}
+            {%- comment -%} Le produit Shopify est un lot de 10 : on n'affiche que la photo des 2 autocollants du pack {%- endcomment -%}
+            {%- assign photo = section.settings.stickers_image -%}
+          {%- endif -%}
           <div class="pv-contents__item"{% if c[4] == 'rfid' %} data-psi-rfid{% unless c0.settings.has_rfid %} hidden{% endunless %}{% endif %}>
             <span class="pv-contents__qty{% if c[4] == 'rfid' %} pv-contents__qty--offert{% endif %}">{{ c[0] }}×</span>
-            {%- if photo -%}<span class="pv-contents__photo">{{ photo | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</span>{%- endif -%}
+            {%- if photo -%}<span class="pv-contents__photo">{{ photo | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</span>{%- elsif c[3] == 'autocollants-propriete-sous-video-surveillance-x10' -%}<span class="pv-contents__photo pv-contents__photo--icone" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>{%- endif -%}
             <div class="pv-contents__txt">
               <div class="pv-contents__name">{{ c[1] }}</div>
               <div class="pv-contents__desc">{{ c[2] }}</div>
@@ -1307,6 +1312,7 @@
     { "type": "text", "id": "title", "label": "Titre (H1)", "default": "Pack Sécurité Intégrale" },
     { "type": "text", "id": "tagline", "label": "Accroche", "default": "Alarme maison sans fil, 2 caméras et sirène solaire. Sans abonnement." },
     { "type": "textarea", "id": "summary", "label": "Résumé sous l'accroche", "default": "Une centrale au choix, 4 contacteurs, 1 détecteur de mouvement, 1 télécommande, 2 caméras, 1 sirène solaire et 2 autocollants." },
+    { "type": "image_picker", "id": "stickers_image", "label": "Photo des 2 autocollants (contenu du pack)", "info": "Le produit Shopify est un lot de 10 : sa photo n'est pas utilisée ici." },
     { "type": "textarea", "id": "sub", "label": "Texte sous le bouton", "default": "Tout pour protéger votre maison, dedans comme dehors. Vous l'installez vous-même, sans technicien, et vous ne payez jamais d'abonnement." }
   ],
   "blocks": [

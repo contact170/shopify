@@ -29,18 +29,25 @@
   endif
 -%}
 {%- if actif -%}
+  {%- capture message -%}
+    <span class="psi-annonce__item">
+      <span class="psi-annonce__pastille">{{ section.settings.label }}</span>
+      <span class="psi-annonce__texte">{{ section.settings.text }}</span>
+      {%- if section.settings.end_date != blank -%}<span class="psi-annonce__reste" data-psi-reste></span>{%- endif -%}
+      {%- unless sur_page_offre -%}<span class="psi-annonce__cta">{{ section.settings.cta }} →</span>{%- endunless -%}
+      <span class="psi-annonce__sep" aria-hidden="true">·</span>
+    </span>
+  {%- endcapture -%}
   <div class="psi-annonce" id="PsiAnnonce-{{ section.id }}"
     data-debut="{{ section.settings.start_date | escape }}" data-fin="{{ section.settings.end_date | escape }}">
     <a class="psi-annonce__lien" href="{{ lien }}"{% if sur_page_offre %} aria-current="page"{% endif %}>
-      <span class="psi-annonce__pastille">{{ section.settings.label }}</span>
-      <span class="psi-annonce__texte psi-annonce__texte--bureau">{{ section.settings.text }}</span>
-      <span class="psi-annonce__texte psi-annonce__texte--mobile">{{ section.settings.text_mobile | default: section.settings.text }}</span>
-      {%- if section.settings.end_date != blank -%}
-        <span class="psi-annonce__reste" data-psi-reste hidden></span>
-      {%- endif -%}
-      {%- unless sur_page_offre -%}
-        <span class="psi-annonce__cta">{{ section.settings.cta }}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      {%- endunless -%}
+      {%- comment -%} Texte lu par les lecteurs d'écran ; le défilement est décoratif {%- endcomment -%}
+      <span class="psi-annonce__lecteur">{{ section.settings.label }} : {{ section.settings.text | strip_html }}</span>
+      <span class="psi-annonce__defile" aria-hidden="true">
+        <span class="psi-annonce__piste" style="--psi-duree: {{ section.settings.speed }}s;">
+          {%- for i in (1..6) -%}{{ message }}{%- endfor -%}
+        </span>
+      </span>
     </a>
   </div>
 
@@ -49,21 +56,26 @@
       #top-banner{display:none !important;}
       body.psi-annonce-finie #top-banner{display:block !important;}
     {%- endif -%}
-    .psi-annonce{background:{{ section.settings.color_background }};color:{{ section.settings.color_text }};font-family:var(--font-body-family,'Helvetica Neue',Arial,sans-serif);}
-    .psi-annonce__lien{display:flex;align-items:center;justify-content:center;gap:10px;min-height:40px;max-width:1280px;margin:0 auto;padding:6px 16px;color:inherit;text-decoration:none;font-size:13.5px;line-height:1.3;}
-    .psi-annonce__pastille{flex-shrink:0;background:{{ section.settings.color_accent }};color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;}
-    .psi-annonce__texte{min-width:0;}
+    .psi-annonce{background:{{ section.settings.color_background }};color:{{ section.settings.color_text }};font-family:var(--font-body-family,'Helvetica Neue',Arial,sans-serif);overflow:hidden;}
+    .psi-annonce__lien{display:block;color:inherit;text-decoration:none;}
+    .psi-annonce__lecteur{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+    .psi-annonce__defile{display:flex;align-items:center;height:40px;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);}
+    .psi-annonce__piste{display:inline-flex;align-items:center;white-space:nowrap;animation:psi-annonce-defile var(--psi-duree,30s) linear infinite;will-change:transform;}
+    .psi-annonce__lien:hover .psi-annonce__piste,.psi-annonce__lien:focus-visible .psi-annonce__piste{animation-play-state:paused;}
+    @keyframes psi-annonce-defile{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+    .psi-annonce__item{display:inline-flex;align-items:center;gap:10px;padding-right:10px;font-size:13.5px;line-height:1;}
+    .psi-annonce__pastille{background:{{ section.settings.color_accent }};color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:999px;}
     .psi-annonce__texte strong{color:{{ section.settings.color_highlight }};font-weight:700;}
-    .psi-annonce__texte--mobile{display:none;}
-    .psi-annonce__reste{flex-shrink:0;font-weight:700;white-space:nowrap;color:{{ section.settings.color_highlight }};}
-    .psi-annonce__cta{flex-shrink:0;display:inline-flex;align-items:center;gap:4px;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;}
-    @media (hover:hover) and (pointer:fine){.psi-annonce__lien:hover .psi-annonce__cta{opacity:.8;}}
+    .psi-annonce__reste{font-weight:700;color:{{ section.settings.color_highlight }};}
+    .psi-annonce__reste:empty{display:none;}
+    .psi-annonce__cta{font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+    .psi-annonce__sep{opacity:.4;padding:0 8px;}
     @media (max-width:749px){
-      .psi-annonce__lien{gap:8px;padding:6px 12px;font-size:12.5px;justify-content:space-between;}
-      .psi-annonce__pastille{display:none;}
-      .psi-annonce__texte--bureau{display:none;}
-      .psi-annonce__texte--mobile{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-      .psi-annonce__reste{display:none;}
+      .psi-annonce__defile{height:36px;}
+      .psi-annonce__item{font-size:12.5px;gap:8px;}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .psi-annonce__piste{animation:none;}
     }
   </style>
 
@@ -81,12 +93,10 @@
         document.body.classList.add('psi-annonce-finie');
         return;
       }
-      var reste = el.querySelector('[data-psi-reste]');
-      if (reste && fin) {
+      if (fin) {
         var jours = Math.floor((fin - now) / 86400000);
-        if (jours > 1) reste.textContent = 'Plus que ' + jours + ' jours';
-        else reste.textContent = 'Dernier jour';
-        reste.hidden = false;
+        var txt = jours > 1 ? 'Plus que ' + jours + ' jours' : 'Dernier jour';
+        el.querySelectorAll('[data-psi-reste]').forEach(function (r) { r.textContent = txt; });
       }
     })();
   </script>
@@ -98,12 +108,12 @@
   "class": "psi-annonce-section",
   "settings": [
     { "type": "text", "id": "label", "label": "Pastille", "default": "Offre spéciale" },
-    { "type": "text", "id": "text", "label": "Texte (ordinateur)", "default": "<strong>Pack Sécurité Intégrale</strong> : alarme, 2 caméras et sirène solaire dès <strong>299,90 €</strong>, sans abonnement" },
-    { "type": "text", "id": "text_mobile", "label": "Texte (mobile)", "default": "Alarme + 2 caméras dès <strong>299,90 €</strong>" },
+    { "type": "text", "id": "text", "label": "Texte", "default": "<strong>Pack Sécurité Intégrale</strong> : alarme, 2 caméras et sirène solaire dès <strong>299,90 €</strong>, sans abonnement" },
     { "type": "text", "id": "cta", "label": "Lien (libellé)", "default": "Voir l'offre" },
     { "type": "text", "id": "link", "label": "Lien (adresse)", "default": "/pages/offre-speciale" },
     { "type": "text", "id": "start_date", "label": "Début de l'offre (optionnel)", "info": "Format 2026-10-01T00:00:00+02:00. Vide : affiché tout de suite." },
     { "type": "text", "id": "end_date", "label": "Fin de l'offre", "default": "2026-10-31T23:59:59+01:00", "info": "Le bandeau disparaît automatiquement après cette date." },
+    { "type": "range", "id": "speed", "label": "Durée d'un tour de défilement", "min": 10, "max": 60, "step": 2, "unit": "s", "default": 30 },
     { "type": "checkbox", "id": "hide_ticker", "label": "Masquer le bandeau défilant habituel pendant l'offre", "default": true },
     { "type": "color", "id": "color_background", "label": "Fond", "default": "#0a1330" },
     { "type": "color", "id": "color_text", "label": "Texte", "default": "#ffffff" },
