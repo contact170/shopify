@@ -183,7 +183,7 @@
         var bloc = c.closest('.psih');
         if (!bloc) return;
         bloc.querySelectorAll('[data-psih-choix]').forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
-        var img = bloc.querySelector('[data-psih-img]');
+        var img = bloc.querySelector('[data-psih-img]') || bloc.querySelector('.psih__visuel img');
         var src = c.getAttribute('data-src');
         if (img && src && img.getAttribute('src') !== src) {
           img.classList.add('is-changing');
