@@ -1,0 +1,220 @@
+{%- comment -%}
+  Mise en avant de l'offre « Pack Sécurité Intégrale » sur la page d'accueil (style home V2).
+  - Un bloc « centrale » par pack : prix lu sur le produit, valeur de référence saisie à la main.
+  - La section disparaît seule après la date de fin.
+{%- endcomment -%}
+{%- liquid
+  assign maintenant = 'now' | date: '%s' | plus: 0
+  assign actif = true
+  if section.settings.end_date != blank
+    assign fin = section.settings.end_date | date: '%s' | plus: 0
+    if maintenant > fin
+      assign actif = false
+    endif
+  endif
+  if request.design_mode
+    assign actif = true
+  endif
+
+  assign centrales = section.blocks | where: 'type', 'centrale'
+  assign c0 = centrales | first
+  assign p0 = c0.settings.product
+  assign lien = section.settings.cta_link | default: '/pages/offre-speciale'
+
+  assign prix_min = 0
+  assign eco_max = 0
+  assign pct_max = 0
+  for block in centrales
+    assign pr = block.settings.product.price
+    if pr
+      if prix_min == 0 or pr < prix_min
+        assign prix_min = pr
+      endif
+      if block.settings.ref_value != blank
+        assign ref = block.settings.ref_value | remove: ' ' | remove: '€' | replace: ',', '.' | times: 100 | round
+        assign eco = ref | minus: pr
+        if eco > eco_max
+          assign eco_max = eco
+          assign pct_max = eco | times: 100.0 | divided_by: ref | floor
+        endif
+      endif
+    endif
+  endfor
+
+  assign visuel = section.settings.image | default: p0.featured_image
+-%}
+{%- if actif -%}
+{% render 'dw-home-head' %}
+<div class="dwh psih" id="PsiHome-{{ section.id }}" data-fin="{{ section.settings.end_date | escape }}">
+  <section class="dwh-bloc psih__bloc" aria-labelledby="PsiHomeTitre-{{ section.id }}">
+    <div class="dwh-large psih__grille">
+
+      <div class="psih__texte">
+        {%- if section.settings.end_date != blank -%}
+          <p class="psih__compte" data-psih-compte>
+            <span class="psih__point" aria-hidden="true"></span>
+            <span>{{ section.settings.eyebrow }}</span>
+            <span class="psih__temps" data-psih-temps hidden></span>
+          </p>
+        {%- else -%}
+          <p class="dwh-surtitre">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="dwh-titre psih__titre" id="PsiHomeTitre-{{ section.id }}">{{ section.settings.title }}</h2>
+        {%- if section.settings.text != blank -%}<p class="dwh-chapo">{{ section.settings.text }}</p>{%- endif -%}
+
+        {%- assign puces = section.settings.bullets | newline_to_br | split: '<br />' -%}
+        {%- if section.settings.bullets != blank -%}
+          <ul class="dwh-puces psih__puces">
+            {%- for puce in puces -%}{%- assign t = puce | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if centrales.size > 0 -%}
+          <p class="psih__choix-titre">{{ section.settings.choice_label }}</p>
+          <ul class="psih__choix">
+            {%- for block in centrales -%}
+              {%- liquid
+                assign p = block.settings.product
+                assign ref = 0
+                if block.settings.ref_value != blank
+                  assign ref = block.settings.ref_value | remove: ' ' | remove: '€' | replace: ',', '.' | times: 100 | round
+                endif
+                assign url_centrale = lien
+                if block.settings.slug != blank
+                  assign url_centrale = lien | append: '?centrale=' | append: block.settings.slug
+                endif
+              -%}
+              <li {{ block.shopify_attributes }}>
+                <a class="psih__carte" href="{{ url_centrale }}">
+                  {%- if block.settings.badge != blank -%}<span class="psih__badge">{{ block.settings.badge }}</span>{%- endif -%}
+                  <span class="psih__nom">{{ block.settings.label }}</span>
+                  <span class="psih__sous">{{ block.settings.sub }}</span>
+                  <span class="psih__prix">
+                    {%- if p -%}<b>{{ p.price | money }}</b>{%- endif -%}
+                    {%- if p and ref > p.price -%}<s>{{ ref | money }}</s>{%- endif -%}
+                  </span>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="psih__cta">
+          <a class="dwh-btn dwh-btn--bleu" href="{{ lien }}">
+            {{ section.settings.cta_label }}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          {%- if section.settings.note != blank -%}<p class="psih__note">{{ section.settings.note }}</p>{%- endif -%}
+        </div>
+      </div>
+
+      <a class="psih__visuel" href="{{ lien }}" tabindex="-1" aria-hidden="true">
+        {%- if pct_max > 0 -%}<span class="psih__remise">Jusqu'à -{{ pct_max }}&nbsp;%</span>{%- endif -%}
+        {%- if visuel -%}
+          {{ visuel | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 750px) 540px, 100vw', alt: '' }}
+        {%- endif -%}
+        {%- if prix_min > 0 -%}<span class="psih__des">Dès <b>{{ prix_min | money }}</b></span>{%- endif -%}
+      </a>
+
+    </div>
+  </section>
+</div>
+
+<style>
+  .psih__bloc{background:linear-gradient(180deg,#fff 0%,var(--porcelaine) 100%);}
+  .psih__grille{display:grid;gap:32px;align-items:center;}
+  .psih__compte{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;max-width:100%;margin-bottom:14px;padding:7px 14px;border-radius:999px;background:#fdecef;color:#be123c;font-size:13px;font-weight:600;}
+  .psih__point{width:8px;height:8px;border-radius:50%;background:#e11d48;box-shadow:0 0 0 0 rgba(225,29,72,.5);animation:psih-pulse 1.8s infinite;}
+  @keyframes psih-pulse{0%{box-shadow:0 0 0 0 rgba(225,29,72,.5);}70%{box-shadow:0 0 0 8px rgba(225,29,72,0);}100%{box-shadow:0 0 0 0 rgba(225,29,72,0);}}
+  .psih__temps{color:var(--encre);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .psih__titre{font-size:clamp(30px,7.4vw,48px);}
+  .psih__puces{margin-top:20px;}
+  .psih__choix-titre{margin-top:28px;margin-bottom:10px;font-size:14px;font-weight:600;color:var(--gris);}
+  .psih__choix{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .psih__carte{position:relative;display:flex;flex-direction:column;gap:2px;height:100%;padding:14px 14px 12px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1.5px var(--trait);text-decoration:none;color:var(--encre);transition:box-shadow 200ms ease,transform 160ms var(--ease-out);}
+  .psih__carte:active{transform:scale(.98);}
+  @media (hover:hover) and (pointer:fine){.psih__carte:hover{box-shadow:inset 0 0 0 1.5px var(--encre);}}
+  .psih__badge{position:absolute;top:-9px;left:12px;font-size:10.5px;font-weight:700;color:#fff;background:#e11d48;padding:2px 8px;border-radius:999px;}
+  .psih__nom{font-weight:700;font-size:16px;}
+  .psih__sous{font-size:13px;color:var(--gris);}
+  .psih__prix{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-top:6px;}
+  .psih__prix b{font-size:17px;}
+  .psih__prix s{font-size:12.5px;color:var(--gris);}
+  .psih__cta{margin-top:24px;}
+  .psih__note{margin-top:10px;font-size:12.5px;line-height:1.45;color:var(--gris);}
+  .psih__visuel{position:relative;display:block;border-radius:24px;overflow:hidden;background:#fff;box-shadow:var(--ombre);order:-1;}
+  .psih__visuel img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;}
+  .psih__remise{position:absolute;top:14px;left:14px;z-index:1;background:#e11d48;color:#fff;font-weight:700;font-size:14px;padding:6px 12px;border-radius:999px;}
+  .psih__des{position:absolute;right:14px;bottom:14px;z-index:1;background:var(--nuit);color:#fff;font-size:14px;padding:8px 14px;border-radius:999px;}
+  .psih__des b{font-size:17px;}
+  @media (min-width:750px){
+    .psih__grille{grid-template-columns:1.05fr 1fr;gap:56px;}
+    .psih__visuel{order:0;}
+    .psih__choix{grid-template-columns:repeat(4,1fr);}
+    .psih__cta .dwh-btn{width:auto;min-width:300px;}
+  }
+  @media (prefers-reduced-motion:reduce){.psih__point{animation:none;}}
+</style>
+
+<script>
+  (function () {
+    var racine = document.getElementById('PsiHome-{{ section.id }}');
+    if (!racine) return;
+    var fin = Date.parse(racine.getAttribute('data-fin') || '');
+    if (!fin) return;
+    var enEdition = {{ request.design_mode | json }};
+    var temps = racine.querySelector('[data-psih-temps]');
+    var deux = function (n) { return (n < 10 ? '0' : '') + n; };
+    function tic() {
+      var s = Math.floor((fin - Date.now()) / 1000);
+      if (s <= 0) {
+        if (!enEdition) { racine.remove(); return; }
+        s = 0;
+      }
+      var j = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
+      if (temps) {
+        temps.textContent = (j > 0 ? j + ' j ' : '') + deux(h) + ' h ' + deux(m) + ' min';
+        temps.hidden = false;
+      }
+      setTimeout(tic, 30000);
+    }
+    tic();
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Offre PSI · accueil",
+  "tag": "div",
+  "class": "psih-section",
+  "settings": [
+    { "type": "text", "id": "end_date", "label": "Fin de l'offre", "default": "2026-10-31T23:59:59+01:00", "info": "La section disparaît automatiquement après cette date." },
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Offre spéciale · fin dans" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Le Pack Sécurité Intégrale. <em>Dedans, dehors, sans abonnement.</em>" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Une alarme complète, deux caméras et une sirène solaire dans une seule boîte. Choisissez simplement votre centrale." },
+    { "type": "textarea", "id": "bullets", "label": "Points clés (un par ligne)", "default": "4 contacteurs d'ouverture et 1 détecteur de mouvement\n1 caméra intérieure et 1 caméra extérieure solaire\nSirène extérieure solaire, sans câble\nInstallé par vous, sans abonnement à vie" },
+    { "type": "text", "id": "choice_label", "label": "Titre du choix de centrale", "default": "Choisissez votre centrale" },
+    { "type": "image_picker", "id": "image", "label": "Visuel", "info": "Vide : photo du premier pack." },
+    { "type": "text", "id": "cta_label", "label": "Bouton", "default": "Découvrir l'offre" },
+    { "type": "text", "id": "cta_link", "label": "Lien du bouton", "default": "/pages/offre-speciale" },
+    { "type": "textarea", "id": "note", "label": "Mention sous le bouton", "default": "Prix barré : valeur des mêmes éléments achetés séparément sur notre site. Offre valable jusqu'au 31 octobre 2026 inclus." }
+  ],
+  "blocks": [
+    {
+      "type": "centrale",
+      "name": "Centrale",
+      "limit": 4,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Pack" },
+        { "type": "text", "id": "label", "label": "Nom", "default": "Vigilia" },
+        { "type": "text", "id": "sub", "label": "Sous-titre", "default": "Wi-Fi" },
+        { "type": "text", "id": "badge", "label": "Badge (optionnel)" },
+        { "type": "text", "id": "slug", "label": "Identifiant sur la page offre", "info": "vigilia, vigilia-plus, touch ou touch-xl" },
+        { "type": "text", "id": "ref_value", "label": "Valeur achetée séparément", "info": "Ex. 433,08" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Offre PSI · accueil" } ]
+}
+{% endschema %}

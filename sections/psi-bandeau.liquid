@@ -1,0 +1,114 @@
+{%- comment -%}
+  Bandeau d'annonce de l'offre « Pack Sécurité Intégrale », en haut de toutes les pages.
+  - Visible entre la date de début (optionnelle) et la date de fin, puis disparaît seul.
+  - Tant qu'il est visible, il masque le bandeau défilant habituel (#top-banner),
+    qui revient automatiquement à la fin de l'offre.
+{%- endcomment -%}
+{%- liquid
+  assign maintenant = 'now' | date: '%s' | plus: 0
+  assign actif = true
+  if section.settings.start_date != blank
+    assign debut = section.settings.start_date | date: '%s' | plus: 0
+    if maintenant < debut
+      assign actif = false
+    endif
+  endif
+  if section.settings.end_date != blank
+    assign fin = section.settings.end_date | date: '%s' | plus: 0
+    if maintenant > fin
+      assign actif = false
+    endif
+  endif
+  if request.design_mode
+    assign actif = true
+  endif
+  assign lien = section.settings.link | default: '/pages/offre-speciale'
+  assign sur_page_offre = false
+  if request.path contains '/pages/offre-speciale'
+    assign sur_page_offre = true
+  endif
+-%}
+{%- if actif -%}
+  <div class="psi-annonce" id="PsiAnnonce-{{ section.id }}"
+    data-debut="{{ section.settings.start_date | escape }}" data-fin="{{ section.settings.end_date | escape }}">
+    <a class="psi-annonce__lien" href="{{ lien }}"{% if sur_page_offre %} aria-current="page"{% endif %}>
+      <span class="psi-annonce__pastille">{{ section.settings.label }}</span>
+      <span class="psi-annonce__texte psi-annonce__texte--bureau">{{ section.settings.text }}</span>
+      <span class="psi-annonce__texte psi-annonce__texte--mobile">{{ section.settings.text_mobile | default: section.settings.text }}</span>
+      {%- if section.settings.end_date != blank -%}
+        <span class="psi-annonce__reste" data-psi-reste hidden></span>
+      {%- endif -%}
+      {%- unless sur_page_offre -%}
+        <span class="psi-annonce__cta">{{ section.settings.cta }}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      {%- endunless -%}
+    </a>
+  </div>
+
+  <style>
+    {%- if section.settings.hide_ticker -%}
+      #top-banner{display:none !important;}
+      body.psi-annonce-finie #top-banner{display:block !important;}
+    {%- endif -%}
+    .psi-annonce{background:{{ section.settings.color_background }};color:{{ section.settings.color_text }};font-family:var(--font-body-family,'Helvetica Neue',Arial,sans-serif);}
+    .psi-annonce__lien{display:flex;align-items:center;justify-content:center;gap:10px;min-height:40px;max-width:1280px;margin:0 auto;padding:6px 16px;color:inherit;text-decoration:none;font-size:13.5px;line-height:1.3;}
+    .psi-annonce__pastille{flex-shrink:0;background:{{ section.settings.color_accent }};color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;}
+    .psi-annonce__texte{min-width:0;}
+    .psi-annonce__texte strong{color:{{ section.settings.color_highlight }};font-weight:700;}
+    .psi-annonce__texte--mobile{display:none;}
+    .psi-annonce__reste{flex-shrink:0;font-weight:700;white-space:nowrap;color:{{ section.settings.color_highlight }};}
+    .psi-annonce__cta{flex-shrink:0;display:inline-flex;align-items:center;gap:4px;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;}
+    @media (hover:hover) and (pointer:fine){.psi-annonce__lien:hover .psi-annonce__cta{opacity:.8;}}
+    @media (max-width:749px){
+      .psi-annonce__lien{gap:8px;padding:6px 12px;font-size:12.5px;justify-content:space-between;}
+      .psi-annonce__pastille{display:none;}
+      .psi-annonce__texte--bureau{display:none;}
+      .psi-annonce__texte--mobile{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+      .psi-annonce__reste{display:none;}
+    }
+  </style>
+
+  <script>
+    (function () {
+      var el = document.getElementById('PsiAnnonce-{{ section.id }}');
+      if (!el) return;
+      var debut = Date.parse(el.getAttribute('data-debut') || '');
+      var fin = Date.parse(el.getAttribute('data-fin') || '');
+      var now = Date.now();
+      var enEdition = {{ request.design_mode | json }};
+      /* Le cache des pages peut servir le bandeau hors période : on vérifie côté navigateur. */
+      if (!enEdition && ((debut && now < debut) || (fin && now > fin))) {
+        el.remove();
+        document.body.classList.add('psi-annonce-finie');
+        return;
+      }
+      var reste = el.querySelector('[data-psi-reste]');
+      if (reste && fin) {
+        var jours = Math.floor((fin - now) / 86400000);
+        if (jours > 1) reste.textContent = 'Plus que ' + jours + ' jours';
+        else reste.textContent = 'Dernier jour';
+        reste.hidden = false;
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Offre PSI · bandeau",
+  "class": "psi-annonce-section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Pastille", "default": "Offre spéciale" },
+    { "type": "text", "id": "text", "label": "Texte (ordinateur)", "default": "<strong>Pack Sécurité Intégrale</strong> : alarme, 2 caméras et sirène solaire dès <strong>299,90 €</strong>, sans abonnement" },
+    { "type": "text", "id": "text_mobile", "label": "Texte (mobile)", "default": "Alarme + 2 caméras dès <strong>299,90 €</strong>" },
+    { "type": "text", "id": "cta", "label": "Lien (libellé)", "default": "Voir l'offre" },
+    { "type": "text", "id": "link", "label": "Lien (adresse)", "default": "/pages/offre-speciale" },
+    { "type": "text", "id": "start_date", "label": "Début de l'offre (optionnel)", "info": "Format 2026-10-01T00:00:00+02:00. Vide : affiché tout de suite." },
+    { "type": "text", "id": "end_date", "label": "Fin de l'offre", "default": "2026-10-31T23:59:59+01:00", "info": "Le bandeau disparaît automatiquement après cette date." },
+    { "type": "checkbox", "id": "hide_ticker", "label": "Masquer le bandeau défilant habituel pendant l'offre", "default": true },
+    { "type": "color", "id": "color_background", "label": "Fond", "default": "#0a1330" },
+    { "type": "color", "id": "color_text", "label": "Texte", "default": "#ffffff" },
+    { "type": "color", "id": "color_highlight", "label": "Texte mis en valeur", "default": "#ffd500" },
+    { "type": "color", "id": "color_accent", "label": "Pastille", "default": "#e11d48" }
+  ]
+}
+{% endschema %}
