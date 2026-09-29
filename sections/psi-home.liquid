@@ -91,7 +91,9 @@
                 endif
               -%}
               <li {{ block.shopify_attributes }}>
+                {%- assign photo_c = block.settings.image | default: p.featured_image -%}
                 <button type="button" class="psih__carte" aria-pressed="false" data-psih-choix="{{ forloop.index0 }}"
+                  {% if photo_c %}data-src="{{ photo_c | image_url: width: 900 }}" data-srcset="{{ photo_c | image_url: width: 400 }} 400w, {{ photo_c | image_url: width: 600 }} 600w, {{ photo_c | image_url: width: 900 }} 900w, {{ photo_c | image_url: width: 1200 }} 1200w"{% endif %}
                   data-url="{{ url_centrale }}" data-prix="{% if p %}{{ p.price | money | strip_html }}{% endif %}" data-pct="{{ pct }}" data-nom="{{ block.settings.label | escape }}">
                   {%- if block.settings.badge != blank -%}<span class="psih__badge">{{ block.settings.badge }}</span>{%- endif -%}
                   <span class="psih__nom">{{ block.settings.label }}</span>
@@ -118,14 +120,8 @@
       <a class="psih__visuel" href="{{ lien }}" tabindex="-1" aria-hidden="true" data-psih-visuel>
         {%- if pct_max > 0 -%}<span class="psih__remise" data-psih-remise>Jusqu'à -{{ pct_max }}&nbsp;%</span>{%- endif -%}
         {%- if visuel -%}
-          <span class="psih__photo is-active" data-psih-photo="defaut">{{ visuel | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 750px) 540px, 100vw', alt: '' }}</span>
+          {{ visuel | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 750px) 540px, 100vw', alt: '', data-psih-img: '' }}
         {%- endif -%}
-        {%- for block in centrales -%}
-          {%- assign photo_c = block.settings.image | default: block.settings.product.featured_image -%}
-          {%- if photo_c -%}
-            <span class="psih__photo" data-psih-photo="{{ forloop.index0 }}">{{ photo_c | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 750px) 540px, 100vw', alt: '' }}</span>
-          {%- endif -%}
-        {%- endfor -%}
         {%- if prix_min > 0 -%}<span class="psih__des"><span data-psih-des>Dès</span> <b data-psih-prix>{{ prix_min | money }}</b></span>{%- endif -%}
       </a>
 
@@ -157,9 +153,8 @@
   .psih .psih__cta{margin-top:24px;}
   .psih .psih__note{margin-top:10px;font-size:12.5px;line-height:1.45;color:var(--gris);}
   .psih .psih__visuel{position:relative;display:block;border-radius:24px;overflow:hidden;background:#fff;box-shadow:var(--ombre);order:-1;}
-  .psih .psih__visuel{display:grid;}
-  .psih .psih__photo{grid-area:1/1;opacity:0;visibility:hidden;transition:opacity 250ms ease,visibility 0s linear 250ms;}
-  .psih .psih__photo.is-active{opacity:1;visibility:visible;transition:opacity 250ms ease;}
+  .psih .psih__visuel img{transition:opacity 200ms ease;}
+  .psih .psih__visuel img.is-changing{opacity:.25;}
   .psih .psih__visuel img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;}
   .psih .psih__remise{position:absolute;top:14px;left:14px;z-index:1;background:#e11d48;color:#fff;font-weight:700;font-size:14px;padding:6px 12px;border-radius:999px;}
   .psih .psih__des{position:absolute;right:14px;bottom:14px;z-index:1;background:var(--nuit);color:#fff;font-size:14px;padding:8px 14px;border-radius:999px;}
@@ -178,27 +173,39 @@
   (function () {
     var racine = document.getElementById('PsiHome-{{ section.id }}');
     if (!racine) return;
-    /* Choix de la centrale : photo, prix, remise et lien du bouton */
-    var cta = racine.querySelector('[data-psih-cta]');
-    var ctaTexte = racine.querySelector('[data-psih-cta-texte]');
-    var remise = racine.querySelector('[data-psih-remise]');
-    var des = racine.querySelector('[data-psih-des]');
-    var prix = racine.querySelector('[data-psih-prix]');
-    var photos = racine.querySelectorAll('[data-psih-photo]');
-    var cartes = racine.querySelectorAll('[data-psih-choix]');
-    cartes.forEach(function (c) {
-      c.addEventListener('click', function () {
-        var i = c.getAttribute('data-psih-choix');
-        cartes.forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
-        var cible = racine.querySelector('[data-psih-photo="' + i + '"]');
-        if (cible) photos.forEach(function (ph) { ph.classList.toggle('is-active', ph === cible); });
+    /* Choix de la centrale : écouteur unique sur le document, pour continuer à marcher
+       quand l'éditeur de thème recharge la section */
+    if (!window.psihChoixInstalle) {
+      window.psihChoixInstalle = true;
+      document.addEventListener('click', function (e) {
+        var c = e.target.closest && e.target.closest('[data-psih-choix]');
+        if (!c) return;
+        var bloc = c.closest('.psih');
+        if (!bloc) return;
+        bloc.querySelectorAll('[data-psih-choix]').forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+        var img = bloc.querySelector('[data-psih-img]');
+        var src = c.getAttribute('data-src');
+        if (img && src && img.getAttribute('src') !== src) {
+          img.classList.add('is-changing');
+          var fini = function () { img.classList.remove('is-changing'); img.removeEventListener('load', fini); };
+          img.addEventListener('load', fini);
+          img.setAttribute('srcset', c.getAttribute('data-srcset') || src);
+          img.setAttribute('src', src);
+          img.loading = 'eager';
+          setTimeout(fini, 1500);
+        }
+        var cta = bloc.querySelector('[data-psih-cta]');
         if (cta) cta.href = c.getAttribute('data-url');
+        var ctaTexte = bloc.querySelector('[data-psih-cta-texte]');
         if (ctaTexte) ctaTexte.textContent = 'Voir le pack ' + c.getAttribute('data-nom');
+        var prix = bloc.querySelector('[data-psih-prix]');
+        var des = bloc.querySelector('[data-psih-des]');
         if (prix && c.getAttribute('data-prix')) { prix.textContent = c.getAttribute('data-prix'); if (des) des.hidden = true; }
+        var remise = bloc.querySelector('[data-psih-remise]');
         var pct = parseInt(c.getAttribute('data-pct'), 10);
-        if (remise) { remise.hidden = !(pct > 0); remise.textContent = '-' + pct + '\u00a0%'; }
+        if (remise) { remise.hidden = !(pct > 0); remise.textContent = '-' + pct + ' %'; }
       });
-    });
+    }
     var fin = Date.parse(racine.getAttribute('data-fin') || '');
     if (!fin) return;
     var enEdition = {{ request.design_mode | json }};
