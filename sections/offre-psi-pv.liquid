@@ -585,11 +585,11 @@
             echo "4|Contacteurs d'ouverture et de vibration WDV301|2-en-1, pour portes, fenêtres et surfaces vitrées|contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302|"
             echo "~1|Détecteur de mouvement WPS305|Compatible animaux jusqu'à 10 kg|detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x|"
             echo "~1|Télécommande WRC305|Armement et désarmement en un geste|telecommande-compatible-vigilia-touch|"
-            echo "~2|Badges RFID WRF301|Inclus avec la Vigilia : on passe le badge devant la centrale, elle se désarme sans code. Idéal pour les enfants|pack-de-2-badges-rfid-wrf301|rfid"
+            echo "~2|Badges RFID WRF301|Inclus avec la Vigilia et la Vigilia + : on passe le badge devant la centrale, elle se désarme sans code. Idéal pour les enfants|pack-de-2-badges-rfid-wrf301|rfid"
             echo "~1|Caméra intérieure IP506P|Rotative, Full HD, mode vie privée|camera-interieure-rotative-ip506p|"
             echo "~1|Caméra extérieure solaire W512MW|Rotative, 1440p, panneau solaire inclus|camera-w512mw-exterieure-rotative-1440p-avec-panneau-solaire|"
             echo "~1|Sirène extérieure solaire WOS305S|Dissuasive, rechargée par le soleil, sans câble|sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire|"
-            echo "~2|Autocollants « Maison sous surveillance »|Dissuasion dès l'entrée|autocollants-propriete-sous-video-surveillance-x10|"
+            echo "~2|Autocollants « Site protégé par Daewoo »|Alarme et caméras : la dissuasion dès l'entrée|autocollants-propriete-sous-video-surveillance-x10|"
           endcapture
           assign lignes = elements | split: '~'
         -%}
@@ -618,7 +618,7 @@
     <div class="pv-wrap">
       <div class="pv-head pv-reveal">
         <h2>Quelle centrale choisir&nbsp;?</h2>
-        <p>Le pack est identique pour les quatre. Seule la centrale change&nbsp;: choisissez selon votre façon de vivre.</p>
+        <p>Le reste du pack est le même pour les quatre&nbsp;: choisissez la centrale selon votre façon de vivre.</p>
       </div>
       <div class="pv-compare__grid pv-reveal">
         {%- for block in centrales -%}
@@ -820,7 +820,7 @@
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Notifications instantanées en cas de détection</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Accès partagé : chaque membre du foyer a l'application</li>
-            <li data-psi-rfid {% unless c0.settings.has_rfid %}hidden{% endunless %}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Avec la Vigilia : 2 badges RFID inclus, désarmement sans code</li>
+            <li data-psi-rfid {% unless c0.settings.has_rfid %}hidden{% endunless %}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Avec la Vigilia et la Vigilia + : 2 badges RFID inclus, désarmement sans code</li>
           </ul>
         </div>
       </div>
@@ -938,9 +938,9 @@
   {%- liquid
     capture faq
       echo "Jusqu'à quand l'offre est-elle valable ?|Les prix du Pack Sécurité Intégrale sont valables jusqu'au 31 octobre 2026 inclus, dans la limite des stocks disponibles."
-      echo "~Que contient le Pack Sécurité Intégrale ?|Une centrale d'alarme au choix (Vigilia, Vigilia +, Touch AM301 ou Touch XL AM302), 4 contacteurs d'ouverture et de vibration WDV301, 1 détecteur de mouvement compatible animaux WPS305, 1 télécommande WRC305, 1 caméra intérieure rotative IP506P, 1 caméra extérieure solaire W512MW, 1 sirène extérieure solaire WOS305S et 2 autocollants de dissuasion. Avec la Vigilia, 2 badges RFID WRF301 sont inclus en plus."
+      echo "~Que contient le Pack Sécurité Intégrale ?|Une centrale d'alarme au choix (Vigilia, Vigilia +, Touch AM301 ou Touch XL AM302), 4 contacteurs d'ouverture et de vibration WDV301, 1 détecteur de mouvement compatible animaux WPS305, 1 télécommande WRC305, 1 caméra intérieure rotative IP506P, 1 caméra extérieure solaire W512MW, 1 sirène extérieure solaire WOS305S et 2 autocollants de dissuasion. Avec la Vigilia et la Vigilia +, 2 badges RFID WRF301 sont inclus en plus."
       echo "~Ai-je besoin d'un abonnement ?|Non. Vous achetez le pack une seule fois : pas de mensualité, pas de frais cachés. Le pilotage se fait avec l'application Daewoo Home Connect, incluse et gratuite."
-      echo "~Quelle centrale choisir ?|Le pack est identique pour les quatre, seule la centrale change. La Vigilia est la plus simple, au clavier ou au badge (2 badges RFID inclus avec elle), en Wi-Fi. La Vigilia + ajoute la 4G en secours. La Touch a un écran tactile couleur de 4,3 pouces et la 4G. La Touch XL a un grand écran de 7 pouces, la 4G et 20 heures de batterie de secours."
+      echo "~Quelle centrale choisir ?|Le reste du pack est le même pour les quatre. La Vigilia est la plus simple, au clavier ou au badge, en Wi-Fi. La Vigilia + ajoute la 4G en secours. Avec l'une comme l'autre, 2 badges RFID sont inclus. La Touch a un écran tactile couleur de 4,3 pouces et la 4G. La Touch XL a un grand écran de 7 pouces, la 4G et 20 heures de batterie de secours."
       echo "~À quoi correspond le prix barré ?|C'est le prix des mêmes éléments (centrale, contacteurs, détecteur, télécommande, caméras, sirène…) achetés séparément sur notre site, via notre configurateur. Le pack vous fait économiser la différence."
       echo "~Que se passe-t-il en cas de coupure de courant ou d'internet ?|En cas de coupure de courant, la centrale bascule sur sa batterie de secours : 4 heures pour la Vigilia, la Vigilia + et la Touch, 20 heures pour la Touch XL. Sans internet, la sirène et la détection continuent de fonctionner. Avec la Vigilia +, la Touch ou la Touch XL et une carte SIM installée (non fournie), vous continuez de recevoir les alertes par SMS et appel. Les caméras, elles, ont besoin du Wi-Fi."
       echo "~Quelle carte SIM utiliser avec la Vigilia +, la Touch ou la Touch XL ?|Une carte SIM M2M, conçue pour les alarmes, comme la carte Afone que nous proposons (1 mois inclus ou 1 an prépayé). Les forfaits mobiles grand public sont réservés aux téléphones et peuvent être suspendus par l'opérateur s'ils sont utilisés dans une alarme. La carte SIM n'est pas fournie avec le pack."
