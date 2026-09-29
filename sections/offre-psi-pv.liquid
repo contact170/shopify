@@ -407,6 +407,23 @@
       .pv-reveal{opacity:1;transform:none;transition:none;}
       .pv-sticky{transition:none;}
     }
+    /* ---- bandeau carte SIM ---- */
+    .psi-sim{margin-top:40px;display:grid;grid-template-columns:1fr;gap:20px;align-items:center;background:#fff;border:1px solid var(--pv-line);border-radius:20px;padding:24px;}
+    .psi-sim__tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--pv-navy);background:var(--pv-bg-alt);border-radius:999px;padding:4px 10px;margin-bottom:10px;}
+    .psi-sim__intro h3{margin:0 0 8px;font-size:20px;line-height:1.25;color:var(--pv-ink);}
+    .psi-sim__intro p{font-size:14px;line-height:1.5;color:var(--pv-gray);}
+    .psi-sim__offres{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .psi-sim__offre{position:relative;display:flex;flex-direction:column;gap:4px;border:1.5px solid var(--pv-line);border-radius:16px;padding:16px;}
+    .psi-sim__offre--top{border-color:var(--pv-navy);}
+    .psi-sim__reco{position:absolute;top:-10px;left:12px;font-size:11px;font-weight:700;color:#fff;background:var(--pv-navy);padding:3px 8px;border-radius:999px;}
+    .psi-sim__nom{font-size:16px;font-weight:700;color:var(--pv-ink);}
+    .psi-sim__detail{font-size:13px;line-height:1.4;color:var(--pv-gray);flex-grow:1;}
+    .psi-sim__prix{font-size:22px;font-weight:700;color:var(--pv-navy);margin:6px 0 10px;}
+    .psi-sim__btn{font-family:inherit;font-size:15px;font-weight:600;border-radius:999px;padding:11px 16px;cursor:pointer;background:transparent;color:var(--pv-navy);border:1.5px solid var(--pv-navy);transition:opacity .15s ease;}
+    .psi-sim__btn--plein{background:var(--pv-navy);color:#fff;}
+    .psi-sim__btn[aria-busy="true"],.psi-sim__btn:disabled{opacity:.55;cursor:default;}
+    @media (min-width:900px){.psi-sim{grid-template-columns:1fr 1.1fr;gap:32px;padding:32px;}}
+    @media (max-width:699px){.psi-sim{margin-top:28px;padding:20px 16px;}.psi-sim__offre{padding:14px 12px;}.psi-sim__intro h3{font-size:18px;}}
   </style>
 
   {%- comment -%} Formulaire produit caché, partagé par tous les boutons « Ajouter au panier » {%- endcomment -%}
@@ -567,8 +584,8 @@
           capture elements
             echo "4|Contacteurs d'ouverture et de vibration WDV301|2-en-1, pour portes, fenêtres et surfaces vitrées|contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302|"
             echo "~1|Détecteur de mouvement WPS305|Compatible animaux jusqu'à 10 kg|detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x|"
-            echo "~2|Télécommandes WRC305|Armement et désarmement en un geste, une pour chacun|telecommande-compatible-vigilia-touch|"
-            echo "~2|Badges RFID WRF301|Désarmement sans code, inclus avec la Vigilia|pack-de-2-badges-rfid-wrf301|rfid"
+            echo "~1|Télécommande WRC305|Armement et désarmement en un geste|telecommande-compatible-vigilia-touch|"
+            echo "~2|Badges RFID WRF301|Inclus avec la Vigilia : on passe le badge devant la centrale, elle se désarme sans code. Idéal pour les enfants|pack-de-2-badges-rfid-wrf301|rfid"
             echo "~1|Caméra intérieure IP506P|Rotative, Full HD, mode vie privée|camera-interieure-rotative-ip506p|"
             echo "~1|Caméra extérieure solaire W512MW|Rotative, 1440p, panneau solaire inclus|camera-w512mw-exterieure-rotative-1440p-avec-panneau-solaire|"
             echo "~1|Sirène extérieure solaire WOS305S|Dissuasive, rechargée par le soleil, sans câble|sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire|"
@@ -736,8 +753,8 @@
           <h2>Box coupée&nbsp;? L'alerte passe quand même.</h2>
           <p class="pv-feature__text">
             Glissez une carte Nano SIM (non fournie) dans la centrale&nbsp;: si internet ou l'électricité
-            sont coupés, elle continue de vous prévenir par SMS et appel. Un petit forfait de l'opérateur
-            de votre choix suffit, sans abonnement Daewoo.
+            sont coupés, elle continue de vous prévenir par SMS et appel. Choisissez une carte M2M, conçue
+            pour les alarmes, et toujours sans abonnement Daewoo.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Relais automatique si le Wi-Fi tombe</li>
@@ -745,6 +762,40 @@
           </ul>
         </div>
       </div>
+
+      {%- comment -%} Bandeau carte SIM Afone : ajout direct au panier {%- endcomment -%}
+      {%- assign sim_mois = all_products['carte-m2m-afone-40-min-ou-100-sms'] -%}
+      {%- assign sim_an = all_products['carte-sim-m2m-afone-1-an-prepaye'] -%}
+      {%- if sim_mois.id or sim_an.id -%}
+        <div class="psi-sim pv-reveal">
+          <div class="psi-sim__intro">
+            <span class="psi-sim__tag">Carte SIM M2M Afone</span>
+            <h3>Pas encore de carte SIM&nbsp;? Ajoutez-la à votre commande.</h3>
+            <p>Conçue pour les alarmes, compatible Vigilia + et Touch. Les forfaits grand public peuvent être coupés par l'opérateur s'ils sont utilisés dans une alarme.</p>
+          </div>
+          <div class="psi-sim__offres">
+            {%- if sim_mois.id -%}
+              {%- assign sv = sim_mois.selected_or_first_available_variant -%}
+              <div class="psi-sim__offre">
+                <div class="psi-sim__nom">1 mois inclus</div>
+                <div class="psi-sim__detail">Puis 4,75&nbsp;€/mois sans engagement</div>
+                <div class="psi-sim__prix">{{ sv.price | money }}</div>
+                <button type="button" class="psi-sim__btn" data-psi-ajout="{{ sv.id }}" {% unless sv.available %}disabled{% endunless %}>{% if sv.available %}Ajouter{% else %}Épuisée{% endif %}</button>
+              </div>
+            {%- endif -%}
+            {%- if sim_an.id -%}
+              {%- assign sv = sim_an.selected_or_first_available_variant -%}
+              <div class="psi-sim__offre psi-sim__offre--top">
+                <span class="psi-sim__reco">Tranquillité</span>
+                <div class="psi-sim__nom">1 an prépayé</div>
+                <div class="psi-sim__detail">12 mois réglés d'avance, aucun prélèvement pendant 1 an</div>
+                <div class="psi-sim__prix">{{ sv.price | money }}</div>
+                <button type="button" class="psi-sim__btn psi-sim__btn--plein" data-psi-ajout="{{ sv.id }}" {% unless sv.available %}disabled{% endunless %}>{% if sv.available %}Ajouter{% else %}Épuisée{% endif %}</button>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
     </div>
   </section>
 
@@ -764,7 +815,8 @@
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Notifications instantanées en cas de détection</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Télécommandes incluses pour toute la famille</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Accès partagé : chaque membre du foyer a l'application</li>
+            <li data-psi-rfid {% unless c0.settings.has_rfid %}hidden{% endunless %}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Avec la Vigilia : 2 badges RFID inclus, désarmement sans code</li>
           </ul>
         </div>
       </div>
@@ -808,7 +860,7 @@
         </div>
         <div class="pv-specs__item">
           <dt>Commande</dt>
-          <dd>Application Daewoo Home Connect&#10;2 télécommandes WRC305<span data-psi-rfid {% unless c0.settings.has_rfid %}hidden{% endunless %}>, 2 badges RFID</span></dd>
+          {%- for block in centrales -%}<dd data-psi-idx="{{ forloop.index0 }}" {% unless forloop.first %}hidden{% endunless %}>Application Daewoo Home Connect&#10;1 télécommande WRC305{% if block.settings.has_rfid %}&#10;<strong>2 badges RFID WRF301 inclus</strong> (désarmement sans code){% endif %}</dd>{%- endfor -%}
         </div>
         <div class="pv-specs__item">
           <dt>Abonnement</dt>
@@ -871,7 +923,7 @@
       echo "Jusqu'à quand l'offre est-elle valable ?|Les prix du Pack Sécurité Intégrale sont valables jusqu'au 31 octobre 2026 inclus, dans la limite des stocks disponibles."
       echo "~Ai-je besoin d'un abonnement ?|Non. Vous achetez le pack une seule fois : pas de mensualité, pas de frais cachés. Le pilotage se fait avec l'application Daewoo Home Connect, incluse et gratuite."
       echo "~Quelle centrale choisir ?|Le pack est identique pour les quatre. La Vigilia est la plus simple, au clavier ou au badge (2 badges inclus), en Wi-Fi. La Vigilia + ajoute la 4G en secours. La Touch a un écran tactile couleur de 4,3 pouces et la 4G. La Touch XL a un grand écran de 7 pouces, la 4G et 20 heures de batterie de secours."
-      echo "~À quoi correspond le prix barré ?|C'est le prix des mêmes éléments (centrale, contacteurs, détecteur, télécommandes, caméras, sirène…) achetés séparément sur notre site, via notre configurateur. Le pack vous fait économiser la différence."
+      echo "~À quoi correspond le prix barré ?|C'est le prix des mêmes éléments (centrale, contacteurs, détecteur, télécommande, caméras, sirène…) achetés séparément sur notre site, via notre configurateur. Le pack vous fait économiser la différence."
       echo "~Que se passe-t-il en cas de coupure de courant ou d'internet ?|En cas de coupure de courant, la centrale bascule sur sa batterie de secours : 4 heures pour la Vigilia, la Vigilia + et la Touch, 20 heures pour la Touch XL. Sans internet, la sirène et la détection continuent de fonctionner. Avec la Vigilia +, la Touch ou la Touch XL et une carte SIM installée (non fournie), vous continuez de recevoir les alertes par SMS et appel. Les caméras, elles, ont besoin du Wi-Fi."
       echo "~Comment se passe l'installation ?|Aucune compétence technique requise : branchez la centrale, fixez les détecteurs et suivez les étapes de l'application Daewoo Home Connect. Pour la sirène et la caméra extérieures, quelques vis suffisent."
       echo "~Puis-je ajouter des accessoires plus tard ?|Oui. Détecteurs, contacteurs, claviers, télécommandes ou caméras supplémentaires s'ajoutent à tout moment, directement depuis l'application."
@@ -1041,6 +1093,35 @@
       var voulu = new URLSearchParams(location.search).get('centrale');
       if (voulu && parCle[voulu]) choisir(voulu, false);
 
+      /* Bandeau carte SIM : ajout direct au panier, puis ouverture du tiroir */
+      root.querySelectorAll('[data-psi-ajout]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (b.getAttribute('aria-busy') === 'true') return;
+          b.setAttribute('aria-busy', 'true');
+          var racineUrl = (window.Shopify && Shopify.routes && Shopify.routes.root) || '/';
+          fetch(racineUrl + 'cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ items: [{ id: Number(b.getAttribute('data-psi-ajout')), quantity: 1 }] })
+          })
+            .then(function (r) { return r.json().then(function (d) { if (!r.ok) throw d; return d; }); })
+            .then(function () {
+              if (window.theme && theme.pubsub && theme.pubsub.PUB_SUB_EVENTS) {
+                fetch(racineUrl + 'cart.js').then(function (r) { return r.json(); }).then(function (cart) {
+                  theme.pubsub.publish(theme.pubsub.PUB_SUB_EVENTS.cartUpdate, { source: 'offre-psi', cart: cart });
+                }).catch(function () {});
+              }
+              if (document.querySelector('cart-drawer')) {
+                document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true, detail: { open: true } }));
+              } else {
+                window.location.href = {{ routes.cart_url | json }};
+              }
+            })
+            .catch(function (e) { alert((e && (e.description || e.message)) || "La carte SIM n'a pas pu être ajoutée au panier. Merci de réessayer."); })
+            .finally(function () { b.removeAttribute('aria-busy'); });
+        });
+      });
+
       /* Vignettes : changent la grande photo du pack affiché */
       root.querySelectorAll('[data-pv-thumb]').forEach(function (t) {
         t.addEventListener('click', function () {
@@ -1153,7 +1234,7 @@
     { "type": "text", "id": "end_date", "label": "Fin de l'offre", "default": "2026-10-31T23:59:59+01:00", "info": "Format : 2026-10-31T23:59:59+01:00 (heure de Paris). Vide = compte à rebours masqué." },
     { "type": "text", "id": "title", "label": "Titre (H1)", "default": "Pack Sécurité Intégrale" },
     { "type": "text", "id": "tagline", "label": "Accroche", "default": "Alarme, 2 caméras et sirène solaire. Sans abonnement." },
-    { "type": "textarea", "id": "summary", "label": "Résumé sous l'accroche", "default": "Une centrale au choix, 4 contacteurs, 1 détecteur de mouvement, 2 télécommandes, 2 caméras, 1 sirène solaire et 2 autocollants." },
+    { "type": "textarea", "id": "summary", "label": "Résumé sous l'accroche", "default": "Une centrale au choix, 4 contacteurs, 1 détecteur de mouvement, 1 télécommande, 2 caméras, 1 sirène solaire et 2 autocollants." },
     { "type": "textarea", "id": "sub", "label": "Texte sous le bouton", "default": "Tout pour protéger votre maison, dedans comme dehors. Vous l'installez vous-même, sans technicien, et vous ne payez jamais d'abonnement." }
   ],
   "blocks": [
