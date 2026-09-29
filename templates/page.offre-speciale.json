@@ -1,487 +1,118 @@
 {
   "sections": {
-    "offre": {
-      "type": "offre-psi",
+    "main": {
+      "type": "offre-psi-pv",
       "blocks": {
-        "c_vigilia": {
+        "vigilia": {
           "type": "centrale",
           "settings": {
             "product": "pack-securite-integrale-offre-speciale-vigilia-avec-2-cameras-et-sirene-solaire",
+            "slug": "vigilia",
             "tab_label": "Vigilia",
             "tab_sub": "Wi-Fi",
-            "slug": "vigilia",
+            "badge": "",
             "title": "Pack Sécurité Intégrale · Vigilia",
-            "description": "La plus simple au quotidien : vous armez et désarmez au clavier, d'un badge ou depuis l'application.",
-            "bullet_1": "Clavier et lecteur de badges intégrés, 2 badges inclus",
-            "bullet_2": "Connexion Wi-Fi",
-            "bullet_3": "Batterie de secours 4 h",
+            "description": "La plus simple : clavier et badge, pour toute la famille.",
+            "bullet_1": "Clavier tactile et lecteur de badges intégrés",
+            "bullet_2": "2 badges RFID inclus",
+            "bullet_3": "Connexion Wi-Fi 2,4 GHz",
             "ref_value": "456,79",
             "has_sim": false,
             "has_rfid": true,
-            "centrale_name": "Centrale Vigilia",
-            "centrale_note": "Clavier et lecteur de badges intégrés",
+            "centrale_name": "Centrale d'alarme Vigilia",
+            "centrale_note": "Wi-Fi. Clavier tactile et sirène 85 dB intégrés, batterie de secours 4 h.",
+            "spec_centrale": "Vigilia · clavier tactile et lecteur de badges, sirène 85 dB intégrée",
+            "spec_connectivite": "Wi-Fi 2,4 GHz",
+            "spec_batterie": "4 heures",
             "centrale_image": "shopify://shop_images/Centrale-Vigilia-alarme-daewoo-security.webp"
           }
         },
-        "c_vigilia_plus": {
+        "vigilia_plus": {
           "type": "centrale",
           "settings": {
             "product": "pack-securite-integrale-offre-speciale-vigilia-wifi-4g-avec-2-cameras-et-sirene-solaire-copie",
+            "slug": "vigilia-plus",
             "tab_label": "Vigilia +",
             "tab_sub": "Wi-Fi + 4G",
-            "slug": "vigilia-plus",
+            "badge": "Recommandé",
             "title": "Pack Sécurité Intégrale · Vigilia +",
-            "description": "La Vigilia avec une sécurité en plus : si votre box est coupée, l'alarme continue de vous prévenir grâce à la 4G.",
-            "bullet_1": "Clavier et lecteur de badges intégrés",
-            "bullet_2": "Wi-Fi + 4G (carte SIM non incluse)",
-            "bullet_3": "Batterie de secours 4 h",
+            "description": "La Vigilia, avec la 4G en secours si la box est coupée.",
+            "bullet_1": "Clavier tactile et lecteur de badges intégrés",
+            "bullet_2": "Wi-Fi + 4G (carte SIM non fournie)",
+            "bullet_3": "Alertes SMS et appel même sans internet",
             "ref_value": "499,29",
             "has_sim": true,
             "has_rfid": false,
-            "centrale_name": "Centrale Vigilia +",
-            "centrale_note": "Wi-Fi + 4G, clavier et lecteur de badges",
+            "centrale_name": "Centrale d'alarme Vigilia +",
+            "centrale_note": "Wi-Fi + 4G. Clavier tactile et sirène 85 dB intégrés, batterie de secours 4 h.",
+            "spec_centrale": "Vigilia + · clavier tactile et lecteur de badges, sirène 85 dB intégrée",
+            "spec_connectivite": "Wi-Fi 2,4 GHz + 4G (carte SIM non fournie)",
+            "spec_batterie": "4 heures",
             "centrale_image": "shopify://shop_images/Centrale-Vigilia-alarme-daewoo-security.webp"
           }
         },
-        "c_touch": {
+        "touch": {
           "type": "centrale",
           "settings": {
             "product": "pack-securite-integrale-offre-speciale-touch-am301-wifi-4g-avec-2-cameras-et-sirene-solaire-copie-copie",
+            "slug": "touch",
             "tab_label": "Touch",
             "tab_sub": "Écran 4,3\"",
-            "slug": "touch",
+            "badge": "",
             "title": "Pack Sécurité Intégrale · Touch",
-            "description": "Pour tout voir d'un coup d'œil : un écran tactile couleur chez vous, l'application partout ailleurs.",
+            "description": "Tout voir d'un coup d'œil sur un écran tactile couleur.",
             "bullet_1": "Écran tactile couleur 4,3\"",
-            "bullet_2": "Wi-Fi + 4G (carte SIM non incluse)",
+            "bullet_2": "Wi-Fi + 4G (carte SIM non fournie)",
             "bullet_3": "Batterie de secours 4 h",
             "ref_value": "543,49",
             "has_sim": true,
             "has_rfid": false,
-            "centrale_name": "Centrale Touch AM301",
-            "centrale_note": "Écran tactile couleur 4,3\", Wi-Fi + 4G",
+            "centrale_name": "Centrale d'alarme Touch AM301",
+            "centrale_note": "Écran tactile couleur 4,3\", Wi-Fi + 4G, batterie de secours 4 h.",
+            "spec_centrale": "Touch AM301 · écran tactile couleur 4,3\"",
+            "spec_connectivite": "Wi-Fi 2,4 GHz + 4G (carte SIM non fournie)",
+            "spec_batterie": "4 heures",
             "centrale_image": "shopify://shop_images/01_AM301_centrale_photo_principale.webp",
             "centrale_product": "centrale-touch-am301-avec-ecran-tactile-4-3"
           }
         },
-        "c_touch_xl": {
+        "touch_xl": {
           "type": "centrale",
           "settings": {
             "product": "pack-securite-integrale-offre-speciale-touch-xl-am302-wifi-4g-avec-2-cameras-et-sirene-solaire-copie-copie-copie",
+            "slug": "touch-xl",
             "tab_label": "Touch XL",
             "tab_sub": "Écran 7\"",
-            "slug": "touch-xl",
+            "badge": "",
             "title": "Pack Sécurité Intégrale · Touch XL",
-            "description": "Le grand écran tactile et la plus grande autonomie de la gamme : 20 h de batterie en cas de coupure de courant.",
+            "description": "Le grand écran et la plus longue autonomie de la gamme.",
             "bullet_1": "Grand écran tactile couleur 7\"",
-            "bullet_2": "Wi-Fi + 4G (carte SIM non incluse)",
+            "bullet_2": "Wi-Fi + 4G (carte SIM non fournie)",
             "bullet_3": "Batterie de secours 20 h",
             "ref_value": "591,52",
             "has_sim": true,
             "has_rfid": false,
-            "centrale_name": "Centrale Touch XL AM302",
-            "centrale_note": "Grand écran tactile couleur 7\", Wi-Fi + 4G",
+            "centrale_name": "Centrale d'alarme Touch XL AM302",
+            "centrale_note": "Grand écran tactile couleur 7\", Wi-Fi + 4G, batterie de secours 20 h.",
+            "spec_centrale": "Touch XL AM302 · grand écran tactile couleur 7\"",
+            "spec_connectivite": "Wi-Fi 2,4 GHz + 4G (carte SIM non fournie)",
+            "spec_batterie": "20 heures",
             "centrale_product": "centrale-am302"
-          }
-        },
-        "o_centrale": {
-          "type": "objet",
-          "settings": {
-            "qty": 1,
-            "name": "Centrale",
-            "note": "",
-            "rfid_only": false,
-            "is_centrale": true
-          }
-        },
-        "o_wdv301": {
-          "type": "objet",
-          "settings": {
-            "qty": 4,
-            "name": "Contacteurs d'ouverture",
-            "note": "WDV301 · portes et fenêtres, détectent aussi les vibrations",
-            "rfid_only": false,
-            "is_centrale": false,
-            "product": "contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302"
-          }
-        },
-        "o_wps305": {
-          "type": "objet",
-          "settings": {
-            "qty": 1,
-            "name": "Détecteur de mouvement",
-            "note": "WPS305 · ignore les animaux jusqu'à 10 kg",
-            "rfid_only": false,
-            "is_centrale": false,
-            "product": "detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x"
-          }
-        },
-        "o_wrc305": {
-          "type": "objet",
-          "settings": {
-            "qty": 2,
-            "name": "Télécommandes",
-            "note": "WRC305 · une pour chacun",
-            "rfid_only": false,
-            "is_centrale": false,
-            "product": "telecommande-compatible-vigilia-touch"
-          }
-        },
-        "o_rfid": {
-          "type": "objet",
-          "settings": {
-            "qty": 2,
-            "name": "Badges RFID",
-            "note": "Inclus avec la Vigilia",
-            "rfid_only": true,
-            "is_centrale": false,
-            "product": "pack-de-2-badges-rfid-wrf301"
-          }
-        },
-        "o_ip506p": {
-          "type": "objet",
-          "settings": {
-            "qty": 1,
-            "name": "Caméra intérieure",
-            "note": "IP506P · rotative, Full HD",
-            "rfid_only": false,
-            "is_centrale": false,
-            "product": "camera-interieure-rotative-ip506p"
-          }
-        },
-        "o_w512mw": {
-          "type": "objet",
-          "settings": {
-            "qty": 1,
-            "name": "Caméra extérieure solaire",
-            "note": "W512MW · rotative, 1440p",
-            "rfid_only": false,
-            "is_centrale": false,
-            "product": "camera-w512mw-exterieure-rotative-1440p-avec-panneau-solaire"
-          }
-        },
-        "o_wos305s": {
-          "type": "objet",
-          "settings": {
-            "qty": 1,
-            "name": "Sirène extérieure solaire",
-            "note": "WOS305S · dissuasive, sans câble",
-            "rfid_only": false,
-            "is_centrale": false,
-            "product": "sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire"
-          }
-        },
-        "o_stickers": {
-          "type": "objet",
-          "settings": {
-            "qty": 2,
-            "name": "Autocollants",
-            "note": "« Maison sous surveillance »",
-            "rfid_only": false,
-            "is_centrale": false,
-            "product": "autocollants-propriete-sous-video-surveillance-x10"
-          }
-        },
-        "f_maison": {
-          "type": "fonction",
-          "settings": {
-            "icon": "home",
-            "title": "Mode Maison",
-            "text": "Vous êtes chez vous ? Les portes et fenêtres restent sous surveillance, mais vous circulez librement sans déclencher le détecteur de mouvement. Idéal pour la nuit.",
-            "modes": "Absent, Maison*, Désarmé",
-            "dark": false,
-            "sim_only": false
-          }
-        },
-        "f_tempo": {
-          "type": "fonction",
-          "settings": {
-            "icon": "horloge",
-            "title": "Temporisation d'entrée et de sortie",
-            "text": "Vous armez en partant : vous avez le temps de sortir. En rentrant, vous avez quelques secondes pour désarmer avant que la sirène ne se déclenche. La durée se règle dans l'application.",
-            "modes": "",
-            "dark": false,
-            "sim_only": false
-          }
-        },
-        "f_sim": {
-          "type": "fonction",
-          "settings": {
-            "icon": "wifi-off",
-            "title": "Carte SIM 4G : l'alerte passe toujours",
-            "text": "Box en panne ou coupée par un cambrioleur ? Avec une carte SIM (non incluse), la centrale bascule sur le réseau mobile et continue de vous prévenir. Un petit forfait de l'opérateur de votre choix suffit, sans abonnement Daewoo. Les caméras, elles, ont besoin du Wi-Fi.",
-            "modes": "",
-            "dark": true,
-            "sim_only": true
-          }
-        },
-        "f_cameras": {
-          "type": "fonction",
-          "settings": {
-            "icon": "camera",
-            "title": "2 caméras, dedans et dehors",
-            "text": "La caméra intérieure rotative et la caméra extérieure solaire se regardent en direct depuis votre téléphone : en cas d'alerte, vous vérifiez avant de réagir.",
-            "modes": "",
-            "dark": false,
-            "sim_only": false
-          }
-        },
-        "f_sirene": {
-          "type": "fonction",
-          "settings": {
-            "icon": "bell",
-            "title": "Sirène solaire dissuasive",
-            "text": "Posée en façade, elle se voit depuis la rue et retentit à 110 dB en cas d'intrusion. Rechargée par le soleil : aucun câble à tirer.",
-            "modes": "",
-            "dark": false,
-            "sim_only": false
-          }
-        },
-        "f_app": {
-          "type": "fonction",
-          "settings": {
-            "icon": "phone",
-            "title": "Tout depuis votre téléphone",
-            "text": "Armez, désarmez, recevez les alertes et regardez les caméras avec l'application Daewoo Home Connect, où que vous soyez. Les télécommandes restent là pour toute la famille.",
-            "modes": "",
-            "dark": false,
-            "sim_only": false
           }
         }
       },
       "block_order": [
-        "c_vigilia",
-        "c_vigilia_plus",
-        "c_touch",
-        "c_touch_xl",
-        "o_centrale",
-        "o_wdv301",
-        "o_wps305",
-        "o_wrc305",
-        "o_rfid",
-        "o_ip506p",
-        "o_w512mw",
-        "o_wos305s",
-        "o_stickers",
-        "f_maison",
-        "f_tempo",
-        "f_sim",
-        "f_cameras",
-        "f_sirene",
-        "f_app"
+        "vigilia",
+        "vigilia_plus",
+        "touch",
+        "touch_xl"
       ],
       "settings": {
         "end_date": "2026-10-31T23:59:59+01:00"
       }
-    },
-    "calcul": {
-      "type": "dw-home-savings",
-      "settings": {
-        "eyebrow": "Le calcul est vite fait",
-        "title": "Payez une fois. Plus jamais d'abonnement.",
-        "text": "",
-        "them_label": "Alarme avec télésurveillance",
-        "competitor_monthly": 35,
-        "competitor_monthly_max": 40,
-        "years": 3,
-        "them_note": "Et les prélèvements continuent.",
-        "us_label": "Pack Sécurité Intégrale",
-        "us_product": "pack-securite-integrale-offre-speciale-vigilia-avec-2-cameras-et-sirene-solaire",
-        "us_note": "Alarme, 2 caméras, sirène et application inclus.",
-        "us_point_1": "Sans contrat ni engagement",
-        "us_point_2": "Le matériel est à vous",
-        "us_point_3": "Il vous suit si vous déménagez",
-        "saving_text": "Sur [ans] ans, vous gardez jusqu'à [economie] € dans votre poche.",
-        "cta_label": "Choisir ma centrale",
-        "cta_link": "",
-        "footnote": "*Abonnements de télésurveillance constatés en France : [mensuel] € par mois."
-      }
-    },
-    "avis": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_psi": {
-          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "show_sample_reviews": true,
-            "reviews_selection": "featured_reviews",
-            "products": [],
-            "filter_pinned": false,
-            "filter_featured": false,
-            "filter_custom_tags": "",
-            "star_rating": "4_to_5_star",
-            "show_review_media": true,
-            "display_order": "most_recent",
-            "no_image_fallback": "product_image",
-            "max_reviews": 10,
-            "review_length": "small",
-            "text_size": "small",
-            "image_ratio": "0.75",
-            "reviews_shown": 4,
-            "show_reviewer_name": true,
-            "show_product_name": true,
-            "hide_arrows_mobile": true,
-            "arrows_position": "sides",
-            "max_width": 1100,
-            "corner_styling": "soft",
-            "header_text_color": "#000000",
-            "text_color": "#000000",
-            "card_color": "#f9f9f9",
-            "stars_color": "",
-            "arrows_color": "#000000",
-            "transition_speed": 5,
-            "header_text": "Ce qu'en disent nos clients",
-            "show_average_rating": true,
-            "rating_display": "default"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_psi"
-      ],
-      "settings": {
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 56,
-        "padding_bottom": 56,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
-    "faq": {
-      "type": "dw-home-faq",
-      "blocks": {
-        "q_duree": {
-          "type": "qa",
-          "settings": {
-            "question": "Jusqu'à quand l'offre est-elle valable ?",
-            "answer": "<p>Les prix de l'offre Pack Sécurité Intégrale sont valables <strong>jusqu'au 31 octobre 2026 inclus</strong>, dans la limite des stocks disponibles.</p>"
-          }
-        },
-        "q_choix": {
-          "type": "qa",
-          "settings": {
-            "question": "Quelle centrale choisir ?",
-            "answer": "<p>Le pack est identique pour les 4 centrales, seule la centrale change.</p><p><strong>Vigilia</strong> : la plus simple, au clavier ou au badge (2 badges inclus), en Wi-Fi. <strong>Vigilia +</strong> : la même, avec la 4G en secours si votre box est coupée. <strong>Touch</strong> : un écran tactile couleur de 4,3\" et la 4G. <strong>Touch XL</strong> : un grand écran de 7\", la 4G et 20 h de batterie de secours.</p><p>Un doute ? <a href=\"/pages/contact\">Notre équipe vous conseille</a>.</p>"
-          }
-        },
-        "q_barre": {
-          "type": "qa",
-          "settings": {
-            "question": "À quoi correspond le prix barré ?",
-            "answer": "<p>C'est le prix des mêmes éléments (centrale, contacteurs, détecteur, télécommandes, caméras, sirène…) achetés séparément sur notre site, via notre configurateur. Le pack vous fait économiser la différence.</p>"
-          }
-        },
-        "q_abo": {
-          "type": "qa",
-          "settings": {
-            "question": "Y a-t-il vraiment aucun abonnement ?",
-            "answer": "<p>Oui, à 100 %. Vous achetez le matériel une fois et il est à vous : notifications sur smartphone, sirène, caméras et pilotage à distance via l'application <strong>Daewoo Home Connect</strong>, <strong>sans le moindre frais mensuel, à vie</strong>.</p>"
-          }
-        },
-        "q_sim": {
-          "type": "qa",
-          "settings": {
-            "question": "Que se passe-t-il en cas de coupure de courant ou de Wi-Fi ?",
-            "answer": "<p><strong>Coupure de courant :</strong> la centrale bascule automatiquement sur sa <strong>batterie de secours</strong> : 4 h pour la Vigilia et la Touch, <strong>20 h</strong> pour la Touch XL.</p><p><strong>Coupure de Wi-Fi :</strong> la sirène reste active et dissuade l'intrus. Avec la Vigilia +, la Touch et la Touch XL, il suffit d'insérer une <strong>carte SIM (non incluse)</strong> pour que la centrale continue de vous alerter par le réseau mobile. Les caméras, elles, ont besoin du Wi-Fi.</p>"
-          }
-        },
-        "q_install": {
-          "type": "qa",
-          "settings": {
-            "question": "L'installation est-elle compliquée ?",
-            "answer": "<p>Non, tout est prévu pour être <strong>posé soi-même, sans technicien</strong>. Les détecteurs sont sans fil et se posent en quelques minutes ; pour la sirène et les caméras extérieures, quelques vis suffisent. L'application vous guide pas à pas.</p>"
-          }
-        },
-        "q_animaux": {
-          "type": "qa",
-          "settings": {
-            "question": "J'ai un animal : vais-je avoir des fausses alertes ?",
-            "answer": "<p>Le détecteur de mouvement fourni <strong>ignore les animaux jusqu'à 10 kg</strong>. Vous pouvez aussi ajuster sa sensibilité dans l'application.</p>"
-          }
-        },
-        "q_evol": {
-          "type": "qa",
-          "settings": {
-            "question": "Puis-je ajouter des accessoires plus tard ?",
-            "answer": "<p>Oui. Détecteurs, contacteurs, clavier ou caméras supplémentaires s'ajoutent à tout moment. Vous trouverez les accessoires compatibles en bas de cette page.</p>"
-          }
-        },
-        "q_garantie": {
-          "type": "qa",
-          "settings": {
-            "question": "Quelle garantie, quelle livraison ?",
-            "answer": "<p>Tout le matériel est <strong>garanti 2 ans</strong>, avec un <strong>support client basé en France</strong>. Expédition le jour même pour toute commande passée avant midi (hors week-end), puis 48 h en Colissimo ou 2 à 3 jours en point relais. Vous disposez de <strong>14 jours</strong> pour changer d'avis.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "q_duree",
-        "q_choix",
-        "q_barre",
-        "q_abo",
-        "q_sim",
-        "q_install",
-        "q_animaux",
-        "q_evol",
-        "q_garantie"
-      ],
-      "settings": {
-        "eyebrow": "Questions fréquentes",
-        "title": "Tout savoir sur l'offre.",
-        "schema_markup": true,
-        "more_text": "Une autre question ?",
-        "more_label": "Écrivez à notre équipe",
-        "more_link": "/pages/contact",
-        "visibles": 5
-      }
-    },
-    "accessoires": {
-      "type": "offre-psi-accessoires",
-      "settings": {
-        "products": [
-          "contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302",
-          "configurateur-pack-de-3-contacteur-douverture-vibration-2-en-1-wdv301",
-          "detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x",
-          "configurateur-pack-de-3-detecteurs-de-mouvement-animaux-wps305",
-          "clavier-wke301-avec-2-badges-rfid",
-          "pack-de-2-badges-rfid-wrf301",
-          "telecommande-compatible-vigilia-touch",
-          "camera-interieure-rotative-ip506p"
-        ],
-        "limit": 8,
-        "link_label": "Voir tous les accessoires",
-        "link": "/collections/tous-les-accessoires"
-      }
-    },
-    "final": {
-      "type": "dw-home-final-cta",
-      "settings": {
-        "title": "L'offre se termine le 31 octobre.",
-        "text": "Alarme, 2 caméras et sirène solaire, posés par vous. Et plus jamais d'abonnement.",
-        "cta_1_label": "Choisir ma centrale",
-        "cta_1_link": "",
-        "cta_2_label": "",
-        "cta_2_link": "",
-        "meta": "Expédié sous 24 h · Garantie 2 ans · Retour sous 14 jours",
-        "notif_title": "Alarme activée",
-        "notif_text": "Votre maison est protégée"
-      }
     }
   },
   "order": [
-    "offre",
-    "calcul",
-    "avis",
-    "faq",
-    "accessoires",
-    "final"
+    "main"
   ]
 }
