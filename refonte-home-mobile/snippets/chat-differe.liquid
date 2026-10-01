@@ -32,6 +32,8 @@
         if (charge) return;
         charge = true;
         gestes.forEach(function (g) { window.removeEventListener(g, charger, options); });
+        // Sécurité : si l'intégration d'application Chatbase est restée activée, on ne charge pas le chat une 2e fois.
+        if (document.querySelector('script[src*="chatbase.co/embed"]')) return;
         var s = document.createElement('script');
         s.src = 'https://www.chatbase.co/embed.min.js';
         s.id = {{ chatbot | json }};
