@@ -1,0 +1,48 @@
+{%- comment -%}
+  Chat Chatbase chargé au premier geste du visiteur (défilement, toucher, clavier, souris)
+  ou 6 secondes après le chargement de la page, au premier des deux.
+  Le téléphone n'a donc plus à exécuter le script du chat pendant l'affichage de la page.
+  Remplace l'intégration d'application « Chatbase » : la laisser désactivée dans l'éditeur
+  de thème, sinon le chat serait chargé deux fois.
+  L'identifiant du chatbot est celui enregistré par l'application Chatbase dans la boutique.
+{%- endcomment -%}
+{%- assign chatbot = shop.metafields.chatbase.chatbot_id.value | default: shop.metafields.chatbase.chatbot_id -%}
+{%- if chatbot != blank and request.design_mode == false -%}
+  <script>
+    (function () {
+      // File d'attente officielle de Chatbase : les appels window.chatbase(...) faits avant le chargement sont conservés.
+      if (!window.chatbase || window.chatbase('getState') !== 'initialized') {
+        window.chatbase = function () {
+          if (!window.chatbase.q) window.chatbase.q = [];
+          window.chatbase.q.push(arguments);
+        };
+        window.chatbase = new Proxy(window.chatbase, {
+          get: function (cible, prop) {
+            if (prop === 'q') return cible.q;
+            return function () { return cible.apply(null, [prop].concat([].slice.call(arguments))); };
+          }
+        });
+      }
+
+      var charge = false;
+      var gestes = ['scroll', 'pointerdown', 'touchstart', 'keydown', 'mousemove'];
+      var options = { passive: true };
+
+      function charger() {
+        if (charge) return;
+        charge = true;
+        gestes.forEach(function (g) { window.removeEventListener(g, charger, options); });
+        var s = document.createElement('script');
+        s.src = 'https://www.chatbase.co/embed.min.js';
+        s.id = {{ chatbot | json }};
+        s.domain = 'www.chatbase.co';
+        s.setAttribute('domain', 'www.chatbase.co');
+        document.body.appendChild(s);
+      }
+
+      gestes.forEach(function (g) { window.addEventListener(g, charger, options); });
+      if (document.readyState === 'complete') setTimeout(charger, 6000);
+      else window.addEventListener('load', function () { setTimeout(charger, 6000); });
+    })();
+  </script>
+{%- endif -%}
