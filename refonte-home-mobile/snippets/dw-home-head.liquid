@@ -1,9 +1,23 @@
 {%- comment -%}
-  Styles et police de la home V2. Appelé en tête de chaque section dw-home-* :
-  le navigateur ne télécharge les fichiers qu'une seule fois.
+  Police et styles de la home V2.
+  - Page d'accueil : rendu une seule fois dans <head> par layout/theme.liquid (dans_head: true).
+    Les appels faits par chaque section ne sortent alors plus rien.
+  - Autre modèle (section ajoutée ailleurs) : la section charge elle-même les styles.
+  La police Instrument Sans est hébergée dans le thème (assets) : aucune connexion à Google.
 {%- endcomment -%}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
-{{ 'dw-home.css' | asset_url | stylesheet_tag }}
-{{ 'dw-home-quiz.css' | asset_url | stylesheet_tag }}
+{%- if dans_head or template.name != 'index' -%}
+  {%- assign police = 'instrument-sans-latin.woff2' | asset_url -%}
+  {%- if dans_head -%}<link rel="preload" href="{{ police }}" as="font" type="font/woff2" crossorigin>{%- endif -%}
+  <style>
+    @font-face {
+      font-family: 'Instrument Sans';
+      font-style: normal;
+      font-weight: 400 700;
+      font-stretch: 75% 100%;
+      font-display: swap;
+      src: url({{ police }}) format('woff2');
+    }
+  </style>
+  {{ 'dw-home.css' | asset_url | stylesheet_tag }}
+  {{ 'dw-home-quiz.css' | asset_url | stylesheet_tag }}
+{%- endif -%}

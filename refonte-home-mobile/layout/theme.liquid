@@ -17,6 +17,11 @@
 
     <link rel="stylesheet" href="{{ 'apps.css' | asset_url }}" media="print" fetchpriority="low" onload="this.media='all'">
 
+    {%- comment -%} Home V2 : police et styles chargés ici, une seule fois, plutôt que dans chaque section. {%- endcomment -%}
+    {%- if template.name == 'index' -%}
+      {%- render 'dw-home-head', dans_head: true -%}
+    {%- endif -%}
+
     {%- comment -%}
       ── Ajout 02/09/2026 ──
       Le thème diffère le chargement des images avec lazysizes : la balise part
