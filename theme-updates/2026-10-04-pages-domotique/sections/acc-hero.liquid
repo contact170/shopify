@@ -7,6 +7,18 @@
   .accp-badge{display:inline-flex;align-items:center;gap:7px;margin-top:18px;padding:8px 17px;
     border-radius:980px;border:1px solid var(--accp-filet);background:#fff;font-size:16px;color:var(--accp-doux)}
   .accp-badge b{color:var(--accp-encre);font-weight:600}
+  .accp-formats{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;border:0;margin:0;padding:0;max-width:540px}
+  .accp-formats legend{width:100%;text-align:center;font-size:15px;color:var(--accp-doux);margin-bottom:10px;padding:0}
+  .accp-format{position:relative;flex:1 1 220px;cursor:pointer}
+  .accp-format input{position:absolute;opacity:0;pointer-events:none}
+  .accp-format span{display:flex;flex-direction:column;gap:3px;height:100%;padding:14px 18px;border-radius:16px;
+    border:1.5px solid var(--accp-filet);background:#fff;text-align:left;transition:border-color .18s,box-shadow .18s}
+  .accp-format b{font-weight:600;font-size:16px;color:var(--accp-encre)}
+  .accp-format small{font-size:15px;color:var(--accp-doux);font-variant-numeric:tabular-nums}
+  .accp-format input:checked + span{border-color:var(--accp-encre);box-shadow:0 0 0 1px var(--accp-encre)}
+  .accp-format input:focus-visible + span{outline:2px solid var(--accp-bleu);outline-offset:3px}
+  .accp-format input:disabled + span{opacity:.45;cursor:not-allowed}
+  .accp-prix s{color:var(--accp-doux);font-weight:400;font-size:.72em;margin-right:6px}
 </style>
 
 {%- liquid
@@ -66,7 +78,8 @@
     « l'unite » est faux pour un lot (pack de 3 IVR501W...). Le metachamp
     custom.mention_prix remplace la mention fiche par fiche.
   endcomment
-  assign mention_prix = product.metafields.custom.mention_prix.value | default: section.settings.mention_prix
+  assign mention_prix = v.metafields.custom.mention_prix.value | default: product.metafields.custom.mention_prix.value | default: section.settings.mention_prix
+  assign mention_defaut = product.metafields.custom.mention_prix.value | default: section.settings.mention_prix
 -%}
 
 <div class="accp">
@@ -125,8 +138,42 @@
            data-accp-devise=" &euro;"
            data-accp-max="{{ section.settings.quantite_max }}">
 
-        <p class="accp-prix">{{ v.price | money }}
-          {%- if mention_prix != blank %} <small>&middot; {{ mention_prix }}</small>{% endif -%}
+        {%- comment -%}
+          Produits a declinaisons (IVR501W : unite / pack de 3) : choix du
+          format en cartes radio. Le script en bas de section met a jour
+          l'identifiant de variante des deux formulaires (en-tete et barre
+          fixe), le prix, le prix barre et l'URL.
+        {%- endcomment -%}
+        {%- unless product.has_only_default_variant -%}
+          <fieldset class="accp-formats" data-accp-formats>
+            <legend>{{ product.options.first }}</legend>
+            {%- for variante in product.variants -%}
+              {%- assign mention_v = variante.metafields.custom.mention_prix.value | default: mention_defaut -%}
+              <label class="accp-format">
+                <input type="radio" name="accp-format" value="{{ variante.id }}"
+                       {% if variante.id == v.id %}checked{% endif %}
+                       {% unless variante.available %}disabled{% endunless %}
+                       data-prix="{{ variante.price }}"
+                       data-prix-texte="{{ variante.price | money | escape }}"
+                       data-barre="{% if variante.compare_at_price > variante.price %}{{ variante.compare_at_price | money | escape }}{% endif %}"
+                       data-mention="{{ mention_v | escape }}">
+                <span>
+                  <b>{{ variante.title }}</b>
+                  <small>
+                    {%- if variante.compare_at_price > variante.price -%}<s>{{ variante.compare_at_price | money }}</s> {% endif -%}
+                    {{ variante.price | money }}
+                    {%- unless variante.available %} &middot; indisponible{% endunless -%}
+                  </small>
+                </span>
+              </label>
+            {%- endfor -%}
+          </fieldset>
+        {%- endunless -%}
+
+        <p class="accp-prix">
+          {%- if v.compare_at_price > v.price -%}<s data-accp-prix-barre>{{ v.compare_at_price | money }}</s>{%- else -%}<s data-accp-prix-barre hidden></s>{%- endif -%}
+          <span data-accp-prix-texte>{{ v.price | money }}</span>
+          <small data-accp-mention {% if mention_prix == blank %}hidden{% endif %}> &middot; {{ mention_prix }}</small>
         </p>
 
         {%- if conseil != blank -%}
@@ -134,7 +181,11 @@
           <p class="accp-conseil"><b>{{ morceaux[0] }}.</b>{{ conseil | remove_first: morceaux[0] | remove_first: '.' }}</p>
         {%- endif -%}
 
-        {%- form 'product', product, id: 'accp-form', novalidate: 'novalidate' -%}
+        {%- comment -%}
+          is="product-form" : le formulaire passe par le composant du theme,
+          qui ajoute en AJAX et ouvre le panier lateral au lieu de la page panier.
+        {%- endcomment -%}
+        {%- form 'product', product, id: 'accp-form', novalidate: 'novalidate', is: 'product-form' -%}
           <input type="hidden" name="id" value="{{ v.id }}">
           <input type="hidden" name="quantity" value="1" data-accp-champ>
           <div class="accp-ligne">
@@ -175,6 +226,37 @@
     </div>
   </section>
 </div>
+
+{%- unless product.has_only_default_variant -%}
+<script>
+  (function () {
+    var groupe = document.querySelector('[data-accp-formats]');
+    if (!groupe) return;
+    groupe.addEventListener('change', function (e) {
+      var r = e.target;
+      if (!r || r.name !== 'accp-format') return;
+      document.querySelectorAll('#accp-form [name="id"], #accp-form-barre [name="id"]').forEach(function (i) { i.value = r.value; });
+      document.querySelectorAll('[data-accp-prix-texte]').forEach(function (p) { p.textContent = r.dataset.prixTexte; });
+      document.querySelectorAll('[data-accp-prix-barre]').forEach(function (b) {
+        b.textContent = r.dataset.barre || '';
+        b.hidden = !r.dataset.barre;
+      });
+      document.querySelectorAll('[data-accp-mention]').forEach(function (m) {
+        m.textContent = r.dataset.mention ? ' · ' + r.dataset.mention : '';
+        m.hidden = !r.dataset.mention;
+      });
+      var zone = document.querySelector('[data-accp-prix-unite]');
+      if (zone) zone.dataset.accpPrixUnite = r.dataset.prix;
+      document.dispatchEvent(new CustomEvent('accp:variante', { detail: { id: r.value } }));
+      try {
+        var url = new URL(window.location.href);
+        url.searchParams.set('variant', r.value);
+        history.replaceState(null, '', url.toString());
+      } catch (err) {}
+    });
+  })();
+</script>
+{%- endunless -%}
 
 <script type="application/ld+json">
   {{- product | structured_data -}}

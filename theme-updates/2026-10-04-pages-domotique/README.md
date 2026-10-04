@@ -21,7 +21,7 @@ titre et méta-description SEO, textes alternatifs des images.
 | Distributeur NutriVision 501C | `distributeur-de-croquettes-connecte-avec-camera-nutrivision-501c` | bandeau `nutrivision-501c`, faq `nutrivision-501c` |
 | Montre SW101 | `montre-connectee-sw101` | bandeau `sw101`, faq `sw101` |
 | Interrupteur volet roulant IVR501W | `interrupteur-pour-volet-roulant-ivr501w` | bandeau `ivr501w`, faq `ivr501w`, rôle `volet-roulant` |
-| Pack de 3 IVR501W | `pack-de-3-interrupteurs-pour-volet-roulant-ivr501w` | bandeau `ivr501w-pack-3`, faq `ivr501w-pack-3`, rôle `volet-roulant` |
+| Pack de 3 IVR501W | `pack-de-3-interrupteurs-pour-volet-roulant-ivr501w` | regroupé dans la fiche IVR501W (voir ci-dessous) ; à passer en brouillon + redirection après publication du thème |
 
 Métaobjets « rôle » existants réécrits : `visiophone`, `interrupteur-lumiere` (partagé par les
 deux interrupteurs), `distributeur-de-croquette`, `montre-connectee`.
@@ -43,6 +43,27 @@ Thème : **« Version finale 04102026 + pages domotique (Claude) »**
 
 La collection `eclairage-prises-connectees` utilise déjà le modèle `eclairage-prises-connectees` :
 tant que la copie n'est pas publiée, Shopify affiche le modèle de collection par défaut.
+
+### IVR501W : unité et pack de 3 regroupés (comme la SP502F)
+
+- Fiche `interrupteur-pour-volet-roulant-ivr501w` : option « Choisissez votre option », déclinaisons
+  « Un interrupteur IVR501W » (34,90 €) et « Pack de 3 interrupteurs IVR501W » (99,90 €, barré 104,70 €,
+  SKU DAIVRW501WP3, EAN 3760285861518, 404 en stock, métachamp de variante `custom.mention_prix` = « le lot de 3 »).
+- Ancienne fiche pack : encore active. Après publication du thème : la passer en brouillon et créer la
+  redirection `/products/pack-de-3-interrupteurs-pour-volet-roulant-ivr501w` → `/products/interrupteur-pour-volet-roulant-ivr501w?variant=57412008640852`.
+
+### Panier latéral
+
+Les formulaires du gabarit premium (`acc-hero`, `acc-barre`, `acc-option`) utilisent désormais
+`is="product-form"` : l'ajout se fait en AJAX et ouvre le panier latéral du thème au lieu de la page panier.
+
+| Fichier | Changement |
+|---|---|
+| `sections/acc-hero.liquid` | Sélecteur de format pour les produits à déclinaisons, prix barré, `is="product-form"` |
+| `sections/acc-barre.liquid` | `is="product-form"`, prix synchronisé avec le format choisi |
+| `sections/acc-option.liquid` | `is="product-form"` |
+| `assets/acc-premium.js` | Total recalculé quand le format change |
+| `templates/collection.volets-roulants-connectes.json` | Nouveau : hero, 2 cartes (unité / pack), 4 arguments, FAQ |
 
 ## 3. SEO des collections — EN LIGNE
 

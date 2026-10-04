@@ -1,0 +1,242 @@
+{
+  "sections": {
+    "volets_hero": {
+      "type": "camera-hero",
+      "settings": {
+        "eyebrow": "Maison connectée",
+        "heading": "Volets roulants connectés",
+        "subheading": "<p>Ouvrez, fermez et programmez vos volets roulants depuis votre téléphone ou à la voix. Un interrupteur Wi-Fi à poser à la place de l'existant, sans passerelle et sans abonnement.</p>",
+        "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IVR501.jpg?v=1776432463",
+        "blur_amount": 8,
+        "min_height": 560,
+        "min_height_mobile": 460,
+        "show_scroll_cue": true,
+        "scroll_target": "gamme"
+      }
+    },
+    "volets_gamme": {
+      "type": "camera-range-showcase",
+      "blocks": {
+        "card_1": {
+          "type": "range_card",
+          "settings": {
+            "size": "large",
+            "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/products/interrupteur-pour-volet-roulant-ivr501w-181606.jpg?v=1763975781",
+            "eyebrow": "À l'unité",
+            "heading": "Interrupteur volet roulant IVR501W",
+            "description": "Un volet piloté au doigt, depuis l'application ou à la voix. Programmation horaire incluse.",
+            "link": "/products/interrupteur-pour-volet-roulant-ivr501w?variant=40308170817689",
+            "accent_color": "#5b8def"
+          }
+        },
+        "card_2": {
+          "type": "range_card",
+          "settings": {
+            "size": "large",
+            "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/IVR501.jpg?v=1776432463",
+            "eyebrow": "Pack de 3",
+            "heading": "3 interrupteurs IVR501W",
+            "description": "Équipez trois volets et fermez toute la maison d'un seul geste.",
+            "link": "/products/interrupteur-pour-volet-roulant-ivr501w?variant=57412008640852",
+            "accent_color": "#0071e3"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2"
+      ],
+      "settings": {
+        "subheading": "La gamme",
+        "heading": "Un interrupteur par volet",
+        "description": "<p>L'IVR501W remplace l'interrupteur filaire de votre volet roulant électrique. À l'unité, ou en pack de 3 pour toute la maison.</p>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "padding_top": 72,
+        "padding_bottom": 48,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "volets_arguments": {
+      "type": "multicolumn-with-icons",
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "icon": "shield",
+            "custom_icon": "",
+            "heading": "<strong>Simulation de présence</strong>",
+            "text": "<p>Volets ouverts le matin, fermés le soir, même en vacances : la maison paraît habitée.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "icon": "phone",
+            "custom_icon": "",
+            "heading": "<strong>Application et commande vocale</strong>",
+            "text": "<p>Daewoo Home Connect, Google Assistant ou Amazon Alexa : commandez vos volets comme vous voulez.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+            "icon": "time",
+            "custom_icon": "",
+            "heading": "<strong>Programmation horaire</strong>",
+            "text": "<p>Fraîcheur l'été, chaleur conservée l'hiver : vos volets suivent vos horaires, automatiquement.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_4": {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "custom_icon": "",
+            "heading": "<strong>Avec votre alarme, sans abonnement</strong>",
+            "text": "<p>Fermez tous les volets à l'armement de l'alarme Daewoo. Aucun frais mensuel.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2",
+        "column_3",
+        "column_4"
+      ],
+      "settings": {
+        "style": "with-border",
+        "columns": 4,
+        "text_alignment": "left",
+        "heading": "Pourquoi connecter vos volets",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 48,
+        "padding_bottom": 24,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "volets_faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "title": "Mon volet roulant est-il compatible ?",
+            "text": "<p>L'IVR501W remplace un interrupteur mural filaire de volet roulant électrique (commande montée / descente). Si votre volet se commande déjà par un interrupteur mural, il est compatible. S'il se commande uniquement par une télécommande radio, l'IVR501W ne convient pas.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "title": "Faut-il un fil neutre ?",
+            "text": "<p>Oui. Le fil neutre est obligatoire dans le boîtier d'encastrement (standard Ø 60 mm, profondeur 27 mm minimum). Vérifiez sa présence avant l'achat, courant coupé au disjoncteur.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "title": "Ai-je besoin d'une passerelle ou d'un abonnement ?",
+            "text": "<p>Non. Chaque interrupteur se connecte directement au Wi-Fi 2,4 GHz de votre box et se pilote avec l'application gratuite Daewoo Home Connect, sans abonnement.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "title": "Puis-je fermer tous mes volets en même temps ?",
+            "text": "<p>Oui. Regroupez vos volets dans l'application pour tout fermer d'un geste, programmez un horaire commun ou créez un scénario déclenché par l'armement de votre alarme Daewoo.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "title": "Combien coûte le pack de 3 ?",
+            "text": "<p>Le pack de 3 interrupteurs IVR501W est à 99,90 € au lieu de 104,70 € pour trois interrupteurs achetés séparément.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {
+        "style": "with-border",
+        "heading": "Questions fréquentes",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "color_overlay": "#ffffff",
+        "overlay_opacity": 4,
+        "padding_top": 56,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "volets_hero",
+    "volets_gamme",
+    "volets_arguments",
+    "volets_faq"
+  ]
+}
