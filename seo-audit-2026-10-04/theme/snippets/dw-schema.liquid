@@ -1,0 +1,117 @@
+{%- comment -%}
+  ── Ajout 04/10/2026 (audit SEO/GEO) ──
+  Données structurées globales, rendues depuis layout/theme.liquid :
+  - Accueil : Organization + WebSite. Le même balisage existait dans
+    snippets/dw-faq.liquid, mais ce snippet n'est plus appelé par aucune
+    section : l'accueil n'émettait plus que le FAQPage de dw-home-faq.
+  - Fiches produit et collections : BreadcrumbList, sauf sur les gabarits
+    dont la section landing émet déjà son propre fil d'Ariane (liste
+    dw_bc_skip ci-dessous, à compléter si une nouvelle landing en ajoute un).
+  - Gabarit prise-connectee : Product, absent car ce gabarit n'utilise que
+    des blocs « Liquid personnalisé » (pas de section main-product).
+  Pour annuler : supprimer l'appel render 'dw-schema' dans theme.liquid.
+{%- endcomment -%}
+
+{%- if request.page_type == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "{{ shop.url }}/#organization",
+  "name": "Daewoo Security",
+  "url": "{{ shop.url }}",
+  {%- if settings.logo != blank %}
+  "logo": "https:{{ settings.logo | image_url: width: 500 }}",
+  {%- endif %}
+  "description": "Alarmes et caméras connectées sans abonnement pour la maison. Installation en 30 minutes, application gratuite, support client en France.",
+  "legalName": "Liz Invest - Daewoo Security",
+  "brand": { "@type": "Brand", "name": "Daewoo" },
+  "areaServed": ["FR", "BE"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mérignac",
+    "addressRegion": "Nouvelle-Aquitaine",
+    "addressCountry": "FR"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    {%- if shop.phone != blank %}
+    "telephone": {{ shop.phone | json }},
+    {%- endif %}
+    {%- if shop.email != blank %}
+    "email": {{ shop.email | json }},
+    {%- endif %}
+    "areaServed": ["FR", "BE"],
+    "availableLanguage": ["French"]
+  },
+  "sameAs": [
+    "https://www.facebook.com/profile.php?id=100063456644012",
+    "https://www.instagram.com/daewoosecurity/",
+    "https://www.youtube.com/@daewoosecurity3029"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "{{ shop.url }}/#website",
+  "name": "Daewoo Security",
+  "url": "{{ shop.url }}",
+  "inLanguage": "fr-FR",
+  "publisher": { "@id": "{{ shop.url }}/#organization" },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{%- endif -%}
+
+{%- if request.page_type == 'product' -%}
+  {%- liquid
+    assign dw_bc_skip = 'eliteoffre1,eliteoffre3,pa570,pa571,pa572,pa573,pa574,pack-touch-2,pack-touch-exclusive,pack-vigilia-2cameras,pack-vigilia,starter-pack-touch,starter-pack-vigilia,starterelite,vig501,vig502,vig503,vig504,vig505,vig506,vig507' | split: ','
+    assign dw_suffix = template.suffix | default: ''
+  -%}
+  {%- unless dw_bc_skip contains dw_suffix -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": {{ shop.url | json }} },
+    {%- if collection and collection.handle != 'all' %}
+    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ shop.url | append: collection.url | json }} },
+    { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ shop.url | append: product.url | json }} }
+    {%- else %}
+    { "@type": "ListItem", "position": 2, "name": {{ product.title | json }}, "item": {{ shop.url | append: product.url | json }} }
+    {%- endif %}
+  ]
+}
+</script>
+  {%- endunless -%}
+
+  {%- if template.suffix == 'prise-connectee' -%}
+<script type="application/ld+json">
+  {{- product | structured_data -}}
+</script>
+  {%- endif -%}
+{%- endif -%}
+
+{%- if request.page_type == 'collection' and collection.handle != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ shop.url | append: collection.url | json }} }
+  ]
+}
+</script>
+{%- endif -%}
