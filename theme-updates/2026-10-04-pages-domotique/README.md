@@ -52,6 +52,13 @@ tant que la copie n'est pas publiée, Shopify affiche le modèle de collection p
 - Ancienne fiche pack : encore active. Après publication du thème : la passer en brouillon et créer la
   redirection `/products/pack-de-3-interrupteurs-pour-volet-roulant-ivr501w` → `/products/interrupteur-pour-volet-roulant-ivr501w?variant=57412008640852`.
 
+### Visuel « Pack de 3 »
+
+`visuels/ivr501w-pack-3-interrupteurs.jpg` (1600 × 1600), composé avec `visuels/compose.py` à partir de la
+vraie photo produit de l'IVR501W (3 exemplaires + pastille « ×3 »). Ajouté à la fiche IVR501W en 2ᵉ position
+et associé à la déclinaison « Pack de 3 » : la photo principale bascule dessus quand on choisit ce format.
+Il est aussi utilisé sur la carte « Pack de 3 » de la page collection volets roulants.
+
 ### Panier latéral
 
 Les formulaires du gabarit premium (`acc-hero`, `acc-barre`, `acc-option`) utilisent désormais
