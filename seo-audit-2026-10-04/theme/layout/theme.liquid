@@ -70,6 +70,8 @@
     <div class="page-container" id="PageContainer">
       <main class="main-content relative" id="MainContent" role="main">
         {{ content_for_layout }}
+        {%- comment -%} Ajout 04/10/2026 : encarts configurateur / packs sur les articles du blog {%- endcomment -%}
+        {%- if request.page_type == 'article' -%}{%- render 'dw-blog-cta' -%}{%- endif -%}
       </main>
 
       <footer class="footer-group block w-full" is="footer-group">

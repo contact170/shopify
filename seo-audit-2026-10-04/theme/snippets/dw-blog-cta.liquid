@@ -1,0 +1,196 @@
+{%- comment -%}
+  ── Ajout 04/10/2026 : renvoi des lecteurs du blog vers le configurateur et les packs ──
+  Rendu depuis layout/theme.liquid sur les pages article uniquement.
+  - Le thème de l'article est déduit de son adresse et de son titre (mots-clés
+    ci-dessous) et choisit le titre de l'encart et les 3 produits proposés.
+  - Deux encarts : un court, inséré par JS au milieu du texte (avant un H2,
+    vers 40 % de l'article, seulement s'il a au moins 3 H2), et un complet
+    placé juste après le texte de l'article.
+  - Les fiches « Configurateur | … » et les produits indisponibles sont exclus.
+  - Chaque clic envoie l'événement GA4 « blog_cta_click » (position, cible).
+  Pour annuler : supprimer l'appel render 'dw-blog-cta' dans theme.liquid.
+{%- endcomment -%}
+
+{%- liquid
+  assign k = article.handle | append: ' ' | append: article.title | downcase
+  assign topic = 'packs'
+  assign has_cam = false
+  if k contains 'camera' or k contains 'caméra' or k contains 'video' or k contains 'vidéo' or k contains 'nvr' or k contains 'cloud'
+    assign has_cam = true
+  endif
+
+  if k contains 'test-alarme'
+    assign topic = 'packs'
+  elsif k contains 'croquette'
+    assign topic = 'compagnons'
+  elsif k contains 'proches-ages' or k contains 'âgés' or k contains 'senior'
+    assign topic = 'seniors'
+  elsif k contains 'prise-connect' or k contains 'prise connect' or k contains 'domotique' or k contains 'connecter-sa-maison' or k contains 'volet'
+    assign topic = 'domotique'
+  elsif k contains 'detecteur' or k contains 'détecteur' or k contains 'sirene' or k contains 'sirène' or k contains 'zigbee' or k contains 'fumee' or k contains 'fumée' or k contains 'composants' or k contains 'choc'
+    assign topic = 'accessoires'
+  elsif k contains 'secondaire' or k contains 'campagne' or k contains 'wifi' or k contains 'wi-fi' or k contains 'gsm' or k contains '4g' or k contains 'isolee'
+    assign topic = '4g'
+  elsif has_cam and k contains 'alarme'
+    assign topic = 'offres'
+  elsif has_cam
+    assign topic = 'cameras'
+  elsif k contains 'prix' or k contains 'tarif' or k contains 'devis' or k contains 'meilleur' or k contains 'animaux' or k contains 'comparatif'
+    assign topic = 'offres'
+  endif
+
+  assign cfg_url = '/pages/configurateur_2'
+  assign handles = ''
+  case topic
+    when 'cameras'
+      assign coll = collections['cameras-de-surveillance']
+      assign titre = 'Nos caméras de surveillance, sans abonnement'
+      assign sous_titre = 'Intérieures, extérieures, autonomes ou solaires : les images arrivent sur votre smartphone, sans frais mensuels.'
+      assign lien_label = 'Voir toutes les caméras'
+    when 'offres'
+      assign coll = collections['offres-exclusives-copie']
+      assign titre = 'Les packs alarme et caméras du moment'
+      assign sous_titre = 'Centrale, détecteurs, sirène et caméras : des packs complets à installer soi-même, sans abonnement.'
+      assign lien_label = 'Voir toutes les offres'
+    when '4g'
+      assign coll = collections['starters-packs']
+      assign handles = 'starter-pack-elite-daewoo,alarme-daewoo-wifi-gsm-4g-starter-pack-am301,offre-exclusive-pack-vigilia-compatible-animaux-wifi-ou-wifi-gsm-4g-2'
+      assign titre = 'Une alarme qui reste joignable sans Wi-Fi'
+      assign sous_titre = 'Nos centrales Wi-Fi + GSM 4G basculent sur le réseau mobile si la box coupe (carte SIM requise) et vous préviennent par SMS et appel.'
+      assign lien_label = 'Voir les packs alarme'
+    when 'accessoires'
+      assign coll = collections['tous-les-accessoires']
+      assign titre = 'Complétez votre alarme Daewoo'
+      assign sous_titre = 'Détecteurs, sirènes et claviers compatibles avec votre centrale, à ajouter en quelques minutes.'
+      assign lien_label = 'Voir tous les accessoires'
+    when 'domotique'
+      assign coll = collections['domotique']
+      assign titre = 'Votre maison connectée, pilotée depuis la même application'
+      assign sous_titre = 'Prises, interrupteurs et volets connectés compatibles avec l’application Daewoo Home Connect.'
+      assign lien_label = 'Voir la maison connectée'
+    when 'compagnons'
+      assign coll = collections['compagnons-connectes']
+      assign titre = 'Nos compagnons connectés'
+      assign sous_titre = 'Distributeur de croquettes avec caméra et montre connectée, pilotés depuis votre smartphone.'
+      assign lien_label = 'Voir les compagnons connectés'
+    when 'seniors'
+      assign coll = collections['starters-packs']
+      assign handles = 'bracelet-sos-sos301,montre-connectee-sw101,alarme-daewoo-wifi-gsm-4g-starter-pack-am301'
+      assign titre = 'Veiller sur un proche à domicile'
+      assign sous_titre = 'Bracelet SOS, montre connectée et alarme sans abonnement : l’alerte arrive directement sur le smartphone de la famille.'
+      assign lien_label = 'Voir les packs alarme'
+    else
+      assign coll = collections['starters-packs']
+      assign titre = 'Protégez votre maison, sans abonnement'
+      assign sous_titre = 'Choisissez un pack prêt à poser, ou laissez le configurateur vous recommander l’alarme adaptée à votre logement.'
+      assign lien_label = 'Voir les packs alarme'
+  endcase
+
+  assign coll_url = coll.url | default: '/collections/all'
+-%}
+
+{%- capture dw_cards -%}
+  {%- assign shown = 0 -%}
+  {%- if handles != blank -%}
+    {%- assign list = handles | split: ',' -%}
+    {%- for h in list -%}
+      {%- assign p = all_products[h] -%}
+      {%- if p.available and shown < 3 -%}
+        {%- render 'dw-blog-cta-card', product: p -%}
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+  {%- if shown < 3 and coll != blank -%}
+    {%- for p in coll.products limit: 16 -%}
+      {%- liquid
+        assign t_up = p.title | upcase | slice: 0, 13
+        assign h_start = p.handle | slice: 0, 13
+        assign deja = false
+        if handles contains p.handle
+          assign deja = true
+        endif
+      -%}
+      {%- if shown < 3 and p.available and t_up != 'CONFIGURATEUR' and h_start != 'configurateur' and deja == false -%}
+        {%- render 'dw-blog-cta-card', product: p -%}
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+<style>
+  .dw-bcta{--dw-acc:rgb(var(--color-base-button));--dw-acc-t:rgb(var(--color-base-button-text));--dw-txt:rgb(var(--color-base-text));
+    box-sizing:border-box;max-width:1100px;margin:48px auto;padding:28px 20px;border-radius:16px;
+    background:rgba(var(--color-base-text),.04);border:1px solid rgba(var(--color-base-text),.10);color:var(--dw-txt);font-family:var(--font-body-family)}
+  .dw-bcta *{box-sizing:border-box}
+  .dw-bcta__eyebrow{margin:0 0 6px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+  .dw-bcta__title{margin:0 0 8px;font-family:var(--font-heading-family);font-size:clamp(22px,3vw,30px);line-height:1.2}
+  .dw-bcta__sub{margin:0 0 20px;font-size:16px;line-height:1.5;opacity:.85;max-width:62ch}
+  .dw-bcta__grid{display:grid;grid-template-columns:1fr;gap:14px;margin:0 0 22px;padding:0;list-style:none}
+  @media (min-width:700px){.dw-bcta__grid{grid-template-columns:repeat(3,1fr)}}
+  .dw-bcta__card{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:rgb(var(--color-base-background));
+    border:1px solid rgba(var(--color-base-text),.10);text-decoration:none;color:inherit;transition:transform .15s ease,box-shadow .15s ease}
+  @media (min-width:700px){.dw-bcta__card{flex-direction:column;align-items:stretch;text-align:left}}
+  .dw-bcta__card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08)}
+  .dw-bcta__img{flex:0 0 84px;width:84px;aspect-ratio:1;object-fit:contain;border-radius:8px;background:#fff}
+  @media (min-width:700px){.dw-bcta__img{width:100%;flex-basis:auto}}
+  .dw-bcta__name{display:block;font-size:15px;font-weight:600;line-height:1.3;margin:0 0 4px}
+  .dw-bcta__price{font-size:15px}
+  .dw-bcta__price s{opacity:.55;margin-left:6px;font-size:13px}
+  .dw-bcta__actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .dw-bcta__btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 22px;border-radius:var(--buttons-radius,999px);
+    background:var(--dw-acc);color:var(--dw-acc-t);font-weight:600;text-decoration:none;font-size:16px}
+  .dw-bcta__btn:hover{opacity:.9}
+  .dw-bcta a.dw-bcta__btn{color:var(--dw-acc-t)!important;text-decoration:none!important}
+  .dw-bcta a.dw-bcta__card{text-decoration:none!important;color:inherit!important}
+  .dw-bcta__link{color:inherit;font-weight:600;text-underline-offset:3px}
+  .dw-bcta--mid{margin:32px 0;padding:18px 18px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+  .dw-bcta--mid p{margin:0;font-size:16px;line-height:1.45;flex:1 1 280px}
+  .dw-bcta--mid strong{display:block;font-size:17px;margin-bottom:2px}
+</style>
+
+<template id="dw-bcta-mid-tpl">
+  <aside class="dw-bcta dw-bcta--mid" aria-label="Trouver mon alarme">
+    <p><strong>Vous hésitez entre plusieurs alarmes ?</strong>Répondez à quelques questions sur votre logement : le configurateur vous recommande le pack adapté, sans abonnement.</p>
+    <a class="dw-bcta__btn" href="{{ cfg_url }}" data-dw-cta="milieu:configurateur">Trouver mon alarme</a>
+  </aside>
+</template>
+
+<aside class="dw-bcta" id="dw-bcta-end" aria-labelledby="dw-bcta-title" data-topic="{{ topic }}">
+  <p class="dw-bcta__eyebrow">Daewoo Security</p>
+  <h2 class="dw-bcta__title" id="dw-bcta-title">{{ titre }}</h2>
+  <p class="dw-bcta__sub">{{ sous_titre }}</p>
+  {%- if dw_cards != blank -%}
+    <ul class="dw-bcta__grid">{{ dw_cards }}</ul>
+  {%- endif -%}
+  <div class="dw-bcta__actions">
+    <a class="dw-bcta__btn" href="{{ cfg_url }}" data-dw-cta="fin:configurateur">Trouver mon alarme avec le configurateur</a>
+    <a class="dw-bcta__link" href="{{ coll_url }}" data-dw-cta="fin:collection">{{ lien_label }}</a>
+  </div>
+</aside>
+
+<script>
+  (function () {
+    var end = document.getElementById('dw-bcta-end');
+    if (!end) return;
+    var body = document.querySelector('[itemprop="articleBody"]') || document.querySelector('.article-template__content') || document.querySelector('article .rte');
+    if (body && body.parentNode) {
+      body.parentNode.insertBefore(end, body.nextSibling);
+      var h2s = Array.prototype.filter.call(body.querySelectorAll('h2'), function (h) { return !h.closest('.dw-bcta'); });
+      var tpl = document.getElementById('dw-bcta-mid-tpl');
+      if (h2s.length >= 3 && tpl && tpl.content) {
+        var target = h2s[Math.max(1, Math.floor(h2s.length * 0.4))];
+        target.parentNode.insertBefore(tpl.content.cloneNode(true), target);
+      }
+    }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('[data-dw-cta]');
+      if (!a) return;
+      var parts = a.getAttribute('data-dw-cta').split(':');
+      var payload = { cta_position: parts[0], cta_target: parts[1], cta_topic: end.getAttribute('data-topic'), article: {{ article.handle | json }}, link_url: a.getAttribute('href') };
+      try { if (typeof window.gtag === 'function') window.gtag('event', 'blog_cta_click', payload); } catch (err) {}
+      try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: 'blog_cta_click' }, payload)); } catch (err) {}
+    });
+  })();
+</script>

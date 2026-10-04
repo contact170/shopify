@@ -1,0 +1,18 @@
+{%- comment -%} Carte produit de l'encart blog (dw-blog-cta). Paramètre : product. {%- endcomment -%}
+{%- liquid
+  assign nom = product.title | remove_first: 'OFFRE EXCLUSIVE | ' | remove_first: 'OFFRE EXCLUSIVE |' | remove_first: 'Daewoo | ' | split: ' | ' | first | strip
+-%}
+<li>
+  <a class="dw-bcta__card" href="{{ product.url }}" data-dw-cta="fin:produit">
+    {%- if product.featured_image -%}
+      <img class="dw-bcta__img" src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.featured_image.alt | default: nom | escape }}" width="400" height="400" loading="lazy">
+    {%- endif -%}
+    <span>
+      <span class="dw-bcta__name">{{ nom }}</span>
+      <span class="dw-bcta__price">
+        {%- if product.price_varies -%}Dès {% endif -%}{{ product.price | money }}
+        {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+      </span>
+    </span>
+  </a>
+</li>
