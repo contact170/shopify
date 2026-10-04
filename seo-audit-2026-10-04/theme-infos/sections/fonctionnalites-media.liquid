@@ -1,0 +1,502 @@
+{%- comment -%}
+  ============================================================================
+  SECTION : Fonctionnalités media — v4 (02/09/2026)
+  v3 : cadre horizontal + fond flou pour les médias verticaux.
+  v4 : lecture automatique muette en boucle quand la vignette entre dans
+       l'écran (au lieu du clic sur un bouton play que personne n'utilisait),
+       image d'aperçu reprise du réglage « image » à défaut de « poster »,
+       et bouton d'action optionnel en fin de section.
+       La lecture auto est désactivée si l'utilisateur a demandé moins
+       d'animations (prefers-reduced-motion) : le bouton play reste alors.
+  ============================================================================
+{%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }}{
+    --fm-accent: {{ section.settings.titre_color | default: 'var(--color-foreground, #0d1b3e)' }};
+    --fm-ink:    {{ section.settings.texte_color | default: 'var(--color-foreground, #0d1b3e)' }};
+    --fm-bg:     {{ section.settings.bg_color    | default: 'var(--color-background, #ffffff)' }};
+    --fm-radius: {{ section.settings.media_radius }}px;
+    --fm-blue:   #1552d6;
+    --fm-font-body: var(--font-body-family, inherit);
+    --fm-font-head: var(--font-heading-family, inherit);
+  }
+
+  #shopify-section-{{ section.id }} .fm{
+    background: var(--fm-bg);
+    padding: {{ section.settings.padding_v }}px {{ section.settings.padding_h }}px;
+    box-sizing: border-box;
+  }
+  #shopify-section-{{ section.id }} .fm,
+  #shopify-section-{{ section.id }} .fm *{
+    font-family: var(--fm-font-body);
+  }
+  #shopify-section-{{ section.id }} .fm h2,
+  #shopify-section-{{ section.id }} .fm h3{
+    font-family: var(--fm-font-head);
+  }
+
+  #shopify-section-{{ section.id }} .fm__inner{
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .fm__header{ margin-bottom: 40px; }
+  #shopify-section-{{ section.id }} .fm__titre{
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    color: var(--fm-accent);
+  }
+  #shopify-section-{{ section.id }} .fm__sous{
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 540px;
+    color: var(--fm-ink);
+    opacity: .75;
+  }
+
+  #shopify-section-{{ section.id }} .fm__grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 40px;
+  }
+
+  #shopify-section-{{ section.id }} .fm__item{
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Cadre média : toujours horizontal, quel que soit le format source ── */
+  #shopify-section-{{ section.id }} .fm__media{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 11;
+    border-radius: var(--fm-radius);
+    overflow: hidden;
+    background: var(--color-base-background-2, #eceef2);
+    margin-bottom: 20px;
+  }
+  #shopify-section-{{ section.id }} .fm__media.is-empty{
+    background: var(--color-base-background-2, #eceef2);
+  }
+
+  /* Fond flou — visible uniquement derrière un média vertical/portrait */
+  #shopify-section-{{ section.id }} .fm__media-bg{
+    position: absolute;
+    inset: -8%;
+    width: 116%;
+    height: 116%;
+    object-fit: cover;
+    filter: blur(24px) brightness(.85);
+    transform: scale(1.05);
+    opacity: 0;
+    transition: opacity .25s ease;
+    z-index: 0;
+  }
+  #shopify-section-{{ section.id }} .fm__media.is-portrait .fm__media-bg{
+    opacity: 1;
+  }
+
+  /* Média principal — cover par défaut (horizontal), contain si portrait détecté */
+  #shopify-section-{{ section.id }} .fm__media-fg{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    z-index: 1;
+  }
+  #shopify-section-{{ section.id }} .fm__media.is-portrait .fm__media-fg{
+    object-fit: contain;
+  }
+  #shopify-section-{{ section.id }} video.fm__media-fg{ cursor: pointer; }
+
+  #shopify-section-{{ section.id }} .fm__play{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.45);
+    border: 2px solid rgba(255,255,255,.85);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    transition: transform .2s ease, background .2s ease, opacity .25s ease;
+  }
+  #shopify-section-{{ section.id }} .fm__play:hover{
+    background: rgba(0,0,0,.6);
+    transform: translate(-50%,-50%) scale(1.06);
+  }
+  #shopify-section-{{ section.id }} .fm__play svg{
+    width: 22px;
+    height: 22px;
+    margin-left: 3px;
+    fill: currentColor;
+  }
+  #shopify-section-{{ section.id }} .fm__item.is-playing .fm__play{
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .fm__ico{
+    width: 32px;
+    height: 32px;
+    margin-bottom: 12px;
+  }
+  #shopify-section-{{ section.id }} .fm__ico img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .fm__nom{
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0 0 8px;
+    color: var(--fm-accent);
+  }
+  #shopify-section-{{ section.id }} .fm__desc{
+    font-size: .92rem;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--fm-ink);
+    opacity: .7;
+  }
+
+  /* ── Bouton d'action de fin de section ── */
+  #shopify-section-{{ section.id }} .fm__cta{
+    margin-top: 48px;
+    display: flex;
+    justify-content: center;
+  }
+  #shopify-section-{{ section.id }} .fm__cta-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 30px;
+    border-radius: 6px;
+    background: var(--fm-blue);
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 2px solid var(--fm-blue);
+    box-shadow: 0 8px 24px rgba(21,82,214,0.24);
+    transition: background .2s ease, transform .2s ease;
+  }
+  #shopify-section-{{ section.id }} .fm__cta-btn:hover{
+    background: #0f43b8;
+    border-color: #0f43b8;
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+
+  @media (max-width: 760px){
+    #shopify-section-{{ section.id }} .fm{ padding: 48px 20px; }
+    #shopify-section-{{ section.id }} .fm__grid{
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    #shopify-section-{{ section.id }} .fm__cta{ margin-top: 36px; }
+    #shopify-section-{{ section.id }} .fm__cta-btn{ width: 100%; justify-content: center; }
+  }
+{%- endstyle -%}
+
+<div class="fm" id="fm-root-{{ section.id }}">
+  <div class="fm__inner">
+
+    {%- if section.settings.titre != blank -%}
+      <div class="fm__header">
+        <h2 class="fm__titre">{{ section.settings.titre }}</h2>
+        {%- if section.settings.sous_titre != blank -%}
+          <p class="fm__sous">{{ section.settings.sous_titre }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="fm__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'feature' -%}
+
+          {%- comment -%} Image d'aperçu : « poster » si renseigné, sinon « image » {%- endcomment -%}
+          {%- assign fm_poster = block.settings.poster | default: block.settings.image -%}
+
+          <div class="fm__item" data-mps-feature {{ block.shopify_attributes }}>
+
+            <div class="fm__media{% if block.settings.image == blank and block.settings.video == blank %} is-empty{% endif %}" data-fm-media>
+              {%- if block.settings.video != blank -%}
+                {%- comment -%} On lit le ratio width/height de la vidéo Shopify pour détecter le portrait côté serveur {%- endcomment -%}
+                {%- assign vid_w = block.settings.video.width -%}
+                {%- assign vid_h = block.settings.video.height -%}
+                <video
+                  class="lazyT fm__media-bg"
+                  muted loop playsinline preload="metadata"
+                  aria-hidden="true"
+                  tabindex="-1"
+                  {% if fm_poster != blank %}poster="{{ fm_poster | image_url: width: 300 }}"{% endif %}
+                >
+                  <source data-src="{{ block.settings.video.sources.last.url }}" type="video/mp4">
+                </video>
+                <video
+                  class="lazyT fm__media-fg fm__video"
+                  muted loop playsinline preload="metadata"
+                  data-w="{{ vid_w }}" data-h="{{ vid_h }}"
+                  {% if fm_poster != blank %}poster="{{ fm_poster | image_url: width: 900 }}"{% endif %}
+                >
+                  <source data-src="{{ block.settings.video.sources.last.url }}" type="video/mp4">
+                </video>
+                <button class="fm__play" type="button" aria-label="Lire la vidéo">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+              {%- elsif block.settings.image != blank -%}
+                {%- assign img_w = block.settings.image.width -%}
+                {%- assign img_h = block.settings.image.height -%}
+                <img
+                  class="fm__media-bg"
+                  src="{{ block.settings.image | image_url: width: 200 }}"
+                  alt=""
+                  loading="lazy"
+                  aria-hidden="true"
+                >
+                <img
+                  class="fm__media-fg"
+                  src="{{ block.settings.image | image_url: width: 900 }}"
+                  alt="{{ block.settings.titre | escape }}"
+                  loading="lazy"
+                  width="{{ img_w }}"
+                  height="{{ img_h }}"
+                  data-w="{{ img_w }}" data-h="{{ img_h }}"
+                >
+              {%- endif -%}
+            </div>
+
+            {%- if block.settings.icone != blank -%}
+              <div class="fm__ico">
+                <img
+                  src="{{ block.settings.icone | image_url: width: 60 }}"
+                  alt=""
+                  loading="lazy"
+                  width="{{ block.settings.icone.width }}"
+                  height="{{ block.settings.icone.height }}"
+                >
+              </div>
+            {%- endif -%}
+
+            <h3 class="fm__nom">{{ block.settings.titre }}</h3>
+            <p class="fm__desc">{{ block.settings.description }}</p>
+
+          </div>
+
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+      <div class="fm__cta">
+        <a class="fm__cta-btn" href="{{ section.settings.cta_url }}">
+          <span>{{ section.settings.cta_label }}</span><span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('fm-root-{{ section.id }}');
+  if(!root) return;
+
+  /* ── Détection portrait : utilise data-w/data-h si dispo,
+       sinon mesure réelle une fois le média chargé ── */
+  function markIfPortrait(mediaWrap, w, h){
+    if(w && h && parseInt(h,10) > parseInt(w,10)){
+      mediaWrap.classList.add('is-portrait');
+    }
+  }
+
+  root.querySelectorAll('[data-fm-media]').forEach(function(mediaWrap){
+    var fg = mediaWrap.querySelector('.fm__media-fg');
+    if(!fg) return;
+
+    var w = fg.dataset.w, h = fg.dataset.h;
+    if(w && h && w !== '' && h !== ''){
+      markIfPortrait(mediaWrap, w, h);
+    } else if(fg.tagName === 'IMG'){
+      if(fg.complete && fg.naturalWidth){
+        markIfPortrait(mediaWrap, fg.naturalWidth, fg.naturalHeight);
+      } else {
+        fg.addEventListener('load', function(){
+          markIfPortrait(mediaWrap, fg.naturalWidth, fg.naturalHeight);
+        });
+      }
+    } else if(fg.tagName === 'VIDEO'){
+      fg.addEventListener('loadedmetadata', function(){
+        markIfPortrait(mediaWrap, fg.videoWidth, fg.videoHeight);
+      });
+    }
+  });
+
+  /* ── Chargement différé de la source vidéo ── */
+  function loadSources(v){
+    if(!v || v.dataset.fmLoaded === '1') return;
+    var changed = false;
+    v.querySelectorAll('source[data-src]').forEach(function(s){
+      if(!s.getAttribute('src')){ s.setAttribute('src', s.getAttribute('data-src')); changed = true; }
+    });
+    v.dataset.fmLoaded = '1';
+    if(changed){ try { v.load(); } catch(e){} }
+  }
+
+  function safePlay(v){
+    if(!v) return;
+    var p = v.play();
+    if(p && typeof p.catch === 'function'){ p.catch(function(){}); }
+  }
+
+  var reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch(e){}
+
+  /* ── Lecture automatique muette en boucle dès que la vignette est visible ── */
+  if(!reduceMotion && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var item = entry.target;
+        var video = item.querySelector('.fm__video');
+        var bgVideo = item.querySelector('video.fm__media-bg');
+        if(!video) return;
+
+        if(entry.isIntersecting){
+          loadSources(video);
+          loadSources(bgVideo);
+          video.dataset.fmAuto = '1';
+          safePlay(video);
+          safePlay(bgVideo);
+          item.classList.add('is-playing');
+        } else {
+          try { video.pause(); } catch(e){}
+          if(bgVideo){ try { bgVideo.pause(); } catch(e){} }
+        }
+      });
+    }, { threshold: 0.35 });
+
+    root.querySelectorAll('[data-mps-feature]').forEach(function(item){
+      if(item.querySelector('.fm__video')) io.observe(item);
+    });
+  }
+
+  /* ── Bouton play (fallback sans lecture auto) et clic sur la vidéo ── */
+  root.querySelectorAll('[data-mps-feature]').forEach(function(item){
+    var video = item.querySelector('.fm__video');
+    var bgVideo = item.querySelector('video.fm__media-bg');
+    var play  = item.querySelector('.fm__play');
+    if(!video) return;
+
+    if(play){
+      play.addEventListener('click', function(){
+        loadSources(video);
+        loadSources(bgVideo);
+        safePlay(video);
+        safePlay(bgVideo);
+        video.controls = true;
+        item.classList.add('is-playing');
+      });
+    }
+
+    /* Un clic sur la vidéo donne la main à l'utilisateur : contrôles + son */
+    video.addEventListener('click', function(){
+      if(!video.controls){
+        video.controls = true;
+        video.muted = false;
+        safePlay(video);
+      }
+    });
+
+    video.addEventListener('pause', function(){
+      /* On ne fait réapparaître le bouton que si la lecture n'est pas pilotée automatiquement */
+      if(video.dataset.fmAuto !== '1'){
+        item.classList.remove('is-playing');
+      }
+    });
+
+    video.addEventListener('play', function(){
+      if(bgVideo){
+        try { bgVideo.currentTime = video.currentTime; } catch(e){}
+        safePlay(bgVideo);
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Fonctionnalites media",
+  "tag": "section",
+  "class": "fm-section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "header", "content": "En-tete" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Fonctionnalites" },
+    { "type": "text", "id": "sous_titre", "label": "Sous-titre (optionnel)" },
+
+    { "type": "header", "content": "Bouton de fin de section (optionnel)" },
+    { "type": "text", "id": "cta_label", "label": "Texte du bouton" },
+    { "type": "url", "id": "cta_url", "label": "Lien du bouton" },
+
+    { "type": "header", "content": "Couleurs — laisser vide = couleurs du theme" },
+    { "type": "color", "id": "bg_color", "label": "Couleur de fond" },
+    { "type": "color", "id": "titre_color", "label": "Couleur des titres" },
+    { "type": "color", "id": "texte_color", "label": "Couleur des textes" },
+
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "max_width", "label": "Largeur maximale (px)", "min": 700, "max": 1400, "step": 50, "default": 1100 },
+    { "type": "range", "id": "media_radius", "label": "Arrondi des medias (px)", "min": 0, "max": 32, "step": 2, "default": 16 },
+    { "type": "range", "id": "padding_v", "label": "Espacement vertical (px)", "min": 0, "max": 96, "step": 8, "default": 64 },
+    { "type": "range", "id": "padding_h", "label": "Espacement horizontal (px)", "min": 0, "max": 80, "step": 8, "default": 32 }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Fonctionnalite",
+      "settings": [
+        { "type": "header", "content": "Media" },
+        { "type": "paragraph", "content": "Format vertical ou horizontal accepte : le cadre reste toujours horizontal, le media s'adapte automatiquement. Les videos demarrent seules, sans son et en boucle, des qu'elles apparaissent a l'ecran." },
+        { "type": "image_picker", "id": "image", "label": "Image (utilisee si pas de video, et comme apercu de la video)" },
+        { "type": "video", "id": "video", "label": "Video (prioritaire sur l'image)" },
+        { "type": "image_picker", "id": "poster", "label": "Image d'apercu de la video (optionnel)" },
+        { "type": "header", "content": "Contenu" },
+        { "type": "image_picker", "id": "icone", "label": "Icone (image, optionnel)" },
+        { "type": "text", "id": "titre", "label": "Titre", "default": "Installation rapide" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Posez votre systeme vous-meme en moins de 20 minutes, sans technicien ni percage." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fonctionnalites media",
+      "category": "Contenu",
+      "blocks": [
+        { "type": "feature", "settings": { "titre": "Propriete a vie", "description": "Vous achetez votre systeme une seule fois. Il vous appartient, sans abonnement, sans frais cache." } },
+        { "type": "feature", "settings": { "titre": "Installation en 30 minutes", "description": "Aucun technicien, aucun percage. Posez vous-meme les detecteurs et la centrale." } },
+        { "type": "feature", "settings": { "titre": "Tout depuis votre telephone", "description": "Armer, desarmer, ajouter une camera : tout se gere depuis l'application mobile, ou que vous soyez." } },
+        { "type": "feature", "settings": { "titre": "Notifications en temps reel", "description": "Mouvement detecte, intrusion : recevez une alerte instantanee et decidez de l'action a prendre." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
