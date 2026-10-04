@@ -35,7 +35,7 @@ Thème : **« Version finale 04102026 + pages domotique (Claude) »**
 
 | Fichier | Changement |
 |---|---|
-| `templates/collection.eclairage-prises-connectees.json` | Nouveau : hero, vitrine de la gamme (3 cartes), 4 arguments, grille produits, FAQ (FAQPage) |
+| `templates/collection.eclairage-prises-connectees.json` | Nouveau : hero, vitrine de la gamme (3 cartes), 4 arguments, FAQ (FAQPage). Pas de grille produits : elle doublait les 3 cartes |
 | `templates/list-collections.json` | Visuels produits actuels par collection (bloc « image »), H1 « Toutes nos collections » |
 | `sections/acc-hero.liquid` | Galerie : 10 vignettes au lieu de 6 (DB502W en a 9, NutriVision 7) |
 
