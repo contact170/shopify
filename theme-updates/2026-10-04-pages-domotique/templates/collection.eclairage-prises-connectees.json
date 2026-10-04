@@ -1,0 +1,277 @@
+{
+  "sections": {
+    "eclairage_hero": {
+      "type": "camera-hero",
+      "settings": {
+        "eyebrow": "Maison connectée",
+        "heading": "Éclairage & prises connectées",
+        "subheading": "<p>Pilotez vos lumières et vos appareils depuis votre téléphone ou à la voix, programmez-les, simulez une présence. En Wi-Fi, sans passerelle et sans abonnement.</p>",
+        "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Visuellifestyleaccessoires_13.png?v=1756732884",
+        "blur_amount": 8,
+        "min_height": 560,
+        "min_height_mobile": 460,
+        "show_scroll_cue": true,
+        "scroll_target": "gamme"
+      }
+    },
+    "eclairage_gamme": {
+      "type": "camera-range-showcase",
+      "blocks": {
+        "card_1": {
+          "type": "range_card",
+          "settings": {
+            "size": "small",
+            "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_22.png?v=1756733055",
+            "eyebrow": "1 zone",
+            "heading": "Interrupteur connecté ILC501W",
+            "description": "Remplace un interrupteur simple : une lumière pilotée au doigt, depuis l'application ou à la voix.",
+            "link": "/products/interrupteur-connecte-pour-lumiere-1-zone-copie",
+            "accent_color": "#f0a500"
+          }
+        },
+        "card_2": {
+          "type": "range_card",
+          "settings": {
+            "size": "small",
+            "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/DaewooVigilia-Alarme-PhotoProduit_1600x1600px_21_2f445f0e-dad0-4aec-a211-5c3803d46ab2.png?v=1756732884",
+            "eyebrow": "2 zones",
+            "heading": "Interrupteur connecté ILC502W",
+            "description": "Remplace un interrupteur double : deux circuits d'éclairage commandés indépendamment.",
+            "link": "/products/interrupteur-connecte-pour-lumiere-2-zones",
+            "accent_color": "#f0a500"
+          }
+        },
+        "card_3": {
+          "type": "range_card",
+          "settings": {
+            "size": "small",
+            "image_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/prise-connectee-daewoo-sp502f-lampe-lifestyle.webp?v=1788435166",
+            "eyebrow": "Prise",
+            "heading": "Prise connectée SP502F",
+            "description": "Norme française 10 A : rendez connectée une lampe ou un appareil, sans aucune installation.",
+            "link": "/products/prise-connectee-sp502f",
+            "accent_color": "#0071e3"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ],
+      "settings": {
+        "subheading": "La gamme",
+        "heading": "Interrupteur ou prise : à chaque usage sa solution",
+        "description": "<p>Un point lumineux fixe ? Choisissez l'interrupteur 1 ou 2 zones. Une lampe, un chauffage d'appoint ou une box ? La prise connectée suffit.</p>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "padding_top": 72,
+        "padding_bottom": 48,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "eclairage_arguments": {
+      "type": "multicolumn-with-icons",
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "icon": "shield",
+            "custom_icon": "",
+            "heading": "<strong>Simulation de présence</strong>",
+            "text": "<p>Programmez l'allumage pendant vos absences : la maison paraît habitée et décourage les repérages.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "icon": "phone",
+            "custom_icon": "",
+            "heading": "<strong>Application et commande vocale</strong>",
+            "text": "<p>Daewoo Home Connect, Google Assistant, Amazon Alexa ou Siri : commandez comme vous voulez.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+            "icon": "lightning",
+            "custom_icon": "",
+            "heading": "<strong>Wi-Fi, sans passerelle</strong>",
+            "text": "<p>Chaque appareil se connecte directement à votre box. Rien d'autre à acheter.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_4": {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "custom_icon": "",
+            "heading": "<strong>Avec votre alarme, sans abonnement</strong>",
+            "text": "<p>Créez des scénarios avec votre alarme Daewoo : lumières allumées en cas d'intrusion. Aucun frais mensuel.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2",
+        "column_3",
+        "column_4"
+      ],
+      "settings": {
+        "style": "with-border",
+        "columns": 4,
+        "text_alignment": "left",
+        "heading": "Pourquoi connecter votre éclairage",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "main-collection": {
+      "type": "main-collection",
+      "settings": {
+        "products_per_page": 24,
+        "columns": 3,
+        "columns_mobile": "2",
+        "pagination": "paginated",
+        "enable_filtering": false,
+        "filter_type": "drawer",
+        "filter_collapsed": false,
+        "filter_color_swatches": true,
+        "enable_sorting": false,
+        "show_on_model": false,
+        "buttons_style": "secondary",
+        "padding_top": 24,
+        "padding_bottom": 56,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "eclairage_faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "title": "Interrupteur ou prise connectée : lequel choisir ?",
+            "text": "<p>L'interrupteur connecté remplace un interrupteur mural et pilote un éclairage fixe (plafonnier, appliques). La prise connectée se branche simplement sur une prise existante et pilote tout appareil qui s'y raccorde : lampe, chauffage d'appoint, box internet. Aucune installation électrique n'est nécessaire pour la prise.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "title": "Faut-il un fil neutre pour les interrupteurs connectés ?",
+            "text": "<p>Oui. Les interrupteurs ILC501W et ILC502W nécessitent un fil neutre dans le boîtier d'encastrement (standard Ø 60 mm, profondeur 27 mm minimum). Vérifiez sa présence avant l'achat, courant coupé au disjoncteur.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "title": "Ai-je besoin d'une passerelle ou d'un abonnement ?",
+            "text": "<p>Non. Chaque appareil se connecte directement au Wi-Fi 2,4 GHz de votre box et se pilote avec l'application gratuite Daewoo Home Connect, sans abonnement.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "title": "Sont-ils compatibles avec Alexa, Google Assistant et Siri ?",
+            "text": "<p>Oui. Après avoir ajouté l'appareil dans l'application, liez votre compte Amazon Alexa ou Google Assistant pour le commander à la voix. Avec Siri, passez par les Raccourcis iOS.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "title": "Fonctionnent-ils avec mon alarme Daewoo ?",
+            "text": "<p>Oui, avec toutes les gammes : Key (SA501), Élite (PA501Z), Touch (AM301), Touch XL (AM302) et Vigilia. Dans l'application, créez des scénarios : allumer les lumières si l'alarme se déclenche, ou simuler une présence pendant vos absences.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {
+        "style": "with-border",
+        "heading": "Questions fréquentes",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "color_overlay": "#ffffff",
+        "overlay_opacity": 4,
+        "padding_top": 56,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "eclairage_hero",
+    "eclairage_gamme",
+    "eclairage_arguments",
+    "main-collection",
+    "eclairage_faq"
+  ]
+}
