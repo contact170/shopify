@@ -61,6 +61,12 @@
   assign note = product.metafields.reviews.rating.value.rating
   assign nb_avis = product.metafields.reviews.rating_count.value
   assign conseil = product.metafields.custom.conseil_quantite.value
+
+  comment
+    « l'unite » est faux pour un lot (pack de 3 IVR501W...). Le metachamp
+    custom.mention_prix remplace la mention fiche par fiche.
+  endcomment
+  assign mention_prix = product.metafields.custom.mention_prix.value | default: section.settings.mention_prix
 -%}
 
 <div class="accp">
@@ -120,7 +126,7 @@
            data-accp-max="{{ section.settings.quantite_max }}">
 
         <p class="accp-prix">{{ v.price | money }}
-          {%- if section.settings.mention_prix != blank %} <small>&middot; {{ section.settings.mention_prix }}</small>{% endif -%}
+          {%- if mention_prix != blank %} <small>&middot; {{ mention_prix }}</small>{% endif -%}
         </p>
 
         {%- if conseil != blank -%}
