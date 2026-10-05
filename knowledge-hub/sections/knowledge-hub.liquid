@@ -1,0 +1,578 @@
+{%- comment -%}
+  Knowledge Hub Daewoo Security
+  Page de référence « Tout savoir sur les alarmes Daewoo Security ».
+  Objectif : définir clairement l'entité Daewoo Security (SEO / GEO) :
+  contenu factuel rendu côté serveur + données structurées JSON-LD.
+  Les chiffres modifiables (clients, avis, URLs) sont dans les réglages de la section.
+{%- endcomment -%}
+
+{%- liquid
+  assign base = shop.url
+  assign page_url = base | append: request.path
+  assign s = section.settings
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ s.padding_top }}px;
+    --section-padding-bottom: {{ s.padding_bottom }}px;
+  }
+  .kh { --kh-accent: #1a4fab; --kh-line: rgb(var(--color-foreground) / 0.12); --kh-muted: rgb(var(--color-foreground) / 0.72); }
+  .kh__intro { max-width: 760px; }
+  .kh__lead { font-size: var(--text-lg); color: var(--kh-muted); margin-top: var(--sp-4); }
+  .kh__updated { font-size: var(--text-sm); color: var(--kh-muted); margin-top: var(--sp-3); }
+  .kh__toc { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin: var(--sp-8) 0 var(--sp-4); padding: 0; list-style: none; }
+  .kh__toc a { display: inline-block; padding: var(--sp-1d5, 6px) var(--sp-3); border: 1px solid var(--kh-line); border-radius: 999px; font-size: var(--text-sm); text-decoration: none; }
+  .kh__toc a:hover { border-color: var(--kh-accent); color: var(--kh-accent); }
+  .kh__block { padding-top: var(--sp-12); scroll-margin-top: 100px; }
+  .kh__block h2 { margin-bottom: var(--sp-4); }
+  .kh__block h3 { margin: var(--sp-6) 0 var(--sp-2); }
+  .kh__block p + p { margin-top: var(--sp-3); }
+  .kh__card { background: rgb(var(--color-background)); border: 1px solid var(--kh-line); border-radius: var(--rounded-block, 12px); padding: var(--sp-6); }
+  .kh__facts { display: grid; grid-template-columns: minmax(140px, 220px) 1fr; margin: 0; }
+  .kh__facts dt, .kh__facts dd { padding: var(--sp-3) 0; border-bottom: 1px solid var(--kh-line); margin: 0; }
+  .kh__facts dt { font-weight: 500; padding-right: var(--sp-4); }
+  .kh__facts dd { color: var(--kh-muted); }
+  .kh__facts > :nth-last-child(-n + 2) { border-bottom: 0; }
+  .kh__table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--kh-line); border-radius: var(--rounded-block, 12px); }
+  .kh__table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: var(--text-sm); }
+  .kh__table th, .kh__table td { text-align: left; padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--kh-line); vertical-align: top; }
+  .kh__table thead th { background: rgb(var(--color-foreground) / 0.04); font-weight: 500; }
+  .kh__table tbody tr:last-child > * { border-bottom: 0; }
+  .kh__table tbody th { font-weight: 500; white-space: nowrap; }
+  .kh__grid { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .kh__list { padding-left: 1.2em; }
+  .kh__list li { margin-top: var(--sp-2); }
+  .kh__links a { display: flex; flex-direction: column; gap: var(--sp-1); height: 100%; text-decoration: none; transition: border-color .2s ease; }
+  .kh__links a:hover { border-color: var(--kh-accent); }
+  .kh__links strong { font-weight: 500; }
+  .kh__links span { font-size: var(--text-sm); color: var(--kh-muted); }
+  .kh__note { font-size: var(--text-sm); color: var(--kh-muted); margin-top: var(--sp-3); }
+  .kh__faq details { border-bottom: 1px solid var(--kh-line); padding: var(--sp-4) 0; }
+  .kh__faq summary { cursor: pointer; font-weight: 500; list-style: none; display: flex; justify-content: space-between; gap: var(--sp-4); }
+  .kh__faq summary::-webkit-details-marker { display: none; }
+  .kh__faq summary::after { content: "+"; font-weight: 400; }
+  .kh__faq details[open] summary::after { content: "–"; }
+  .kh__faq details p { margin-top: var(--sp-3); color: var(--kh-muted); }
+  @media (max-width: 639px) {
+    .kh__facts { grid-template-columns: 1fr; }
+    .kh__facts dt { border-bottom: 0; padding-bottom: 0; }
+    .kh__card { padding: var(--sp-4); }
+  }
+</style>
+
+<div class="section section--padding">
+  <div class="page-width relative">
+    <article class="kh rte {{ s.text_size }}" itemscope itemtype="https://schema.org/AboutPage">
+      {%- comment -%} ===== En-tête ===== {%- endcomment -%}
+      <header class="kh__intro">
+        <h1 class="heading {{ s.heading_size }}" itemprop="name">{{ page.title | default: 'Tout savoir sur les alarmes Daewoo Security' }}</h1>
+        <p class="kh__lead" itemprop="description">
+          <strong>Daewoo Security</strong> est la marque d'alarmes, de caméras de surveillance et de domotique connectées
+          <strong>sans abonnement</strong> vendue en France et en Belgique sur daewoo-security.fr. Elle est exploitée sous
+          <strong>licence officielle de la marque Daewoo</strong> par la société française <strong>Liz Invest SAS</strong>,
+          dont l'équipe (logistique, support technique, service client) est basée à <strong>Mérignac, dans la métropole de Bordeaux</strong>.
+        </p>
+        <p class="kh__updated">Page de référence mise à jour le <time datetime="{{ page.updated_at | default: 'now' | date: '%Y-%m-%d' }}" itemprop="dateModified">{{ page.updated_at | default: 'now' | date: '%d/%m/%Y' }}</time>.</p>
+      </header>
+
+      <nav aria-label="Sommaire">
+        <ul class="kh__toc">
+          <li><a href="#kh-identite">Fiche d'identité</a></li>
+          <li><a href="#kh-distribution">Qui distribue la marque ?</a></li>
+          <li><a href="#kh-gammes">Gammes</a></li>
+          <li><a href="#kh-application">Application</a></li>
+          <li><a href="#kh-abonnement">Sans abonnement</a></li>
+          <li><a href="#kh-technologies">Technologies</a></li>
+          <li><a href="#kh-compatibilites">Compatibilités</a></li>
+          <li><a href="#kh-support">Support</a></li>
+          <li><a href="#kh-garanties">Garanties</a></li>
+          <li><a href="#kh-documentation">Documentation</a></li>
+          <li><a href="#kh-choisir">Choisir son alarme</a></li>
+          <li><a href="#kh-faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      {%- comment -%} ===== 1. Fiche d'identité ===== {%- endcomment -%}
+      <section id="kh-identite" class="kh__block" aria-labelledby="kh-identite-t">
+        <h2 id="kh-identite-t" class="heading title-md">Daewoo Security en bref</h2>
+        <div class="kh__card">
+          <dl class="kh__facts">
+            <dt>Nom</dt>
+            <dd>Daewoo Security</dd>
+            <dt>Activité</dt>
+            <dd>Systèmes d'alarme sans fil, caméras de surveillance et domotique connectés, sans abonnement, pour particuliers et petits professionnels</dd>
+            <dt>Marque</dt>
+            <dd>Daewoo (marque d'origine sud-coréenne), utilisée sous licence officielle</dd>
+            <dt>Société exploitante</dt>
+            <dd>Liz Invest SAS – RCS Bordeaux 791 022 692 – TVA FR45791022692</dd>
+            <dt>Siège</dt>
+            <dd>6 rue Léon Morane, 33700 Mérignac (Bordeaux Métropole), France</dd>
+            <dt>Marchés</dt>
+            <dd>France et Belgique</dd>
+            <dt>Site officiel</dt>
+            <dd><a href="{{ base }}">daewoo-security.fr</a></dd>
+            <dt>Gammes d'alarme</dt>
+            <dd>Vigilia, Touch (AM301), Touch XL (AM302), Élite (PA501Z) – et Key (SA501) pour le parc existant</dd>
+            <dt>Application</dt>
+            <dd>Daewoo Home Connect (iOS et Android, gratuite)</dd>
+            <dt>Modèle économique</dt>
+            <dd>Achat unique du matériel, aucun abonnement obligatoire</dd>
+            <dt>Garantie</dt>
+            <dd>2 ans à compter de la livraison (1 an sur les produits « Destockage »)</dd>
+            <dt>Support</dt>
+            <dd>Techniciens basés en France (Mérignac), du lundi au vendredi de 9h30 à 17h30</dd>
+            {%- if s.customers != blank -%}
+              <dt>Clients</dt>
+              <dd>{{ s.customers }}</dd>
+            {%- endif -%}
+            {%- if s.rating != blank -%}
+              <dt>Avis clients</dt>
+              <dd>{{ s.rating }} (avis vérifiés Judge.me)</dd>
+            {%- endif -%}
+          </dl>
+        </div>
+      </section>
+
+      {%- comment -%} ===== 2. Distribution & équipe ===== {%- endcomment -%}
+      <section id="kh-distribution" class="kh__block" aria-labelledby="kh-distribution-t">
+        <h2 id="kh-distribution-t" class="heading title-md">Qui distribue Daewoo Security en France ?</h2>
+        <p>
+          Les produits Daewoo Security sont conçus et commercialisés en France par <strong>Liz Invest SAS</strong>,
+          société française immatriculée au RCS de Bordeaux, qui exploite la marque <strong>sous licence officielle Daewoo</strong>.
+          Liz Invest assure la sélection des produits selon un cahier des charges propre, la vente en ligne sur
+          daewoo-security.fr, la logistique, le service après-vente et le support technique.
+        </p>
+        <p>
+          Daewoo est une marque historique d'origine sud-coréenne, connue dans l'électronique et les technologies grand public.
+          Daewoo Security en est la déclinaison dédiée à la sécurité de la maison.
+        </p>
+        <h3 class="heading title-sm">Où se trouve l'équipe ?</h3>
+        <p>
+          L'équipe Daewoo Security est installée à <strong>Mérignac, en Gironde (métropole bordelaise)</strong>. Les commandes y sont
+          préparées et expédiées, et c'est là que travaillent les techniciens qui accompagnent les clients dans l'installation et l'utilisation de leur système.
+        </p>
+      </section>
+
+      {%- comment -%} ===== 3. Gammes ===== {%- endcomment -%}
+      <section id="kh-gammes" class="kh__block" aria-labelledby="kh-gammes-t">
+        <h2 id="kh-gammes-t" class="heading title-md">Les gammes actuelles</h2>
+        <p>Daewoo Security propose trois familles de centrales d'alarme, complétées par des caméras et des accessoires domotiques.</p>
+
+        <div class="kh__table-wrap" style="margin-top: var(--sp-6);">
+          <table class="kh__table">
+            <caption class="sr-only">Comparatif des centrales d'alarme Daewoo Security</caption>
+            <thead>
+              <tr>
+                <th scope="col">Gamme</th>
+                <th scope="col">Référence centrale</th>
+                <th scope="col">Interface</th>
+                <th scope="col">Connectivité</th>
+                <th scope="col">Radio</th>
+                <th scope="col">Accessoires max.</th>
+                <th scope="col">Idéal pour</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href="{{ s.url_vigilia }}">Vigilia</a></th>
+                <td>Vigilia (WiFi ou GSM)</td>
+                <td>Clavier rétroéclairé</td>
+                <td>Wi-Fi 2,4 GHz (+ 4G sur la version GSM)</td>
+                <td>433 MHz</td>
+                <td>{{ s.vigilia_accessories }}</td>
+                <td>Appartement, maison</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="{{ s.url_touch }}">Touch</a></th>
+                <td>AM301</td>
+                <td>Écran tactile 4,3"</td>
+                <td>Wi-Fi 2,4 GHz + 4G en option (carte SIM)</td>
+                <td>433 MHz</td>
+                <td>90</td>
+                <td>Appartement, maison avec jardin</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="{{ s.url_touch }}">Touch XL</a></th>
+                <td>AM302</td>
+                <td>Écran tactile 7"</td>
+                <td>Wi-Fi 2,4 GHz + 4G en option (carte SIM)</td>
+                <td>433 MHz</td>
+                <td>90</td>
+                <td>Maison</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="{{ s.url_elite }}">Élite</a></th>
+                <td>PA501Z</td>
+                <td>Centrale + application</td>
+                <td>Ethernet (RJ45) + Wi-Fi + 4G (carte SIM)</td>
+                <td>433 / 868 MHz + Zigbee 3.0</td>
+                <td>200</td>
+                <td>Maison connectée, domotique</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="heading title-sm">Caméras de surveillance</h3>
+        <p>
+          La gamme vidéo comprend des caméras intérieures et extérieures Wi-Fi (Full HD 1080p à QHD 1440p / 4 MP), sur secteur,
+          sur batterie ou solaires, motorisées ou fixes (références W503, W509MW, W512MW, IF501, IP501, IP506P, EP506…),
+          ainsi qu'un kit enregistreur NVR504. L'enregistrement se fait sur carte micro-SD (jusqu'à 64 Go), sans abonnement.
+          <a href="{{ s.url_cameras }}">Voir les caméras</a>.
+        </p>
+
+        <h3 class="heading title-sm">Domotique</h3>
+        <p>
+          La centrale Élite intègre une passerelle <strong>Zigbee 3.0</strong> pour piloter volets, éclairages, prises et capteurs connectés. <a href="{{ s.url_domotique }}">Voir la domotique</a>.
+        </p>
+
+        <h3 class="heading title-sm">Gamme Key (SA501) et arrêt de la 2G</h3>
+        <p>
+          La centrale Key (SA501) équipe de nombreux foyers. Les opérateurs français arrêtant progressivement le réseau 2G,
+          Daewoo Security propose aux clients Key une centrale de remplacement <strong>SA501 4G</strong>, compatible avec les accessoires
+          existants de la série 501. <a href="{{ s.url_sa501_4g }}">En savoir plus</a>.
+        </p>
+      </section>
+
+      {%- comment -%} ===== 4. Application ===== {%- endcomment -%}
+      <section id="kh-application" class="kh__block" aria-labelledby="kh-application-t">
+        <h2 id="kh-application-t" class="heading title-md">L'application Daewoo Home Connect</h2>
+        <p>
+          Toutes les alarmes Daewoo Security se pilotent avec l'application gratuite <strong>Daewoo Home Connect</strong>,
+          disponible sur l'App Store (iPhone) et Google Play (Android). Elle permet de :
+        </p>
+        <ul class="kh__list">
+          <li>armer, désarmer ou passer en mode partiel à distance ;</li>
+          <li>recevoir des notifications instantanées en cas d'intrusion, d'ouverture ou d'alerte ;</li>
+          <li>gérer les utilisateurs et les accessoires ;</li>
+          <li>piloter les équipements domotiques (gamme Élite).</li>
+        </ul>
+        <p>L'application est gratuite et ne nécessite aucun abonnement.</p>
+      </section>
+
+      {%- comment -%} ===== 5. Sans abonnement ===== {%- endcomment -%}
+      <section id="kh-abonnement" class="kh__block" aria-labelledby="kh-abonnement-t">
+        <h2 id="kh-abonnement-t" class="heading title-md">Le modèle sans abonnement</h2>
+        <p>
+          Avec Daewoo Security, le client <strong>achète son matériel une seule fois</strong> : pas de mensualité, pas d'engagement,
+          pas de frais d'installation. Le système s'installe soi-même (sans fil) et fonctionne en autonomie via le Wi-Fi du domicile
+          et l'application. C'est la principale différence avec les offres de télésurveillance par abonnement.
+        </p>
+        <p>Deux options facultatives existent, pour ceux qui le souhaitent :</p>
+        <ul class="kh__list">
+          <li>
+            <strong>Carte SIM 4G (partenaire Afone, réseau SFR)</strong> : secours en cas de coupure Internet, pour les centrales compatibles.
+            Sans engagement, frais d'activation offerts. Elle n'est pas obligatoire : les systèmes fonctionnent en Wi-Fi.
+          </li>
+          <li>
+            <strong>Stockage Cloud vidéo</strong> : sauvegarde des enregistrements des caméras pendant 14 jours, à partir de 4,49 €/mois.
+            Sans cette option, les vidéos sont enregistrées gratuitement sur carte micro-SD. <a href="{{ s.url_cloud }}">Détails de l'offre Cloud</a>.
+          </li>
+        </ul>
+      </section>
+
+      {%- comment -%} ===== 6. Technologies ===== {%- endcomment -%}
+      <section id="kh-technologies" class="kh__block" aria-labelledby="kh-technologies-t">
+        <h2 id="kh-technologies-t" class="heading title-md">Technologies</h2>
+        <div class="kh__grid">
+          <div class="kh__card">
+            <h3 class="heading title-sm" style="margin-top:0;">Radio sans fil</h3>
+            <p>Communication centrale ↔ accessoires en 433 MHz (et 868 MHz sur Élite), portée jusqu'à 100 m en champ libre.</p>
+          </div>
+          <div class="kh__card">
+            <h3 class="heading title-sm" style="margin-top:0;">Wi-Fi, 4G et Ethernet</h3>
+            <p>Connexion Wi-Fi 2,4 GHz sur toutes les centrales, 4G de secours via carte SIM, et Ethernet RJ45 sur Élite (triple connectivité).</p>
+          </div>
+          <div class="kh__card">
+            <h3 class="heading title-sm" style="margin-top:0;">Zigbee 3.0</h3>
+            <p>Passerelle Zigbee intégrée à la centrale Élite (PA501Z) : réseau maillé pour la domotique, jusqu'à 200 appareils et 20 utilisateurs.</p>
+          </div>
+          <div class="kh__card">
+            <h3 class="heading title-sm" style="margin-top:0;">Batterie de secours</h3>
+            <p>Les centrales continuent de fonctionner en cas de coupure de courant grâce à leur batterie intégrée (jusqu'à 20 h sur Touch XL, 5 000 mAh sur Élite).</p>
+          </div>
+        </div>
+      </section>
+
+      {%- comment -%} ===== 7. Compatibilités ===== {%- endcomment -%}
+      <section id="kh-compatibilites" class="kh__block" aria-labelledby="kh-compatibilites-t">
+        <h2 id="kh-compatibilites-t" class="heading title-md">Compatibilités</h2>
+        <div class="kh__table-wrap">
+          <table class="kh__table">
+            <caption class="sr-only">Compatibilités des alarmes Daewoo Security</caption>
+            <thead>
+              <tr>
+                <th scope="col">Gamme</th>
+                <th scope="col">Amazon Alexa</th>
+                <th scope="col">Google Home</th>
+                <th scope="col">Zigbee</th>
+                <th scope="col">Accessoires compatibles</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Vigilia</th><td>Oui</td><td>Oui</td><td>Non</td><td>Accessoires radio 433 MHz de la gamme</td></tr>
+              <tr><th scope="row">Touch / Touch XL</th><td>Oui</td><td>Oui</td><td>Non</td><td>Accessoires radio 433 MHz de la gamme</td></tr>
+              <tr><th scope="row">Élite</th><td>Non</td><td>Non</td><td>Oui (Zigbee 3.0)</td><td>Accessoires Zigbee (série 502Z) et radio de la série 501</td></tr>
+              <tr><th scope="row">Key SA501 / SA501 4G</th><td>—</td><td>—</td><td>Non</td><td>Accessoires de la série 501 (WDS501, WPS501, WKE501…)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="kh__note">
+          Les alarmes Daewoo Security fonctionnent avec leurs propres accessoires (détecteurs, sirènes, claviers, télécommandes) :
+          les accessoires d'autres marques ne sont pas garantis compatibles. Certaines caméras sont compatibles avec les écrans
+          connectés Amazon Echo Show et Google Nest Hub.
+        </p>
+      </section>
+
+      {%- comment -%} ===== 8. Support ===== {%- endcomment -%}
+      <section id="kh-support" class="kh__block" aria-labelledby="kh-support-t">
+        <h2 id="kh-support-t" class="heading title-md">Support technique</h2>
+        <p>
+          Le support est assuré par les techniciens Daewoo Security basés en France, qui connaissent l'ensemble des produits.
+          Réponse sous 48 heures ouvrées.
+        </p>
+        <ul class="kh__list">
+          <li><strong>Formulaire d'assistance</strong> (premier contact recommandé) : <a href="{{ s.url_contact }}">nous contacter</a></li>
+          <li><strong>E-mail</strong> : <a href="mailto:support@daewoo-security.fr">support@daewoo-security.fr</a> – du lundi au vendredi, 9h30-17h30</li>
+          <li><strong>WhatsApp</strong> : envoyez une vidéo de votre installation à nos techniciens au <a href="https://wa.me/33660897483" rel="noopener">+33 6 60 89 74 83</a></li>
+          <li><strong>Franck, l'assistant virtuel</strong> : réponses immédiates 24h/24 sur la <a href="{{ s.url_assistance }}">page assistance</a></li>
+          <li><strong>Retour SAV</strong> : <a href="{{ s.url_sav }}">procédure de retour</a></li>
+        </ul>
+      </section>
+
+      {%- comment -%} ===== 9. Garanties ===== {%- endcomment -%}
+      <section id="kh-garanties" class="kh__block" aria-labelledby="kh-garanties-t">
+        <h2 id="kh-garanties-t" class="heading title-md">Garanties</h2>
+        <ul class="kh__list">
+          <li><strong>Garantie 2 ans</strong> sur les produits, à compter de la date de livraison (1 an pour les produits « Destockage »), couvrant les défauts de matériel et de fabrication dans des conditions normales d'utilisation.</li>
+          <li><strong>Droit de rétractation de 14 jours</strong> à compter de la réception de la commande.</li>
+        </ul>
+        <p class="kh__note">Conditions complètes : <a href="{{ s.url_cgv }}">livraison &amp; retours</a> · <a href="{{ s.url_legal }}">mentions légales</a>.</p>
+      </section>
+
+      {%- comment -%} ===== 10. Documentation ===== {%- endcomment -%}
+      <section id="kh-documentation" class="kh__block" aria-labelledby="kh-documentation-t">
+        <h2 id="kh-documentation-t" class="heading title-md">Documentation</h2>
+        <div class="kh__grid kh__links">
+          <a class="kh__card" href="{{ s.url_notices }}"><strong>Notices et manuels</strong><span>Manuels Vigilia, Touch AM301, Touch XL AM302, Élite PA501Z</span></a>
+          <a class="kh__card" href="{{ s.url_videos }}"><strong>Tutoriels vidéo</strong><span>Installation et paramétrage pas à pas</span></a>
+          <a class="kh__card" href="{{ s.url_faq }}"><strong>Questions fréquentes</strong><span>Installation, application, caméras, SIM</span></a>
+          <a class="kh__card" href="{{ s.url_assistance }}"><strong>Centre d'assistance</strong><span>Aide par centrale : SA501, AM301, AM302, PA501Z, caméras</span></a>
+        </div>
+      </section>
+
+      {%- comment -%} ===== 11. Comparateur / configurateur ===== {%- endcomment -%}
+      <section id="kh-choisir" class="kh__block" aria-labelledby="kh-choisir-t">
+        <h2 id="kh-choisir-t" class="heading title-md">Choisir son alarme Daewoo</h2>
+        <div class="kh__grid kh__links">
+          <a class="kh__card" href="{{ s.url_comparateur }}"><strong>Comparateur des alarmes</strong><span>Vigilia, Touch et Élite côte à côte</span></a>
+          <a class="kh__card" href="{{ s.url_configurateur }}"><strong>Configurateur</strong><span>Composez votre système pièce par pièce</span></a>
+          <a class="kh__card" href="{{ s.url_quiz }}"><strong>Quiz : trouver mon alarme</strong><span>La bonne gamme en quelques questions</span></a>
+          <a class="kh__card" href="{{ s.url_guide }}"><strong>Guide de choix</strong><span>Appartement, maison, maison connectée</span></a>
+        </div>
+      </section>
+
+      {%- comment -%} ===== 12. FAQ entité ===== {%- endcomment -%}
+      <section id="kh-faq" class="kh__block kh__faq" aria-labelledby="kh-faq-t">
+        <h2 id="kh-faq-t" class="heading title-md">Questions fréquentes sur Daewoo Security</h2>
+        <details>
+          <summary>Daewoo Security est-elle une marque fiable ?</summary>
+          <p>Daewoo Security est exploitée sous licence officielle de la marque Daewoo par Liz Invest SAS, société française basée à Mérignac (Bordeaux). Les produits sont garantis 2 ans et le support technique est assuré en France.</p>
+        </details>
+        <details>
+          <summary>Qui vend les alarmes Daewoo en France ?</summary>
+          <p>Les alarmes Daewoo Security sont vendues en France et en Belgique par Liz Invest SAS, principalement via le site officiel daewoo-security.fr.</p>
+        </details>
+        <details>
+          <summary>Faut-il payer un abonnement pour une alarme Daewoo ?</summary>
+          <p>Non. Le matériel s'achète une fois et l'application Daewoo Home Connect est gratuite. Seules deux options restent facultatives : une carte SIM 4G de secours et un stockage Cloud pour les vidéos des caméras.</p>
+        </details>
+        <details>
+          <summary>Quelle application utiliser avec une alarme Daewoo ?</summary>
+          <p>L'application gratuite Daewoo Home Connect, disponible sur iOS et Android, permet de piloter toutes les centrales Daewoo Security.</p>
+        </details>
+        <details>
+          <summary>Les alarmes Daewoo sont-elles compatibles avec Alexa et Google Home ?</summary>
+          <p>Oui pour les gammes Vigilia et Touch. La gamme Élite n'est pas compatible avec Alexa et Google Home, mais intègre une passerelle Zigbee 3.0 pour la domotique.</p>
+        </details>
+        <details>
+          <summary>Où se trouve le service client Daewoo Security ?</summary>
+          <p>L'équipe et les techniciens sont basés à Mérignac, dans la métropole bordelaise. Ils sont joignables par formulaire, e-mail (support@daewoo-security.fr) et WhatsApp, du lundi au vendredi de 9h30 à 17h30.</p>
+        </details>
+        <details>
+          <summary>Quelle est la différence entre Vigilia, Touch et Élite ?</summary>
+          <p>Vigilia est la gamme essentielle à clavier ; Touch (AM301, 4,3") et Touch XL (AM302, 7") ajoutent un écran tactile ; Élite (PA501Z) offre la triple connectivité Ethernet/Wi-Fi/4G, une passerelle Zigbee et jusqu'à 200 accessoires.</p>
+        </details>
+      </section>
+    </article>
+  </div>
+</div>
+
+{%- comment -%} ===== Données structurées (entité) ===== {%- endcomment -%}
+{%- capture org_id -%}{{ base }}/#organization{%- endcapture -%}
+{%- capture brand_id -%}{{ base }}/#brand{%- endcapture -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": {{ org_id | json }},
+      "name": "Daewoo Security",
+      "legalName": "Liz Invest SAS",
+      "url": {{ base | json }},
+      {%- if settings.logo != blank %}
+      "logo": {{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }},
+      {%- endif %}
+      "description": "Daewoo Security commercialise en France et en Belgique des alarmes, caméras de surveillance et équipements domotiques connectés sans abonnement, sous licence officielle de la marque Daewoo.",
+      "vatID": "FR45791022692",
+      "identifier": { "@type": "PropertyValue", "propertyID": "RCS Bordeaux", "value": "791022692" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "6 rue Léon Morane",
+        "postalCode": "33700",
+        "addressLocality": "Mérignac",
+        "addressRegion": "Nouvelle-Aquitaine",
+        "addressCountry": "FR"
+      },
+      "areaServed": [{ "@type": "Country", "name": "France" }, { "@type": "Country", "name": "Belgique" }],
+      "email": "contact@daewoo-security.fr",
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "contactType": "technical support",
+        "email": "support@daewoo-security.fr",
+        "availableLanguage": "fr",
+        "areaServed": ["FR", "BE"],
+        "hoursAvailable": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:30",
+          "closes": "17:30"
+        }
+      }],
+      "brand": { "@id": {{ brand_id | json }} },
+      "knowsAbout": ["Système d'alarme sans fil", "Alarme sans abonnement", "Vidéosurveillance", "Domotique", "Zigbee", "Maison connectée"],
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=100063456644012",
+        "https://www.instagram.com/daewoosecurity/",
+        "https://www.youtube.com/@daewoosecurity3029"
+      ]
+    },
+    {
+      "@type": "Brand",
+      "@id": {{ brand_id | json }},
+      "name": "Daewoo Security",
+      "description": "Gammes d'alarmes Vigilia, Touch, Touch XL et Élite, caméras de surveillance et domotique, pilotées par l'application Daewoo Home Connect."
+    },
+    {
+      "@type": "MobileApplication",
+      "name": "Daewoo Home Connect",
+      "operatingSystem": "iOS, Android",
+      "applicationCategory": "LifestyleApplication",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+      "publisher": { "@id": {{ org_id | json }} }
+    },
+    {
+      "@type": "AboutPage",
+      "@id": {{ page_url | append: '#webpage' | json }},
+      "url": {{ page_url | json }},
+      "name": {{ page.title | default: 'Tout savoir sur les alarmes Daewoo Security' | json }},
+      "inLanguage": "fr-FR",
+      "about": { "@id": {{ org_id | json }} },
+      "mainEntity": { "@id": {{ org_id | json }} },
+      "dateModified": {{ page.updated_at | default: 'now' | date: '%Y-%m-%d' | json }},
+      "hasPart": {
+        "@type": "ItemList",
+        "name": "Gammes d'alarmes Daewoo Security",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Vigilia", "url": {{ s.url_vigilia | prepend: base | json }} },
+          { "@type": "ListItem", "position": 2, "name": "Touch AM301 / Touch XL AM302", "url": {{ s.url_touch | prepend: base | json }} },
+          { "@type": "ListItem", "position": 3, "name": "Élite PA501Z", "url": {{ s.url_elite | prepend: base | json }} }
+        ]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Daewoo Security est-elle une marque fiable ?", "acceptedAnswer": { "@type": "Answer", "text": "Daewoo Security est exploitée sous licence officielle de la marque Daewoo par Liz Invest SAS, société française basée à Mérignac (Bordeaux). Les produits sont garantis 2 ans et le support technique est assuré en France." } },
+        { "@type": "Question", "name": "Qui vend les alarmes Daewoo en France ?", "acceptedAnswer": { "@type": "Answer", "text": "Les alarmes Daewoo Security sont vendues en France et en Belgique par Liz Invest SAS, principalement via le site officiel daewoo-security.fr." } },
+        { "@type": "Question", "name": "Faut-il payer un abonnement pour une alarme Daewoo ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. Le matériel s'achète une fois et l'application Daewoo Home Connect est gratuite. Seules deux options restent facultatives : une carte SIM 4G de secours et un stockage Cloud pour les vidéos des caméras." } },
+        { "@type": "Question", "name": "Quelle application utiliser avec une alarme Daewoo ?", "acceptedAnswer": { "@type": "Answer", "text": "L'application gratuite Daewoo Home Connect, disponible sur iOS et Android, permet de piloter toutes les centrales Daewoo Security." } },
+        { "@type": "Question", "name": "Les alarmes Daewoo sont-elles compatibles avec Alexa et Google Home ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui pour les gammes Vigilia et Touch. La gamme Élite n'est pas compatible avec Alexa et Google Home, mais intègre une passerelle Zigbee 3.0 pour la domotique." } },
+        { "@type": "Question", "name": "Où se trouve le service client Daewoo Security ?", "acceptedAnswer": { "@type": "Answer", "text": "L'équipe et les techniciens sont basés à Mérignac, dans la métropole bordelaise. Ils sont joignables par formulaire, e-mail (support@daewoo-security.fr) et WhatsApp, du lundi au vendredi de 9h30 à 17h30." } },
+        { "@type": "Question", "name": "Quelle est la différence entre Vigilia, Touch et Élite ?", "acceptedAnswer": { "@type": "Answer", "text": "Vigilia est la gamme essentielle à clavier ; Touch (AM301, 4,3 pouces) et Touch XL (AM302, 7 pouces) ajoutent un écran tactile ; Élite (PA501Z) offre la triple connectivité Ethernet/Wi-Fi/4G, une passerelle Zigbee et jusqu'à 200 accessoires." } }
+      ]
+    }
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Knowledge Hub Daewoo",
+  "class": "section-knowledge-hub",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Mise en page"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Taille du titre",
+      "options": [
+        { "value": "title-md", "label": "Moyen" },
+        { "value": "title-lg tracking-heading", "label": "Grand" },
+        { "value": "title-xl tracking-heading", "label": "Très grand" }
+      ],
+      "default": "title-lg tracking-heading"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Taille du texte",
+      "options": [
+        { "value": "text-base", "label": "Normal" },
+        { "value": "text-lg", "label": "Grand" }
+      ],
+      "default": "text-base"
+    },
+    { "type": "range", "id": "padding_top", "label": "Marge haute", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Marge basse", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 96 },
+    {
+      "type": "header",
+      "content": "Chiffres clés"
+    },
+    { "type": "text", "id": "customers", "label": "Clients", "default": "Plus de 60 000 foyers protégés en France et en Belgique" },
+    { "type": "text", "id": "rating", "label": "Note moyenne", "default": "4,6/5 sur plus de 900 avis" },
+    { "type": "text", "id": "vigilia_accessories", "label": "Accessoires max. Vigilia", "default": "60" },
+    {
+      "type": "header",
+      "content": "Liens (chemins relatifs)"
+    },
+    { "type": "text", "id": "url_comparateur", "label": "Comparateur", "default": "/pages/comparateur-am301-sa501-pa501z" },
+    { "type": "text", "id": "url_configurateur", "label": "Configurateur", "default": "/pages/configurateurs" },
+    { "type": "text", "id": "url_quiz", "label": "Quiz", "default": "/pages/trouver-mon-alarme-quiz" },
+    { "type": "text", "id": "url_guide", "label": "Guide de choix", "default": "/pages/comment-choisir-son-alarme" },
+    { "type": "text", "id": "url_vigilia", "label": "Collection Vigilia", "default": "/collections/systeme-dalarme-vigilia" },
+    { "type": "text", "id": "url_touch", "label": "Collection Touch", "default": "/collections/systeme-dalarme-am301-am302" },
+    { "type": "text", "id": "url_elite", "label": "Collection Élite", "default": "/collections/systeme-dalarme-pa501z" },
+    { "type": "text", "id": "url_cameras", "label": "Collection caméras", "default": "/collections/cameras-de-surveillance" },
+    { "type": "text", "id": "url_domotique", "label": "Collection domotique", "default": "/collections/domotique" },
+    { "type": "text", "id": "url_sa501_4g", "label": "Offre SA501 4G", "default": "/pages/sa501-4g" },
+    { "type": "text", "id": "url_cloud", "label": "Offre Cloud", "default": "/pages/cloud" },
+    { "type": "text", "id": "url_assistance", "label": "Assistance", "default": "/pages/assistance" },
+    { "type": "text", "id": "url_contact", "label": "Contact", "default": "/pages/nous-contacter" },
+    { "type": "text", "id": "url_sav", "label": "Retour SAV", "default": "/pages/sav" },
+    { "type": "text", "id": "url_notices", "label": "Notices", "default": "/pages/notices" },
+    { "type": "text", "id": "url_videos", "label": "Vidéos", "default": "/pages/videos" },
+    { "type": "text", "id": "url_faq", "label": "FAQ", "default": "/pages/questions-frequentes" },
+    { "type": "text", "id": "url_cgv", "label": "Livraison & retours", "default": "/pages/livraison-retour" },
+    { "type": "text", "id": "url_legal", "label": "Mentions légales", "default": "/pages/mentions-legales" }
+  ],
+  "presets": [
+    { "name": "Knowledge Hub Daewoo" }
+  ]
+}
+{% endschema %}
