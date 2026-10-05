@@ -42,18 +42,21 @@ Le thème ne contenait jusqu'ici **aucun JSON-LD Organization**. Seule une micro
 3. Ajouter un lien vers la page dans le footer (par exemple « À propos de Daewoo Security »). Sans lien interne, la page sera mal découverte.
 4. Tester la page avec l'outil Google *Rich Results Test* et le *Schema Markup Validator*.
 
-## À vérifier avant publication
+## Valeurs validées (à reporter sur le reste du site)
 
-Dans le thème, plusieurs pages se contredisent. Les moteurs génératifs ont besoin d'une source **cohérente**, donc la page retient les valeurs les plus sûres. Il reste à harmoniser le reste du site.
+| Point | Valeur officielle |
+|---|---|
+| Accessoires max. | Vigilia 60 · Touch/Touch XL 90 · Élite 200 |
+| Retours | 14 jours |
+| Note moyenne | 4,6/5 |
+| Sirène intégrée | 85-90 dB (Vigilia, Touch, Élite) |
+| Sirène extérieure (option) | 105-110 dB |
+| Adresse | 15 allée James Watt, Immeuble 2000 Watt, 33700 Mérignac |
+| Support humain | Lundi-vendredi, 9h30-17h30 |
+| Assistant IA (Franck) | 7j/7, 24h/24 |
 
-| Point | Constat dans le thème | Choix retenu ici |
-|---|---|---|
-| Accessoires max. Vigilia | 60 (collection, compare) vs 90 (accueil, comparatif) | 60 (modifiable dans les réglages de la section) |
-| Durée de retour | 14 jours (CGV) vs « 30 jours » (badges accueil et collection Vigilia) | 14 jours, la valeur légale des CGV |
-| Note moyenne | 4,6/5 (accueil) vs 4,7/5 (collections) | 4,6/5 sur plus de 900 avis (modifiable) |
-| Puissance des sirènes | Vigilia 85 ou 90 dB ; Élite 85, 95-100 ou 110 dB | Non affichée |
-| Adresse | 6 rue Léon Morane (siège) vs 15 allée James Watt (retours SAV) | Siège social uniquement |
-| Horaires du support | Lun-ven 9h30-17h30 vs « 7j/7 » sur l'accueil | Lun-ven 9h30-17h30 (Franck 24h/24) |
-| Année de création | « Depuis 2015 » (accueil) ; page À propos : Daewoo « fondée en 1971 » | Aucune date donnée (année à confirmer) |
+Pages du thème encore en contradiction : badges « Retours 30 jours » (accueil, collection Vigilia), « jusqu'à 90 accessoires » pour Vigilia (accueil, comparatif d'alarme), 4,7/5 (collections, comparatif), dB des sirènes (collections, compare), « Support technique 7j/7 » sur l'accueil (à reformuler en « Assistant IA 7j/7 »), adresse Léon Morane dans les mentions légales et la page Livraison & Retour.
 
-Les **URLs** sont des réglages de la section, modifiables dans l'éditeur de thème. Les handles suivants ont été déduits des liens du thème et sont **à vérifier** : `/pages/configurateurs`, `/pages/sa501-4g`, `/pages/livraison-retour`, `/pages/questions-frequentes`, `/pages/notices`.
+Année de création : non indiquée (« depuis 2015 » sur l'accueil, à confirmer).
+
+Les **URLs** sont des réglages de la section, modifiables dans l'éditeur de thème. Handles déduits des liens du thème, **à vérifier** : `/pages/configurateurs`, `/pages/sa501-4g`, `/pages/livraison-retour`, `/pages/questions-frequentes`, `/pages/notices`.

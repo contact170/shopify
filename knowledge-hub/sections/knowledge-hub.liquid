@@ -106,12 +106,14 @@
             <dd>Daewoo (marque d'origine sud-coréenne), utilisée sous licence officielle</dd>
             <dt>Société exploitante</dt>
             <dd>Liz Invest SAS – RCS Bordeaux 791 022 692 – TVA FR45791022692</dd>
-            <dt>Siège</dt>
-            <dd>6 rue Léon Morane, 33700 Mérignac (Bordeaux Métropole), France</dd>
+            <dt>Adresse</dt>
+            <dd>15 allée James Watt, Immeuble 2000 Watt, 33700 Mérignac (Bordeaux Métropole), France</dd>
             <dt>Marchés</dt>
             <dd>France et Belgique</dd>
             <dt>Site officiel</dt>
             <dd><a href="{{ base }}">daewoo-security.fr</a></dd>
+            <dt>Sirènes</dt>
+            <dd>Sirène intégrée de 85 à 90 dB sur toutes les centrales ; sirène extérieure en option de 105 à 110 dB</dd>
             <dt>Gammes d'alarme</dt>
             <dd>Vigilia, Touch (AM301), Touch XL (AM302), Élite (PA501Z) – et Key (SA501) pour le parc existant</dd>
             <dt>Application</dt>
@@ -121,7 +123,7 @@
             <dt>Garantie</dt>
             <dd>2 ans à compter de la livraison (1 an sur les produits « Destockage »)</dd>
             <dt>Support</dt>
-            <dd>Techniciens basés en France (Mérignac), du lundi au vendredi de 9h30 à 17h30</dd>
+            <dd>Techniciens basés en France (Mérignac), du lundi au vendredi de 9h30 à 17h30 – assistant IA 7j/7, 24h/24</dd>
             {%- if s.customers != blank -%}
               <dt>Clients</dt>
               <dd>{{ s.customers }}</dd>
@@ -149,7 +151,7 @@
         </p>
         <h3 class="heading title-sm">Où se trouve l'équipe ?</h3>
         <p>
-          L'équipe Daewoo Security est installée à <strong>Mérignac, en Gironde (métropole bordelaise)</strong>. Les commandes y sont
+          L'équipe Daewoo Security est installée au <strong>15 allée James Watt à Mérignac, en Gironde (métropole bordelaise)</strong>. Les commandes y sont
           préparées et expédiées, et c'est là que travaillent les techniciens qui accompagnent les clients dans l'installation et l'utilisation de leur système.
         </p>
       </section>
@@ -170,6 +172,7 @@
                 <th scope="col">Connectivité</th>
                 <th scope="col">Radio</th>
                 <th scope="col">Accessoires max.</th>
+                <th scope="col">Sirène intégrée</th>
                 <th scope="col">Idéal pour</th>
               </tr>
             </thead>
@@ -181,6 +184,7 @@
                 <td>Wi-Fi 2,4 GHz (+ 4G sur la version GSM)</td>
                 <td>433 MHz</td>
                 <td>{{ s.vigilia_accessories }}</td>
+                <td>85-90 dB</td>
                 <td>Appartement, maison</td>
               </tr>
               <tr>
@@ -189,7 +193,8 @@
                 <td>Écran tactile 4,3"</td>
                 <td>Wi-Fi 2,4 GHz + 4G en option (carte SIM)</td>
                 <td>433 MHz</td>
-                <td>90</td>
+                <td>{{ s.touch_accessories }}</td>
+                <td>85-90 dB</td>
                 <td>Appartement, maison avec jardin</td>
               </tr>
               <tr>
@@ -198,7 +203,8 @@
                 <td>Écran tactile 7"</td>
                 <td>Wi-Fi 2,4 GHz + 4G en option (carte SIM)</td>
                 <td>433 MHz</td>
-                <td>90</td>
+                <td>{{ s.touch_accessories }}</td>
+                <td>85-90 dB</td>
                 <td>Maison</td>
               </tr>
               <tr>
@@ -207,12 +213,15 @@
                 <td>Centrale + application</td>
                 <td>Ethernet (RJ45) + Wi-Fi + 4G (carte SIM)</td>
                 <td>433 / 868 MHz + Zigbee 3.0</td>
-                <td>200</td>
+                <td>{{ s.elite_accessories }}</td>
+                <td>85-90 dB</td>
                 <td>Maison connectée, domotique</td>
               </tr>
             </tbody>
           </table>
         </div>
+
+        <p class="kh__note">Toutes les centrales intègrent une sirène de 85 à 90 dB. Une sirène extérieure (105 à 110 dB) peut être ajoutée en accessoire pour renforcer la dissuasion.</p>
 
         <h3 class="heading title-sm">Caméras de surveillance</h3>
         <p>
@@ -286,7 +295,7 @@
           </div>
           <div class="kh__card">
             <h3 class="heading title-sm" style="margin-top:0;">Zigbee 3.0</h3>
-            <p>Passerelle Zigbee intégrée à la centrale Élite (PA501Z) : réseau maillé pour la domotique, jusqu'à 200 appareils et 20 utilisateurs.</p>
+            <p>Passerelle Zigbee intégrée à la centrale Élite (PA501Z) : réseau maillé pour la domotique, jusqu'à {{ s.elite_accessories }} appareils et 20 utilisateurs.</p>
           </div>
           <div class="kh__card">
             <h3 class="heading title-sm" style="margin-top:0;">Batterie de secours</h3>
@@ -336,7 +345,7 @@
           <li><strong>Formulaire d'assistance</strong> (premier contact recommandé) : <a href="{{ s.url_contact }}">nous contacter</a></li>
           <li><strong>E-mail</strong> : <a href="mailto:support@daewoo-security.fr">support@daewoo-security.fr</a> – du lundi au vendredi, 9h30-17h30</li>
           <li><strong>WhatsApp</strong> : envoyez une vidéo de votre installation à nos techniciens au <a href="https://wa.me/33660897483" rel="noopener">+33 6 60 89 74 83</a></li>
-          <li><strong>Franck, l'assistant virtuel</strong> : réponses immédiates 24h/24 sur la <a href="{{ s.url_assistance }}">page assistance</a></li>
+          <li><strong>Franck, l'assistant IA</strong> : réponses immédiates 7j/7 et 24h/24 sur la <a href="{{ s.url_assistance }}">page assistance</a></li>
           <li><strong>Retour SAV</strong> : <a href="{{ s.url_sav }}">procédure de retour</a></li>
         </ul>
       </section>
@@ -398,11 +407,11 @@
         </details>
         <details>
           <summary>Où se trouve le service client Daewoo Security ?</summary>
-          <p>L'équipe et les techniciens sont basés à Mérignac, dans la métropole bordelaise. Ils sont joignables par formulaire, e-mail (support@daewoo-security.fr) et WhatsApp, du lundi au vendredi de 9h30 à 17h30.</p>
+          <p>L'équipe et les techniciens sont basés à Mérignac, dans la métropole bordelaise. Ils sont joignables par formulaire, e-mail (support@daewoo-security.fr) et WhatsApp, du lundi au vendredi de 9h30 à 17h30. L'assistant IA Franck répond 7j/7, 24h/24.</p>
         </details>
         <details>
           <summary>Quelle est la différence entre Vigilia, Touch et Élite ?</summary>
-          <p>Vigilia est la gamme essentielle à clavier ; Touch (AM301, 4,3") et Touch XL (AM302, 7") ajoutent un écran tactile ; Élite (PA501Z) offre la triple connectivité Ethernet/Wi-Fi/4G, une passerelle Zigbee et jusqu'à 200 accessoires.</p>
+          <p>Vigilia est la gamme essentielle à clavier ; Touch (AM301, 4,3") et Touch XL (AM302, 7") ajoutent un écran tactile ; Élite (PA501Z) offre la triple connectivité Ethernet/Wi-Fi/4G, une passerelle Zigbee et jusqu'à 200 accessoires. Vigilia accepte jusqu'à 60 accessoires et Touch jusqu'à 90.</p>
         </details>
       </section>
     </article>
@@ -430,7 +439,7 @@
       "identifier": { "@type": "PropertyValue", "propertyID": "RCS Bordeaux", "value": "791022692" },
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "6 rue Léon Morane",
+        "streetAddress": "15 allée James Watt, Immeuble 2000 Watt",
         "postalCode": "33700",
         "addressLocality": "Mérignac",
         "addressRegion": "Nouvelle-Aquitaine",
@@ -449,6 +458,18 @@
           "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
           "opens": "09:30",
           "closes": "17:30"
+        }
+      }, {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "name": "Franck, assistant IA Daewoo Security",
+        "url": {{ s.url_assistance | prepend: base | json }},
+        "availableLanguage": "fr",
+        "hoursAvailable": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "00:00",
+          "closes": "23:59"
         }
       }],
       "brand": { "@id": {{ brand_id | json }} },
@@ -500,8 +521,8 @@
         { "@type": "Question", "name": "Faut-il payer un abonnement pour une alarme Daewoo ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. Le matériel s'achète une fois et l'application Daewoo Home Connect est gratuite. Seules deux options restent facultatives : une carte SIM 4G de secours et un stockage Cloud pour les vidéos des caméras." } },
         { "@type": "Question", "name": "Quelle application utiliser avec une alarme Daewoo ?", "acceptedAnswer": { "@type": "Answer", "text": "L'application gratuite Daewoo Home Connect, disponible sur iOS et Android, permet de piloter toutes les centrales Daewoo Security." } },
         { "@type": "Question", "name": "Les alarmes Daewoo sont-elles compatibles avec Alexa et Google Home ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui pour les gammes Vigilia et Touch. La gamme Élite n'est pas compatible avec Alexa et Google Home, mais intègre une passerelle Zigbee 3.0 pour la domotique." } },
-        { "@type": "Question", "name": "Où se trouve le service client Daewoo Security ?", "acceptedAnswer": { "@type": "Answer", "text": "L'équipe et les techniciens sont basés à Mérignac, dans la métropole bordelaise. Ils sont joignables par formulaire, e-mail (support@daewoo-security.fr) et WhatsApp, du lundi au vendredi de 9h30 à 17h30." } },
-        { "@type": "Question", "name": "Quelle est la différence entre Vigilia, Touch et Élite ?", "acceptedAnswer": { "@type": "Answer", "text": "Vigilia est la gamme essentielle à clavier ; Touch (AM301, 4,3 pouces) et Touch XL (AM302, 7 pouces) ajoutent un écran tactile ; Élite (PA501Z) offre la triple connectivité Ethernet/Wi-Fi/4G, une passerelle Zigbee et jusqu'à 200 accessoires." } }
+        { "@type": "Question", "name": "Où se trouve le service client Daewoo Security ?", "acceptedAnswer": { "@type": "Answer", "text": "L'équipe et les techniciens sont basés à Mérignac, dans la métropole bordelaise. Ils sont joignables par formulaire, e-mail (support@daewoo-security.fr) et WhatsApp, du lundi au vendredi de 9h30 à 17h30. L'assistant IA Franck répond 7j/7, 24h/24." } },
+        { "@type": "Question", "name": "Quelle est la différence entre Vigilia, Touch et Élite ?", "acceptedAnswer": { "@type": "Answer", "text": "Vigilia est la gamme essentielle à clavier ; Touch (AM301, 4,3 pouces) et Touch XL (AM302, 7 pouces) ajoutent un écran tactile ; Élite (PA501Z) offre la triple connectivité Ethernet/Wi-Fi/4G, une passerelle Zigbee et jusqu'à 200 accessoires. Vigilia accepte jusqu'à 60 accessoires et Touch jusqu'à 90." } }
       ]
     }
   ]
@@ -547,6 +568,8 @@
     { "type": "text", "id": "customers", "label": "Clients", "default": "Plus de 60 000 foyers protégés en France et en Belgique" },
     { "type": "text", "id": "rating", "label": "Note moyenne", "default": "4,6/5 sur plus de 900 avis" },
     { "type": "text", "id": "vigilia_accessories", "label": "Accessoires max. Vigilia", "default": "60" },
+    { "type": "text", "id": "touch_accessories", "label": "Accessoires max. Touch / Touch XL", "default": "90" },
+    { "type": "text", "id": "elite_accessories", "label": "Accessoires max. Élite", "default": "200" },
     {
       "type": "header",
       "content": "Liens (chemins relatifs)"
