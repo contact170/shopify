@@ -1,0 +1,642 @@
+<template>
+  <script src="assets/vendor/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "Inter"; font-weight: 400; font-style: normal; src: url("assets/fonts/Inter-400.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 600; font-style: normal; src: url("assets/fonts/Inter-600.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 700; font-style: normal; src: url("assets/fonts/Inter-700.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 800; font-style: normal; src: url("assets/fonts/Inter-800.woff2") format("woff2"); }
+
+    #root {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #ffffff;
+    }
+    .\30 2-detecte-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120% 80% at 50% 30%, #13295f 0%, #0c1e4a 40%, #081430 100%);
+    }
+    .\30 2-detecte-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(90% 70% at 45% 40%, rgba(8, 20, 48, 0) 55%, rgba(4, 9, 24, 0.55) 100%);
+    }
+    .\30 2-detecte-scene {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .\30 2-detecte-world {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+    .\30 2-detecte-abs { position: absolute; }
+
+    /* window frame (dark background trait) */
+    .\30 2-detecte-glass {
+      position: absolute;
+      left: -108px;
+      top: 192px;
+      width: 443px;
+      height: 998px;
+      border-radius: 0 0 6px 0;
+      background:
+        linear-gradient(115deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.05) 38%, rgba(255, 255, 255, 0) 44%, rgba(255, 255, 255, 0) 58%, rgba(255, 255, 255, 0.035) 62%, rgba(255, 255, 255, 0) 66%),
+        linear-gradient(180deg, rgba(4, 10, 28, 0.55), rgba(6, 14, 36, 0.35));
+    }
+    .\30 2-detecte-jamb {
+      position: absolute;
+      left: 335px;
+      top: 192px;
+      width: 32px;
+      height: 998px;
+      border-radius: 0 0 6px 6px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.2) 55%, rgba(255, 255, 255, 0.1));
+    }
+    .\30 2-detecte-sill {
+      position: absolute;
+      left: -108px;
+      top: 1176px;
+      width: 475px;
+      height: 14px;
+      border-radius: 0 0 6px 0;
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .\30 2-detecte-rabbet {
+      position: absolute;
+      left: 318px;
+      top: 192px;
+      width: 2px;
+      height: 984px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    /* WDV301 */
+    .\30 2-detecte-sensor {
+      position: absolute;
+      left: 259px;
+      top: 307px;
+      width: 352px;
+      height: 576px;
+    }
+    .\30 2-detecte-sensor-img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 352px;
+      height: 576px;
+      display: block;
+    }
+    .\30 2-detecte-sensor-shade {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 352px;
+      height: 576px;
+      border-radius: 40px;
+      background: linear-gradient(180deg, rgba(12, 30, 74, 0) 40%, rgba(12, 30, 74, 0.18) 100%);
+    }
+    .\30 2-detecte-led-halo {
+      position: absolute;
+      left: 47px;
+      top: 165px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(225, 29, 72, 0.95) 0%, rgba(190, 18, 60, 0.55) 22%, rgba(150, 12, 48, 0) 68%);
+    }
+    .\30 2-detecte-led {
+      position: absolute;
+      left: 158px;
+      top: 240px;
+      width: 19px;
+      height: 91px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #ff5a7d, #e11d48 40%, #c3123c);
+      box-shadow: 0 0 10px 2px rgba(255, 70, 110, 0.9), 0 0 26px 6px rgba(225, 29, 72, 0.55);
+    }
+    .\30 2-detecte-led-core {
+      position: absolute;
+      left: 164px;
+      top: 254px;
+      width: 7px;
+      height: 63px;
+      border-radius: 4px;
+      background: #ffd6df;
+    }
+    .\30 2-detecte-ring {
+      position: absolute;
+      left: 226px;
+      top: 392px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 5px solid rgba(225, 29, 72, 0.75);
+    }
+
+    /* vibration pill */
+    .\30 2-detecte-vpill {
+      position: absolute;
+      left: 590px;
+      top: 458px;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 34px 16px 28px;
+      border-radius: 100px;
+      background: rgba(225, 29, 72, 0.16);
+      border: 1.5px solid rgba(225, 29, 72, 0.55);
+      color: #ffb3c2;
+      font-size: 34px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .\30 2-detecte-vdot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #e11d48;
+      box-shadow: 0 0 12px 3px rgba(225, 29, 72, 0.8);
+    }
+
+    /* signal svg */
+    .\30 2-detecte-svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: visible;
+    }
+
+    /* Centrale Vigilia + */
+    .\30 2-detecte-hub {
+      position: absolute;
+      left: 570px;
+      top: 1070px;
+      width: 450px;
+      height: 310px;
+    }
+    .\30 2-detecte-hub-depth {
+      position: absolute;
+      left: 9px;
+      top: 7px;
+      width: 450px;
+      height: 310px;
+      border-radius: 40px;
+      background: linear-gradient(180deg, #d8d8d3, #b9b9b3);
+      box-shadow: 0 34px 60px rgba(0, 0, 0, 0.45), 0 10px 22px rgba(0, 0, 0, 0.3);
+    }
+    .\30 2-detecte-hub-face {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 450px;
+      height: 310px;
+      border-radius: 40px;
+      background: linear-gradient(160deg, #ffffff 0%, #f7f7f5 45%, #ececea 100%);
+      overflow: hidden;
+    }
+    .\30 2-detecte-hub-pulse {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 450px;
+      height: 310px;
+      border-radius: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.85);
+    }
+    .\30 2-detecte-key {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+    }
+    .\30 2-detecte-kl, .\30 2-detecte-kb, .\30 2-detecte-kf {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1;
+      box-sizing: border-box;
+    }
+    .\30 2-detecte-kb { border: 1.5px solid #c9c9c9; color: #8a8a8a; }
+    .\30 2-detecte-kl {
+      border: 2px solid #0c1e4a;
+      color: #0c1e4a;
+      font-weight: 600;
+      background: rgba(12, 30, 74, 0.07);
+      box-shadow: 0 0 10px rgba(60, 110, 255, 0.35);
+    }
+    .\30 2-detecte-kf { background: #0c1e4a; color: #ffffff; font-weight: 600; border: 2px solid #0c1e4a; }
+    .\30 2-detecte-key svg { width: 24px; height: 24px; display: block; }
+    .\30 2-detecte-sdot {
+      position: absolute;
+      left: 302px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #e11d48;
+    }
+    .\30 2-detecte-sdot-glow {
+      position: absolute;
+      left: 299px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(225, 29, 72, 0.9), rgba(225, 29, 72, 0) 70%);
+    }
+    .\30 2-detecte-hled-g, .\30 2-detecte-hled-r {
+      position: absolute;
+      left: 344px;
+      top: 44px;
+      width: 40px;
+      height: 12px;
+      border-radius: 100px;
+    }
+    .\30 2-detecte-hled-g { background: #3ccf4e; box-shadow: 0 0 8px rgba(60, 207, 78, 0.8); }
+    .\30 2-detecte-hled-r { background: #e11d48; box-shadow: 0 0 10px 2px rgba(225, 29, 72, 0.9), 0 0 26px 6px rgba(225, 29, 72, 0.45); }
+    .\30 2-detecte-rfid {
+      position: absolute;
+      left: 324px;
+      top: 118px;
+      width: 70px;
+      height: 70px;
+      border-radius: 14px;
+      border: 1.5px solid #c9c9c9;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: #9a9a9a;
+    }
+    .\30 2-detecte-rfid svg { width: 34px; height: 22px; display: block; }
+    .\30 2-detecte-rfid span { font-size: 9px; font-weight: 600; letter-spacing: 0.04em; }
+    .\30 2-detecte-brand {
+      position: absolute;
+      left: 318px;
+      top: 258px;
+      width: 90px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: #9a9a9a;
+    }
+
+    .\30 2-detecte-hub-label {
+      position: absolute;
+      left: 570px;
+      top: 1414px;
+      width: 450px;
+      display: flex;
+      justify-content: center;
+    }
+    .\30 2-detecte-hpill {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 30px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.24);
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+    .\30 2-detecte-hdot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #e11d48;
+      box-shadow: 0 0 10px 2px rgba(225, 29, 72, 0.8);
+    }
+
+    /* headline */
+    .\30 2-detecte-accent {
+      position: absolute;
+      left: 88px;
+      top: 1162px;
+      width: 72px;
+      height: 8px;
+      border-radius: 4px;
+      background: #e11d48;
+      transform-origin: 0% 50%;
+    }
+    .\30 2-detecte-head {
+      position: absolute;
+      left: 84px;
+      top: 1190px;
+      width: 470px;
+      font-size: 92px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.02;
+      color: #ffffff;
+    }
+    .\30 2-detecte-line {
+      display: block;
+      white-space: nowrap;
+      transform-origin: 0% 60%;
+    }
+    .\30 2-detecte-flash {
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+
+  <div id="root" data-composition-id="02-detecte" data-width="1080" data-height="1920" data-duration="3.5">
+    <div class="clip 02-detecte-bg" id="02-detecte-bg" data-start="0" data-duration="3.5" data-track-index="0">
+      <div class="02-detecte-vignette"></div>
+    </div>
+
+    <div class="clip 02-detecte-scene" id="02-detecte-scene" data-start="0" data-duration="3.5" data-track-index="1">
+      <div class="02-detecte-world" id="02-detecte-world" data-layout-allow-overflow>
+        <!-- window frame -->
+        <div class="02-detecte-glass"></div>
+        <div class="02-detecte-rabbet"></div>
+        <div class="02-detecte-jamb"></div>
+        <div class="02-detecte-sill"></div>
+
+        <!-- vibration rings (world space, centred on the LED) -->
+        <div class="02-detecte-ring" id="02-detecte-ring1"></div>
+        <div class="02-detecte-ring" id="02-detecte-ring2"></div>
+        <div class="02-detecte-ring" id="02-detecte-ring3"></div>
+
+        <!-- WDV301 hero -->
+        <div class="02-detecte-sensor" id="02-detecte-sensor">
+          <img class="02-detecte-sensor-img" src="assets/wdv301.png" alt="" />
+          <div class="02-detecte-sensor-shade"></div>
+          <div class="02-detecte-led-halo" id="02-detecte-halo"></div>
+          <div class="02-detecte-led" id="02-detecte-led"></div>
+          <div class="02-detecte-led-core" id="02-detecte-ledcore"></div>
+        </div>
+
+        <!-- vibration pill -->
+        <div class="02-detecte-vpill" id="02-detecte-vpill"><span class="02-detecte-vdot"></span>Vibration détectée</div>
+
+        <!-- signal -->
+        <svg class="02-detecte-svg" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="02-detecte-glowf" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="7" />
+            </filter>
+            <mask id="02-detecte-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920">
+              <path id="02-detecte-maskpath" d="M 600 760 C 740 800, 812 930, 772 1068" fill="none" stroke="#ffffff" stroke-width="30" stroke-linecap="round" />
+            </mask>
+          </defs>
+          <path id="02-detecte-path" d="M 600 760 C 740 800, 812 930, 772 1068" fill="none" stroke="none" />
+          <g mask="url(#02-detecte-mask)">
+            <path d="M 600 760 C 740 800, 812 930, 772 1068" fill="none" stroke="rgba(225,29,72,0.75)" stroke-width="10" filter="url(#02-detecte-glowf)" />
+            <path id="02-detecte-dash" d="M 600 760 C 740 800, 812 930, 772 1068" fill="none" stroke="rgba(255,255,255,0.92)" stroke-width="5" stroke-linecap="round" stroke-dasharray="14 12" />
+          </g>
+          <circle id="02-detecte-startnode" cx="600" cy="760" r="9" fill="#ffffff" />
+          <circle id="02-detecte-startring" cx="600" cy="760" r="14" fill="none" stroke="#ff8aa3" stroke-width="3" />
+          <circle id="02-detecte-endring" cx="772" cy="1068" r="14" fill="none" stroke="#ffffff" stroke-width="4" />
+          <circle id="02-detecte-tail2" cx="600" cy="760" r="6" fill="#ff8aa3" opacity="0" />
+          <circle id="02-detecte-tail1" cx="600" cy="760" r="8" fill="#ffc2cf" opacity="0" />
+          <circle id="02-detecte-cometglow" cx="600" cy="760" r="26" fill="#e11d48" opacity="0" filter="url(#02-detecte-glowf)" />
+          <circle id="02-detecte-comet" cx="600" cy="760" r="10" fill="#ffffff" opacity="0" />
+        </svg>
+
+        <!-- Centrale Vigilia + (HTML build) -->
+        <div class="02-detecte-hub" id="02-detecte-hub">
+          <div class="02-detecte-hub-depth"></div>
+          <div class="02-detecte-hub-face" id="02-detecte-face">
+            <div class="02-detecte-hled-g" id="02-detecte-hledg"></div>
+            <div class="02-detecte-hled-r" id="02-detecte-hledr"></div>
+            <div class="02-detecte-rfid">
+              <svg viewBox="0 0 34 22" fill="none" stroke="#a5a5a5" stroke-width="1.6" stroke-linecap="round">
+                <path d="M9 4 a12 12 0 0 1 16 0" />
+                <path d="M12 8 a7 7 0 0 1 10 0" />
+                <path d="M9 18 a12 12 0 0 0 16 0" />
+                <path d="M12 14 a7 7 0 0 0 10 0" />
+              </svg>
+              <span>RFID</span>
+            </div>
+            <div class="02-detecte-brand">DAEWOO</div>
+            <div id="02-detecte-keys"></div>
+          </div>
+          <div class="02-detecte-hub-pulse" id="02-detecte-hubpulse"></div>
+        </div>
+        <div class="02-detecte-hub-label"><div class="02-detecte-hpill" id="02-detecte-hpill"><span class="02-detecte-hdot"></span>Centrale Vigilia +</div></div>
+
+        <!-- headline -->
+        <div class="02-detecte-accent" id="02-detecte-accent"></div>
+        <div class="02-detecte-head">
+          <span class="02-detecte-line" id="02-detecte-l1">Moins d'1</span>
+          <span class="02-detecte-line" id="02-detecte-l2">seconde.</span>
+        </div>
+      </div>
+      <div class="02-detecte-flash" id="02-detecte-flash"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var FID = "02-detecte";
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      function $(n) { return root.querySelector('[id="' + FID + "-" + n + '"]'); }
+      var Q = FID + "-";
+
+      // ---------- Build the Vigilia + keypad (4×4, exact photo layout) ----------
+      var ICON = {
+        sh1: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l7 3v5c0 4.6-3 8-7 10-4-2-7-5.4-7-10V6z"/><path d="M10 9h4v6h-4"/><path d="M12 12h-3.5"/></svg>',
+        sh2: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l7 3v5c0 4.6-3 8-7 10-4-2-7-5.4-7-10V6z"/><circle cx="12" cy="10.5" r="2"/><path d="M8.6 16c.8-1.6 2-2.4 3.4-2.4s2.6.8 3.4 2.4"/></svg>',
+        sh3: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l7 3v5c0 4.6-3 8-7 10-4-2-7-5.4-7-10V6z"/><path d="M9 12h6"/></svg>',
+        x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>',
+        ok: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+        gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6.2"/><path d="M12 3.5v2.3M12 18.2v2.3M3.5 12h2.3M18.2 12h2.3M6 6l1.6 1.6M16.4 16.4L18 18M6 18l1.6-1.6M16.4 7.6L18 6"/></svg>'
+      };
+      var ROWS = [["1", "2", "3", "sh1"], ["4", "5", "6", "sh2"], ["7", "8", "9", "sh3"], ["x", "0", "ok", "gear"]];
+      var COLX = [40, 107, 175, 241];   // key left (46px keys)
+      var ROWY = [33, 96, 159, 222];    // key top
+      var keysHost = $("keys");
+      var keys = [];
+      var keyById = {};
+      ROWS.forEach(function (row, r) {
+        row.forEach(function (id, c) {
+          var g = ICON[id] || id;
+          var k = document.createElement("div");
+          k.className = Q + "key";
+          k.style.left = COLX[c] + "px";
+          k.style.top = ROWY[r] + "px";
+          k.innerHTML = '<div class="' + Q + 'kb">' + g + '</div><div class="' + Q + 'kl">' + g + '</div><div class="' + Q + 'kf">' + g + "</div>";
+          keysHost.appendChild(k);
+          var cx = COLX[c] + 23, cy = ROWY[r] + 23;
+          var rec = { el: k, lit: k.children[1], fl: k.children[2], d: Math.hypot(cx - 200, cy - 0) };
+          keys.push(rec);
+          keyById[id] = rec;
+        });
+        var dot = document.createElement("div");
+        dot.className = Q + "sdot";
+        dot.style.top = ROWY[r] + 20 + "px";
+        var glow = document.createElement("div");
+        glow.className = Q + "sdot-glow";
+        glow.style.top = ROWY[r] + 17 + "px";
+        $("face").appendChild(glow);
+        $("face").appendChild(dot);
+      });
+      var sdots = root.querySelectorAll('[class~="' + Q + 'sdot-glow"]');
+      // cascade order: nearest to the signal's landing point first (deterministic sort)
+      var order = keys.slice().sort(function (a, b) { return a.d - b.d; });
+
+      // ---------- Camera: one world wrapper, one writer ----------
+      var world = $("world");
+      var cam = { s: 1.34, x: -126.3, y: 229.1 };
+      var shakes = [
+        { amp: 0, p: 0, fx: 7, fy: 5, rot: 0.0 },     // 1.45 arrival tick
+        { amp: 0, p: 0, fx: 9, fy: 7, rot: 0.05 }     // 2.2 impact
+      ];
+      function applyCamera() {
+        var sx = 0, sy = 0, sr = 0;
+        for (var i = 0; i < shakes.length; i++) {
+          var k = shakes[i];
+          var a = k.amp;
+          if (!a) continue;
+          sx += a * Math.sin(k.p * Math.PI * 2 * k.fx);
+          sy += a * 0.75 * Math.sin(k.p * Math.PI * 2 * k.fy);
+          sr += a * k.rot * Math.sin(k.p * Math.PI * 2 * (k.fx - 2));
+        }
+        world.style.transform = "translate(" + (cam.x + sx).toFixed(2) + "px," + (cam.y + sy).toFixed(2) + "px) scale(" + cam.s.toFixed(4) + ") rotate(" + sr.toFixed(3) + "deg)";
+      }
+      applyCamera();
+
+      // ---------- Sensor vibration (seek-safe: zero at both ends) ----------
+      var sensor = $("sensor");
+      var vib = { p: 0, amp: 0 };
+      function applyVib() {
+        var a = vib.amp;
+        var x = a * Math.sin(vib.p * Math.PI * 2 * 12);
+        var r = a * 0.12 * Math.sin(vib.p * Math.PI * 2 * 9);
+        sensor.style.transform = "translate(" + x.toFixed(2) + "px,0px) rotate(" + r.toFixed(3) + "deg)";
+      }
+      applyVib();
+
+      // ---------- Signal path ----------
+      var path = $("path");
+      var maskPath = $("maskpath");
+      var LEN = path.getTotalLength();
+      maskPath.style.strokeDasharray = LEN * 1.05 + " " + LEN * 1.05;
+      maskPath.style.strokeDashoffset = String(LEN * 1.05);
+      var comet = $("comet"), cometGlow = $("cometglow"), tail1 = $("tail1"), tail2 = $("tail2");
+      var sig = { d: 0 };
+      function place(el, f) {
+        var pt = path.getPointAtLength(Math.max(0, Math.min(1, f)) * LEN);
+        el.setAttribute("cx", pt.x.toFixed(2));
+        el.setAttribute("cy", pt.y.toFixed(2));
+      }
+      function applySig() {
+        maskPath.style.strokeDashoffset = String(LEN * 1.05 * (1 - sig.d));
+        place(comet, sig.d);
+        place(cometGlow, sig.d);
+        place(tail1, sig.d - 0.045);
+        place(tail2, sig.d - 0.09);
+      }
+      applySig();
+
+      var tl = gsap.timeline({ paused: true });
+
+      // ===== Scene 1 (0.00–0.55): tight on the WDV301, LED fires at 0.25 =====
+      // slow creeping pull already alive under the hero
+      tl.fromTo(cam, { s: 1.34, x: -126.3, y: 229.1 }, { s: 1.3, x: -130.5, y: 214.5, duration: 0.55, ease: "power1.out", onUpdate: applyCamera }, 0);
+      tl.fromTo(sensor.querySelector("img"), { filter: "brightness(0.82)" }, { filter: "brightness(0.9)", duration: 0.25, ease: "none" }, 0);
+
+      // LED ignition @0.25 (beep) — slot pops red + halo bloom lands as one beat
+      tl.fromTo($("led"), { opacity: 0, scaleY: 0.4 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.25);
+      tl.fromTo($("ledcore"), { opacity: 0 }, { opacity: 0.85, duration: 0.08, ease: "power2.out" }, 0.25);
+      tl.fromTo($("halo"), { opacity: 0, scale: 0.55 }, { opacity: 0.45, scale: 1.1, duration: 0.18, ease: "expo.out" }, 0.25);
+      tl.fromTo($("halo"), { opacity: 0.45, scale: 1.1 }, { opacity: 0.32, scale: 1, duration: 0.5, ease: "power2.out", immediateRender: false }, 0.43);
+
+      // sensor buzzes (deterministic decaying sine)
+      tl.fromTo(vib, { p: 0 }, { p: 1, duration: 0.5, ease: "none", onUpdate: applyVib }, 0.25);
+      tl.fromTo(vib, { amp: 7 }, { amp: 0, duration: 0.5, ease: "power2.out", onUpdate: applyVib }, 0.25);
+
+      // concentric vibration rings
+      [$("ring1"), $("ring2"), $("ring3")].forEach(function (rg, i) {
+        tl.fromTo(rg, { scale: 0.18, opacity: 0.9, borderWidth: 8 }, { scale: 1.45 + i * 0.25, opacity: 0, borderWidth: 2, duration: 0.85, ease: "expo.out" }, 0.25 + i * 0.11);
+      });
+
+      // pill slides in from the right
+      tl.fromTo($("vpill"), { x: 260, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.38, ease: "expo.out" }, 0.3);
+
+      // ===== Scene 2 (0.55–1.45): signal departs, camera pulls back to reveal the hub =====
+      tl.fromTo($("startring"), { attr: { r: 8 }, opacity: 1 }, { attr: { r: 52 }, opacity: 0, duration: 0.45, ease: "expo.out" }, 0.55);
+      tl.fromTo($("startnode"), { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.2, ease: "back.out(2)" }, 0.55);
+      tl.fromTo($("halo"), { scale: 1.3 }, { scale: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, 0.55);
+      tl.fromTo([comet, cometGlow, tail1, tail2], { opacity: 0 }, { opacity: function (i) { return [1, 0.7, 0.6, 0.35][i]; }, duration: 0.06, ease: "none" }, 0.55);
+      tl.fromTo(sig, { d: 0 }, { d: 1, duration: 0.9, ease: "power2.in", onUpdate: applySig }, 0.55);
+      tl.fromTo($("dash"), { strokeDashoffset: 0 }, { strokeDashoffset: -78, duration: 2.95, ease: "none" }, 0.55);
+      tl.fromTo(cam, { s: 1.3, x: -130.5, y: 214.5 }, { s: 1, x: 0, y: 0, duration: 0.9, ease: "power3.inOut", onUpdate: applyCamera, immediateRender: false }, 0.55);
+
+      // hub rises into the reveal
+      tl.fromTo($("hub"), { opacity: 0, y: 150, scale: 0.9, filter: "blur(10px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.55, ease: "power4.out" }, 0.82);
+      tl.fromTo($("face"), { filter: "brightness(0.72)" }, { filter: "brightness(0.8)", duration: 0.5, ease: "none" }, 0.82);
+
+      // ===== Scene 3 (1.45–2.20): signal lands, the hub wakes =====
+      tl.fromTo([comet, cometGlow, tail1, tail2], { opacity: function (i) { return [1, 0.7, 0.6, 0.35][i]; } }, { opacity: 0, duration: 0.08, ease: "power1.out", immediateRender: false }, 1.45);
+      tl.fromTo($("endring"), { attr: { r: 10 }, opacity: 1 }, { attr: { r: 90 }, opacity: 0, duration: 0.5, ease: "expo.out" }, 1.45);
+      tl.fromTo($("face"), { filter: "brightness(1.25)" }, { filter: "brightness(1)", duration: 0.4, ease: "power3.out", immediateRender: false }, 1.45);
+      tl.fromTo($("hub"), { scale: 1.045 }, { scale: 1, duration: 0.4, ease: "power4.out", immediateRender: false }, 1.45);
+      tl.fromTo($("hubpulse"), { scale: 1, opacity: 0.85 }, { scale: 1.16, opacity: 0, duration: 0.55, ease: "expo.out" }, 1.45);
+      tl.fromTo(shakes[0], { p: 0 }, { p: 1, duration: 0.28, ease: "none", onUpdate: applyCamera }, 1.45);
+      tl.fromTo(shakes[0], { amp: 6 }, { amp: 0, duration: 0.28, ease: "power2.out", onUpdate: applyCamera }, 1.45);
+
+      // LED pill green → red
+      tl.fromTo($("hledr"), { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 1.45);
+      tl.fromTo($("hledg"), { opacity: 1 }, { opacity: 0, duration: 0.06, ease: "none" }, 1.45);
+      tl.fromTo(sdots, { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "power2.out", stagger: 0.05 }, 1.47);
+
+      // key backlight cascade (stagger 0.03) from the landing point
+      order.forEach(function (k, i) {
+        tl.fromTo(k.lit, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out" }, 1.45 + i * 0.03);
+      });
+      // two keys flash navy on the double keypad beep
+      [["sh1", 1.45], ["ok", 1.56]].forEach(function (f) {
+        var k = keyById[f[0]];
+        tl.fromTo(k.fl, { opacity: 0 }, { opacity: 1, duration: 0.03, ease: "none" }, f[1]);
+        tl.fromTo(k.fl, { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, f[1] + 0.12);
+        tl.fromTo(k.el, { scale: 0.86 }, { scale: 1, duration: 0.3, ease: "power4.out" }, f[1]);
+      });
+
+      // label whoosh @1.6
+      tl.fromTo($("hpill"), { x: -220, opacity: 0, filter: "blur(12px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.42, ease: "expo.out" }, 1.6);
+
+      // ===== Scene 4 (2.20–3.50): SLAM « Moins d'1 seconde. » then hold =====
+      tl.fromTo($("l1"), { opacity: 0, scale: 1.25, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 2.2);
+      tl.fromTo($("l2"), { opacity: 0, scale: 1.25, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 2.25);
+      tl.fromTo($("accent"), { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power4.out" }, 2.2);
+      tl.fromTo($("flash"), { opacity: 0 }, { opacity: 0.16, duration: 0.03, ease: "none" }, 2.2);
+      tl.fromTo($("flash"), { opacity: 0.16 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, 2.23);
+      tl.fromTo(shakes[1], { p: 0 }, { p: 1, duration: 0.55, ease: "none", onUpdate: applyCamera }, 2.2);
+      tl.fromTo(shakes[1], { amp: 16 }, { amp: 0, duration: 0.55, ease: "power3.out", onUpdate: applyCamera }, 2.2);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

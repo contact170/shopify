@@ -1,0 +1,449 @@
+<template>
+  <style>
+    @font-face { font-family: "Inter"; font-weight: 400; font-style: normal; src: url("assets/fonts/Inter-400.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 600; font-style: normal; src: url("assets/fonts/Inter-600.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 700; font-style: normal; src: url("assets/fonts/Inter-700.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 800; font-style: normal; src: url("assets/fonts/Inter-800.woff2") format("woff2"); }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #1d1d1f;
+    }
+    .f06-le-pack-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(75% 42% at 50% 33%, #ffffff 0%, #fafafb 38%, #f5f5f7 72%);
+    }
+    .f06-le-pack-layer { position: absolute; inset: 0; }
+    .f06-le-pack-shake, .f06-le-pack-world {
+      position: absolute; inset: 0; transform-origin: 50% 32%;
+    }
+    .f06-le-pack-flash {
+      position: absolute; inset: 0; background: #ffffff; pointer-events: none;
+    }
+    .f06-le-pack-shock {
+      position: absolute; left: 340px; top: 386px; width: 400px; height: 400px;
+      border-radius: 50%; border: 3px solid rgba(12, 30, 74, 0.22);
+    }
+
+    /* ---------- header ---------- */
+    .f06-le-pack-eyebrow {
+      position: absolute; left: 0; right: 0; top: 112px;
+      display: flex; justify-content: center; align-items: center; gap: 16px;
+      color: #0c1e4a; font-size: 34px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    .f06-le-pack-dot { width: 16px; height: 16px; border-radius: 50%; background: #037e05; }
+    .f06-le-pack-title {
+      position: absolute; left: 40px; right: 40px; top: 186px;
+      text-align: center; font-size: 78px; font-weight: 700; line-height: 1.06;
+      letter-spacing: -0.03em; color: #1d1d1f;
+    }
+    .f06-le-pack-line { display: block; white-space: nowrap; }
+    .f06-le-pack-w { display: inline-block; will-change: transform; }
+
+    /* ---------- Vigilia + (HTML build) ---------- */
+    .f06-le-pack-glow {
+      position: absolute; left: 160px; top: 300px; width: 760px; height: 580px;
+      background: radial-gradient(closest-side, rgba(12, 30, 74, 0.55), rgba(12, 30, 74, 0.18) 55%, rgba(12, 30, 74, 0) 100%);
+      opacity: 0;
+    }
+    .f06-le-pack-vig {
+      position: absolute; left: 310px; top: 426px; width: 460px; height: 317px;
+      transform-origin: 50% 50%;
+    }
+    .f06-le-pack-vig-edge {
+      position: absolute; left: 7px; top: 9px; right: -7px; bottom: -9px;
+      border-radius: 41px; background: linear-gradient(160deg, #e9e9e6, #d9d9d5);
+      box-shadow: 0 30px 56px -14px rgba(12, 30, 74, 0.30), 0 8px 16px rgba(12, 30, 74, 0.08);
+    }
+    .f06-le-pack-vig-body {
+      position: absolute; inset: 0; border-radius: 41px;
+      background: linear-gradient(165deg, #fbfbfa 0%, #f7f7f5 55%, #f1f1ee 100%);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    .f06-le-pack-key {
+      position: absolute; width: 45px; height: 45px; border-radius: 50%;
+      border: 1.5px solid #c9c9c9; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      color: #8a8a8a; font-size: 21px; font-weight: 400; line-height: 1;
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .f06-le-pack-key svg { width: 22px; height: 22px; display: block; }
+    .f06-le-pack-sdot {
+      position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #e11d48; opacity: 0.25;
+    }
+    .f06-le-pack-led {
+      position: absolute; left: 352px; top: 46px; width: 36px; height: 11px; border-radius: 6px;
+      background: #d6d9d6;
+    }
+    .f06-le-pack-ledglow {
+      position: absolute; left: 336px; top: 32px; width: 68px; height: 39px; border-radius: 20px;
+      background: radial-gradient(closest-side, rgba(60, 207, 78, 0.75), rgba(60, 207, 78, 0));
+      opacity: 0;
+    }
+    .f06-le-pack-rfid {
+      position: absolute; left: 330px; top: 116px; width: 76px; height: 72px; box-sizing: border-box;
+      border: 1.5px solid #c9c9c9; border-radius: 13px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+      color: #9a9a9a; font-size: 9px; font-weight: 600; letter-spacing: 0.04em;
+    }
+    .f06-le-pack-rfid svg { width: 34px; height: 22px; display: block; }
+    .f06-le-pack-brand {
+      position: absolute; left: 330px; top: 245px; color: #9a9a9a;
+      font-size: 17px; font-weight: 800; letter-spacing: 0.01em;
+    }
+
+    /* ---------- grid ---------- */
+    .f06-le-pack-grid { position: absolute; left: 64px; top: 812px; width: 952px; height: 764px; }
+    .f06-le-pack-card {
+      position: absolute; width: 298.67px; height: 236px; box-sizing: border-box;
+      border-radius: 14px; background: #ffffff; border: 1.5px solid rgba(12, 30, 74, 0.2);
+      overflow: hidden; transform-origin: 50% 60%;
+    }
+    .f06-le-pack-imgbox { position: absolute; left: 18px; right: 18px; top: 40px; height: 124px; }
+    .f06-le-pack-imgbox img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .f06-le-pack-cover { position: absolute; inset: 0; }
+    .f06-le-pack-cover img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
+    .f06-le-pack-fade {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 96px;
+      background: linear-gradient(180deg, rgba(240, 240, 240, 0) 0%, rgba(242, 242, 242, 0.92) 55%, rgba(243, 243, 243, 0.98) 100%);
+    }
+    .f06-le-pack-qty {
+      position: absolute; left: 12px; top: 12px; background: #0c1e4a; color: #ffffff;
+      border-radius: 100px; padding: 5px 13px; font-size: 22px; font-weight: 800; line-height: 1.1;
+      font-variant-numeric: tabular-nums; transform-origin: 30% 50%;
+    }
+    .f06-le-pack-model {
+      position: absolute; right: 14px; top: 17px; color: #9a9a9a;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.05em;
+    }
+    .f06-le-pack-label {
+      position: absolute; left: 16px; right: 14px; bottom: 15px;
+      font-size: 20px; font-weight: 700; line-height: 1.16; letter-spacing: -0.01em; color: #1d1d1f;
+    }
+    .f06-le-pack-sheen { position: absolute; inset: 0; pointer-events: none; }
+    .f06-le-pack-band {
+      position: absolute; top: -30%; height: 160%; left: 0; width: 200px;
+      background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(12, 30, 74, 0.05) 22%,
+        rgba(255, 255, 255, 0.85) 46%,
+        rgba(255, 255, 255, 0.95) 52%,
+        rgba(12, 30, 74, 0.05) 78%,
+        rgba(255, 255, 255, 0) 100%);
+      transform: translateX(-400px) skewX(-18deg);
+    }
+    .f06-le-pack-total {
+      background: #0c1e4a; border-color: #0c1e4a; color: #ffffff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transform-origin: 50% 50%;
+    }
+    .f06-le-pack-total-n {
+      font-size: 104px; font-weight: 800; line-height: 0.92; letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    .f06-le-pack-total-l {
+      margin-top: 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; color: rgba(255, 255, 255, 0.82);
+    }
+    .f06-le-pack-total-flash { position: absolute; inset: 0; background: #ffffff; opacity: 0; }
+    .f06-le-pack-total .f06-le-pack-band {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.22) 45%, rgba(255, 255, 255, 0.34) 52%, rgba(255, 255, 255, 0) 100%);
+    }
+    .f06-le-pack-ring {
+      position: absolute; left: 653.33px; top: 528px; width: 298.67px; height: 236px;
+      border-radius: 18px; border: 3px solid rgba(12, 30, 74, 0.35); opacity: 0; transform-origin: 50% 50%;
+    }
+  </style>
+
+  <div id="root" data-composition-id="06-le-pack" data-width="1080" data-height="1920">
+    <div class="f06-le-pack-bg clip" data-start="0" data-duration="6.5" data-track-index="0"></div>
+
+    <div class="f06-le-pack-layer clip" data-start="0" data-duration="6.5" data-track-index="1">
+      <div class="f06-le-pack-shake" id="f06-le-pack-shake">
+        <div class="f06-le-pack-world" id="f06-le-pack-world">
+
+          <div class="f06-le-pack-shock" id="f06-le-pack-shock"></div>
+
+          <!-- Scene 1: eyebrow + title -->
+          <div class="f06-le-pack-eyebrow">
+            <span class="f06-le-pack-dot" id="f06-le-pack-dot"></span>
+            <span id="f06-le-pack-eyetext">Pack Sécurité Intégrale</span>
+          </div>
+          <div class="f06-le-pack-title">
+            <span class="f06-le-pack-line"><span class="f06-le-pack-w">Tout</span> <span class="f06-le-pack-w">ce</span> <span class="f06-le-pack-w">qu'il</span> <span class="f06-le-pack-w">faut,</span></span>
+            <span class="f06-le-pack-line"><span class="f06-le-pack-w">dans</span> <span class="f06-le-pack-w">une</span> <span class="f06-le-pack-w">seule</span> <span class="f06-le-pack-w">boîte.</span></span>
+          </div>
+
+          <!-- Scene 2: centrale Vigilia + -->
+          <div class="f06-le-pack-glow" id="f06-le-pack-glow"></div>
+          <div class="f06-le-pack-vig" id="f06-le-pack-vig">
+            <div class="f06-le-pack-vig-edge"></div>
+            <div class="f06-le-pack-vig-body">
+              <!-- row 1 -->
+              <div class="f06-le-pack-key" data-r="0" data-c="0" style="left:41.5px;top:32.5px">1</div>
+              <div class="f06-le-pack-key" data-r="0" data-c="1" style="left:110.5px;top:32.5px">2</div>
+              <div class="f06-le-pack-key" data-r="0" data-c="2" style="left:179.5px;top:32.5px">3</div>
+              <div class="f06-le-pack-key" data-r="0" data-c="3" style="left:248.5px;top:32.5px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2.8l7.2 2.9v5.6c0 4.6-3 8.2-7.2 9.9-4.2-1.7-7.2-5.3-7.2-9.9V5.7z"/><path d="M9.6 8.6h4.2v6.4H9.6z"/><path d="M12.2 11.8h3.2M14.4 10.6l1.2 1.2-1.2 1.2"/></svg>
+              </div>
+              <!-- row 2 -->
+              <div class="f06-le-pack-key" data-r="1" data-c="0" style="left:41.5px;top:99.5px">4</div>
+              <div class="f06-le-pack-key" data-r="1" data-c="1" style="left:110.5px;top:99.5px">5</div>
+              <div class="f06-le-pack-key" data-r="1" data-c="2" style="left:179.5px;top:99.5px">6</div>
+              <div class="f06-le-pack-key" data-r="1" data-c="3" style="left:248.5px;top:99.5px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2.8l7.2 2.9v5.6c0 4.6-3 8.2-7.2 9.9-4.2-1.7-7.2-5.3-7.2-9.9V5.7z"/><circle cx="12" cy="9.8" r="2"/><path d="M8.6 15.6c.7-1.8 2-2.7 3.4-2.7s2.7.9 3.4 2.7"/></svg>
+              </div>
+              <!-- row 3 -->
+              <div class="f06-le-pack-key" data-r="2" data-c="0" style="left:41.5px;top:166.5px">7</div>
+              <div class="f06-le-pack-key" data-r="2" data-c="1" style="left:110.5px;top:166.5px">8</div>
+              <div class="f06-le-pack-key" data-r="2" data-c="2" style="left:179.5px;top:166.5px">9</div>
+              <div class="f06-le-pack-key" data-r="2" data-c="3" style="left:248.5px;top:166.5px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2.8l7.2 2.9v5.6c0 4.6-3 8.2-7.2 9.9-4.2-1.7-7.2-5.3-7.2-9.9V5.7z"/><path d="M9 11.6h6"/></svg>
+              </div>
+              <!-- row 4 -->
+              <div class="f06-le-pack-key" data-r="3" data-c="0" style="left:41.5px;top:233.5px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.7" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>
+              </div>
+              <div class="f06-le-pack-key" data-r="3" data-c="1" style="left:110.5px;top:233.5px">0</div>
+              <div class="f06-le-pack-key" data-r="3" data-c="2" style="left:179.5px;top:233.5px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12.5l4 4 8-9"/></svg>
+              </div>
+              <div class="f06-le-pack-key" data-r="3" data-c="3" style="left:248.5px;top:233.5px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="5.2"/><circle cx="12" cy="12" r="2"/><path d="M12 4.2v1.6M12 18.2v1.6M4.2 12h1.6M18.2 12h1.6M6.5 6.5l1.1 1.1M16.4 16.4l1.1 1.1M6.5 17.5l1.1-1.1M16.4 7.6l1.1-1.1"/></svg>
+              </div>
+
+              <!-- status LEDs column -->
+              <div class="f06-le-pack-sdot" style="left:305.5px;top:52.5px"></div>
+              <div class="f06-le-pack-sdot" style="left:305.5px;top:119.5px"></div>
+              <div class="f06-le-pack-sdot" style="left:305.5px;top:186.5px"></div>
+              <div class="f06-le-pack-sdot" style="left:305.5px;top:253.5px"></div>
+
+              <div class="f06-le-pack-ledglow" id="f06-le-pack-ledglow"></div>
+              <div class="f06-le-pack-led" id="f06-le-pack-led"></div>
+
+              <div class="f06-le-pack-rfid">
+                <svg viewBox="0 0 34 22" fill="none" stroke="#a6a6a6" stroke-width="1.4" stroke-linecap="round"><path d="M9 4.5c-2.6 3.8-2.6 9.2 0 13"/><path d="M12.6 7c-1.5 2.6-1.5 5.4 0 8"/><path d="M25 4.5c2.6 3.8 2.6 9.2 0 13"/><path d="M21.4 7c1.5 2.6 1.5 5.4 0 8"/></svg>
+                <span>RFID</span>
+              </div>
+              <div class="f06-le-pack-brand">DAEWOO</div>
+            </div>
+          </div>
+
+          <!-- Scene 3 + 4: grid 3x3 -->
+          <div class="f06-le-pack-grid" id="f06-le-pack-grid">
+            <div class="f06-le-pack-card" style="left:0px;top:0px">
+              <div class="f06-le-pack-imgbox"><img src="assets/wdv301.png" alt=""></div>
+              <span class="f06-le-pack-model">WDV301</span>
+              <span class="f06-le-pack-qty" data-qty="4">1×</span>
+              <div class="f06-le-pack-label">Contacteurs 2-en-1</div>
+              <div class="f06-le-pack-sheen"><div class="f06-le-pack-band"></div></div>
+            </div>
+            <div class="f06-le-pack-card" style="left:326.67px;top:0px">
+              <div class="f06-le-pack-cover"><img src="assets/wps305-card.jpg" alt=""></div>
+              <div class="f06-le-pack-fade"></div>
+              <span class="f06-le-pack-model">WPS305</span>
+              <span class="f06-le-pack-qty" data-qty="1">1×</span>
+              <div class="f06-le-pack-label">Mouvement · animaux ≤ 10 kg</div>
+              <div class="f06-le-pack-sheen"><div class="f06-le-pack-band"></div></div>
+            </div>
+            <div class="f06-le-pack-card" style="left:653.33px;top:0px">
+              <div class="f06-le-pack-imgbox"><img src="assets/wrc305.png" alt=""></div>
+              <span class="f06-le-pack-model">WRC305</span>
+              <span class="f06-le-pack-qty" data-qty="1">1×</span>
+              <div class="f06-le-pack-label">Télécommande</div>
+              <div class="f06-le-pack-sheen"><div class="f06-le-pack-band"></div></div>
+            </div>
+            <div class="f06-le-pack-card" style="left:0px;top:264px">
+              <div class="f06-le-pack-imgbox"><img src="assets/wrf301.png" alt=""></div>
+              <span class="f06-le-pack-model">WRF301</span>
+              <span class="f06-le-pack-qty" data-qty="2">1×</span>
+              <div class="f06-le-pack-label">Badges RFID</div>
+              <div class="f06-le-pack-sheen"><div class="f06-le-pack-band"></div></div>
+            </div>
+            <div class="f06-le-pack-card" style="left:326.67px;top:264px">
+              <div class="f06-le-pack-imgbox"><img src="assets/ip506p.png" alt=""></div>
+              <span class="f06-le-pack-model">IP506P</span>
+              <span class="f06-le-pack-qty" data-qty="1">1×</span>
+              <div class="f06-le-pack-label">Caméra int. Full HD</div>
+              <div class="f06-le-pack-sheen"><div class="f06-le-pack-band"></div></div>
+            </div>
+            <div class="f06-le-pack-card" style="left:653.33px;top:264px">
+              <div class="f06-le-pack-imgbox"><img src="assets/w512mw.png" alt=""></div>
+              <span class="f06-le-pack-model">W512MW</span>
+              <span class="f06-le-pack-qty" data-qty="1">1×</span>
+              <div class="f06-le-pack-label">Caméra ext. solaire 1440p</div>
+              <div class="f06-le-pack-sheen"><div class="f06-le-pack-band"></div></div>
+            </div>
+            <div class="f06-le-pack-card" style="left:0px;top:528px">
+              <div class="f06-le-pack-imgbox"><img src="assets/wos305s.png" alt=""></div>
+              <span class="f06-le-pack-model">WOS305S</span>
+              <span class="f06-le-pack-qty" data-qty="1">1×</span>
+              <div class="f06-le-pack-label">Sirène solaire</div>
+              <div class="f06-le-pack-sheen"><div class="f06-le-pack-band"></div></div>
+            </div>
+            <div class="f06-le-pack-card" style="left:326.67px;top:528px">
+              <div class="f06-le-pack-imgbox"><img src="assets/stickers.png" alt=""></div>
+              <span class="f06-le-pack-qty" data-qty="2">1×</span>
+              <div class="f06-le-pack-label">Autocollants</div>
+              <div class="f06-le-pack-sheen"><div class="f06-le-pack-band"></div></div>
+            </div>
+
+            <div class="f06-le-pack-ring" id="f06-le-pack-ring"></div>
+            <div class="f06-le-pack-card f06-le-pack-total" id="f06-le-pack-total" style="left:653.33px;top:528px">
+              <span class="f06-le-pack-total-n">13</span>
+              <span class="f06-le-pack-total-l">éléments</span>
+              <div class="f06-le-pack-total-flash" id="f06-le-pack-total-flash"></div>
+              <div class="f06-le-pack-sheen"><div class="f06-le-pack-band"></div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="f06-le-pack-flash" id="f06-le-pack-flash"></div>
+    </div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var ID = "06-le-pack";
+      var DUR = 6.5;
+      var R = document.querySelector('[data-composition-id="' + ID + '"]');
+      var $ = function (s) { return R.querySelector(s); };
+      var $$ = function (s) { return Array.prototype.slice.call(R.querySelectorAll(s)); };
+      var tl = gsap.timeline({ paused: true });
+
+      var shakeEl = $("#f06-le-pack-shake");
+      var world = $("#f06-le-pack-world");
+      var cards = $$(".f06-le-pack-grid > .f06-le-pack-card:not(.f06-le-pack-total)");
+      var total = $("#f06-le-pack-total");
+      var CARD_T = [1.55, 1.85, 2.15, 2.45, 2.75, 3.05, 3.35, 3.65];
+      var HIT_T = 4.2;
+      var SHEEN_T = 5.0, SHEEN_DUR = 1.15;
+
+      // ---------- deterministic impact shakes (decaying sines) ----------
+      var impacts = [
+        { t: 0.0, a: 12, f: 8.5, d: 6.5 },
+        { t: 1.04, a: 8, f: 10.5, d: 7.5 },
+        { t: HIT_T + 0.04, a: 9, f: 10, d: 7 }
+      ];
+      CARD_T.forEach(function (t, i) { impacts.push({ t: t + 0.05, a: 3.2 - i * 0.12, f: 13, d: 11 }); });
+
+      // ---------- sheen + qty counters, all derived from master time ----------
+      var allCards = cards.concat([total]);
+      var bands = allCards.map(function (c, i) {
+        var col = i % 3, row = Math.floor(i / 3);
+        return { el: c.querySelector(".f06-le-pack-band"), left: col * 326.67, row: row };
+      });
+      var qtys = cards.map(function (c, i) {
+        var q = c.querySelector(".f06-le-pack-qty");
+        return { el: q, n: parseInt(q.getAttribute("data-qty"), 10), t: CARD_T[i] + 0.12, last: "" };
+      });
+
+      function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+      var master = { t: 0 };
+      function render() {
+        var t = master.t;
+        // shake
+        var x = 0, y = 0, r = 0;
+        for (var k = 0; k < impacts.length; k++) {
+          var im = impacts[k], dt = t - im.t;
+          if (dt < 0 || dt > 1.2) continue;
+          var env = im.a * Math.exp(-im.d * dt);
+          var w = 2 * Math.PI * im.f * dt;
+          x += env * Math.sin(w);
+          y += env * 0.75 * Math.sin(w * 1.31);
+          r += env * 0.035 * Math.sin(w * 0.87);
+        }
+        shakeEl.style.transform = "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px,0) rotate(" + r.toFixed(3) + "deg)";
+
+        // one-pass diagonal sheen across the whole grid
+        var p = clamp01((t - SHEEN_T) / SHEEN_DUR);
+        var bandX = -260 + p * (1180 + 260);
+        for (var b = 0; b < bands.length; b++) {
+          var bx = bandX - bands[b].left - bands[b].row * 90;
+          bands[b].el.style.transform = "translateX(" + bx.toFixed(1) + "px) skewX(-18deg)";
+        }
+
+        // quantity tick-up (1x -> 4x / 2x)
+        for (var qn = 0; qn < qtys.length; qn++) {
+          var Q = qtys[qn];
+          var v = Q.n <= 1 ? 1 : 1 + Math.round((Q.n - 1) * clamp01((t - Q.t) / 0.3));
+          var s = v + "×";
+          if (s !== Q.last) { Q.el.textContent = s; Q.last = s; }
+        }
+      }
+      tl.fromTo(master, { t: 0 }, { t: DUR, duration: DUR, ease: "none", onUpdate: render }, 0);
+
+      // ---------- Scene 1 (0.0–1.0): day switch on the drop ----------
+      tl.fromTo($("#f06-le-pack-flash"), { opacity: 0.9 }, { opacity: 0, duration: 0.45, ease: "power2.out" }, 0);
+      tl.fromTo(world, { scale: 1.07 }, { scale: 1, duration: 1.1, ease: "expo.out" }, 0);
+      tl.fromTo($("#f06-le-pack-shock"), { scale: 0.15, opacity: 0.9 }, { scale: 3.4, opacity: 0, duration: 0.9, ease: "expo.out" }, 0);
+
+      // eyebrow
+      tl.fromTo($("#f06-le-pack-dot"), { scale: 0 }, { scale: 1, duration: 0.4, ease: "expo.out" }, 0.05);
+      tl.fromTo($("#f06-le-pack-eyetext"),
+        { opacity: 0, x: -24, clipPath: "inset(0% 100% 0% 0%)" },
+        { opacity: 1, x: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.42, ease: "expo.out" }, 0.1);
+
+      // title waterfall (binary opacity, whip up from below, shrinking gaps)
+      var words = $$(".f06-le-pack-w");
+      var wStart = [0.35, 0.44, 0.52, 0.59, 0.66, 0.72, 0.78, 0.84];
+      var wY     = [80, 45, 42, 50, 70, 40, 46, 84];
+      var wDur   = [0.22, 0.16, 0.15, 0.18, 0.2, 0.15, 0.16, 0.26];
+      words.forEach(function (el, i) {
+        tl.set(el, { opacity: 0, y: wY[i], filter: "blur(6px)" }, 0);
+        tl.set(el, { opacity: 1 }, wStart[i]);
+        tl.to(el, { y: 0, filter: "blur(0px)", duration: wDur[i], ease: "power4.out" }, wStart[i]);
+      });
+
+      // ---------- Scene 2 (1.0–1.55): Vigilia + inverse zoom-through ----------
+      var vig = $("#f06-le-pack-vig");
+      tl.fromTo(vig, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, 1.0);
+      tl.fromTo(vig, { scale: 1.6, filter: "blur(16px)" }, { scale: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, 1.0);
+      tl.fromTo($("#f06-le-pack-glow"), { opacity: 0, scale: 0.85 }, { opacity: 0.2, scale: 1, duration: 0.6, ease: "power2.out" }, 1.0);
+
+      // keypad boot wave (outline -> navy -> back to grey)
+      $$(".f06-le-pack-key").forEach(function (k) {
+        var d = (parseInt(k.getAttribute("data-r"), 10) + parseInt(k.getAttribute("data-c"), 10)) * 0.028;
+        tl.fromTo(k, { borderColor: "#c9c9c9" }, { borderColor: "#0c1e4a", duration: 0.08, ease: "power2.out" }, 1.12 + d);
+        tl.to(k, { borderColor: "#c9c9c9", duration: 0.22, ease: "power2.inOut" }, 1.22 + d);
+      });
+      // status LEDs + green LED on
+      tl.fromTo($$(".f06-le-pack-sdot"), { opacity: 0.25 }, { opacity: 1, duration: 0.12, ease: "power2.out", stagger: 0.04 }, 1.3);
+      tl.fromTo($("#f06-le-pack-led"), { backgroundColor: "#d6d9d6" }, { backgroundColor: "#3ccf4e", duration: 0.1, ease: "power2.out" }, 1.36);
+      tl.fromTo($("#f06-le-pack-ledglow"), { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out" }, 1.36);
+
+      // ---------- Scene 3 (1.55–4.2): one card per beat ----------
+      cards.forEach(function (c, i) {
+        var T = CARD_T[i];
+        var media = c.querySelector(".f06-le-pack-imgbox, .f06-le-pack-cover");
+        var qty = c.querySelector(".f06-le-pack-qty");
+        var txt = [c.querySelector(".f06-le-pack-label")];
+        var model = c.querySelector(".f06-le-pack-model");
+        if (model) txt.push(model);
+        tl.fromTo(c, { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "none" }, T);
+        tl.fromTo(c, { scale: 0.6, y: 40, filter: "blur(10px)" }, { scale: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, T);
+        tl.fromTo(media, { scale: 1.3, y: -12 }, { scale: 1, y: 0, duration: 0.65, ease: "expo.out" }, T + 0.02);
+        tl.fromTo(qty, { scale: 0, rotation: -16 }, { scale: 1, rotation: 0, duration: 0.4, ease: "expo.out" }, T + 0.1);
+        tl.fromTo(txt, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.34, ease: "power4.out", stagger: 0.04 }, T + 0.08);
+      });
+
+      // ---------- Scene 4 (4.2–6.5): "13 éléments" slam, sheen, hold ----------
+      tl.fromTo(total, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, HIT_T);
+      tl.fromTo(total, { scale: 1.25, filter: "blur(12px)" }, { scale: 1, filter: "blur(0px)", duration: 0.45, ease: "expo.out" }, HIT_T);
+      tl.fromTo($("#f06-le-pack-total-flash"), { opacity: 0.85 }, { opacity: 0, duration: 0.35, ease: "power2.out" }, HIT_T + 0.02);
+      tl.fromTo($("#f06-le-pack-ring"), { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.35, duration: 0.7, ease: "expo.out" }, HIT_T + 0.04);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+    })();
+  </script>
+</template>
