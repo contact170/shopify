@@ -48,7 +48,7 @@
       left: -108px;
       top: -40px;
       width: 284px;
-      height: 740px;
+      height: 680px;
       border-radius: 0 0 6px 0;
       background:
         linear-gradient(115deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.05) 38%, rgba(255, 255, 255, 0) 44%, rgba(255, 255, 255, 0) 58%, rgba(255, 255, 255, 0.035) 62%, rgba(255, 255, 255, 0) 66%),
@@ -59,14 +59,14 @@
       left: 176px;
       top: -40px;
       width: 32px;
-      height: 740px;
+      height: 680px;
       border-radius: 0 0 6px 6px;
       background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.2) 55%, rgba(255, 255, 255, 0.1));
     }
     .f02-sill {
       position: absolute;
       left: -108px;
-      top: 686px;
+      top: 626px;
       width: 316px;
       height: 14px;
       border-radius: 0 0 6px 0;
@@ -77,7 +77,7 @@
       left: 159px;
       top: -40px;
       width: 2px;
-      height: 726px;
+      height: 666px;
       background: rgba(255, 255, 255, 0.07);
     }
 
@@ -148,7 +148,7 @@
     .f02-vpill {
       position: absolute;
       left: 431px;
-      top: 223px;
+      top: 84px;
       display: inline-flex;
       align-items: center;
       gap: 16px;
@@ -184,7 +184,7 @@
     .f02-hub {
       position: absolute;
       left: 566px;
-      top: 430px;
+      top: 290px;
       width: 450px;
       height: 310px;
     }
@@ -306,7 +306,7 @@
     .f02-hub-label {
       position: absolute;
       left: 566px;
-      top: 772px;
+      top: 624px;
       width: 450px;
       display: flex;
       justify-content: center;
@@ -336,9 +336,9 @@
     /* headline */
     .f02-accent {
       position: absolute;
-      left: 76px;
-      top: 732px;
-      width: 84px;
+      left: 78px;
+      top: 676px;
+      width: 96px;
       height: 8px;
       border-radius: 4px;
       background: #e11d48;
@@ -346,10 +346,10 @@
     }
     .f02-head {
       position: absolute;
-      left: 70px;
-      top: 758px;
-      width: 480px;
-      font-size: 120px;
+      left: 68px;
+      top: 700px;
+      width: 700px;
+      font-size: 150px;
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1.02;
@@ -406,18 +406,18 @@
               <feGaussianBlur stdDeviation="7" />
             </filter>
           </defs>
-          <path id="f02-path" d="M 445 492 C 560 440, 740 360, 768 428" fill="none" stroke="none" />
+          <path id="f02-path" d="M 446 250 C 560 172, 724 176, 768 288" fill="none" stroke="none" />
           <g>
-            <path id="f02-glowpath" d="M 445 492 C 560 440, 740 360, 768 428" fill="none" stroke="rgba(225,29,72,0.8)" stroke-width="12" stroke-linecap="round" filter="url(#f02-glowf)" />
-            <path id="f02-dash" d="M 445 492 C 560 440, 740 360, 768 428" fill="none" stroke="rgba(255,255,255,0.92)" stroke-width="5" stroke-linecap="round" />
+            <path id="f02-glowpath" d="M 446 250 C 560 172, 724 176, 768 288" fill="none" stroke="rgba(225,29,72,0.8)" stroke-width="12" stroke-linecap="round" filter="url(#f02-glowf)" />
+            <path id="f02-dash" d="M 446 250 C 560 172, 724 176, 768 288" fill="none" stroke="rgba(255,255,255,0.92)" stroke-width="5" stroke-linecap="round" />
           </g>
-          <circle id="f02-startnode" cx="445" cy="492" r="9" fill="#ffffff" />
-          <circle id="f02-startring" opacity="0" cx="445" cy="492" r="14" fill="none" stroke="#ff8aa3" stroke-width="3" />
-          <circle id="f02-endring" opacity="0" cx="768" cy="428" r="14" fill="none" stroke="#ffffff" stroke-width="4" />
-          <circle id="f02-tail2" cx="445" cy="492" r="6" fill="#ff8aa3" opacity="0" />
-          <circle id="f02-tail1" cx="445" cy="492" r="8" fill="#ffc2cf" opacity="0" />
-          <circle id="f02-cometglow" cx="445" cy="492" r="26" fill="#e11d48" opacity="0" filter="url(#f02-glowf)" />
-          <circle id="f02-comet" cx="445" cy="492" r="10" fill="#ffffff" opacity="0" />
+          <circle id="f02-startnode" cx="446" cy="250" r="9" fill="#ffffff" />
+          <circle id="f02-startring" opacity="0" cx="446" cy="250" r="14" fill="none" stroke="#ff8aa3" stroke-width="3" />
+          <circle id="f02-endring" opacity="0" cx="768" cy="288" r="14" fill="none" stroke="#ffffff" stroke-width="4" />
+          <circle id="f02-tail2" cx="446" cy="250" r="6" fill="#ff8aa3" opacity="0" />
+          <circle id="f02-tail1" cx="446" cy="250" r="8" fill="#ffc2cf" opacity="0" />
+          <circle id="f02-cometglow" cx="446" cy="250" r="26" fill="#e11d48" opacity="0" filter="url(#f02-glowf)" />
+          <circle id="f02-comet" cx="446" cy="250" r="10" fill="#ffffff" opacity="0" />
         </svg>
 
         <!-- Centrale Vigilia + (HTML build) -->
@@ -549,11 +549,13 @@
       // dashed white line drawn progressively: explicit dash list up to the drawn length, then one long gap
       function dashFor(drawn) {
         var arr = [], acc = 0, DASH = 14, GAP = 12;
-        while (acc < drawn) {
+        // integer-count loop (float-safe: never spins on a rounding residue)
+        var n = Math.ceil(drawn / (DASH + GAP)) + 1;
+        for (var i = 0; i < n && drawn - acc > 0.001; i++) {
           var dl = Math.min(DASH, drawn - acc);
           arr.push(dl.toFixed(2));
           acc += dl;
-          if (acc >= drawn) break;
+          if (drawn - acc <= 0.001) break;
           var gl = Math.min(GAP, drawn - acc);
           arr.push(gl.toFixed(2));
           acc += gl;

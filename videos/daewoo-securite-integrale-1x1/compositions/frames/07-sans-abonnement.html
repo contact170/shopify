@@ -26,38 +26,38 @@
     #f07-sans-abonnement-shake { position: absolute; inset: 0; }
 
     #f07-sans-abonnement-label {
-      position: absolute; left: 72px; top: 70px;
+      position: absolute; left: 84px; top: 80px;
       font-size: 46px; font-weight: 600; letter-spacing: -0.01em; color: #6e6e73; white-space: nowrap;
     }
 
     #f07-sans-abonnement-ring {
-      position: absolute; left: 140px; top: 120px; width: 340px; height: 340px; border-radius: 50%;
+      position: absolute; left: 160px; top: 135px; width: 340px; height: 340px; border-radius: 50%;
       border: 6px solid rgba(12, 30, 74, 0.2);
     }
 
     /* hero ticker window: "0 €" lands left-aligned, "À vie." sits beside it */
-    #f07-sans-abonnement-zoom { position: absolute; left: 40px; top: 130px; width: 600px; height: 330px; }
+    #f07-sans-abonnement-zoom { position: absolute; left: 52px; top: 130px; width: 600px; height: 370px; }
     #f07-sans-abonnement-ticker {
-      position: absolute; left: 0; top: 0; width: 600px; height: 330px; overflow: hidden;
+      position: absolute; left: 0; top: 0; width: 600px; height: 370px; overflow: hidden;
       filter: url(#f07-sans-abonnement-mblur);
       -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 12%, #000 88%, rgba(0,0,0,0) 100%);
       mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 12%, #000 88%, rgba(0,0,0,0) 100%);
     }
     #f07-sans-abonnement-stack { display: flex; flex-direction: column; }
     .f07-sans-abonnement-item {
-      height: 330px; line-height: 330px; display: flex; align-items: center; justify-content: flex-start;
+      height: 370px; line-height: 370px; display: flex; align-items: center; justify-content: flex-start;
       padding-left: 26px;
-      font-size: 300px; font-weight: 900; letter-spacing: -0.04em; color: #0c1e4a;
+      font-size: 345px; font-weight: 900; letter-spacing: -0.04em; color: #0c1e4a;
       font-variant-numeric: tabular-nums; white-space: nowrap;
     }
     .f07-sans-abonnement-item.f07-sans-abonnement-fill { color: #6e7a96; }
 
     #f07-sans-abonnement-avie {
-      position: absolute; left: 600px; top: 304px;
+      position: absolute; left: 640px; top: 334px;
       font-size: 132px; font-weight: 800; letter-spacing: -0.035em; line-height: 1; color: #1d1d1f; white-space: nowrap;
     }
 
-    #f07-sans-abonnement-strike { position: absolute; left: 72px; top: 470px; }
+    #f07-sans-abonnement-strike { position: absolute; left: 84px; top: 518px; }
     .f07-sans-abonnement-strike-txt {
       position: relative; display: inline-block;
       font-size: 44px; font-weight: 600; color: #9a9a9a; letter-spacing: -0.01em; white-space: nowrap;
@@ -68,12 +68,12 @@
     }
 
     #f07-sans-abonnement-rule {
-      position: absolute; left: 72px; right: 72px; top: 572px; height: 2px; background: rgba(12, 30, 74, 0.12);
+      position: absolute; left: 84px; right: 84px; top: 612px; height: 2px; background: rgba(12, 30, 74, 0.12);
       transform-origin: 0% 50%;
     }
 
     #f07-sans-abonnement-list {
-      position: absolute; left: 72px; right: 64px; top: 622px;
+      position: absolute; left: 84px; right: 64px; top: 652px;
       display: flex; flex-direction: column; gap: 32px;
     }
     .f07-sans-abonnement-row { display: flex; align-items: center; gap: 28px; height: 86px; }
@@ -152,7 +152,7 @@
       var tl = gsap.timeline({ paused: true });
 
       // ---------- build the ticker stack (blurred filler rows, then the landing "0 €") ----------
-      var ITEM_H = 330;
+      var ITEM_H = 370;
       var FILL = ["38", "24", "59", "17", "46", "32", "68", "29", "51", "19", "44", "27", "36", "58", "22"];
       var stack = $("stack");
       for (var k = 0; k < FILL.length; k++) {

@@ -1,110 +1,110 @@
-<!doctype html><html><head><meta charset="utf-8"><base href="http://127.0.0.1:8763/daewoo-securite-integrale-1x1/"><style>body{margin:0;background:#000}</style></head><body>
-<div id="root" data-composition-id="03-riposte" data-width="1080" data-height="1080" data-start="0" data-duration="4.5">
+<!doctype html><html><head><meta charset="utf-8"><base href="file:///home/user/shopify/videos/daewoo-securite-integrale/"><style>body{margin:0;background:#000}</style></head><body>
+<div id="root" data-composition-id="03-riposte" data-width="1080" data-height="1920" data-start="0" data-duration="4.5">
   <style>
     @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; }
     @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-800.woff2") format("woff2"); font-weight: 800; font-style: normal; }
 
-    #root { position: relative; width: 1080px; height: 1080px; overflow: hidden; font-family: "Inter", sans-serif; color: #ffffff; }
+    #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: #ffffff; }
     #root * { box-sizing: border-box; }
 
     /* ---------- ground ---------- */
-    #f03-bg { position: absolute; inset: 0; overflow: hidden;
-      background: radial-gradient(95% 85% at 57% 34%, #13295f 0%, #0c1e4a 48%, #081430 100%); }
-    #f03-strobe { position: absolute; inset: 0; opacity: 0;
-      background: radial-gradient(85% 80% at 57% 36%, rgba(255,45,85,0.95) 0%, rgba(225,29,72,0.7) 32%, rgba(120,10,40,0.35) 62%, rgba(8,20,48,0) 100%); }
-    #f03-beam { position: absolute; left: -380px; top: -610px; width: 2000px; height: 2000px; opacity: 0; mix-blend-mode: screen;
-      transform-origin: 1000px 1000px;
-      background: conic-gradient(from 0deg at 1000px 1000px, rgba(255,60,95,0) 0deg, rgba(255,60,95,0.55) 14deg, rgba(255,60,95,0) 34deg, rgba(255,60,95,0) 180deg, rgba(255,60,95,0.45) 194deg, rgba(255,60,95,0) 214deg, rgba(255,60,95,0) 360deg); }
-    #f03-vignette { position: absolute; inset: 0;
-      background: radial-gradient(110% 110% at 52% 42%, rgba(8,20,48,0) 55%, rgba(4,10,26,0.75) 100%); }
-    #f03-facade { position: absolute; left: 0; right: 0; top: 0; height: 1080px; opacity: 0.16;
+    [id="03-riposte-bg"] { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(90% 60% at 59% 34%, #13295f 0%, #0c1e4a 48%, #081430 100%); }
+    [id="03-riposte-strobe"] { position: absolute; inset: 0; opacity: 0;
+      background: radial-gradient(85% 55% at 59% 36%, rgba(255,45,85,0.95) 0%, rgba(225,29,72,0.7) 32%, rgba(120,10,40,0.35) 62%, rgba(8,20,48,0) 100%); }
+    [id="03-riposte-beam"] { position: absolute; left: -161px; top: -296px; width: 1600px; height: 2000px; opacity: 0; mix-blend-mode: screen;
+      transform-origin: 800px 1000px;
+      background: conic-gradient(from 0deg at 800px 1000px, rgba(255,60,95,0) 0deg, rgba(255,60,95,0.55) 14deg, rgba(255,60,95,0) 34deg, rgba(255,60,95,0) 180deg, rgba(255,60,95,0.45) 194deg, rgba(255,60,95,0) 214deg, rgba(255,60,95,0) 360deg); }
+    [id="03-riposte-vignette"] { position: absolute; inset: 0;
+      background: radial-gradient(120% 75% at 50% 40%, rgba(8,20,48,0) 55%, rgba(4,10,26,0.75) 100%); }
+    [id="03-riposte-facade"] { position: absolute; left: 0; right: 0; top: 0; height: 1600px; opacity: 0.16;
       background:
         repeating-linear-gradient(90deg, rgba(255,255,255,0) 0 214px, rgba(255,255,255,0.35) 214px 216px),
         repeating-linear-gradient(0deg, rgba(255,255,255,0) 0 318px, rgba(255,255,255,0.22) 318px 320px);
       -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
-              mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%); }
+              mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%); }
 
     /* ---------- camera rigs ---------- */
-    #f03-stage { position: absolute; inset: 0; overflow: hidden; }
-    #f03-push, #f03-camA, #f03-camB { position: absolute; inset: 0; transform-origin: 57% 45%; }
+    [id="03-riposte-stage"] { position: absolute; inset: 0; overflow: hidden; }
+    [id="03-riposte-push"], [id="03-riposte-camA"], [id="03-riposte-camB"] { position: absolute; inset: 0; transform-origin: 59% 40%; }
 
     /* ---------- sound waves ---------- */
-    .f03-ring { position: absolute; left: 496px; top: 266px; width: 250px; height: 250px; border-radius: 50%;
+    [class~="03-riposte-ring"] { position: absolute; left: 489px; top: 554px; width: 300px; height: 300px; border-radius: 50%;
       border: 7px solid rgba(255,90,120,0.95); opacity: 0; }
-    .f03-ring[data-thin] { border-width: 3px; border-color: rgba(255,255,255,0.85); }
-    #f03-shock { position: absolute; left: 496px; top: 266px; width: 250px; height: 250px; border-radius: 50%;
+    [class~="03-riposte-ring"][data-thin] { border-width: 3px; border-color: rgba(255,255,255,0.85); }
+    [id="03-riposte-shock"] { position: absolute; left: 489px; top: 554px; width: 300px; height: 300px; border-radius: 50%;
       border: 14px solid rgba(255,208,218,0.95); opacity: 0; }
-    .f03-halo-ring { position: absolute; border-radius: 50%; opacity: 0; }
+    [class~="03-riposte-halo-ring"] { position: absolute; border-radius: 50%; opacity: 0; }
 
     /* ---------- siren ---------- */
-    #f03-siren { position: absolute; left: 278px; top: 64px; width: 480px; height: 383px; transform-origin: 71% 70%; }
-    #f03-halo { position: absolute; left: 60px; top: 44px; width: 566px; height: 566px; border-radius: 50%; opacity: 0;
+    [id="03-riposte-siren"] { position: absolute; left: 215px; top: 300px; width: 594px; height: 474px; transform-origin: 71% 70%; }
+    [id="03-riposte-halo"] { position: absolute; left: 74px; top: 54px; width: 700px; height: 700px; border-radius: 50%; opacity: 0;
       background: radial-gradient(circle, rgba(255,70,105,0.95) 0%, rgba(225,29,72,0.55) 28%, rgba(225,29,72,0) 66%); }
-    #f03-img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-    #f03-band { position: absolute; inset: 0; opacity: 0; mix-blend-mode: screen;
+    [id="03-riposte-img"] { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    [id="03-riposte-band"] { position: absolute; inset: 0; opacity: 0; mix-blend-mode: screen;
       background: linear-gradient(180deg, #ff8aa0 0%, #ff3b62 55%, #ff1f4b 100%);
       -webkit-mask-image: url("assets/wos305s.png"); -webkit-mask-size: 100% 100%; -webkit-mask-repeat: no-repeat;
               mask-image: url("assets/wos305s.png");         mask-size: 100% 100%;         mask-repeat: no-repeat;
       clip-path: inset(70.4% 1.6% 0% 44.6%); }
-    #f03-core { position: absolute; left: 234px; top: 270px; width: 218px; height: 113px; border-radius: 50%; opacity: 0;
+    [id="03-riposte-core"] { position: absolute; left: 289px; top: 334px; width: 270px; height: 140px; border-radius: 50%; opacity: 0;
       mix-blend-mode: screen; background: radial-gradient(closest-side, rgba(255,255,255,0.95) 0%, rgba(255,170,190,0.6) 45%, rgba(255,80,110,0) 100%); }
 
     /* ---------- copy ---------- */
-    #f03-pillrow { position: absolute; left: 0; right: 0; top: 466px; display: flex; justify-content: center; }
-    #f03-pill { display: inline-flex; align-items: center; gap: 15px; border-radius: 100px; padding: 15px 36px 15px 27px;
+    [id="03-riposte-pillrow"] { position: absolute; left: 0; right: 0; top: 862px; display: flex; justify-content: center; }
+    [id="03-riposte-pill"] { display: inline-flex; align-items: center; gap: 17px; border-radius: 100px; padding: 17px 40px 17px 30px;
       background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.28);
-      font-size: 36px; font-weight: 600; letter-spacing: -0.01em; line-height: 1; color: #ffffff; white-space: nowrap; }
-    #f03-sun { width: 42px; height: 42px; display: block; }
-    #f03-l1wrap { position: absolute; left: 0; right: 0; top: 572px; }
-    #f03-l2wrap { position: absolute; left: 0; right: 0; top: 780px; }
-    .f03-line { text-align: center; font-weight: 800; font-size: 98px; line-height: 0.98; letter-spacing: -0.035em;
+      font-size: 39px; font-weight: 600; letter-spacing: -0.01em; line-height: 1; color: #ffffff; white-space: nowrap; }
+    [id="03-riposte-sun"] { width: 46px; height: 46px; display: block; }
+    [id="03-riposte-l1wrap"] { position: absolute; left: 0; right: 0; top: 1004px; }
+    [id="03-riposte-l2wrap"] { position: absolute; left: 0; right: 0; top: 1254px; }
+    [class~="03-riposte-line"] { text-align: center; font-weight: 800; font-size: 104px; line-height: 0.98; letter-spacing: -0.035em;
       white-space: nowrap; transform-origin: 50% 50%; }
-    #f03-l2 { color: #ffd0da; }
+    [id="03-riposte-l2"] { color: #ffd0da; }
   </style>
 
   <!-- ground: night façade + red/navy strobe + rotating beacon -->
-  <div id="f03-bg" class="clip" data-start="0" data-duration="4.5" data-track-index="0">
-    <div id="f03-facade"></div>
-    <div id="f03-strobe"></div>
-    <div id="f03-beam"></div>
-    <div id="f03-vignette"></div>
+  <div id="03-riposte-bg" class="clip" data-start="0" data-duration="4.5" data-track-index="0">
+    <div id="03-riposte-facade"></div>
+    <div id="03-riposte-strobe"></div>
+    <div id="03-riposte-beam"></div>
+    <div id="03-riposte-vignette"></div>
   </div>
 
   <!-- stage: camera rigs carrying waves, siren, copy -->
-  <div id="f03-stage" class="clip" data-start="0" data-duration="4.5" data-track-index="1">
-    <div id="f03-push">
-      <div id="f03-camA">
-        <div id="f03-camB">
-          <div class="f03-halo-ring" id="f03-hr1" style="left:378px;top:19px;width:485px;height:485px;border:5px solid rgba(255,255,255,0.22);"></div>
-          <div class="f03-halo-ring" id="f03-hr2" style="left:273px;top:-86px;width:695px;height:695px;border:4px solid rgba(255,255,255,0.11);"></div>
+  <div id="03-riposte-stage" class="clip" data-start="0" data-duration="4.5" data-track-index="1">
+    <div id="03-riposte-push">
+      <div id="03-riposte-camA">
+        <div id="03-riposte-camB">
+          <div class="03-riposte-halo-ring" id="03-riposte-hr1" style="left:339px;top:244px;width:600px;height:600px;border:5px solid rgba(255,255,255,0.22);"></div>
+          <div class="03-riposte-halo-ring" id="03-riposte-hr2" style="left:209px;top:114px;width:860px;height:860px;border:4px solid rgba(255,255,255,0.11);"></div>
 
-          <div class="f03-ring" id="f03-r0"></div>
-          <div class="f03-ring" id="f03-r1"></div>
-          <div class="f03-ring" id="f03-r2"></div>
-          <div class="f03-ring" id="f03-r3"></div>
-          <div class="f03-ring" id="f03-r4"></div>
-          <div class="f03-ring" id="f03-r5"></div>
-          <div class="f03-ring" id="f03-r6"></div>
-          <div class="f03-ring" data-thin id="f03-t0"></div>
-          <div class="f03-ring" data-thin id="f03-t1"></div>
-          <div class="f03-ring" data-thin id="f03-t2"></div>
-          <div class="f03-ring" data-thin id="f03-t3"></div>
-          <div class="f03-ring" data-thin id="f03-t4"></div>
-          <div class="f03-ring" data-thin id="f03-t5"></div>
-          <div class="f03-ring" data-thin id="f03-t6"></div>
-          <div id="f03-shock"></div>
+          <div class="03-riposte-ring" id="03-riposte-r0"></div>
+          <div class="03-riposte-ring" id="03-riposte-r1"></div>
+          <div class="03-riposte-ring" id="03-riposte-r2"></div>
+          <div class="03-riposte-ring" id="03-riposte-r3"></div>
+          <div class="03-riposte-ring" id="03-riposte-r4"></div>
+          <div class="03-riposte-ring" id="03-riposte-r5"></div>
+          <div class="03-riposte-ring" id="03-riposte-r6"></div>
+          <div class="03-riposte-ring" data-thin id="03-riposte-t0"></div>
+          <div class="03-riposte-ring" data-thin id="03-riposte-t1"></div>
+          <div class="03-riposte-ring" data-thin id="03-riposte-t2"></div>
+          <div class="03-riposte-ring" data-thin id="03-riposte-t3"></div>
+          <div class="03-riposte-ring" data-thin id="03-riposte-t4"></div>
+          <div class="03-riposte-ring" data-thin id="03-riposte-t5"></div>
+          <div class="03-riposte-ring" data-thin id="03-riposte-t6"></div>
+          <div id="03-riposte-shock"></div>
 
-          <div id="f03-siren">
-            <div id="f03-halo"></div>
-            <img id="f03-img" src="assets/wos305s.png" alt="">
-            <div id="f03-band"></div>
-            <div id="f03-core"></div>
+          <div id="03-riposte-siren">
+            <div id="03-riposte-halo"></div>
+            <img id="03-riposte-img" src="assets/wos305s.png" alt="">
+            <div id="03-riposte-band"></div>
+            <div id="03-riposte-core"></div>
           </div>
 
-          <div id="f03-pillrow">
-            <div id="f03-pill">
-              <svg id="f03-sun" viewBox="0 0 48 48" aria-hidden="true">
+          <div id="03-riposte-pillrow">
+            <div id="03-riposte-pill">
+              <svg id="03-riposte-sun" viewBox="0 0 48 48" aria-hidden="true">
                 <circle cx="24" cy="24" r="9" fill="#ffcf4a"/>
                 <g stroke="#ffcf4a" stroke-width="3.6" stroke-linecap="round">
                   <line x1="24" y1="3.5" x2="24" y2="9"/><line x1="24" y1="39" x2="24" y2="44.5"/>
@@ -117,11 +117,11 @@
             </div>
           </div>
 
-          <div id="f03-l1wrap">
-            <div class="f03-line" id="f03-l1">Visible depuis<br>la rue.</div>
+          <div id="03-riposte-l1wrap">
+            <div class="03-riposte-line" id="03-riposte-l1">Visible depuis<br>la rue.</div>
           </div>
-          <div id="f03-l2wrap">
-            <div class="f03-line" id="f03-l2">Entendue par<br>tout le quartier.</div>
+          <div id="03-riposte-l2wrap">
+            <div class="03-riposte-line" id="03-riposte-l2">Entendue par<br>tout le quartier.</div>
           </div>
         </div>
       </div>
@@ -132,7 +132,7 @@
   <script>
     (function () {
       var root = document.querySelector('[data-composition-id="03-riposte"]');
-      function $(id) { return root.querySelector('#f03-' + id); }
+      function $(id) { return root.querySelector('[id="03-riposte-' + id + '"]'); }
 
       var strobe = $("strobe"), beam = $("beam"), camA = $("camA"), camB = $("camB"), push = $("push");
       var siren = $("siren"), halo = $("halo"), band = $("band"), core = $("core");
