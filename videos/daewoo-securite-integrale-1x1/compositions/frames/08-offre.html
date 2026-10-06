@@ -1,0 +1,587 @@
+<template>
+  <div id="root" data-composition-id="08-offre" data-start="0" data-duration="5.5" data-width="1080" data-height="1080">
+    <style>
+      @font-face { font-family: "Inter"; font-weight: 500; font-style: normal; src: url("assets/fonts/Inter-500.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 600; font-style: normal; src: url("assets/fonts/Inter-600.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 700; font-style: normal; src: url("assets/fonts/Inter-700.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 800; font-style: normal; src: url("assets/fonts/Inter-800.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 900; font-style: normal; src: url("assets/fonts/Inter-900.woff2") format("woff2"); }
+
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1080px;
+        overflow: hidden;
+        font-family: "Inter", sans-serif;
+        color: #ffffff;
+      }
+
+      /* ---------- full-bleed night ground (clip layer, not the root) ---------- */
+      #f08-bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(110% 95% at 62% 48%, #13295f 0%, #0c1e4a 45%, #081430 100%);
+        overflow: hidden;
+      }
+      #f08-glow {
+        position: absolute;
+        left: 402px;
+        top: 345px;
+        width: 760px;
+        height: 480px;
+        border-radius: 50%;
+        background: radial-gradient(closest-side, rgba(70, 110, 220, 0.55), rgba(70, 110, 220, 0.18) 55%, rgba(70, 110, 220, 0) 100%);
+        opacity: 0;
+      }
+      #f08-redglow {
+        position: absolute;
+        left: 502px;
+        top: 300px;
+        width: 560px;
+        height: 320px;
+        border-radius: 50%;
+        background: radial-gradient(closest-side, rgba(225, 29, 72, 0.35), rgba(225, 29, 72, 0) 100%);
+        opacity: 0;
+      }
+      .f08-ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.07);
+      }
+
+      /* ---------- camera + shake ---------- */
+      #f08-cam {
+        position: absolute;
+        inset: 0;
+        transform-origin: 600px 560px;
+      }
+      #f08-shake {
+        position: absolute;
+        inset: 0;
+      }
+
+      /* logo — top, centred */
+      #f08-logo {
+        position: absolute;
+        left: 342px;
+        top: 64px;
+        width: 396px;
+        height: 72px;
+      }
+      #f08-logo img {
+        display: block;
+        width: 396px;
+        height: 72px;
+      }
+
+      /* pack card — left half */
+      #f08-card {
+        position: absolute;
+        left: 64px;
+        top: 184px;
+        width: 448px;
+        height: 572px;
+        background: #ffffff;
+        border-radius: 28px;
+        overflow: hidden;
+        transform-origin: 50% 50%;
+      }
+      #f08-card img {
+        position: absolute;
+        left: 4px;
+        top: 66px;
+        width: 440px;
+        height: 440px;
+        transform-origin: 50% 50%;
+      }
+      #f08-sheen {
+        position: absolute;
+        top: -100px;
+        left: -300px;
+        width: 180px;
+        height: 780px;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.75) 50%, rgba(255, 255, 255, 0) 100%);
+        transform: rotate(18deg);
+      }
+      #f08-card-halo {
+        position: absolute;
+        left: 24px;
+        top: 144px;
+        width: 528px;
+        height: 652px;
+        border-radius: 60px;
+        background: radial-gradient(closest-side, rgba(120, 160, 255, 0.28), rgba(120, 160, 255, 0) 100%);
+        opacity: 0;
+      }
+
+      /* ---------- right column: price block ---------- */
+      .f08-row {
+        position: absolute;
+        left: 548px;
+        width: 468px;
+        text-align: center;
+      }
+      .f08-pill {
+        display: inline-block;
+        position: relative;
+        border-radius: 100px;
+        white-space: nowrap;
+      }
+
+      /* badge */
+      #f08-badge-row { top: 184px; }
+      #f08-badge {
+        background: #e11d48;
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 31px;
+        line-height: 38px;
+        letter-spacing: -0.01em;
+        padding: 15px 30px;
+        transform-origin: 50% 50%;
+      }
+      #f08-badge-ring {
+        position: absolute;
+        inset: 0;
+        border-radius: 100px;
+        border: 4px solid rgba(225, 29, 72, 0.9);
+        opacity: 0;
+      }
+
+      /* title (two lines) */
+      #f08-title {
+        top: 290px;
+        font-size: 42px;
+        line-height: 52px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .f08-line {
+        display: block;
+        white-space: nowrap;
+      }
+      .f08-word {
+        display: inline-block;
+        white-space: pre;
+      }
+
+      /* struck price */
+      #f08-old-row { top: 420px; }
+      #f08-old {
+        display: inline-block;
+        position: relative;
+        font-size: 60px;
+        line-height: 70px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+      }
+      #f08-old-text { color: rgba(255, 255, 255, 0.6); }
+      #f08-strike {
+        position: absolute;
+        left: -12px;
+        right: -12px;
+        top: 33px;
+        height: 8px;
+        border-radius: 6px;
+        background: #e11d48;
+        transform-origin: 0% 50%;
+      }
+
+      /* hero price */
+      #f08-price-row { top: 500px; height: 200px; }
+      .f08-price {
+        display: inline-block;
+        font-size: 152px;
+        line-height: 200px;
+        font-weight: 900;
+        letter-spacing: -0.045em;
+        white-space: nowrap;
+        transform-origin: 50% 55%;
+      }
+      #f08-price { color: #ffffff; position: relative; }
+      #f08-price-ghost { color: #e11d48; }
+      #f08-price-glow { color: #ffffff; }
+      .f08-price-layer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        text-align: center;
+      }
+
+      /* fx */
+      #f08-shock {
+        position: absolute;
+        left: 652px;
+        top: 460px;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        border: 6px solid rgba(255, 255, 255, 0.9);
+        opacity: 0;
+      }
+      #f08-field {
+        position: absolute;
+        left: 782px;
+        top: 600px;
+        width: 0;
+        height: 0;
+      }
+      .f08-spark {
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 4px;
+        opacity: 0;
+      }
+
+      /* ---------- bottom lockup: date line + URL pill (full width) ---------- */
+      .f08-wide {
+        position: absolute;
+        left: 64px;
+        right: 64px;
+        text-align: center;
+      }
+      #f08-date {
+        top: 800px;
+        font-size: 40px;
+        line-height: 52px;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        color: rgba(255, 255, 255, 0.78);
+        white-space: nowrap;
+      }
+      #f08-date-inner {
+        display: inline-block;
+        position: relative;
+      }
+      #f08-date-em {
+        position: relative;
+        color: #ffffff;
+        font-weight: 700;
+      }
+      #f08-date-ul {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -7px;
+        height: 5px;
+        border-radius: 3px;
+        background: #e11d48;
+        transform-origin: 0% 50%;
+      }
+
+      #f08-url-row { top: 884px; }
+      #f08-url-wrap {
+        display: inline-block;
+        position: relative;
+      }
+      #f08-url-burst {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 0;
+        bottom: 0;
+        border-radius: 100px;
+        background: radial-gradient(closest-side, rgba(150, 185, 255, 0.95), rgba(150, 185, 255, 0) 100%);
+        filter: blur(30px);
+        opacity: 0;
+      }
+      #f08-url {
+        position: relative;
+        background: #ffffff;
+        color: #0c1e4a;
+        font-weight: 800;
+        font-size: 50px;
+        line-height: 60px;
+        letter-spacing: -0.02em;
+        padding: 18px 52px;
+        overflow: hidden;
+        transform-origin: 50% 50%;
+      }
+      #f08-url-sheen {
+        position: absolute;
+        top: -30px;
+        left: -160px;
+        width: 90px;
+        height: 160px;
+        background: linear-gradient(90deg, rgba(12, 30, 74, 0) 0%, rgba(12, 30, 74, 0.14) 50%, rgba(12, 30, 74, 0) 100%);
+        transform: rotate(18deg);
+      }
+      #f08-url-label { position: relative; }
+
+      /* overlays */
+      #f08-flash {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(60% 50% at 72% 55%, rgba(255, 255, 255, 1) 0%, rgba(210, 225, 255, 0.85) 45%, rgba(255, 255, 255, 0.55) 100%);
+        opacity: 0;
+        pointer-events: none;
+      }
+      #f08-black {
+        position: absolute;
+        inset: 0;
+        background: #000000;
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+
+    <!-- Track 0: night ground -->
+    <div id="f08-bg" class="clip" data-start="0" data-duration="5.5" data-track-index="0">
+      <div id="f08-glow"></div>
+      <div id="f08-redglow"></div>
+      <div class="f08-ring" id="f08-ring-a" style="left:482px;top:300px;width:600px;height:600px"></div>
+      <div class="f08-ring" id="f08-ring-b" style="left:332px;top:150px;width:900px;height:900px"></div>
+      <div class="f08-ring" id="f08-ring-c" style="left:157px;top:-25px;width:1250px;height:1250px"></div>
+    </div>
+
+    <!-- Track 1: the shot -->
+    <div id="f08-cam" class="clip" data-start="0" data-duration="5.5" data-track-index="1">
+      <div id="f08-shake">
+        <div id="f08-logo">
+          <img src="assets/logo-white.png" alt="DAEWOO" />
+        </div>
+
+        <div id="f08-card-halo"></div>
+        <div id="f08-card">
+          <img id="f08-pack" src="assets/pack.jpg" alt="Pack Vigilia +" />
+          <div id="f08-sheen"></div>
+        </div>
+
+        <div class="f08-row" id="f08-badge-row">
+          <span class="f08-pill" id="f08-badge">Offre spéciale · -26&nbsp;%<span id="f08-badge-ring"></span></span>
+        </div>
+
+        <div class="f08-row" id="f08-title"><span class="f08-line"><span class="f08-word">Pack </span><span class="f08-word">Sécurité</span></span><span class="f08-line"><span class="f08-word">Intégrale </span><span class="f08-word">· </span><span class="f08-word">Vigilia&nbsp;+</span></span></div>
+
+        <div class="f08-row" id="f08-old-row">
+          <span id="f08-old"><span id="f08-old-text">475,58&nbsp;€</span><span id="f08-strike"></span></span>
+        </div>
+
+        <div id="f08-shock"></div>
+        <div id="f08-field"></div>
+
+        <div class="f08-row" id="f08-price-row">
+          <div class="f08-price-layer"><span class="f08-price" id="f08-price-ghost">349,90&nbsp;€</span></div>
+          <div class="f08-price-layer"><span class="f08-price" id="f08-price-glow">349,90&nbsp;€</span></div>
+          <span class="f08-price" id="f08-price">349,90&nbsp;€</span>
+        </div>
+
+        <div class="f08-wide" id="f08-date">
+          <span id="f08-date-inner">Jusqu'au <span id="f08-date-em">31 octobre<span id="f08-date-ul"></span></span> · Sans abonnement</span>
+        </div>
+
+        <div class="f08-wide" id="f08-url-row">
+          <span id="f08-url-wrap">
+            <span id="f08-url-burst"></span>
+            <span class="f08-pill" id="f08-url"><span id="f08-url-sheen"></span><span id="f08-url-label">daewoo-security.fr</span></span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Track 2: slam flash -->
+    <div id="f08-flash" class="clip" data-start="0" data-duration="5.5" data-track-index="2"></div>
+    <!-- Track 3: final fade to black (final frame only) -->
+    <div id="f08-black" class="clip" data-start="0" data-duration="5.5" data-track-index="3"></div>
+
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      (function () {
+        var FID = "08-offre";
+        var $ = function (s) { return document.getElementById("f08-" + s); };
+        var tl = gsap.timeline({ paused: true });
+
+        var cam = $("cam"), shake = $("shake");
+        var logo = $("logo"), logoImg = logo.querySelector("img");
+        var card = $("card"), pack = $("pack"), sheen = $("sheen"), halo = $("card-halo");
+        var badge = $("badge"), badgeRing = $("badge-ring");
+        var title = $("title");
+        var words = title.querySelectorAll(".f08-word");
+        var oldText = $("old-text"), oldWrap = $("old"), strike = $("strike");
+        var price = $("price"), ghost = $("price-ghost"), pglow = $("price-glow");
+        var shock = $("shock"), field = $("field");
+        var glow = $("glow"), redglow = $("redglow");
+        var ringA = $("ring-a"), ringB = $("ring-b"), ringC = $("ring-c");
+        var dateInner = $("date-inner"), dateUl = $("date-ul");
+        var urlWrap = $("url-wrap"), url = $("url"), urlBurst = $("url-burst"), urlSheen = $("url-sheen");
+        var flash = $("flash"), black = $("black");
+
+        // ---------- deterministic hash ----------
+        var prand = function (n) {
+          var x = Math.sin(n * 127.1 + 311.7) * 43758.5453;
+          return x - Math.floor(x);
+        };
+
+        // ---------- spark pool (particle-burst, dot/streak variant) ----------
+        var SPARK_N = 30, BURST_AT = 1.9, FLIGHT = 0.95, G = 520, FADE_FRAC = 0.4;
+        var palette = ["#e11d48", "#ffffff", "#5b7fd6", "#ff5a7a", "#9db7ff"];
+        var sparks = [];
+        for (var i = 0; i < SPARK_N; i++) {
+          var el = document.createElement("div");
+          el.className = "f08-spark";
+          var size = 6 + prand(i * 3 + 1) * 8;
+          el.style.width = (size * 2.6).toFixed(1) + "px";
+          el.style.height = (size * 0.55).toFixed(1) + "px";
+          el.style.marginLeft = (-size * 1.3).toFixed(1) + "px";
+          el.style.marginTop = (-size * 0.275).toFixed(1) + "px";
+          el.style.background = palette[i % palette.length];
+          field.appendChild(el);
+          // radial, biased upward and wide (the price is wide)
+          var ang = (i / SPARK_N) * Math.PI * 2 + (prand(i * 5 + 2) - 0.5) * 0.5;
+          var speed = 440 + prand(i * 7 + 3) * 600;
+          sparks.push({
+            el: el,
+            vx: Math.cos(ang) * speed * 1.2,
+            vy: Math.sin(ang) * speed * 0.8 - 140,
+            ox: Math.cos(ang) * 170,
+            oy: Math.sin(ang) * 50,
+            deg: (ang * 180) / Math.PI
+          });
+        }
+
+        // ---------- deterministic camera-shake events (decaying sines) ----------
+        // [start, duration, amplitude px, freq x, freq y]
+        var SHAKES = [
+          [0.42, 0.32, 8, 31, 41],   // card lands (whoosh 0.3)
+          [1.3, 0.22, 5, 47, 37],    // strike
+          [1.9, 0.62, 22, 43, 53],   // CASH SLAM
+          [2.6, 0.26, 6, 39, 49],    // badge pop
+          [3.8, 0.26, 5, 45, 35]     // URL click
+        ];
+
+        function render(t) {
+          var sx = 0, sy = 0, sr = 0;
+          for (var k = 0; k < SHAKES.length; k++) {
+            var s = SHAKES[k];
+            var p = (t - s[0]) / s[1];
+            if (p > 0 && p < 1) {
+              var env = s[2] * (1 - p) * (1 - p);
+              sx += env * Math.sin(p * s[3]);
+              sy += env * 0.75 * Math.sin(p * s[4] + 0.6 * Math.sin(p * 7));
+              sr += env * 0.012 * Math.sin(p * (s[3] - 9));
+            }
+          }
+          shake.style.transform = "translate(" + sx.toFixed(2) + "px," + sy.toFixed(2) + "px) rotate(" + sr.toFixed(3) + "deg)";
+
+          var T = (t - BURST_AT) / FLIGHT;
+          for (var j = 0; j < sparks.length; j++) {
+            var sp = sparks[j];
+            if (T <= 0 || T >= 1) {
+              sp.el.style.opacity = "0";
+              continue;
+            }
+            var ft = T * FLIGHT;
+            var x = sp.ox + sp.vx * ft * (1 - 0.35 * T);
+            var y = sp.oy + sp.vy * ft * (1 - 0.35 * T) + 0.5 * G * ft * ft;
+            var fade = Math.min(1, (1 - T) / FADE_FRAC);
+            var stretch = 1.6 - 1.1 * T;
+            sp.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) rotate(" + sp.deg.toFixed(1) + "deg) scaleX(" + stretch.toFixed(3) + ")";
+            sp.el.style.opacity = fade.toFixed(3);
+          }
+        }
+
+        var clock = { t: 0 };
+        tl.fromTo(clock, { t: 0 }, {
+          t: 5.5, duration: 5.5, ease: "none",
+          onUpdate: function () { render(clock.t); }
+        }, 0);
+        render(0);
+
+        // ---------- CAMERA macro move ----------
+        tl.fromTo(cam, { scale: 1.07 }, { scale: 1.0, duration: 1.0, ease: "power3.out" }, 0);
+        tl.to(cam, { scale: 1.03, duration: 0.9, ease: "power2.in" }, 1.0);            // riser tension push
+        tl.to(cam, { scale: 0.985, duration: 0.07, ease: "power4.out" }, 1.9);          // impact kick
+        tl.to(cam, { scale: 1.0, duration: 0.55, ease: "expo.out" }, 1.97);
+        tl.to(cam, { scale: 1.018, duration: 3.03, ease: "sine.inOut" }, 2.52);         // life in the hold
+
+        // ---------- SCENE 1 (0.0–0.3) logo wipe L→R ----------
+        tl.fromTo(logo,
+          { clipPath: "inset(0% 100% 0% 0%)", x: -18, opacity: 0.4 },
+          { clipPath: "inset(0% 0% 0% 0%)", x: 0, opacity: 1, duration: 0.3, ease: "power4.out" }, 0);
+        tl.fromTo(logoImg,
+          { filter: "brightness(2.2) drop-shadow(0px 0px 18px rgba(150,185,255,0.9))" },
+          { filter: "brightness(1) drop-shadow(0px 0px 0px rgba(150,185,255,0))", duration: 0.7, ease: "power2.out" }, 0.05);
+
+        // ---------- SCENE 2 (0.3–1.3) card inverse zoom-through + title per-word ----------
+        tl.fromTo(card,
+          { scale: 2.4, opacity: 0, filter: "blur(26px)", x: 120, y: 60 },
+          { scale: 1, opacity: 1, filter: "blur(0px)", x: 0, y: 0, duration: 0.62, ease: "expo.out" }, 0.3);
+        tl.fromTo(pack, { scale: 1.22 }, { scale: 1.0, duration: 1.3, ease: "power3.out" }, 0.3);
+        tl.fromTo(halo, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.8, ease: "expo.out" }, 0.4);
+        tl.fromTo(sheen, { x: 0 }, { x: 900, duration: 0.7, ease: "power2.inOut" }, 0.62);
+
+        tl.fromTo(words,
+          { y: 40, opacity: 0, filter: "blur(12px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out", stagger: 0.07 }, 0.72);
+
+        // ---------- SCENE 3 (1.3–2.6) strike, SLAM, badge ----------
+        tl.fromTo(oldWrap,
+          { y: 28, opacity: 0, filter: "blur(10px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 0.98);
+        tl.fromTo(strike, { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power4.out" }, 1.3);
+        tl.to(oldText, { color: "rgba(255,255,255,0.42)", duration: 0.25, ease: "power2.out" }, 1.3);
+        tl.fromTo(oldWrap, { rotation: 0 }, { rotation: -2, duration: 0.12, ease: "power4.out" }, 1.3);
+        tl.to(oldWrap, { rotation: 0, duration: 0.4, ease: "back.out(2)" }, 1.42);
+        tl.fromTo(redglow, { opacity: 0 }, { opacity: 0.7, duration: 0.2, ease: "power2.out" }, 1.3);
+        tl.to(redglow, { opacity: 0.25, duration: 0.5, ease: "power2.inOut" }, 1.5);
+
+        // riser: glow builds toward the slam
+        tl.fromTo(glow, { opacity: 0, scale: 0.7 }, { opacity: 0.75, scale: 1.0, duration: 1.4, ease: "power2.in" }, 0.5);
+        tl.fromTo([ringA, ringB, ringC], { scale: 0.92, opacity: 0.4 }, { scale: 0.86, opacity: 1, duration: 1.4, ease: "power2.in" }, 0.5);
+
+        // 1.9 CASH SLAM — accelerate into impact, overshoot settle
+        tl.fromTo(price,
+          { scale: 2.9, opacity: 0, filter: "blur(30px)" },
+          { scale: 0.9, opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power3.in" }, 1.74);
+        tl.to(price, { scale: 1, duration: 0.6, ease: "back.out(3)" }, 1.9);
+        tl.fromTo(ghost,
+          { opacity: 0, x: 0, y: 0, scale: 1 },
+          { opacity: 0.9, x: 16, y: 6, scale: 1.04, duration: 0.05, ease: "none" }, 1.9);
+        tl.to(ghost, { opacity: 0, x: 0, y: 0, scale: 1, duration: 0.42, ease: "expo.out" }, 1.95);
+        tl.fromTo(pglow,
+          { opacity: 0, scale: 1, filter: "blur(14px)" },
+          { opacity: 0.9, scale: 1.08, filter: "blur(18px)", duration: 0.06, ease: "none" }, 1.9);
+        tl.to(pglow, { opacity: 0.18, scale: 1.0, filter: "blur(22px)", duration: 0.9, ease: "power3.out" }, 1.96);
+        tl.fromTo(flash, { opacity: 0 }, { opacity: 0.7, duration: 0.04, ease: "none" }, 1.88);
+        tl.to(flash, { opacity: 0, duration: 0.42, ease: "power3.out" }, 1.92);
+        tl.fromTo(shock, { scale: 0.3, opacity: 0.95, borderWidth: 14 },
+          { scale: 3.4, opacity: 0, borderWidth: 2, duration: 0.7, ease: "expo.out", immediateRender: false }, 1.9);
+        tl.to(glow, { opacity: 1, scale: 1.25, duration: 0.08, ease: "power2.out" }, 1.9);
+        tl.to(glow, { opacity: 0.42, scale: 1.05, duration: 1.1, ease: "power3.out" }, 1.98);
+        tl.to([ringA, ringB, ringC], { scale: 1.06, opacity: 1, duration: 0.5, ease: "expo.out", stagger: 0.05 }, 1.9);
+        tl.to([ringA, ringB, ringC], { scale: 1.0, opacity: 0.7, duration: 1.2, ease: "power2.inOut" }, 2.5);
+        tl.to(redglow, { opacity: 0, duration: 0.3, ease: "power2.out" }, 1.9);
+
+        // 2.6 badge pop
+        tl.fromTo(badge,
+          { scale: 0, rotation: -14, opacity: 0 },
+          { scale: 1, rotation: 0, opacity: 1, duration: 0.55, ease: "back.out(2.4)" }, 2.6);
+        tl.fromTo(badgeRing, { scale: 1, opacity: 0.9 }, { scale: 1.55, opacity: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, 2.66);
+
+        // ---------- SCENE 4 (2.6–4.2) date line, URL pill ----------
+        tl.fromTo(dateInner,
+          { clipPath: "inset(0% 100% 0% 0%)", x: -24, opacity: 0.3 },
+          { clipPath: "inset(0% 0% 0% 0%)", x: 0, opacity: 1, duration: 0.45, ease: "power4.out" }, 3.2);
+        tl.fromTo(dateUl, { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "expo.out" }, 3.4);
+
+        tl.fromTo(urlWrap,
+          { scale: 0.2, opacity: 0, y: 40 },
+          { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power4.out" }, 3.66);
+        tl.fromTo(url, { scale: 1 }, { scale: 0.9, duration: 0.12, ease: "power1.in" }, 3.86);  // press
+        tl.to(url, { scale: 1, duration: 0.6, ease: "back.out(2.4)" }, 3.98);                 // spring release
+        tl.fromTo(urlBurst, { scale: 1, opacity: 0 }, { scale: 2.6, opacity: 0.85, duration: 0.45, ease: "power2.out" }, 3.8);
+        tl.to(urlBurst, { opacity: 0.22, duration: 0.7, ease: "power2.in" }, 4.25);
+
+        // ---------- SCENE 5 (4.2–5.5) hold + final fade ----------
+        tl.fromTo(urlSheen, { x: 0 }, { x: 760, duration: 0.8, ease: "power2.inOut" }, 4.3);
+        tl.fromTo(black, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power1.in" }, 5.1);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[FID] = tl;
+      })();
+    </script>
+  </div>
+</template>

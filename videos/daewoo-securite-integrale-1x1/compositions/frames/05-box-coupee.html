@@ -1,0 +1,455 @@
+<template id="f05-box-coupee-template">
+  <div id="root" data-composition-id="05-box-coupee" data-start="0" data-duration="3.9" data-width="1080" data-height="1080">
+    <style>
+      @font-face { font-family: "Inter"; font-weight: 500; font-style: normal; src: url("assets/fonts/Inter-500.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 600; font-style: normal; src: url("assets/fonts/Inter-600.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 700; font-style: normal; src: url("assets/fonts/Inter-700.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 800; font-style: normal; src: url("assets/fonts/Inter-800.woff2") format("woff2"); }
+
+      #root {
+        position: absolute;
+        left: 0; top: 0;
+        width: 1080px; height: 1080px;
+        overflow: hidden;
+        font-family: "Inter", sans-serif;
+        color: #ffffff;
+      }
+      [id="f05-bg"] {
+        position: absolute; left: 0; top: 0; width: 1080px; height: 1080px;
+        background: linear-gradient(180deg, #05091a 0%, #081430 100%);
+      }
+      [id="f05-stage"] {
+        position: absolute; left: 0; top: 0; width: 1080px; height: 1080px;
+      }
+      [id="f05-push"], [id="f05-shake"] {
+        position: absolute; left: 0; top: 0; width: 1080px; height: 1080px;
+        transform-origin: 540px 620px;
+      }
+      [class~="f05-abs"] { position: absolute; }
+
+      /* ---------- top row: Wi-Fi icon + "Box coupée ?" side by side ---------- */
+      [id="f05-row"] {
+        left: 0; top: 52px; width: 1080px; height: 280px;
+        display: flex; align-items: center; justify-content: center; gap: 28px;
+        transform-origin: 540px 140px;
+      }
+      [id="f05-wifibox"] { position: relative; flex: 0 0 auto; width: 250px; height: 250px; margin-top: -36px; }
+      [id="f05-wifi"] {
+        position: absolute; left: 0; top: 0; width: 250px; height: 250px;
+        display: grid;
+      }
+      [class~="f05-wcopy"] {
+        grid-area: 1 / 1; width: 250px; height: 250px; overflow: visible;
+      }
+      [class~="f05-wbase"] { z-index: 2; }
+      [class~="f05-wghost"] { z-index: 1; opacity: 0; mix-blend-mode: screen; }
+      [id="f05-wslash"] {
+        position: absolute; left: 0; top: 0; width: 250px; height: 250px; overflow: visible; z-index: 3;
+      }
+
+      [id="f05-title"] {
+        position: relative; flex: 0 0 auto;
+        display: grid; justify-items: start;
+        transform-origin: 50% 50%;
+      }
+      [class~="f05-tline"] {
+        grid-area: 1 / 1;
+        font-size: 100px; font-weight: 800; line-height: 1.05; letter-spacing: -0.03em;
+        white-space: nowrap;
+      }
+      [class~="f05-tbase"] { z-index: 3; color: #ffffff; }
+      [class~="f05-tghost"] { z-index: 1; opacity: 0; mix-blend-mode: screen; }
+      [class~="f05-tslice"] { z-index: 2; opacity: 0; color: #ffffff; }
+
+      /* ---------- power-down overlay (dims Wi-Fi + title only) ---------- */
+      [id="f05-dim"] {
+        left: 0; top: 0; width: 1080px; height: 1080px;
+        background: #02040c; opacity: 0;
+      }
+
+      /* ---------- 4G badge ---------- */
+      [id="f05-glow"] {
+        left: 140px; top: 24px; width: 800px; height: 800px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(3,126,5,0.55) 0%, rgba(3,126,5,0.18) 38%, rgba(3,126,5,0) 68%);
+        opacity: 0;
+      }
+      [id="f05-g4"] {
+        left: 0; top: 372px; width: 1080px; height: 104px;
+      }
+      [class~="f05-ring"] {
+        position: absolute; left: 50%; top: 50%;
+        width: 220px; height: 220px; margin-left: -110px; margin-top: -110px;
+        border-radius: 50%; border: 5px solid #19b31c; opacity: 0;
+      }
+      [id="f05-badge"] {
+        position: absolute; left: 50%; top: 0; height: 104px; width: 300px; margin-left: -150px;
+        display: flex; align-items: center; justify-content: center; gap: 18px;
+        background: #037e05; color: #ffffff; border-radius: 100px;
+        font-size: 72px; font-weight: 800; letter-spacing: -0.02em; line-height: 1;
+      }
+      [id="f05-bars"] { width: 52px; height: 52px; overflow: visible; }
+
+      /* ---------- SMS bubble (left) ---------- */
+      [id="f05-sms"] { left: 82px; top: 512px; width: 520px; }
+      [class~="f05-bubble"] {
+        background: #1f2a48; border: 1.5px solid rgba(255,255,255,0.08);
+        border-radius: 38px 38px 38px 11px;
+        padding: 26px 32px 28px;
+      }
+      [class~="f05-label"] {
+        display: flex; align-items: center; gap: 12px;
+        font-size: 24px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+        color: rgba(255,255,255,0.55); line-height: 1.2; margin-bottom: 10px;
+      }
+      [class~="f05-smstext"] {
+        font-size: 40px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: #ffffff;
+      }
+
+      /* ---------- incoming call card (right, staggered lower) ---------- */
+      [id="f05-call"] { left: 618px; top: 596px; width: 380px; }
+      [class~="f05-card"] {
+        display: flex; align-items: center; gap: 22px;
+        background: #ffffff; color: #1d1d1f; border-radius: 38px;
+        padding: 22px 28px;
+      }
+      [class~="f05-picon"] {
+        position: relative; flex: 0 0 auto;
+        width: 76px; height: 76px; border-radius: 50%; background: #037e05;
+        display: flex; align-items: center; justify-content: center;
+      }
+      [id="f05-pring"] {
+        position: absolute; left: 0; top: 0; width: 76px; height: 76px;
+        border-radius: 50%; border: 4px solid #037e05; opacity: 0;
+      }
+      [class~="f05-ckicker"] { font-size: 26px; font-weight: 600; color: #6e6e73; line-height: 1.2; }
+      [class~="f05-cname"] { font-size: 42px; font-weight: 800; color: #1d1d1f; line-height: 1.05; letter-spacing: -0.02em; }
+
+      /* ---------- payoff ---------- */
+      [id="f05-head"] {
+        left: 0; top: 770px; width: 1080px;
+        text-align: center;
+        font-size: 84px; font-weight: 800; line-height: 1.0; letter-spacing: -0.03em;
+        color: #ffffff;
+        transform-origin: 540px 84px;
+      }
+      [id="f05-sub"] {
+        left: 0; top: 960px; width: 1080px; text-align: center;
+        font-size: 30px; font-weight: 500; line-height: 1.2; letter-spacing: 0.01em;
+        color: rgba(255,255,255,0.55);
+      }
+
+      /* ---------- interference layers ---------- */
+      [id="f05-scan"] {
+        left: 0; top: 0; width: 1080px; height: 1080px; opacity: 0;
+        background: repeating-linear-gradient(0deg, rgba(0,0,0,0.5) 0px, rgba(0,0,0,0.5) 2px, rgba(0,0,0,0) 2px, rgba(0,0,0,0) 6px);
+      }
+      [class~="f05-band"] {
+        position: absolute; left: 0; top: 0; width: 1080px;
+        background: rgba(190,215,255,0.22); mix-blend-mode: screen; opacity: 0;
+      }
+      [id="f05-flash"] {
+        left: 0; top: 0; width: 1080px; height: 1080px; background: #ffffff; opacity: 0;
+      }
+    </style>
+
+    <div id="f05-bg" class="clip" data-start="0" data-duration="3.9" data-track-index="0"></div>
+
+    <div id="f05-stage" class="clip" data-start="0" data-duration="3.9" data-track-index="1">
+      <div id="f05-push">
+        <div id="f05-shake">
+
+          <div id="f05-glow" class="f05-abs"></div>
+
+          <!-- top row: Wi-Fi icon + title side by side -->
+          <div id="f05-row" class="f05-abs">
+            <div id="f05-wifibox">
+              <div id="f05-wifi">
+            <svg class="f05-wcopy f05-wghost" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+              <path class="f05-arc" d="M2 8.8a15 15 0 0 1 20 0"/><path class="f05-arc" d="M5 12.5a10 10 0 0 1 14 0"/><path class="f05-arc" d="M8.5 16a5 5 0 0 1 7 0"/><circle class="f05-dot" cx="12" cy="19.5" r="0.9" fill="#e11d48" stroke="none"/>
+            </svg>
+            <svg class="f05-wcopy f05-wghost" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+              <path class="f05-arc" d="M2 8.8a15 15 0 0 1 20 0"/><path class="f05-arc" d="M5 12.5a10 10 0 0 1 14 0"/><path class="f05-arc" d="M8.5 16a5 5 0 0 1 7 0"/><circle class="f05-dot" cx="12" cy="19.5" r="0.9" fill="#22d3ee" stroke="none"/>
+            </svg>
+            <svg class="f05-wcopy f05-wbase" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round">
+              <path class="f05-arc" d="M2 8.8a15 15 0 0 1 20 0"/><path class="f05-arc" d="M5 12.5a10 10 0 0 1 14 0"/><path class="f05-arc" d="M8.5 16a5 5 0 0 1 7 0"/><circle class="f05-dot" cx="12" cy="19.5" r="0.9" fill="#ffffff" stroke="none"/>
+            </svg>
+          </div>
+          <svg id="f05-wslash" viewBox="0 0 24 24" fill="none" stroke-linecap="round">
+            <path id="f05-slashgap" d="M3 3l18 18" stroke="#060b1f" stroke-width="3.6"/>
+            <path id="f05-slash" d="M3 3l18 18" stroke="#e11d48" stroke-width="2"/>
+          </svg>
+            </div>
+            <div id="f05-title">
+            <span class="f05-tline f05-tghost" style="color:#e11d48" aria-hidden="true">Box coupée&nbsp;?</span>
+            <span class="f05-tline f05-tghost" style="color:#22d3ee" aria-hidden="true">Box coupée&nbsp;?</span>
+            <span class="f05-tline f05-tslice" aria-hidden="true">Box coupée&nbsp;?</span>
+            <span class="f05-tline f05-tslice" aria-hidden="true">Box coupée&nbsp;?</span>
+            <span class="f05-tline f05-tslice" aria-hidden="true">Box coupée&nbsp;?</span>
+            <span class="f05-tline f05-tslice" aria-hidden="true">Box coupée&nbsp;?</span>
+            <span class="f05-tline f05-tslice" aria-hidden="true">Box coupée&nbsp;?</span>
+            <span class="f05-tline f05-tbase">Box coupée&nbsp;?</span>
+          </div>
+          </div>
+
+          <div id="f05-dim" class="f05-abs"></div>
+
+          <!-- 4G badge + green wave -->
+          <div id="f05-g4" class="f05-abs">
+            <div class="f05-ring"></div>
+            <div class="f05-ring"></div>
+            <div id="f05-badge">
+              <svg id="f05-bars" viewBox="0 0 26 26" fill="#ffffff">
+                <rect class="f05-bar" x="1" y="18" width="4.4" height="7" rx="1.4"/>
+                <rect class="f05-bar" x="7.6" y="13" width="4.4" height="12" rx="1.4"/>
+                <rect class="f05-bar" x="14.2" y="8" width="4.4" height="17" rx="1.4"/>
+                <rect class="f05-bar" x="20.8" y="2" width="4.4" height="23" rx="1.4"/>
+              </svg>
+              <span>4G</span>
+            </div>
+          </div>
+
+          <!-- SMS bubble -->
+          <div id="f05-sms" class="f05-abs">
+            <div id="f05-smsvibe">
+              <div class="f05-bubble">
+                <div class="f05-label">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2.2" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <span>SMS</span>
+                </div>
+                <div class="f05-smstext">Alarme&nbsp;: intrusion fenêtre salon</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- incoming call card -->
+          <div id="f05-call" class="f05-abs">
+            <div id="f05-callvibe">
+              <div class="f05-card">
+                <div class="f05-picon">
+                  <div id="f05-pring"></div>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="#ffffff"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <div>
+                  <div class="f05-ckicker">Appel entrant</div>
+                  <div class="f05-cname">Alarme</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- payoff -->
+          <div id="f05-head" class="f05-abs">L'alerte passe<br>quand même.</div>
+          <div id="f05-sub" class="f05-abs">Wi-Fi + 4G · carte SIM non fournie</div>
+
+          <!-- interference -->
+          <div id="f05-scan" class="f05-abs"></div>
+          <div class="f05-band" style="height:10px"></div>
+          <div class="f05-band" style="height:38px"></div>
+          <div class="f05-band" style="height:4px"></div>
+          <div id="f05-flash" class="f05-abs"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      (function () {
+        var FID = "f05";
+        var root = document.querySelector('[data-composition-id="05-box-coupee"]');
+        var byId = function (s) { return root.querySelector('[id="' + FID + "-" + s + '"]'); };
+        var all = function (s) { return Array.prototype.slice.call(root.querySelectorAll('[class~="' + FID + "-" + s + '"]')); };
+
+        var push = byId("push"), shake = byId("shake");
+        var titleWrap = byId("title");
+        var tBase = all("tbase")[0], tGhosts = all("tghost"), tSlices = all("tslice");
+        var wGhosts = all("wghost");
+        var wCopies = all("wcopy");
+        var dim = byId("dim"), scan = byId("scan"), flash = byId("flash"), bands = all("band");
+        var rings = all("ring"), pring = byId("pring");
+        var smsVibe = byId("smsvibe"), callVibe = byId("callvibe");
+
+        // arcs per copy: [outer, middle, inner]; dots per copy
+        var arcsByCopy = wCopies.map(function (svg) { return Array.prototype.slice.call(svg.querySelectorAll("path")); });
+        var dots = wCopies.map(function (svg) { return svg.querySelector("circle"); });
+
+        // static slice bands (clip-path is constant — seek-safe)
+        var nS = tSlices.length;
+        tSlices.forEach(function (el, i) {
+          var a = (i * 100) / nS, b = 100 - ((i + 1) * 100) / nS;
+          gsap.set(el, { clipPath: "inset(" + a.toFixed(2) + "% -40px " + b.toFixed(2) + "% -40px)" });
+        });
+
+        // --- deterministic helpers ---
+        var hash = function (n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+        var JIT = 1 / 30;
+        var win = function (t, t0, d) { var k = (t - t0) / d; return k >= 0 && k <= 1 ? k : -1; };
+
+        // camera shakes: [t0, dur, amp px, rad/s, phase, scalePunch]
+        var SHAKES = [
+          [0.0, 0.32, 4, 70, 0.3, 0],
+          [0.5, 0.45, 15, 55, 1.1, 0.012],
+          [1.2, 0.28, 6, 48, 0.5, 0.01],
+          [2.5, 0.5, 26, 46, 2.0, 0.03]
+        ];
+        var ARC_OFF = [0.16, 0.3, 0.44];
+
+        function drive(t) {
+          var step = Math.floor(t / JIT + 1e-6);
+
+          // 1. camera shake (decaying, sine-derived)
+          var sx = 0, sy = 0, sr = 0, ss = 0;
+          SHAKES.forEach(function (s) {
+            var k = win(t, s[0], s[1]); if (k < 0) return;
+            var e = (1 - k) * (1 - k), u = t - s[0];
+            sx += s[2] * e * Math.sin(u * s[3] + s[4]);
+            sy += s[2] * 0.7 * e * Math.sin(u * s[3] * 1.37 + s[4] * 2);
+            sr += s[2] * 0.035 * e * Math.sin(u * s[3] * 0.83 + s[4]);
+            ss += s[5] * e;
+          });
+          gsap.set(shake, { x: sx, y: sy, rotation: sr, scale: 1 + ss });
+
+          // 2. Wi-Fi arcs die one by one (outer → inner), dot drops at power-down
+          var arcOp = ARC_OFF.map(function (off, i) {
+            if (t >= off + 0.07) return 0.3;
+            if (t >= off) return hash(step * 5 + i) > 0.5 ? 0.75 : 0.3;
+            var p = t > off - 0.12 ? 0.45 : 0.12;
+            return hash(step * 3 + i * 17) < p ? 0.35 : 1;
+          });
+          var dotOp = t < 0.5 ? (hash(step * 11) < 0.1 ? 0.5 : 1) : t < 0.56 ? (hash(step * 13) > 0.5 ? 0.8 : 0.3) : 0.32;
+          arcsByCopy.forEach(function (arcs, c) {
+            arcs.forEach(function (p, i) { p.style.opacity = arcOp[i]; });
+            dots[c].style.opacity = dotOp;
+          });
+
+          // 3. Wi-Fi RGB-split jitter (crackle 0–0.5, cut 0.55–0.9)
+          var wa = 0, k1 = win(t, 0.0, 0.5), k2 = win(t, 0.55, 0.35);
+          if (k1 >= 0) wa = (0.45 + 0.55 * hash(step * 19)) * (1 - k1);
+          if (k2 >= 0) wa = Math.pow(1 - k2, 1.3);
+          wGhosts.forEach(function (el, L) {
+            gsap.set(el, {
+              x: wa * (hash(step * 13 + L * 7) * 2 - 1) * 18,
+              y: wa * (hash(step * 29 + L * 11) * 2 - 1) * 6,
+              opacity: wa > 0.01 ? 0.85 : 0
+            });
+          });
+
+          // 4. title ghosts (slam 0.12–0.42, cut 0.55–0.9) + slice tear (0.55–0.92)
+          var ta = 0, k3 = win(t, 0.12, 0.3);
+          if (k3 >= 0) ta = Math.pow(1 - k3, 1.2);
+          if (k2 >= 0) ta = Math.max(ta, Math.pow(1 - k2, 1.3));
+          tGhosts.forEach(function (el, L) {
+            gsap.set(el, {
+              x: ta * (hash(step * 17 + L * 5) * 2 - 1) * 16,
+              y: ta * (hash(step * 31 + L * 3) * 2 - 1) * 5,
+              opacity: ta > 0.01 ? 0.8 : 0
+            });
+          });
+          var ks = win(t, 0.55, 0.37), sa = ks >= 0 ? Math.pow(1 - ks, 1.3) : 0;
+          var tearing = sa > 0.04;
+          tBase.style.opacity = tearing ? 0 : 1;
+          tSlices.forEach(function (el, i) {
+            gsap.set(el, {
+              x: tearing ? sa * (hash(step * 13 + i * 7) * 2 - 1) * 80 : 0,
+              scaleX: tearing ? 1 + sa * hash(step * 7 + i * 3) * 0.22 : 1,
+              opacity: tearing ? 1 : 0
+            });
+          });
+
+          // 5. power-down dim (flicker 0.5–0.8, hold, relight at the 4G switch 1.2)
+          var d = 0;
+          if (t >= 0.5 && t < 0.8) d = 0.62 * (hash(step * 23) < 0.3 ? 0.35 : 1);
+          else if (t >= 0.8 && t < 1.2) d = 0.62;
+          else if (t >= 1.2 && t < 1.6) { var kr = (t - 1.2) / 0.4; d = 0.62 - 0.47 * (1 - Math.pow(1 - kr, 3)); }
+          else if (t >= 1.6) d = 0.15;
+          dim.style.opacity = d;
+
+          // 6. scanlines + noise bands
+          var sc = 0, ba = 0;
+          if (t < 0.3) { sc = 0.12 * hash(step * 37); ba = 0.5 * (1 - t / 0.3); }
+          else if (t >= 0.55 && t < 0.95) { sc = 0.55 * (0.75 + 0.25 * hash(step * 31)); ba = 1; }
+          else if (t >= 0.95 && t < 1.25) { sc = 0.55 * (1 - (t - 0.95) / 0.3); ba = 0.4 * (1 - (t - 0.95) / 0.3); }
+          scan.style.opacity = sc;
+          bands.forEach(function (el, i) {
+            var on = ba > 0 && hash(step * 41 + i * 9) > 0.35;
+            gsap.set(el, { y: Math.floor(hash(step * 43 + i * 5) * 1040), opacity: on ? 0.9 * ba : 0 });
+          });
+
+          // 7. flashes (power-down hit 0.5, slam hit 2.5)
+          var f = 0, kf1 = win(t, 0.5, 0.1), kf2 = win(t, 2.5, 0.14);
+          if (kf1 >= 0) f = 0.32 * (1 - kf1);
+          if (kf2 >= 0) f = 0.16 * (1 - kf2);
+          flash.style.opacity = f;
+
+          // 8. green 4G wave rings (1.2, 1.34)
+          [1.2, 1.34].forEach(function (t0, i) {
+            var k = win(t, t0, 0.95);
+            if (k < 0) { gsap.set(rings[i], { scale: 0.35, opacity: 0 }); return; }
+            gsap.set(rings[i], { scale: 0.35 + 3.9 * (1 - (1 - k) * (1 - k)), opacity: 0.95 * (1 - k) });
+          });
+
+          // 9. vibration buzz — SMS (1.7) and call (2.15)
+          var vib = function (el, t0, dur, ax, ar) {
+            var k = win(t, t0, dur);
+            if (k < 0) { gsap.set(el, { x: 0, rotation: 0 }); return; }
+            var e = 1 - k, buzz = Math.sin(k * Math.PI * 3) > 0 ? 1 : 0.2, u = t - t0;
+            gsap.set(el, { x: ax * e * buzz * Math.sin(u * 150), rotation: ar * e * buzz * Math.sin(u * 120 + 0.7) });
+          };
+          vib(smsVibe, 1.72, 0.42, 8, 1.2);
+          vib(callVibe, 2.17, 0.5, 6, 3.2);
+
+          // 10. phone ring pulse (2.2)
+          var kp = win(t, 2.2, 0.55);
+          gsap.set(pring, kp < 0 ? { scale: 1, opacity: 0 } : { scale: 1 + 0.9 * (1 - (1 - kp) * (1 - kp)), opacity: 0.8 * (1 - kp) });
+        }
+
+        var tl = gsap.timeline({ paused: true });
+
+        // macro camera: slow push under the whole shot
+        tl.fromTo(push, { scale: 1 }, { scale: 1.03, duration: 3.5, ease: "none" }, 0);
+
+        // deterministic driver (shakes, glitch, flicker, vibration) — pure function of time
+        var proxy = { p: 0 };
+        tl.to(proxy, { p: 1, duration: 3.5, ease: "none", onUpdate: function () { drive(tl.time()); } }, 0);
+
+        // Square reflow: the Wi-Fi/title row opens centred and big (fills the square in act 1),
+        // then lifts to the top at the 4G switch (1.2) to make room for the 4G story.
+        tl.fromTo(byId("row"), { y: 300, scale: 1.08 }, { y: 0, scale: 1, duration: 0.5, ease: "expo.out" }, 1.08);
+
+        // Scene 1 — "Box coupée ?" slams under the crackling icon
+        tl.fromTo(titleWrap,
+          { scale: 1.7, opacity: 0, filter: "blur(18px)" },
+          { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.34, ease: "expo.out" }, 0.12);
+
+        // Scene 2 — red slash draws across the Wi-Fi (0.55 → 0.85)
+        [byId("slashgap"), byId("slash")].forEach(function (p) {
+          var len = p.getTotalLength() * 1.05;
+          p.style.strokeDasharray = len;
+          tl.fromTo(p, { strokeDashoffset: len }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, 0.55);
+        });
+
+        // Scene 3 — 4G switch (1.2): badge spring-pop, green glow, signal bars climb
+        tl.fromTo(byId("glow"), { opacity: 0, scale: 0.5 }, { opacity: 0.6, scale: 1, duration: 0.45, ease: "expo.out" }, 1.2);
+        tl.to(byId("glow"), { opacity: 0.32, duration: 0.7, ease: "power2.out" }, 1.7);
+        tl.fromTo(byId("badge"), { scale: 0, rotation: -12 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2.4)" }, 1.2);
+        tl.fromTo(all("bar"), { scaleY: 0 }, { scaleY: 1, transformOrigin: "50% 100%", duration: 0.3, ease: "back.out(3)", stagger: 0.06 }, 1.26);
+
+        // SMS bubble from the left (1.7)
+        tl.fromTo(byId("sms"), { x: -780, rotation: -6, scale: 0.92 }, { x: 0, rotation: 0, scale: 1, duration: 0.6, ease: "expo.out" }, 1.7);
+        // incoming call card from the right (2.15)
+        tl.fromTo(byId("call"), { x: 640, rotation: 6, scale: 0.92 }, { x: 0, rotation: 0, scale: 1, duration: 0.6, ease: "expo.out" }, 2.15);
+
+        // Scene 4 — SLAM (2.5) + sub-line, then hold
+        tl.fromTo(byId("head"),
+          { scale: 2.5, opacity: 0, y: -24, filter: "blur(30px)" },
+          { scale: 1, opacity: 1, y: 0, filter: "blur(0px)", duration: 0.32, ease: "power4.out" }, 2.5);
+        tl.fromTo(byId("sub"), { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.82);
+
+        drive(0);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["05-box-coupee"] = tl;
+      })();
+    </script>
+  </div>
+</template>
