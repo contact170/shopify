@@ -16,7 +16,7 @@ voiceover: none — kinetic typography carries the words
 - voiceover: ""
 - duration: 4s
 - transition_in: cut
-- status: outline
+- status: built
 - src: compositions/frames/01-hook-0312.html
 - type: hook
 - persuasion: Pain validation (la peur de la nuit, concrète)
@@ -35,7 +35,7 @@ keyMessage: ça arrive la nuit, quand vous ne regardez pas.
 - voiceover: ""
 - duration: 3.5s
 - transition_in: zoom-through
-- status: outline
+- status: built
 - src: compositions/frames/02-detecte.html
 - type: product_intro
 - persuasion: Show-don't-tell proof
@@ -54,7 +54,7 @@ keyMessage: le contacteur 2-en-1 détecte ouverture ET vibration de la vitre.
 - voiceover: ""
 - duration: 4s
 - transition_in: cut
-- status: outline
+- status: built
 - src: compositions/frames/03-riposte.html
 - type: feature_showcase
 - persuasion: Negative contrast (l'intrus devient la cible)
@@ -73,7 +73,7 @@ keyMessage: la maison se défend toute seule.
 - voiceover: ""
 - duration: 4.5s
 - transition_in: push-slide UP
-- status: outline
+- status: built
 - src: compositions/frames/04-telephone.html
 - type: feature_showcase
 - persuasion: Feature-to-benefit translation (vérifier avant de réagir)
@@ -92,7 +92,7 @@ keyMessage: alerte + preuve vidéo, instantanément sur le téléphone.
 - voiceover: ""
 - duration: 3.5s
 - transition_in: cut
-- status: outline
+- status: built
 - src: compositions/frames/05-box-coupee.html
 - type: feature_showcase
 - persuasion: Risk reversal (l'objection « et si on coupe internet ? »)
@@ -111,7 +111,7 @@ keyMessage: Wi-Fi + 4G : rien ne coupe l'alerte.
 - voiceover: ""
 - duration: 6.5s
 - transition_in: zoom-through
-- status: outline
+- status: built
 - src: compositions/frames/06-le-pack.html
 - type: feature_showcase
 - persuasion: Value stacking
@@ -130,7 +130,7 @@ keyMessage: intérieur, extérieur, jour et nuit — tout est inclus.
 - voiceover: ""
 - duration: 4s
 - transition_in: push-slide LEFT
-- status: outline
+- status: built
 - src: compositions/frames/07-sans-abonnement.html
 - type: benefit_highlight
 - persuasion: Rule of three + risk reversal
@@ -149,7 +149,7 @@ keyMessage: vous payez une fois, le système vous appartient.
 - voiceover: ""
 - duration: 5.5s
 - transition_in: zoom-through
-- status: outline
+- status: built
 - src: compositions/frames/08-offre.html
 - type: cta
 - persuasion: Scarcity/urgency + value anchoring

@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Storyboard Sécurité Intégrale</title>
+<style>
+  :root{
+    --navy:#0c1e4a; --navy-dark:#081430; --ink:#1d1d1f; --gray:#6e6e73;
+    --bg-alt:#f5f5f7; --line:#d2d2d7; --ok:#037e05; --promo:#e11d48;
+    --page:#eceef3; --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  header{max-width:1280px;margin:0 auto;padding:40px 24px 8px}
+  header h1{margin:0;font-size:clamp(26px,3.4vw,40px);letter-spacing:-.02em;font-weight:700}
+  header h1 small{font-size:.45em;vertical-align:middle;background:var(--navy);color:#fff;border-radius:100px;padding:4px 10px;margin-left:10px;letter-spacing:0}
+  header p{color:var(--gray);margin:8px 0 0;max-width:760px;line-height:1.5}
+  .tag{display:inline-flex;gap:8px;margin-top:14px;font-size:13px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.06em}
+  .tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);align-self:center}
+  .act{max-width:1280px;margin:28px auto 0;padding:0 24px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);display:flex;gap:10px;align-items:center}
+  .act::after{content:"";flex:1;height:1px;background:var(--line)}
+  .grid{max-width:1280px;margin:12px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+  @media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:520px){.grid{grid-template-columns:minmax(0,1fr)}}
+  .cell{background:var(--card);border-radius:14px;padding:10px;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+  .f{aspect-ratio:9/16;container-type:inline-size;border-radius:8px;overflow:hidden;position:relative}
+  .meta{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin:10px 2px 4px}
+  .meta span:last-child{color:var(--gray);font-weight:500}
+  .note{font-size:12.5px;line-height:1.45;color:var(--gray);margin:0 2px}
+  .note b{color:var(--ink)}
+  .chip{display:inline-block;margin:8px 2px 2px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px;background:rgba(12,30,74,.08);color:var(--navy)}
+  .snd{display:block;margin:6px 2px 0;font-size:11.5px;color:var(--navy)}
+
+  /* ---------- frame atoms (cqw = 1% of a 1080px-wide frame) ---------- */
+  .night{background:radial-gradient(120% 80% at 50% 30%,#13295f 0%,var(--navy) 40%,var(--navy-dark) 100%);color:#fff}
+  .day{background:#fff;color:var(--ink)}
+  .day.alt{background:var(--bg-alt)}
+  .abs{position:absolute}
+  .center{left:0;right:0;text-align:center}
+  .h-xxl{font-weight:800;letter-spacing:-.04em;line-height:.9}
+  .h{font-weight:700;letter-spacing:-.02em;line-height:1.05}
+  .eyebrow{font-size:3.4cqw;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .ph{min-width:0;overflow:hidden;flex-direction:column;border:1.5px dashed rgba(255,255,255,.45);border-radius:2.5cqw;display:flex;align-items:center;justify-content:center;text-align:center;font-size:3.2cqw;font-weight:600;color:rgba(255,255,255,.75);padding:2cqw}
+  .day .ph{border-color:rgba(12,30,74,.3);color:var(--navy);background:rgba(12,30,74,.04)}
+  .pill{display:inline-flex;align-items:center;gap:1.6cqw;border-radius:100px;padding:1.6cqw 3.6cqw;font-size:3.6cqw;font-weight:600}
+  .qty{position:absolute;top:1.2cqw;left:1.2cqw;background:var(--navy);color:#fff;border-radius:100px;font-size:3cqw;font-weight:800;padding:.8cqw 2.2cqw}
+  .check{color:var(--ok);font-weight:800}
+  .ring{position:absolute;border-radius:50%;border:.6cqw solid}
+  .safe{position:absolute;left:0;right:0;bottom:0;height:16%;background:repeating-linear-gradient(45deg,rgba(225,29,72,.06) 0 1.2cqw,transparent 1.2cqw 2.4cqw);border-top:1px dashed rgba(225,29,72,.35)}
+  .safe::after{content:"zone UI réseaux sociaux";position:absolute;right:2cqw;bottom:1.5cqw;font-size:2.4cqw;color:rgba(225,29,72,.7);font-weight:600}
+
+  .tokens .sw{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+  .tokens .sw span{width:44px;height:44px;border-radius:8px;display:flex;align-items:flex-end;padding:3px;font-size:9px;font-weight:600}
+  .seams{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .seams span{font-size:11px;padding:4px 8px;border-radius:6px;background:var(--bg-alt);border:1px solid var(--line)}
+  footer{max-width:1280px;margin:30px auto 50px;padding:0 24px;color:var(--gray);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Pack Sécurité Intégrale — motion design <small>v1</small></h1>
+  <p>Croquis fixes, un par scène, au moment clé. Pas encore d'animation : on valide la place des éléments, la hiérarchie et les textes. Les blocs en pointillés seront remplacés par les vraies photos produits.</p>
+  <div class="tag">1080×1920 · ~35 s · 8 scènes · sans voix off · musique + SFX</div>
+</header>
+
+<div class="act">Acte 1 · La nuit — le problème et la riposte</div>
+<div class="grid">
+
+  <!-- 01 -->
+  <div class="cell" id="frame-01">
+    <div class="f night">
+      <div class="abs center" style="top:14%" ><span class="eyebrow" style="color:rgba(255,255,255,.55)">Mardi · nuit</span></div>
+      <div class="abs center h-xxl" style="top:22%;font-size:27cqw;font-variant-numeric:tabular-nums">03:12</div>
+      <div class="abs" style="left:18%;right:18%;top:48%;height:24%;border:1.2cqw solid rgba(255,255,255,.85);border-radius:1cqw;display:grid;grid-template-columns:1fr 1fr;gap:1cqw;padding:1cqw;transform:rotate(-1.5deg)">
+        <div style="background:linear-gradient(160deg,rgba(120,160,255,.25),rgba(255,255,255,.05))"></div>
+        <div style="background:linear-gradient(160deg,rgba(120,160,255,.25),rgba(255,255,255,.05))"></div>
+      </div>
+      <div class="abs" style="left:13%;top:57%;font-size:6cqw;color:rgba(255,255,255,.6)">((</div>
+      <div class="abs" style="right:13%;top:57%;font-size:6cqw;color:rgba(255,255,255,.6)">))</div>
+      <div class="abs center" style="top:73%;font-size:4.2cqw;color:rgba(255,255,255,.6)">Tout le monde dort.</div>
+      <div class="abs center h" style="top:77%;font-size:8.6cqw">Une fenêtre vibre.</div>
+      <div class="safe"></div>
+    </div>
+    <div class="meta"><span>01 · 03:12</span><span>0,0–4,0 s</span></div>
+    <p class="note"><b>« 03:12 » claque en premier</b>, puis la fenêtre tremble (shake caméra) et les deux lignes s'empilent en dessous.</p>
+    <span class="snd">♪ drone grave · cœur · tic d'horloge · vitre</span>
+    <span class="chip">ouverture · cut</span>
+  </div>
+
+  <!-- 02 -->
+  <div class="cell" id="frame-02">
+    <div class="f night">
+      <div class="abs" style="left:-10%;top:10%;width:44%;height:52%;border-right:3cqw solid rgba(255,255,255,.18)"></div>
+      <div class="abs ph" style="left:24%;top:16%;width:30%;height:30%">WDV301<br>module + aimant</div>
+      <div class="abs" style="left:37%;top:19%;width:3cqw;height:3cqw;border-radius:50%;background:var(--promo);box-shadow:0 0 4cqw var(--promo)"></div>
+      <div class="ring" style="left:22%;top:14%;width:34%;aspect-ratio:1;border-color:rgba(225,29,72,.35)"></div>
+      <div class="abs pill" style="left:58%;top:24%;background:rgba(225,29,72,.16);color:#ffb3c2;border:1px solid rgba(225,29,72,.5)">● Vibration détectée</div>
+      <svg class="abs" style="left:38%;top:44%;width:30%;height:14%" viewBox="0 0 100 50" preserveAspectRatio="none"><path d="M5 5 C 40 10, 60 40, 95 45" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.6" stroke-dasharray="4 4"/></svg>
+      <div class="abs ph" style="left:52%;top:55%;width:38%;height:22%">Centrale<br>Vigilia +<br>clavier allumé</div>
+      <div class="abs h" style="left:8%;top:62%;font-size:9cqw;width:42%">Moins d'1&nbsp;seconde.</div>
+      <div class="safe"></div>
+    </div>
+    <div class="meta"><span>02 · DÉTECTÉ</span><span>4,0–7,5 s</span></div>
+    <p class="note"><b>La LED rouge du WDV301 s'allume d'abord</b>, l'onde part, la caméra suit le signal en pointillés jusqu'à la Vigilia + qui s'éclaire.</p>
+    <span class="snd">♪ bip LED · zap radio · bip clavier</span>
+    <span class="chip">entrée · zoom-through</span>
+  </div>
+
+  <!-- 03 -->
+  <div class="cell" id="frame-03">
+    <div class="f night" style="background:radial-gradient(90% 60% at 50% 32%,rgba(225,29,72,.55) 0%,var(--navy) 55%,var(--navy-dark) 100%)">
+      <div class="ring" style="left:22%;top:12%;width:56%;aspect-ratio:1;border-color:rgba(255,255,255,.25)"></div>
+      <div class="ring" style="left:10%;top:5%;width:80%;aspect-ratio:1;border-color:rgba(255,255,255,.12)"></div>
+      <div class="abs ph" style="left:34%;top:19%;width:32%;height:22%">Sirène<br>WOS305S</div>
+      <div class="abs center"style="top:46%"><span class="pill" style="background:rgba(255,255,255,.12);color:#fff">☀️ Solaire · sans câble</span></div>
+      <div class="abs center h" style="top:57%;font-size:9.6cqw;padding:0 6%">Visible depuis la rue.</div>
+      <div class="abs center h" style="top:68%;font-size:9.6cqw;padding:0 6%;color:#ffd0da">Entendue par tout le quartier.</div>
+      <div class="safe"></div>
+    </div>
+    <div class="meta"><span>03 · RIPOSTE</span><span>7,5–11,5 s</span></div>
+    <p class="note"><b>Le flash rouge part en premier</b>, à chaque coup de sirène, avec un stroboscope rouge/marine, puis les deux phrases claquent l'une après l'autre.</p>
+    <span class="snd">♪ montée de sirène · impacts sur chaque flash · sub-boom</span>
+    <span class="chip">entrée · cut</span>
+  </div>
+
+  <!-- 04 -->
+  <div class="cell" id="frame-04">
+    <div class="f night">
+      <div class="abs" style="left:17%;top:8%;width:66%;height:64%;border-radius:7cqw;background:#0b0f1c;border:1.2cqw solid #2a3350;padding:3cqw">
+        <div style="background:rgba(255,255,255,.92);color:var(--ink);border-radius:3cqw;padding:2.4cqw;font-size:3cqw;line-height:1.3">
+          <b style="font-size:2.6cqw;color:var(--gray);letter-spacing:.04em">DAEWOO HOME CONNECT · maintenant</b><br>
+          <b style="color:var(--promo)">Intrusion détectée</b><br>Fenêtre salon · WDV301
+        </div>
+        <div class="ph" style="margin-top:2.4cqw;height:52%;color:#fff;border-color:rgba(255,255,255,.35)">Live W512MW<br>vision nocturne couleur<br>● REC 03:12</div>
+        <div class="ph" style="margin-top:2cqw;height:16%;width:48%;color:#fff;border-color:rgba(255,255,255,.35)">IP506P</div>
+      </div>
+      <div class="abs center h" style="top:75%;font-size:8.4cqw">Vous vérifiez en direct.</div>
+      <div class="abs center" style="top:83%;font-size:4.4cqw;color:rgba(255,255,255,.7)">2 caméras. Dedans et dehors.</div>
+      <div class="safe"></div>
+    </div>
+    <div class="meta"><span>04 · DANS VOTRE POCHE</span><span>11,5–16,0 s</span></div>
+    <p class="note"><b>Le téléphone monte du bas</b>, la notification tombe, un tap ouvre le live de la caméra extérieure, puis la vignette intérieure glisse en place.</p>
+    <span class="snd">♪ ding · tap · swoosh · bip REC</span>
+    <span class="chip">entrée · push-slide ↑</span>
+  </div>
+</div>
+
+<div class="act">Acte 2 · Le système — l'objection, le pack, la valeur, l'offre</div>
+<div class="grid">
+
+  <!-- 05 -->
+  <div class="cell" id="frame-05">
+    <div class="f night" style="background:linear-gradient(180deg,#05091a,var(--navy-dark))">
+      <svg class="abs" style="left:30%;top:13%;width:40%" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.6" stroke-linecap="round"><path d="M2 8.8a15 15 0 0 1 20 0"/><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r=".8" fill="rgba(255,255,255,.35)"/><path d="M3 3l18 18" stroke="var(--promo)" stroke-width="2"/></svg>
+      <div class="abs center h" style="top:37%;font-size:10cqw">Box coupée&nbsp;?</div>
+      <div class="abs center" style="top:50%"><span class="pill" style="background:var(--ok);color:#fff;font-size:6cqw;font-weight:800;padding:1.6cqw 5cqw">4G</span></div>
+      <div class="abs" style="left:10%;top:57%;width:52%;background:#1f2a48;border-radius:3.5cqw 3.5cqw 3.5cqw 1cqw;padding:2.4cqw;font-size:3.2cqw">SMS · Alarme : intrusion fenêtre salon</div>
+      <div class="abs" style="right:10%;top:63.5%;width:42%;background:#fff;color:var(--ink);border-radius:3.5cqw;padding:2.4cqw;font-size:3.2cqw;font-weight:700">📞 Appel entrant · Alarme</div>
+      <div class="abs center h" style="top:71.5%;font-size:7cqw;padding:0 6%">L'alerte passe quand même.</div>
+      <div class="abs center" style="top:81.5%;font-size:2.8cqw;color:rgba(255,255,255,.5)">Wi-Fi + 4G · carte SIM non fournie</div>
+      <div class="safe"></div>
+    </div>
+    <div class="meta"><span>05 · BOX COUPÉE ?</span><span>16,0–19,5 s</span></div>
+    <p class="note"><b>Le Wi-Fi grésille et se barre</b> (glitch, l'image s'éteint), puis le badge 4G pop, et le SMS et l'appel arrivent en quinconce.</p>
+    <span class="snd">♪ coupure de courant · glitch · ping 4G · vibreur</span>
+    <span class="chip">entrée · cut</span>
+  </div>
+
+  <!-- 06 -->
+  <div class="cell" id="frame-06">
+    <div class="f day alt">
+      <div class="abs center" style="top:6%"><span class="eyebrow" style="color:var(--navy)">● Pack Sécurité Intégrale</span></div>
+      <div class="abs center h" style="top:10.5%;font-size:7.4cqw;padding:0 8%">Tout ce qu'il faut, dans une seule boîte.</div>
+      <div class="abs ph" style="left:30%;top:23%;width:40%;height:16%">Vigilia +</div>
+      <div class="abs" style="left:7%;right:7%;top:43%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3cqw;grid-auto-rows:19cqw">
+        <div style="position:relative" class="ph"><span class="qty">4×</span>WDV301<br><small>2-en-1</small></div>
+        <div style="position:relative" class="ph"><span class="qty">1×</span>WPS305<br><small>animaux ≤10 kg</small></div>
+        <div style="position:relative" class="ph"><span class="qty">1×</span>WRC305<br><small>télécommande</small></div>
+        <div style="position:relative" class="ph"><span class="qty">2×</span>WRF301<br><small>badges RFID</small></div>
+        <div style="position:relative" class="ph"><span class="qty">1×</span>IP506P<br><small>int. Full HD</small></div>
+        <div style="position:relative" class="ph"><span class="qty">1×</span>W512MW<br><small>ext. solaire 1440p</small></div>
+        <div style="position:relative" class="ph"><span class="qty">1×</span>WOS305S<br><small>sirène solaire</small></div>
+        <div style="position:relative" class="ph"><span class="qty">2×</span>Autocollants</div>
+        <div class="ph" style="border-style:solid;background:var(--navy);color:#fff;font-weight:800">13 éléments</div>
+      </div>
+      <div class="safe"></div>
+    </div>
+    <div class="meta"><span>06 · TOUT DANS UNE BOÎTE</span><span>19,5–26,0 s</span></div>
+    <p class="note"><b>Le passage au jour se fait sur le drop musical</b>. La centrale arrive au centre, puis les 8 cartes se posent en cascade, une par temps, avec leur pastille de quantité.</p>
+    <span class="snd">♪ drop · un pop par composant · whoosh</span>
+    <span class="chip">entrée · zoom-through</span>
+  </div>
+
+  <!-- 07 -->
+  <div class="cell" id="frame-07">
+    <div class="f day">
+      <div class="abs center" style="top:12%;font-size:4.4cqw;color:var(--gray);font-weight:600">Abonnement mensuel</div>
+      <div class="abs center h-xxl" style="top:17%;font-size:34cqw;color:var(--navy)">0&nbsp;€</div>
+      <div class="abs center" style="top:37%;font-size:4cqw;color:var(--gray);text-decoration:line-through">–– € / mois · –– € / mois</div>
+      <div class="abs center h" style="top:43%;font-size:8cqw">À vie.</div>
+      <div class="abs" style="left:12%;right:12%;top:55%;display:flex;flex-direction:column;gap:3cqw;font-size:5.4cqw;font-weight:700">
+        <div><span class="check">✓</span> Installation sans technicien</div>
+        <div><span class="check">✓</span> Expédié sous 24 h</div>
+        <div><span class="check">✓</span> Garantie 2 ans</div>
+      </div>
+      <div class="safe"></div>
+    </div>
+    <div class="meta"><span>07 · SANS ABONNEMENT</span><span>26,0–30,0 s</span></div>
+    <p class="note"><b>Le compteur €/mois défile vite</b> (chiffres flous qui tournent, aucun montant réel affiché), puis s'écrase sur « 0 € ». Les 3 garanties claquent ensuite une par une, avec la coche verte du site.</p>
+    <span class="snd">♪ tic de compteur qui accélère · slam · 3 dings</span>
+    <span class="chip">entrée · push-slide ←</span>
+  </div>
+
+  <!-- 08 -->
+  <div class="cell" id="frame-08">
+    <div class="f night">
+      <div class="abs ph" style="left:30%;top:3.5%;width:40%;height:3.6%;font-size:2.6cqw">logo Daewoo Security</div>
+      <div class="abs center" style="top:9%"><span class="pill" style="background:var(--promo);color:#fff;font-weight:800">Offre spéciale · -26&nbsp;%</span></div>
+      <div class="abs ph" style="left:14%;top:16%;width:72%;height:26%">Pack Vigilia + complet<br>(photo pack officielle)</div>
+      <div class="abs center h" style="top:45%;font-size:6.2cqw">Pack Sécurité Intégrale · Vigilia +</div>
+      <div class="abs center" style="top:52%;font-size:6cqw;color:rgba(255,255,255,.55);text-decoration:line-through;text-decoration-color:var(--promo);text-decoration-thickness:.8cqw">475,58 €</div>
+      <div class="abs center h-xxl" style="top:57%;font-size:21cqw">349,90&nbsp;€</div>
+      <div class="abs center" style="top:71%;font-size:4.2cqw;color:rgba(255,255,255,.75)">Jusqu'au 31 octobre · Sans abonnement</div>
+      <div class="abs center" style="top:77%"><span class="pill" style="background:#fff;color:var(--navy);font-weight:800;font-size:4.6cqw">daewoo-security.fr</span></div>
+      
+      
+      <div class="safe"></div>
+    </div>
+    <div class="meta"><span>08 · L'OFFRE</span><span>30,0–35,5 s</span></div>
+    <p class="note"><b>Le pack se recompose en vedette</b>, le prix barré se raye en rouge, puis 349,90 € slam avec le boom, et l'URL arrive en dernier, tenue jusqu'à la fin.</p>
+    <span class="snd">♪ riser · rayure · cash slam · boom + réverbe</span>
+    <span class="chip">entrée · zoom-through</span>
+  </div>
+</div>
+
+<div class="act">Repères</div>
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+  <div class="cell">
+    <div class="meta"><span>Raccords entre scènes</span><span>8 coupes</span></div>
+    <div class="seams">
+      <span>01 → 02 · zoom-through</span><span>02 → 03 · cut</span><span>03 → 04 · push-slide ↑</span>
+      <span>04 → 05 · cut (glitch)</span><span>05 → 06 · zoom-through (nuit → jour)</span>
+      <span>06 → 07 · push-slide ←</span><span>07 → 08 · zoom-through (jour → nuit)</span>
+    </div>
+    <p class="note" style="margin-top:10px"><b>La zone hachurée en bas</b> (16 %) reste libre de texte important : c'est là que Reels et TikTok affichent leurs boutons.</p>
+  </div>
+  <div class="cell tokens">
+    <div class="meta"><span>Charte (reprise de votre page offre)</span><span>Inter 600–800</span></div>
+    <div class="sw">
+      <span style="background:#0c1e4a;color:#fff">navy</span><span style="background:#081430;color:#fff">nuit</span>
+      <span style="background:#e11d48;color:#fff">promo</span><span style="background:#037e05;color:#fff">ok</span>
+      <span style="background:#f5f5f7;border:1px solid #d2d2d7">alt</span><span style="background:#1d1d1f;color:#fff">ink</span>
+    </div>
+    <p class="note"><b>Rouge</b> réservé aux alarmes et au prix. <b>Vert</b> réservé aux coches et au « 4G ». Interdits : statistiques non sourcées, carte SIM présentée comme incluse, visuels de marques tierces.</p>
+  </div>
+</div>
+<footer>Fichier de travail · videos/daewoo-securite-integrale/storyboard.html</footer>
+</body>
+</html>
