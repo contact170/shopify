@@ -1,0 +1,284 @@
+<template id="04-telephone-template">
+<style>
+@font-face{font-family:"Inter";font-weight:500;font-style:normal;src:url("assets/fonts/Inter-500.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-weight:600;font-style:normal;src:url("assets/fonts/Inter-600.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-weight:700;font-style:normal;src:url("assets/fonts/Inter-700.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-weight:800;font-style:normal;src:url("assets/fonts/Inter-800.woff2") format("woff2");}
+#root{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Inter",sans-serif;color:#ffffff;}
+#root *{box-sizing:border-box;}
+.f04-bg{position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(90% 120% at 42% 48%,#13295f 0%,#0c1e4a 40%,#081430 100%);}
+.f04-glow-blue{position:absolute;left:480px;top:60px;width:960px;height:960px;border-radius:50%;background:radial-gradient(closest-side,rgba(60,110,230,0.38),rgba(60,110,230,0) 100%);}
+.f04-glow-red{position:absolute;left:560px;top:120px;width:800px;height:800px;border-radius:50%;background:radial-gradient(closest-side,rgba(225,29,72,0.45),rgba(225,29,72,0) 100%);opacity:0;}
+.f04-shake{position:absolute;left:0;top:0;width:1920px;height:1080px;}
+.f04-slide{position:absolute;left:0;top:0;width:1920px;height:1080px;}
+.f04-cam{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:960px 540px;}
+.f04-persp{position:absolute;left:704px;top:94px;width:712px;height:1240px;transform:scale(0.72);transform-origin:0 0;perspective:1800px;perspective-origin:356px 620px;}
+.f04-vib{position:absolute;left:0;top:0;width:712px;height:1240px;perspective:1800px;perspective-origin:356px 620px;}
+.f04-phone{position:absolute;left:0;top:0;width:712px;height:1240px;border-radius:76px;background:#0b0f1c;border:13px solid #2a3350;outline:2px solid rgba(255,255,255,0.10);outline-offset:-1px;transform-origin:356px 620px;}
+.f04-btn{position:absolute;width:7px;border-radius:4px;background:#2a3350;}
+.f04-screen{position:absolute;left:0;top:0;width:686px;height:1214px;border-radius:63px;overflow:hidden;background:radial-gradient(90% 60% at 50% 30%,#1a2c5e 0%,#0f1834 55%,#0b0f1c 100%);}
+.f04-island{position:absolute;left:243px;top:22px;width:200px;height:58px;border-radius:29px;background:#000000;}
+.f04-status{position:absolute;left:0;top:0;width:686px;height:90px;}
+.f04-stime{position:absolute;left:62px;top:34px;font-size:30px;font-weight:600;letter-spacing:-0.01em;}
+.f04-sicons{position:absolute;right:52px;top:38px;width:120px;height:26px;display:flex;align-items:center;justify-content:flex-end;gap:10px;}
+.f04-bars{display:flex;align-items:flex-end;gap:3px;height:22px;}
+.f04-bars span{display:block;width:5px;border-radius:2px;background:#ffffff;}
+.f04-batt{position:relative;width:44px;height:22px;border-radius:7px;border:2px solid rgba(255,255,255,0.55);padding:2px;}
+.f04-batt span{display:block;width:30px;height:14px;border-radius:3px;background:#ffffff;}
+.f04-lock{position:absolute;left:0;top:322px;width:686px;text-align:center;transform-origin:343px 140px;}
+.f04-lockic{display:block;margin:0 auto 6px auto;width:34px;height:42px;}
+.f04-clock{font-size:168px;font-weight:600;letter-spacing:-0.045em;line-height:1;color:rgba(255,255,255,0.94);}
+.f04-livewrap{position:absolute;left:28px;top:100px;width:630px;height:868px;clip-path:inset(0px 0px 664px 0px round 34px);visibility:hidden;}
+.f04-skin{position:absolute;left:0;top:0;width:630px;height:868px;background:#f2f3f7;}
+.f04-live{position:absolute;left:0;top:228px;width:630px;height:640px;overflow:hidden;background:#05070d;border-radius:30px;}
+.f04-feedin{position:absolute;left:0;top:0;width:630px;height:640px;transform-origin:220px 207px;}
+.f04-feedkb{position:absolute;left:0;top:0;width:630px;height:640px;transform-origin:220px 207px;}
+.f04-feed{position:absolute;left:-818px;top:-497px;width:1618px;height:1618px;max-width:none;filter:saturate(1.25) contrast(1.12) brightness(0.86);}
+.f04-tint{position:absolute;left:0;top:0;width:630px;height:640px;background:linear-gradient(180deg,rgba(8,20,48,0.55) 0%,rgba(8,20,48,0) 26%,rgba(8,20,48,0) 70%,rgba(8,20,48,0.6) 100%);mix-blend-mode:normal;}
+.f04-grade{position:absolute;left:0;top:0;width:630px;height:640px;background:linear-gradient(160deg,rgba(70,120,255,0.55) 0%,rgba(40,70,160,0.25) 45%,rgba(255,160,70,0.45) 100%);mix-blend-mode:soft-light;}
+.f04-scan{position:absolute;left:0;top:0;width:630px;height:640px;background:repeating-linear-gradient(180deg,rgba(255,255,255,0.045) 0px,rgba(255,255,255,0.045) 1px,rgba(0,0,0,0) 1px,rgba(0,0,0,0) 4px);}
+.f04-sweep{position:absolute;left:-260px;top:-100px;width:220px;height:840px;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.32) 50%,rgba(255,255,255,0) 100%);transform-origin:110px 420px;opacity:0;}
+.f04-corner{position:absolute;width:46px;height:46px;border-color:rgba(255,255,255,0.92);border-style:solid;border-width:0;}
+.f04-c1{left:18px;top:18px;border-top-width:4px;border-left-width:4px;border-top-left-radius:12px;}
+.f04-c2{right:18px;top:18px;border-top-width:4px;border-right-width:4px;border-top-right-radius:12px;}
+.f04-c3{left:18px;bottom:18px;border-bottom-width:4px;border-left-width:4px;border-bottom-left-radius:12px;}
+.f04-c4{right:18px;bottom:18px;border-bottom-width:4px;border-right-width:4px;border-bottom-right-radius:12px;}
+.f04-cross{position:absolute;left:295px;top:300px;width:40px;height:40px;}
+.f04-cross span{position:absolute;background:rgba(255,255,255,0.55);}
+.f04-detect{position:absolute;left:150px;top:104px;width:140px;height:206px;border:3px solid #e11d48;border-radius:8px;}
+.f04-chip{position:absolute;left:30px;top:30px;height:52px;padding:0 18px 0 8px;border-radius:100px;background:rgba(8,20,48,0.78);display:flex;align-items:center;gap:8px;font-size:21px;font-weight:700;letter-spacing:-0.01em;white-space:nowrap;}
+.f04-chip img{display:block;width:38px;height:34px;object-fit:contain;}
+.f04-rec{position:absolute;right:30px;top:30px;height:52px;padding:0 16px;border-radius:100px;background:#e11d48;display:flex;align-items:center;gap:9px;font-size:22px;font-weight:800;letter-spacing:0.02em;white-space:nowrap;transform-origin:80% 50%;}
+.f04-recdot{display:block;width:13px;height:13px;border-radius:50%;background:#ffffff;}
+.f04-notif{position:absolute;left:28px;top:100px;width:630px;height:204px;border-radius:34px;background:#f2f3f7;color:#1d1d1f;padding:26px 30px;transform-origin:315px 102px;}
+.f04-nrow1{display:flex;align-items:center;gap:14px;height:44px;}
+.f04-appic{width:44px;height:44px;border-radius:11px;background:#0c1e4a;display:flex;align-items:center;justify-content:center;flex:none;}
+.f04-appic svg{width:26px;height:26px;}
+.f04-napp{font-size:24px;font-weight:700;letter-spacing:0.04em;color:#6e6e73;white-space:nowrap;}
+.f04-napp span{font-weight:500;letter-spacing:0;}
+.f04-nalert{margin-top:12px;font-size:40px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;color:#e11d48;display:flex;align-items:center;gap:12px;white-space:nowrap;}
+.f04-nalertdot{display:block;width:14px;height:14px;border-radius:50%;background:#e11d48;}
+.f04-nsub{margin-top:4px;font-size:31px;font-weight:500;letter-spacing:-0.01em;color:#1d1d1f;white-space:nowrap;}
+.f04-tap{position:absolute;left:298px;top:157px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,0.92);border:3px solid rgba(12,30,74,0.25);opacity:0;}
+.f04-ripple{position:absolute;left:298px;top:157px;width:90px;height:90px;border-radius:50%;border:3px solid rgba(255,255,255,0.95);opacity:0;}
+.f04-thumb{position:absolute;left:28px;top:990px;width:452px;height:176px;border-radius:28px;background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.2);transform-origin:226px 176px;}
+.f04-tile{position:absolute;left:14px;top:14px;width:148px;height:148px;border-radius:20px;background:#f5f5f7;overflow:hidden;}
+.f04-tile img{position:absolute;left:14px;top:6px;width:120px;height:136px;object-fit:contain;transform-origin:60px 80px;}
+.f04-tlabel{position:absolute;left:184px;top:34px;font-size:26px;font-weight:500;color:rgba(255,255,255,0.68);white-space:nowrap;}
+.f04-tname{position:absolute;left:184px;top:72px;font-size:42px;font-weight:800;letter-spacing:-0.02em;white-space:nowrap;display:flex;align-items:center;gap:12px;}
+.f04-okdot{display:block;width:14px;height:14px;border-radius:50%;background:#2fc24a;}
+.f04-home{position:absolute;left:243px;top:1192px;width:200px;height:8px;border-radius:4px;background:rgba(255,255,255,0.5);}
+.f04-glare{position:absolute;left:0;top:0;width:686px;height:1214px;background:linear-gradient(125deg,rgba(255,255,255,0.07) 0%,rgba(255,255,255,0) 38%);pointer-events:none;}
+.f04-flash{position:absolute;left:880px;top:200px;width:1000px;height:680px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,170,255,0.55),rgba(130,170,255,0) 100%);opacity:0;}
+.f04-head{position:absolute;left:980px;top:206px;width:844px;text-align:left;font-size:142px;font-weight:800;letter-spacing:-0.035em;line-height:1.0;color:#ffffff;white-space:nowrap;transform-origin:260px 213px;}
+.f04-sub{position:absolute;left:984px;top:690px;width:840px;text-align:left;font-size:64px;white-space:nowrap;font-weight:500;letter-spacing:-0.01em;line-height:1.2;color:rgba(255,255,255,0.66);}
+.f04-sub span{display:inline-block;margin:0 16px 0 0;}
+</style>
+
+<div id="root" data-composition-id="04-telephone" data-width="1920" data-height="1080" data-duration="4.5">
+  <div class="f04-bg clip" data-start="0" data-duration="4.5" data-track-index="0"></div>
+  <div class="f04-shake">
+   <div class="f04-slide">
+    <div class="f04-glow-blue"></div>
+    <div class="f04-glow-red"></div>
+    <div class="f04-cam">
+      <div class="f04-persp">
+        <div class="f04-vib">
+          <div class="f04-phone">
+            <div class="f04-btn" style="left:-21px;top:230px;height:70px;"></div>
+            <div class="f04-btn" style="left:-21px;top:330px;height:110px;"></div>
+            <div class="f04-btn" style="left:-21px;top:460px;height:110px;"></div>
+            <div class="f04-btn" style="right:-21px;top:350px;height:160px;"></div>
+            <div class="f04-screen">
+              <div class="f04-status">
+                <div class="f04-stime">03:12</div>
+                <div class="f04-sicons">
+                  <div class="f04-bars"><span style="height:8px"></span><span style="height:12px"></span><span style="height:17px"></span><span style="height:22px"></span></div>
+                  <div class="f04-batt"><span></span></div>
+                </div>
+              </div>
+              <div class="f04-island"></div>
+              <div class="f04-lock">
+                <svg class="f04-lockic" viewBox="0 0 34 42" fill="none"><rect x="2" y="18" width="30" height="22" rx="6" fill="rgba(255,255,255,0.9)"/><path d="M9 18v-6a8 8 0 0 1 16 0v6" stroke="rgba(255,255,255,0.9)" stroke-width="4" stroke-linecap="round"/></svg>
+                <div class="f04-clock">03:12</div>
+              </div>
+
+              <div class="f04-livewrap">
+                <div class="f04-skin"></div>
+                <div class="f04-live">
+                  <div class="f04-feedin"><div class="f04-feedkb">
+                    <img class="f04-feed" src="assets/w512mw-nuit.jpg" alt="">
+                    <div class="f04-detect"></div>
+                  </div></div>
+                  <div class="f04-grade"></div>
+                  <div class="f04-tint"></div>
+                  <div class="f04-scan"></div>
+                  <div class="f04-sweep"></div>
+                  <div class="f04-cross"><span style="left:19px;top:0;width:2px;height:40px"></span><span style="left:0;top:19px;width:40px;height:2px"></span></div>
+                  <div class="f04-corner f04-c1"></div><div class="f04-corner f04-c2"></div><div class="f04-corner f04-c3"></div><div class="f04-corner f04-c4"></div>
+                  <div class="f04-chip"><img src="assets/w512mw.png" alt="">Caméra extérieure W512MW</div>
+                  <div class="f04-rec"><span class="f04-recdot"></span>REC 03:12</div>
+                </div>
+              </div>
+
+              <div class="f04-notif">
+                <div class="f04-nrow1 f04-nl">
+                  <div class="f04-appic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.5l7.5 3v6c0 4.6-3.1 8.4-7.5 10-4.4-1.6-7.5-5.4-7.5-10v-6z" fill="#ffffff"/><path d="M8.5 12.2l2.4 2.4 4.6-4.8" stroke="#0c1e4a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  <div class="f04-napp">DAEWOO HOME CONNECT<span> · maintenant</span></div>
+                </div>
+                <div class="f04-nalert f04-nl"><span class="f04-nalertdot"></span>Intrusion détectée</div>
+                <div class="f04-nsub f04-nl">Fenêtre salon · WDV301</div>
+              </div>
+              <div class="f04-ripple f04-r1"></div><div class="f04-ripple f04-r2"></div><div class="f04-ripple f04-r3"></div>
+              <div class="f04-tap"></div>
+
+              <div class="f04-thumb">
+                <div class="f04-tile"><img src="assets/ip506p.png" alt=""></div>
+                <div class="f04-tlabel">Caméra intérieure</div>
+                <div class="f04-tname"><span class="f04-okdot"></span>IP506P</div>
+              </div>
+              <div class="f04-home"></div>
+              <div class="f04-glare"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
+
+    <div class="f04-flash"></div>
+    <div class="f04-head">Vous<br>vérifiez<br>en direct.</div>
+    <div class="f04-sub"><span>2</span><span>caméras.</span><br><span>Dedans</span><span>et</span><span>dehors.</span></div>
+  </div>
+</div>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script>
+(function () {
+  var P = "f04-";
+  function q(n) { return document.querySelector("." + CSS.escape(P + n)); }
+  function qa(n) { return Array.prototype.slice.call(document.querySelectorAll("." + CSS.escape(P + n))); }
+
+  var tl = gsap.timeline({ paused: true });
+
+  var glowBlue = q("glow-blue"), glowRed = q("glow-red"), shake = q("shake"), cam = q("cam"), slide = q("slide");
+  var vib = q("vib"), phone = q("phone"), lock = q("lock"), status = q("status");
+  var notif = q("notif"), nl = qa("nl"), tap = q("tap"), ripples = [q("r1"), q("r2"), q("r3")];
+  var livewrap = q("livewrap"), skin = q("skin"), feedin = q("feedin"), feedkb = q("feedkb");
+  var sweep = q("sweep"), corners = qa("corner"), cross = q("cross"), detect = q("detect");
+  var chip = q("chip"), rec = q("rec"), recdot = q("recdot");
+  var thumb = q("thumb"), tileImg = document.querySelector("." + CSS.escape(P + "tile") + " img"), okdot = q("okdot");
+  var flash = q("flash"), head = q("head"), subWords = Array.prototype.slice.call(q("sub").querySelectorAll("span"));
+
+  // ---------- Scene 1 (0.0–0.7): phone rises from below, 3D tilt straightens ----------
+  tl.fromTo(glowBlue, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.0, ease: "power2.out" }, 0);
+  tl.fromTo(phone,
+    { y: 1180, rotationX: 34, rotationZ: -6, scale: 0.88 },
+    { y: 0, rotationX: 0, rotationZ: 0, scale: 1, duration: 0.9, ease: "expo.out" }, 0.04);
+  tl.fromTo(phone, { filter: "blur(14px)" }, { filter: "blur(0px)", duration: 0.42, ease: "power3.out" }, 0.04);
+  tl.fromTo(status, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.3);
+  tl.fromTo(lock, { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "expo.out" }, 0.28);
+
+  // ---------- Scene 2 (0.7–1.5): notification drops in, phone buzzes x3 ----------
+  tl.fromTo(notif, { y: -300, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, duration: 0.55, ease: "expo.out" }, 0.62);
+  tl.fromTo(nl, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power4.out", stagger: 0.06 }, 0.68);
+  tl.fromTo(lock, { y: 0 }, { y: 30, duration: 0.5, ease: "expo.out", immediateRender: false }, 0.66);
+  tl.fromTo(glowRed, { opacity: 0, scale: 0.8 }, { opacity: 0.95, scale: 1.05, duration: 0.25, ease: "power3.out" }, 0.7);
+  tl.to(glowRed, { opacity: 0.5, scale: 1, duration: 0.6, ease: "sine.inOut" }, 0.95);
+
+  // 3 deterministic buzz bursts (index-derived, decaying)
+  [0.78, 0.98, 1.18].forEach(function (t0, b) {
+    var amp = 9 - b * 1.5;
+    for (var i = 0; i < 5; i++) {
+      var s = (i % 2 === 0 ? 1 : -1);
+      var k = 1 - i / 5;
+      tl.to(vib, { x: s * amp * k, rotation: s * 0.7 * k, duration: 0.026, ease: "sine.inOut" }, t0 + i * 0.026);
+    }
+    tl.to(vib, { x: 0, rotation: 0, duration: 0.03, ease: "sine.out" }, t0 + 5 * 0.026);
+  });
+
+  // ---------- Scene 3 (1.5–2.9): tap → notification morphs open into the live view ----------
+  tl.fromTo(tap, { scale: 1.7, opacity: 0 }, { scale: 1, opacity: 0.95, duration: 0.18, ease: "power3.out" }, 1.28);
+  tl.to(tap, { scale: 0.8, duration: 0.08, ease: "power2.in" }, 1.42);
+  tl.to(notif, { scale: 0.965, duration: 0.08, ease: "power2.in" }, 1.42);
+  tl.to(tap, { scale: 1, duration: 0.1, ease: "power2.out" }, 1.5);
+  tl.to(notif, { scale: 1, duration: 0.14, ease: "power2.out" }, 1.5);
+  tl.set(ripples, { opacity: 1 }, 1.5);
+  tl.fromTo(ripples, { scale: 0.6 }, { scale: 4.4, opacity: 0, duration: 0.62, ease: "expo.out", stagger: 0.08, immediateRender: false }, 1.5);
+  tl.to(tap, { opacity: 0, scale: 1.25, duration: 0.2, ease: "power2.out" }, 1.6);
+
+  // card-morph-anchor: one clip-path shape tween, content crossfade old → new
+  tl.set(livewrap, { visibility: "visible" }, 1.54);
+  tl.fromTo(livewrap,
+    { clipPath: "inset(0px 0px 664px 0px round 34px)" },
+    { clipPath: "inset(228px 0px 0px 0px round 30px)", duration: 0.62, ease: "power3.inOut", immediateRender: false }, 1.56);
+  tl.fromTo(skin, { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power1.out", immediateRender: false }, 1.56 + 0.62 * 0.55);
+  tl.to(lock, { opacity: 0, scale: 0.86, filter: "blur(16px)", duration: 0.3, ease: "power1.in" }, 1.56);
+  tl.fromTo(feedin,
+    { opacity: 0, scale: 1.4, filter: "blur(20px) brightness(1.8)" },
+    { opacity: 1, scale: 1, filter: "blur(0px) brightness(1)", duration: 0.6, ease: "expo.out" }, 1.74);
+  tl.fromTo(feedkb, { scale: 1 }, { scale: 1.1, duration: 2.76, ease: "sine.out" }, 1.74);
+  tl.fromTo(sweep, { x: 0, opacity: 0, rotation: 18 }, { x: 1150, opacity: 1, rotation: 18, duration: 0.55, ease: "power2.inOut" }, 1.86);
+  tl.to(glowRed, { opacity: 0.18, duration: 0.6, ease: "power2.out" }, 1.6);
+  tl.to(glowBlue, { scale: 1.12, duration: 0.6, ease: "power2.out" }, 1.6);
+
+  // camera: commit-synced micro push, then slow drift
+  tl.fromTo(cam, { scale: 1 }, { scale: 1.035, duration: 0.45, ease: "power3.out" }, 1.56);
+  tl.to(cam, { scale: 1.055, duration: 2.49, ease: "sine.inOut" }, 2.01);
+
+  // viewfinder chrome
+  var cOff = [[-30, -30], [30, -30], [-30, 30], [30, 30]];
+  corners.forEach(function (c, i) {
+    tl.fromTo(c, { x: cOff[i][0], y: cOff[i][1], opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.45, ease: "expo.out" }, 1.88 + i * 0.03);
+  });
+  tl.fromTo(cross, { scale: 0.3, opacity: 0, rotation: 45 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.4, ease: "expo.out" }, 1.95);
+
+  // 1.9 REC beep
+  tl.fromTo(rec, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.38, ease: "back.out(2.4)" }, 1.88);
+  [2.4, 2.9, 3.4, 3.9, 4.4].forEach(function (t, i) { tl.set(recdot, { opacity: i % 2 === 0 ? 0.15 : 1 }, t); });
+  tl.fromTo(chip, { x: -50, opacity: 0, filter: "blur(8px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, 1.98);
+
+  // motion-detection lock on the window
+  tl.fromTo(detect, { scale: 1.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "expo.out" }, 2.3);
+  tl.set(detect, { opacity: 0.35 }, 2.62);
+  tl.set(detect, { opacity: 1 }, 2.7);
+  tl.set(detect, { opacity: 0.35 }, 2.78);
+  tl.set(detect, { opacity: 1 }, 2.86);
+
+  // ---------- Scene 4 (2.9–4.5): IP506P thumbnail pops, headline SLAM, subline ----------
+  tl.fromTo(thumb, { y: 240, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.55, ease: "expo.out" }, 2.84);
+  tl.fromTo(tileImg, { scale: 0.35, rotation: -14 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2.2)" }, 2.9);
+  tl.fromTo(okdot, { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(3)" }, 3.08);
+
+  // landscape recompose: phone glides from centre to the left column, clearing room before the slam
+  tl.fromTo(slide, { x: 0 }, { x: -380, duration: 0.5, ease: "power3.inOut" }, 2.74);
+
+  // SLAM — lands at 3.41
+  tl.fromTo(head,
+    { scale: 1.9, y: -24, opacity: 0, filter: "blur(26px)" },
+    { scale: 1, y: 0, opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.in" }, 3.25);
+  tl.fromTo(flash, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1.1, duration: 0.05, ease: "power2.out" }, 3.41);
+  tl.to(flash, { opacity: 0, scale: 1.3, duration: 0.5, ease: "power2.out" }, 3.46);
+  tl.fromTo(head, { scale: 1 }, { scale: 1.03, duration: 0.08, ease: "power2.out", immediateRender: false }, 3.41);
+  tl.to(head, { scale: 1, duration: 0.3, ease: "expo.out" }, 3.49);
+
+  // deterministic decaying camera shake (sine-derived)
+  var N = 10, st = 0.034;
+  for (var j = 0; j < N; j++) {
+    var d = Math.pow(1 - j / N, 1.6);
+    tl.to(shake, { x: 22 * Math.sin(j * 2.1 + 0.6) * d, y: 15 * Math.cos(j * 2.7 + 0.3) * d, rotation: 0.5 * Math.sin(j * 1.7) * d, duration: st, ease: "sine.inOut" }, 3.41 + j * st);
+  }
+  tl.to(shake, { x: 0, y: 0, rotation: 0, duration: 0.08, ease: "power2.out" }, 3.41 + N * st);
+
+  tl.fromTo(subWords,
+    { y: 36, opacity: 0, filter: "blur(10px)" },
+    { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out", stagger: 0.055 }, 3.74);
+
+  // quiet float under the hold
+  tl.to(vib, { y: -12, duration: 3.1, ease: "sine.inOut" }, 1.4);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["04-telephone"] = tl;
+})();
+</script>
+</template>
