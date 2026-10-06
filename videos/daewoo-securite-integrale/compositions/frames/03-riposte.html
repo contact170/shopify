@@ -1,5 +1,5 @@
 <template id="03-riposte-template">
-<div id="root" data-composition-id="03-riposte" data-width="1080" data-height="1920" data-start="0" data-duration="4">
+<div id="root" data-composition-id="03-riposte" data-width="1080" data-height="1920" data-start="0" data-duration="4.5">
   <style>
     @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; }
@@ -64,7 +64,7 @@
   </style>
 
   <!-- ground: night façade + red/navy strobe + rotating beacon -->
-  <div id="03-riposte-bg" class="clip" data-start="0" data-duration="4" data-track-index="0">
+  <div id="03-riposte-bg" class="clip" data-start="0" data-duration="4.5" data-track-index="0">
     <div id="03-riposte-facade"></div>
     <div id="03-riposte-strobe"></div>
     <div id="03-riposte-beam"></div>
@@ -72,7 +72,7 @@
   </div>
 
   <!-- stage: camera rigs carrying waves, siren, copy -->
-  <div id="03-riposte-stage" class="clip" data-start="0" data-duration="4" data-track-index="1">
+  <div id="03-riposte-stage" class="clip" data-start="0" data-duration="4.5" data-track-index="1">
     <div id="03-riposte-push">
       <div id="03-riposte-camA">
         <div id="03-riposte-camB">
@@ -260,8 +260,8 @@
 
       /* Scene 2 — 1.30 hit: "Visible depuis la rue." slams */
       tl.fromTo(l1,
-        { opacity: 0, scale: 1.75, y: -24, filter: "blur(20px)", letterSpacing: "0.06em" },
-        { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", letterSpacing: "-0.035em", duration: 0.42, ease: "expo.out" }, HIT1);
+        { opacity: 0, scale: 1.75, y: -24, filter: "blur(20px)" },
+        { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.42, ease: "expo.out" }, HIT1);
 
       /* pill pops under the siren */
       tl.fromTo(pill,
@@ -271,8 +271,8 @@
 
       /* Scene 3 — 2.30 hit + sub-boom: "Entendue par tout le quartier." slams harder */
       tl.fromTo(l2,
-        { opacity: 0, scale: 2.3, y: 30, filter: "blur(28px)", letterSpacing: "0.08em" },
-        { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", letterSpacing: "-0.035em", duration: 0.5, ease: "power4.out" }, HIT2);
+        { opacity: 0, scale: 2.3, y: 30, filter: "blur(28px)" },
+        { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power4.out" }, HIT2);
 
       render(0);
 

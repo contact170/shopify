@@ -73,24 +73,6 @@
         width: 432px;
         height: 79px;
       }
-      [id="08-offre-logo-glint"] {
-        position: absolute;
-        inset: 0;
-        -webkit-mask-image: url("assets/logo-white.png");
-        mask-image: url("assets/logo-white.png");
-        -webkit-mask-size: 100% 100%;
-        mask-size: 100% 100%;
-        overflow: hidden;
-      }
-      [id="08-offre-logo-glint-bar"] {
-        position: absolute;
-        top: -20px;
-        left: -160px;
-        width: 120px;
-        height: 120px;
-        background: linear-gradient(90deg, rgba(160, 190, 255, 0) 0%, rgba(160, 190, 255, 1) 50%, rgba(160, 190, 255, 0) 100%);
-      }
-
       /* badge */
       .o8-row {
         position: absolute;
@@ -349,7 +331,6 @@
       <div id="08-offre-shake">
         <div id="08-offre-logo">
           <img src="assets/logo-white.png" alt="DAEWOO" />
-          <div id="08-offre-logo-glint"><div id="08-offre-logo-glint-bar"></div></div>
         </div>
 
         <div id="08-offre-card-halo"></div>
@@ -403,7 +384,7 @@
         var tl = gsap.timeline({ paused: true });
 
         var cam = $("cam"), shake = $("shake");
-        var logo = $("logo"), glintBar = $("logo-glint-bar");
+        var logo = $("logo"), logoImg = logo.querySelector("img");
         var card = $("card"), pack = $("pack"), sheen = $("sheen"), halo = $("card-halo");
         var badge = $("badge"), badgeRing = $("badge-ring");
         var title = $("title");
@@ -511,7 +492,9 @@
         tl.fromTo(logo,
           { clipPath: "inset(0% 100% 0% 0%)", x: -18, opacity: 0.4 },
           { clipPath: "inset(0% 0% 0% 0%)", x: 0, opacity: 1, duration: 0.3, ease: "power4.out" }, 0);
-        tl.fromTo(glintBar, { x: 0 }, { x: 760, duration: 0.55, ease: "power2.inOut" }, 0.08);
+        tl.fromTo(logoImg,
+          { filter: "brightness(2.2) drop-shadow(0px 0px 18px rgba(150,185,255,0.9))" },
+          { filter: "brightness(1) drop-shadow(0px 0px 0px rgba(150,185,255,0))", duration: 0.7, ease: "power2.out" }, 0.05);
 
         // ---------- SCENE 2 (0.3–1.3) card inverse zoom-through + title per-word ----------
         tl.fromTo(card,
@@ -561,7 +544,7 @@
         tl.to(flash, { opacity: 0, duration: 0.42, ease: "power3.out" }, 1.92);
         // shockwave
         tl.fromTo(shock, { scale: 0.3, opacity: 0.95, borderWidth: 14 },
-          { scale: 3.6, opacity: 0, borderWidth: 2, duration: 0.7, ease: "expo.out" }, 1.9);
+          { scale: 3.6, opacity: 0, borderWidth: 2, duration: 0.7, ease: "expo.out", immediateRender: false }, 1.9);
         // ground reacts
         tl.to(glow, { opacity: 1, scale: 1.25, duration: 0.08, ease: "power2.out" }, 1.9);
         tl.to(glow, { opacity: 0.42, scale: 1.05, duration: 1.1, ease: "power3.out" }, 1.98);
@@ -573,7 +556,7 @@
         tl.fromTo(badge,
           { scale: 0, rotation: -14, opacity: 0 },
           { scale: 1, rotation: 0, opacity: 1, duration: 0.55, ease: "back.out(2.4)" }, 2.6);
-        tl.fromTo(badgeRing, { scale: 1, opacity: 0.9 }, { scale: 1.55, opacity: 0, duration: 0.6, ease: "expo.out" }, 2.66);
+        tl.fromTo(badgeRing, { scale: 1, opacity: 0.9 }, { scale: 1.55, opacity: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, 2.66);
 
         // ---------- SCENE 4 (2.6–4.2) date line, URL pill ----------
         tl.fromTo(dateInner,
