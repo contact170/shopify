@@ -25,20 +25,20 @@
       position: absolute; inset: 0; background: #ffffff; pointer-events: none;
     }
     .f06-le-pack-shock {
-      position: absolute; left: 183.5px; top: 498px; width: 400px; height: 400px;
+      position: absolute; left: 183.5px; top: 522px; width: 400px; height: 400px;
       border-radius: 50%; border: 3px solid rgba(12, 30, 74, 0.22);
     }
 
     /* ---------- header (left of the hero) ---------- */
     .f06-le-pack-eyebrow {
-      position: absolute; left: 96px; top: 124px;
+      position: absolute; left: 96px; top: 148px;
       display: flex; align-items: center; gap: 16px;
       color: #0c1e4a; font-size: 30px; font-weight: 700; letter-spacing: 0.08em;
       text-transform: uppercase; white-space: nowrap;
     }
     .f06-le-pack-dot { width: 16px; height: 16px; border-radius: 50%; background: #037e05; }
     .f06-le-pack-title {
-      position: absolute; left: 96px; width: 620px; top: 184px;
+      position: absolute; left: 96px; width: 620px; top: 208px;
       text-align: left; font-size: 74px; font-weight: 700; line-height: 1.05;
       letter-spacing: -0.03em; color: #1d1d1f;
     }
@@ -47,12 +47,12 @@
 
     /* ---------- Vigilia + (HTML build) ---------- */
     .f06-le-pack-glow {
-      position: absolute; left: 3.5px; top: 408px; width: 760px; height: 580px;
+      position: absolute; left: 3.5px; top: 432px; width: 760px; height: 580px;
       background: radial-gradient(closest-side, rgba(12, 30, 74, 0.55), rgba(12, 30, 74, 0.18) 55%, rgba(12, 30, 74, 0) 100%);
       opacity: 0;
     }
     .f06-le-pack-vigwrap {
-      position: absolute; left: 96px; top: 500px; width: 460px; height: 317px;
+      position: absolute; left: 96px; top: 524px; width: 460px; height: 317px;
       transform: scale(1.25); transform-origin: 0 0;
     }
     .f06-le-pack-vig {
@@ -125,6 +125,10 @@
     .f06-le-pack-model {
       position: absolute; right: 16px; top: 22px; color: #9a9a9a;
       font-size: 16px; font-weight: 700; letter-spacing: 0.04em;
+    }
+    .f06-le-pack-cover ~ .f06-le-pack-model {
+      top: 14px; right: 14px; padding: 6px 10px; border-radius: 100px;
+      background: rgba(255, 255, 255, 0.88); color: #8a8a8a;
     }
     .f06-le-pack-label {
       position: absolute; left: 18px; right: 14px; bottom: 16px;
