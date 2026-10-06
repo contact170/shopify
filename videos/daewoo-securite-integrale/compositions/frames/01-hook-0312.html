@@ -1,0 +1,484 @@
+<template id="01-hook-0312-template">
+  <style>
+    @font-face { font-family: "Inter"; font-weight: 500; font-style: normal; src: url("assets/fonts/Inter-500.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 700; font-style: normal; src: url("assets/fonts/Inter-700.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 800; font-style: normal; src: url("assets/fonts/Inter-800.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 900; font-style: normal; src: url("assets/fonts/Inter-900.woff2") format("woff2"); }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #ffffff;
+    }
+
+    /* ---------- ground (fixed, outside the camera) ---------- */
+    .f01-ground {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: radial-gradient(120% 80% at 50% 30%, #13295f 0%, #0c1e4a 40%, #081430 100%);
+    }
+    .f01-moon {
+      position: absolute;
+      left: 140px;
+      top: 220px;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(120, 160, 255, 0.16), rgba(120, 160, 255, 0) 100%);
+    }
+    .f01-alarm {
+      position: absolute;
+      left: -200px;
+      right: -200px;
+      bottom: -520px;
+      height: 1100px;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(225, 29, 72, 0.55), rgba(225, 29, 72, 0.18) 55%, rgba(225, 29, 72, 0) 100%);
+      opacity: 0;
+    }
+
+    /* ---------- camera (wraps all content) ---------- */
+    .f01-camera {
+      position: absolute;
+      inset: 0;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    .f01-eyebrow {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 262px;
+      text-align: center;
+      font-size: 37px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+      white-space: pre;
+    }
+    .f01-eyebrow span { display: inline-block; }
+
+    .f01-clock,
+    .f01-clock-echo {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 410px;
+      text-align: center;
+      font-size: 292px;
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      transform-origin: 50% 50%;
+      white-space: nowrap;
+    }
+    .f01-clock {
+      color: #ffffff;
+      text-shadow: 0 0 70px rgba(120, 160, 255, 0.35);
+    }
+    .f01-clock-echo {
+      color: transparent;
+      -webkit-text-stroke: 3px rgba(255, 255, 255, 0.55);
+      opacity: 0;
+    }
+    .f01-colon { display: inline-block; }
+
+    /* window: rise wrapper -> shake wrapper -> static tilted frame */
+    .f01-win-rise {
+      position: absolute;
+      left: 194px;
+      top: 922px;
+      width: 692px;
+      height: 461px;
+      transform-origin: 50% 100%;
+    }
+    .f01-win-shake {
+      position: absolute;
+      inset: 0;
+    }
+    .f01-win {
+      position: absolute;
+      inset: 0;
+      border: 13px solid rgba(255, 255, 255, 0.9);
+      border-radius: 11px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+      padding: 11px;
+      transform: rotate(-1.5deg);
+      background: rgba(8, 20, 48, 0.55);
+      box-sizing: border-box;
+    }
+    .f01-sill {
+      position: absolute;
+      left: -34px;
+      right: -34px;
+      bottom: -34px;
+      height: 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+    .f01-pane {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      background: linear-gradient(160deg, rgba(120, 160, 255, 0.3), rgba(255, 255, 255, 0.05));
+    }
+    .f01-reflect {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(118deg, rgba(255, 255, 255, 0) 22%, rgba(255, 255, 255, 0.22) 30%, rgba(255, 255, 255, 0) 38%, rgba(255, 255, 255, 0) 46%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0) 55%);
+    }
+    .f01-sheen {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 70%;
+      background: linear-gradient(112deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 70%);
+      opacity: 0;
+    }
+    .f01-handle {
+      position: absolute;
+      top: 46%;
+      width: 10px;
+      height: 54px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.85);
+    }
+    .f01-pane:first-child .f01-handle { right: 14px; }
+    .f01-pane:last-child .f01-handle { left: 14px; }
+
+    .f01-wave {
+      position: absolute;
+      top: 1082px;
+      width: 70px;
+      height: 140px;
+      opacity: 0;
+    }
+    .f01-wave svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .f01-wave.f01-l { left: 104px; transform-origin: 100% 50%; }
+    .f01-wave.f01-r { right: 104px; transform-origin: 0% 50%; }
+
+    .f01-sub {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1402px;
+      text-align: center;
+      font-size: 45px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .f01-title {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1478px;
+      text-align: center;
+    }
+    .f01-gstack {
+      display: inline-grid;
+      font-size: 93px;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      transform-origin: 50% 50%;
+    }
+    .f01-gbase,
+    .f01-gcopy { grid-area: 1 / 1; }
+    .f01-gbase { z-index: 2; color: #ffffff; }
+    .f01-gcopy { z-index: 1; opacity: 0; mix-blend-mode: screen; will-change: transform; }
+    .f01-gcopy.f01-warm { color: #e11d48; }
+    .f01-gcopy.f01-cool { color: #6fa8ff; }
+
+    /* ---------- overlays ---------- */
+    .f01-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(90% 62% at 50% 44%, rgba(4, 10, 26, 0) 40%, rgba(4, 10, 26, 0.62) 80%, rgba(2, 6, 16, 0.92) 100%);
+      pointer-events: none;
+    }
+    .f01-pulse {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(80% 55% at 50% 44%, rgba(2, 6, 16, 0) 35%, rgba(2, 6, 16, 0.95) 100%);
+      opacity: 0;
+    }
+    .f01-flash {
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      opacity: 0;
+    }
+    .f01-redflash {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(100% 70% at 50% 80%, rgba(225, 29, 72, 0.6), rgba(225, 29, 72, 0.1));
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="01-hook-0312" data-width="1080" data-height="1920" data-start="0" data-duration="4">
+    <!-- full-bleed night ground -->
+    <div class="clip f01-ground" data-start="0" data-duration="4" data-track-index="0">
+      <div class="f01-moon"></div>
+      <div class="f01-alarm"></div>
+    </div>
+
+    <!-- camera: everything that moves as one viewpoint -->
+    <div class="clip f01-camera" data-start="0" data-duration="4" data-track-index="1">
+      <div class="f01-eyebrow" aria-label="Mardi · nuit"><span>M</span><span>A</span><span>R</span><span>D</span><span>I</span><span> </span><span>·</span><span> </span><span>N</span><span>U</span><span>I</span><span>T</span></div>
+
+      <div class="f01-clock-echo" aria-hidden="true">03:12</div>
+      <div class="f01-clock">03<span class="f01-colon">:</span>12</div>
+
+      <div class="f01-wave f01-l f01-w0"><svg viewBox="0 0 70 140"><path d="M52 18 Q14 70 52 122" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/><path d="M30 38 Q8 70 30 102" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/></svg></div>
+      <div class="f01-wave f01-l f01-w1"><svg viewBox="0 0 70 140"><path d="M52 18 Q14 70 52 122" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/><path d="M30 38 Q8 70 30 102" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/></svg></div>
+      <div class="f01-wave f01-l f01-w2"><svg viewBox="0 0 70 140"><path d="M52 18 Q14 70 52 122" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/><path d="M30 38 Q8 70 30 102" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/></svg></div>
+      <div class="f01-wave f01-r f01-w0"><svg viewBox="0 0 70 140"><path d="M18 18 Q56 70 18 122" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/><path d="M40 38 Q62 70 40 102" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/></svg></div>
+      <div class="f01-wave f01-r f01-w1"><svg viewBox="0 0 70 140"><path d="M18 18 Q56 70 18 122" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/><path d="M40 38 Q62 70 40 102" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/></svg></div>
+      <div class="f01-wave f01-r f01-w2"><svg viewBox="0 0 70 140"><path d="M18 18 Q56 70 18 122" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/><path d="M40 38 Q62 70 40 102" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7" stroke-linecap="round"/></svg></div>
+
+      <div class="f01-win-rise">
+        <div class="f01-win-shake">
+          <div class="f01-sill"></div>
+          <div class="f01-win">
+            <div class="f01-pane"><div class="f01-reflect"></div><div class="f01-sheen"></div><div class="f01-handle"></div></div>
+            <div class="f01-pane"><div class="f01-reflect"></div><div class="f01-sheen"></div><div class="f01-handle"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="f01-sub">Tout le monde dort.</div>
+
+      <div class="f01-title">
+        <div class="f01-gstack">
+          <span class="f01-gcopy f01-warm" aria-hidden="true">Une fenêtre vibre.</span>
+          <span class="f01-gcopy f01-cool" aria-hidden="true">Une fenêtre vibre.</span>
+          <span class="f01-gbase">Une fenêtre vibre.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- overlays -->
+    <div class="clip f01-vignette" data-start="0" data-duration="4" data-track-index="2">
+      <div class="f01-pulse"></div>
+    </div>
+    <div class="clip f01-redflash" data-start="0" data-duration="4" data-track-index="3"></div>
+    <div class="clip f01-flash" data-start="0" data-duration="4" data-track-index="4"></div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var ID = "01-hook-0312";
+      var DUR = 4;
+      var R = document.querySelector('[data-composition-id="' + ID + '"]');
+      var q = function (s) { return R.querySelector(s); };
+      var qa = function (s) { return Array.prototype.slice.call(R.querySelectorAll(s)); };
+
+      // ---- cue grid (local seconds; SFX land on these exact times) ----
+      var T_CLOCK = 0.45;   // impact on "03:12"
+      var T_TICK = 0.24;    // clock tick cadence 0.45 -> 1.6
+      var T_TICK_END = 1.6;
+      var T_WIN = 1.6;      // window rises
+      var T_VIB = 1.95;     // glass rattle
+      var VIB_DUR = 0.8;
+      var T_SUB = 2.15;
+      var T_TITLE = 2.9;    // impact + glitch
+      var GLITCH_DUR = 0.2;
+      var HEART = 0.75;     // heartbeat period
+
+      var camera = q(".f01-camera");
+      var colon = q(".f01-colon");
+      var shake = q(".f01-win-shake");
+      var panes = qa(".f01-pane");
+      var pulse = q(".f01-pulse");
+
+      var camEase = gsap.parseEase("power1.inOut");
+      var TAU = Math.PI * 2;
+
+      // decaying impact shakes (deterministic, sine-derived)
+      var IMPACTS = [
+        { at: T_CLOCK, amp: 12, dur: 0.38, f: 19, rot: 0.25 },
+        { at: T_VIB, amp: 4, dur: VIB_DUR, f: 23, rot: 0.08 },
+        { at: T_TITLE, amp: 26, dur: 0.6, f: 17, rot: 0.55 }
+      ];
+
+      function hash(n) {
+        var x = Math.sin(n * 127.1 + 311.7) * 43758.5453;
+        return x - Math.floor(x);
+      }
+
+      // ONE writer for all clock-derived state
+      function render(t) {
+        // camera: slow 1.08 -> 1.0 pull + organic drift + decaying shakes
+        var s = 1.08 - 0.08 * camEase(Math.min(1, Math.max(0, t / DUR)));
+        var dx = Math.sin(t * 0.9) * 4;
+        var dy = Math.sin(t * 0.9 * 1.3) * 2;
+        var rot = 0;
+        for (var i = 0; i < IMPACTS.length; i++) {
+          var k = IMPACTS[i];
+          var u = t - k.at;
+          if (u >= 0 && u < k.dur) {
+            var env = Math.pow(1 - u / k.dur, 2);
+            dx += k.amp * env * Math.sin(TAU * k.f * u + 0.7 + i);
+            dy += k.amp * 0.7 * env * Math.sin(TAU * k.f * 1.31 * u + 1.9 + i);
+            rot += k.rot * env * Math.sin(TAU * k.f * 0.77 * u + 0.3);
+          }
+        }
+        camera.style.transform =
+          "translate(" + dx.toFixed(2) + "px," + dy.toFixed(2) + "px) rotate(" + rot.toFixed(3) + "deg) scale(" + s.toFixed(4) + ")";
+
+        // colon: discrete on/off steps on the tick tempo, then slower after the ticks stop
+        var on = 1;
+        if (t >= T_CLOCK) {
+          var stepLen = t < T_TICK_END ? T_TICK : 0.5;
+          var base = t < T_TICK_END ? T_CLOCK : T_TICK_END;
+          on = Math.floor((t - base) / stepLen) % 2 === 0 ? 1 : 0.18;
+        }
+        colon.style.opacity = on;
+        colon.style.color = t >= T_TITLE ? "#e11d48" : "#ffffff";
+
+        // window glass rattle: per-frame alternating, decaying ±8px, then a residual tense tremor
+        var wx = 0, wy = 0, wr = 0, px = 0;
+        var v = t - T_VIB;
+        if (v >= 0) {
+          var stp = Math.floor(v * 30);
+          var sign = stp % 2 === 0 ? 1 : -1;
+          var envV = v < VIB_DUR ? Math.pow(1 - v / VIB_DUR, 1.6) : 0;
+          var amp = 8 * envV + 1.2;
+          wx = sign * amp * (0.65 + 0.35 * hash(stp));
+          wy = -sign * amp * 0.3 * hash(stp + 17);
+          wr = sign * (0.35 * envV + 0.05) * hash(stp + 5);
+          px = -sign * (3 * envV + 0.4);
+        }
+        gsap.set(shake, { x: wx, y: wy, rotation: wr });
+        gsap.set(panes[0], { x: px });
+        gsap.set(panes[1], { x: -px * 0.8 });
+
+        // heartbeat darkening (lub-dub every 0.75s)
+        var ph = t % HEART;
+        var beat = Math.exp(-ph * 10) + (ph >= 0.18 ? 0.6 * Math.exp(-(ph - 0.18) * 12) : 0);
+        pulse.style.opacity = (0.22 * Math.min(1, beat)).toFixed(3);
+      }
+
+      var tl = gsap.timeline({ paused: true });
+      var clk = { t: 0 };
+      render(0);
+
+      // master clock: drives camera, colon, rattle, heartbeat (spans the whole frame)
+      tl.to(clk, { t: DUR, duration: DUR, ease: "none", onUpdate: function () { render(clk.t); } }, 0);
+
+      // ---- Scene 2 (0.45) : "03:12" slam + 1-frame white flash ----
+      tl.fromTo(".f01-clock", { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "none" }, T_CLOCK);
+      tl.fromTo(
+        ".f01-clock",
+        { scale: 1.75, filter: "blur(28px)" },
+        { scale: 1, filter: "blur(0px)", duration: 0.55, ease: "power4.out" },
+        T_CLOCK
+      );
+      tl.fromTo(
+        ".f01-clock-echo",
+        { opacity: 0.75, scale: 1 },
+        { opacity: 0, scale: 1.38, duration: 0.7, ease: "power2.out" },
+        T_CLOCK + 0.03
+      );
+      tl.set(".f01-flash", { opacity: 0.9 }, T_CLOCK);
+      tl.set(".f01-flash", { opacity: 0 }, T_CLOCK + 1 / 30);
+
+      // eyebrow per-letter reveal over 0.8s
+      tl.fromTo(
+        ".f01-eyebrow span",
+        { opacity: 0, y: 16, filter: "blur(8px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3, ease: "power3.out", stagger: 0.045 },
+        T_CLOCK + 0.1
+      );
+
+      // ---- Scene 3 (1.6) : window rises, rattles at 1.95 ----
+      tl.fromTo(
+        ".f01-win-rise",
+        { y: 780, opacity: 0, rotation: 5, filter: "blur(14px)" },
+        { y: 0, opacity: 1, rotation: 0, filter: "blur(0px)", duration: 0.55, ease: "expo.out" },
+        T_WIN
+      );
+      tl.fromTo(
+        ".f01-sheen",
+        { xPercent: -120, opacity: 0.9 },
+        { xPercent: 170, opacity: 0.9, duration: 0.85, ease: "power2.inOut", stagger: 0.06 },
+        T_WIN + 0.15
+      );
+
+      // "(( ))" waves pulse 3 times from 1.95 (last pulse settles and holds)
+      [0, 1, 2].forEach(function (n) {
+        var at = T_VIB + n * 0.25;
+        var last = n === 2;
+        [".f01-l", ".f01-r"].forEach(function (side) {
+          var dir = side === ".f01-l" ? -1 : 1;
+          var sel = ".f01-wave" + side + ".f01-w" + n;
+          tl.fromTo(sel, { opacity: 0, scale: 0.6, x: 18 * -dir }, { opacity: 1, scale: 1.05, x: 0, duration: 0.09, ease: "power4.out" }, at);
+          if (last) {
+            tl.to(sel, { opacity: 0.6, scale: 1, x: 4 * dir, duration: 0.4, ease: "power2.out" }, at + 0.09);
+          } else {
+            tl.to(sel, { opacity: 0, scale: 1.2, x: 46 * dir, duration: 0.32, ease: "power2.out" }, at + 0.09);
+          }
+        });
+      });
+
+      // "Tout le monde dort." discreet rise
+      tl.fromTo(".f01-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, T_SUB);
+
+      // ---- Scene 4 (2.9) : "Une fenêtre vibre." slam + chromatic glitch ----
+      tl.fromTo(
+        ".f01-gstack",
+        { opacity: 0, scaleX: 1.6, scaleY: 0.85, y: 24, filter: "blur(10px)" },
+        { opacity: 1, scaleX: 1, scaleY: 1, y: 0, filter: "blur(0px)", duration: 0.22, ease: "power4.out" },
+        T_TITLE
+      );
+      var copies = qa(".f01-gcopy");
+      var amp = { a: 0 };
+      var JITTER_STEP = 1 / 30;
+      var MAX_SPLIT = 12;
+      tl.set(amp, { a: 1 }, T_TITLE);
+      tl.set(copies, { opacity: 0.85 }, T_TITLE);
+      tl.to(
+        amp,
+        {
+          a: 0,
+          duration: GLITCH_DUR,
+          ease: "power3.in",
+          onUpdate: function () {
+            var step = Math.floor(tl.time() / JITTER_STEP);
+            copies.forEach(function (el, layer) {
+              var jx = (hash(step * 13 + layer * 7) * 2 - 1) * MAX_SPLIT * amp.a + (layer === 0 ? -1 : 1) * 4 * amp.a;
+              var jy = (hash(step * 29 + layer * 11) * 2 - 1) * MAX_SPLIT * 0.35 * amp.a;
+              gsap.set(el, { x: jx, y: jy });
+            });
+          }
+        },
+        T_TITLE
+      );
+      tl.set(copies, { x: 0, y: 0, opacity: 0 }, T_TITLE + GLITCH_DUR);
+
+      // impact red flash + rising alarm light in the bottom of frame
+      tl.fromTo(".f01-redflash", { opacity: 0.35 }, { opacity: 0, duration: 0.35, ease: "power2.out" }, T_TITLE);
+      tl.fromTo(".f01-alarm", { opacity: 0 }, { opacity: 0.55, duration: DUR - T_TITLE, ease: "power2.in" }, T_TITLE);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+    })();
+  </script>
+</template>
