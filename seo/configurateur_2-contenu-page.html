@@ -3,8 +3,8 @@
      Contenu COMPLET à coller dans l'éditeur HTML de la page
      (Boutique en ligne > Pages > Configurateur_2 > bouton "<>").
 
-     1. Intégration du configurateur Daewoo Security V2 (inchangée,
-        sauf correction du "%0A" en fin d'URL du script).
+     1. Intégration du configurateur Daewoo Security V2 + écran de
+        chargement (code Lovable actuellement en ligne, inchangé).
      2. NOUVEAU : bloc de texte + FAQ lisible par Google et les IA,
         avec données structurées (FAQPage, BreadcrumbList).
      ============================================================ -->
@@ -64,10 +64,69 @@
       min-height: 700px;
     }
   }
+
+  /* ===== Écran de préchargement Daewoo (évite le bloc blanc) ===== */
+  .daewoo-configurator-container { position: relative; }
+  .daewoo-loader {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: flex-start; padding: 18vh 24px 0;
+    background: #f0f0f8; text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transition: opacity .45s ease, visibility .45s ease;
+  }
+  .daewoo-loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .daewoo-loader__brand {
+    font-size: 13px; font-weight: 700; letter-spacing: .28em;
+    text-transform: uppercase; color: #0b1f3a; margin-bottom: 28px;
+  }
+  .daewoo-loader__spinner {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 3px solid rgba(11,31,58,.12); border-top-color: #0b1f3a;
+    animation: daewoo-spin .9s linear infinite;
+  }
+  .daewoo-loader__title {
+    margin: 26px 0 6px; font-size: 20px; font-weight: 600; color: #0b1f3a;
+  }
+  .daewoo-loader__text { margin: 0; font-size: 15px; color: #5b6478; max-width: 340px; }
+  .daewoo-loader__skeleton { width: 100%; max-width: 760px; margin-top: 44px; display: grid; gap: 14px; }
+  .daewoo-loader__bar {
+    height: 14px; border-radius: 999px;
+    background: linear-gradient(90deg, #e3e4ef 25%, #f4f4fa 50%, #e3e4ef 75%);
+    background-size: 200% 100%; animation: daewoo-shimmer 1.4s ease-in-out infinite;
+  }
+  .daewoo-loader__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 10px; }
+  .daewoo-loader__card { height: 150px; border-radius: 18px; background: inherit; }
+  .daewoo-loader__cards .daewoo-loader__bar { height: 150px; border-radius: 18px; }
+  @media (max-width: 768px) {
+    .daewoo-loader { padding-top: 14vh; }
+    .daewoo-loader__cards { grid-template-columns: 1fr; }
+    .daewoo-loader__cards .daewoo-loader__bar:nth-child(n+2) { display: none; }
+  }
+  @keyframes daewoo-spin { to { transform: rotate(360deg); } }
+  @keyframes daewoo-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .daewoo-loader__spinner, .daewoo-loader__bar { animation: none; }
+  }
 </style>
 
 <div class="daewoo-configurator-wrapper">
   <div class="daewoo-configurator-container">
+    <div class="daewoo-loader" id="daewooLoader" role="status" aria-live="polite">
+      <div class="daewoo-loader__brand">Daewoo Security</div>
+      <div class="daewoo-loader__spinner" aria-hidden="true"></div>
+      <p class="daewoo-loader__title">Chargement de votre configurateur…</p>
+      <p class="daewoo-loader__text">Votre alarme sans abonnement sur mesure, en quelques questions.</p>
+      <div class="daewoo-loader__skeleton" aria-hidden="true">
+        <div class="daewoo-loader__bar" style="width:60%;margin:0 auto"></div>
+        <div class="daewoo-loader__bar" style="width:40%;margin:0 auto"></div>
+        <div class="daewoo-loader__cards">
+          <div class="daewoo-loader__bar"></div>
+          <div class="daewoo-loader__bar"></div>
+          <div class="daewoo-loader__bar"></div>
+        </div>
+      </div>
+    </div>
     <object id="daewooConfiguratorV2" class="daewoo-configurator-iframe" type="text/html" data="https://configurateur-daewoo.lovable.app/" data-app="https://configurateur-daewoo.lovable.app/" title="Configurateur Daewoo Security" data-daewoo-embed>
       <div style="text-align: center; padding: 40px; background: #f5f5f5;">
         <p>Le configurateur nécessite JavaScript pour fonctionner.</p>
@@ -80,6 +139,28 @@
 </div>
 
 <script class="analytics" src="https://configurateur-daewoo.lovable.app/daewoo-shopify-embed.js?v=20260913-iphone-safari" data-cfasync="false" data-cookieconsent="ignore" data-consentmo="ignore"></script>
+
+<script data-cfasync="false" data-cookieconsent="ignore">
+  (function () {
+    var loader = document.getElementById("daewooLoader");
+    if (!loader) return;
+    var done = false;
+    function hide() {
+      if (done) return; done = true;
+      loader.classList.add("is-hidden");
+      setTimeout(function () { loader.remove(); }, 600);
+    }
+    // Le configurateur envoie sa hauteur dès qu'il est affiché : signal "prêt".
+    window.addEventListener("message", function (e) {
+      if (e.origin !== "https://configurateur-daewoo.lovable.app") return;
+      if (e.data && e.data.type === "daewoo:resize") hide();
+    });
+    // Sécurités : chargement de l'objet puis délai maximum.
+    var obj = loader.parentNode.querySelector("[data-daewoo-embed]");
+    if (obj) obj.addEventListener("load", function () { setTimeout(hide, 400); });
+    setTimeout(hide, 8000);
+  })();
+</script>
 
 
 <!-- ============================================================
