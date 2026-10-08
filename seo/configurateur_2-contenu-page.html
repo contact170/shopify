@@ -1,0 +1,310 @@
+<!-- ============================================================
+     Page Shopify : /pages/configurateur_2
+     Contenu COMPLET à coller dans l'éditeur HTML de la page
+     (Boutique en ligne > Pages > Configurateur_2 > bouton "<>").
+
+     1. Intégration du configurateur Daewoo Security V2 (inchangée,
+        sauf correction du "%0A" en fin d'URL du script).
+     2. NOUVEAU : bloc de texte + FAQ lisible par Google et les IA,
+        avec données structurées (FAQPage, BreadcrumbList).
+     ============================================================ -->
+
+<!-- Snippet à copier dans une page Shopify (page.liquid ou template) -->
+<!-- Intègre le configurateur Daewoo Security V2 : page d'accueil + quiz, pleine largeur -->
+<!-- Intégration via <object> avec synchronisation de hauteur externe. -->
+
+<style>
+  /* Masque le titre de la page Shopify ("Configurateur_2") et le breadcrumb
+     pour que le configurateur occupe vraiment toute la page. */
+  .main-page-title,
+  .page-title,
+  .breadcrumb,
+  .shopify-section-header,
+  .page-header,
+  h1.page__title,
+  header.page__header {
+    display: none !important;
+  }
+
+  /* On enlève les marges du conteneur Shopify pour vraiment occuper la page */
+  .daewoo-configurator-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #f0f0f8; /* lavande clair, identique à la home Daewoo */
+  }
+
+  .daewoo-configurator-container {
+    width: 100%;
+    max-width: 100%;        /* pleine largeur */
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .daewoo-configurator-iframe {
+    display: block;
+    width: 100%;
+    border: none;
+    background: #fff;
+
+    /* Hauteur initiale = toute la fenêtre.
+       Ensuite on l'ajuste dynamiquement via postMessage pour suivre
+       la vraie hauteur de la page (accueil longue + quiz).
+       Pas de transition : l'ajustement est instantané pour éviter
+       tout saut de mise en page (CLS). */
+    height: 100vh;
+    min-height: 800px;
+  }
+
+  /* Sur mobile : on garde 100vh par défaut, le configurateur gère son propre
+     scroll interne si postMessage n'est pas reçu */
+  @media (max-width: 768px) {
+    .daewoo-configurator-iframe {
+      min-height: 700px;
+    }
+  }
+</style>
+
+<div class="daewoo-configurator-wrapper">
+  <div class="daewoo-configurator-container">
+    <object id="daewooConfiguratorV2" class="daewoo-configurator-iframe" type="text/html" data="https://configurateur-daewoo.lovable.app/" data-app="https://configurateur-daewoo.lovable.app/" title="Configurateur Daewoo Security" data-daewoo-embed>
+      <div style="text-align: center; padding: 40px; background: #f5f5f5;">
+        <p>Le configurateur nécessite JavaScript pour fonctionner.</p>
+        <a href="https://configurateur-daewoo.lovable.app/" target="_blank" style="color: #0066cc; text-decoration: underline;">
+          Ouvrir le configurateur dans un nouvel onglet
+        </a>
+      </div>
+    </object>
+  </div>
+</div>
+
+<script class="analytics" src="https://configurateur-daewoo.lovable.app/daewoo-shopify-embed.js?v=20260913-iphone-safari" data-cfasync="false" data-cookieconsent="ignore" data-consentmo="ignore"></script>
+
+
+<!-- ============================================================
+     BLOC SEO / IA : texte visible sous le configurateur
+     ============================================================ -->
+
+<style>
+  .dsc-seo {
+    max-width: 960px;
+    margin: 64px auto 0;
+    padding: 0 16px;
+    color: #1d1d2b;
+    line-height: 1.6;
+    box-sizing: border-box;
+  }
+  .dsc-seo * { box-sizing: border-box; }
+  .dsc-seo h2 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 16px; }
+  .dsc-seo h3 { font-size: 1.15rem; line-height: 1.3; margin: 0 0 8px; }
+  .dsc-seo p { margin: 0 0 16px; }
+  .dsc-seo a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+  .dsc-seo__section { margin-bottom: 56px; }
+
+  .dsc-seo__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .dsc-seo__card {
+    background: #f0f0f8;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .dsc-seo__card p { margin: 0; }
+  .dsc-seo__step {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    opacity: 0.6;
+  }
+
+  .dsc-seo__list { margin: 0; padding-left: 20px; }
+  .dsc-seo__list li { margin-bottom: 8px; }
+
+  .dsc-seo__faq details {
+    border-bottom: 1px solid rgba(29, 29, 43, 0.15);
+    padding: 16px 0;
+  }
+  .dsc-seo__faq summary {
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+    position: relative;
+    padding-right: 32px;
+  }
+  .dsc-seo__faq summary::-webkit-details-marker { display: none; }
+  .dsc-seo__faq summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  .dsc-seo__faq details[open] summary::after { content: "–"; }
+  .dsc-seo__faq details p { margin: 12px 0 0; }
+
+  @media (max-width: 768px) {
+    .dsc-seo { margin-top: 40px; }
+    .dsc-seo h2 { font-size: 1.4rem; }
+    .dsc-seo__grid { grid-template-columns: 1fr; }
+    .dsc-seo__section { margin-bottom: 40px; }
+  }
+</style>
+
+<div class="dsc-seo">
+
+  <section class="dsc-seo__section">
+    <h2>Configurateur d'alarme maison sans abonnement</h2>
+    <p>
+      Le configurateur Daewoo Security vous aide à composer une alarme maison sans fil adaptée à votre logement.
+      Vous répondez à quelques questions sur votre maison ou votre appartement, puis il vous propose
+      la bonne centrale, les détecteurs, la sirène et les caméras. Vous ne payez que le matériel :
+      aucun abonnement de télésurveillance n'est obligatoire.
+    </p>
+    <ul class="dsc-seo__grid">
+      <li class="dsc-seo__card">
+        <span class="dsc-seo__step">Étape 1</span>
+        <h3>Décrivez votre logement</h3>
+        <p>Répondez à quelques questions simples sur votre maison ou votre appartement.</p>
+      </li>
+      <li class="dsc-seo__card">
+        <span class="dsc-seo__step">Étape 2</span>
+        <h3>Recevez votre pack</h3>
+        <p>Le configurateur sélectionne une centrale et les accessoires compatibles avec votre situation.</p>
+      </li>
+      <li class="dsc-seo__card">
+        <span class="dsc-seo__step">Étape 3</span>
+        <h3>Ajustez et commandez</h3>
+        <p>Ajoutez ou retirez des éléments, puis commandez. Vous pourrez compléter votre système plus tard.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="dsc-seo__section">
+    <h2>Trois gammes d'alarmes sans fil</h2>
+    <ul class="dsc-seo__grid">
+      <li class="dsc-seo__card">
+        <h3><a href="/collections/systeme-dalarme-vigilia">Alarme Vigilia</a></h3>
+        <p>Une centrale sans fil simple et efficace, disponible en version Wi-Fi ou Wi-Fi + GSM 4G (carte SIM en option) pour être alerté même en cas de coupure Internet.</p>
+      </li>
+      <li class="dsc-seo__card">
+        <h3><a href="/collections/systeme-dalarme-am301-am302">Alarme Touch / Touch XL</a></h3>
+        <p>Une centrale à écran tactile couleur (4,3" ou 7"), Wi-Fi 2,4 GHz et 4G en option, avec batterie de secours de 4 h (Touch) ou 20 h (Touch XL).</p>
+      </li>
+      <li class="dsc-seo__card">
+        <h3><a href="/collections/systeme-dalarme-pa501z">Alarme Élite</a></h3>
+        <p>Une centrale discrète, installable à l'abri des regards, utilisant le protocole Zigbee et connectée en Wi-Fi, Ethernet ou 4G.</p>
+      </li>
+    </ul>
+    <p style="margin-top: 16px;">
+      Vous hésitez entre les gammes ? Consultez notre guide <a href="/pages/comment-choisir-son-alarme">Comment choisir son alarme</a>,
+      le <a href="/pages/comparateur-am301-sa501-pa501z">comparatif des centrales</a> ou nos <a href="/collections/starters-packs">starter packs</a>.
+      Pour la vidéo, voir nos <a href="/collections/cameras-de-surveillance">caméras de surveillance</a>.
+    </p>
+  </section>
+
+  <section class="dsc-seo__section">
+    <h2>Pourquoi choisir Daewoo Security</h2>
+    <ul class="dsc-seo__list">
+      <li><strong>Sans abonnement obligatoire :</strong> vous êtes alerté directement sur votre smartphone, sans frais mensuels.</li>
+      <li><strong>Installation sans technicien :</strong> matériel sans fil, sans travaux, installation guidée dans l'application Daewoo Home Connect (iOS et Android).</li>
+      <li><strong>Système évolutif :</strong> ajoutez détecteurs, sirènes, caméras ou prises connectées quand vous le souhaitez.</li>
+      <li><strong>Garantie 2 ans</strong> et 14 jours pour changer d'avis.</li>
+      <li><strong>Expédition sous 24 h</strong> pour toute commande passée avant midi (hors week-end et jours fériés), livraison offerte dès 50 € en France métropolitaine (hors Chronopost).</li>
+      <li><strong>Équipe basée à Mérignac, près de Bordeaux</strong>, pour vous conseiller avant et après l'achat. <a href="/pages/nous-contacter">Nous contacter</a>.</li>
+    </ul>
+  </section>
+
+  <section class="dsc-seo__section dsc-seo__faq">
+    <h2>Questions fréquentes</h2>
+
+    <details>
+      <summary>Les alarmes Daewoo Security nécessitent-elles un abonnement ?</summary>
+      <p>Non, toutes nos alarmes fonctionnent sans abonnement. Vous êtes alerté en cas d'intrusion directement sur votre smartphone via l'application Daewoo Home Connect, sans frais mensuels.</p>
+    </details>
+
+    <details>
+      <summary>Puis-je installer l'alarme moi-même ?</summary>
+      <p>Oui. Tous les éléments sont sans fil : il suffit de brancher la centrale, de fixer les détecteurs et de suivre les étapes dans l'application Daewoo Home Connect. Aucun technicien ni travaux ne sont nécessaires.</p>
+    </details>
+
+    <details>
+      <summary>Puis-je ajouter des accessoires plus tard ?</summary>
+      <p>Oui, nos systèmes sont évolutifs. Vous pouvez ajouter à tout moment des détecteurs, des sirènes, des badges, des caméras ou des prises connectées compatibles avec votre centrale.</p>
+    </details>
+
+    <details>
+      <summary>Que se passe-t-il en cas de coupure de courant ou d'Internet ?</summary>
+      <p>La centrale dispose d'une batterie de secours qui prend le relais en cas de coupure de courant. Sans Internet, l'alarme continue de fonctionner localement (détection et sirène). Avec une carte SIM 4G en option, selon la gamme, vous restez notifié même en cas de coupure Internet.</p>
+    </details>
+
+    <details>
+      <summary>L'alarme est-elle compatible avec mes animaux ?</summary>
+      <p>Oui, nous proposons des détecteurs de mouvement compatibles animaux, conçus pour éviter les fausses alertes.</p>
+    </details>
+
+    <details>
+      <summary>Quels sont les délais de livraison et la garantie ?</summary>
+      <p>Les commandes passées avant midi (hors week-end et jours fériés) sont expédiées sous 24 h. La livraison est offerte dès 50 € en France métropolitaine (hors Chronopost). Tous nos produits sont garantis 2 ans et vous disposez de 14 jours pour changer d'avis.</p>
+    </details>
+  </section>
+
+</div>
+
+<!-- Données structurées : le texte doit rester identique à la FAQ visible ci-dessus -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://daewoo-security.fr/" },
+        { "@type": "ListItem", "position": 2, "name": "Configurateur d'alarme", "item": "https://daewoo-security.fr/pages/configurateur_2" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Les alarmes Daewoo Security nécessitent-elles un abonnement ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Non, toutes nos alarmes fonctionnent sans abonnement. Vous êtes alerté en cas d'intrusion directement sur votre smartphone via l'application Daewoo Home Connect, sans frais mensuels." }
+        },
+        {
+          "@type": "Question",
+          "name": "Puis-je installer l'alarme moi-même ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui. Tous les éléments sont sans fil : il suffit de brancher la centrale, de fixer les détecteurs et de suivre les étapes dans l'application Daewoo Home Connect. Aucun technicien ni travaux ne sont nécessaires." }
+        },
+        {
+          "@type": "Question",
+          "name": "Puis-je ajouter des accessoires plus tard ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui, nos systèmes sont évolutifs. Vous pouvez ajouter à tout moment des détecteurs, des sirènes, des badges, des caméras ou des prises connectées compatibles avec votre centrale." }
+        },
+        {
+          "@type": "Question",
+          "name": "Que se passe-t-il en cas de coupure de courant ou d'Internet ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "La centrale dispose d'une batterie de secours qui prend le relais en cas de coupure de courant. Sans Internet, l'alarme continue de fonctionner localement (détection et sirène). Avec une carte SIM 4G en option, selon la gamme, vous restez notifié même en cas de coupure Internet." }
+        },
+        {
+          "@type": "Question",
+          "name": "L'alarme est-elle compatible avec mes animaux ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui, nous proposons des détecteurs de mouvement compatibles animaux, conçus pour éviter les fausses alertes." }
+        },
+        {
+          "@type": "Question",
+          "name": "Quels sont les délais de livraison et la garantie ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Les commandes passées avant midi (hors week-end et jours fériés) sont expédiées sous 24 h. La livraison est offerte dès 50 € en France métropolitaine (hors Chronopost). Tous nos produits sont garantis 2 ans et vous disposez de 14 jours pour changer d'avis." }
+        }
+      ]
+    }
+  ]
+}
+</script>
