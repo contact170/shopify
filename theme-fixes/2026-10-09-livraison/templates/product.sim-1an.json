@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{"sections":{
+"hero":{"type":"acc-hero","settings":{"marque":"Daewoo","reference":"1 An Prépayé","libelle_bouton":"Ajouter au panier","mention_prix":"","quantite_max":5,"paiement":"Paiement en 3 ou 4 fois avec Alma · Livraison en 48 à 72 h","atout_1":"12 mois inclus","atout_2":"Réseau SFR","atout_3":"Sans engagement ensuite"}},
+"role":{"type":"acc-chrono","settings":{"titre":"Ce qui se passe le jour où le Wi-Fi tombe.","intro":"","repere_1":"01","repere_2":"02","repere_3":"03"}},
+"couts":{"type":"acc-couts","blocks":{
+"p1":{"type":"palier","settings":{"quand":"Aujourd'hui","montant":"72 €","unite":"une seule fois, pour 12 mois","detail":"La carte SIM M2M Afone et douze mois d'abonnement réglés d'avance. Soit 6 € par mois — exactement le tarif appliqué ensuite, mais sans rien à surveiller de l'année."}},
+"p2":{"type":"palier","settings":{"quand":"Au bout de 12 mois","montant":"6 €","unite":"par mois, TTC","detail":"L'abonnement se poursuit au mois, sans engagement, prélevé sur le RIB fourni à l'activation. Vous pouvez aussi racheter une carte 1 an prépayée."}},
+"p3":{"type":"palier","settings":{"quand":"Si vous dépassez","montant":"1 €","unite":"par recharge, TTC","detail":"15 minutes, ou 75 SMS, ou 25 Mo de plus. À votre demande, jamais automatiquement."}}},
+"block_order":["p1","p2","p3"],
+"settings":{"surtitre":"Le coût, en clair","titre":"Ce que vous payez, et quand.","chapo":"Une seule dépense cette année. Et ce que l'opérateur vous facturera ensuite.","inclus_titre":"Ce que contient l'enveloppe","inclus_texte":"<p><strong>30 minutes d'appel, ou 150 SMS, ou 50 Mo de données — chaque mois.</strong> C'est une seule et même réserve exprimée de trois façons, et non trois enveloppes qui s'additionnent. Ce qui est prépayé, c'est l'abonnement : l'enveloppe, elle, se renouvelle tous les mois. Si elle s'épuise avant la fin du mois, une recharge à 1 € la reconstitue.</p>","note":"<p>Réseau SFR · Code APN <strong>sl2sfr</strong> · Valable en France uniquement. Un RIB est demandé à l'activation, y compris pour cette carte prépayée : rien n'est prélevé pendant les douze mois. Les douze mois sont réglés sur cette page ; au-delà, l'abonnement est facturé directement par Afone. Une fois la carte activée, elle ne peut plus être reprise ni remboursée.</p>"}},
+"compat":{"type":"acc-compat","settings":{"surtitre":"Compatibilité"}},
+"technique":{"type":"acc-fiche-technique","settings":{"surtitre":"Fiche technique","titre":"Le détail de l'offre.","titre_1":"Ce que la carte SIM apporte","titre_2":"Ce qu'elle ne fait pas","titre_3":"Activer et gérer l'abonnement"}},
+"boite":{"type":"acc-boite","settings":{"surtitre":"Livraison","titre":"Ce que vous recevez."}},
+"documents":{"type":"acc-documents","blocks":{
+"fiche":{"type":"document","settings":{"titre":"Offre Afone Mobile — 12 mois prépayés","texte":"La fiche officielle de l'opérateur : enveloppe incluse, tarif au-delà des 12 mois, code APN, recharge et contacts du service client.","lien":"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Afone_Mobile_12_mois.pdf?v=1788254952","meta":"PDF · 58 Ko"}}},
+"block_order":["fiche"],
+"settings":{"surtitre":"Documents","titre":"À télécharger.","chapo":"Le détail de l'offre, tel que l'opérateur le publie."}},
+"description":{"type":"acc-description","settings":{"surtitre":"En détail"}},
+"avis":{"type":"acc-avis","settings":{"surtitre":"Avis clients","marge_haute":28}},
+"avis_widget":{"type":"apps","blocks":{"jmc":{"type":"shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","settings":{"show_sample_reviews":false,"reviews_selection":"current_product","products":[],"filter_pinned":false,"filter_featured":false,"filter_custom_tags":"","star_rating":"all","show_review_media":true,"display_order":"media_first","no_image_fallback":"review_text_only","max_reviews":20,"review_length":"small","text_size":"small","image_ratio":"1","reviews_shown":4,"show_reviewer_name":true,"show_product_name":true,"hide_arrows_mobile":true,"arrows_position":"sides","max_width":1100,"corner_styling":"soft","header_text_color":"#000000","text_color":"#000000","card_color":"#f9f9f9","stars_color":"","arrows_color":"#000000","transition_speed":5,"header_text":"Les avis de nos clients","show_average_rating":true,"rating_display":"default"}}},"block_order":["jmc"],"settings":{"padding_top":4,"padding_bottom":16,"divider":false,"full_width":false,"rounded":false}},
+"faq":{"type":"acc-faq-produit","settings":{"surtitre":"Questions fréquentes","titre":"Avant de commander."}},
+"recommandations":{"type":"acc-complements","settings":{"surtitre":"Compléter","titre":"Souvent commandé avec.","nombre":4,"collection_repli":"","exclusions":""}},
+"barre":{"type":"acc-barre","settings":{"libelle_bouton":"Ajouter au panier"}}
+},
+"order":["hero","role","couts","compat","technique","boite","documents","description","avis","avis_widget","faq","recommandations","barre"]}
