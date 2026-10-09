@@ -10,7 +10,7 @@ Les points juridiques sont des signalements, pas un avis juridique : à faire va
 
 ## 🔴 PRIORITÉ 1 – Retours, rétractation, garantie (juridique et confiance)
 
-### 1.1 « Retour gratuit » encore affiché sur la collection Élite
+### 1.1 ✅ FAIT le 9/10 – « Retour gratuit » encore affiché sur la collection Élite
 Le retour en cas de rétractation est **à la charge du client** (CGV, page Livraison & Retour, politique de remboursement, page Retours SAV), mais la collection Élite promet le contraire **à 5 endroits** :
 - « Garantie 2 ans **Retour gratuit sous 14 jours** »
 - « **Retour Gratuit**, 14 jours »
@@ -21,7 +21,7 @@ Le retour en cas de rétractation est **à la charge du client** (CGV, page Livr
 📍 `/collections/systeme-dalarme-pa501z`
 ✅ À faire : remplacer par « Retour possible sous 14 jours », comme sur la collection Touch.
 
-### 1.2 « Satisfait ou remboursé » dans 4 articles de blog
+### 1.2 ✅ FAIT le 9/10 – « Satisfait ou remboursé » dans 4 articles de blog
 Cette formule laisse entendre un remboursement sans condition ni frais, ce qui contredit votre politique.
 - « 2 ans + 14 jours **satisfait ou remboursé** » : `/blogs/news/alarme-maison-sans-abonnement-amazon`, `…-castorama`, `…-leroy-merlin`
 - « 14 jours de **satisfaction garantie** » : `/blogs/news/alarme-maison-sans-abonnement-sans-wifi`
@@ -177,7 +177,7 @@ Ce sont des produits différents, mais leurs adresses se terminent par `-copie`,
   - `proteger-une-maison-isolee…` : WPS301, sirène solaire WOS301S
   - `nathalie-a-securise…` : sirène WIS502
 - **`/collections/systemes-dalarme` redirige vers l'accueil** : liens dans 3 articles. Mieux vaut viser une vraie collection.
-- **Liens avec préfixes de marché** `/fr-ch/…` et `/fr-com/…` dans 3 articles (`meilleurs-detecteurs-d-alarme`, `top-5-sirenes-d-alarme`, `alarme-maison-sans-abonnement-amazon`) : remplacer par des liens directs.
+- **Liens avec préfixes de marché** `/fr-ch/…` et `/fr-com/…` (✅ `/fr-com/` corrigés le 9/10 dans l'article Amazon) dans 3 articles (`meilleurs-detecteurs-d-alarme`, `top-5-sirenes-d-alarme`, `alarme-maison-sans-abonnement-amazon`) : remplacer par des liens directs.
 - **Page Livraison & Retour** : le lien « SAV » pointe vers `/pages/sav`, qui redirige vers Contact au lieu de `/pages/retours-sav`.
 - **Pages sans meta description** : les 7 politiques et `/collections/offres-du-mois-1`. Faible priorité.
 
