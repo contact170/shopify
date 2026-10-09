@@ -1,0 +1,859 @@
+<style>
+    #form-gdpr-access-data-request,
+    #form-gdpr-correct-info-request,
+    #form-gdpr-delete-data-request,
+    #form-gdpr-withdraw-consent-request {
+        display: none;
+    }
+    #gdpr_page button {
+      background-color: transparent;
+      border: 0;
+      border-bottom: 1px solid black;
+      padding: 0px;
+    }
+
+    /* Modal background */
+    #data-verification-background {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding: 24px 16px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(15, 23, 42, 0.5);
+      opacity: unset;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Modal Content */
+    #data-verification-modal {
+      background-color: #fefefe;
+      margin: 0;
+      padding: 20px 22px;
+      border: 1px solid #d0d7de;
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
+      width: min(100%, 620px);
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      opacity: 1;
+    }
+    /* Modal Close Button */
+    .data-verification-close {
+      color: #4b5563;
+      float: right;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 22px;
+      background-color: transparent;
+      border: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      padding: 0;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .data-verification-close:hover {
+      color: #111827;
+      background-color: #f3f4f6;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    /* Checkbox Text */
+    #data-verification-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    #data-verification-container p {
+      display: block;
+      padding: 0;
+      margin: 0;
+      line-height: 1.5;
+      font-size: 15px;
+      color: #1f2937;
+      width: auto;
+    }
+    #data-verification-container a, #data-verification-container a:hover{
+      text-decoration: underline !important;
+      color: #2563eb;
+      font-weight: 600;
+    }
+    #data-verification-container input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      margin: 0;
+      padding: 0;
+    }
+    /* Checkbox Icon */
+    #data-verification-icon {
+      cursor: pointer;
+      position: relative;
+      margin: 2px 0 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      -webkit-tap-highlight-color: transparent;
+      transform: translate3d(0, 0, 0);
+      flex: 0 0 24px;
+    }
+    #data-verification-icon:before {
+      content: "";
+      position: absolute;
+      top: -7px;
+      left: -7px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(34,50,84,0.03);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    #data-verification-icon svg {
+      position: relative;
+      z-index: 1;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke: #94a3b8;
+      stroke-width: 1.5;
+      transform: translate3d(0, 0, 0);
+      transition: all 0.2s ease;
+    }
+    #data-verification-icon svg path {
+      stroke-dasharray: 60;
+      stroke-dashoffset: 0;
+    }
+    #data-verification-icon svg polyline {
+      stroke-dasharray: 22;
+      stroke-dashoffset: 66;
+    }
+    #data-verification-icon:hover:before {
+      opacity: 1;
+    }
+    #data-verification-container:hover #data-verification-icon svg {
+      stroke: #2563eb;
+    }
+    #data-verification-icon.clicked svg {
+      stroke: #2563eb;
+    }
+    #data-verification-icon.clicked svg path {
+      stroke-dashoffset: 60;
+      transition: all 0.3s linear;
+    }
+    #data-verification-icon.clicked svg polyline {
+      stroke-dashoffset: 42;
+      transition: all 0.2s linear;
+      transition-delay: 0.15s;
+    }
+
+    /* Accessibility design */
+    #data-verification-icon:focus, .data-verification-close:focus, #data-verification-container input:focus ~ #data-verification-icon svg, #data-verification-container a:focus {
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.28);
+      transition: all 0.3s ease;
+      outline: none;
+      transform: scale(1.06);
+    }
+
+    /* Loading Element */
+    .loading {
+        display: none;
+        top:50vh;
+        left:50vw;
+        position:fixed;
+    }
+    .loading:not(:required):after {
+      content: '';
+      display: block;
+      font-size: 10px;
+      width: 1em;
+      height: 1em;
+      margin-top: -0.5em;
+      -webkit-animation: spinner 1500ms infinite linear;
+      -moz-animation: spinner 1500ms infinite linear;
+      -ms-animation: spinner 1500ms infinite linear;
+      -o-animation: spinner 1500ms infinite linear;
+      animation: spinner 1500ms infinite linear;
+      border-radius: 0.5em;
+      -webkit-box-shadow: rgba(255,255,255, 1) 1.5em 0 0 0, rgba(255,255,255, 1) 1.1em 1.1em 0 0, rgba(255,255,255, 1) 0 1.5em 0 0, rgba(255,255,255, 1) -1.1em 1.1em 0 0, rgba(255,255,255, 1) -1.5em 0 0 0, rgba(255,255,255, 1) -1.1em -1.1em 0 0, rgba(255,255,255, 1) 0 -1.5em 0 0, rgba(255,255,255, 1) 1.1em -1.1em 0 0;
+      box-shadow: rgba(255,255,255, 1) 1.5em 0 0 0, rgba(255,255,255, 1) 1.1em 1.1em 0 0, rgba(255,255,255, 1) 0 1.5em 0 0, rgba(255,255,255, 1) -1.1em 1.1em 0 0, rgba(255,255,255, 1) -1.5em 0 0 0, rgba(255,255,255, 1) -1.1em -1.1em 0 0, rgba(255,255,255, 1) 0 -1.5em 0 0, rgba(255,255,255, 1) 1.1em -1.1em 0 0;
+    }
+    #gdpr_page .list-unstyled li button {
+      cursor: pointer;
+    }
+    #gdpr_page .form-gdpr-request form label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    #gdpr_page .form-gdpr-request form input[type="email"] {
+      display: inline-block;
+      width: 100%;
+      max-width: 420px;
+      padding: 12px 14px;
+      margin: 0 10px 12px 0;
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      font-size: 16px;
+      line-height: 1.4;
+      box-sizing: border-box;
+      vertical-align: middle;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      background-color: #fff;
+      color: #1f2328;
+    }
+    #gdpr_page .form-gdpr-request form input[type="email"]:focus {
+      border-color: #4c8bf5;
+      box-shadow: 0 0 0 3px rgba(76, 139, 245, 0.2);
+      outline: none;
+    }
+    #gdpr_page .form-gdpr-request form input[type="submit"] {
+      display: inline-block;
+      min-height: 42px;
+      padding: 10px 18px;
+      margin-bottom: 12px;
+      border: 0;
+      border-radius: 10px;
+      background-color: #111827;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1;
+      cursor: pointer;
+      vertical-align: middle;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    #gdpr_page .form-gdpr-request form input[type="submit"]:hover {
+      background-color: #1f2937;
+      transform: translateY(-1px);
+    }
+    #gdpr_page .form-gdpr-request form input[type="submit"]:focus {
+      box-shadow: 0 0 0 3px rgba(76, 139, 245, 0.25);
+      outline: none;
+    }
+    #gdpr_page .form-gdpr-request form .gdpr-request-success {
+      display: block;
+      margin: 0 0 12px;
+      color: #15803d;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+    #gdpr_page .form-gdpr-request form .gdpr-request-error {
+      display: block;
+      margin: 0 0 12px;
+      color: #b91c1c;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+    .show-isense {
+      transition: opacity 400ms !important;
+    }
+    .hide-isense {
+      opacity: 0 !important;
+      transition: 0.4s ease-out;
+    }
+
+    /* Mise en page Daewoo */
+    #gdpr_page { float: none !important; max-width: 820px; margin: 0 auto !important; padding: 32px 16px 72px !important; box-sizing: border-box; }
+    #gdpr_page .gdpr-title { font-size: 2rem !important; line-height: 1.2 !important; font-weight: 600; margin: 0 0 24px !important; }
+    #gdpr_page h2 { font-size: 1.35rem !important; line-height: 1.3 !important; margin: 40px 0 12px !important; }
+    #gdpr_page p { margin: 0 0 12px !important; line-height: 1.6; }
+    #gdpr_page br { display: none; }
+    #gdpr_page ul.list-unstyled { list-style: none !important; padding: 0 !important; margin: 0 0 16px !important; }
+    #gdpr_page ul.list-unstyled li { margin: 0 !important; padding: 0 !important; }
+    #gdpr_page ul.list-unstyled li::before { content: none !important; }
+    #gdpr_page button { font-weight: 600; cursor: pointer; color: inherit; }
+    @media only screen and (max-width: 600px) { #gdpr_page .gdpr-title { font-size: 1.6rem !important; } }
+
+    /* Modal changes on mobile resolution*/
+    @media only screen and (max-width: 600px) {
+      #data-verification-modal {
+        width: 100%;
+        padding: 16px;
+      }
+    }
+
+    /* Animation */
+    @-webkit-keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+    @-moz-keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+    @-o-keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+</style>
+<div id="gdpr_page" class="col-sm-12">
+    <p class="gdpr-title">Vos droits sur vos données personnelles</p>
+    <div>
+        <p><strong>Nous respectons votre vie privée.</strong> Si vous êtes situé dans l’Espace économique européen (EEE), vous disposez de certains droits en vertu du Règlement général sur la protection des données (RGPD). Utilisez les options ci-dessous pour exercer vos droits concernant les données personnelles que nous détenons à votre sujet.</p>
+    </div>
+    <p><strong>Comment nous traitons votre demande</strong> Lorsque vous soumettez une Demande d'Accès aux Données Personnelles (DSAR) via notre page de Conformité, notre fournisseur de conformité, Consentmo, traite votre adresse IP et votre e-mail uniquement pour répondre à votre demande. Pour plus de détails, voir <a href="https://www.consentmo.com/privacy-policy-terms-of-service/fr" target="_blank" aria-label="Privacy Policy link (opens in a new tab)">Politique de Traitement des Données de Consentmo</a>.</p>
+    <br>
+    <h2>Accès aux Données Personnelles</h2>
+    <p>Vous pouvez utiliser le lien ci-dessous pour demander un rapport qui contiendra toutes les informations personnelles que nous conservons à votre sujet. Nous répondrons sous 30 jours.</p>
+    <ul id="gdpr_access_data_compliance_requests" class="gdpr-compliance-requests list-unstyled">
+        <li><button id="btn-gdpr-access-data-request" aria-label="Demander un rapport" aria-controls="form-gdpr-access-data-request" aria-expanded="false">Demander un rapport</button></li>
+    </ul>
+    <div id="form-gdpr-access-data-request" class="form-gdpr-request">
+        <form>
+            <label for="form-gdpr-access-data-request-email">Saisissez votre e-mail pour confirmer votre identité</label>
+            <input type="email" name="email" id="form-gdpr-access-data-request-email" placeholder="example@email.com" autocomplete="email" autocorrect="off" autocapitalize="off" autofocus="">
+            <input type="submit" id="form-gdpr-access-data-request-submit" class="btn" value="Envoyer">
+        </form>
+    </div>
+    <p><em>Délai de réponse : nous répondons dans un délai d’un mois. Si votre demande est complexe, nous pouvons prolonger ce délai comme le permet la loi et nous vous en informerons.</em></p>
+    <br>
+    <h2>Rectification des Données</h2>
+    <p>Si les données de votre compte sont inexactes, mettez-les à jour ou corrigez-les via le lien ci-dessous.</p>
+    <ul id="gdpr_correct_info_compliance_requests" class="gdpr-compliance-requests list-unstyled">
+        <li><button id="btn-gdpr-correct-info-request" aria-label="Rectification des Données" aria-controls="form-gdpr-correct-info-request" aria-expanded="false">Rectification des Données</button></li>
+    </ul>
+    <div id="form-gdpr-correct-info-request" class="form-gdpr-request">
+        <form>
+            <label for="form-gdpr-correct-info-request-email">Saisissez votre e-mail pour confirmer votre identité</label>
+            <input type="email" name="email" id="form-gdpr-correct-info-request-email" placeholder="example@email.com" autocomplete="email" autocorrect="off" autocapitalize="off" autofocus="">
+            <input type="submit" id="form-gdpr-correct-info-request-submit" class="btn" value="Envoyer">
+        </form>
+    </div>
+    <br>
+    <h2>Droit à l'Oubli</h2>
+    <p>Utilisez cette option si vous souhaitez supprimer vos données personnelles et autres données de notre boutique. Notez que ce processus supprimera votre compte, vous ne pourrez donc plus y accéder ni l'utiliser.</p>
+    <ul id="gdpr_delete_data_compliance_requests" class="gdpr-compliance-requests list-unstyled">
+        <li><button id="btn-gdpr-delete-data-request" aria-label="Demander la suppression des données personnelles" aria-controls="form-gdpr-delete-data-request" aria-expanded="false">Demander la suppression des données personnelles</button></li>
+    </ul>
+    <div id="form-gdpr-delete-data-request" class="form-gdpr-request">
+        <form>
+            <label for="form-gdpr-delete-data-request-email">Saisissez votre e-mail pour confirmer votre identité</label>
+            <input type="email" name="email" id="form-gdpr-delete-data-request-email" placeholder="example@email.com" autocomplete="email" autocorrect="off" autocapitalize="off" autofocus="">
+            <input type="submit" class="btn" id="form-gdpr-delete-data-request-submit" value="Envoyer">
+        </form>
+    </div>
+    <p><em>Important : certaines informations peuvent être conservées lorsque la loi l’exige ou à des fins légitimes (par exemple, fiscalité, prévention de la fraude et sécurité).</em></p>
+    <br>
+    <h2>Gérer les préférences de confidentialité</h2>
+    <p>Vous pouvez personnaliser votre expérience en choisissant exactement quels types de cookies et de technologies vous nous autorisez à utiliser (par exemple, activer l’analytique mais désactiver le marketing). Vous pouvez mettre à jour ces paramètres spécifiques à tout moment.</p>
+    <ul id="gdpr_manage_privacy_preferences_compliance_requests" class="gdpr-compliance-requests list-unstyled">
+        <li><button id="btn-gdpr-manage-privacy-preferences" aria-label="Mettre à jour les paramètres des cookies">Mettre à jour les paramètres des cookies</button></li>
+    </ul>
+    <br>
+    <h2>Retirer le consentement</h2>
+    <p>Vous avez le droit de retirer à tout moment votre consentement marketing Shopify pour les technologies de suivi. Cela s’appliquera à votre utilisation future de notre boutique et arrêtera la collecte de données à des fins facultatives.</p>
+    <ul id="gdpr_withdraw_consent_compliance_requests" class="gdpr-compliance-requests list-unstyled">
+        <li><button id="btn-gdpr-withdraw-consent-request" aria-label="Retirer le consentement" aria-controls="form-gdpr-withdraw-consent-request" aria-expanded="false">Retirer le consentement</button></li>
+    </ul>
+    <div id="form-gdpr-withdraw-consent-request" class="form-gdpr-request">
+        <form>
+            <label for="form-gdpr-withdraw-consent-request-email">Saisissez votre e-mail pour confirmer votre identité</label>
+            <input type="email" name="email" id="form-gdpr-withdraw-consent-request-email" placeholder="example@email.com" autocomplete="email" autocorrect="off" autocapitalize="off" autofocus="">
+            <input type="submit" class="btn" id="form-gdpr-withdraw-consent-request-submit" value="Envoyer">
+        </form>
+    </div>
+    <br>
+    <h2>Droit de Limitation du Traitement / Droit d'Opposition</h2>
+    <p>Vous pouvez demander la limitation du traitement de vos données personnelles dans certaines circonstances, par exemple le temps de vérifier leur exactitude.</p>
+    <p>Vous pouvez également vous opposer à certains traitements, notamment à la prospection commerciale ou aux traitements fondés sur notre intérêt légitime.</p>
+    <p>Pour exercer ces droits, écrivez-nous à :</p>
+    <p>📧 contact@daewoo-security.fr</p>
+    <br>
+    <h2>Informations de Contact</h2>
+    <p>Pour toute question concernant vos données personnelles ou vos droits en matière de confidentialité, contactez notre Délégué à la Protection des Données (DPO) à :</p>
+    <p><strong>E-mail :</strong> contact@daewoo-security.fr</p>
+    <p><strong>Adresse :</strong> 15 Allée James Watt – Immeuble 2000 Watt, 33700 Mérignac, France</p>
+    <br>
+    <h2>Droit de Déposer une Réclamation</h2>
+    <p>Si vous estimez que nous n'avons pas traité vos préoccupations, vous avez le droit de déposer une réclamation auprès de votre autorité nationale de protection des données (en France, la CNIL : <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>).</p>
+</div>
+
+<script>
+
+     /* SLIDE UP */
+     let slideUp = (target, duration=500) => {
+        target.style.transitionProperty = 'height, margin, padding';
+        target.style.transitionDuration = duration + 'ms';
+        target.style.boxSizing = 'border-box';
+        target.style.height = target.offsetHeight + 'px';
+        target.offsetHeight;
+        target.style.overflow = 'hidden';
+        target.style.height = 0;
+        target.style.paddingTop = 0;
+        target.style.paddingBottom = 0;
+        target.style.marginTop = 0;
+        target.style.marginBottom = 0;
+        window.setTimeout( () => {
+            target.style.display = 'none';
+            target.style.removeProperty('height');
+            target.style.removeProperty('padding-top');
+            target.style.removeProperty('padding-bottom');
+            target.style.removeProperty('margin-top');
+            target.style.removeProperty('margin-bottom');
+            target.style.removeProperty('overflow');
+            target.style.removeProperty('transition-duration');
+            target.style.removeProperty('transition-property');
+        }, duration);
+    }
+
+    /* SLIDE DOWN */
+    let slideDown = (target, duration=500) => {
+      setTimeout(function(){
+        target.style.removeProperty('display');
+        let display = window.getComputedStyle(target).display;
+        if (display === 'none') display = 'block';
+
+          target.style.display = display;
+          
+          let height = target.offsetHeight;
+          
+          target.style.overflow = 'hidden';
+          target.style.height = 0;
+          target.style.paddingTop = 0;
+          target.style.paddingBottom = 0;
+          target.style.marginTop = 0;
+          target.style.marginBottom = 0;
+          target.offsetHeight;
+          target.style.boxSizing = 'border-box';
+          target.style.transitionProperty = "height, margin, padding";
+          target.style.transitionDuration = duration + 'ms';
+          target.style.height = height + 'px';
+
+          target.style.removeProperty('padding-top');
+          target.style.removeProperty('padding-bottom');
+          target.style.removeProperty('margin-top');
+          target.style.removeProperty('margin-bottom');
+          
+          window.setTimeout( () => {
+              target.style.removeProperty('height');
+              target.style.removeProperty('overflow');
+              target.style.removeProperty('transition-duration');
+              target.style.removeProperty('transition-property');
+          }, duration);
+       }, 100)
+    }
+
+    /* TOOGLE */
+    var slideToggle = (target, duration = 500) => {
+        if (window.getComputedStyle(target).display === 'none') {
+            return slideDown(target, duration);
+        } else {
+            return slideUp(target, duration);
+        }
+    }
+
+    /* FADE */
+    var toggleFadeiSense = (elem, show) => {
+        if (show) {
+            elem.style.display = elem.id === 'data-verification-background' ? 'flex' : 'block';
+            setTimeout(function(){
+                elem.classList.add('show-isense');
+                elem.classList.remove('hide-isense');
+            },20)
+        } else {
+            elem.classList.remove('show-isense');
+            elem.classList.add('hide-isense');
+            setTimeout(() => {
+                elem.style.display = 'none';
+            }, 400)
+        }
+    }
+
+    var gdprSlideUpAll = function() {
+        slideUp(document.querySelector('#form-gdpr-access-data-request'), 100);
+        if(document.querySelector('#btn-gdpr-access-data-request')) document.querySelector('#btn-gdpr-access-data-request').setAttribute("aria-expanded", "false");
+        slideUp(document.querySelector('#form-gdpr-correct-info-request'), 100);
+        if(document.querySelector('#btn-gdpr-correct-info-request')) document.querySelector('#btn-gdpr-correct-info-request').setAttribute("aria-expanded", "false");
+        slideUp(document.querySelector('#form-gdpr-delete-data-request'), 100);
+        if(document.querySelector('#btn-gdpr-delete-data-request')) document.querySelector('#btn-gdpr-delete-data-request').setAttribute("aria-expanded", "false");
+        slideUp(document.querySelector('#form-gdpr-withdraw-consent-request'), 100);
+        if(document.querySelector('#btn-gdpr-withdraw-consent-request')) document.querySelector('#btn-gdpr-withdraw-consent-request').setAttribute("aria-expanded", "false");
+        if(document.querySelector('#gdpr_page button')) document.querySelector('#gdpr_page button').setAttribute("aria-expanded", "false");
+    };
+
+    var email, type, consentGiven = false;
+    var activeEnvoyerButton = null;
+    var successMessage = 'Votre demande a bien été envoyée. Consultez votre boîte e-mail pour la suite.';
+    var verificationModalContent = '<div id="data-verification-background"><div class="loading"></div><div id="data-verification-modal"><button class="data-verification-close" aria-label="Fermer">&times;</button><div id="data-verification-container"><input type="checkbox" aria-labelledby="gdpr-modal-container-text"><label id="data-verification-icon" aria-label="Icône de vérification des données"><svg width="24px" height="24px" viewBox="0 0 18 18"><path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path></path><polyline points="1 9 7 14 15 4"></polyline></svg></label><p id="gdpr-modal-container-text">J\'accepte que mon adresse e-mail et mon adresse IP soient collectées pour traiter cette demande. En savoir plus : <a href="https://www.consentmo.com/privacy-policy-terms-of-service/fr" target="_blank" aria-label="Politique de confidentialité (nouvel onglet)">politique de confidentialité de Consentmo</a>.</p></div></div></div>';
+
+    var isEmailValid = function(email) {
+        let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (email == '' || email == undefined) {
+            return false;
+        } else {
+            return regex.test(email);
+        }
+    }
+
+    var gdprSendRequest = function(callback) {
+        
+        fetch('https://www.cloudflare.com/cdn-cgi/trace', {
+            method: 'GET' ,
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+        })
+        .then(resp => resp.text())
+        .then(resp => {
+            if (!resp.error) {
+                let ipInfo = resp;
+
+                let formData = new FormData();
+
+                formData.append('shop', Shopify.shop);
+                formData.append('email', email);
+                formData.append('type', type);
+                formData.append('sourceOfRequest', 1);
+                formData.append('ipAddress', ipInfo);
+                formData.append('consentGiven', consentGiven);
+                formData.append('page', 'gdpr');
+                formData.append('lang', Shopify.locale ? Shopify.locale : '');
+                formData.append('gtranslateLang', (typeof isenseGDPR !== 'undefined' && isenseGDPR.Cookies) ? isenseGDPR.Cookies.get('googtrans') : '');
+
+                fetch('https://app.consentmo.com/gdprRequests/submitRequest', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(resp => resp.json())
+                .then(resp => {
+                    if (!resp.error) {
+                        showInlineSuccessMessage();
+                    } else {
+                        showInlineErrorMessage(resp.message);
+                    }
+                    if (typeof callback == 'function') {
+                        callback(resp);
+                    }
+                })
+                .catch(error => {
+                    showInlineErrorMessage(error.message || 'Une erreur s’est produite. Veuillez réessayer.');
+                })
+
+            } 
+            else {
+                showInlineErrorMessage(resp.message || 'Une erreur s’est produite. Veuillez réessayer.');
+            }                        
+        })
+    }
+
+    function showInlineSuccessMessage() {
+        if (!activeEnvoyerButton) {
+            return;
+        }
+        var form = activeEnvoyerButton.closest('form');
+        if (!form) {
+            return;
+        }
+        var errNode = form.querySelector('.gdpr-request-error');
+        if (errNode) {
+            errNode.remove();
+        }
+        var successNode = form.querySelector('.gdpr-request-success');
+        if (!successNode) {
+            successNode = document.createElement('p');
+            successNode.className = 'gdpr-request-success';
+            form.appendChild(successNode);
+        }
+        successNode.textContent = successMessage;
+    }
+
+    function showInlineErrorMessage(message) {
+        if (!activeEnvoyerButton) {
+            return;
+        }
+        var form = activeEnvoyerButton.closest('form');
+        if (!form) {
+            return;
+        }
+        var successNode = form.querySelector('.gdpr-request-success');
+        if (successNode) {
+            successNode.remove();
+        }
+        var errorNode = form.querySelector('.gdpr-request-error');
+        if (!errorNode) {
+            errorNode = document.createElement('p');
+            errorNode.className = 'gdpr-request-error';
+            form.appendChild(errorNode);
+        }
+        errorNode.textContent = message;
+    }
+
+
+    
+    document.addEventListener("DOMContentLoaded", function() {
+
+      //Append modal to body, because otherwise it will not stay centered(even if position is fixed)
+      document.querySelector("body").insertAdjacentHTML( 'beforeend', verificationModalContent);
+      
+      // When the user clicks on <span> (x), close the modal
+      document.querySelector('.data-verification-close').addEventListener('click', function(e) {
+          e.preventDefault();
+          closeVerificationModal();
+      });
+
+      document.querySelector('#data-verification-icon, #data-verification-container p').addEventListener('click', function(e) {
+          e.preventDefault();
+
+          // Detect a href's click, because it is overwritten.
+          if(e.target.tagName === "A") {
+            window.open(e.target.href, '_blank');
+            return;
+          }
+
+          document.querySelector('#data-verification-icon').classList.add("clicked");
+          setTimeout(()=>{
+            toggleFadeiSense(document.querySelector("#data-verification-modal"), false);
+            document.querySelector('#data-verification-background .loading').style.display = 'inline-block';
+            consentGiven = true;
+            gdprSendRequest(function(resp) {
+                consentGiven = false;
+                closeVerificationModal();
+            });
+          }, 400);
+      });
+    });
+
+    function openVerificationModal(){
+        if(!isEmailValid(email)) {
+            showInlineErrorMessage('L\'e-mail n\'est pas valide');
+            return;
+        }   
+        toggleFadeiSense(document.querySelector("#data-verification-modal"), true);
+        toggleFadeiSense(document.querySelector('#data-verification-background'), true);
+        document.querySelector('#data-verification-container input').focus();
+    }
+
+    function closeVerificationModal(){
+        toggleFadeiSense(document.querySelector("#data-verification-background"), false);
+
+        document.querySelector('#data-verification-icon').classList.remove("clicked");
+        document.querySelector('#data-verification-background .loading').style.display = 'none';
+
+        // Focus the button of the request type that was picked
+        let gdprForms = document.querySelectorAll('.form-gdpr-request');
+        gdprForms.forEach(function(gdprForm) {
+          if (gdprForm.style.display !== "none") {
+            let gdprFormLinks = gdprForm.previousElementSibling.querySelectorAll('li');
+            if (gdprFormLinks.length === 1) {
+              gdprFormLinks[0].querySelector('button').focus();
+            } else {
+              // Focus logic for Data Portability requests
+              gdprFormLinks = gdprForm.parentElement;
+              if (gdprFormLinks.nodeName === 'LI') {
+                gdprFormLinks.querySelector('button').focus();
+              }
+            }
+          }
+        });
+    }
+
+    // Accès aux Données Personnelles
+    document.querySelector('#btn-gdpr-access-data-request').addEventListener('click', function(e) {
+        e.preventDefault();
+        let isExpanded = this.getAttribute('aria-expanded') === 'true' ? true : false;
+        gdprSlideUpAll();
+        if(!isExpanded) {
+          slideDown(document.querySelector('#form-gdpr-access-data-request'), 200);
+          this.setAttribute("aria-expanded", "true");
+        } else {
+          slideUp(document.querySelector('#form-gdpr-access-data-request'), 200);
+          this.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    document.querySelector('#form-gdpr-access-data-request-submit').addEventListener('click', function(e) {
+        e.preventDefault();
+        activeEnvoyerButton = this;
+        email = document.querySelector('#form-gdpr-access-data-request-email').value;
+        type = 'customer/report';
+        openVerificationModal();
+    });
+
+    // Rectification des Données
+    document.querySelector('#btn-gdpr-correct-info-request').addEventListener('click', function(e) {
+        e.preventDefault();
+        let isExpanded = this.getAttribute('aria-expanded') === 'true' ? true : false;
+        gdprSlideUpAll();
+        if(!isExpanded) {
+          slideDown(document.querySelector('#form-gdpr-correct-info-request'), 200);
+          this.setAttribute("aria-expanded", "true");
+        } else {
+          slideUp(document.querySelector('#form-gdpr-correct-info-request'), 200);
+          this.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    document.querySelector('#form-gdpr-correct-info-request-submit').addEventListener('click', function(e) {
+        e.preventDefault();
+        activeEnvoyerButton = this;
+        email = document.querySelector('#form-gdpr-correct-info-request-email').value;
+        type = 'customer/edit';
+        openVerificationModal();
+    });
+
+    // Droit à l'Oubli
+    document.querySelector('#btn-gdpr-delete-data-request').addEventListener('click', function(e) {
+        e.preventDefault();
+        let isExpanded = this.getAttribute('aria-expanded') === 'true' ? true : false;
+        gdprSlideUpAll();
+        if(!isExpanded) {
+          slideDown(document.querySelector('#form-gdpr-delete-data-request'), 200);
+          this.setAttribute("aria-expanded", "true");
+        } else {
+          slideUp(document.querySelector('#form-gdpr-delete-data-request'), 200);
+          this.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    document.querySelector('#form-gdpr-delete-data-request-submit').addEventListener('click', function(e) {
+        e.preventDefault();
+        activeEnvoyerButton = this;
+        email = document.querySelector('#form-gdpr-delete-data-request-email').value;
+        type = 'customer/delete';
+        openVerificationModal();
+    });
+
+    // Retirer le consentement
+    document.querySelector('#btn-gdpr-withdraw-consent-request').addEventListener('click', function(e) {
+        e.preventDefault();
+        let isExpanded = this.getAttribute('aria-expanded') === 'true' ? true : false;
+        gdprSlideUpAll();
+        if(!isExpanded) {
+          slideDown(document.querySelector('#form-gdpr-withdraw-consent-request'), 200);
+          this.setAttribute("aria-expanded", "true");
+        } else {
+          slideUp(document.querySelector('#form-gdpr-withdraw-consent-request'), 200);
+          this.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    document.querySelector('#form-gdpr-withdraw-consent-request-submit').addEventListener('click', function(e) {
+        e.preventDefault();
+        activeEnvoyerButton = this;
+        email = document.querySelector('#form-gdpr-withdraw-consent-request-email').value;
+        type = 'customer/withdraw_consent';
+        openVerificationModal();
+    });
+
+    // Manage privacy preferences
+    document.querySelector('#btn-gdpr-manage-privacy-preferences').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        if (typeof showPreferences === 'function') {
+            showPreferences(this);
+            return;
+        }
+
+        let settingsButton = document.querySelector('.cc-window .cc-settings');
+        if (settingsButton) {
+            settingsButton.click();
+            return;
+        }
+
+        alert('Les paramètres des cookies ne sont pas disponibles sur cette page.');
+    });
+
+    // Keyboard navigation in data verification modal for accessibility
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelector('#data-verification-modal').addEventListener('keydown', function(e) {
+      let isTabPressed = e.keyCode === 9 || e.key === "Tab" || e.code === "Tab";
+      let isEscapePressed = e.keyCode === 27 || e.key === "Escape" || e.code === "Escape";
+      let isSpacePressed = event.keyCode === 32 || e.key === " " || event.code === "Space";
+      let isEnterPressed = event.keyCode === 13 || e.key === "Enter" || event.code === "Enter";
+      let dataVerificationCloseButton = document.querySelector('.data-verification-close');
+      let dataVerificationCheckbox = document.querySelector('#data-verification-container input');
+      let dataVerificationLink = document.querySelector('#data-verification-container a');
+      // This function saves us the trouble of calling e.preventDefault() after every focusing
+      let executeFocus = (focusElement) => {focusElement.focus();e.preventDefault();}
+
+      if (isEscapePressed) {
+        if (dataVerificationCloseButton) {
+          dataVerificationCloseButton.click();
+        }
+      }
+
+      if (isSpacePressed || isEnterPressed) {
+        if (document.activeElement === dataVerificationCheckbox) {
+          document.querySelector('#data-verification-container #data-verification-icon').click();
+        }
+      }
+
+      if (isTabPressed) {
+        if (e.shiftKey) {
+          if (dataVerificationCloseButton && document.activeElement === dataVerificationCloseButton) {
+            executeFocus(dataVerificationLink);
+          }
+        } else {
+          if (dataVerificationLink && document.activeElement === dataVerificationLink) {
+            executeFocus(dataVerificationCloseButton);
+          }
+        }
+      }
+      });
+    });
+</script>
