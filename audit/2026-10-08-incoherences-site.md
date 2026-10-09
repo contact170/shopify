@@ -81,7 +81,7 @@ Le widget d'avis affiche **« gerardmottais@gmail.com »** comme nom d'auteur d'
 - **« 6 Léon Maurane, 33700 Mérignac »** : `/pages/demandes-rgpd-confidentialite`, comme adresse du DPO. ❓ Ancienne adresse ?
 - (35 rue Jacques Prévert : point relais de retour sur `/pages/retours-sav`. Normal.)
 
-### 2.3 Horaires du service client
+### 2.3 Horaires du service client (⏸ décision du 9/10 : on laisse en l'état)
 - Accueil : « 05 47 74 29 40 du **lundi au samedi, 9 h – 19 h** ».
 - Collection Touch, blogs : « équipe joignable **5j/7** » (donc pas le samedi ?).
 
@@ -90,6 +90,8 @@ Le widget d'avis affiche **« gerardmottais@gmail.com »** comme nom d'auteur d'
 ---
 
 ## 🟠 PRIORITÉ 3 – Délais d'expédition et de livraison
+
+> ✅ 9/10 : règle validée (commande complète avant midi = expédiée le jour même du lundi au vendredi, livraison 48-72 h, offerte dès 50 € en France et en Belgique). Thème corrigé dans la copie « Délais livraison harmonisés 09102026 (Claude) » (60 fichiers) — à publier. Pages Livraison & Retour et configurateur mises à jour. Politique d'expédition : à coller.
 
 Au moins **7 versions différentes** coexistent :
 | Message | Où |
