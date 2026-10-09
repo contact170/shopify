@@ -1,0 +1,295 @@
+{% comment %}
+  Nos 3 gammes — 02/09/2026
+  Les images utilisaient class="lazyload" + data-src sans aucun src :
+  le navigateur affichait l'icône d'image cassée avant que le script ne
+  prenne le relais. Remplacé par le lazy-loading natif.
+{% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  .gs-section * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .gs-section {
+    font-family: 'Poppins', sans-serif;
+    padding: 64px 48px;
+    background: transparent;
+  }
+
+  .gs-inner { max-width: 1100px; margin: 0 auto; }
+
+  .gs-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .gs-tag {
+    display: inline-block;
+    background: #e6f1fb;
+    color: #185fa5;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .gs-title {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    color: #0f1a2e;
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+
+  .gs-subtitle {
+    font-size: 15px;
+    color: #6b7280;
+  }
+
+  .gs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .gs-card {
+    background: #fff;
+    border-radius: 18px;
+    border: 1.5px solid #e5e7eb;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .gs-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+  }
+
+  .gs-card.featured {
+    border: 2px solid #1a4faa;
+  }
+
+  .gs-card-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .gs-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .gs-card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #1a4faa;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    z-index: 2;
+  }
+
+  .gs-card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .gs-card-ref {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .gs-card-ref.blue   { color: #185fa5; }
+  .gs-card-ref.purple { color: #7c3aed; }
+
+  .gs-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f1a2e;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .gs-card-desc {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .gs-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+
+  .gs-feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #374151;
+  }
+
+  .gs-feature-check {
+    font-size: 13px;
+  }
+
+  .gs-feature-check.blue   { color: #1a4faa; }
+  .gs-feature-check.purple { color: #7c3aed; }
+
+  .gs-btn {
+    display: block;
+    text-align: center;
+    padding: 13px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .gs-btn:hover { transform: translateY(-1px); text-decoration: none; }
+
+  .gs-btn.blue-outline {
+    background: #f0f4ff;
+    color: #185fa5;
+  }
+
+  .gs-btn.blue-outline:hover { background: #dbeafe; color: #185fa5; }
+
+  .gs-btn.blue-solid {
+    background: #1a4faa;
+    color: #fff;
+  }
+
+  .gs-btn.blue-solid:hover { background: #2260cc; color: #fff; }
+
+  .gs-btn.purple-outline {
+    background: #f5f3ff;
+    color: #7c3aed;
+  }
+
+  .gs-btn.purple-outline:hover { background: #ede9fe; color: #7c3aed; }
+
+  @media (max-width: 768px) {
+    .gs-section { padding: 48px 0; }
+    .gs-header   { padding: 0 24px; }
+
+    .gs-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 16px;
+      padding: 8px 24px 16px;
+      scrollbar-width: none;
+      align-items: stretch;
+    }
+
+    .gs-grid::-webkit-scrollbar { display: none; }
+
+    .gs-card {
+      flex: 0 0 78vw;
+      max-width: 300px;
+      scroll-snap-align: start;
+    }
+  }
+</style>
+
+<div class="gs-section">
+  <div class="gs-inner">
+
+    <div class="gs-header">
+      <span class="gs-tag">Nos 3 gammes</span>
+      <h2 class="gs-title">Nos gammes d'alarmes</h2>
+      <p class="gs-subtitle">Choisissez selon votre logement et votre niveau d'exigence.</p>
+    </div>
+
+    <div class="gs-grid">
+
+      <!-- Vigilia -->
+      <div class="gs-card">
+        <div class="gs-card-img" style="background:#dbeafe;">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Visuels_amazon_vendor_3_a1675f6c-d7ca-46f7-bf83-a223e20eb5e5.webp?v=1777539260&width=700" alt="Gamme Vigilia" loading="lazy" decoding="async">
+        </div>
+        <div class="gs-card-body">
+          <p class="gs-card-ref blue">Vigilia</p>
+          <p class="gs-card-title">Simple & rapide</p>
+          <p class="gs-card-desc">Idéale pour un appartement ou une maison. Sans fil, sans câble.</p>
+          <div class="gs-features">
+            <div class="gs-feature"><span class="gs-feature-check blue">✓</span> Wi-Fi + batterie de secours</div>
+            <div class="gs-feature"><span class="gs-feature-check blue">✓</span> Jusqu'à 60 accessoires</div>
+            <div class="gs-feature"><span class="gs-feature-check blue">✓</span> App gratuite incluse</div>
+          </div>
+          <a href="https://daewoo-security.fr/collections/systeme-dalarme-vigilia" class="gs-btn blue-outline">Voir la gamme →</a>
+        </div>
+      </div>
+
+      <!-- Touch -->
+      <div class="gs-card featured">
+        <div class="gs-card-img" style="background:#bfdbfe;position:relative;">
+          <div class="gs-card-badge">Populaire</div>
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/BANNIERE_PC_VIGILIA_1450_x_700_px_1700_x_900_px_1700_x_700_px_7.webp?v=1777540487&width=700" alt="Gamme Touch" loading="lazy" decoding="async">
+        </div>
+        <div class="gs-card-body">
+          <p class="gs-card-ref blue">Touch</p>
+          <p class="gs-card-title">Moderne & évolutive</p>
+          <p class="gs-card-desc">Écran tactile couleur. Pilotez tout depuis la centrale ou le smartphone.</p>
+          <div class="gs-features">
+            <div class="gs-feature"><span class="gs-feature-check blue">✓</span> Écran tactile 4,3'' ou 7''</div>
+            <div class="gs-feature"><span class="gs-feature-check blue">✓</span> Wi-Fi + 4G optionnel</div>
+            <div class="gs-feature"><span class="gs-feature-check blue">✓</span> Batterie 4h à 20h</div>
+          </div>
+          <a href="https://daewoo-security.fr/collections/systeme-dalarme-am301-am302" class="gs-btn blue-solid">Voir la gamme →</a>
+        </div>
+      </div>
+
+      <!-- Élite -->
+      <div class="gs-card">
+        <div class="gs-card-img" style="background:#ede9fe;">
+          <img src="https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Visuels_amazon_vendor_4.webp?v=1777541137&width=700" alt="Gamme Élite" loading="lazy" decoding="async">
+        </div>
+        <div class="gs-card-body">
+          <p class="gs-card-ref purple">Élite</p>
+          <p class="gs-card-title">Renforcée & pro</p>
+          <p class="gs-card-desc">Zigbee 3.0, triple connexion, batterie 10 h. Pour les grandes maisons.</p>
+          <div class="gs-features">
+            <div class="gs-feature"><span class="gs-feature-check purple">✓</span> RJ45 + Wi-Fi + 4G</div>
+            <div class="gs-feature"><span class="gs-feature-check purple">✓</span> Zigbee 3.0 — réseau maillé</div>
+            <div class="gs-feature"><span class="gs-feature-check purple">✓</span> Batterie de secours 10 h</div>
+          </div>
+          <a href="https://daewoo-security.fr/collections/systeme-dalarme-pa501z" class="gs-btn purple-outline">Voir la gamme →</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

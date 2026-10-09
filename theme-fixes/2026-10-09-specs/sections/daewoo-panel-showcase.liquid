@@ -1,0 +1,254 @@
+{%- comment -%}
+  Daewoo Security — centrale/panel showcase banner. Apple-style visual language:
+  system font stack, generous whitespace, large tight headline, thin-line icon
+  chips, pill CTA style reserved for buttons elsewhere on the page.
+{%- endcomment -%}
+
+<div class="dps-wrap">
+  <div class="dps-container">
+    <div class="dps-grid">
+
+      <div class="dps-col dps-col--left">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="dps-heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="dps-description">{{ section.settings.description }}</p>
+        {%- endif -%}
+
+        <div class="dps-features">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'feature' and block.settings.side == 'left' -%}
+              <div class="dps-feature" {{ block.shopify_attributes }}>
+                <span class="dps-feature__icon">{% render 'daewoo-panel-icon', icon: block.settings.icon %}</span>
+                <span class="dps-feature__text">
+                  <strong>{{ block.settings.title }}</strong>
+                  {%- if block.settings.description != blank -%}
+                    <span>{{ block.settings.description }}</span>
+                  {%- endif -%}
+                </span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="dps-col dps-col--image">
+        {%- if section.settings.image_url != blank -%}
+          <img
+            class="dps-image"
+            src="{{ section.settings.image_url }}"
+            alt="{{ section.settings.image_alt | default: section.settings.heading | escape }}"
+            loading="lazy"
+            width="1200"
+            height="1200"
+          >
+        {%- endif -%}
+      </div>
+
+      <div class="dps-col dps-col--right">
+        <div class="dps-features">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'feature' and block.settings.side == 'right' -%}
+              <div class="dps-feature" {{ block.shopify_attributes }}>
+                <span class="dps-feature__icon">{% render 'daewoo-panel-icon', icon: block.settings.icon %}</span>
+                <span class="dps-feature__text">
+                  <strong>{{ block.settings.title }}</strong>
+                  {%- if block.settings.description != blank -%}
+                    <span>{{ block.settings.description }}</span>
+                  {%- endif -%}
+                </span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .dps-wrap {
+    padding-block: clamp(4rem, 8vw, 7.5rem);
+    background: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  .dps-wrap * {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+  }
+
+  .dps-container {
+    margin-inline: auto;
+    max-width: 1200px;
+    padding-inline: clamp(1.25rem, 3vw, 2.5rem);
+  }
+
+  .dps-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .dps-col--left,
+  .dps-col--right {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.75rem, 2.5vw, 2.25rem);
+  }
+
+  .dps-heading {
+    margin: 0 0 0.7rem;
+    font-size: clamp(1.9rem, 1.8vw + 1.2rem, 2.5rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #1d1d1f;
+  }
+
+  .dps-description {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: #6e6e73;
+    max-width: 32rem;
+  }
+
+  .dps-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .dps-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .dps-feature__icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #f5f5f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0071e3;
+  }
+
+  .dps-feature__icon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .dps-feature__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-top: 0.3rem;
+  }
+
+  .dps-feature__text strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    letter-spacing: -0.005em;
+  }
+
+  .dps-feature__text span {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #6e6e73;
+  }
+
+  .dps-col--image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dps-image {
+    display: block !important;
+    width: 100% !important;
+    max-width: 480px;
+    height: auto !important;
+  }
+
+  @media screen and (max-width: 900px) {
+    .dps-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .dps-col--image {
+      order: -1;
+    }
+
+    .dps-col--left,
+    .dps-col--right {
+      gap: 1.6rem;
+    }
+
+    .dps-heading {
+      text-align: center;
+    }
+
+    .dps-description {
+      text-align: center;
+      max-width: none;
+      margin-inline: auto;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Daewoo — Vitrine centrale",
+  "class": "daewoo-panel-showcase-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Tout commence ici." },
+    { "type": "textarea", "id": "description", "label": "Texte d'introduction", "default": "Compacte, simple à utiliser et pensée pour le quotidien, la centrale Vigilia réunit l'essentiel dans un seul produit." },
+    { "type": "url", "id": "image_url", "label": "Image de la centrale (URL)", "info": "Collez ici l'URL d'une image déjà présente dans votre bibliothèque de fichiers Shopify." },
+    { "type": "text", "id": "image_alt", "label": "Texte alternatif de l'image" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Fonctionnalité",
+      "settings": [
+        { "type": "select", "id": "side", "label": "Colonne", "options": [
+          { "value": "left", "label": "Gauche" },
+          { "value": "right", "label": "Droite" }
+        ], "default": "left" },
+        { "type": "select", "id": "icon", "label": "Icône", "options": [
+          { "value": "keypad", "label": "Clavier" },
+          { "value": "rfid", "label": "Badge RFID" },
+          { "value": "siren", "label": "Sirène" },
+          { "value": "battery", "label": "Batterie" },
+          { "value": "wifi", "label": "Wi-Fi" },
+          { "value": "sim", "label": "Carte SIM" }
+        ], "default": "keypad" },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Fonctionnalité" },
+        { "type": "text", "id": "description", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Daewoo — Vitrine centrale",
+      "blocks": [
+        { "type": "feature", "settings": { "side": "left", "icon": "keypad", "title": "Clavier intégré", "description": "Activez et désactivez directement depuis la centrale." } },
+        { "type": "feature", "settings": { "side": "left", "icon": "rfid", "title": "Lecteur RFID", "description": "Un badge suffit pour désarmer l'alarme." } },
+        { "type": "feature", "settings": { "side": "left", "icon": "siren", "title": "Sirène intégrée 90 dB", "description": "Une première dissuasion immédiatement dans le logement." } },
+        { "type": "feature", "settings": { "side": "right", "icon": "battery", "title": "Batterie de secours", "description": "Environ 4 heures d'autonomie en cas de coupure de courant." } },
+        { "type": "feature", "settings": { "side": "right", "icon": "wifi", "title": "Connexion Wi-Fi 2,4 GHz", "description": "Pilotage via l'application Daewoo Home Connect." } },
+        { "type": "feature", "settings": { "side": "right", "icon": "sim", "title": "Version Wi-Fi + GSM disponible", "description": "Ajoutez une carte SIM pour recevoir des alertes SMS en cas de coupure Internet." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

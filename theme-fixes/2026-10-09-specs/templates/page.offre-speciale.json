@@ -1,0 +1,128 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "offre-psi-pv",
+      "blocks": {
+        "vigilia": {
+          "type": "centrale",
+          "settings": {
+            "product": "pack-securite-integrale-offre-speciale-vigilia-avec-2-cameras-et-sirene-solaire",
+            "slug": "vigilia",
+            "tab_label": "Vigilia",
+            "tab_sub": "Wi-Fi",
+            "badge": "",
+            "title": "Pack Sécurité Intégrale · Vigilia",
+            "description": "La plus simple : clavier et badge, pour toute la famille.",
+            "bullet_1": "Clavier tactile et lecteur de badges intégrés",
+            "bullet_2": "2 badges RFID inclus",
+            "bullet_3": "Connexion Wi-Fi 2,4 GHz",
+            "ref_value": "433,08",
+            "has_sim": false,
+            "has_rfid": true,
+            "centrale_name": "Centrale d'alarme Vigilia",
+            "centrale_note": "Wi-Fi. Clavier tactile et sirène 90 dB intégrés, batterie de secours 4 h.",
+            "spec_centrale": "Vigilia · clavier tactile et lecteur de badges, sirène 90 dB intégrée",
+            "spec_connectivite": "Wi-Fi 2,4 GHz",
+            "spec_batterie": "4 heures",
+            "centrale_image": "shopify://shop_images/Centrale-Vigilia-alarme-daewoo-security.webp"
+          }
+        },
+        "vigilia_plus": {
+          "type": "centrale",
+          "settings": {
+            "product": "pack-securite-integrale-offre-speciale-vigilia-wifi-4g-avec-2-cameras-et-sirene-solaire",
+            "slug": "vigilia-plus",
+            "tab_label": "Vigilia +",
+            "tab_sub": "Wi-Fi + 4G",
+            "badge": "Recommandé",
+            "title": "Pack Sécurité Intégrale · Vigilia +",
+            "description": "La Vigilia, avec la 4G en secours si la box est coupée.",
+            "bullet_1": "Clavier tactile et 2 badges RFID inclus",
+            "bullet_2": "Wi-Fi + 4G (carte SIM non fournie)",
+            "bullet_3": "Alertes SMS et appel même sans internet",
+            "ref_value": "475,58",
+            "has_sim": true,
+            "has_rfid": true,
+            "centrale_name": "Centrale d'alarme Vigilia +",
+            "centrale_note": "Wi-Fi + 4G. Clavier tactile et sirène 90 dB intégrés, batterie de secours 4 h.",
+            "spec_centrale": "Vigilia + · clavier tactile et lecteur de badges, sirène 90 dB intégrée",
+            "spec_connectivite": "Wi-Fi 2,4 GHz + 4G (carte SIM non fournie)",
+            "spec_batterie": "4 heures",
+            "centrale_image": "shopify://shop_images/Centrale-Vigilia-alarme-daewoo-security.webp"
+          }
+        },
+        "touch": {
+          "type": "centrale",
+          "settings": {
+            "product": "pack-securite-integrale-offre-speciale-touch-am301-wifi-4g-avec-2-cameras-et-sirene-solaire",
+            "slug": "touch",
+            "tab_label": "Touch",
+            "tab_sub": "Écran 4,3\"",
+            "badge": "",
+            "title": "Pack Sécurité Intégrale · Touch",
+            "description": "Tout voir d'un coup d'œil sur un écran tactile couleur.",
+            "bullet_1": "Écran tactile couleur 4,3\"",
+            "bullet_2": "Wi-Fi + 4G (carte SIM non fournie)",
+            "bullet_3": "Batterie de secours 4 h",
+            "ref_value": "519,77",
+            "has_sim": true,
+            "has_rfid": false,
+            "centrale_name": "Centrale d'alarme Touch AM301",
+            "centrale_note": "Écran tactile couleur 4,3\", Wi-Fi + 4G, batterie de secours 4 h.",
+            "spec_centrale": "Touch AM301 · écran tactile couleur 4,3\"",
+            "spec_connectivite": "Wi-Fi 2,4 GHz + 4G (carte SIM non fournie)",
+            "spec_batterie": "4 heures",
+            "centrale_image": "shopify://shop_images/01_AM301_centrale_photo_principale.webp",
+            "centrale_product": "centrale-touch-am301-avec-ecran-tactile-4-3"
+          }
+        },
+        "touch_xl": {
+          "type": "centrale",
+          "settings": {
+            "product": "pack-securite-integrale-offre-speciale-touch-xl-am302-wifi-4g-avec-2-cameras-et-sirene-solaire",
+            "slug": "touch-xl",
+            "tab_label": "Touch XL",
+            "tab_sub": "Écran 7\"",
+            "badge": "",
+            "title": "Pack Sécurité Intégrale · Touch XL",
+            "description": "Le grand écran et la plus longue autonomie de la gamme.",
+            "bullet_1": "Grand écran tactile couleur 7\"",
+            "bullet_2": "Wi-Fi + 4G (carte SIM non fournie)",
+            "bullet_3": "Batterie de secours 20 h",
+            "ref_value": "569,20",
+            "has_sim": true,
+            "has_rfid": false,
+            "centrale_name": "Centrale d'alarme Touch XL AM302",
+            "centrale_note": "Grand écran tactile couleur 7\", Wi-Fi + 4G, batterie de secours 20 h.",
+            "spec_centrale": "Touch XL AM302 · grand écran tactile couleur 7\"",
+            "spec_connectivite": "Wi-Fi 2,4 GHz + 4G (carte SIM non fournie)",
+            "spec_batterie": "20 heures",
+            "centrale_product": "centrale-am302"
+          }
+        }
+      },
+      "block_order": [
+        "vigilia",
+        "vigilia_plus",
+        "touch",
+        "touch_xl"
+      ],
+      "settings": {
+        "end_date": "2026-10-31T23:59:59+01:00",
+        "stickers_image": "shopify://shop_images/pack-securite-integrale-2-autocollants-daewoo.webp"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
