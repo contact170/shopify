@@ -91,7 +91,7 @@ Le widget d'avis affiche **« gerardmottais@gmail.com »** comme nom d'auteur d'
 
 ## 🟠 PRIORITÉ 3 – Délais d'expédition et de livraison
 
-> ✅ 9/10 : règle validée (commande complète avant midi = expédiée le jour même du lundi au vendredi, livraison 48-72 h, offerte dès 50 € en France et en Belgique). Thème corrigé dans la copie « Délais livraison harmonisés 09102026 (Claude) » (60 fichiers) — à publier. Pages Livraison & Retour et configurateur mises à jour. Politique d'expédition : à coller.
+> ✅ 9/10 : règle validée (commande complète avant midi = expédiée le jour même du lundi au vendredi, livraison 48-72 h, offerte dès 50 € en France et en Belgique). Thème « Délais livraison harmonisés 09102026 (Claude) » publié le 9/10, pages et politique d'expédition à jour. Vérifié en ligne sur 233 pages.
 
 Au moins **7 versions différentes** coexistent :
 | Message | Où |
