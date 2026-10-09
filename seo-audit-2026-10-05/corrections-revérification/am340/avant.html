@@ -1,0 +1,217 @@
+<p><meta charset="UTF-8"> <meta content="width=device-width, initial-scale=1.0" name="viewport"></p>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.touch-pack-wrapper { max-width: 780px; width: 100%; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; color: #1a1a1a; }
+.touch-hero { background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 60%, #1F3864 100%); border-radius: 10px; padding: 28px; margin-bottom: 20px; }
+.touch-hero h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.touch-hero p { font-size: 13px; color: #a8c4e0; line-height: 1.5; }
+.touch-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.touch-badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: rgba(255,255,255,0.13); color: #E6F1FB; }
+.touch-badge-gsm { background: rgba(239,159,39,0.25); color: #FAC775; }
+.touch-badge-screen { background: rgba(52,168,83,0.25); color: #8fe0a4; }
+.touch-badge-cam { background: rgba(120,80,220,0.25); color: #c9aaff; }
+.touch-intro { font-size: 14px; color: #444; line-height: 1.75; margin-bottom: 20px; }
+.touch-gsm-banner { background: #FAEEDA; border-left: 4px solid #BA7517; border-radius: 0 8px 8px 0; padding: 14px 16px; margin-bottom: 24px; }
+.touch-gsm-banner h3 { font-size: 13px; font-weight: 700; color: #412402; margin-bottom: 6px; }
+.touch-gsm-banner ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.touch-gsm-banner ul li { font-size: 13px; color: #633806; padding-left: 16px; position: relative; }
+.touch-gsm-banner ul li::before { content: ""; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: #BA7517; }
+.touch-gsm-note { font-size: 12px; color: #7a4a10; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e8c98a; font-style: italic; }
+.touch-central-banner { background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%); border: 1px solid #c5d0f0; border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; }
+.touch-central-banner h3 { font-size: 14px; font-weight: 700; color: #1F3864; margin-bottom: 10px; }
+.touch-central-specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.touch-spec-pill { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 99px; background: #1F3864; color: #fff; }
+.touch-spec-pill-green { background: #27500A; }
+.touch-spec-pill-amber { background: #633806; }
+.touch-spec-pill-purple { background: #4a1a8a; }
+.touch-section-title { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; }
+.touch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
+@media (max-width: 520px) { .touch-grid { grid-template-columns: 1fr; } }
+.touch-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 14px 16px; }
+.touch-card-cam { border: 1px solid #34a853; background: #f6fff8; }
+.touch-card-icon { font-size: 18px; margin-bottom: 8px; }
+.touch-card h3 { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
+.touch-card p { font-size: 12px; color: #555; line-height: 1.55; }
+.touch-tag { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 99px; }
+.touch-tag-blue { background: #E6F1FB; color: #0C447C; }
+.touch-tag-green { background: #EAF3DE; color: #27500A; }
+.touch-tag-amber { background: #FAEEDA; color: #633806; }
+.touch-tag-purple { background: #f0eaff; color: #4a1a8a; }
+.touch-features { margin-bottom: 24px; }
+.touch-feat { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+.touch-feat:last-child { border-bottom: none; }
+.touch-feat-dot { width: 7px; height: 7px; border-radius: 50%; background: #1F3864; margin-top: 4px; flex-shrink: 0; }
+.touch-feat strong { color: #1a1a1a; }
+.touch-feat span { color: #555; }
+.touch-avantages { background: #f0f4ff; border: 1px solid #c5d0f0; border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; }
+.touch-avantages h3 { font-size: 13px; font-weight: 700; color: #1F3864; margin-bottom: 10px; }
+.touch-avantages ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.touch-avantages ul li { font-size: 13px; color: #333; padding-left: 16px; position: relative; line-height: 1.5; }
+.touch-avantages ul li::before { content: ""; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: #1F3864; }
+.touch-box { background: #f7f8f9; border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; }
+.touch-box-list { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
+.touch-box-item { display: flex; align-items: baseline; gap: 8px; font-size: 13px; }
+.touch-qty { font-weight: 700; color: #1F3864; min-width: 24px; }
+.touch-name { color: #1a1a1a; font-weight: 600; }
+.touch-detail { color: #777; font-size: 12px; }
+.touch-footer { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 16px; border-top: 1px solid #e5e5e5; }
+.touch-pill { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 1px solid #ddd; color: #555; background: #fff; }
+.touch-pill-gsm { border-color: #EF9F27; color: #633806; background: #FAEEDA; }
+.touch-pill-screen { border-color: #34a853; color: #27500A; background: #EAF3DE; }
+.touch-pill-cam { border-color: #7850dc; color: #4a1a8a; background: #f0eaff; }
+</style>
+<div class="touch-pack-wrapper">
+<div class="touch-hero">
+<h2>Pack AM340 – Touch · Sécurité Intégrale Sans Abonnement</h2>
+<p>Détection précoce — Levée de doute vidéo — Guide vocal — Zéro frais mensuel</p>
+<div class="touch-badges">
+<span class="touch-badge touch-badge-gsm">📶 Wi-Fi + GSM optionnel</span> <span class="touch-badge touch-badge-screen">🖥️ Écran tactile 4,3''</span> <span class="touch-badge touch-badge-cam">📷 Caméra IA</span> <span class="touch-badge">Sans abonnement</span> <span class="touch-badge">100 % sans fil (capteurs)</span> <span class="touch-badge">Assistance France</span>
+</div>
+</div>
+<p class="touch-intro">Protégez votre foyer avec le Pack AM340, conçu autour de la centrale tactile <strong>AM301</strong> et son écran couleur de 4,3 pouces. Il associe détection précoce des intrusions, levée de doute vidéo en temps réel et sirène extérieure flash pour une protection redoutable — le tout sans aucun frais mensuel, piloté depuis l'application gratuite <strong>Daewoo Home Connect</strong>.</p>
+<div class="touch-central-banner">
+<h3>🧠 La Centrale AM301 Touch — Le cœur du système</h3>
+<p style="font-size: 13px; color: #333; line-height: 1.6;">Son écran tactile couleur de <strong>4,3 pouces</strong> offre un pilotage intuitif depuis votre entrée — plus besoin de sortir votre smartphone pour armer ou désarmer. Elle se connecte en <strong>Wi-Fi 2.4 GHz</strong> et accepte une <strong>carte SIM GSM en option</strong> pour basculer sur SMS en cas de coupure internet. Elle intègre un <strong>guide vocal</strong>, un <strong>bouton SOS tactile</strong> et une <strong>batterie de secours de 4 heures</strong>.</p>
+<div class="touch-central-specs">
+<span class="touch-spec-pill">🖥️ Écran tactile 4,3''</span> <span class="touch-spec-pill">📡 Wi-Fi 2.4 GHz</span> <span class="touch-spec-pill touch-spec-pill-amber">📶 GSM en option</span> <span class="touch-spec-pill touch-spec-pill-green">🔋 4h d'autonomie</span> <span class="touch-spec-pill touch-spec-pill-purple">🗣️ Guide vocal</span> <span class="touch-spec-pill">📱 App Daewoo Home Connect</span>
+</div>
+</div>
+<div class="touch-gsm-banner">
+<h3>📶 Wi-Fi + GSM optionnel : une fiabilité maximale</h3>
+<ul>
+<li>Connectée en Wi-Fi par défaut pour les notifications sur smartphone via l'application.</li>
+<li>En ajoutant une carte SIM, la centrale bascule automatiquement sur le GSM en cas de coupure internet ou d'électricité.</li>
+<li>Armez et désarmez votre alarme par SMS avec la carte SIM installée.</li>
+<li>Idéal pour une sécurité fiable même dans les zones à connexion instable.</li>
+</ul>
+<p class="touch-gsm-note">⚠️ À noter : en cas de coupure Wi-Fi, les alertes SMS restent actives via le GSM (si carte SIM installée), mais l'accès à la caméra depuis l'application n'est plus disponible — la caméra nécessite une connexion internet pour la diffusion vidéo.</p>
+</div>
+<p class="touch-section-title">Les équipements du pack</p>
+<div class="touch-grid">
+<div class="touch-card touch-card-cam">
+<div class="touch-card-icon">📷</div>
+<h3>Caméra motorisée IP506P</h3>
+<p>Full HD, Auto-Tracking IA, vision nocturne. Mode Vie Privée mécanique : l'objectif se rétracte physiquement quand vous êtes chez vous. Audio bidirectionnel.</p>
+<span class="touch-tag touch-tag-green">Intimité garantie</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🔊</div>
+<h3>Sirène extérieure WOS305</h3>
+<p>Flash stroboscopique rouge + son ultra-puissant en façade. Dissuasion immédiate avant l'effraction. Panneau solaire SPWOS305 disponible en option pour une autonomie totale.</p>
+<span class="touch-tag touch-tag-blue">Dissuasion pro</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🚪</div>
+<h3>4× Contacteurs 2-en-1 WDV301</h3>
+<p>Détection ouverture + vibration sur portes et fenêtres. Alerte donnée dès les premiers chocs, avant même que l'intrus ne pénètre chez vous.</p>
+<span class="touch-tag touch-tag-blue">Alerte préventive</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🐾</div>
+<h3>2× Détecteurs de mouvement WPS305</h3>
+<p>Surveillance large des pièces de vie. Compatible animaux jusqu'à 12 kg : votre chat circule librement sans déclencher la sirène, un intrus est immédiatement repéré.</p>
+<span class="touch-tag touch-tag-green">Anti-fausse alerte</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🎮</div>
+<h3>2× Télécommandes WRC305</h3>
+<p>Armez et désarmez sans sortir votre téléphone. Bouton SOS (appui 3 sec) pour déclencher l'alarme en cas de danger immédiat ou de malaise à domicile.</p>
+<span class="touch-tag touch-tag-blue">Contrôle immédiat</span>
+</div>
+</div>
+<p class="touch-section-title">Fonctions intelligentes</p>
+<div class="touch-features">
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Écran tactile 4,3'' + guide vocal</strong> — <span>Pilotez l'alarme depuis l'entrée en un geste. Le guide vocal confirme chaque action pour une utilisation simple par toute la famille.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Levée de doute vidéo instantanée</strong> — <span>En cas d'alerte, vérifiez ce qui se passe chez vous en temps réel depuis l'application. La caméra IP506P démarre l'enregistrement automatiquement.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Mode Maison (nuit)</strong> — <span>Activez uniquement les capteurs d'ouverture et de vibration en soirée. Circulez librement à l'intérieur sans déclencher les détecteurs de mouvement.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Temporisation réglable</strong> — <span>Paramétrez un délai d'entrée/sortie pour armer et désarmer sereinement sans déclencher l'alarme.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Scénarios automatiques</strong> — <span>La caméra s'active quand l'alarme est armée. Elle passe en mode vie privée dès le désarmement. Votre système s'adapte à votre quotidien.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Application unique Daewoo Home Connect</strong> — <span>Alarme, caméra, scénarios et notifications : tout centralisé dans une seule app gratuite, disponible iOS et Android.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Stockage vidéo flexible</strong> — <span>Enregistrez sur carte SD (non fournie) ou sur le cloud sécurisé en option. Vos images vous appartiennent.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Batterie de secours 4h</strong> — <span>En cas de coupure de courant, votre système reste opérationnel jusqu'à 4 heures.</span>
+</div>
+</div>
+</div>
+<div class="touch-avantages">
+<h3>✅ Pourquoi choisir le Pack AM340 ?</h3>
+<ul>
+<li>
+<strong>Zéro abonnement, liberté totale</strong> : vous êtes propriétaire de votre matériel. Aucune mensualité, aucun contrat, aucun frais caché.</li>
+<li>
+<strong>Installation sans travaux</strong> : système 100 % sans fil pour les capteurs. Plug &amp; Play, en quelques minutes.</li>
+<li>
+<strong>Évolutif jusqu'à 90 accessoires</strong> : ajoutez détecteurs de fumée, barrières infrarouges, sirènes supplémentaires selon vos besoins.</li>
+<li>
+<strong>Vie privée protégée</strong> : le mode mécanique de la caméra IP506P garantit une intimité totale — l'objectif se rétracte physiquement quand vous êtes chez vous.</li>
+<li>
+<strong>Une seule application</strong> : Daewoo Home Connect centralise alarme, caméra et scénarios. Gratuite à vie.</li>
+</ul>
+</div>
+<div class="touch-box">
+<p class="touch-section-title" style="margin-bottom: 10px;">Contenu de la boîte</p>
+<div class="touch-box-list">
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Centrale AM301 Touch</span><span class="touch-detail">(écran tactile 4,3'', guide vocal, batterie 4h, Wi-Fi, GSM en option)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Caméra intérieure motorisée IP506P</span><span class="touch-detail">(Full HD, mode vie privée mécanique, Auto-Tracking, audio bidirectionnel)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Sirène extérieure WOS305</span><span class="touch-detail">(flash rouge + son puissant, alimentation secteur — solaire en option)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">4×</span><span class="touch-name">Contacteurs 2-en-1 WDV301</span><span class="touch-detail">(ouverture + vibration)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">2×</span><span class="touch-name">Détecteurs de mouvement WPS305</span><span class="touch-detail">(compatible animaux &lt; 12 kg)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">2×</span><span class="touch-name">Télécommandes WRC305</span><span class="touch-detail">(armement total/partiel, désarmement, SOS 3 sec)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">—</span><span class="touch-detail">Piles, visserie, câbles d'alimentation et notices inclus</span>
+</div>
+</div>
+</div>
+<div class="touch-footer">
+<span class="touch-pill touch-pill-gsm">📶 Wi-Fi + GSM optionnel</span> <span class="touch-pill touch-pill-screen">🖥️ Écran 4,3''</span> <span class="touch-pill touch-pill-cam">📷 Caméra IA</span> <span class="touch-pill">0 € d'abonnement</span> <span class="touch-pill">Installation sans travaux</span> <span class="touch-pill">Support technique France</span> <span class="touch-pill">🔋 4h d'autonomie</span> <span class="touch-pill">⚙️ Évolutif 90 accessoires</span>
+</div>
+</div>

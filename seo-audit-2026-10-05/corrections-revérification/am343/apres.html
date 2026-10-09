@@ -1,0 +1,295 @@
+<p>Le Pack AM343 est un système d'alarme connectée sans fil complet, conçu pour les propriétaires qui veulent protéger leur maison sans abonnement mensuel. Ce pack alarme maison associe une centrale tactile AM301, 7 détecteurs d'ouverture et de vibration, 4 détecteurs de mouvement compatibles animaux, une caméra intérieure, une caméra extérieure solaire et une sirène solaire autonome — le tout sans frais mensuels ni engagement. Grâce au Mode Maison et à la temporisation, vous bénéficiez d'une alarme avec caméra intelligente et d'un confort d'utilisation supérieur au quotidien. Pilotez l'ensemble depuis l'application gratuite Daewoo Home Connect, où que vous soyez. <meta charset="UTF-8"> <meta content="width=device-width, initial-scale=1.0" name="viewport"></p>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.touch-pack-wrapper { max-width: 780px; width: 100%; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; color: #1a1a1a; }
+.touch-hero { background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 60%, #1F3864 100%); border-radius: 10px; padding: 28px; margin-bottom: 20px; }
+.touch-hero h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.touch-hero p { font-size: 13px; color: #a8c4e0; line-height: 1.5; }
+.touch-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.touch-badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: rgba(255,255,255,0.13); color: #E6F1FB; }
+.touch-badge-gsm { background: rgba(239,159,39,0.25); color: #FAC775; }
+.touch-badge-screen { background: rgba(52,168,83,0.25); color: #8fe0a4; }
+.touch-badge-cam { background: rgba(120,80,220,0.25); color: #c9aaff; }
+.touch-badge-solar { background: rgba(255,180,0,0.25); color: #ffe08a; }
+.touch-intro { font-size: 14px; color: #444; line-height: 1.75; margin-bottom: 20px; }
+.touch-avantages { background: #f0f4ff; border: 1px solid #c5d0f0; border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; }
+.touch-avantages h3 { font-size: 13px; font-weight: 700; color: #1F3864; margin-bottom: 10px; }
+.touch-avantages ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.touch-avantages ul li { font-size: 13px; color: #333; padding-left: 16px; position: relative; line-height: 1.5; }
+.touch-avantages ul li::before { content: ""; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: #1F3864; }
+.touch-comfort-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
+@media (max-width: 520px) { .touch-comfort-grid { grid-template-columns: 1fr; } }
+.touch-comfort-card { border-radius: 10px; padding: 16px 18px; }
+.touch-comfort-card-maison { background: #EAF3DE; border: 1px solid #a8d080; }
+.touch-comfort-card-tempo { background: #E6F1FB; border: 1px solid #90bce8; }
+.touch-comfort-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 7px; }
+.touch-comfort-card-maison h3 { color: #27500A; }
+.touch-comfort-card-tempo h3 { color: #0C447C; }
+.touch-comfort-card p { font-size: 12px; line-height: 1.6; }
+.touch-comfort-card-maison p { color: #3a6010; }
+.touch-comfort-card-tempo p { color: #1a4a7a; }
+.touch-central-banner { background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%); border: 1px solid #c5d0f0; border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; }
+.touch-central-banner h3 { font-size: 14px; font-weight: 700; color: #1F3864; margin-bottom: 10px; }
+.touch-central-specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.touch-spec-pill { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 99px; background: #1F3864; color: #fff; }
+.touch-spec-pill-green { background: #27500A; }
+.touch-spec-pill-amber { background: #633806; }
+.touch-gsm-banner { background: #FAEEDA; border-left: 4px solid #BA7517; border-radius: 0 8px 8px 0; padding: 14px 16px; margin-bottom: 24px; }
+.touch-gsm-banner h3 { font-size: 13px; font-weight: 700; color: #412402; margin-bottom: 6px; }
+.touch-gsm-banner ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.touch-gsm-banner ul li { font-size: 13px; color: #633806; padding-left: 16px; position: relative; }
+.touch-gsm-banner ul li::before { content: ""; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: #BA7517; }
+.touch-gsm-note { font-size: 12px; color: #7a4a10; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e8c98a; font-style: italic; }
+.touch-section-title { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; }
+.touch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
+@media (max-width: 520px) { .touch-grid { grid-template-columns: 1fr; } }
+.touch-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 14px 16px; }
+.touch-card-cam-int { border: 1px solid #34a853; background: #f6fff8; }
+.touch-card-cam-ext { border: 1px solid #7850dc; background: #f8f5ff; }
+.touch-card-solar { border: 1px solid #e6a800; background: #fffbee; }
+.touch-card-clavier { border: 1px solid #185FA5; background: #f0f6ff; }
+.touch-card-icon { font-size: 18px; margin-bottom: 8px; }
+.touch-card h3 { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
+.touch-card p { font-size: 12px; color: #555; line-height: 1.55; }
+.touch-tag { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 99px; }
+.touch-tag-blue { background: #E6F1FB; color: #0C447C; }
+.touch-tag-green { background: #EAF3DE; color: #27500A; }
+.touch-tag-amber { background: #FAEEDA; color: #633806; }
+.touch-tag-purple { background: #f0eaff; color: #4a1a8a; }
+.touch-tag-solar { background: #fff3cc; color: #7a5500; }
+.touch-features { margin-bottom: 24px; }
+.touch-feat { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+.touch-feat:last-child { border-bottom: none; }
+.touch-feat-dot { width: 7px; height: 7px; border-radius: 50%; background: #1F3864; margin-top: 4px; flex-shrink: 0; }
+.touch-feat strong { color: #1a1a1a; }
+.touch-feat span { color: #555; }
+.touch-garantie { background: #f7f8f9; border: 1px solid #e5e5e5; border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
+.touch-garantie-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #444; }
+.touch-garantie-icon { font-size: 16px; }
+.touch-box { background: #f7f8f9; border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; }
+.touch-box-list { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
+.touch-box-item { display: flex; align-items: baseline; gap: 8px; font-size: 13px; }
+.touch-qty { font-weight: 700; color: #1F3864; min-width: 24px; }
+.touch-name { color: #1a1a1a; font-weight: 600; }
+.touch-detail { color: #777; font-size: 12px; }
+.touch-box-separator { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin: 10px 0 6px; }
+.touch-footer { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 16px; border-top: 1px solid #e5e5e5; }
+.touch-pill { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 1px solid #ddd; color: #555; background: #fff; }
+.touch-pill-gsm { border-color: #EF9F27; color: #633806; background: #FAEEDA; }
+.touch-pill-screen { border-color: #34a853; color: #27500A; background: #EAF3DE; }
+.touch-pill-cam { border-color: #7850dc; color: #4a1a8a; background: #f0eaff; }
+.touch-pill-solar { border-color: #e6a800; color: #7a5500; background: #fff3cc; }
+</style>
+<div class="touch-pack-wrapper">
+<div class="touch-hero">
+<h2>Pack AM343 – Touch · Sécurité Renforcée, Mode Maison &amp; Temporisation</h2>
+<p>Protection multi-zones — Double vidéosurveillance solaire — Clavier sans fil — Sans abonnement</p>
+<div class="touch-badges">
+<span class="touch-badge touch-badge-gsm">📶 Wi-Fi + 4G</span> <span class="touch-badge touch-badge-screen">🖥️ Écran tactile 4,3''</span> <span class="touch-badge touch-badge-cam">📷 2 caméras</span> <span class="touch-badge touch-badge-solar">☀️ Solaire</span> <span class="touch-badge">Mode Maison</span> <span class="touch-badge">Garantie 2 ans</span>
+</div>
+</div>
+<p class="touch-intro">Le Pack AM343 est conçu pour protéger portes, fenêtres, pièces de vie et extérieur, tout en vous offrant un vrai confort d'utilisation grâce au <strong>Mode Maison</strong> et à la <strong>temporisation</strong>. Évolutif et connecté, il se pilote entièrement depuis l'application gratuite <strong>Daewoo Home Connect</strong>, sans abonnement ni engagement.</p>
+<div class="touch-avantages">
+<h3>✅ Les points forts du pack AM343</h3>
+<ul>
+<li>
+<strong>Protection complète</strong> : intérieur et extérieur couverts en une seule solution.</li>
+<li>
+<strong>Mode Maison</strong> : sécurisez les accès pendant que vous êtes chez vous, en circulant librement.</li>
+<li>
+<strong>Temporisation</strong> : délai d'entrée/sortie pour armer ou désarmer sans stress.</li>
+<li>
+<strong>Double détection</strong> sur les accès : ouverture + vibration (WDV301) sur 7 points.</li>
+<li>
+<strong>Détecteurs compatibles animaux</strong> WPS305 pour limiter les fausses alertes.</li>
+<li>
+<strong>Clavier sans fil WKE301</strong> pour un contrôle rapide sans smartphone.</li>
+<li>
+<strong>Caméra extérieure solaire W512MW</strong> pour surveiller les abords sans câblage.</li>
+<li>
+<strong>Sirène solaire extérieure WOS305S</strong> : dissuasion puissante et totalement autonome.</li>
+</ul>
+</div>
+<p class="touch-section-title">Confort &amp; sécurité au quotidien</p>
+<div class="touch-comfort-grid">
+<div class="touch-comfort-card touch-comfort-card-maison">
+<h3>🏠 Mode Maison (présence)</h3>
+<p>Activez la protection des accès (portes, fenêtres, vibrations) tout en désactivant les zones de mouvement. Vous restez libre de circuler chez vous la nuit ou en journée, tout en gardant votre domicile sécurisé contre toute intrusion extérieure.</p>
+</div>
+<div class="touch-comfort-card touch-comfort-card-tempo">
+<h3>⏱️ Temporisation (entrée / sortie)</h3>
+<p>Un délai configurable vous laisse le temps d'armer avant de partir et de désarmer en rentrant — via le clavier, la télécommande ou l'application — sans déclencher l'alarme. Moins de fausses alertes, plus de confort au quotidien.</p>
+</div>
+</div>
+<div class="touch-central-banner">
+<h3>🧠 La Centrale AM301 Touch — Le cœur du système</h3>
+<p style="font-size: 13px; color: #333; line-height: 1.6;">Son écran tactile couleur de <strong>4,3 pouces</strong> permet une gestion intuitive de l'armement, du Mode Maison et des temporisations. Elle communique en radio sécurisé avec tous les accessoires et dispose d'un <strong>emplacement pour carte SIM 4G (non incluse)</strong> pour basculer sur SMS en cas de coupure internet. Batterie de secours intégrée pour une protection continue.</p>
+<div class="touch-central-specs">
+<span class="touch-spec-pill">🖥️ Écran tactile 4,3''</span> <span class="touch-spec-pill">📡 Wi-Fi 2.4 GHz</span> <span class="touch-spec-pill touch-spec-pill-amber">📶 4G (carte SIM non incluse)</span> <span class="touch-spec-pill touch-spec-pill-green">🔋 Batterie de secours</span> <span class="touch-spec-pill">🏠 Mode Maison</span> <span class="touch-spec-pill">⏱️ Temporisation</span> <span class="touch-spec-pill">📱 App Daewoo Home Connect</span>
+</div>
+</div>
+<div class="touch-gsm-banner">
+<h3>📶 Wi-Fi + 4G : fiabilité maximale</h3>
+<ul>
+<li>Connectée en Wi-Fi par défaut pour les notifications instantanées sur smartphone.</li>
+<li>En ajoutant une carte SIM, la centrale bascule automatiquement sur le GSM en cas de coupure internet.</li>
+<li>Armez et désarmez votre alarme par SMS avec la carte SIM installée.</li>
+<li>Idéal pour les maisons avec de nombreux accès ou zones à connexion instable.</li>
+</ul>
+<p class="touch-gsm-note">⚠️ À noter : en cas de coupure Wi-Fi, les alertes SMS restent actives via le GSM (si carte SIM installée), mais l'accès aux caméras depuis l'application n'est plus disponible — les caméras nécessitent une connexion internet pour la diffusion vidéo.</p>
+</div>
+<p class="touch-section-title">Les équipements du pack</p>
+<div class="touch-grid">
+<div class="touch-card touch-card-cam-int">
+<div class="touch-card-icon">📷</div>
+<h3>Caméra intérieure IP506P</h3>
+<p>Visualisation en direct depuis l'application. Levée de doute instantanée en cas d'alerte pour vérifier ce qui se passe chez vous.</p>
+<span class="touch-tag touch-tag-green">Levée de doute</span>
+</div>
+<div class="touch-card touch-card-cam-ext">
+<div class="touch-card-icon">🎥</div>
+<h3>Caméra extérieure W512MW + solaire</h3>
+<p>Surveillance des abords : entrée, façade, jardin. Fonctionnement autonome grâce au panneau solaire intégré — sans câblage, sans contrainte d'alimentation.</p>
+<span class="touch-tag touch-tag-purple">Extérieure · Solaire</span>
+</div>
+<div class="touch-card touch-card-solar">
+<div class="touch-card-icon">☀️</div>
+<h3>Sirène solaire extérieure WOS305S</h3>
+<p>Sirène puissante et très dissuasive en façade. Totalement autonome grâce à son alimentation solaire intégrée — sans câblage nécessaire.</p>
+<span class="touch-tag touch-tag-solar">100 % autonome</span>
+</div>
+<div class="touch-card touch-card-clavier">
+<div class="touch-card-icon">⌨️</div>
+<h3>Clavier sans fil WKE301</h3>
+<p>Armement et désarmement rapide par code. Très pratique pour la famille et les invités — idéal combiné avec la temporisation pour entrer et sortir sereinement.</p>
+<span class="touch-tag touch-tag-blue">Accès par code</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🚪</div>
+<h3>7× Contacteurs 2-en-1 WDV301</h3>
+<p>Détection ouverture + vibration sur portes et fenêtres principales et secondaires. Alerte donnée dès les premiers chocs, avant l'effraction.</p>
+<span class="touch-tag touch-tag-blue">Alerte préventive</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">💥</div>
+<h3>3× Détecteurs de vibration</h3>
+<p>Protection renforcée des zones sensibles : baies vitrées, portes fragiles, zones exposées. Détectent les tentatives de forçage avant toute intrusion.</p>
+<span class="touch-tag touch-tag-amber">Anti bris de glace</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🐾</div>
+<h3>4× Détecteurs de mouvement WPS305</h3>
+<p>Surveillance volumétrique de toutes vos zones de passage. Compatible animaux pour réduire les fausses alertes — parfait pour salon, couloirs et escaliers.</p>
+<span class="touch-tag touch-tag-green">Anti-fausse alerte</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🎮</div>
+<h3>2× Télécommandes WRC305</h3>
+<p>Armement et désarmement rapide pour toute la famille, sans smartphone. Toujours à portée de main, accrochées à vos clés.</p>
+<span class="touch-tag touch-tag-blue">Contrôle immédiat</span>
+</div>
+</div>
+<p class="touch-section-title">Fonctions intelligentes</p>
+<div class="touch-features">
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Mode Maison (présence)</strong> — <span>Protégez vos accès la nuit ou en journée tout en circulant librement à l'intérieur. Les détecteurs de mouvement sont désactivés, les capteurs d'ouverture et de vibration restent actifs.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Temporisation d'entrée/sortie</strong> — <span>Paramétrez un délai pour armer et désarmer sereinement depuis le clavier, la télécommande ou l'application. Moins de fausses alertes, plus de confort au quotidien.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Clavier sans fil WKE301</strong> — <span>Armement et désarmement par code, sans smartphone. Idéal pour les invités, les enfants ou toute la famille.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Double vidéosurveillance solaire</strong> — <span>Caméra intérieure IP506P pour la levée de doute et caméra extérieure W512MW autonome pour surveiller les abords — les deux sans contrainte de câblage.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Sirène solaire autonome</strong> — <span>La WOS305S se déclenche en cas d'alerte et reste opérationnelle grâce à son panneau solaire intégré — sans câble, sans contrainte.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Application unique Daewoo Home Connect</strong> — <span>Armement/désarmement à distance, activation du Mode Maison, réglage des temporisations, visualisation des caméras et notifications instantanées — tout depuis une seule interface.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Relais 4G automatique</strong> — <span>En cas de coupure internet, la centrale bascule sur la 4G (carte SIM non incluse) et continue d'envoyer des alertes SMS. L'accès aux caméras nécessite le Wi-Fi.</span>
+</div>
+</div>
+</div>
+<div class="touch-garantie">
+<div class="touch-garantie-item">
+<span class="touch-garantie-icon">🛡️</span><span><strong>Garantie 2 ans</strong> sur tous les produits</span>
+</div>
+<div class="touch-garantie-item">
+<span class="touch-garantie-icon">🛠️</span><span><strong>Support technique</strong> dédié en France</span>
+</div>
+<div class="touch-garantie-item">
+<span class="touch-garantie-icon">📦</span><span><strong>Installation simple</strong> et rapide, sans travaux</span>
+</div>
+<div class="touch-garantie-item">
+<span class="touch-garantie-icon">💶</span><span><strong>0 € d'abonnement</strong> — vous êtes propriétaire</span>
+</div>
+</div>
+<div class="touch-box">
+<p class="touch-section-title" style="margin-bottom: 10px;">Contenu de la boîte</p>
+<div class="touch-box-list">
+<div class="touch-box-separator">Centrale</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Centrale AM301 Touch</span><span class="touch-detail">(écran tactile 4,3'', Mode Maison, temporisation, Wi-Fi et 4G, carte SIM non incluse)</span>
+</div>
+<div class="touch-box-separator">Vidéosurveillance</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Caméra intérieure IP506P</span><span class="touch-detail">(visualisation en direct, levée de doute)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Caméra extérieure W512MW</span><span class="touch-detail">(panneau solaire intégré, autonome)</span>
+</div>
+<div class="touch-box-separator">Dissuasion extérieure</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Sirène solaire extérieure WOS305S</span><span class="touch-detail">(panneau solaire intégré, autonome)</span>
+</div>
+<div class="touch-box-separator">Contrôle</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Clavier sans fil WKE301</span><span class="touch-detail">(armement/désarmement par code)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">2×</span><span class="touch-name">Télécommandes WRC305</span><span class="touch-detail">(armement/désarmement rapide)</span>
+</div>
+<div class="touch-box-separator">Détection périmétrique</div>
+<div class="touch-box-item">
+<span class="touch-qty">7×</span><span class="touch-name">Contacteurs 2-en-1 WDV301</span><span class="touch-detail">(ouverture + vibration)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">3×</span><span class="touch-name">Détecteurs de vibration</span><span class="touch-detail">(zones sensibles, anti bris de glace)</span>
+</div>
+<div class="touch-box-separator">Détection intérieure</div>
+<div class="touch-box-item">
+<span class="touch-qty">4×</span><span class="touch-name">Détecteurs de mouvement WPS305</span><span class="touch-detail">(compatible animaux, zones de passage)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">—</span><span class="touch-detail">Piles, visserie, câbles d'alimentation et notices inclus</span>
+</div>
+</div>
+</div>
+<div class="touch-footer">
+<span class="touch-pill touch-pill-gsm">📶 Wi-Fi + 4G</span> <span class="touch-pill touch-pill-screen">🖥️ Écran 4,3''</span> <span class="touch-pill touch-pill-cam">📷 2 caméras</span> <span class="touch-pill touch-pill-solar">☀️ Solaire</span> <span class="touch-pill">🏠 Mode Maison</span> <span class="touch-pill">⏱️ Temporisation</span> <span class="touch-pill">0 € d'abonnement</span> <span class="touch-pill">Garantie 2 ans</span> <span class="touch-pill">Support technique France</span>
+</div>
+</div>

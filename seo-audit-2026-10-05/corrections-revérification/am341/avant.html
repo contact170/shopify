@@ -1,0 +1,216 @@
+<p><meta charset="UTF-8"> <meta content="width=device-width, initial-scale=1.0" name="viewport"></p>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.touch-pack-wrapper { max-width: 780px; width: 100%; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; color: #1a1a1a; }
+.touch-hero { background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 60%, #1F3864 100%); border-radius: 10px; padding: 28px; margin-bottom: 20px; }
+.touch-hero h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.touch-hero p { font-size: 13px; color: #a8c4e0; line-height: 1.5; }
+.touch-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.touch-badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: rgba(255,255,255,0.13); color: #E6F1FB; }
+.touch-badge-gsm { background: rgba(239,159,39,0.25); color: #FAC775; }
+.touch-badge-screen { background: rgba(52,168,83,0.25); color: #8fe0a4; }
+.touch-badge-cam { background: rgba(120,80,220,0.25); color: #c9aaff; }
+.touch-intro { font-size: 14px; color: #444; line-height: 1.75; margin-bottom: 20px; }
+.touch-gsm-banner { background: #FAEEDA; border-left: 4px solid #BA7517; border-radius: 0 8px 8px 0; padding: 14px 16px; margin-bottom: 24px; }
+.touch-gsm-banner h3 { font-size: 13px; font-weight: 700; color: #412402; margin-bottom: 6px; }
+.touch-gsm-banner ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.touch-gsm-banner ul li { font-size: 13px; color: #633806; padding-left: 16px; position: relative; }
+.touch-gsm-banner ul li::before { content: ""; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: #BA7517; }
+.touch-gsm-note { font-size: 12px; color: #7a4a10; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e8c98a; font-style: italic; }
+.touch-central-banner { background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%); border: 1px solid #c5d0f0; border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; }
+.touch-central-banner h3 { font-size: 14px; font-weight: 700; color: #1F3864; margin-bottom: 10px; }
+.touch-central-specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.touch-spec-pill { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 99px; background: #1F3864; color: #fff; }
+.touch-spec-pill-green { background: #27500A; }
+.touch-spec-pill-amber { background: #633806; }
+.touch-spec-pill-purple { background: #4a1a8a; }
+.touch-section-title { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; }
+.touch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
+@media (max-width: 520px) { .touch-grid { grid-template-columns: 1fr; } }
+.touch-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 14px 16px; }
+.touch-card-cam-int { border: 1px solid #34a853; background: #f6fff8; }
+.touch-card-cam-ext { border: 1px solid #7850dc; background: #f8f5ff; }
+.touch-card-icon { font-size: 18px; margin-bottom: 8px; }
+.touch-card h3 { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
+.touch-card p { font-size: 12px; color: #555; line-height: 1.55; }
+.touch-tag { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 99px; }
+.touch-tag-blue { background: #E6F1FB; color: #0C447C; }
+.touch-tag-green { background: #EAF3DE; color: #27500A; }
+.touch-tag-amber { background: #FAEEDA; color: #633806; }
+.touch-tag-purple { background: #f0eaff; color: #4a1a8a; }
+.touch-features { margin-bottom: 24px; }
+.touch-feat { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+.touch-feat:last-child { border-bottom: none; }
+.touch-feat-dot { width: 7px; height: 7px; border-radius: 50%; background: #1F3864; margin-top: 4px; flex-shrink: 0; }
+.touch-feat strong { color: #1a1a1a; }
+.touch-feat span { color: #555; }
+.touch-box { background: #f7f8f9; border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; }
+.touch-box-list { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
+.touch-box-item { display: flex; align-items: baseline; gap: 8px; font-size: 13px; }
+.touch-qty { font-weight: 700; color: #1F3864; min-width: 24px; }
+.touch-name { color: #1a1a1a; font-weight: 600; }
+.touch-detail { color: #777; font-size: 12px; }
+.touch-footer { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 16px; border-top: 1px solid #e5e5e5; }
+.touch-pill { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 1px solid #ddd; color: #555; background: #fff; }
+.touch-pill-gsm { border-color: #EF9F27; color: #633806; background: #FAEEDA; }
+.touch-pill-screen { border-color: #34a853; color: #27500A; background: #EAF3DE; }
+.touch-pill-cam { border-color: #7850dc; color: #4a1a8a; background: #f0eaff; }
+</style>
+<div class="touch-pack-wrapper">
+<div class="touch-hero">
+<h2>Pack AM341 – Touch · Le Bouclier Absolu pour Votre Propriété</h2>
+<p>Défense périmétrique redoutable — Double caméra IA — Dissuasion sonore maximale</p>
+<div class="touch-badges">
+<span class="touch-badge touch-badge-gsm">📶 Wi-Fi + GSM optionnel</span> <span class="touch-badge touch-badge-screen">🖥️ Écran tactile 4,3''</span> <span class="touch-badge touch-badge-cam">📷 2 caméras IA</span> <span class="touch-badge">Sans abonnement</span> <span class="touch-badge">100 % sans fil (capteurs)</span> <span class="touch-badge">Assistance France</span>
+</div>
+</div>
+<p class="touch-intro">Le Pack AM341 est notre solution la plus aboutie pour les maisons et les propriétaires exigeants. Il combine la centrale tactile <strong>AM301</strong>, une défense périmétrique multicouche avec 5 contacteurs 2-en-1 et un détecteur de vibration, trois détecteurs de mouvement, une sirène extérieure puissante et une double vidéosurveillance motorisée IA — intérieure et extérieure. Le tout contrôlable depuis une seule application gratuite, <strong>Daewoo Home Connect</strong>, sans aucun abonnement.</p>
+<div class="touch-central-banner">
+<h3>🧠 La Centrale AM301 Touch — Le cœur du système</h3>
+<p style="font-size: 13px; color: #333; line-height: 1.6;">Son écran tactile couleur de <strong>4,3 pouces</strong> et son <strong>interface vocale</strong> rendent le système ultra-intuitif pour toute la famille. Elle intègre une <strong>sirène de 95 dB</strong>, un <strong>système anti-arrachement</strong> et une <strong>batterie de secours de 4 à 6 heures</strong>. En cas de panne internet, elle bascule sur la 4G/GSM (carte SIM optionnelle) pour continuer à vous alerter par SMS.</p>
+<div class="touch-central-specs">
+<span class="touch-spec-pill">🖥️ Écran tactile 4,3''</span> <span class="touch-spec-pill">📡 Wi-Fi 2.4 GHz</span> <span class="touch-spec-pill touch-spec-pill-amber">📶 GSM en option</span> <span class="touch-spec-pill touch-spec-pill-green">🔋 4 à 6h d'autonomie</span> <span class="touch-spec-pill touch-spec-pill-purple">🗣️ Interface vocale</span> <span class="touch-spec-pill touch-spec-pill-amber">🔊 Sirène intégrée 95 dB</span> <span class="touch-spec-pill">📱 App Daewoo Home Connect</span>
+</div>
+</div>
+<div class="touch-gsm-banner">
+<h3>📶 Wi-Fi + GSM optionnel : fiabilité maximale</h3>
+<ul>
+<li>Connectée en Wi-Fi par défaut pour les notifications instantanées sur smartphone.</li>
+<li>En ajoutant une carte SIM, la centrale bascule automatiquement sur le GSM en cas de coupure internet ou d'électricité.</li>
+<li>Armez et désarmez votre alarme par SMS avec la carte SIM installée.</li>
+<li>Idéal pour les grandes propriétés ou zones à connexion instable.</li>
+</ul>
+<p class="touch-gsm-note">⚠️ À noter : en cas de coupure Wi-Fi, les alertes SMS restent actives via le GSM (si carte SIM installée), mais l'accès aux caméras depuis l'application n'est plus disponible — les caméras nécessitent une connexion internet pour la diffusion vidéo.</p>
+</div>
+<p class="touch-section-title">Les équipements du pack</p>
+<div class="touch-grid">
+<div class="touch-card touch-card-cam-ext">
+<div class="touch-card-icon">🎥</div>
+<h3>Caméra extérieure motorisée EP506</h3>
+<p>Rotation 355°/90°, Auto-Tracking IA, vision nocturne couleur. Alimentation secteur ou PoE (câble RJ45 unique). Véritable sentinelle extérieure 24h/24.</p>
+<span class="touch-tag touch-tag-purple">Extérieure PoE</span>
+</div>
+<div class="touch-card touch-card-cam-int">
+<div class="touch-card-icon">📷</div>
+<h3>Caméra intérieure motorisée IP506P</h3>
+<p>Full HD, Auto-Tracking IA. Mode Vie Privée mécanique : l'objectif se rétracte physiquement quand vous êtes chez vous. Intimité totale garantie.</p>
+<span class="touch-tag touch-tag-green">Intimité garantie</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🔊</div>
+<h3>Sirène extérieure WOS305</h3>
+<p>Flash stroboscopique rouge + son ultra-puissant (220V). Double dissuasion massive en façade pour alerter immédiatement tout le voisinage.</p>
+<span class="touch-tag touch-tag-blue">Dissuasion pro</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🚪</div>
+<h3>5× Contacteurs 2-en-1 WDV301</h3>
+<p>Détection ouverture + vibration sur baies vitrées et portes principales. Alerte dès les premiers chocs, avant même l'effraction. À paramétrer en catégorie "Générale".</p>
+<span class="touch-tag touch-tag-blue">Alerte préventive</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">💥</div>
+<h3>1× Détecteur de vibration WVD301</h3>
+<p>Protection ciblée pour fenêtre fixe ou surface vulnérable. Détecte les tentatives de bris de glace avant toute intrusion.</p>
+<span class="touch-tag touch-tag-amber">Anti bris de glace</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🐾</div>
+<h3>3× Détecteurs de mouvement WPS305</h3>
+<p>Sécurisez tous vos grands volumes intérieurs. Compatible animaux jusqu'à 10–12 kg : votre animal circule librement, un intrus est immédiatement repéré.</p>
+<span class="touch-tag touch-tag-green">Anti-fausse alerte</span>
+</div>
+<div class="touch-card">
+<div class="touch-card-icon">🎮</div>
+<h3>2× Télécommandes WRC305</h3>
+<p>Armez (total ou mode nuit) et désarmez d'un simple clic sans sortir votre téléphone. Bouton SOS sécurisé (appui 3 sec) pour les situations d'urgence.</p>
+<span class="touch-tag touch-tag-blue">Contrôle immédiat</span>
+</div>
+</div>
+<p class="touch-section-title">Fonctions intelligentes</p>
+<div class="touch-features">
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Écran tactile 4,3'' + interface vocale</strong> — <span>Pilotez l'alarme en un geste depuis l'entrée. L'interface vocale confirme chaque action pour une utilisation simple par toute la famille.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Double vidéosurveillance IA</strong> — <span>Caméra extérieure PoE 355° et caméra intérieure Full HD, toutes deux équipées de l'Auto-Tracking pour suivre physiquement tout mouvement suspect.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Défense périmétrique multicouche</strong> — <span>5 contacteurs 2-en-1 ouverture + vibration, 1 détecteur de vibration dédié et 3 détecteurs de mouvement pour ne laisser aucune zone dans l'ombre.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Mode Maison (nuit)</strong> — <span>Capteurs d'ouverture et de vibration actifs, détecteurs de mouvement désactivés. Circulez librement la nuit en toute sécurité.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Temporisation réglable</strong> — <span>Paramétrez un délai d'entrée/sortie pour armer et désarmer sereinement sans déclencher l'alarme.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Scénarios automatiques</strong> — <span>Si l'alarme se déclenche → les caméras lancent l'enregistrement. Si vous désarmez → la caméra intérieure passe en mode vie privée.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Relais GSM automatique</strong> — <span>En cas de coupure internet, la centrale bascule sur le GSM (carte SIM optionnelle) et continue d'envoyer des alertes SMS. L'accès aux caméras nécessite le Wi-Fi.</span>
+</div>
+</div>
+<div class="touch-feat">
+<div class="touch-feat-dot"><br></div>
+<div>
+<strong>Batterie de secours 4 à 6h</strong> — <span>Même en cas de coupure de courant, votre système reste pleinement opérationnel.</span>
+</div>
+</div>
+</div>
+<div class="touch-box">
+<p class="touch-section-title" style="margin-bottom: 10px;">Contenu de la boîte</p>
+<div class="touch-box-list">
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Centrale AM301 Touch</span><span class="touch-detail">(écran 4,3'', interface vocale, sirène 95 dB, batterie 4-6h, Wi-Fi, GSM en option)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Caméra extérieure motorisée EP506</span><span class="touch-detail">(355°/90°, Auto-Tracking, vision nocturne couleur, secteur ou PoE)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Caméra intérieure motorisée IP506P</span><span class="touch-detail">(Full HD, mode vie privée mécanique, Auto-Tracking)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Sirène extérieure WOS305</span><span class="touch-detail">(flash rouge + son puissant, alimentation 220V)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">5×</span><span class="touch-name">Contacteurs 2-en-1 WDV301</span><span class="touch-detail">(ouverture + vibration, catégorie "Générale")</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">1×</span><span class="touch-name">Détecteur de vibration WVD301</span><span class="touch-detail">(fenêtre fixe, anti bris de glace)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">3×</span><span class="touch-name">Détecteurs de mouvement WPS305</span><span class="touch-detail">(compatible animaux &lt; 12 kg)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">2×</span><span class="touch-name">Télécommandes WRC305</span><span class="touch-detail">(armement total/nuit, désarmement, SOS 3 sec)</span>
+</div>
+<div class="touch-box-item">
+<span class="touch-qty">—</span><span class="touch-detail">Piles, visserie, câbles d'alimentation et notices inclus</span>
+</div>
+</div>
+</div>
+<div class="touch-footer">
+<span class="touch-pill touch-pill-gsm">📶 Wi-Fi + GSM optionnel</span> <span class="touch-pill touch-pill-screen">🖥️ Écran 4,3''</span> <span class="touch-pill touch-pill-cam">📷 2 caméras IA</span> <span class="touch-pill">0 € d'abonnement</span> <span class="touch-pill">Installation sans travaux</span> <span class="touch-pill">Support technique France</span> <span class="touch-pill">🔋 4 à 6h d'autonomie</span> <span class="touch-pill">⚙️ Évolutif 90 accessoires</span>
+</div>
+</div>
