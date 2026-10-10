@@ -320,6 +320,9 @@
           <div class="vg-collapse" id="{{ body_id }}">
             <div>
               <div class="vg-step__body">
+                {%- if block.settings.alert != blank -%}
+                  <div class="vg-note vg-note--warn" style="margin-top:0"><span class="vg-note__icon">⚠️</span><div>{{ block.settings.alert }}</div></div>
+                {%- endif -%}
                 {%- if block.settings.content != blank -%}<div class="vg-rte">{{ block.settings.content }}</div>{%- endif -%}
 
                 {%- if block.settings.show_store_buttons -%}
@@ -702,6 +705,7 @@
         { "type": "text", "id": "title", "label": "Titre", "default": "Nouvelle étape" },
         { "type": "text", "id": "summary", "label": "Résumé (1 ligne)" },
         { "type": "text", "id": "duration", "label": "Durée", "default": "2 min" },
+        { "type": "richtext", "id": "alert", "label": "Avertissement en haut de l'étape (encadré orange)" },
         { "type": "richtext", "id": "content", "label": "Instructions" },
         { "type": "checkbox", "id": "show_store_buttons", "label": "Afficher les boutons App Store / Google Play", "default": false },
         { "type": "image_picker", "id": "image", "label": "Image 1" },

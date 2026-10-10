@@ -82,13 +82,14 @@
             "title": "Ajoutez vos accessoires",
             "summary": "Détecteurs, contacteurs, télécommandes, sirènes…",
             "duration": "1 min / accessoire",
-            "content": "<p>Le principe est toujours le même : <strong>vous appuyez sur + dans l'appli, et l'accessoire se signale juste après.</strong></p><p>Par exemple pour un détecteur de mouvement : <strong>éteignez-le, touchez + dans la catégorie « Mouvement », et rallumez-le tout de suite après.</strong></p>",
+            "content": "<p>Le principe est toujours le même : <strong>vous appuyez sur + dans l'appli, et l'accessoire se signale juste après.</strong></p><p>Exemples : pour un détecteur de mouvement, <strong>éteignez-le, touchez + dans « Mouvement », et rallumez-le tout de suite</strong>. Pour un contacteur de porte, <strong>touchez + dans « Entrée », puis séparez ses 2 parties</strong>.</p>",
             "show_accessories": true,
+            "alert": "<p><strong>Important : un accessoire à la fois.</strong> Au fur et à mesure, posez chaque accessoire installé <strong>ailleurs, hors de vue</strong> (dans une autre pièce ou un tiroir). Sinon, l'accessoire déjà installé et le nouveau peuvent envoyer un signal <strong>en même temps</strong>, et l'installation échoue.</p>",
             "video_url": "https://www.youtube.com/watch?v=Sgg_b-9vu4U",
             "video_label": "Voir l'ajout d'un accessoire en vidéo",
             "tip": "<p>Ajoutez les accessoires <strong>un par un</strong>, à côté de la centrale. Vous les poserez à leur place ensuite.</p>",
             "help_title": "L'accessoire n'est pas détecté ?",
-            "help_content": "<ul><li>Recommencez en étant <strong>plus rapide</strong> : l'accessoire doit se signaler juste après l'appui sur +.</li><li>Vérifiez que vous êtes dans la <strong>bonne catégorie</strong> (indiquée en orange ci-dessus).</li><li>Vérifiez les <strong>piles</strong> et, pour le WPS305 et le WDV301, l'<strong>interrupteur ON/OFF</strong> sous le capot.</li><li>Rapprochez l'accessoire de la centrale.</li></ul>"
+            "help_content": "<ul><li>Recommencez en étant <strong>plus rapide</strong> : l'accessoire doit se signaler juste après l'appui sur +.</li><li>Vérifiez que vous êtes dans la <strong>bonne catégorie</strong> (indiquée en orange ci-dessus).</li><li>Vérifiez les <strong>piles</strong> et, pour le WPS305 et le WDV301, l'<strong>interrupteur ON/OFF</strong> sous le capot.</li><li>Éloignez les accessoires <strong>déjà installés</strong> : s'ils envoient un signal en même temps, la centrale ne sait pas lequel ajouter.</li><li>Rapprochez l'accessoire de la centrale.</li></ul>"
           }
         },
         "step_cam": {
@@ -147,9 +148,9 @@
             "name": "Contacteur de porte / fenêtre",
             "ref": "WDS301",
             "emoji": "🚪",
-            "category": "Général",
-            "before": "Retirez la pile du contacteur.",
-            "action": "remettez la pile.",
+            "category": "Entrée",
+            "before": "Gardez les 2 parties du contacteur collées l'une à l'autre.",
+            "action": "séparez les 2 parties du contacteur.",
             "example_name": "Porte d'entrée"
           }
         },
@@ -161,8 +162,8 @@
             "emoji": "🪟",
             "product": "contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302",
             "category": "Général",
-            "before": "Ouvrez le capot et mettez l'interrupteur ON/OFF sur OFF.",
-            "action": "remettez l'interrupteur sur ON.",
+            "before": "Ouvrez le capot, mettez l'interrupteur ON/OFF sur ON, puis gardez les 2 parties collées.",
+            "action": "séparez les 2 parties du contacteur.",
             "example_name": "Baie vitrée"
           }
         },
