@@ -61,6 +61,7 @@
   #vg-{{ sid }} .vg-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--vg-card); border: 1px solid var(--vg-line); border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 500; }
   #vg-{{ sid }} .vg-hero__media { background: var(--vg-card); border-radius: 28px; padding: 16px; box-shadow: var(--vg-shadow); }
   #vg-{{ sid }} .vg-hero__media img { border-radius: 18px; width: 100%; }
+  @media (max-width: 749px) { #vg-{{ sid }} .vg-hero__media { padding: 10px; } #vg-{{ sid }} .vg-hero__media img { max-height: 220px; object-fit: contain; } }
 
   /* Barre de progression collante */
   #vg-{{ sid }} .vg-progress { position: sticky; top: calc(var(--sticky-header-height, 0px) + 8px); z-index: 5; background: rgba(255,255,255,.92); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border: 1px solid var(--vg-line); border-radius: 999px; padding: 10px 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 20px; box-shadow: var(--vg-shadow); }
