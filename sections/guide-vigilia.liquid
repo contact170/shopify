@@ -230,6 +230,26 @@
   #vg-{{ sid }} .vg-link strong { display: block; color: var(--vg-navy); }
   #vg-{{ sid }} .vg-link small { color: var(--vg-muted); font-size: 14px; }
 
+  /* Photo / notice accessoire */
+  #vg-{{ sid }} .vg-acc__photo { margin: 16px 0 0; }
+  #vg-{{ sid }} .vg-acc__photo img { width: 100%; border-radius: 14px; background: #fff; }
+  #vg-{{ sid }} .vg-acc__photo figcaption { font-size: 13px; color: var(--vg-muted); margin-top: 6px; text-align: center; }
+  #vg-{{ sid }} .vg-acc__extra { margin-top: 16px; }
+  #vg-{{ sid }} .vg-pdf { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-weight: 600; font-size: 14px; text-decoration: none; background: #fff; border: 1px solid var(--vg-line); padding: 8px 14px; border-radius: 999px; }
+
+  /* Manuels */
+  #vg-{{ sid }} .vg-docs { margin-bottom: 28px; }
+  #vg-{{ sid }} .vg-doc { display: flex; gap: 12px; align-items: center; padding: 14px 16px; text-decoration: none; color: inherit; transition: transform .2s var(--vg-ease), border-color .2s ease; }
+  @media (hover: hover) { #vg-{{ sid }} .vg-doc:hover { transform: translateY(-2px); border-color: rgba(11,97,205,.35); } }
+  #vg-{{ sid }} .vg-doc--main { padding: 18px; margin-bottom: 12px; }
+  #vg-{{ sid }} .vg-doc--main strong { display: block; color: var(--vg-navy); }
+  #vg-{{ sid }} .vg-doc--main small { color: var(--vg-muted); font-size: 14px; }
+  #vg-{{ sid }} .vg-doc__name { flex: 1; font-weight: 600; font-size: 14px; color: var(--vg-navy); line-height: 1.3; }
+  #vg-{{ sid }} .vg-doc__name small { display: block; font-weight: 400; color: var(--vg-muted); font-size: 12px; }
+  #vg-{{ sid }} .vg-doc__dl { margin-left: auto; flex: 0 0 auto; font-size: 12px; font-weight: 700; color: var(--vg-blue); background: var(--vg-blue-soft); padding: 4px 10px; border-radius: 999px; }
+  #vg-{{ sid }} .vg-docs__grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
+  @media (min-width: 600px) { #vg-{{ sid }} .vg-docs__grid { grid-template-columns: 1fr 1fr; } }
+
   /* Support */
   #vg-{{ sid }} .vg-support { padding: 28px 24px; text-align: center; }
   #vg-{{ sid }} .vg-support .vg-actions { justify-content: center; }
@@ -408,8 +428,18 @@
                             <li><span class="vg-mini__n">{{ n }}</span><span class="vg-mini__t">Donnez-lui un nom clair (ex : « {{ acc.settings.example_name | default: acc.settings.name }} ») et validez. ✅</span></li>
                           </ol>
                         {%- endif -%}
+                        {%- if acc.settings.photo != blank -%}
+                          <figure class="vg-acc__photo">
+                            {{ acc.settings.photo | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 600px, 100vw', widths: '400, 700, 1000' }}
+                            {%- if acc.settings.photo_caption != blank -%}<figcaption>{{ acc.settings.photo_caption }}</figcaption>{%- endif -%}
+                          </figure>
+                        {%- endif -%}
+                        {%- if acc.settings.extra != blank -%}<div class="vg-rte vg-acc__extra">{{ acc.settings.extra }}</div>{%- endif -%}
                         {%- if acc.settings.note != blank -%}
                           <div class="vg-note vg-note--warn"><span class="vg-note__icon">⚠️</span><div>{{ acc.settings.note }}</div></div>
+                        {%- endif -%}
+                        {%- if acc.settings.manual != blank -%}
+                          <a class="vg-pdf" href="{{ acc.settings.manual }}" target="_blank" rel="noopener">📄 Notice {{ acc.settings.ref | default: acc.settings.name }} (PDF)</a>
                         {%- endif -%}
                       </div>
                     {%- endfor -%}
@@ -478,6 +508,43 @@
             <div class="vg-faq__a vg-rte">{{ block.settings.answer }}</div>
           </details>
         {%- endfor -%}
+      </section>
+    {%- endif -%}
+
+    {%- comment -%} ===== MANUELS À TÉLÉCHARGER ===== {%- endcomment -%}
+    {%- liquid
+      assign acc_docs = 0
+      for acc in accessories
+        if acc.settings.manual != blank
+          assign acc_docs = acc_docs | plus: 1
+        endif
+      endfor
+    -%}
+    {%- if section.settings.manual_url != blank or section.settings.camera_manual_url != blank or acc_docs > 0 -%}
+      <section class="vg-docs" id="manuels" aria-labelledby="vg-docs-{{ sid }}">
+        <h2 class="vg-block-title" id="vg-docs-{{ sid }}">{{ section.settings.docs_title }}</h2>
+        {%- if section.settings.docs_text != blank -%}<p class="vg-block-sub">{{ section.settings.docs_text }}</p>{%- endif -%}
+        {%- if section.settings.manual_url != blank -%}
+          <a class="vg-card vg-doc vg-doc--main" href="{{ section.settings.manual_url }}" target="_blank" rel="noopener">
+            <span class="vg-link__icon" aria-hidden="true">📘</span>
+            <span><strong>{{ section.settings.manual_title }}</strong>{%- if section.settings.manual_text != blank -%}<small>{{ section.settings.manual_text }}</small>{%- endif -%}</span>
+            <span class="vg-doc__dl" aria-hidden="true">PDF ↓</span>
+          </a>
+        {%- endif -%}
+        <div class="vg-docs__grid">
+          {%- if section.settings.camera_manual_url != blank -%}
+            <a class="vg-card vg-doc" href="{{ section.settings.camera_manual_url }}" target="_blank" rel="noopener">
+              <span class="vg-doc__name">{{ section.settings.camera_manual_title }}</span><span class="vg-doc__dl" aria-hidden="true">PDF ↓</span>
+            </a>
+          {%- endif -%}
+          {%- for acc in accessories -%}
+            {%- if acc.settings.manual != blank -%}
+              <a class="vg-card vg-doc" href="{{ acc.settings.manual }}" target="_blank" rel="noopener">
+                <span class="vg-doc__name">{{ acc.settings.name }}{% if acc.settings.ref != blank %} <small>{{ acc.settings.ref }}</small>{% endif %}</span><span class="vg-doc__dl" aria-hidden="true">PDF ↓</span>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
       </section>
     {%- endif -%}
 
@@ -672,6 +739,14 @@
     { "type": "header", "content": "Fin du guide" },
     { "type": "text", "id": "done_title", "label": "Titre", "default": "Bravo, votre alarme est prête !" },
     { "type": "text", "id": "done_text", "label": "Texte", "default": "Votre maison est protégée. Pensez à changer vos codes par défaut si ce n'est pas encore fait." },
+    { "type": "header", "content": "Manuels à télécharger" },
+    { "type": "text", "id": "docs_title", "label": "Titre", "default": "Manuels à télécharger" },
+    { "type": "text", "id": "docs_text", "label": "Texte" },
+    { "type": "text", "id": "manual_title", "label": "Titre du manuel complet", "default": "Manuel complet Vigilia" },
+    { "type": "text", "id": "manual_text", "label": "Description du manuel complet" },
+    { "type": "url", "id": "manual_url", "label": "Lien du manuel complet (PDF)" },
+    { "type": "text", "id": "camera_manual_title", "label": "Titre du manuel caméra", "default": "Caméra intérieure IP506P" },
+    { "type": "url", "id": "camera_manual_url", "label": "Lien du manuel caméra (PDF)", "info": "Les notices des accessoires s'ajoutent automatiquement depuis chaque bloc Accessoire." },
     { "type": "header", "content": "Autres blocs" },
     { "type": "checkbox", "id": "show_leds", "label": "Afficher la légende des voyants LED", "default": true },
     { "type": "text", "id": "faq_title", "label": "Titre FAQ", "default": "Un souci ? Les solutions rapides" },
@@ -743,6 +818,10 @@
         { "type": "text", "id": "action", "label": "Juste après avoir appuyé sur +", "default": "rallumez l'accessoire." },
         { "type": "text", "id": "example_name", "label": "Exemple de nom" },
         { "type": "text", "id": "note", "label": "Remarque (encadré orange)" },
+        { "type": "image_picker", "id": "photo", "label": "Photo d'installation (dans la fiche)" },
+        { "type": "text", "id": "photo_caption", "label": "Légende de la photo" },
+        { "type": "richtext", "id": "extra", "label": "Texte complémentaire (installation physique…)" },
+        { "type": "url", "id": "manual", "label": "Notice PDF", "info": "Apparaît dans la fiche et dans « Manuels à télécharger »." },
         { "type": "richtext", "id": "custom_steps", "label": "Procédure spécifique (remplace la procédure standard)", "info": "Pour les sirènes par exemple, qui ne s'ajoutent pas avec le bouton +." }
       ]
     },
