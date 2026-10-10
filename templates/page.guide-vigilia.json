@@ -47,13 +47,17 @@
         "step_power": {
           "type": "step",
           "settings": {
-            "title": "Allumez la centrale",
-            "summary": "Le câble et un petit interrupteur au dos",
-            "duration": "1 min",
-            "content": "<ol><li><strong>Branchez</strong> le câble USB-C fourni sur la centrale et sur une prise.</li><li>Au dos de la centrale, mettez l'<strong>interrupteur batterie sur ON</strong>.</li><li>La lumière (LED) de la centrale s'allume.</li></ol>",
+            "title": "Remettez la centrale à zéro, puis allumez-la",
+            "summary": "Indispensable : on repart d'une centrale propre",
+            "duration": "2 min",
+            "content": "<p>Même neuve, commencez par une <strong>remise à zéro</strong> : c'est ce qui évite la plupart des échecs d'installation.</p><ol><li>Laissez le câble USB-C <strong>débranché</strong> et mettez l'<strong>interrupteur batterie</strong> (au dos) sur <strong>OFF</strong>.</li><li>Appuyez en même temps sur <strong>❌ et ✅</strong> et gardez-les enfoncés.</li><li>Sans relâcher, remettez l'interrupteur batterie sur <strong>ON</strong>.</li><li>Continuez d'appuyer environ <strong>15 secondes</strong>, jusqu'au <strong>bip</strong> : la LED clignote, vous pouvez relâcher.</li><li><strong>Branchez</strong> le câble USB-C sur la centrale et sur une prise.</li></ol>",
             "image": "shopify://shop_images/Manuel_complet_Vigilia_14022025.pdf_1.png",
-            "caption": "Votre centrale Vigilia",
-            "tip": "<p>Si la LED est <strong>jaune fixe</strong>, l'interrupteur batterie est encore sur OFF.</p>"
+            "caption": "Les touches ❌ et ✅ et l'interrupteur batterie au dos",
+            "video_url": "https://www.youtube.com/watch?v=h5voMunDGUM",
+            "video_label": "Voir la remise à zéro en vidéo",
+            "tip": "<p>Si la LED est <strong>jaune fixe</strong>, l'interrupteur batterie est encore sur OFF.</p>",
+            "help_title": "Pas de bip au bout de 15 secondes ?",
+            "help_content": "<ul><li>Vérifiez que le câble USB-C est bien <strong>débranché</strong> pendant la manipulation.</li><li>Appuyez <strong>fermement</strong> sur ❌ et ✅ <strong>avant</strong> de remettre l'interrupteur sur ON, et ne relâchez pas.</li><li>Recommencez depuis le début : interrupteur sur OFF, puis les deux touches.</li></ul>"
           }
         },
         "step_install": {
@@ -85,6 +89,20 @@
             "tip": "<p>Ajoutez les accessoires <strong>un par un</strong>, à côté de la centrale. Vous les poserez à leur place ensuite.</p>",
             "help_title": "L'accessoire n'est pas détecté ?",
             "help_content": "<ul><li>Recommencez en étant <strong>plus rapide</strong> : l'accessoire doit se signaler juste après l'appui sur +.</li><li>Vérifiez que vous êtes dans la <strong>bonne catégorie</strong> (indiquée en orange ci-dessus).</li><li>Vérifiez les <strong>piles</strong> et, pour le WPS305 et le WDV301, l'<strong>interrupteur ON/OFF</strong> sous le capot.</li><li>Rapprochez l'accessoire de la centrale.</li></ul>"
+          }
+        },
+        "step_cam": {
+          "type": "step",
+          "settings": {
+            "title": "Installez votre caméra IP506P",
+            "summary": "Livrée avec votre alarme : elle s'ajoute en scannant un QR code",
+            "duration": "3 min",
+            "content": "<ol><li><strong>Branchez</strong> la caméra sur une prise avec l'adaptateur et le câble fournis.</li><li>Dans l'appli : touchez le <strong>+</strong> en haut à droite › <strong>« Ajouter un appareil »</strong> › choisissez <strong>IP506P</strong> dans la liste.</li><li>Mettez la caméra en mode appairage : appuyez <strong>8 à 10 secondes sur le bouton RESET</strong> de la caméra, jusqu'au <strong>signal sonore</strong>.</li><li>Choisissez votre <strong>Wi-Fi 2,4 GHz</strong> et entrez son mot de passe.</li><li>Un <strong>QR code</strong> s'affiche sur votre téléphone : montrez-le à l'objectif de la caméra. Dès que la caméra bipe, touchez <strong>« J'ai entendu un bip »</strong>.</li><li>La caméra est détectée : touchez <strong>+</strong> pour confirmer, puis donnez-lui un nom (ex : « Caméra Salon »). ✅</li></ol>",
+            "image": "shopify://shop_images/camera-interieure-rotative-ip506p-2048.webp",
+            "caption": "Caméra intérieure IP506P",
+            "tip": "<p>Posez la caméra sur un meuble ou fixez son support au mur avec les vis fournies. Évitez de la placer face à un miroir, et gardez-la à au moins 1 mètre des autres appareils sans fil.</p>",
+            "help_title": "La caméra ne bipe pas ou n'est pas détectée ?",
+            "help_content": "<ul><li>Refaites l'appui long sur <strong>RESET</strong> (8 à 10 s) jusqu'au signal sonore, puis recommencez l'ajout.</li><li>Vérifiez que votre téléphone est sur le <strong>Wi-Fi 2,4 GHz</strong> et que le mot de passe est simple (20 caractères max, sans caractère spécial).</li><li>Pour le QR code : augmentez la luminosité de votre téléphone et avancez-le ou reculez-le doucement devant l'objectif.</li><li>Rapprochez la caméra de votre box le temps de l'installation.</li></ul><p><a href=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_camera_ip506p_2.pdf?v=1701429637\" target=\"_blank\">Télécharger le manuel de la caméra (PDF)</a></p>"
           }
         },
         "step_test": {
@@ -284,6 +302,13 @@
             "answer": "<p>Le plus souvent, l'accessoire s'est signalé trop tard. Touchez <strong>+</strong> dans la bonne catégorie et, <strong>dans la foulée</strong>, éteignez/rallumez l'accessoire (ou appuyez sur un bouton pour une télécommande). Vérifiez aussi les piles.</p>"
           }
         },
+        "faq_cam": {
+          "type": "faq",
+          "settings": {
+            "question": "📷 Je n'arrive pas à installer ma caméra",
+            "answer": "<p>Remettez la caméra en mode appairage en appuyant <strong>8 à 10 secondes sur RESET</strong> jusqu'au signal sonore. Vérifiez le Wi-Fi 2,4 GHz, puis refaites l'étape « Installez votre caméra IP506P ».</p>"
+          }
+        },
         "faq_blink": {
           "type": "faq",
           "settings": {
@@ -376,6 +401,7 @@
         "step_power",
         "step_install",
         "step_acc",
+        "step_cam",
         "step_test",
         "step_wall",
         "acc_wps",
@@ -393,6 +419,7 @@
         "faq_orange",
         "faq_box",
         "faq_acc",
+        "faq_cam",
         "faq_blink",
         "faq_siren",
         "faq_notif",
@@ -406,9 +433,9 @@
       ],
       "settings": {
         "eyebrow": "Guide d'installation",
-        "title": "Installez votre alarme Vigilia en 15 minutes",
+        "title": "Installez votre alarme Vigilia en 20 minutes",
         "subtitle": "<p>Suivez les étapes une par une, sans jargon. Validez chaque étape quand elle est faite : on vous guide jusqu'au bout.</p>",
-        "duration": "≈ 15 minutes",
+        "duration": "≈ 20 minutes",
         "hero_image": "shopify://shop_images/Manuel_complet_Vigilia_14022025.pdf_1.png",
         "checklist_title": "Avant de commencer",
         "checklist_text": "4 vérifications rapides qui évitent la plupart des problèmes d'installation.",
