@@ -1,0 +1,437 @@
+{
+  "sections": {
+    "guide": {
+      "type": "guide-vigilia",
+      "blocks": {
+        "check_wifi": {
+          "type": "check",
+          "settings": {
+            "title": "Votre téléphone est connecté au Wi-Fi 2,4 GHz de votre box",
+            "detail": "La centrale ne capte pas le 5 GHz. Si votre box mélange les deux, voir l'aide de l'étape 3."
+          }
+        },
+        "check_pwd": {
+          "type": "check",
+          "settings": {
+            "title": "Votre mot de passe Wi-Fi est simple",
+            "detail": "20 caractères maximum, sans caractères spéciaux (@ # $ % & …)."
+          }
+        },
+        "check_bt": {
+          "type": "check",
+          "settings": {
+            "title": "Le Bluetooth de votre téléphone est activé",
+            "detail": "Il permet à l'appli de trouver la centrale toute seule."
+          }
+        },
+        "check_near": {
+          "type": "check",
+          "settings": {
+            "title": "Vous êtes à côté de la centrale et de votre box",
+            "detail": "Vous fixerez la centrale au mur à la fin, une fois tout testé."
+          }
+        },
+        "step_app": {
+          "type": "step",
+          "settings": {
+            "title": "Téléchargez l'appli et créez votre compte",
+            "summary": "Daewoo Home Connect, gratuite sur iPhone et Android",
+            "duration": "3 min",
+            "content": "<ol><li>Sur votre téléphone, cherchez <strong>« Daewoo Home Connect »</strong> dans l'App Store ou Google Play et installez l'appli.</li><li>Ouvrez-la et entrez votre <strong>adresse e-mail</strong>.</li><li>Recopiez le <strong>code reçu par e-mail</strong>.</li><li>Choisissez un <strong>mot de passe</strong>.</li></ol>",
+            "show_store_buttons": true,
+            "warning": "<p><strong>Notez bien votre mot de passe.</strong> Il vous servira pour partager l'alarme avec votre famille ou la relier à Alexa / Google Home.</p>",
+            "help_title": "Je ne reçois pas le code par e-mail",
+            "help_content": "<ul><li>Regardez dans vos <strong>courriers indésirables (spams)</strong>.</li><li>Vérifiez que l'adresse e-mail saisie ne contient pas de faute.</li><li>Patientez une minute puis redemandez un code.</li></ul>"
+          }
+        },
+        "step_power": {
+          "type": "step",
+          "settings": {
+            "title": "Allumez la centrale",
+            "summary": "Le câble et un petit interrupteur au dos",
+            "duration": "1 min",
+            "content": "<ol><li><strong>Branchez</strong> le câble USB-C fourni sur la centrale et sur une prise.</li><li>Au dos de la centrale, mettez l'<strong>interrupteur batterie sur ON</strong>.</li><li>La lumière (LED) de la centrale s'allume.</li></ol>",
+            "image": "shopify://shop_images/Manuel_complet_Vigilia_14022025.pdf_1.png",
+            "caption": "Votre centrale Vigilia",
+            "tip": "<p>Si la LED est <strong>jaune fixe</strong>, l'interrupteur batterie est encore sur OFF.</p>"
+          }
+        },
+        "step_install": {
+          "type": "step",
+          "settings": {
+            "title": "Ajoutez la centrale dans l'appli",
+            "summary": "L'appli la trouve toute seule grâce au Bluetooth",
+            "duration": "3 min",
+            "content": "<ol><li>Dans l'appli, touchez le <strong>+ orange</strong> en haut à droite, puis <strong>« Ajouter un appareil »</strong>.</li><li>Votre centrale <strong>apparaît en haut</strong> de l'écran, dans « Détection des appareils ». Touchez son icône.</li><li>Si l'appli le demande, entrez le <strong>mot de passe de votre Wi-Fi 2,4 GHz</strong>.</li><li>Patientez quelques instants, puis touchez <strong>« Terminer »</strong>.</li></ol>",
+            "image": "shopify://shop_images/Videos_scenarios_manuel_vigilia_1.png",
+            "caption": "Touchez le + orange",
+            "image_2": "shopify://shop_images/Videos_scenarios_manuel_vigilia_3.png",
+            "caption_2": "La centrale apparaît en haut",
+            "tip": "<p>Renommez la centrale avec le crayon ✏️ (ex : « Alarme Maison ») : ce sera plus clair dans vos notifications.</p>",
+            "help_title": "La centrale n'apparaît pas ? Installation manuelle",
+            "help_content": "<p><strong>Vérifiez d'abord :</strong> Bluetooth activé, téléphone sur le Wi-Fi 2,4 GHz, mot de passe Wi-Fi simple.</p><p><strong>Sinon, ajoutez-la manuellement :</strong></p><ol><li>Dans l'appli : <strong>+</strong> › « Ajouter un appareil » › choisissez <strong>« Centrale Vigilia »</strong> dans la liste.</li><li>Entrez le mot de passe de votre Wi-Fi 2,4 GHz et suivez l'écran.</li><li>Sur la centrale, tapez : <strong>⚙</strong> › <strong>9876</strong> › <strong>✅</strong> › <strong>0</strong> › <strong>✅</strong></li><li>La LED <strong>orange clignote vite</strong> : la centrale se connecte. Patientez, puis touchez « Terminer ».</li></ol><p><strong>Votre box mélange 2,4 GHz et 5 GHz ?</strong> Dans les réglages de votre box, séparez les deux réseaux ou coupez le 5 GHz le temps de l'installation.</p>"
+          }
+        },
+        "step_acc": {
+          "type": "step",
+          "settings": {
+            "title": "Ajoutez vos accessoires",
+            "summary": "Détecteurs, contacteurs, télécommandes, sirènes…",
+            "duration": "1 min / accessoire",
+            "content": "<p>Le principe est toujours le même : <strong>vous appuyez sur + dans l'appli, et l'accessoire se signale juste après.</strong></p><p>Par exemple pour un détecteur de mouvement : <strong>éteignez-le, touchez + dans la catégorie « Mouvement », et rallumez-le tout de suite après.</strong></p>",
+            "show_accessories": true,
+            "video_url": "https://www.youtube.com/watch?v=Sgg_b-9vu4U",
+            "video_label": "Voir l'ajout d'un accessoire en vidéo",
+            "tip": "<p>Ajoutez les accessoires <strong>un par un</strong>, à côté de la centrale. Vous les poserez à leur place ensuite.</p>",
+            "help_title": "L'accessoire n'est pas détecté ?",
+            "help_content": "<ul><li>Recommencez en étant <strong>plus rapide</strong> : l'accessoire doit se signaler juste après l'appui sur +.</li><li>Vérifiez que vous êtes dans la <strong>bonne catégorie</strong> (indiquée en orange ci-dessus).</li><li>Vérifiez les <strong>piles</strong> et, pour le WPS305 et le WDV301, l'<strong>interrupteur ON/OFF</strong> sous le capot.</li><li>Rapprochez l'accessoire de la centrale.</li></ul>"
+          }
+        },
+        "step_test": {
+          "type": "step",
+          "settings": {
+            "title": "Testez votre alarme",
+            "summary": "Armer, désarmer : vérifiez que tout répond",
+            "duration": "2 min",
+            "content": "<ol><li>Sur la centrale, appuyez sur <strong>« Armer »</strong> : la LED devient <strong>rouge</strong>. Vous avez quelques secondes pour sortir.</li><li>Pour désarmer, appuyez sur <strong>« Désarmer »</strong>, tapez <strong>1234</strong> (code par défaut) puis <strong>✅</strong>, ou passez votre <strong>badge</strong>. La LED redevient <strong>verte</strong>.</li><li>Faites le même essai depuis l'appli.</li></ol><p><strong>Mode Maison</strong> (la nuit) : seules les portes et fenêtres sont surveillées, vous pouvez circuler chez vous.</p>",
+            "video_url": "https://www.youtube.com/watch?v=DdIqLdLjtW4",
+            "video_label": "Changer le code en vidéo",
+            "warning": "<p><strong>Changez les codes par défaut</strong> (utilisateur 1234 et administrateur 9876), et ne mettez pas le même code pour les deux. <a href=\"/pages/manuel-vigilia#changer-code\">Voir comment faire</a></p>"
+          }
+        },
+        "step_wall": {
+          "type": "step",
+          "settings": {
+            "title": "Fixez la centrale au mur",
+            "summary": "Près de l'entrée, à hauteur des yeux",
+            "duration": "5 min",
+            "content": "<ol><li>Choisissez un endroit <strong>près de l'entrée</strong>, à environ <strong>1,50 m</strong>, près d'une prise, avec un bon Wi-Fi.</li><li>Vissez le <strong>support mural</strong> avec les 2 grandes vis et les chevilles.</li><li>Branchez le câble, puis <strong>emboîtez</strong> la centrale sur le support.</li><li>Vissez les <strong>2 petites vis de sécurité</strong> sous la centrale : elle ne pourra plus être retirée sans outil.</li></ol>",
+            "tip": "<p>Évitez le plein soleil, les pièces humides et les sources de chaleur. Ne couvrez pas le capteur de lumière.</p>"
+          }
+        },
+        "acc_wps": {
+          "type": "accessory",
+          "settings": {
+            "name": "Détecteur de mouvement",
+            "ref": "WPS301 / WPS305",
+            "emoji": "🚶",
+            "image": "shopify://shop_images/WPS305.png",
+            "category": "Mouvement",
+            "before": "Éteignez le détecteur.",
+            "action": "rallumez le détecteur.",
+            "example_name": "Mouvement Salon",
+            "note": "WPS305 : l'interrupteur ON/OFF se trouve sous le capot, sur la carte électronique."
+          }
+        },
+        "acc_wds": {
+          "type": "accessory",
+          "settings": {
+            "name": "Contacteur de porte / fenêtre",
+            "ref": "WDS301",
+            "emoji": "🚪",
+            "category": "Général",
+            "before": "Retirez la pile du contacteur.",
+            "action": "remettez la pile.",
+            "example_name": "Porte d'entrée"
+          }
+        },
+        "acc_wdv": {
+          "type": "accessory",
+          "settings": {
+            "name": "Contacteur 2-en-1 porte + vibration",
+            "ref": "WDV301",
+            "emoji": "🪟",
+            "product": "contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302",
+            "category": "Général",
+            "before": "Ouvrez le capot et mettez l'interrupteur ON/OFF sur OFF.",
+            "action": "remettez l'interrupteur sur ON.",
+            "example_name": "Baie vitrée"
+          }
+        },
+        "acc_wrc": {
+          "type": "accessory",
+          "settings": {
+            "name": "Télécommande",
+            "ref": "WRC301 / WRC305",
+            "emoji": "🎛️",
+            "product": "telecommande-compatible-vigilia-touch",
+            "category": "Télécommande",
+            "before": "",
+            "action": "appuyez sur un bouton de la télécommande.",
+            "example_name": "Télécommande Papa"
+          }
+        },
+        "acc_wrf": {
+          "type": "accessory",
+          "settings": {
+            "name": "Badge RFID",
+            "ref": "WRF301",
+            "emoji": "🏷️",
+            "product": "pack-de-2-badges-rfid-wrf301",
+            "category": "Badge RFID",
+            "before": "",
+            "action": "passez le badge devant le lecteur de la centrale.",
+            "example_name": "Badge Léa"
+          }
+        },
+        "acc_wke": {
+          "type": "accessory",
+          "settings": {
+            "name": "Clavier sans fil",
+            "ref": "WKE301",
+            "emoji": "⌨️",
+            "product": "clavier-wke301-avec-2-badges-rfid",
+            "category": "Entrée",
+            "before": "Éteignez le clavier.",
+            "action": "rallumez le clavier.",
+            "example_name": "Clavier entrée"
+          }
+        },
+        "acc_wvd": {
+          "type": "accessory",
+          "settings": {
+            "name": "Détecteur de vibration",
+            "ref": "WVD301",
+            "emoji": "📳",
+            "product": "detecteur-de-vibration-wvd301",
+            "category": "Général",
+            "before": "Retirez la pile du détecteur.",
+            "action": "remettez la pile.",
+            "example_name": "Vitre cuisine"
+          }
+        },
+        "acc_wdg": {
+          "type": "accessory",
+          "settings": {
+            "name": "Contacteur de porte de garage",
+            "ref": "WDG301",
+            "emoji": "🚗",
+            "product": "contacteur-de-porte-de-garage-wdg301",
+            "category": "Général",
+            "before": "Retirez la pile du contacteur.",
+            "action": "remettez la pile.",
+            "example_name": "Porte garage"
+          }
+        },
+        "acc_wsd": {
+          "type": "accessory",
+          "settings": {
+            "name": "Détecteur de fumée",
+            "ref": "WSD301",
+            "emoji": "🔥",
+            "product": "detecteur-de-fumee-wsd301",
+            "category": "Urgent",
+            "before": "Retirez la pile du détecteur.",
+            "action": "remettez la pile.",
+            "example_name": "Fumée couloir"
+          }
+        },
+        "acc_wwf": {
+          "type": "accessory",
+          "settings": {
+            "name": "Détecteur de fuite d'eau",
+            "ref": "WWF301",
+            "emoji": "💧",
+            "product": "detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302",
+            "category": "Général",
+            "before": "Retirez la pile du détecteur.",
+            "action": "remettez la pile.",
+            "example_name": "Fuite buanderie"
+          }
+        },
+        "acc_bir": {
+          "type": "accessory",
+          "settings": {
+            "name": "Barrière infrarouge",
+            "ref": "BIR301",
+            "emoji": "📡",
+            "product": "daewoo-barrieres-infrarouge-pour-alarme-am301-am302",
+            "category": "Urgent",
+            "before": "Éteignez la barrière.",
+            "action": "rallumez la barrière.",
+            "example_name": "Barrière jardin"
+          }
+        },
+        "acc_wos": {
+          "type": "accessory",
+          "settings": {
+            "name": "Sirène supplémentaire",
+            "ref": "WOS301 / WOS305 / WOS301S",
+            "emoji": "🔊",
+            "product": "sirene-exterieure-wos305-filaire-compatible-panneau-solaire",
+            "category": "Général",
+            "custom_steps": "<p><strong>Les sirènes ne s'ajoutent pas avec le +.</strong> C'est la centrale qui les « appelle » quand vous l'armez.</p><ol><li><strong>D'abord, dans l'appli :</strong> touchez votre centrale › <strong>Paramètres</strong> › cochez <strong>« Sirène additionnelle »</strong> et <strong>« Rappel sirène »</strong>.</li><li><strong>WOS301 / WOS301S :</strong> allumez la sirène, appuyez 1 fois sur le bouton au dos, puis <strong>armez la centrale</strong>. (WOS301 : rappuyez une fois sur le bouton.)</li><li><strong>WOS305 :</strong> allumez la sirène, maintenez le bouton <strong>⚙ 2 secondes</strong> (toutes les LED s'allument), puis <strong>armez la centrale</strong>. Un long bip confirme.</li></ol>"
+          }
+        },
+        "faq_orange": {
+          "type": "faq",
+          "settings": {
+            "question": "🟠 La LED de ma centrale clignote orange",
+            "answer": "<p>La centrale n'est pas connectée au Wi-Fi. Vérifiez que votre réseau est en <strong>2,4 GHz</strong> et que le mot de passe fait <strong>moins de 20 caractères sans caractère spécial</strong>. Ensuite, faites une réinitialisation Wi-Fi (question ci-dessous) et réinstallez la centrale.</p>"
+          }
+        },
+        "faq_box": {
+          "type": "faq",
+          "settings": {
+            "question": "📶 J'ai changé de box ou de mot de passe Wi-Fi",
+            "answer": "<p>Faites une <strong>réinitialisation Wi-Fi</strong> (vos accessoires et réglages sont conservés). Sur la centrale, tapez :</p><p><strong>⚙ › 9876 › ✅ › 0 › ✅ › 0 › ✅</strong></p><p>Puis refaites l'étape 3 « Ajoutez la centrale dans l'appli ».</p>"
+          }
+        },
+        "faq_acc": {
+          "type": "faq",
+          "settings": {
+            "question": "🔁 Mon accessoire ne s'ajoute pas",
+            "answer": "<p>Le plus souvent, l'accessoire s'est signalé trop tard. Touchez <strong>+</strong> dans la bonne catégorie et, <strong>dans la foulée</strong>, éteignez/rallumez l'accessoire (ou appuyez sur un bouton pour une télécommande). Vérifiez aussi les piles.</p>"
+          }
+        },
+        "faq_blink": {
+          "type": "faq",
+          "settings": {
+            "question": "🔴 La LED de mon accessoire clignote",
+            "answer": "<p>Les piles sont faibles : remplacez-les. <a href=\"/pages/manuel-vigilia#piles\">Voir comment changer les piles</a></p>"
+          }
+        },
+        "faq_siren": {
+          "type": "faq",
+          "settings": {
+            "question": "🔇 Ma sirène ne sonne pas",
+            "answer": "<p>Dans l'appli, ouvrez les <strong>Paramètres</strong> de la centrale et vérifiez que <strong>« Sirène additionnelle »</strong> et <strong>« Rappel sirène »</strong> sont cochés. Puis refaites l'appairage de la sirène (étape 4).</p>"
+          }
+        },
+        "faq_notif": {
+          "type": "faq",
+          "settings": {
+            "question": "🔔 Je ne reçois pas les notifications",
+            "answer": "<p>Autorisez les notifications pour Daewoo Home Connect dans les réglages de votre téléphone :</p><ul><li>iPhone : Réglages › Daewoo Home Connect › Notifications</li><li>Android : Paramètres › Applications › Daewoo Home Connect › Notifications</li></ul>"
+          }
+        },
+        "faq_reset": {
+          "type": "faq",
+          "settings": {
+            "question": "♻️ Remettre la centrale à zéro (réglages d'usine)",
+            "answer": "<p><strong>Attention : cela efface tout</strong> (accessoires, codes, Wi-Fi).</p><ol><li>Débranchez le câble et mettez l'interrupteur batterie sur OFF.</li><li>Maintenez <strong>❌ et ✅</strong> enfoncés.</li><li>Sans relâcher, remettez l'interrupteur sur ON et maintenez environ <strong>15 secondes</strong>, jusqu'au bip.</li></ol><p><a href=\"https://www.youtube.com/watch?v=h5voMunDGUM\" target=\"_blank\">Voir la vidéo</a></p>"
+          }
+        },
+        "link_codes": {
+          "type": "link",
+          "settings": {
+            "emoji": "🔐",
+            "title": "Gérer les codes",
+            "text": "Changer ou ajouter jusqu'à 6 codes",
+            "url": "/pages/manuel-vigilia#codes"
+          }
+        },
+        "link_gsm": {
+          "type": "link",
+          "settings": {
+            "emoji": "📱",
+            "title": "Mode GSM et SMS",
+            "text": "Piloter l'alarme par SMS, même sans Wi-Fi",
+            "url": "/pages/manuel-vigilia#gsm"
+          }
+        },
+        "link_voice": {
+          "type": "link",
+          "settings": {
+            "emoji": "🗣️",
+            "title": "Alexa et Google Home",
+            "text": "Armer l'alarme à la voix",
+            "url": "/pages/manuel-vigilia#assistants"
+          }
+        },
+        "link_share": {
+          "type": "link",
+          "settings": {
+            "emoji": "👨‍👩‍👧",
+            "title": "Partager avec la famille",
+            "text": "Donner l'accès à vos proches",
+            "url": "/pages/manuel-vigilia#partage"
+          }
+        },
+        "link_scen": {
+          "type": "link",
+          "settings": {
+            "emoji": "✨",
+            "title": "Scénarios avec vos caméras",
+            "text": "Automatiser votre maison",
+            "url": "/pages/manuel-vigilia#scenarios"
+          }
+        },
+        "link_manual": {
+          "type": "link",
+          "settings": {
+            "emoji": "📘",
+            "title": "Manuel complet",
+            "text": "Toutes les fonctions en détail",
+            "url": "/pages/manuel-vigilia"
+          }
+        }
+      },
+      "block_order": [
+        "check_wifi",
+        "check_pwd",
+        "check_bt",
+        "check_near",
+        "step_app",
+        "step_power",
+        "step_install",
+        "step_acc",
+        "step_test",
+        "step_wall",
+        "acc_wps",
+        "acc_wds",
+        "acc_wdv",
+        "acc_wrc",
+        "acc_wrf",
+        "acc_wke",
+        "acc_wvd",
+        "acc_wdg",
+        "acc_wsd",
+        "acc_wwf",
+        "acc_bir",
+        "acc_wos",
+        "faq_orange",
+        "faq_box",
+        "faq_acc",
+        "faq_blink",
+        "faq_siren",
+        "faq_notif",
+        "faq_reset",
+        "link_codes",
+        "link_gsm",
+        "link_voice",
+        "link_share",
+        "link_scen",
+        "link_manual"
+      ],
+      "settings": {
+        "eyebrow": "Guide d'installation",
+        "title": "Installez votre alarme Vigilia en 15 minutes",
+        "subtitle": "<p>Suivez les étapes une par une, sans jargon. Validez chaque étape quand elle est faite : on vous guide jusqu'au bout.</p>",
+        "duration": "≈ 15 minutes",
+        "hero_image": "shopify://shop_images/Manuel_complet_Vigilia_14022025.pdf_1.png",
+        "checklist_title": "Avant de commencer",
+        "checklist_text": "4 vérifications rapides qui évitent la plupart des problèmes d'installation.",
+        "acc_question": "Quel accessoire voulez-vous ajouter ? Touchez-le :",
+        "done_title": "Bravo, votre alarme est prête !",
+        "done_text": "Votre maison est protégée. Pensez à changer vos codes par défaut si ce n'est pas encore fait.",
+        "show_leds": true,
+        "faq_title": "Un souci ? Les solutions rapides",
+        "links_title": "Aller plus loin",
+        "links_text": "Votre alarme fonctionne. Quand vous voulez, profitez de toutes ses possibilités :",
+        "support_title": "Toujours bloqué ? On est là.",
+        "support_text": "Notre équipe basée à Bordeaux vous aide à finaliser votre installation.",
+        "support_label": "Demander de l'aide",
+        "support_url": "/pages/assistance-1",
+        "contact_label": "Nous écrire",
+        "contact_url": "/pages/nous-contacter",
+        "youtube_url": "https://www.youtube.com/@daewoosecurity3029",
+        "padding_top": 48,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "guide"
+  ]
+}

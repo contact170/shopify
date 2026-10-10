@@ -1,0 +1,767 @@
+{%- comment -%}
+  Guide d'installation pas à pas — Centrale Vigilia
+  Section autonome : hero + checklist, étapes en accordéon avec progression,
+  sélecteur d'accessoires, voyants LED, FAQ dépannage, liens « aller plus loin ».
+  Tout le contenu est éditable dans l'éditeur de thème (blocs).
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign steps = section.blocks | where: 'type', 'step'
+  assign checks = section.blocks | where: 'type', 'check'
+  assign accessories = section.blocks | where: 'type', 'accessory'
+  assign faqs = section.blocks | where: 'type', 'faq'
+  assign links = section.blocks | where: 'type', 'link'
+  assign step_count = steps.size
+-%}
+
+<style>
+  #vg-{{ sid }} {
+    --vg-navy: #0c1e4a;
+    --vg-blue: #0b61cd;
+    --vg-blue-soft: #e8f0fd;
+    --vg-orange: #f26a1b;
+    --vg-orange-soft: #fff1e8;
+    --vg-green: #16a34a;
+    --vg-green-soft: #e9f8ef;
+    --vg-red: #e11d48;
+    --vg-yellow: #f5a524;
+    --vg-bg: #f2f3ff;
+    --vg-card: #ffffff;
+    --vg-text: #0c1e4a;
+    --vg-muted: #55617f;
+    --vg-line: rgba(12, 30, 74, .1);
+    --vg-radius: 20px;
+    --vg-shadow: 0 1px 2px rgba(12,30,74,.06), 0 8px 24px rgba(12,30,74,.06);
+    --vg-ease: cubic-bezier(.23, 1, .32, 1);
+    background: var(--vg-bg);
+    color: var(--vg-text);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  #vg-{{ sid }} *, #vg-{{ sid }} *::before, #vg-{{ sid }} *::after { box-sizing: border-box; }
+  #vg-{{ sid }} .vg-wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+  #vg-{{ sid }} h2, #vg-{{ sid }} h3, #vg-{{ sid }} h4 { color: var(--vg-navy); margin: 0; letter-spacing: -.02em; line-height: 1.2; }
+  #vg-{{ sid }} p { margin: 0 0 .75em; }
+  #vg-{{ sid }} p:last-child { margin-bottom: 0; }
+  #vg-{{ sid }} a { color: var(--vg-blue); }
+  #vg-{{ sid }} img { max-width: 100%; height: auto; display: block; }
+  #vg-{{ sid }} .vg-rte ol, #vg-{{ sid }} .vg-rte ul { margin: 0 0 .75em; padding-left: 1.25em; }
+  #vg-{{ sid }} .vg-rte li { margin: .35em 0; }
+  #vg-{{ sid }} .vg-rte strong { color: var(--vg-navy); }
+
+  /* Hero */
+  #vg-{{ sid }} .vg-hero { display: grid; gap: 24px; align-items: center; margin-bottom: 28px; }
+  @media (min-width: 750px) { #vg-{{ sid }} .vg-hero { grid-template-columns: 1.2fr .8fr; gap: 40px; } }
+  #vg-{{ sid }} .vg-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--vg-blue); background: var(--vg-blue-soft); padding: 6px 12px; border-radius: 999px; margin-bottom: 14px; }
+  #vg-{{ sid }} .vg-hero h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.08; letter-spacing: -.03em; color: var(--vg-navy); margin: 0 0 14px; }
+  #vg-{{ sid }} .vg-hero__sub { font-size: 18px; color: var(--vg-muted); margin-bottom: 20px; }
+  #vg-{{ sid }} .vg-hero__meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  #vg-{{ sid }} .vg-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--vg-card); border: 1px solid var(--vg-line); border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 500; }
+  #vg-{{ sid }} .vg-hero__media { background: var(--vg-card); border-radius: 28px; padding: 16px; box-shadow: var(--vg-shadow); }
+  #vg-{{ sid }} .vg-hero__media img { border-radius: 18px; width: 100%; }
+
+  /* Barre de progression collante */
+  #vg-{{ sid }} .vg-progress { position: sticky; top: calc(var(--sticky-header-height, 0px) + 8px); z-index: 5; background: rgba(255,255,255,.92); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border: 1px solid var(--vg-line); border-radius: 999px; padding: 10px 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 20px; box-shadow: var(--vg-shadow); }
+  #vg-{{ sid }} .vg-progress__label { font-size: 14px; font-weight: 600; white-space: nowrap; }
+  #vg-{{ sid }} .vg-progress__bar { flex: 1; height: 8px; border-radius: 999px; background: var(--vg-blue-soft); overflow: hidden; }
+  #vg-{{ sid }} .vg-progress__fill { height: 100%; width: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--vg-blue), #3b8bff); transform-origin: left; transform: scaleX(0); transition: transform .5s var(--vg-ease); }
+  #vg-{{ sid }} .vg-progress__reset { border: 0; background: none; font: inherit; font-size: 13px; color: var(--vg-muted); text-decoration: underline; cursor: pointer; padding: 4px; }
+
+  /* Cartes */
+  #vg-{{ sid }} .vg-card { background: var(--vg-card); border-radius: var(--vg-radius); box-shadow: var(--vg-shadow); border: 1px solid var(--vg-line); }
+  #vg-{{ sid }} .vg-block-title { font-size: 24px; margin-bottom: 6px; }
+  #vg-{{ sid }} .vg-block-sub { color: var(--vg-muted); margin-bottom: 18px; }
+
+  /* Checklist */
+  #vg-{{ sid }} .vg-checklist { padding: 24px; margin-bottom: 28px; }
+  #vg-{{ sid }} .vg-checklist ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  #vg-{{ sid }} .vg-check { display: flex; gap: 14px; align-items: flex-start; padding: 14px; border-radius: 14px; background: var(--vg-bg); cursor: pointer; transition: background-color .2s ease; }
+  #vg-{{ sid }} .vg-check input { position: absolute; opacity: 0; pointer-events: none; }
+  #vg-{{ sid }} .vg-check__box { flex: 0 0 26px; height: 26px; border-radius: 8px; border: 2px solid rgba(12,30,74,.25); background: #fff; display: grid; place-items: center; transition: background-color .2s ease, border-color .2s ease, transform .15s var(--vg-ease); }
+  #vg-{{ sid }} .vg-check__box svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 3; fill: none; stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset .3s var(--vg-ease); }
+  #vg-{{ sid }} .vg-check input:checked + .vg-check__box { background: var(--vg-green); border-color: var(--vg-green); }
+  #vg-{{ sid }} .vg-check input:checked + .vg-check__box svg { stroke-dashoffset: 0; }
+  #vg-{{ sid }} .vg-check:active .vg-check__box { transform: scale(.92); }
+  #vg-{{ sid }} .vg-check input:focus-visible + .vg-check__box { outline: 3px solid var(--vg-blue); outline-offset: 2px; }
+  #vg-{{ sid }} .vg-check__title { font-weight: 600; display: block; }
+  #vg-{{ sid }} .vg-check__detail { font-size: 14px; color: var(--vg-muted); display: block; margin-top: 2px; }
+  #vg-{{ sid }} .vg-check:has(input:checked) { background: var(--vg-green-soft); }
+
+  /* Étapes */
+  #vg-{{ sid }} .vg-steps { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 14px; counter-reset: none; }
+  #vg-{{ sid }} .vg-step { overflow: hidden; transition: border-color .25s ease, box-shadow .25s ease; }
+  #vg-{{ sid }} .vg-step.is-open { border-color: rgba(11,97,205,.35); box-shadow: 0 0 0 4px rgba(11,97,205,.08), var(--vg-shadow); }
+  #vg-{{ sid }} .vg-step__head { width: 100%; display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: none; border: 0; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  #vg-{{ sid }} .vg-step__head:focus-visible { outline: 3px solid var(--vg-blue); outline-offset: -3px; border-radius: var(--vg-radius); }
+  #vg-{{ sid }} .vg-step__num { flex: 0 0 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 18px; background: var(--vg-blue-soft); color: var(--vg-blue); transition: background-color .25s ease, color .25s ease; }
+  #vg-{{ sid }} .vg-step__num svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 3; fill: none; display: none; }
+  #vg-{{ sid }} .vg-step.is-open .vg-step__num { background: var(--vg-blue); color: #fff; }
+  #vg-{{ sid }} .vg-step.is-done .vg-step__num { background: var(--vg-green); color: #fff; }
+  #vg-{{ sid }} .vg-step.is-done .vg-step__num span { display: none; }
+  #vg-{{ sid }} .vg-step.is-done .vg-step__num svg { display: block; }
+  #vg-{{ sid }} .vg-step__titles { flex: 1; min-width: 0; }
+  #vg-{{ sid }} .vg-step__title { font-size: 19px; font-weight: 600; color: var(--vg-navy); display: block; line-height: 1.25; }
+  #vg-{{ sid }} .vg-step__summary { font-size: 14px; color: var(--vg-muted); display: block; margin-top: 2px; }
+  #vg-{{ sid }} .vg-step__time { font-size: 13px; font-weight: 600; color: var(--vg-muted); background: var(--vg-bg); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  #vg-{{ sid }} .vg-chevron { width: 20px; height: 20px; flex: 0 0 20px; stroke: var(--vg-muted); fill: none; stroke-width: 2.5; transition: transform .3s var(--vg-ease); }
+  #vg-{{ sid }} .vg-step.is-open .vg-chevron { transform: rotate(180deg); }
+  #vg-{{ sid }} .vg-collapse { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--vg-ease); }
+  #vg-{{ sid }} .vg-collapse > div { overflow: hidden; min-height: 0; }
+  #vg-{{ sid }} .is-open > .vg-collapse { grid-template-rows: 1fr; }
+  #vg-{{ sid }} .vg-step__body { padding: 0 20px 22px; }
+  @media (min-width: 750px) { #vg-{{ sid }} .vg-step__body { padding: 0 24px 26px 78px; } }
+  @media (max-width: 480px) { #vg-{{ sid }} .vg-step__time { display: none; } }
+
+  #vg-{{ sid }} .vg-media { display: grid; gap: 12px; margin: 16px 0; }
+  @media (min-width: 600px) { #vg-{{ sid }} .vg-media--2 { grid-template-columns: 1fr 1fr; } }
+  #vg-{{ sid }} .vg-media img { border-radius: 14px; width: 100%; background: var(--vg-bg); }
+  #vg-{{ sid }} .vg-media figcaption { font-size: 13px; color: var(--vg-muted); margin-top: 6px; text-align: center; }
+
+  /* Encadrés */
+  #vg-{{ sid }} .vg-note { display: flex; gap: 12px; padding: 14px 16px; border-radius: 14px; margin: 14px 0; font-size: 15px; }
+  #vg-{{ sid }} .vg-note__icon { flex: 0 0 auto; font-size: 18px; line-height: 1.4; }
+  #vg-{{ sid }} .vg-note--tip { background: var(--vg-blue-soft); }
+  #vg-{{ sid }} .vg-note--warn { background: var(--vg-orange-soft); }
+  #vg-{{ sid }} .vg-help { margin-top: 14px; border: 1px dashed rgba(12,30,74,.2); border-radius: 14px; }
+  #vg-{{ sid }} .vg-help summary { cursor: pointer; padding: 14px 16px; font-weight: 600; color: var(--vg-navy); list-style: none; display: flex; align-items: center; gap: 10px; }
+  #vg-{{ sid }} .vg-help summary::-webkit-details-marker { display: none; }
+  #vg-{{ sid }} .vg-help summary::after { content: "+"; margin-left: auto; font-size: 20px; color: var(--vg-muted); transition: transform .25s var(--vg-ease); }
+  #vg-{{ sid }} .vg-help[open] summary::after { transform: rotate(45deg); }
+  #vg-{{ sid }} .vg-help__body { padding: 0 16px 16px; }
+
+  /* Boutons */
+  #vg-{{ sid }} .vg-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  #vg-{{ sid }} .vg-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 22px; border-radius: 999px; font: inherit; font-weight: 600; font-size: 15px; text-decoration: none; cursor: pointer; border: 2px solid transparent; transition: transform .15s var(--vg-ease), background-color .2s ease; }
+  #vg-{{ sid }} .vg-btn:active { transform: scale(.97); }
+  #vg-{{ sid }} .vg-btn:focus-visible { outline: 3px solid var(--vg-blue); outline-offset: 2px; }
+  #vg-{{ sid }} .vg-btn--primary { background: var(--vg-navy); color: #fff; }
+  #vg-{{ sid }} .vg-btn--ghost { background: transparent; color: var(--vg-navy); border-color: var(--vg-line); }
+  #vg-{{ sid }} .vg-btn--store { background: #000; color: #fff; padding: 10px 18px; }
+  @media (hover: hover) {
+    #vg-{{ sid }} .vg-btn--primary:hover { background: #17306f; }
+    #vg-{{ sid }} .vg-btn--ghost:hover { background: var(--vg-bg); }
+  }
+
+  /* Vidéo YouTube (chargée au clic) */
+  #vg-{{ sid }} .vg-video { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #0c1e4a; margin: 16px 0; }
+  #vg-{{ sid }} .vg-video iframe, #vg-{{ sid }} .vg-video video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  #vg-{{ sid }} .vg-video__poster { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; cursor: pointer; background: none; }
+  #vg-{{ sid }} .vg-video__poster img { width: 100%; height: 100%; object-fit: cover; opacity: .85; transition: opacity .2s ease; }
+  #vg-{{ sid }} .vg-video__play { position: absolute; top: 50%; left: 50%; width: 68px; height: 68px; margin: -34px 0 0 -34px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.25); transition: transform .2s var(--vg-ease); }
+  #vg-{{ sid }} .vg-video__play svg { width: 26px; height: 26px; margin-left: 4px; fill: var(--vg-navy); }
+  #vg-{{ sid }} .vg-video__label { position: absolute; left: 12px; bottom: 12px; background: rgba(12,30,74,.85); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 8px; }
+  @media (hover: hover) {
+    #vg-{{ sid }} .vg-video__poster:hover img { opacity: 1; }
+    #vg-{{ sid }} .vg-video__poster:hover .vg-video__play { transform: scale(1.06); }
+  }
+
+  /* Sélecteur d'accessoires */
+  #vg-{{ sid }} .vg-acc { margin-top: 18px; }
+  #vg-{{ sid }} .vg-acc__q { font-weight: 600; margin-bottom: 12px; color: var(--vg-navy); }
+  #vg-{{ sid }} .vg-acc__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (min-width: 600px) { #vg-{{ sid }} .vg-acc__grid { grid-template-columns: repeat(3, 1fr); } }
+  #vg-{{ sid }} .vg-acc__item { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding: 12px 10px; border-radius: 16px; border: 2px solid var(--vg-line); background: #fff; cursor: pointer; font: inherit; color: inherit; transition: border-color .2s ease, transform .15s var(--vg-ease), box-shadow .2s ease; }
+  #vg-{{ sid }} .vg-acc__item:active { transform: scale(.97); }
+  #vg-{{ sid }} .vg-acc__item:focus-visible { outline: 3px solid var(--vg-blue); outline-offset: 2px; }
+  #vg-{{ sid }} .vg-acc__item[aria-expanded="true"] { border-color: var(--vg-blue); box-shadow: 0 0 0 4px rgba(11,97,205,.1); }
+  @media (hover: hover) { #vg-{{ sid }} .vg-acc__item:hover { border-color: rgba(11,97,205,.4); } }
+  #vg-{{ sid }} .vg-acc__img { width: 72px; height: 72px; border-radius: 12px; background: var(--vg-bg); display: grid; place-items: center; overflow: hidden; font-size: 30px; }
+  #vg-{{ sid }} .vg-acc__img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  #vg-{{ sid }} .vg-acc__name { font-size: 14px; font-weight: 600; line-height: 1.25; color: var(--vg-navy); }
+  #vg-{{ sid }} .vg-acc__ref { font-size: 12px; color: var(--vg-muted); }
+  #vg-{{ sid }} .vg-acc__panel { margin-top: 14px; padding: 20px; border-radius: 18px; background: var(--vg-bg); }
+  #vg-{{ sid }} .vg-acc__panel[hidden] { display: none; }
+  #vg-{{ sid }} .vg-acc__panel.is-entering { animation: vg-in .35s var(--vg-ease); }
+  @keyframes vg-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  #vg-{{ sid }} .vg-acc__panel h4 { font-size: 18px; margin-bottom: 4px; }
+  #vg-{{ sid }} .vg-path { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 10px 0 16px; font-size: 14px; }
+  #vg-{{ sid }} .vg-path span { background: #fff; border: 1px solid var(--vg-line); padding: 5px 10px; border-radius: 8px; font-weight: 500; }
+  #vg-{{ sid }} .vg-path i { font-style: normal; color: var(--vg-muted); }
+  #vg-{{ sid }} .vg-path .vg-path__cat { background: var(--vg-orange); color: #fff; border-color: var(--vg-orange); font-weight: 700; }
+  #vg-{{ sid }} .vg-path .vg-path__plus { background: var(--vg-orange); color: #fff; border-color: var(--vg-orange); font-weight: 700; width: 30px; text-align: center; padding: 5px 0; }
+  #vg-{{ sid }} .vg-mini { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  #vg-{{ sid }} .vg-mini li { display: flex; gap: 12px; align-items: flex-start; background: #fff; border-radius: 14px; padding: 14px; }
+  #vg-{{ sid }} .vg-mini__n { flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--vg-navy); color: #fff; font-weight: 700; font-size: 14px; display: grid; place-items: center; }
+  #vg-{{ sid }} .vg-mini li.is-key { box-shadow: inset 0 0 0 2px var(--vg-orange); }
+  #vg-{{ sid }} .vg-mini li.is-key .vg-mini__n { background: var(--vg-orange); }
+  #vg-{{ sid }} .vg-mini__t { padding-top: 3px; }
+  #vg-{{ sid }} .vg-mini__t small { display: block; color: var(--vg-muted); font-size: 13px; margin-top: 2px; }
+
+  /* Fin */
+  #vg-{{ sid }} .vg-done { text-align: center; padding: 32px 24px; margin-bottom: 28px; background: linear-gradient(160deg, #0c1e4a, #17306f); color: #fff; border: 0; }
+  #vg-{{ sid }} .vg-done h3 { color: #fff; font-size: 26px; margin-bottom: 8px; }
+  #vg-{{ sid }} .vg-done p { color: rgba(255,255,255,.8); }
+  #vg-{{ sid }} .vg-done__emoji { font-size: 44px; margin-bottom: 8px; display: inline-block; }
+  #vg-{{ sid }} .vg-done.is-celebrating .vg-done__emoji { animation: vg-pop .6s var(--vg-ease); }
+  @keyframes vg-pop { 0% { transform: scale(.6); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+  /* LED */
+  #vg-{{ sid }} .vg-leds { padding: 24px; margin-bottom: 28px; }
+  #vg-{{ sid }} .vg-leds__grid { display: grid; gap: 10px; }
+  @media (min-width: 600px) { #vg-{{ sid }} .vg-leds__grid { grid-template-columns: 1fr 1fr; } }
+  #vg-{{ sid }} .vg-led { display: flex; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 14px; background: var(--vg-bg); }
+  #vg-{{ sid }} .vg-led__dot { flex: 0 0 18px; height: 18px; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255,255,255,.9), 0 0 12px currentColor; background: currentColor; }
+  #vg-{{ sid }} .vg-led__dot--fast { animation: vg-blink .5s steps(2, jump-none) infinite; }
+  #vg-{{ sid }} .vg-led__dot--slow { animation: vg-blink 2s steps(2, jump-none) infinite; }
+  #vg-{{ sid }} .vg-led__dot--vslow { animation: vg-blink 5s steps(2, jump-none) infinite; }
+  @keyframes vg-blink { 0% { opacity: 1; } 100% { opacity: .25; } }
+  #vg-{{ sid }} .vg-led strong { display: block; font-size: 15px; color: var(--vg-navy); }
+  #vg-{{ sid }} .vg-led small { color: var(--vg-muted); font-size: 13px; }
+
+  /* FAQ */
+  #vg-{{ sid }} .vg-faq { padding: 24px; margin-bottom: 28px; }
+  #vg-{{ sid }} .vg-faq details { border-top: 1px solid var(--vg-line); }
+  #vg-{{ sid }} .vg-faq details:first-of-type { border-top: 0; }
+  #vg-{{ sid }} .vg-faq summary { cursor: pointer; list-style: none; padding: 16px 0; font-weight: 600; color: var(--vg-navy); display: flex; gap: 12px; align-items: center; }
+  #vg-{{ sid }} .vg-faq summary::-webkit-details-marker { display: none; }
+  #vg-{{ sid }} .vg-faq summary::after { content: "+"; margin-left: auto; font-size: 22px; color: var(--vg-muted); transition: transform .25s var(--vg-ease); }
+  #vg-{{ sid }} .vg-faq details[open] summary::after { transform: rotate(45deg); }
+  #vg-{{ sid }} .vg-faq__a { padding: 0 0 18px; color: var(--vg-text); }
+
+  /* Liens */
+  #vg-{{ sid }} .vg-links { display: grid; gap: 12px; grid-template-columns: 1fr; margin-bottom: 28px; }
+  @media (min-width: 600px) { #vg-{{ sid }} .vg-links { grid-template-columns: 1fr 1fr; } }
+  #vg-{{ sid }} .vg-link { display: flex; gap: 14px; align-items: center; padding: 16px 18px; text-decoration: none; color: inherit; transition: transform .2s var(--vg-ease), border-color .2s ease; }
+  @media (hover: hover) { #vg-{{ sid }} .vg-link:hover { transform: translateY(-2px); border-color: rgba(11,97,205,.35); } }
+  #vg-{{ sid }} .vg-link__icon { flex: 0 0 44px; height: 44px; border-radius: 12px; background: var(--vg-blue-soft); display: grid; place-items: center; font-size: 22px; }
+  #vg-{{ sid }} .vg-link strong { display: block; color: var(--vg-navy); }
+  #vg-{{ sid }} .vg-link small { color: var(--vg-muted); font-size: 14px; }
+
+  /* Support */
+  #vg-{{ sid }} .vg-support { padding: 28px 24px; text-align: center; }
+  #vg-{{ sid }} .vg-support .vg-actions { justify-content: center; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #vg-{{ sid }} *, #vg-{{ sid }} *::before, #vg-{{ sid }} *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+
+{%- capture icon_check -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke-linecap="round" stroke-linejoin="round"/></svg>{%- endcapture -%}
+{%- capture icon_chevron -%}<svg class="vg-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>{%- endcapture -%}
+
+<div id="vg-{{ sid }}" class="vg" data-guide-vigilia data-storage-key="vg-{{ page.handle | default: sid }}">
+  <div class="vg-wrap">
+
+    {%- comment -%} ===== HERO ===== {%- endcomment -%}
+    <header class="vg-hero">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="vg-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h1>{{ section.settings.title }}</h1>
+        {%- if section.settings.subtitle != blank -%}<div class="vg-hero__sub">{{ section.settings.subtitle }}</div>{%- endif -%}
+        <div class="vg-hero__meta">
+          {%- if section.settings.duration != blank -%}<span class="vg-pill">⏱ {{ section.settings.duration }}</span>{%- endif -%}
+          {%- if step_count > 0 -%}<span class="vg-pill">✅ {{ step_count }} étapes</span>{%- endif -%}
+          <span class="vg-pill">🧰 Aucun outil pour démarrer</span>
+        </div>
+      </div>
+      {%- if section.settings.hero_image != blank -%}
+        <div class="vg-hero__media">
+          {{ section.settings.hero_image | image_url: width: 900 | image_tag: loading: 'eager', sizes: '(min-width: 750px) 340px, 100vw', widths: '400, 600, 900', alt: section.settings.title }}
+        </div>
+      {%- endif -%}
+    </header>
+
+    {%- comment -%} ===== CHECKLIST ===== {%- endcomment -%}
+    {%- if checks.size > 0 -%}
+      <section class="vg-card vg-checklist" aria-labelledby="vg-check-{{ sid }}">
+        <h2 class="vg-block-title" id="vg-check-{{ sid }}">{{ section.settings.checklist_title }}</h2>
+        {%- if section.settings.checklist_text != blank -%}<p class="vg-block-sub">{{ section.settings.checklist_text }}</p>{%- endif -%}
+        <ul>
+          {%- for block in checks -%}
+            <li {{ block.shopify_attributes }}>
+              <label class="vg-check">
+                <input type="checkbox" data-check="{{ block.id }}">
+                <span class="vg-check__box">{{ icon_check }}</span>
+                <span>
+                  <span class="vg-check__title">{{ block.settings.title }}</span>
+                  {%- if block.settings.detail != blank -%}<span class="vg-check__detail">{{ block.settings.detail }}</span>{%- endif -%}
+                </span>
+              </label>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+
+    {%- comment -%} ===== PROGRESSION ===== {%- endcomment -%}
+    {%- if step_count > 0 -%}
+      <div class="vg-progress" role="status" aria-live="polite">
+        <span class="vg-progress__label" data-progress-label>0 / {{ step_count }} étapes</span>
+        <span class="vg-progress__bar" aria-hidden="true"><span class="vg-progress__fill" data-progress-fill></span></span>
+        <button type="button" class="vg-progress__reset" data-reset>Recommencer</button>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ===== ÉTAPES ===== {%- endcomment -%}
+    <ol class="vg-steps">
+      {%- for block in steps -%}
+        {%- liquid
+          assign is_last = forloop.last
+          assign body_id = 'vg-body-' | append: block.id
+          assign yt_id = ''
+          if block.settings.video_url != blank and block.settings.video_url.type == 'youtube'
+            assign yt_id = block.settings.video_url.id
+          endif
+        -%}
+        <li class="vg-card vg-step" id="etape-{{ forloop.index }}" data-step="{{ block.id }}" {{ block.shopify_attributes }}>
+          <button type="button" class="vg-step__head" aria-expanded="false" aria-controls="{{ body_id }}" data-step-toggle>
+            <span class="vg-step__num"><span>{{ forloop.index }}</span>{{ icon_check }}</span>
+            <span class="vg-step__titles">
+              <span class="vg-step__title">{{ block.settings.title }}</span>
+              {%- if block.settings.summary != blank -%}<span class="vg-step__summary">{{ block.settings.summary }}</span>{%- endif -%}
+            </span>
+            {%- if block.settings.duration != blank -%}<span class="vg-step__time">{{ block.settings.duration }}</span>{%- endif -%}
+            {{ icon_chevron }}
+          </button>
+
+          <div class="vg-collapse" id="{{ body_id }}">
+            <div>
+              <div class="vg-step__body">
+                {%- if block.settings.content != blank -%}<div class="vg-rte">{{ block.settings.content }}</div>{%- endif -%}
+
+                {%- if block.settings.show_store_buttons -%}
+                  <div class="vg-actions">
+                    {%- if section.settings.app_store_url != blank -%}<a class="vg-btn vg-btn--store" href="{{ section.settings.app_store_url }}" target="_blank" rel="noopener"> App Store</a>{%- endif -%}
+                    {%- if section.settings.play_store_url != blank -%}<a class="vg-btn vg-btn--store" href="{{ section.settings.play_store_url }}" target="_blank" rel="noopener">▶ Google Play</a>{%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.image != blank or block.settings.image_2 != blank -%}
+                  <div class="vg-media{% if block.settings.image != blank and block.settings.image_2 != blank %} vg-media--2{% endif %}">
+                    {%- if block.settings.image != blank -%}
+                      <figure style="margin:0">
+                        {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 380px, 100vw', widths: '400, 700, 1000' }}
+                        {%- if block.settings.caption != blank -%}<figcaption>{{ block.settings.caption }}</figcaption>{%- endif -%}
+                      </figure>
+                    {%- endif -%}
+                    {%- if block.settings.image_2 != blank -%}
+                      <figure style="margin:0">
+                        {{ block.settings.image_2 | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 380px, 100vw', widths: '400, 700, 1000' }}
+                        {%- if block.settings.caption_2 != blank -%}<figcaption>{{ block.settings.caption_2 }}</figcaption>{%- endif -%}
+                      </figure>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.video != blank -%}
+                  <div class="vg-video">{{ block.settings.video | video_tag: controls: true, preload: 'metadata', playsinline: true }}</div>
+                {%- elsif yt_id != '' -%}
+                  <div class="vg-video">
+                    <button type="button" class="vg-video__poster" data-yt="{{ yt_id }}" aria-label="Lire la vidéo : {{ block.settings.video_label | default: block.settings.title | escape }}">
+                      <img src="https://i.ytimg.com/vi/{{ yt_id }}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+                      <span class="vg-video__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></span>
+                      <span class="vg-video__label">▶ {{ block.settings.video_label | default: 'Voir la vidéo' }}</span>
+                    </button>
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.show_accessories and accessories.size > 0 -%}
+                  <div class="vg-acc" data-acc>
+                    <p class="vg-acc__q">{{ section.settings.acc_question }}</p>
+                    <div class="vg-acc__grid">
+                      {%- for acc in accessories -%}
+                        {%- liquid
+                          assign acc_img = acc.settings.image
+                          if acc_img == blank and acc.settings.product != blank
+                            assign acc_img = acc.settings.product.featured_media.preview_image
+                          endif
+                        -%}
+                        <button type="button" class="vg-acc__item" aria-expanded="false" aria-controls="vg-acc-{{ acc.id }}" data-acc-btn {{ acc.shopify_attributes }}>
+                          <span class="vg-acc__img">
+                            {%- if acc_img != blank -%}
+                              {{ acc_img | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                            {%- else -%}
+                              {{ acc.settings.emoji | default: '📦' }}
+                            {%- endif -%}
+                          </span>
+                          <span class="vg-acc__name">{{ acc.settings.name }}</span>
+                          {%- if acc.settings.ref != blank -%}<span class="vg-acc__ref">{{ acc.settings.ref }}</span>{%- endif -%}
+                        </button>
+                      {%- endfor -%}
+                    </div>
+
+                    {%- for acc in accessories -%}
+                      <div class="vg-acc__panel" id="vg-acc-{{ acc.id }}" hidden data-acc-panel>
+                        <h4>{{ acc.settings.name }}{% if acc.settings.ref != blank %} <span style="font-weight:400;color:var(--vg-muted)">· {{ acc.settings.ref }}</span>{% endif %}</h4>
+                        {%- if acc.settings.custom_steps != blank -%}
+                          <div class="vg-rte">{{ acc.settings.custom_steps }}</div>
+                        {%- else -%}
+                          <div class="vg-path" aria-label="Chemin dans l'application">
+                            <span>Votre centrale</span><i>›</i><span>Accessoires</span><i>›</i><span class="vg-path__cat">{{ acc.settings.category }}</span><i>›</i><span class="vg-path__plus">+</span>
+                          </div>
+                          <ol class="vg-mini">
+                            {%- assign n = 1 -%}
+                            {%- if acc.settings.before != blank -%}
+                              <li><span class="vg-mini__n">{{ n }}</span><span class="vg-mini__t">{{ acc.settings.before }}</span></li>
+                              {%- assign n = n | plus: 1 -%}
+                            {%- endif -%}
+                            <li><span class="vg-mini__n">{{ n }}</span><span class="vg-mini__t">Dans l'appli, touchez votre <strong>centrale</strong> › <strong>Accessoires</strong> › catégorie <strong>« {{ acc.settings.category }} »</strong>, puis touchez le <strong>+</strong> en haut à droite.</span></li>
+                            {%- assign n = n | plus: 1 -%}
+                            <li class="is-key"><span class="vg-mini__n">{{ n }}</span><span class="vg-mini__t"><strong>Tout de suite après :</strong> {{ acc.settings.action }}<small>L'accessoire doit envoyer un signal dans les secondes qui suivent l'appui sur +.</small></span></li>
+                            {%- assign n = n | plus: 1 -%}
+                            <li><span class="vg-mini__n">{{ n }}</span><span class="vg-mini__t">Donnez-lui un nom clair (ex : « {{ acc.settings.example_name | default: acc.settings.name }} ») et validez. ✅</span></li>
+                          </ol>
+                        {%- endif -%}
+                        {%- if acc.settings.note != blank -%}
+                          <div class="vg-note vg-note--warn"><span class="vg-note__icon">⚠️</span><div>{{ acc.settings.note }}</div></div>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.tip != blank -%}
+                  <div class="vg-note vg-note--tip"><span class="vg-note__icon">💡</span><div>{{ block.settings.tip }}</div></div>
+                {%- endif -%}
+                {%- if block.settings.warning != blank -%}
+                  <div class="vg-note vg-note--warn"><span class="vg-note__icon">⚠️</span><div>{{ block.settings.warning }}</div></div>
+                {%- endif -%}
+
+                {%- if block.settings.help_content != blank -%}
+                  <details class="vg-help">
+                    <summary>🛟 {{ block.settings.help_title | default: 'Ça ne marche pas ?' }}</summary>
+                    <div class="vg-help__body vg-rte">{{ block.settings.help_content }}</div>
+                  </details>
+                {%- endif -%}
+
+                <div class="vg-actions">
+                  <button type="button" class="vg-btn vg-btn--primary" data-step-done>
+                    {%- if is_last -%}C'est fait, j'ai terminé 🎉{%- else -%}C'est fait, étape suivante →{%- endif -%}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+
+    {%- comment -%} ===== FIN ===== {%- endcomment -%}
+    {%- if step_count > 0 -%}
+      <div class="vg-card vg-done" data-done-card hidden>
+        <span class="vg-done__emoji" aria-hidden="true">🎉</span>
+        <h3>{{ section.settings.done_title }}</h3>
+        <p>{{ section.settings.done_text }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ===== VOYANTS LED ===== {%- endcomment -%}
+    {%- if section.settings.show_leds -%}
+      <section class="vg-card vg-leds" aria-labelledby="vg-led-{{ sid }}">
+        <h2 class="vg-block-title" id="vg-led-{{ sid }}">Que veut dire la lumière de ma centrale ?</h2>
+        <p class="vg-block-sub">La LED de la centrale vous indique son état en un coup d'œil.</p>
+        <div class="vg-leds__grid">
+          <div class="vg-led"><span class="vg-led__dot" style="color:#16a34a"></span><div><strong>Vert fixe</strong><small>En veille, tout va bien</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot" style="color:#e11d48"></span><div><strong>Rouge fixe</strong><small>Alarme armée</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--fast" style="color:#f97316"></span><div><strong>Orange, clignote vite</strong><small>Connexion Wi-Fi en cours</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--slow" style="color:#f97316"></span><div><strong>Orange, clignote lentement</strong><small>Wi-Fi déconnecté</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot" style="color:#f5a524"></span><div><strong>Jaune fixe</strong><small>Interrupteur batterie sur OFF</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--vslow" style="color:#f5a524"></span><div><strong>Jaune, clignote lentement</strong><small>Batterie faible</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--fast" style="color:#e11d48"></span><div><strong>Rouge clignotant</strong><small>Temporisation : l'alarme va sonner</small></div></div>
+        </div>
+      </section>
+    {%- endif -%}
+
+    {%- comment -%} ===== FAQ ===== {%- endcomment -%}
+    {%- if faqs.size > 0 -%}
+      <section class="vg-card vg-faq" aria-labelledby="vg-faq-{{ sid }}">
+        <h2 class="vg-block-title" id="vg-faq-{{ sid }}">{{ section.settings.faq_title }}</h2>
+        {%- for block in faqs -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question }}</summary>
+            <div class="vg-faq__a vg-rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </section>
+    {%- endif -%}
+
+    {%- comment -%} ===== ALLER PLUS LOIN ===== {%- endcomment -%}
+    {%- if links.size > 0 -%}
+      <h2 class="vg-block-title">{{ section.settings.links_title }}</h2>
+      {%- if section.settings.links_text != blank -%}<p class="vg-block-sub">{{ section.settings.links_text }}</p>{%- endif -%}
+      <div class="vg-links">
+        {%- for block in links -%}
+          <a class="vg-card vg-link" href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>
+            <span class="vg-link__icon" aria-hidden="true">{{ block.settings.emoji }}</span>
+            <span><strong>{{ block.settings.title }}</strong>{%- if block.settings.text != blank -%}<small>{{ block.settings.text }}</small>{%- endif -%}</span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ===== SUPPORT ===== {%- endcomment -%}
+    <section class="vg-card vg-support">
+      <h2 class="vg-block-title">{{ section.settings.support_title }}</h2>
+      <p class="vg-block-sub">{{ section.settings.support_text }}</p>
+      <div class="vg-actions">
+        {%- if section.settings.support_url != blank -%}<a class="vg-btn vg-btn--primary" href="{{ section.settings.support_url }}">{{ section.settings.support_label }}</a>{%- endif -%}
+        {%- if section.settings.contact_url != blank -%}<a class="vg-btn vg-btn--ghost" href="{{ section.settings.contact_url }}">{{ section.settings.contact_label }}</a>{%- endif -%}
+        {%- if section.settings.youtube_url != blank -%}<a class="vg-btn vg-btn--ghost" href="{{ section.settings.youtube_url }}" target="_blank" rel="noopener">▶ Nos vidéos YouTube</a>{%- endif -%}
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initGuide(root) {
+      if (!root || root.dataset.ready) return;
+      root.dataset.ready = '1';
+
+      var key = root.dataset.storageKey;
+      var steps = Array.prototype.slice.call(root.querySelectorAll('[data-step]'));
+      var label = root.querySelector('[data-progress-label]');
+      var fill = root.querySelector('[data-progress-fill]');
+      var doneCard = root.querySelector('[data-done-card]');
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function load() { try { return JSON.parse(localStorage.getItem(key)) || {}; } catch (e) { return {}; } }
+      function save(s) { try { localStorage.setItem(key, JSON.stringify(s)); } catch (e) {} }
+      var state = load();
+      state.done = state.done || {};
+      state.checks = state.checks || {};
+
+      function setOpen(step, open) {
+        step.classList.toggle('is-open', open);
+        step.querySelector('[data-step-toggle]').setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      function openOnly(step, scroll) {
+        steps.forEach(function (s) { setOpen(s, s === step); });
+        if (scroll && step) {
+          setTimeout(function () {
+            var top = step.getBoundingClientRect().top + window.pageYOffset - 90 - (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--sticky-header-height")) || 0);
+            window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+          }, 360);
+        }
+      }
+      function render() {
+        var count = 0;
+        steps.forEach(function (s) {
+          var d = !!state.done[s.dataset.step];
+          s.classList.toggle('is-done', d);
+          if (d) count++;
+        });
+        if (label) label.textContent = count + ' / ' + steps.length + ' étapes';
+        if (fill) fill.style.transform = 'scaleX(' + (steps.length ? count / steps.length : 0) + ')';
+        if (doneCard) {
+          var all = steps.length > 0 && count === steps.length;
+          if (all && doneCard.hidden) {
+            doneCard.hidden = false;
+            doneCard.classList.remove('is-celebrating');
+            void doneCard.offsetWidth;
+            doneCard.classList.add('is-celebrating');
+          } else if (!all) {
+            doneCard.hidden = true;
+          }
+        }
+      }
+
+      steps.forEach(function (step, i) {
+        step.querySelector('[data-step-toggle]').addEventListener('click', function () {
+          var isOpen = step.classList.contains('is-open');
+          if (isOpen) setOpen(step, false); else openOnly(step, false);
+        });
+        var doneBtn = step.querySelector('[data-step-done]');
+        if (doneBtn) doneBtn.addEventListener('click', function () {
+          state.done[step.dataset.step] = true;
+          save(state);
+          render();
+          var next = steps.slice(i + 1).filter(function (s) { return !state.done[s.dataset.step]; })[0] || steps[i + 1];
+          if (next) openOnly(next, true);
+          else { setOpen(step, false); if (doneCard) setTimeout(function () { doneCard.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); }, 360); }
+        });
+      });
+
+      // Checklist
+      root.querySelectorAll('[data-check]').forEach(function (cb) {
+        cb.checked = !!state.checks[cb.dataset.check];
+        cb.addEventListener('change', function () {
+          state.checks[cb.dataset.check] = cb.checked;
+          save(state);
+        });
+      });
+
+      // Recommencer
+      var reset = root.querySelector('[data-reset]');
+      if (reset) reset.addEventListener('click', function () {
+        state = { done: {}, checks: {} };
+        save(state);
+        root.querySelectorAll('[data-check]').forEach(function (cb) { cb.checked = false; });
+        render();
+        openOnly(steps[0], true);
+      });
+
+      // Accessoires
+      root.querySelectorAll('[data-acc]').forEach(function (acc) {
+        var btns = acc.querySelectorAll('[data-acc-btn]');
+        btns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var target = document.getElementById(btn.getAttribute('aria-controls'));
+            var wasOpen = btn.getAttribute('aria-expanded') === 'true';
+            btns.forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+            acc.querySelectorAll('[data-acc-panel]').forEach(function (p) { p.hidden = true; p.classList.remove('is-entering'); });
+            if (!wasOpen && target) {
+              btn.setAttribute('aria-expanded', 'true');
+              target.hidden = false;
+              target.classList.add('is-entering');
+              var r = target.getBoundingClientRect();
+              if (r.bottom > window.innerHeight) target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
+            }
+          });
+        });
+      });
+
+      // Vidéos YouTube chargées au clic (page plus rapide)
+      root.querySelectorAll('[data-yt]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var iframe = document.createElement('iframe');
+          iframe.src = 'https://www.youtube-nocookie.com/embed/' + btn.dataset.yt + '?autoplay=1&rel=0&playsinline=1';
+          iframe.title = btn.getAttribute('aria-label') || 'Vidéo';
+          iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+          iframe.allowFullscreen = true;
+          btn.parentNode.replaceChild(iframe, btn);
+        });
+      });
+
+      // Ouvre la première étape non terminée (ou celle de l'ancre #etape-N)
+      var hashStep = location.hash && root.querySelector(location.hash + '[data-step]');
+      var first = hashStep || steps.filter(function (s) { return !state.done[s.dataset.step]; })[0];
+      render();
+      if (first) openOnly(first, !!hashStep);
+
+      // Éditeur de thème : ouvrir l'étape sélectionnée
+      document.addEventListener('shopify:block:select', function (e) {
+        var s = root.querySelector('[data-step="' + (e.detail && e.detail.blockId) + '"]');
+        if (s) openOnly(s, false);
+      });
+    }
+
+    function boot() { document.querySelectorAll('[data-guide-vigilia]').forEach(initGuide); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+    document.addEventListener('shopify:section:load', boot);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Guide installation Vigilia",
+  "tag": "section",
+  "class": "section-guide-vigilia",
+  "settings": [
+    { "type": "header", "content": "En-tête" },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Guide d'installation" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Installez votre alarme Vigilia en 15 minutes" },
+    { "type": "richtext", "id": "subtitle", "label": "Sous-titre", "default": "<p>Suivez les étapes une par une. Cochez chaque étape quand elle est faite : on vous guide jusqu'au bout.</p>" },
+    { "type": "text", "id": "duration", "label": "Durée affichée", "default": "≈ 15 minutes" },
+    { "type": "image_picker", "id": "hero_image", "label": "Image de la centrale" },
+    { "type": "header", "content": "Checklist" },
+    { "type": "text", "id": "checklist_title", "label": "Titre", "default": "Avant de commencer" },
+    { "type": "text", "id": "checklist_text", "label": "Texte", "default": "4 vérifications rapides qui évitent 90 % des problèmes d'installation." },
+    { "type": "header", "content": "Applications" },
+    { "type": "url", "id": "app_store_url", "label": "Lien App Store (iPhone)" },
+    { "type": "url", "id": "play_store_url", "label": "Lien Google Play (Android)" },
+    { "type": "header", "content": "Accessoires" },
+    { "type": "text", "id": "acc_question", "label": "Question", "default": "Quel accessoire voulez-vous ajouter ? Touchez-le :" },
+    { "type": "header", "content": "Fin du guide" },
+    { "type": "text", "id": "done_title", "label": "Titre", "default": "Bravo, votre alarme est prête !" },
+    { "type": "text", "id": "done_text", "label": "Texte", "default": "Votre maison est protégée. Pensez à changer vos codes par défaut si ce n'est pas encore fait." },
+    { "type": "header", "content": "Autres blocs" },
+    { "type": "checkbox", "id": "show_leds", "label": "Afficher la légende des voyants LED", "default": true },
+    { "type": "text", "id": "faq_title", "label": "Titre FAQ", "default": "Un souci ? Les solutions rapides" },
+    { "type": "text", "id": "links_title", "label": "Titre « Aller plus loin »", "default": "Aller plus loin" },
+    { "type": "text", "id": "links_text", "label": "Texte « Aller plus loin »", "default": "Votre alarme fonctionne. Quand vous voulez, profitez de toutes ses possibilités :" },
+    { "type": "header", "content": "Assistance" },
+    { "type": "text", "id": "support_title", "label": "Titre", "default": "Toujours bloqué ? On est là." },
+    { "type": "text", "id": "support_text", "label": "Texte", "default": "Notre équipe basée à Bordeaux vous répond et vous aide à finaliser votre installation." },
+    { "type": "text", "id": "support_label", "label": "Bouton assistance", "default": "Demander de l'aide" },
+    { "type": "url", "id": "support_url", "label": "Lien assistance" },
+    { "type": "text", "id": "contact_label", "label": "Bouton contact", "default": "Nous écrire" },
+    { "type": "url", "id": "contact_url", "label": "Lien contact" },
+    { "type": "url", "id": "youtube_url", "label": "Chaîne YouTube" },
+    { "type": "header", "content": "Espacement" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Marge haute", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Marge basse", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "check",
+      "name": "Checklist : point",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Point à vérifier", "default": "Wi-Fi 2,4 GHz" },
+        { "type": "text", "id": "detail", "label": "Précision" }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Étape",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre", "default": "Nouvelle étape" },
+        { "type": "text", "id": "summary", "label": "Résumé (1 ligne)" },
+        { "type": "text", "id": "duration", "label": "Durée", "default": "2 min" },
+        { "type": "richtext", "id": "content", "label": "Instructions" },
+        { "type": "checkbox", "id": "show_store_buttons", "label": "Afficher les boutons App Store / Google Play", "default": false },
+        { "type": "image_picker", "id": "image", "label": "Image 1" },
+        { "type": "text", "id": "caption", "label": "Légende image 1" },
+        { "type": "image_picker", "id": "image_2", "label": "Image 2" },
+        { "type": "text", "id": "caption_2", "label": "Légende image 2" },
+        { "type": "video_url", "id": "video_url", "label": "Vidéo YouTube", "accept": ["youtube"] },
+        { "type": "video", "id": "video", "label": "Ou vidéo hébergée sur Shopify" },
+        { "type": "text", "id": "video_label", "label": "Texte sur la vidéo", "default": "Voir la vidéo" },
+        { "type": "checkbox", "id": "show_accessories", "label": "Afficher le sélecteur d'accessoires", "default": false },
+        { "type": "richtext", "id": "tip", "label": "Astuce (encadré bleu)" },
+        { "type": "richtext", "id": "warning", "label": "Attention (encadré orange)" },
+        { "type": "text", "id": "help_title", "label": "Titre aide dépliable", "default": "Ça ne marche pas ?" },
+        { "type": "richtext", "id": "help_content", "label": "Contenu aide dépliable" }
+      ]
+    },
+    {
+      "type": "accessory",
+      "name": "Accessoire",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Nom", "default": "Détecteur de mouvement" },
+        { "type": "text", "id": "ref", "label": "Référence(s)" },
+        { "type": "text", "id": "emoji", "label": "Emoji (si pas d'image)", "default": "📦" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "product", "id": "product", "label": "Ou produit (image automatique)" },
+        { "type": "select", "id": "category", "label": "Catégorie dans l'application", "default": "Mouvement", "options": [
+          { "value": "Mouvement", "label": "Mouvement" },
+          { "value": "Général", "label": "Général" },
+          { "value": "Urgent", "label": "Urgent" },
+          { "value": "Entrée", "label": "Entrée" },
+          { "value": "Télécommande", "label": "Télécommande" },
+          { "value": "Badge RFID", "label": "Badge RFID" }
+        ] },
+        { "type": "text", "id": "before", "label": "Avant d'appuyer sur + (optionnel)", "default": "Éteignez l'accessoire." },
+        { "type": "text", "id": "action", "label": "Juste après avoir appuyé sur +", "default": "rallumez l'accessoire." },
+        { "type": "text", "id": "example_name", "label": "Exemple de nom" },
+        { "type": "text", "id": "note", "label": "Remarque (encadré orange)" },
+        { "type": "richtext", "id": "custom_steps", "label": "Procédure spécifique (remplace la procédure standard)", "info": "Pour les sirènes par exemple, qui ne s'ajoutent pas avec le bouton +." }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Réponse", "default": "<p>Réponse</p>" }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Lien « aller plus loin »",
+      "settings": [
+        { "type": "text", "id": "emoji", "label": "Emoji", "default": "🔐" },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Lien" },
+        { "type": "text", "id": "text", "label": "Texte" },
+        { "type": "url", "id": "url", "label": "Lien" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Guide installation Vigilia" }
+  ]
+}
+{% endschema %}
