@@ -66,14 +66,14 @@
             "title": "Ajoutez la centrale dans l'appli",
             "summary": "L'appli la trouve toute seule grâce au Bluetooth",
             "duration": "3 min",
-            "content": "<ol><li>Dans l'appli, touchez le <strong>+ orange</strong> en haut à droite, puis <strong>« Ajouter un appareil »</strong>.</li><li>Votre centrale <strong>apparaît en haut</strong> de l'écran, dans « Détection des appareils ». Touchez son icône.</li><li>Si l'appli le demande, entrez le <strong>mot de passe de votre Wi-Fi 2,4 GHz</strong>.</li><li>Patientez quelques instants, puis touchez <strong>« Terminer »</strong>.</li></ol>",
+            "content": "<ol><li>Dans l'appli, touchez le <strong>+ orange</strong> en haut à droite, puis <strong>« Ajouter un appareil »</strong>.</li><li>Votre centrale <strong>apparaît en haut</strong> de l'écran, dans « Détection des appareils ». Touchez <strong>« Ajouter »</strong>.</li><li>Si l'appli le demande, entrez le <strong>mot de passe de votre Wi-Fi 2,4 GHz</strong>.</li><li>Patientez quelques instants, puis renommez-la si besoin et touchez <strong>« Terminer »</strong>.</li></ol>",
             "image": "shopify://shop_images/Videos_scenarios_manuel_vigilia_1.png",
             "caption": "Touchez le + orange",
             "image_2": "shopify://shop_images/Videos_scenarios_manuel_vigilia_3.png",
             "caption_2": "La centrale apparaît en haut",
             "tip": "<p>Renommez la centrale avec le crayon ✏️ (ex : « Alarme Maison ») : ce sera plus clair dans vos notifications.</p>",
             "help_title": "La centrale n'apparaît pas ? Installation manuelle",
-            "help_content": "<p><strong>Vérifiez d'abord :</strong> Bluetooth activé, téléphone sur le Wi-Fi 2,4 GHz, mot de passe Wi-Fi simple.</p><p><strong>Sinon, ajoutez-la manuellement :</strong></p><ol><li>Dans l'appli : <strong>+</strong> › « Ajouter un appareil » › choisissez <strong>« Centrale Vigilia »</strong> dans la liste.</li><li>Entrez le mot de passe de votre Wi-Fi 2,4 GHz et suivez l'écran.</li><li>Sur la centrale, tapez : <strong>⚙</strong> › <strong>9876</strong> › <strong>✅</strong> › <strong>0</strong> › <strong>✅</strong></li><li>La LED <strong>orange clignote vite</strong> : la centrale se connecte. Patientez, puis touchez « Terminer ».</li></ol><p><strong>Votre box mélange 2,4 GHz et 5 GHz ?</strong> Dans les réglages de votre box, séparez les deux réseaux ou coupez le 5 GHz le temps de l'installation.</p>"
+            "help_content": "<p><strong>Vérifiez d'abord :</strong> Bluetooth activé, téléphone sur le Wi-Fi 2,4 GHz, mot de passe Wi-Fi simple.</p><p><strong>Sinon, ajoutez-la manuellement :</strong></p><ol><li>Dans l'appli : <strong>+</strong> › « Ajouter un appareil » › choisissez <strong>« Centrale Vigilia »</strong> dans la liste.</li><li>Entrez le mot de passe de votre Wi-Fi 2,4 GHz et suivez l'écran.</li><li>Sur la centrale, tapez : <strong>⚙</strong> › <strong>9876</strong> › <strong>✅</strong> › <strong>0</strong> › <strong>✅</strong></li><li>La LED <strong>clignote vite en jaune-orangé</strong> : la centrale se connecte. Patientez, puis touchez « Terminer ».</li></ol><p><strong>Votre box mélange 2,4 GHz et 5 GHz ?</strong> Dans les réglages de votre box, séparez les deux réseaux ou coupez le 5 GHz le temps de l'installation.</p>"
           }
         },
         "step_acc": {
@@ -112,7 +112,7 @@
             "title": "Testez votre alarme",
             "summary": "Armer, désarmer : vérifiez que tout répond",
             "duration": "2 min",
-            "content": "<ol><li>Sur la centrale, appuyez sur <strong>« Armer »</strong> : la LED devient <strong>rouge</strong>. Vous avez quelques secondes pour sortir.</li><li>Pour désarmer, appuyez sur <strong>« Désarmer »</strong>, tapez <strong>1234</strong> (code par défaut) puis <strong>✅</strong>, ou passez votre <strong>badge</strong>. La LED redevient <strong>verte</strong>.</li><li>Faites le même essai depuis l'appli.</li></ol><p><strong>Mode Maison</strong> (la nuit) : seules les portes et fenêtres sont surveillées, vous pouvez circuler chez vous.</p>",
+            "content": "<ol><li>Sur la centrale, appuyez sur <strong>« Armer »</strong> : la LED passe au <strong>vert fixe</strong>. Vous avez quelques secondes pour sortir.</li><li>Pour désarmer, appuyez sur <strong>« Désarmer »</strong>, tapez <strong>1234</strong> (code par défaut) puis <strong>✅</strong>, ou passez votre <strong>badge</strong>. La LED reprend son clignotement lent (<strong>vert, 1 fois toutes les 5 s</strong>) : la centrale est en veille.</li><li>Faites le même essai depuis l'appli.</li></ol><p><strong>Mode Maison</strong> (la nuit) : seules les portes et fenêtres sont surveillées, vous pouvez circuler chez vous.</p>",
             "video_url": "https://www.youtube.com/watch?v=DdIqLdLjtW4",
             "video_label": "Changer le code en vidéo",
             "warning": "<p><strong>Changez les codes par défaut</strong> (utilisateur 1234 et administrateur 9876), et ne mettez pas le même code pour les deux. Sur la centrale : <strong>⚙</strong> › code administrateur (<strong>9876</strong>) › <strong>✅</strong> › <strong>3</strong> › <strong>✅</strong> › numéro du code (<strong>0</strong> = administrateur, <strong>1 à 6</strong> = utilisateurs) › <strong>✅</strong> › nouveau code › <strong>✅</strong> › même code › <strong>✅</strong>.</p>"
@@ -152,12 +152,12 @@
             "emoji": "🌳",
             "product": "detecteur-de-mouvement-exterieur-wmo301",
             "category": "Mouvement",
-            "before": "Mettez les 2 piles AA dans le détecteur (voir plus bas) : le voyant s'allume.",
+            "before": "Mettez les 2 piles AA fournies dans le détecteur (voir plus bas) : le voyant s'allume.",
             "action": "passez la main devant le détecteur.",
             "example_name": "Mouvement jardin",
             "photo": "shopify://shop_images/WMO301_guide_installation.webp",
             "photo_caption": "Fixez le support, posez la protection étanche, emboîtez le détecteur puis orientez-le vers la zone à surveiller",
-            "extra": "<p><strong>Bien le poser dehors : c'est le plus important</strong></p><ul><li><strong>Hauteur : entre 2 et 2,4 m.</strong> Plus haut, il y a un angle mort au pied du mur. Plus bas, il ne voit pas assez loin.</li><li>Il ignore les animaux <strong>jusqu'à 25 kg</strong> : ne le pointez pas vers un animal plus gros, et faites en sorte qu'un animal ne puisse pas passer tout près.</li><li><strong>À éviter</strong> : face au soleil, face à une surface métallique, face à une source de chaud ou de froid (climatisation, ventilation…), près d'une ligne électrique, ou sur un support qui bouge.</li></ul><p><strong>Piles</strong> : faites glisser le capot vers le haut, dévissez, ouvrez le boîtier et placez 2 piles AA 1,5 V.</p><p><strong>Fixation</strong> : vissez le support au mur, montez le capot étanche, puis glissez le détecteur dans le capot vers le bas.</p><p><strong>Test</strong> : placez-vous au bout de la zone à surveiller et traversez-la lentement (1 pas par seconde). Le voyant s'allume 3 secondes à chaque détection. Si besoin, ajustez l'angle vers le haut ou le bas et refaites le test.</p>"
+            "extra": "<p><strong>Bien le poser dehors : c'est le plus important</strong></p><ul><li><strong>Hauteur : entre 2 et 2,4 m.</strong> Plus haut, il y a un angle mort au pied du mur. Plus bas, il ne voit pas assez loin.</li><li>Il ignore les animaux <strong>jusqu'à 15 kg</strong> : ne le pointez pas vers un animal plus gros, et faites en sorte qu'un animal ne puisse pas passer tout près.</li><li><strong>À éviter</strong> : face au soleil, face à une surface métallique, face à une source de chaud ou de froid (climatisation, ventilation…), près d'une ligne électrique, ou sur un support qui bouge.</li></ul><p><strong>Piles</strong> : faites glisser le capot vers le haut, dévissez, ouvrez le boîtier et placez 2 piles AA 1,5 V.</p><p><strong>Fixation</strong> : vissez le support au mur, montez le capot étanche, puis glissez le détecteur dans le capot vers le bas.</p><p><strong>Test</strong> : ajustez l'angle du détecteur, armez l'alarme, patientez quelques secondes puis passez devant : l'alarme doit se déclencher (désarmez ensuite). Il détecte entre 3 et 9 m.</p>"
           }
         },
         "acc_wds": {
@@ -221,7 +221,7 @@
             "ref": "WKE301",
             "emoji": "⌨️",
             "product": "clavier-wke301-avec-2-badges-rfid",
-            "category": "Entrée",
+            "category": "Télécommande",
             "before": "Éteignez le clavier.",
             "action": "rallumez le clavier.",
             "example_name": "Clavier entrée"
@@ -245,14 +245,16 @@
         "acc_wvd": {
           "type": "accessory",
           "settings": {
+            "note": "Ne confondez pas le WVD301 (détecteur de vibration seul) avec le WDV301 (contacteur porte + vibration).",
+            "extra": "<p><strong>Pose</strong> : collez le détecteur <strong>verticalement</strong> avec l'adhésif double face, directement sur ce que vous voulez protéger (vitre, porte…). Plus le coup est loin du détecteur, moins il le sent : placez-le au plus près de la zone à protéger.</p><p><strong>Voyants</strong> : bleu, 1 clignotement = détection. Rouge fixe = pile faible (1 pile 23A 12V).</p>",
             "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/MANUEL_WVD301_compressed.pdf?v=1679586864",
             "name": "Détecteur de vibration",
             "ref": "WVD301",
             "emoji": "📳",
             "product": "detecteur-de-vibration-wvd301",
             "category": "Général",
-            "before": "Retirez la pile du détecteur.",
-            "action": "remettez la pile.",
+            "before": "",
+            "action": "retirez la languette de sécurité, puis donnez un petit coup sur le détecteur.",
             "example_name": "Vitre cuisine"
           }
         },
@@ -291,7 +293,7 @@
             "ref": "WWF301",
             "emoji": "💧",
             "product": "detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302",
-            "category": "Général",
+            "category": "Urgent",
             "before": "Retirez la pile du détecteur.",
             "action": "remettez la pile.",
             "example_name": "Fuite buanderie"
@@ -300,15 +302,16 @@
         "acc_bir": {
           "type": "accessory",
           "settings": {
+            "extra": "<p><strong>Avant tout : les interrupteurs</strong>. Chaque barrière porte une étiquette au dos : <strong>TX</strong> (émettrice) ou <strong>RX</strong> (receveuse). Pour accéder aux interrupteurs : retirez les embouts blancs (tirez dessus), retirez les caoutchoucs d'étanchéité, puis faites glisser la carte électronique.</p><ul><li><strong>TX</strong> : interrupteurs <strong>1 et 3 sur ON</strong>.</li><li><strong>RX</strong> : interrupteur <strong>1 sur ON</strong>. Mettez aussi le <strong>4 sur ON</strong> si vous voulez un bip à chaque passage.</li></ul><p>Remettez la carte, les caoutchoucs et les embouts.</p><p><strong>Après l'ajout</strong>, la barrière apparaît dans « Général » sous le nom « Général 1 » : renommez-la.</p><p><strong>Pose</strong> : côté étiquette vers le haut. Fixez-les avec les adhésifs 3M fournis (surface plane nettoyée à l'alcool) ou avec les vis (retirez le couvercle du support pour accéder aux trous). Jusqu'à 10 m entre les deux barrières.</p><ul><li>Aucun obstacle entre les deux barrières.</li><li>Pas face au soleil ni à une lumière puissante.</li><li>Sur un support stable.</li></ul>",
             "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Guide_installation_BIR301_complet_FR.pdf?v=1721226345",
             "name": "Barrière infrarouge",
             "ref": "BIR301",
             "emoji": "📡",
             "product": "daewoo-barrieres-infrarouge-pour-alarme-am301-am302",
-            "category": "Urgent",
-            "before": "Éteignez la barrière.",
-            "action": "rallumez la barrière.",
-            "example_name": "Barrière jardin"
+            "category": "Général",
+            "before": "Réglez les interrupteurs des 2 barrières (voir plus bas), puis posez-les face à face.",
+            "action": "passez la main entre les 2 barrières.",
+            "example_name": "Barrière allée"
           }
         },
         "acc_wos305": {
@@ -351,15 +354,15 @@
         "faq_orange": {
           "type": "faq",
           "settings": {
-            "question": "🟠 La LED de ma centrale clignote orange",
-            "answer": "<p>La centrale n'est pas connectée au Wi-Fi. Vérifiez que votre réseau est en <strong>2,4 GHz</strong> et que le mot de passe fait <strong>moins de 20 caractères sans caractère spécial</strong>. Ensuite, faites une réinitialisation Wi-Fi (question ci-dessous) et réinstallez la centrale.</p>"
+            "question": "🟠 La LED de ma centrale clignote en jaune-orangé",
+            "answer": "<p>Si elle clignote lentement (1 fois par seconde), la centrale n'est pas connectée au Wi-Fi. Vérifiez que votre réseau est en <strong>2,4 GHz</strong> et que le mot de passe fait <strong>moins de 20 caractères sans caractère spécial</strong>. Ensuite, faites une réinitialisation Wi-Fi (question ci-dessous) et réinstallez la centrale.</p>"
           }
         },
         "faq_box": {
           "type": "faq",
           "settings": {
             "question": "📶 J'ai changé de box ou de mot de passe Wi-Fi",
-            "answer": "<p>Faites une <strong>réinitialisation Wi-Fi</strong> (vos accessoires et réglages sont conservés). Sur la centrale, tapez :</p><p><strong>⚙ › 9876 › ✅ › 0 › ✅ › 0 › ✅</strong></p><p>Puis refaites l'étape 3 « Ajoutez la centrale dans l'appli ».</p>"
+            "answer": "<p>Faites une <strong>réinitialisation Wi-Fi</strong> (vos accessoires et réglages sont conservés). Sur la centrale, tapez :</p><p><strong>⚙ › code administrateur (9876 par défaut) › ✅ › 0 › ✅</strong></p><p>Puis refaites l'étape 3 « Ajoutez la centrale dans l'appli ».</p>"
           }
         },
         "faq_acc": {

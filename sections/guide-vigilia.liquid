@@ -204,8 +204,8 @@
   @media (min-width: 600px) { #vg-{{ sid }} .vg-leds__grid { grid-template-columns: 1fr 1fr; } }
   #vg-{{ sid }} .vg-led { display: flex; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 14px; background: var(--vg-bg); }
   #vg-{{ sid }} .vg-led__dot { flex: 0 0 18px; height: 18px; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255,255,255,.9), 0 0 12px currentColor; background: currentColor; }
-  #vg-{{ sid }} .vg-led__dot--fast { animation: vg-blink .5s steps(2, jump-none) infinite; }
-  #vg-{{ sid }} .vg-led__dot--slow { animation: vg-blink 2s steps(2, jump-none) infinite; }
+  #vg-{{ sid }} .vg-led__dot--fast { animation: vg-blink .4s steps(2, jump-none) infinite; }
+  #vg-{{ sid }} .vg-led__dot--slow { animation: vg-blink 1s steps(2, jump-none) infinite; }
   #vg-{{ sid }} .vg-led__dot--vslow { animation: vg-blink 5s steps(2, jump-none) infinite; }
   @keyframes vg-blink { 0% { opacity: 1; } 100% { opacity: .25; } }
   #vg-{{ sid }} .vg-led strong { display: block; font-size: 15px; color: var(--vg-navy); }
@@ -487,13 +487,13 @@
         <h2 class="vg-block-title" id="vg-led-{{ sid }}">Que veut dire la lumière de ma centrale ?</h2>
         <p class="vg-block-sub">La LED de la centrale vous indique son état en un coup d'œil.</p>
         <div class="vg-leds__grid">
-          <div class="vg-led"><span class="vg-led__dot" style="color:#16a34a"></span><div><strong>Vert fixe</strong><small>En veille, tout va bien</small></div></div>
-          <div class="vg-led"><span class="vg-led__dot" style="color:#e11d48"></span><div><strong>Rouge fixe</strong><small>Alarme armée</small></div></div>
-          <div class="vg-led"><span class="vg-led__dot vg-led__dot--fast" style="color:#f97316"></span><div><strong>Orange, clignote vite</strong><small>Connexion Wi-Fi en cours</small></div></div>
-          <div class="vg-led"><span class="vg-led__dot vg-led__dot--slow" style="color:#f97316"></span><div><strong>Orange, clignote lentement</strong><small>Wi-Fi déconnecté</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--vslow" style="color:#16a34a"></span><div><strong>Vert, clignote lentement (1 fois / 5 s)</strong><small>En veille, tout va bien</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot" style="color:#16a34a"></span><div><strong>Vert fixe</strong><small>Alarme armée</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--fast" style="color:#f5a524"></span><div><strong>Jaune, clignote vite</strong><small>Connexion Wi-Fi en cours</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--slow" style="color:#f5a524"></span><div><strong>Jaune, clignote lentement (1 fois / s)</strong><small>Wi-Fi déconnecté</small></div></div>
           <div class="vg-led"><span class="vg-led__dot" style="color:#f5a524"></span><div><strong>Jaune fixe</strong><small>Interrupteur batterie sur OFF</small></div></div>
-          <div class="vg-led"><span class="vg-led__dot vg-led__dot--vslow" style="color:#f5a524"></span><div><strong>Jaune, clignote lentement</strong><small>Batterie faible</small></div></div>
-          <div class="vg-led"><span class="vg-led__dot vg-led__dot--fast" style="color:#e11d48"></span><div><strong>Rouge clignotant</strong><small>Temporisation : l'alarme va sonner</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--slow" style="color:#e11d48"></span><div><strong>Rouge, clignote lentement (1 fois / s)</strong><small>Temporisation : l'alarme va sonner</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--vslow" style="color:#e11d48"></span><div><strong>Rouge, clignote 1 fois / 5 s</strong><small>Batterie de la centrale faible</small></div></div>
         </div>
       </section>
     {%- endif -%}
