@@ -528,13 +528,12 @@
     {%- if section.settings.show_leds -%}
       <section class="vg-card vg-leds" aria-labelledby="vg-led-{{ sid }}">
         <h2 class="vg-block-title" id="vg-led-{{ sid }}">Que veut dire la lumière de ma centrale ?</h2>
-        <p class="vg-block-sub">Le <strong>voyant LED</strong>, sur la face avant, indique l'état de la centrale. Le mode en cours (Armé, Maison, Désarmé) s'affiche aussi sur l'<strong>écran tactile</strong>.</p>
+        <p class="vg-block-sub">Le <strong>voyant LED</strong>, sur la face avant, indique l'état de la centrale. Les modes Armé et Maison ont la même couleur : l'<strong>écran tactile</strong> indique lequel est actif.</p>
         <div class="vg-leds__grid">
           <div class="vg-led"><span class="vg-led__dot" style="color:#16a34a"></span><div><strong>Vert fixe</strong><small>Centrale désarmée</small></div></div>
-          <div class="vg-led"><span class="vg-led__dot" style="color:#e11d48"></span><div><strong>Rouge fixe</strong><small>Centrale armée</small></div></div>
-          <div class="vg-led"><span class="vg-led__dot" style="color:#eab308"></span><div><strong>Jaune fixe</strong><small>Centrale en cours de configuration</small></div></div>
-          <div class="vg-led"><span class="vg-led__dot vg-led__dot--slow" style="color:#eab308"></span><div><strong>Jaune / vert, clignote</strong><small>Temporisation en cours : avant l'armement, ou avant la sirène (désarmez)</small></div></div>
-          <div class="vg-led"><span class="vg-led__dot vg-led__dot--slow" style="color:#f97316"></span><div><strong>Orange, clignote</strong><small>Pas de connexion Wi-Fi</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot" style="color:#f97316"></span><div><strong>Orange fixe</strong><small>Centrale armée : mode Armé ou mode Maison</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--slow" style="color:#f97316"></span><div><strong>Orange, clignote</strong><small>Temporisation en cours, juste après l'armement ou à l'ouverture d'une porte (désarmez)</small></div></div>
+          <div class="vg-led"><span class="vg-led__dot vg-led__dot--slow" style="color:#f97316"></span><div><strong>Orange, clignote en dehors d'un armement</strong><small>Pas de connexion Wi-Fi</small></div></div>
         </div>
       </section>
     {%- endif -%}
