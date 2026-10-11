@@ -1,0 +1,544 @@
+{
+  "sections": {
+    "guide": {
+      "type": "guide-am302",
+      "blocks": {
+        "check_wifi": {
+          "type": "check",
+          "settings": {
+            "title": "Votre téléphone est connecté au Wi-Fi 2,4 GHz de votre box",
+            "detail": "La centrale ne capte pas le 5 GHz. Si votre box mélange les deux, voir l'aide de l'étape 3."
+          }
+        },
+        "check_pwd": {
+          "type": "check",
+          "settings": {
+            "title": "Votre mot de passe Wi-Fi est simple",
+            "detail": "20 caractères maximum, sans caractères spéciaux (@ # $ % & …)."
+          }
+        },
+        "check_bt": {
+          "type": "check",
+          "settings": {
+            "title": "Le Bluetooth de votre téléphone est activé",
+            "detail": "Il permet à l'appli de trouver la centrale toute seule."
+          }
+        },
+        "check_near": {
+          "type": "check",
+          "settings": {
+            "title": "Vous êtes à côté de la centrale et de votre box",
+            "detail": "Vous fixerez la centrale au mur à la fin, une fois tout testé."
+          }
+        },
+        "step_app": {
+          "type": "step",
+          "settings": {
+            "title": "Téléchargez l'appli et créez votre compte",
+            "summary": "Daewoo Home Connect, gratuite sur iPhone et Android",
+            "duration": "3 min",
+            "content": "<ol><li>Sur votre téléphone, cherchez <strong>« Daewoo Home Connect »</strong> dans l'App Store ou Google Play et installez l'appli.</li><li>Ouvrez-la et entrez votre <strong>adresse e-mail</strong>.</li><li>Recopiez le <strong>code reçu par e-mail</strong>.</li><li>Choisissez un <strong>mot de passe</strong>.</li></ol>",
+            "show_store_buttons": true,
+            "warning": "<p><strong>Notez bien votre mot de passe.</strong> Il vous servira pour partager l'alarme avec votre famille ou la relier à Alexa / Google Home.</p>",
+            "help_title": "Je ne reçois pas le code par e-mail",
+            "help_content": "<ul><li>Regardez dans vos <strong>courriers indésirables (spams)</strong>.</li><li>Vérifiez que l'adresse e-mail saisie ne contient pas de faute.</li><li>Patientez une minute puis redemandez un code.</li></ul>"
+          }
+        },
+        "step_power": {
+          "type": "step",
+          "settings": {
+            "title": "Allumez la centrale",
+            "summary": "Bouton ON/OFF et prise USB-C, dans le compartiment au dos",
+            "duration": "1 min",
+            "content": "<ol><li>Au dos de la centrale, <strong>ouvrez le capot</strong> du compartiment arrière.</li><li>Mettez le <strong>bouton ON/OFF</strong> (à gauche du support SIM) sur <strong>ON</strong>.</li><li><strong>Branchez</strong> le câble USB-C fourni dans la prise du compartiment, puis sur une prise secteur.</li><li>Refermez le capot. L'<strong>écran tactile s'allume</strong> et affiche le guide de démarrage.</li></ol>",
+            "image": "shopify://shop_images/centrale-am302-touch-xl-face.webp",
+            "caption": "La centrale AM302 Touch XL",
+            "tip": "<p>Le bouton doit rester sur <strong>ON</strong> : il active la batterie de secours, qui prend le relais en cas de coupure de courant.</p><p>Utilisez un adaptateur secteur <strong>5V 2A</strong> : la Touch XL a besoin de plus de puissance que la Touch.</p>",
+            "help_title": "La centrale a déjà servi, ou l'installation a échoué ?",
+            "help_content": "<p>Repartez d'une centrale propre : sur l'écran, touchez la <strong>roue dentée ⚙</strong> (en haut à droite) › <strong>Restaurer</strong> › <strong>Réinitialiser</strong>, puis confirmez (code système <strong>9876</strong> si demandé).</p><p><strong>Attention : cela efface tout</strong> (accessoires, codes, Wi-Fi).</p><p><strong>L'écran ne s'allume pas ?</strong> Vérifiez le bouton ON/OFF dans le compartiment arrière (position ON), essayez une autre prise, un autre câble USB-C ou un adaptateur 5V 2A.</p>",
+            "image_2": "shopify://shop_images/bouton-on-off-compartiment-arriere-am302.webp",
+            "caption_2": "Compartiment arrière ouvert : bouton ON/OFF à gauche du support SIM, prise USB-C en haut"
+          }
+        },
+        "step_install": {
+          "type": "step",
+          "settings": {
+            "title": "Ajoutez la centrale dans l'appli",
+            "summary": "Mode Airlink sur la centrale, puis l'appli la trouve grâce au Bluetooth",
+            "duration": "3 min",
+            "content": "<ol><li>Sur la centrale, touchez l'<strong>icône Connexion</strong> (les ondes, en haut à droite de l'écran, à gauche de SOS), tapez le code utilisateur <strong>1234</strong>, puis touchez <strong>WiFi</strong> (et « Confirmer » si demandé) et enfin <strong>« Airlink »</strong> : la centrale passe en mode configuration Wi-Fi.</li><li>Dans l'appli, touchez le <strong>+ orange</strong> en haut à droite, puis <strong>« Ajouter un appareil »</strong>.</li><li>Votre centrale <strong>apparaît en haut</strong> de l'écran, dans « Détection des appareils ». Touchez <strong>« Ajouter »</strong>.</li><li>Entrez le <strong>mot de passe de votre Wi-Fi 2,4 GHz</strong> et touchez « Suivant ».</li><li>Patientez 30 secondes à 1 minute, puis renommez-la si besoin et touchez <strong>« Terminer »</strong>.</li></ol><p>💡 À la toute première mise en route, le guide de démarrage affiché à l'écran vous amène directement au bouton Airlink.</p>",
+            "image": "shopify://shop_images/Videos_scenarios_manuel_vigilia_1.png",
+            "caption": "Touchez le + orange",
+            "tip": "<p>Renommez la centrale avec le crayon ✏️ (ex : « Alarme Maison ») : ce sera plus clair dans vos notifications.</p>",
+            "help_title": "La centrale n'apparaît pas ? Installation manuelle",
+            "help_content": "<p><strong>Vérifiez d'abord :</strong> Bluetooth activé, téléphone sur le Wi-Fi 2,4 GHz, mot de passe Wi-Fi simple.</p><p><strong>Sinon, ajoutez-la manuellement :</strong></p><ol><li>Dans l'appli : <strong>+</strong> › « Ajouter un appareil » › choisissez <strong>l'alarme AM302</strong> dans la liste.</li><li>Sur la centrale : <strong>icône Connexion</strong> › code <strong>1234</strong> › <strong>WiFi</strong> › <strong>Airlink</strong>.</li><li>Entrez le mot de passe de votre Wi-Fi 2,4 GHz et suivez l'écran.</li></ol><p><strong>Votre box mélange 2,4 GHz et 5 GHz ?</strong> Dans les réglages de votre box, séparez les deux réseaux ou coupez le 5 GHz le temps de l'installation.</p>",
+            "video_url": "https://www.youtube.com/watch?v=lKI5k_bptNg",
+            "video_label": "Voir l'installation en vidéo",
+            "image_2": "shopify://shop_images/icone-connexion-airlink-am302.webp",
+            "caption_2": "L'icône Connexion, en haut à droite de l'écran, à gauche de SOS"
+          }
+        },
+        "step_acc": {
+          "type": "step",
+          "settings": {
+            "title": "Ajoutez vos accessoires",
+            "summary": "Détecteurs, contacteurs, télécommandes, sirènes…",
+            "duration": "1 min / accessoire",
+            "content": "<p>Le principe est toujours le même : <strong>vous appuyez sur + dans l'appli, et l'accessoire se signale juste après.</strong></p><p>Exemples : pour un détecteur de mouvement, <strong>éteignez-le, touchez + dans « Mouvement », et rallumez-le tout de suite</strong>. Pour un contacteur de porte, <strong>touchez + dans « Entrée », puis séparez ses 2 parties</strong>.</p>",
+            "show_accessories": true,
+            "alert": "<p><strong>Important : un accessoire à la fois.</strong> Au fur et à mesure, posez chaque accessoire installé <strong>ailleurs, hors de vue</strong> (dans une autre pièce ou un tiroir). Sinon, l'accessoire déjà installé et le nouveau peuvent envoyer un signal <strong>en même temps</strong>, et l'installation échoue.</p>",
+            "video_url": "https://www.youtube.com/watch?v=bCWaB9b-lc0",
+            "video_label": "Voir l'ajout d'un accessoire en vidéo",
+            "tip": "<p>Ajoutez les accessoires <strong>un par un</strong>, à côté de la centrale. Vous les poserez à leur place ensuite.</p>",
+            "help_title": "L'accessoire n'est pas détecté ?",
+            "help_content": "<ul><li>Recommencez en étant <strong>plus rapide</strong> : l'accessoire doit se signaler juste après l'appui sur +.</li><li>Vérifiez que vous êtes dans la <strong>bonne catégorie</strong> (indiquée en orange ci-dessus).</li><li>Vérifiez les <strong>piles</strong> et, pour le WPS305 et le WDV301, l'<strong>interrupteur ON/OFF</strong> sous le capot.</li><li>Éloignez les accessoires <strong>déjà installés</strong> : s'ils envoient un signal en même temps, la centrale ne sait pas lequel ajouter.</li><li>Rapprochez l'accessoire de la centrale.</li></ul>"
+          }
+        },
+        "step_cam": {
+          "type": "step",
+          "settings": {
+            "title": "Installez votre caméra IP506P",
+            "summary": "Si votre pack en contient une : elle s'ajoute en Bluetooth en 2 minutes",
+            "duration": "3 min",
+            "content": "<ol><li><strong>Branchez</strong> la caméra sur une prise avec l'adaptateur et le câble fournis.</li><li>Mettez la caméra en mode appairage : repliez la tête de la caméra vers le bas (voir photo), puis appuyez <strong>8 à 10 secondes sur le bouton RESET</strong>, jusqu'au <strong>signal sonore</strong>.</li><li><strong>Avec le Bluetooth activé</strong> : la caméra apparaît en haut de l'appli, dans <strong>« Détection des appareils »</strong>. Touchez <strong>« Ajouter »</strong>.</li><li>Choisissez votre <strong>Wi-Fi 2,4 GHz</strong>, entrez son mot de passe et patientez.</li><li>Donnez-lui un nom (ex : « Caméra Salon »). ✅</li></ol><p><strong>La caméra n'apparaît pas ?</strong> Ajoutez-la par QR code : voir l'aide en bas de cette étape.</p><p><strong>Pour enregistrer les vidéos en cas de détection de mouvement</strong>, vous avez 2 possibilités :</p><ul><li><strong>Une carte microSD</strong> (non fournie, jusqu'à 128 Go) : insérez-la dans l'emplacement prévu <strong>caméra débranchée</strong>, puis rebranchez-la. Si l'appli propose de formater la carte, patientez environ 2 minutes.</li><li><strong>Ou un abonnement de stockage Cloud</strong>, à souscrire directement dans l'appli Daewoo Home Connect.</li></ul><p>Sans l'un ou l'autre, la caméra fonctionne en direct et vous envoie les alertes avec photo, mais n'enregistre pas de vidéo.</p>",
+            "image": "shopify://shop_images/camera-daewoo-ip506p-mode-vie-privee.webp",
+            "caption": "Tête repliée : le bouton RESET et l'emplacement de la carte microSD apparaissent",
+            "tip": "<p>Posez la caméra sur un meuble ou fixez son support au mur avec les vis fournies. Évitez de la placer face à un miroir, et gardez-la à au moins 1 mètre des autres appareils sans fil.</p>",
+            "help_title": "La caméra n'apparaît pas ? Installation par QR code",
+            "help_content": "<ol><li>Refaites l'appui long sur <strong>RESET</strong> (8 à 10 s) jusqu'au signal sonore.</li><li>Dans l'appli : touchez le <strong>+</strong> en haut à droite › <strong>« Ajouter un appareil »</strong> › choisissez <strong>IP506P</strong> dans la liste.</li><li>Choisissez votre <strong>Wi-Fi 2,4 GHz</strong> et entrez son mot de passe.</li><li>Un <strong>QR code</strong> s'affiche sur votre téléphone : montrez-le à l'objectif de la caméra. Dès que la caméra bipe, touchez <strong>« J'ai entendu un bip »</strong>.</li><li>La caméra est détectée : touchez <strong>+</strong> pour confirmer, puis donnez-lui un nom. ✅</li></ol><ul><li>Vérifiez que votre téléphone est sur le <strong>Wi-Fi 2,4 GHz</strong> et que le mot de passe est simple (20 caractères max, sans caractère spécial).</li><li>Pour le QR code : augmentez la luminosité de votre téléphone et avancez-le ou reculez-le doucement devant l'objectif.</li><li>Rapprochez la caméra de votre box le temps de l'installation.</li></ul><p>Le manuel de la caméra est disponible en bas de cette page.</p>"
+          }
+        },
+        "step_test": {
+          "type": "step",
+          "settings": {
+            "title": "Testez votre alarme",
+            "summary": "Armer, désarmer : vérifiez que tout répond",
+            "duration": "2 min",
+            "content": "<p>Le mode en cours s'affiche sur l'<strong>écran tactile</strong> et sur le <strong>voyant LED</strong> : vert = désarmée, orange = armée (mode Sortir ou Accueil).</p><ol><li>Sur l'écran, touchez <strong>« Sortir »</strong> pour armer, puis tapez <strong>1234</strong> (code par défaut) si demandé. Le voyant clignote en orange / vert : vous avez quelques secondes pour sortir.</li><li>Pour désarmer, touchez <strong>« Désactiver »</strong> et tapez <strong>1234</strong>, ou utilisez la <strong>télécommande</strong>.</li><li>Faites le même essai depuis l'appli.</li></ol><p><strong>Mode Accueil</strong> (la nuit) : seules les portes et fenêtres sont surveillées, vous pouvez circuler chez vous.</p><p><strong>Testez aussi la temporisation</strong> : alarme armée, ouvrez une porte équipée d'un contacteur. Le <strong>voyant</strong> clignote en rouge / vert : c'est le délai pour désarmer avant que la sirène sonne.</p><p>💡 Bon à savoir : la durée des temporisations se règle sur la centrale en touchant l'<strong>icône Sécurité</strong> (le bouclier, en haut à droite de l'écran) › <strong>Temporisation</strong>.</p>",
+            "warning": "<p><strong>Changez les codes par défaut</strong> (utilisateur 1234 et système 9876), et ne mettez pas le même code pour les deux. Sur la centrale : touchez l'<strong>icône Sécurité</strong> (le bouclier, en haut à droite de l'écran) › <strong>Code</strong>. Vous pouvez créer jusqu'à 3 codes utilisateur.</p>"
+          }
+        },
+        "step_wall": {
+          "type": "step",
+          "settings": {
+            "title": "Fixez la centrale au mur",
+            "summary": "Au centre de la maison, près d'une prise",
+            "duration": "5 min",
+            "content": "<ol><li>Choisissez un endroit <strong>central</strong> dans la maison, <strong>près d'une prise</strong>, avec un bon Wi-Fi.</li><li>Vissez la <strong>plaque de suspension</strong> au mur avec les vis et chevilles fournies, bien à l'horizontale.</li><li>Branchez le câble USB-C, puis <strong>accrochez</strong> la centrale sur la plaque.</li><li>Vérifiez qu'elle est bien maintenue : le <strong>bouton anti-arrachement</strong> au dos déclenche l'alarme si on la retire.</li></ol>",
+            "tip": "<p>Évitez les surfaces métalliques, les murs très épais et l'arrière de gros meubles : ils perturbent le signal radio des accessoires.</p><p>Pas envie de percer ? La centrale peut être <strong>posée sur un meuble</strong> grâce à son support. Dans ce cas, la protection anti-arrachement ne fonctionne pas.</p>"
+          }
+        },
+        "step_sim": {
+          "type": "step",
+          "settings": {
+            "bonus": true,
+            "title": "Vous avez une carte SIM ?",
+            "summary": "Alertes par appel et SMS, même sans Wi-Fi",
+            "duration": "5 min",
+            "alert": "<p><strong>Important : la centrale doit être éteinte</strong> pour installer la carte SIM. Débranchez le câble USB-C et mettez l'interrupteur ON/OFF du compartiment arrière sur <strong>OFF</strong>.</p>",
+            "content": "<p><strong>1. Préparez la carte SIM</strong></p><ul><li><strong>Carte SIM Afone</strong> : activez-la d'abord sur <a href=\"https://m2minstallateur.afonemobile.fr/\" target=\"_blank\" rel=\"noopener\">m2minstallateur.afonemobile.fr</a>.</li><li><strong>Carte SIM d'un autre opérateur</strong> : vérifiez qu'elle n'a <strong>pas de code PIN</strong>. Si besoin, mettez-la dans un téléphone pour désactiver le code PIN.</li></ul><p><strong>2. Installez la carte</strong></p><ol><li>Centrale <strong>éteinte</strong> (câble débranché, batterie sur OFF).</li><li>Ouvrez le <strong>capot du compartiment arrière</strong> : le support SIM métallique est à droite du bouton ON/OFF.</li><li>Faites glisser <strong>délicatement</strong> le support métallique vers la prise USB-C pour le déverrouiller, puis soulevez-le.</li><li>Posez la <strong>carte Nano SIM</strong>, puce vers le bas.</li><li>Rabattez le support et faites-le glisser dans l'autre sens pour bloquer la carte.</li><li>Rallumez la centrale : bouton ON/OFF sur ON, rebranchez le câble et refermez le capot.</li></ol><p><strong>3. Enregistrez vos numéros</strong></p><ol><li>Sur la centrale, touchez l'<strong>icône Connexion</strong> (les ondes, en haut à droite de l'écran, à gauche de SOS) › code <strong>1234</strong> › <strong>Téléphone</strong> › <strong>Paramètres</strong> (en bas).</li><li>Ajoutez jusqu'à <strong>5 numéros</strong>, au format <strong>0033612345678</strong> (indicatif 0033, sans le 0 du numéro).</li><li>Pour chaque numéro, activez le <strong>combiné</strong> 📞 (appels) et/ou l'<strong>enveloppe</strong> ✉️ (SMS), puis touchez <strong>« Sauver »</strong>.</li></ol><p>En cas d'alarme, la centrale envoie d'abord un SMS aux numéros concernés, puis appelle le 1er numéro. Si vous décrochez, un message vocal vous prévient, la sirène de la centrale se coupe et vous pouvez <strong>écouter et parler</strong> à travers la centrale. Quand vous raccrochez, si l'alarme est toujours armée, elle appelle le numéro suivant. Mettez votre numéro principal en premier.</p><p><strong>Piloter l'alarme par SMS</strong> : envoyez au numéro de la carte SIM de la centrale <strong>away arm</strong> (armer), <strong>stay arm</strong> (mode Maison) ou <strong>disarm</strong> (désarmer), en minuscules. La centrale répond « System armed! » ou « System disarmed! ». Seuls les numéros enregistrés sont acceptés.</p>",
+            "help_title": "Pas d'appel ni de SMS ?",
+            "help_content": "<ul><li>Vérifiez que la carte SIM est <strong>activée</strong>, <strong>sans code PIN</strong> et qu'elle a du <strong>crédit</strong>.</li><li>Vérifiez le <strong>sens</strong> de la carte et que le capot est bien refermé.</li><li>Vérifiez vos numéros (icône Connexion › Téléphone › Paramètres), leur format <strong>0033…</strong> et que le combiné et l'enveloppe sont activés.</li></ul>",
+            "warning": "<p><strong>Manipulation délicate :</strong> le support SIM métallique est fragile, ne forcez pas. S'il est endommagé, il n'est pas couvert par la garantie.</p>",
+            "image": "shopify://shop_images/bouton-on-off-compartiment-arriere-am302.webp",
+            "caption": "Support SIM au centre du compartiment, à droite du bouton ON/OFF"
+          }
+        },
+        "step_scen": {
+          "type": "step",
+          "settings": {
+            "bonus": true,
+            "title": "Je ne veux pas que ma caméra me détecte quand je suis à la maison",
+            "summary": "Sa détection s'active seulement quand l'alarme est armée",
+            "duration": "5 min",
+            "content": "<p>Le principe : vous créez <strong>2 scénarios</strong> dans l'appli. Le 1er <strong>active</strong> la détection de mouvement de la caméra quand vous <strong>armez</strong> l'alarme. Le 2e la <strong>désactive</strong> quand vous <strong>désarmez</strong>. Résultat : plus d'alertes inutiles quand vous êtes chez vous.</p><p><strong>Scénario 1 : quand j'arme l'alarme</strong></p><ol><li>Dans l'appli, touchez le <strong>+ orange</strong> › <strong>« Créer une scène »</strong> › <strong>« Lorsque le statut de l'appareil change »</strong>.</li><li>Touchez <strong>« Sélectionner un seul appareil »</strong> et choisissez votre <strong>centrale AM302</strong>.</li><li>Touchez <strong>« Mode système »</strong> › <strong>« Armer »</strong> › <strong>« Confirmer »</strong>.</li><li>Touchez le <strong>+</strong> à côté de <strong>« Alors »</strong> › <strong>« Sélectionner un seul appareil »</strong> › votre <strong>caméra</strong>.</li><li>Réglez <strong>Détection de mouvement sur ON</strong>, choisissez la sensibilité (faible, moyenne ou élevée), puis <strong>Filtrage corps humain sur ON</strong>.</li><li>Touchez <strong>« Enregistrer »</strong> et donnez-lui un nom, par exemple « Caméra ON à l'armement ».</li></ol><p><strong>Scénario 2 : quand je désarme l'alarme</strong></p><p>Refaites exactement les mêmes étapes, avec 2 différences : choisissez <strong>« Désarmer »</strong> à l'étape 3, et mettez <strong>Détection de mouvement</strong> et <strong>Filtrage corps humain</strong> sur <strong>OFF</strong> à l'étape 5. Nommez-le « Caméra OFF au désarmement ».</p><p>✅ C'est terminé : votre caméra surveille quand vous êtes absent et vous laisse tranquille quand vous êtes là.</p>",
+            "tip": "<p>Vous avez plusieurs caméras ? Faites <strong>un scénario par caméra</strong>. Le même principe fonctionne pour d'autres appareils connectés : allumer une prise connectée ou fermer un volet roulant quand vous armez l'alarme.</p>",
+            "help_title": "Le scénario ne fonctionne pas ?",
+            "help_content": "<ul><li>Vérifiez que la caméra et la centrale sont sur le <strong>même compte</strong> et dans la <strong>même « Maison »</strong> de l'appli : c'est la cause la plus fréquente.</li><li>Certaines fonctions peuvent ne pas être disponibles selon le modèle de caméra.</li></ul><p><strong>Supprimer un scénario</strong> : touchez <strong>« Scène »</strong> en bas de l'écran d'accueil, ouvrez le scénario, puis les <strong>3 points</strong> en haut à droite › « Supprimer le scénario ».</p><p><a href=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Scenario_pour_activer_detection_de_mouvement_si_alarme_Armee_SA501_AM_VIGILIA.pdf?v=1760274100\" target=\"_blank\">Voir le guide illustré des scénarios (PDF)</a></p>"
+          }
+        },
+        "step_ext": {
+          "type": "step",
+          "settings": {
+            "bonus": true,
+            "title": "Vous avez une caméra extérieure W503 ou W512MW ?",
+            "summary": "Même principe que la caméra intérieure, avec une charge au départ",
+            "duration": "5 min + charge",
+            "alert": "<p><strong>Première installation : chargez d'abord la caméra</strong> pendant plusieurs heures, avec le câble fourni et un adaptateur secteur <strong>5V 2A</strong>.</p>",
+            "content": "<p><strong>Carte microSD (facultatif)</strong> : pour enregistrer les vidéos, insérez une carte microSD (64 Go maximum) <strong>caméra éteinte</strong>, dans le bon sens. Sur la <strong>W503</strong>, l'emplacement est à côté du port de charge et du bouton reset. Sur la <strong>W512MW</strong>, il se trouve sous l'objectif : tournez l'objectif pour y accéder. Sans carte, vous pouvez aussi souscrire un abonnement de stockage Cloud dans l'appli.</p><p><strong>Ajouter la caméra dans l'appli</strong></p><ol><li>Mettez la caméra en mode connexion : appuyez <strong>environ 8 secondes sur le bouton reset</strong>, puis patientez <strong>1 minute</strong>.</li><li><strong>Avec le Bluetooth activé</strong> : la caméra apparaît en haut de l'appli, dans « Détection des appareils ». Touchez <strong>« Ajouter »</strong>, entrez le mot de passe de votre Wi-Fi 2,4 GHz et patientez.</li><li><strong>Sinon, par QR code</strong> : touchez le <strong>+</strong> › « Ajouter un appareil » › choisissez votre caméra. Cochez « étape suivante », touchez « Suivant », entrez le mot de passe Wi-Fi, puis montrez le <strong>QR code</strong> affiché sur votre téléphone à l'objectif de la caméra.</li><li>Donnez-lui un nom clair (ex : « Caméra jardin »). ✅</li></ol>",
+            "image": "shopify://shop_images/camera-surveillance-autonome-daewoo-w503.webp",
+            "caption": "Caméra W503",
+            "image_2": "shopify://shop_images/camera-surveillance-solaire-daewoo-w512mw-produit.webp",
+            "caption_2": "Caméra W512MW avec panneau solaire",
+            "tip": "<p>Comme pour la centrale : Wi-Fi <strong>2,4 GHz</strong> et mot de passe de 20 caractères maximum. Rapprochez la caméra de votre box le temps de l'installation, puis fixez-la avec le kit fourni.</p>",
+            "help_title": "Les manuels des caméras",
+            "help_content": "<ul><li><a href=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Guide_installation_complet_W503_1.pdf?v=1763042891\" target=\"_blank\">Manuel de la caméra W503 (PDF)</a></li><li><a href=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_complet_installation_W512MW.pdf?v=1758789550\" target=\"_blank\">Manuel de la caméra W512MW (PDF)</a></li></ul>"
+          }
+        },
+        "acc_wps": {
+          "type": "accessory",
+          "settings": {
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_WPS305_2.pdf?v=1760690273",
+            "name": "Détecteur de mouvement",
+            "ref": "WPS301 / WPS305",
+            "emoji": "🚶",
+            "image": "shopify://shop_images/guide-vigilia-detecteur-mouvement-wps305.png",
+            "category": "Mouvement",
+            "before": "Éteignez le détecteur.",
+            "action": "rallumez le détecteur.",
+            "example_name": "Mouvement Salon",
+            "note": "WPS305 : l'interrupteur ON/OFF se trouve sous le capot, sur la carte électronique."
+          }
+        },
+        "acc_wmo": {
+          "type": "accessory",
+          "settings": {
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WMO301_Manuel_d_utilisation.pdf?v=1763030665",
+            "name": "Détecteur de mouvement extérieur",
+            "ref": "WMO301",
+            "emoji": "🌳",
+            "product": "detecteur-de-mouvement-exterieur-wmo301",
+            "category": "Mouvement",
+            "before": "Mettez les 2 piles AA fournies dans le détecteur (voir plus bas) : le voyant s'allume.",
+            "action": "passez la main devant le détecteur.",
+            "example_name": "Mouvement jardin",
+            "photo": "shopify://shop_images/WMO301_guide_installation.webp",
+            "photo_caption": "Fixez le support, posez la protection étanche, emboîtez le détecteur puis orientez-le vers la zone à surveiller",
+            "extra": "<p><strong>Bien le poser dehors : c'est le plus important</strong></p><ul><li><strong>Hauteur : entre 2 et 2,4 m.</strong> Plus haut, il y a un angle mort au pied du mur. Plus bas, il ne voit pas assez loin.</li><li>Il ignore les animaux <strong>jusqu'à 15 kg</strong> : ne le pointez pas vers un animal plus gros, et faites en sorte qu'un animal ne puisse pas passer tout près.</li><li><strong>À éviter</strong> : face au soleil, face à une surface métallique, face à une source de chaud ou de froid (climatisation, ventilation…), près d'une ligne électrique, ou sur un support qui bouge.</li></ul><p><strong>Piles</strong> : faites glisser le capot vers le haut, dévissez, ouvrez le boîtier et placez 2 piles AA 1,5 V.</p><p><strong>Fixation</strong> : vissez le support au mur, montez le capot étanche, puis glissez le détecteur dans le capot vers le bas.</p><p><strong>Test</strong> : ajustez l'angle du détecteur, armez l'alarme, patientez quelques secondes puis passez devant : l'alarme doit se déclencher (désarmez ensuite). Il détecte entre 3 et 9 m.</p>"
+          }
+        },
+        "acc_wds": {
+          "type": "accessory",
+          "settings": {
+            "image": "shopify://shop_images/guide-vigilia-contacteur-porte-wds301.png",
+            "name": "Contacteur de porte / fenêtre",
+            "ref": "WDS301",
+            "emoji": "🚪",
+            "category": "Entrée",
+            "before": "Gardez les 2 parties du contacteur collées l'une à l'autre.",
+            "action": "séparez les 2 parties du contacteur.",
+            "example_name": "Porte d'entrée"
+          }
+        },
+        "acc_wdv": {
+          "type": "accessory",
+          "settings": {
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_WDV301_2.pdf?v=1760689180",
+            "name": "Contacteur 2-en-1 porte + vibration",
+            "ref": "WDV301",
+            "emoji": "🪟",
+            "product": "contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302",
+            "category": "Général",
+            "before": "Ouvrez le capot, mettez l'interrupteur ON/OFF sur ON, puis gardez les 2 parties collées.",
+            "action": "séparez les 2 parties du contacteur.",
+            "example_name": "Baie vitrée"
+          }
+        },
+        "acc_wrc": {
+          "type": "accessory",
+          "settings": {
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_WRC305_2.pdf?v=1760689717",
+            "name": "Télécommande",
+            "ref": "WRC301 / WRC305",
+            "emoji": "🎛️",
+            "product": "telecommande-compatible-vigilia-touch",
+            "category": "Contrôleur",
+            "before": "",
+            "action": "appuyez sur un des boutons de la télécommande.",
+            "example_name": "Télécommande Papa"
+          }
+        },
+        "acc_wrf": {
+          "type": "accessory",
+          "settings": {
+            "name": "Badge RFID",
+            "ref": "WRF301",
+            "emoji": "🏷️",
+            "product": "pack-de-2-badges-rfid-wrf301",
+            "category": "Badge RFID",
+            "before": "",
+            "example_name": "Badge Léa",
+            "note": "Les badges s'ajoutent uniquement depuis le clavier sans fil WKE301 : la centrale AM302 n'a pas de lecteur de badge. Jusqu'à 10 badges (numéros 0 à 9).",
+            "custom_steps": "<p><strong>Les badges s'ajoutent depuis le clavier WKE301</strong>, pas depuis l'appli.</p><ol><li>Sur le clavier, tapez le code administrateur <strong>8888</strong> puis <strong>√</strong> : le clavier passe en mode maintenance.</li><li>Tapez <strong>1</strong> puis <strong>√</strong> (enregistrer un badge).</li><li>Tapez le <strong>numéro du badge</strong> (0 pour le premier, 1 pour le deuxième…) puis <strong>√</strong>.</li><li>Passez le badge devant le lecteur du clavier. ✅</li><li>Pour un autre badge, recommencez à l'étape 2 avec le numéro suivant.</li><li>Pour quitter : touche retour <strong>←</strong> puis <strong>√</strong>.</li></ol><p><strong>Utilisation</strong> : touchez Armer ou Désarmer sur le clavier, puis passez le badge devant le lecteur.</p>"
+          }
+        },
+        "acc_wke": {
+          "type": "accessory",
+          "settings": {
+            "extra": "<p><strong>Utilisation</strong> : tapez le code utilisateur puis la touche Armer, Désarmer ou Maison. Avec un badge : appuyez sur la touche, puis passez le badge sur le lecteur du clavier. Les 2 badges fournis sont déjà couplés au clavier.</p><p><strong>Pose</strong> : vissez le support au mur et insérez le clavier dedans. Évitez les surfaces métalliques, qui bloquent le signal radio.</p><p><strong>Voyant d'alimentation</strong> : vert fixe = batterie chargée, vert lent = en charge, rouge 1 fois toutes les 2 s = batterie faible.</p><p>Pour économiser la batterie, le clavier se met en veille au bout de 20 s : appuyez sur n'importe quelle touche pour le réveiller.</p>",
+            "note": "Le clavier a ses propres codes : utilisateur 1234 et administrateur 8888 (différent de celui de la centrale).",
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WKE301_MANUEL_compressed.pdf?v=1679586864",
+            "name": "Clavier sans fil",
+            "ref": "WKE301",
+            "emoji": "⌨️",
+            "product": "clavier-wke301-avec-2-badges-rfid",
+            "category": "Clavier",
+            "before": "Chargez le clavier (câble USB fourni, 2 à 3 h), puis allumez-le : interrupteur au dos sur ON.",
+            "action": "tapez 1234 sur le clavier, puis appuyez sur la touche Armer.",
+            "example_name": "Clavier entrée"
+          }
+        },
+        "acc_sos": {
+          "type": "accessory",
+          "settings": {
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Guide_SOS301_Touch_Vigilia_CORRIGE.pdf?v=1783338676",
+            "name": "Bracelet SOS",
+            "ref": "SOS301",
+            "emoji": "🆘",
+            "product": "bracelet-sos-sos301",
+            "category": "Urgent",
+            "before": "Vérifiez que l'alarme est bien désarmée.",
+            "action": "appuyez sur le bouton SOS du bracelet.",
+            "example_name": "Bracelet Mamie",
+            "note": "Le bracelet déclenche l'alarme immédiatement, même quand elle n'est pas armée, et prévient tous les téléphones qui ont l'appli. Il fonctionne avec une pile 27A 12V."
+          }
+        },
+        "acc_wvd": {
+          "type": "accessory",
+          "settings": {
+            "note": "Ne confondez pas le WVD301 (détecteur de vibration seul) avec le WDV301 (contacteur porte + vibration).",
+            "extra": "<p><strong>Pose</strong> : collez le détecteur <strong>verticalement</strong> avec l'adhésif double face, directement sur ce que vous voulez protéger (vitre, porte…). Plus le coup est loin du détecteur, moins il le sent : placez-le au plus près de la zone à protéger.</p><p><strong>Voyants</strong> : bleu, 1 clignotement = détection. Rouge fixe = pile faible (1 pile 23A 12V).</p>",
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/MANUEL_WVD301_compressed.pdf?v=1679586864",
+            "name": "Détecteur de vibration",
+            "ref": "WVD301",
+            "emoji": "📳",
+            "product": "detecteur-de-vibration-wvd301",
+            "category": "Général",
+            "before": "",
+            "action": "retirez la languette de sécurité, puis donnez un petit coup sur le détecteur.",
+            "example_name": "Vitre cuisine"
+          }
+        },
+        "acc_wdg": {
+          "type": "accessory",
+          "settings": {
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WDG301_MANUEL_compressed.pdf?v=1679586864",
+            "name": "Contacteur de porte de garage",
+            "ref": "WDG301",
+            "emoji": "🚗",
+            "product": "contacteur-de-porte-de-garage-wdg301",
+            "category": "Général",
+            "before": "Gardez les 2 parties métalliques collées l'une à l'autre.",
+            "action": "séparez les 2 parties métalliques.",
+            "example_name": "Porte garage"
+          }
+        },
+        "acc_wsd": {
+          "type": "accessory",
+          "settings": {
+            "extra": "<p><strong>Pose au plafond</strong> : vissez le support fourni au plafond, puis fixez le détecteur dessus en le tournant.</p><p><strong>À éviter</strong> :</p><ul><li>les courants d'air (ventilation, chauffage, portes et fenêtres) ;</li><li>la salle de bain, la cuisine, la chaufferie, la buanderie et le garage (vapeur, fumées de cuisson, gaz d'échappement) ;</li><li>la pointe d'un plafond en « A » ;</li><li>moins de 30 cm d'un luminaire ou d'un coin de la pièce, moins de 150 cm d'un néon.</li></ul><p><strong>Voyant rouge</strong> : 1 clignotement toutes les 55 s avec un bip = pile faible (pile 3 V intégrée, non remplaçable). 1 clignotement toutes les 8 s avec un bip = défaut du détecteur.</p>",
+            "note": "Indispensable : une fois ajouté, ouvrez les paramètres du détecteur dans l'appli et activez le mode « Fonctionnement 24H ». Il restera actif même quand l'alarme est désarmée.",
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WSD301_MANUEL_WSD301.pdf?v=1685450989",
+            "name": "Détecteur de fumée",
+            "ref": "WSD301",
+            "emoji": "🔥",
+            "product": "detecteur-de-fumee-wsd301",
+            "category": "Urgent",
+            "before": "Allumez le détecteur : bouton ON/OFF au dos sur ON.",
+            "action": "appuyez sur le bouton principal, sur le dessus du détecteur. Il bipe plusieurs fois.",
+            "example_name": "Fumée couloir"
+          }
+        },
+        "acc_wwf": {
+          "type": "accessory",
+          "settings": {
+            "note": "L'ajout est réussi quand la centrale émet un bip et que l'appli confirme la détection.",
+            "name": "Détecteur de fuite d'eau",
+            "ref": "WWF301",
+            "emoji": "💧",
+            "product": "detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302",
+            "category": "Urgent",
+            "before": "",
+            "action": "mettez un peu d'eau sur les 2 contacts métalliques (sous le boîtier ou sur la sonde déportée) pour simuler une fuite.",
+            "example_name": "Fuite buanderie"
+          }
+        },
+        "acc_bir": {
+          "type": "accessory",
+          "settings": {
+            "extra": "<p><strong>Avant tout : les interrupteurs</strong>. Chaque barrière porte une étiquette au dos : <strong>TX</strong> (émettrice) ou <strong>RX</strong> (receveuse). Pour accéder aux interrupteurs : retirez les embouts blancs (tirez dessus), retirez les caoutchoucs d'étanchéité, puis faites glisser la carte électronique.</p><ul><li><strong>TX</strong> : interrupteurs <strong>1 et 3 sur ON</strong>.</li><li><strong>RX</strong> : interrupteur <strong>1 sur ON</strong>. Mettez aussi le <strong>4 sur ON</strong> si vous voulez un bip à chaque passage.</li></ul><p>Remettez la carte, les caoutchoucs et les embouts.</p><p><strong>Après l'ajout</strong>, la barrière apparaît dans « Général » sous le nom « Général 1 » : renommez-la.</p><p><strong>Pose</strong> : côté étiquette vers le haut. Fixez-les avec les adhésifs 3M fournis (surface plane nettoyée à l'alcool) ou avec les vis (retirez le couvercle du support pour accéder aux trous). Jusqu'à 10 m entre les deux barrières.</p><ul><li>Aucun obstacle entre les deux barrières.</li><li>Pas face au soleil ni à une lumière puissante.</li><li>Sur un support stable.</li></ul>",
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Guide_installation_BIR301_complet_FR.pdf?v=1721226345",
+            "name": "Barrière infrarouge",
+            "ref": "BIR301",
+            "emoji": "📡",
+            "product": "daewoo-barrieres-infrarouge-pour-alarme-am301-am302",
+            "category": "Général",
+            "before": "Réglez les interrupteurs des 2 barrières (voir plus bas), puis posez-les face à face.",
+            "action": "passez la main entre les 2 barrières.",
+            "example_name": "Barrière allée"
+          }
+        },
+        "acc_wos305": {
+          "type": "accessory",
+          "settings": {
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_WOS305.pdf?v=1757337899",
+            "name": "Sirène extérieure",
+            "ref": "WOS305 / WOS305S",
+            "emoji": "🔊",
+            "product": "sirene-exterieure-wos305-filaire-compatible-panneau-solaire",
+            "category": "Général",
+            "custom_steps": "<p><strong>Les sirènes ne s'ajoutent pas comme les autres accessoires.</strong> Faites l'installation <strong>avant</strong> de fixer la sirène au mur.</p><p><strong>1. Préparez la centrale</strong></p><p>Vérifiez que <strong>« Alarme sonore »</strong> et <strong>« Rappel sirène »</strong> sont activés (dans l'appli, ou sur la centrale : icône Sécurité (bouclier) › Sirène).</p><p><strong>2. Appairez la sirène</strong></p><ol><li><strong>Branchez</strong> l'adaptateur secteur fourni (ou le panneau solaire pour la WOS305S) et mettez le bouton <strong>ON/OFF sur ON</strong>.</li><li>Au dos, maintenez le bouton <strong>« Volume » 3 secondes</strong> : la sirène clignote, elle est prête.</li><li>Dans l'appli, touchez votre centrale › <strong>« Paramètres de connexion »</strong> › <strong>« Sirène »</strong>.</li><li>Confirmez que la sirène est prête et touchez <strong>« Continuer »</strong>.</li><li>Attendez la confirmation, puis renommez-la (ex : « Sirène extérieure »). ✅</li></ol><p><strong>3. Fixez-la au mur</strong></p><ol><li>Posez le <strong>tampon et le cache d'imperméabilité</strong> à l'arrière de la sirène.</li><li>Vissez le <strong>support mural</strong> avec le kit fourni, en hauteur, à un endroit visible de l'extérieur.</li><li>Accrochez la sirène sur son support.</li></ol><p><strong>Réglages (facultatif), au dos de la sirène :</strong></p><p>⚠️ Les 2 boutons du dos (⚙ et « Volume ») ne répondent que <strong>pendant la première minute</strong> après l'allumage de la sirène. Passé ce délai, éteignez-la puis rallumez-la (bouton ON/OFF) pour les réactiver.</p><ul><li><strong>Volume</strong> : appuis courts sur « Volume » pour 80, 100 ou 120 dB (1, 2 ou 3 bips). Un appui de 2 s change la sonnerie.</li><li><strong>Durée de sonnerie</strong> : appuis sur ⚙ pour 30 s, 1, 3 ou 5 min (1 à 4 bips).</li></ul><p><a href=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_WOS305.pdf?v=1757337899\" target=\"_blank\">Télécharger le manuel de la sirène (PDF)</a></p>",
+            "note": "Les boutons du dos ne marchent que dans la 1re minute après l'allumage : si rien ne se passe, éteignez et rallumez la sirène. Pas de confirmation ? Vérifiez que « Alarme sonore » et « Rappel sirène » sont activés, puis recommencez. Si besoin, réinitialisez la sirène : appuyez 5 s sur « Volume » et ⚙ en même temps (1 bip + 1 flash). Si la sirène bipe et flashe toutes les minutes, sa batterie est faible."
+          }
+        },
+        "acc_wis305": {
+          "type": "accessory",
+          "settings": {
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Guide_WIS305_Touch_Vigilia_CORRIGE.pdf?v=1783338679",
+            "name": "Sirène intérieure",
+            "ref": "WIS305",
+            "emoji": "📢",
+            "product": "sirene-interieure-sans-fil-100-db-wis305",
+            "category": "Général",
+            "custom_steps": "<p><strong>Avant tout :</strong> chargez la sirène avec un câble USB-C. Elle peut <strong>rester branchée</strong> pendant l'installation. Comme toutes les sirènes, elle ne s'ajoute pas avec le + : c'est la centrale qui l'« appelle » quand vous l'armez.</p><ol><li>Vérifiez que <strong>« Alarme sonore »</strong> et <strong>« Rappel sirène »</strong> sont activés (dans l'appli, ou sur la centrale : icône Sécurité (bouclier) › Sirène).</li><li>Mettez l'<strong>interrupteur</strong> de la sirène (au dos) sur <strong>ON</strong>.</li><li>Maintenez le <strong>bouton Paramètre (roue dentée, au dos) 2 à 3 secondes</strong> : toutes les LED s'allument.</li><li>Dans l'appli, touchez <strong>Armer</strong>.</li><li>La sirène émet <strong>1 bip</strong> : elle est installée. ✅ Vous pouvez désarmer.</li></ol><p><strong>Fixation murale</strong> (après l'appairage) : vissez la plaque de montage, accrochez la sirène (flèche UP vers le haut) et branchez le câble USB-C pour une alimentation permanente.</p><p><strong>Pas de bip ?</strong> Réinitialisez la sirène : débranchez le câble USB, rallumez-la (1 bip), puis appuyez 2 à 3 s <strong>en même temps</strong> sur la roue dentée et sur Volume (toutes les LED s'allument et la sirène bipe). Recommencez ensuite l'appairage.</p>",
+            "note": "Une fois fixée, toute dépose du mur déclenche l'alarme anti-sabotage : appairez-la avant de la fixer."
+          }
+        },
+        "acc_wos": {
+          "type": "accessory",
+          "settings": {
+            "image": "shopify://shop_images/guide-vigilia-sirene-wos301.png",
+            "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WOS301S_MANUEL_compressed.pdf?v=1679586864",
+            "name": "Sirène ancien modèle",
+            "ref": "WOS301 / WOS301S",
+            "emoji": "🔈",
+            "category": "Général",
+            "custom_steps": "<p><strong>Ces sirènes s'ajoutent uniquement depuis l'écran de la centrale</strong>, pas depuis l'appli.</p><ol><li>Vérifiez que <strong>« Alarme sonore »</strong> est activé : icône Sécurité (bouclier) › Sirène.</li><li>Sur la centrale : touchez l'<strong>icône Connexion</strong> (les ondes, en haut à droite de l'écran, à gauche de SOS) › code <strong>1234</strong> › <strong>Ajouter</strong> › <strong>Sirène</strong>.</li><li><strong>WOS301</strong> : branchez et allumez la sirène, appuyez sur le bouton d'appairage au dos (toutes les LED s'allument), touchez <strong>« Exécuter »</strong> sur la centrale, puis appuyez <strong>5 fois de suite</strong> sur le bouton d'appairage.</li><li><strong>WOS301S</strong> : allumez la sirène, appuyez sur le bouton d'appairage au dos (toutes les LED s'allument), puis touchez <strong>« Exécuter »</strong> sur la centrale.</li></ol><p><strong>Vérification</strong> : touchez le bouton SOS de la centrale, la sirène doit sonner.</p>"
+          }
+        },
+        "faq_orange": {
+          "type": "faq",
+          "settings": {
+            "question": "📶 Ma centrale ne se connecte pas au Wi-Fi",
+            "answer": "<p>Vérifiez que votre réseau est en <strong>2,4 GHz</strong> et que le mot de passe fait <strong>moins de 20 caractères sans caractère spécial</strong>. Rapprochez la centrale de la box, puis refaites la connexion Wi-Fi (question ci-dessous).</p>"
+          }
+        },
+        "faq_box": {
+          "type": "faq",
+          "settings": {
+            "question": "📶 J'ai changé de box ou de mot de passe Wi-Fi",
+            "answer": "<p>Refaites la connexion Wi-Fi (vos accessoires et réglages sont conservés). Sur la centrale :</p><p><strong>icône Connexion (en haut à droite, à gauche de SOS) › code 1234 › WiFi › Airlink</strong></p><p>Puis refaites l'étape 3 « Ajoutez la centrale dans l'appli ».</p>"
+          }
+        },
+        "faq_acc": {
+          "type": "faq",
+          "settings": {
+            "question": "🔁 Mon accessoire ne s'ajoute pas",
+            "answer": "<p>Le plus souvent, l'accessoire s'est signalé trop tard. Touchez <strong>+</strong> dans la bonne catégorie et, <strong>dans la foulée</strong>, éteignez/rallumez l'accessoire (ou appuyez sur un bouton pour une télécommande). Vérifiez aussi les piles.</p>"
+          }
+        },
+        "faq_cam": {
+          "type": "faq",
+          "settings": {
+            "question": "📷 Je n'arrive pas à installer ma caméra",
+            "answer": "<p>Remettez la caméra en mode appairage en appuyant <strong>8 à 10 secondes sur RESET</strong> jusqu'au signal sonore. Vérifiez le Wi-Fi 2,4 GHz, puis refaites l'étape « Installez votre caméra IP506P ».</p>"
+          }
+        },
+        "faq_blink": {
+          "type": "faq",
+          "settings": {
+            "question": "🔴 La LED de mon accessoire clignote",
+            "answer": "<p>Les piles sont faibles : remplacez-les. La procédure est dans la notice de l'accessoire, en bas de cette page.</p>"
+          }
+        },
+        "faq_siren": {
+          "type": "faq",
+          "settings": {
+            "question": "🔇 Ma sirène ne sonne pas",
+            "answer": "<p>Sur la centrale, touchez l'<strong>icône Sécurité</strong> (le bouclier) › <strong>Sirène</strong> et vérifiez que <strong>« Sirène intégrée »</strong> et <strong>« Alarme sonore »</strong> (sirènes externes) sont activés. Puis refaites l'appairage de la sirène (étape 4). Pour tester, touchez le bouton SOS de la centrale.</p>"
+          }
+        },
+        "faq_notif": {
+          "type": "faq",
+          "settings": {
+            "question": "🔔 Je ne reçois pas les notifications",
+            "answer": "<p>Autorisez les notifications pour Daewoo Home Connect dans les réglages de votre téléphone :</p><ul><li>iPhone : Réglages › Daewoo Home Connect › Notifications</li><li>Android : Paramètres › Applications › Daewoo Home Connect › Notifications</li></ul>"
+          }
+        },
+        "faq_reset": {
+          "type": "faq",
+          "settings": {
+            "question": "♻️ Remettre la centrale à zéro (réglages d'usine)",
+            "answer": "<p><strong>Attention : cela efface tout</strong> (accessoires, codes, Wi-Fi).</p><p>Sur la centrale : touchez la <strong>roue dentée ⚙</strong> (en haut à droite) › <strong>Restaurer</strong> › <strong>Réinitialiser</strong>, puis confirmez (code système <strong>9876</strong> si demandé).</p><p>Pour un simple redémarrage sans rien effacer, choisissez <strong>« Redémarrer »</strong> au même endroit.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "check_wifi",
+        "check_pwd",
+        "check_bt",
+        "check_near",
+        "step_app",
+        "step_power",
+        "step_install",
+        "step_acc",
+        "step_cam",
+        "step_test",
+        "step_wall",
+        "step_sim",
+        "step_scen",
+        "step_ext",
+        "acc_wps",
+        "acc_wmo",
+        "acc_wds",
+        "acc_wdv",
+        "acc_wrc",
+        "acc_wrf",
+        "acc_wke",
+        "acc_sos",
+        "acc_wvd",
+        "acc_wdg",
+        "acc_wsd",
+        "acc_wwf",
+        "acc_bir",
+        "acc_wos305",
+        "acc_wis305",
+        "acc_wos",
+        "faq_orange",
+        "faq_box",
+        "faq_acc",
+        "faq_cam",
+        "faq_blink",
+        "faq_siren",
+        "faq_notif",
+        "faq_reset"
+      ],
+      "settings": {
+        "eyebrow": "Guide d'installation",
+        "title": "Installez votre alarme AM302 Touch XL en 20 minutes",
+        "subtitle": "<p>Suivez les étapes une par une, sans jargon. Validez chaque étape quand elle est faite : on vous guide jusqu'au bout.</p>",
+        "duration": "≈ 20 minutes",
+        "checklist_title": "Avant de commencer",
+        "checklist_text": "4 vérifications rapides qui évitent la plupart des problèmes d'installation.",
+        "acc_question": "Quel accessoire voulez-vous ajouter ? Touchez-le :",
+        "bonus_title": "Pour aller plus loin",
+        "bonus_text": "Votre alarme fonctionne. Quand vous voulez, rendez-la encore plus pratique :",
+        "done_title": "Bravo, votre alarme est prête !",
+        "done_text": "Votre maison est protégée. Pensez à changer vos codes par défaut si ce n'est pas encore fait.",
+        "show_leds": true,
+        "faq_title": "Un souci ? Les solutions rapides",
+        "docs_title": "Manuels à télécharger",
+        "docs_text": "Toutes les notices de votre système, au même endroit.",
+        "manual_title": "Manuel complet AM302 Touch XL",
+        "manual_text": "Menus de la centrale, codes, mode GSM et SMS, temporisations, sirènes, scénarios… tout y est.",
+        "manual_url": "/pages/manuel-touch-xl-am302",
+        "camera_manual_title": "Caméra intérieure IP506P",
+        "camera_manual_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_camera_ip506p_2.pdf?v=1701429637",
+        "links_title": "Aller plus loin",
+        "links_text": "Votre alarme fonctionne. Quand vous voulez, profitez de toutes ses possibilités :",
+        "support_title": "Toujours bloqué ? On est là.",
+        "support_text": "Notre équipe basée à Bordeaux vous aide à finaliser votre installation.",
+        "support_label": "Demander de l'aide",
+        "support_url": "/pages/assistance-1",
+        "contact_label": "Nous écrire",
+        "contact_url": "/pages/nous-contacter",
+        "youtube_url": "https://www.youtube.com/@daewoosecurity3029",
+        "padding_top": 48,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "guide"
+  ]
+}
