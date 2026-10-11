@@ -176,6 +176,7 @@
         "acc_wds": {
           "type": "accessory",
           "settings": {
+            "image": "shopify://shop_images/guide-vigilia-contacteur-porte-wds301.png",
             "name": "Contacteur de porte / fenêtre",
             "ref": "WDS301",
             "emoji": "🚪",
@@ -306,13 +307,14 @@
         "acc_wwf": {
           "type": "accessory",
           "settings": {
+            "note": "L'ajout est réussi quand la centrale émet un bip et que l'appli confirme la détection.",
             "name": "Détecteur de fuite d'eau",
             "ref": "WWF301",
             "emoji": "💧",
             "product": "detecteur-de-fuite-deau-wwf301-compatible-avec-les-centrale-am301-am302",
             "category": "Urgent",
-            "before": "Retirez la pile du détecteur.",
-            "action": "remettez la pile.",
+            "before": "",
+            "action": "mettez un peu d'eau sur les 2 contacts métalliques (sous le boîtier ou sur la sonde déportée) pour simuler une fuite.",
             "example_name": "Fuite buanderie"
           }
         },
@@ -360,6 +362,7 @@
         "acc_wos": {
           "type": "accessory",
           "settings": {
+            "image": "shopify://shop_images/guide-vigilia-sirene-wos301.png",
             "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WOS301S_MANUEL_compressed.pdf?v=1679586864",
             "name": "Sirène ancien modèle",
             "ref": "WOS301 / WOS301S",
