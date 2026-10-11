@@ -128,6 +128,21 @@
             "tip": "<p>Évitez le plein soleil, les pièces humides et les sources de chaleur. Ne couvrez pas le capteur de lumière.</p>"
           }
         },
+        "step_sim": {
+          "type": "step",
+          "settings": {
+            "bonus": true,
+            "title": "Vous avez une carte SIM ?",
+            "summary": "Alertes par appel et SMS, même sans Wi-Fi (version Wi-Fi + GSM)",
+            "duration": "5 min",
+            "alert": "<p><strong>Important : la centrale doit être éteinte</strong> pour installer la carte SIM. Débranchez le câble USB-C et mettez l'interrupteur batterie sur <strong>OFF</strong>.</p>",
+            "content": "<p>Uniquement pour la Vigilia <strong>Wi-Fi + GSM</strong> : la version Wi-Fi seule n'a pas d'emplacement SIM.</p><p><strong>1. Préparez la carte SIM</strong></p><ul><li><strong>Carte SIM Afone</strong> : activez-la d'abord sur <a href=\"https://m2minstallateur.afonemobile.fr/\" target=\"_blank\" rel=\"noopener\">m2minstallateur.afonemobile.fr</a>.</li><li><strong>Carte SIM d'un autre opérateur</strong> : vérifiez qu'elle n'a <strong>pas de code PIN</strong>. Si besoin, mettez-la dans un téléphone pour désactiver le code PIN.</li></ul><p><strong>2. Installez la carte</strong></p><ol><li>Centrale <strong>éteinte</strong> (câble débranché, batterie sur OFF).</li><li>Au dos de la centrale, glissez la <strong>carte Nano SIM</strong> dans l'emplacement marqué « NANO », dans le sens indiqué sur le schéma, et poussez jusqu'au clic.</li><li>Rallumez la centrale : interrupteur batterie sur ON, puis rebranchez le câble.</li></ol><p><strong>3. Réglez les alertes dans l'appli</strong></p><ol><li>Touchez votre centrale › <strong>Paramètres</strong> › <strong>« Numéro de téléphone d'alarme »</strong> › <strong>« Ajouter un numéro »</strong> (format 06 xx xx xx xx). Vous pouvez en ajouter plusieurs.</li><li>Sortez du menu (« Annuler »), puis cochez <strong>« Appel de la centrale »</strong> (appel en cas de déclenchement) et <strong>« Envoi d'un SMS »</strong> (notifications).</li></ol><p><strong>Piloter l'alarme par SMS</strong> : envoyez au numéro de la carte SIM de la centrale <strong>Away arm</strong> (armer), <strong>Stay arm</strong> (mode Maison) ou <strong>Disarm</strong> (désarmer), en respectant les majuscules. La centrale répond « System armed! » ou « System disarmed! ».</p>",
+            "image": "shopify://shop_images/guide-vigilia-sens-carte-sim.png",
+            "caption": "Dos de la centrale : emplacement « NANO » et sens d'insertion de la carte SIM (flèche rouge)",
+            "help_title": "Pas d'appel ni de SMS ?",
+            "help_content": "<ul><li>Vérifiez que la carte SIM est <strong>activée</strong> et <strong>sans code PIN</strong>.</li><li>Vérifiez le <strong>sens</strong> de la carte et qu'elle est bien enfoncée.</li><li>Vérifiez vos numéros dans Paramètres › « Numéro de téléphone d'alarme » et que les 2 cases sont cochées.</li></ul><p><strong>Retirer la carte</strong> : centrale éteinte, poussez légèrement la carte pour l'éjecter.</p>"
+          }
+        },
         "step_scen": {
           "type": "step",
           "settings": {
@@ -440,6 +455,7 @@
         "step_cam",
         "step_test",
         "step_wall",
+        "step_sim",
         "step_scen",
         "acc_wps",
         "acc_wmo",
