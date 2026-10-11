@@ -62,14 +62,14 @@
           "type": "step",
           "settings": {
             "title": "Ajoutez la centrale dans l'appli",
-            "summary": "Touchez « Airlink » sur la centrale, l'appli la trouve grâce au Bluetooth",
+            "summary": "Mode Airlink sur la centrale, puis l'appli la trouve grâce au Bluetooth",
             "duration": "3 min",
-            "content": "<ol><li>Sur l'écran de la centrale, touchez <strong>« Airlink »</strong> : elle passe en mode configuration Wi-Fi.</li><li>Dans l'appli, touchez le <strong>+ orange</strong> en haut à droite, puis <strong>« Ajouter un appareil »</strong>.</li><li>Votre centrale <strong>apparaît en haut</strong> de l'écran, dans « Détection des appareils ». Touchez <strong>« Ajouter »</strong>.</li><li>Entrez le <strong>mot de passe de votre Wi-Fi 2,4 GHz</strong> et touchez « Suivant ».</li><li>Patientez 30 secondes à 1 minute, puis renommez-la si besoin et touchez <strong>« Terminer »</strong>.</li></ol>",
+            "content": "<ol><li>Sur la centrale, touchez la <strong>roue dentée ⚙</strong> en bas à droite, puis <strong>Paramètres</strong> (roue dentée en bas à droite), puis la touche <strong>WiFi</strong>. Tapez le code <strong>1234</strong> et touchez <strong>« Airlink »</strong> : la centrale passe en mode configuration Wi-Fi.</li><li>Dans l'appli, touchez le <strong>+ orange</strong> en haut à droite, puis <strong>« Ajouter un appareil »</strong>.</li><li>Votre centrale <strong>apparaît en haut</strong> de l'écran, dans « Détection des appareils ». Touchez <strong>« Ajouter »</strong>.</li><li>Entrez le <strong>mot de passe de votre Wi-Fi 2,4 GHz</strong> et touchez « Suivant ».</li><li>Patientez 30 secondes à 1 minute, puis renommez-la si besoin et touchez <strong>« Terminer »</strong>.</li></ol>",
             "image": "shopify://shop_images/Videos_scenarios_manuel_vigilia_1.png",
             "caption": "Touchez le + orange",
             "tip": "<p>Renommez la centrale avec le crayon ✏️ (ex : « Alarme Maison ») : ce sera plus clair dans vos notifications.</p>",
             "help_title": "La centrale n'apparaît pas ? Installation manuelle",
-            "help_content": "<p><strong>Vérifiez d'abord :</strong> Bluetooth activé, téléphone sur le Wi-Fi 2,4 GHz, mot de passe Wi-Fi simple.</p><p><strong>Sinon, ajoutez-la manuellement :</strong></p><ol><li>Dans l'appli : <strong>+</strong> › « Ajouter un appareil » › choisissez <strong>l'alarme AM301</strong> dans la liste.</li><li>Sur la centrale, touchez <strong>« Airlink »</strong>.</li><li>Entrez le mot de passe de votre Wi-Fi 2,4 GHz et suivez l'écran.</li></ol><p><strong>Le bouton Airlink n'apparaît pas ?</strong> Sur la centrale : <strong>Menu ⚙</strong> › <strong>Paramètres</strong> › <strong>WiFi</strong> › code <strong>1234</strong> › validez, puis touchez « Airlink ».</p><p><strong>Votre box mélange 2,4 GHz et 5 GHz ?</strong> Dans les réglages de votre box, séparez les deux réseaux ou coupez le 5 GHz le temps de l'installation.</p>",
+            "help_content": "<p><strong>Vérifiez d'abord :</strong> Bluetooth activé, téléphone sur le Wi-Fi 2,4 GHz, mot de passe Wi-Fi simple.</p><p><strong>Sinon, ajoutez-la manuellement :</strong></p><ol><li>Dans l'appli : <strong>+</strong> › « Ajouter un appareil » › choisissez <strong>l'alarme AM301</strong> dans la liste.</li><li>Sur la centrale : <strong>⚙</strong> › <strong>Paramètres ⚙</strong> › <strong>WiFi</strong> › code <strong>1234</strong> › <strong>Airlink</strong>.</li><li>Entrez le mot de passe de votre Wi-Fi 2,4 GHz et suivez l'écran.</li></ol><p><strong>Votre box mélange 2,4 GHz et 5 GHz ?</strong> Dans les réglages de votre box, séparez les deux réseaux ou coupez le 5 GHz le temps de l'installation.</p>",
             "video_url": "https://www.youtube.com/watch?v=tiIc1oUgPks",
             "video_label": "Voir l'installation en vidéo"
           }
@@ -412,7 +412,7 @@
           "type": "faq",
           "settings": {
             "question": "📶 J'ai changé de box ou de mot de passe Wi-Fi",
-            "answer": "<p>Faites une <strong>réinitialisation Wi-Fi</strong> (vos accessoires et réglages sont conservés). Sur la centrale :</p><p><strong>Menu ⚙ › Paramètres › WiFi › code 1234 › validez</strong></p><p>Puis refaites l'étape 3 « Ajoutez la centrale dans l'appli ».</p>"
+            "answer": "<p>Refaites la connexion Wi-Fi (vos accessoires et réglages sont conservés). Sur la centrale :</p><p><strong>⚙ (en bas à droite) › Paramètres ⚙ › WiFi › code 1234 › Airlink</strong></p><p>Puis refaites l'étape 3 « Ajoutez la centrale dans l'appli ».</p>"
           }
         },
         "faq_acc": {
