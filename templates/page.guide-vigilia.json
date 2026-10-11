@@ -216,14 +216,16 @@
         "acc_wke": {
           "type": "accessory",
           "settings": {
+            "extra": "<p><strong>Utilisation</strong> : tapez le code utilisateur puis la touche Armer, Désarmer ou Maison. Avec un badge : appuyez sur la touche, puis passez le badge sur le lecteur du clavier. Les 2 badges fournis sont déjà couplés au clavier.</p><p><strong>Pose</strong> : vissez le support au mur et insérez le clavier dedans. Évitez les surfaces métalliques, qui bloquent le signal radio.</p><p><strong>Voyant d'alimentation</strong> : vert fixe = batterie chargée, vert lent = en charge, rouge 1 fois toutes les 2 s = batterie faible.</p><p>Pour économiser la batterie, le clavier se met en veille au bout de 20 s : appuyez sur n'importe quelle touche pour le réveiller.</p>",
+            "note": "Le clavier a ses propres codes : utilisateur 1234 et administrateur 8888 (différent de celui de la centrale).",
             "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WKE301_MANUEL_compressed.pdf?v=1679586864",
             "name": "Clavier sans fil",
             "ref": "WKE301",
             "emoji": "⌨️",
             "product": "clavier-wke301-avec-2-badges-rfid",
             "category": "Télécommande",
-            "before": "Éteignez le clavier.",
-            "action": "rallumez le clavier.",
+            "before": "Chargez le clavier avec le câble USB fourni (2 à 3 h pour une charge complète).",
+            "action": "allumez le clavier (interrupteur au dos sur ON), tapez 1234 puis appuyez sur la touche Armer.",
             "example_name": "Clavier entrée"
           }
         },
@@ -275,14 +277,16 @@
         "acc_wsd": {
           "type": "accessory",
           "settings": {
+            "extra": "<p><strong>Pose au plafond</strong> : vissez le support fourni au plafond, puis fixez le détecteur dessus en le tournant.</p><p><strong>À éviter</strong> :</p><ul><li>les courants d'air (ventilation, chauffage, portes et fenêtres) ;</li><li>la salle de bain, la cuisine, la chaufferie, la buanderie et le garage (vapeur, fumées de cuisson, gaz d'échappement) ;</li><li>la pointe d'un plafond en « A » ;</li><li>moins de 30 cm d'un luminaire ou d'un coin de la pièce, moins de 150 cm d'un néon.</li></ul><p><strong>Voyant rouge</strong> : 1 clignotement toutes les 55 s avec un bip = pile faible (pile 3 V intégrée, non remplaçable). 1 clignotement toutes les 8 s avec un bip = défaut du détecteur.</p>",
+            "note": "Indispensable : une fois ajouté, ouvrez les paramètres du détecteur dans l'appli et activez le mode « Fonctionnement 24H ». Il restera actif même quand l'alarme est désarmée.",
             "manual": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/WSD301_MANUEL_WSD301.pdf?v=1685450989",
             "name": "Détecteur de fumée",
             "ref": "WSD301",
             "emoji": "🔥",
             "product": "detecteur-de-fumee-wsd301",
             "category": "Urgent",
-            "before": "Retirez la pile du détecteur.",
-            "action": "remettez la pile.",
+            "before": "Allumez le détecteur : bouton ON/OFF au dos sur ON.",
+            "action": "appuyez sur le bouton principal, sur le dessus du détecteur. Il bipe plusieurs fois.",
             "example_name": "Fumée couloir"
           }
         },
