@@ -73,8 +73,8 @@
   /* Barre de progression collante */
   #vg-{{ sid }} .vg-progress { position: sticky; top: calc(var(--sticky-header-height, 0px) + 8px); z-index: 5; background: rgba(255,255,255,.92); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border: 1px solid var(--vg-line); border-radius: 999px; padding: 10px 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 20px; box-shadow: var(--vg-shadow); }
   #vg-{{ sid }} .vg-progress__label { font-size: 14px; font-weight: 600; white-space: nowrap; }
-  #vg-{{ sid }} .vg-progress__bar { flex: 1; height: 8px; border-radius: 999px; background: var(--vg-blue-soft); overflow: hidden; }
-  #vg-{{ sid }} .vg-progress__fill { height: 100%; width: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--vg-blue), #3b8bff); transform-origin: left; transform: scaleX(0); transition: transform .5s var(--vg-ease); }
+  #vg-{{ sid }} .vg-progress__bar { display: block; flex: 1; height: 8px; border-radius: 999px; background: var(--vg-blue-soft); overflow: hidden; }
+  #vg-{{ sid }} .vg-progress__fill { display: block; height: 100%; width: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--vg-blue), #3b8bff); transform-origin: left; transform: scaleX(0); transition: transform .5s var(--vg-ease); }
   #vg-{{ sid }} .vg-progress__reset { border: 0; background: none; font: inherit; font-size: 13px; color: var(--vg-muted); text-decoration: underline; cursor: pointer; padding: 4px; }
 
   /* Cartes */
@@ -746,6 +746,12 @@
       var first = hashStep || steps.filter(function (s) { return !state.done[s.dataset.step]; })[0];
       render();
       if (first) openOnly(first, !!hashStep);
+
+      // Lien vers une étape (#etape-4, #bonus-1) depuis la même page
+      window.addEventListener('hashchange', function () {
+        var t = location.hash && root.querySelector(location.hash + '[data-step]');
+        if (t) openOnly(t, true);
+      });
 
       // Éditeur de thème : ouvrir l'étape sélectionnée
       document.addEventListener('shopify:block:select', function (e) {
