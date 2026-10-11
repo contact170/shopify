@@ -73,7 +73,7 @@
             "caption_2": "La centrale apparaît en haut",
             "tip": "<p>Renommez la centrale avec le crayon ✏️ (ex : « Alarme Maison ») : ce sera plus clair dans vos notifications.</p>",
             "help_title": "La centrale n'apparaît pas ? Installation manuelle",
-            "help_content": "<p><strong>Vérifiez d'abord :</strong> Bluetooth activé, téléphone sur le Wi-Fi 2,4 GHz, mot de passe Wi-Fi simple.</p><p><strong>Sinon, ajoutez-la manuellement :</strong></p><ol><li>Dans l'appli : <strong>+</strong> › « Ajouter un appareil » › choisissez <strong>« Centrale Vigilia »</strong> dans la liste.</li><li>Entrez le mot de passe de votre Wi-Fi 2,4 GHz et suivez l'écran.</li><li>Sur la centrale, tapez : <strong>⚙</strong> › <strong>9876</strong> › <strong>✅</strong> › <strong>0</strong> › <strong>✅</strong></li><li>La LED <strong>clignote vite en jaune-orangé</strong> : la centrale se connecte. Patientez, puis touchez « Terminer ».</li></ol><p><strong>Votre box mélange 2,4 GHz et 5 GHz ?</strong> Dans les réglages de votre box, séparez les deux réseaux ou coupez le 5 GHz le temps de l'installation.</p>"
+            "help_content": "<p><strong>Vérifiez d'abord :</strong> Bluetooth activé, téléphone sur le Wi-Fi 2,4 GHz, mot de passe Wi-Fi simple.</p><p><strong>Sinon, ajoutez-la manuellement :</strong></p><ol><li>Dans l'appli : <strong>+</strong> › « Ajouter un appareil » › choisissez <strong>« Centrale Vigilia »</strong> dans la liste.</li><li>Entrez le mot de passe de votre Wi-Fi 2,4 GHz et suivez l'écran.</li><li>Sur la centrale, tapez : <strong>⚙</strong> › <strong>9876</strong> › <strong>✅</strong> › <strong>0</strong> › <strong>✅</strong></li><li>La LED <strong>orange clignote vite</strong> : la centrale se connecte. Patientez, puis touchez « Terminer ».</li></ol><p><strong>Votre box mélange 2,4 GHz et 5 GHz ?</strong> Dans les réglages de votre box, séparez les deux réseaux ou coupez le 5 GHz le temps de l'installation.</p>"
           }
         },
         "step_acc": {
@@ -112,7 +112,7 @@
             "title": "Testez votre alarme",
             "summary": "Armer, désarmer : vérifiez que tout répond",
             "duration": "2 min",
-            "content": "<ol><li>Sur la centrale, appuyez sur <strong>« Armer »</strong> : la LED passe au <strong>vert fixe</strong>. Vous avez quelques secondes pour sortir.</li><li>Pour désarmer, appuyez sur <strong>« Désarmer »</strong>, tapez <strong>1234</strong> (code par défaut) puis <strong>✅</strong>, ou passez votre <strong>badge</strong>. La LED reprend son clignotement lent (<strong>vert, 1 fois toutes les 5 s</strong>) : la centrale est en veille.</li><li>Faites le même essai depuis l'appli.</li></ol><p><strong>Mode Maison</strong> (la nuit) : seules les portes et fenêtres sont surveillées, vous pouvez circuler chez vous.</p>",
+            "content": "<ol><li>Sur la centrale, appuyez sur <strong>« Armer »</strong> : la LED passe au <strong>vert fixe</strong> (au bout de 30 s environ, elle passe en veille et clignote lentement en vert). Vous avez quelques secondes pour sortir.</li><li>Pour désarmer, appuyez sur <strong>« Désarmer »</strong>, tapez <strong>1234</strong> (code par défaut) puis <strong>✅</strong>, ou passez votre <strong>badge</strong>. L'alarme est désarmée.</li><li>Faites le même essai depuis l'appli.</li></ol><p><strong>Testez aussi la temporisation</strong> : alarme armée, ouvrez une porte équipée d'un contacteur. La LED <strong>clignote lentement en rouge</strong> : c'est le délai pour désarmer avant que la sirène sonne.</p><p><strong>Mode Maison</strong> (la nuit) : seules les portes et fenêtres sont surveillées, vous pouvez circuler chez vous.</p>",
             "video_url": "https://www.youtube.com/watch?v=DdIqLdLjtW4",
             "video_label": "Changer le code en vidéo",
             "warning": "<p><strong>Changez les codes par défaut</strong> (utilisateur 1234 et administrateur 9876), et ne mettez pas le même code pour les deux. Sur la centrale : <strong>⚙</strong> › code administrateur (<strong>9876</strong>) › <strong>✅</strong> › <strong>3</strong> › <strong>✅</strong> › numéro du code (<strong>0</strong> = administrateur, <strong>1 à 6</strong> = utilisateurs) › <strong>✅</strong> › nouveau code › <strong>✅</strong> › même code › <strong>✅</strong>.</p>"
@@ -358,7 +358,7 @@
         "faq_orange": {
           "type": "faq",
           "settings": {
-            "question": "🟠 La LED de ma centrale clignote en jaune-orangé",
+            "question": "🟠 La LED de ma centrale clignote en orange",
             "answer": "<p>Si elle clignote lentement (1 fois par seconde), la centrale n'est pas connectée au Wi-Fi. Vérifiez que votre réseau est en <strong>2,4 GHz</strong> et que le mot de passe fait <strong>moins de 20 caractères sans caractère spécial</strong>. Ensuite, faites une réinitialisation Wi-Fi (question ci-dessous) et réinstallez la centrale.</p>"
           }
         },
