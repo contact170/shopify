@@ -12,7 +12,14 @@
   assign accessories = section.blocks | where: 'type', 'accessory'
   assign faqs = section.blocks | where: 'type', 'faq'
   assign links = section.blocks | where: 'type', 'link'
-  assign step_count = steps.size
+  assign step_count = 0
+  assign last_main_id = ''
+  for b in steps
+    unless b.settings.bonus
+      assign step_count = step_count | plus: 1
+      assign last_main_id = b.id
+    endunless
+  endfor
 -%}
 
 <style>
@@ -190,6 +197,11 @@
   #vg-{{ sid }} .vg-mini__t { padding-top: 3px; }
   #vg-{{ sid }} .vg-mini__t small { display: block; color: var(--vg-muted); font-size: 13px; margin-top: 2px; }
 
+  /* Bonus */
+  #vg-{{ sid }} .vg-bonus-title { margin-top: 8px; }
+  #vg-{{ sid }} .vg-step--bonus .vg-step__num { background: var(--vg-orange-soft); color: var(--vg-orange); }
+  #vg-{{ sid }} .vg-step--bonus.is-open .vg-step__num { background: var(--vg-orange); color: #fff; }
+
   /* Fin */
   #vg-{{ sid }} .vg-done { text-align: center; padding: 32px 24px; margin-bottom: 28px; background: linear-gradient(160deg, #0c1e4a, #17306f); color: #fff; border: 0; }
   #vg-{{ sid }} .vg-done h3 { color: #fff; font-size: 26px; margin-bottom: 8px; }
@@ -316,19 +328,46 @@
     {%- endif -%}
 
     {%- comment -%} ===== ÉTAPES ===== {%- endcomment -%}
+    {%- assign main_n = 0 -%}
+    {%- assign bonus_n = 0 -%}
     <ol class="vg-steps">
       {%- for block in steps -%}
+        {%- if block.settings.bonus -%}
+          {%- assign bonus_n = bonus_n | plus: 1 -%}
+          {%- if bonus_n == 1 -%}
+            </ol>
+            {%- if step_count > 0 -%}
+              <div class="vg-card vg-done" data-done-card hidden>
+                <span class="vg-done__emoji" aria-hidden="true">🎉</span>
+                <h3>{{ section.settings.done_title }}</h3>
+                <p>{{ section.settings.done_text }}</p>
+              </div>
+            {%- endif -%}
+            <h2 class="vg-block-title vg-bonus-title">{{ section.settings.bonus_title }}</h2>
+            {%- if section.settings.bonus_text != blank -%}<p class="vg-block-sub">{{ section.settings.bonus_text }}</p>{%- endif -%}
+            <ol class="vg-steps">
+          {%- endif -%}
+          {%- assign step_label = '★' -%}
+          {%- assign step_anchor = 'bonus-' | append: bonus_n -%}
+        {%- else -%}
+          {%- assign main_n = main_n | plus: 1 -%}
+          {%- assign step_label = main_n -%}
+          {%- assign step_anchor = 'etape-' | append: main_n -%}
+        {%- endif -%}
         {%- liquid
-          assign is_last = forloop.last
+          assign is_last = false
+          if block.id == last_main_id
+            assign is_last = true
+          endif
           assign body_id = 'vg-body-' | append: block.id
           assign yt_id = ''
           if block.settings.video_url != blank and block.settings.video_url.type == 'youtube'
             assign yt_id = block.settings.video_url.id
           endif
         -%}
-        <li class="vg-card vg-step" id="etape-{{ forloop.index }}" data-step="{{ block.id }}" {{ block.shopify_attributes }}>
+        <li class="vg-card vg-step{% if block.settings.bonus %} vg-step--bonus{% endif %}" id="{{ step_anchor }}" data-step="{{ block.id }}"{% if block.settings.bonus %} data-bonus{% endif %} {{ block.shopify_attributes }}>
           <button type="button" class="vg-step__head" aria-expanded="false" aria-controls="{{ body_id }}" data-step-toggle>
-            <span class="vg-step__num"><span>{{ forloop.index }}</span>{{ icon_check }}</span>
+            <span class="vg-step__num"><span>{{ step_label }}</span>{{ icon_check }}</span>
             <span class="vg-step__titles">
               <span class="vg-step__title">{{ block.settings.title }}</span>
               {%- if block.settings.summary != blank -%}<span class="vg-step__summary">{{ block.settings.summary }}</span>{%- endif -%}
@@ -460,11 +499,13 @@
                   </details>
                 {%- endif -%}
 
+                {%- unless block.settings.bonus -%}
                 <div class="vg-actions">
                   <button type="button" class="vg-btn vg-btn--primary" data-step-done>
                     {%- if is_last -%}C'est fait, j'ai terminé 🎉{%- else -%}C'est fait, étape suivante →{%- endif -%}
                   </button>
                 </div>
+                {%- endunless -%}
               </div>
             </div>
           </div>
@@ -473,7 +514,7 @@
     </ol>
 
     {%- comment -%} ===== FIN ===== {%- endcomment -%}
-    {%- if step_count > 0 -%}
+    {%- if step_count > 0 and bonus_n == 0 -%}
       <div class="vg-card vg-done" data-done-card hidden>
         <span class="vg-done__emoji" aria-hidden="true">🎉</span>
         <h3>{{ section.settings.done_title }}</h3>
@@ -583,7 +624,8 @@
       root.dataset.ready = '1';
 
       var key = root.dataset.storageKey;
-      var steps = Array.prototype.slice.call(root.querySelectorAll('[data-step]'));
+      var allSteps = Array.prototype.slice.call(root.querySelectorAll('[data-step]'));
+      var steps = allSteps.filter(function (s) { return !s.hasAttribute('data-bonus'); });
       var label = root.querySelector('[data-progress-label]');
       var fill = root.querySelector('[data-progress-fill]');
       var doneCard = root.querySelector('[data-done-card]');
@@ -600,7 +642,7 @@
         step.querySelector('[data-step-toggle]').setAttribute('aria-expanded', open ? 'true' : 'false');
       }
       function openOnly(step, scroll) {
-        steps.forEach(function (s) { setOpen(s, s === step); });
+        allSteps.forEach(function (s) { setOpen(s, s === step); });
         if (scroll && step) {
           setTimeout(function () {
             var top = step.getBoundingClientRect().top + window.pageYOffset - 90 - (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--sticky-header-height")) || 0);
@@ -630,11 +672,13 @@
         }
       }
 
-      steps.forEach(function (step, i) {
+      allSteps.forEach(function (step) {
         step.querySelector('[data-step-toggle]').addEventListener('click', function () {
           var isOpen = step.classList.contains('is-open');
           if (isOpen) setOpen(step, false); else openOnly(step, false);
         });
+      });
+      steps.forEach(function (step, i) {
         var doneBtn = step.querySelector('[data-step-done]');
         if (doneBtn) doneBtn.addEventListener('click', function () {
           state.done[step.dataset.step] = true;
@@ -739,6 +783,9 @@
     { "type": "header", "content": "Fin du guide" },
     { "type": "text", "id": "done_title", "label": "Titre", "default": "Bravo, votre alarme est prête !" },
     { "type": "text", "id": "done_text", "label": "Texte", "default": "Votre maison est protégée. Pensez à changer vos codes par défaut si ce n'est pas encore fait." },
+    { "type": "header", "content": "Étapes bonus" },
+    { "type": "text", "id": "bonus_title", "label": "Titre", "default": "Pour aller plus loin" },
+    { "type": "text", "id": "bonus_text", "label": "Texte" },
     { "type": "header", "content": "Manuels à télécharger" },
     { "type": "text", "id": "docs_title", "label": "Titre", "default": "Manuels à télécharger" },
     { "type": "text", "id": "docs_text", "label": "Texte" },
@@ -791,6 +838,7 @@
         { "type": "video", "id": "video", "label": "Ou vidéo hébergée sur Shopify" },
         { "type": "text", "id": "video_label", "label": "Texte sur la vidéo", "default": "Voir la vidéo" },
         { "type": "checkbox", "id": "show_accessories", "label": "Afficher le sélecteur d'accessoires", "default": false },
+        { "type": "checkbox", "id": "bonus", "label": "Étape bonus (après le guide, hors progression)", "default": false },
         { "type": "richtext", "id": "tip", "label": "Astuce (encadré bleu)" },
         { "type": "richtext", "id": "warning", "label": "Attention (encadré orange)" },
         { "type": "text", "id": "help_title", "label": "Titre aide dépliable", "default": "Ça ne marche pas ?" },

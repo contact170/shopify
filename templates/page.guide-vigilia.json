@@ -128,6 +128,19 @@
             "tip": "<p>Évitez le plein soleil, les pièces humides et les sources de chaleur. Ne couvrez pas le capteur de lumière.</p>"
           }
         },
+        "step_scen": {
+          "type": "step",
+          "settings": {
+            "bonus": true,
+            "title": "Ma caméra ne me détecte pas quand je suis à la maison",
+            "summary": "Sa détection s'active seulement quand l'alarme est armée",
+            "duration": "5 min",
+            "content": "<p>Le principe : vous créez <strong>2 scénarios</strong> dans l'appli. Le 1er <strong>active</strong> la détection de mouvement de la caméra quand vous <strong>armez</strong> l'alarme. Le 2e la <strong>désactive</strong> quand vous <strong>désarmez</strong>. Résultat : plus d'alertes inutiles quand vous êtes chez vous.</p><p><strong>Scénario 1 : quand j'arme l'alarme</strong></p><ol><li>Dans l'appli, touchez le <strong>+ orange</strong> › <strong>« Créer une scène »</strong> › <strong>« Lorsque le statut de l'appareil change »</strong>.</li><li>Touchez <strong>« Sélectionner un seul appareil »</strong> et choisissez votre <strong>centrale Vigilia</strong>.</li><li>Touchez <strong>« Mode système »</strong> › <strong>« Armer »</strong> › <strong>« Confirmer »</strong>.</li><li>Touchez le <strong>+</strong> à côté de <strong>« Alors »</strong> › <strong>« Sélectionner un seul appareil »</strong> › votre <strong>caméra</strong>.</li><li>Réglez <strong>Détection de mouvement sur ON</strong>, choisissez la sensibilité (faible, moyenne ou élevée), puis <strong>Filtrage corps humain sur ON</strong>.</li><li>Touchez <strong>« Enregistrer »</strong> et donnez-lui un nom, par exemple « Caméra ON à l'armement ».</li></ol><p><strong>Scénario 2 : quand je désarme l'alarme</strong></p><p>Refaites exactement les mêmes étapes, avec 2 différences : choisissez <strong>« Désarmer »</strong> à l'étape 3, et mettez <strong>Détection de mouvement</strong> et <strong>Filtrage corps humain</strong> sur <strong>OFF</strong> à l'étape 5. Nommez-le « Caméra OFF au désarmement ».</p><p>✅ C'est terminé : votre caméra surveille quand vous êtes absent et vous laisse tranquille quand vous êtes là.</p>",
+            "tip": "<p>Vous avez plusieurs caméras ? Faites <strong>un scénario par caméra</strong>. Le même principe fonctionne pour d'autres appareils connectés : allumer une prise connectée ou fermer un volet roulant quand vous armez l'alarme.</p>",
+            "help_title": "Le scénario ne fonctionne pas ?",
+            "help_content": "<ul><li>Vérifiez que la caméra et la centrale sont sur le <strong>même compte</strong> et dans la <strong>même « Maison »</strong> de l'appli : c'est la cause la plus fréquente.</li><li>Certaines fonctions peuvent ne pas être disponibles selon le modèle de caméra.</li></ul><p><strong>Supprimer un scénario</strong> : touchez <strong>« Scène »</strong> en bas de l'écran d'accueil, ouvrez le scénario, puis les <strong>3 points</strong> en haut à droite › « Supprimer le scénario ».</p><p><a href=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Scenario_pour_activer_detection_de_mouvement_si_alarme_Armee_SA501_AM_VIGILIA.pdf?v=1760274100\" target=\"_blank\">Voir le guide illustré des scénarios (PDF)</a></p>"
+          }
+        },
         "acc_wps": {
           "type": "accessory",
           "settings": {
@@ -424,6 +437,7 @@
         "step_cam",
         "step_test",
         "step_wall",
+        "step_scen",
         "acc_wps",
         "acc_wmo",
         "acc_wds",
@@ -458,6 +472,8 @@
         "checklist_title": "Avant de commencer",
         "checklist_text": "4 vérifications rapides qui évitent la plupart des problèmes d'installation.",
         "acc_question": "Quel accessoire voulez-vous ajouter ? Touchez-le :",
+        "bonus_title": "Pour aller plus loin",
+        "bonus_text": "Votre alarme fonctionne. Quand vous voulez, rendez-la encore plus pratique :",
         "done_title": "Bravo, votre alarme est prête !",
         "done_text": "Votre maison est protégée. Pensez à changer vos codes par défaut si ce n'est pas encore fait.",
         "show_leds": true,
