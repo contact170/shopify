@@ -1,0 +1,55 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- assign f = product.metafields.custom.faq.value -%}
+{%- if f != blank -%}
+<style>
+  .accp-faq-bande{background:var(--accp-clair)}
+  .accp-faq-tete{text-align:center}
+  .accp-faq-tete h2{margin-top:14px}
+</style>
+<div class="accp">
+  <section class="accp-bande accp-bande--serree accp-faq-bande">
+    <div class="accp-wrap accp-etroit">
+      <div class="accp-faq-tete">
+        <p class="accp-ref">{{ section.settings.surtitre }}</p>
+        {%- if section.settings.titre != blank -%}<h2>{{ section.settings.titre }}</h2>{%- endif -%}
+      </div>
+      <div class="accp-faq">
+        {%- render 'acc-faq-item', q: f.question_1, a: f.reponse_1, ouvert: true -%}
+        {%- render 'acc-faq-item', q: f.question_2, a: f.reponse_2 -%}
+        {%- render 'acc-faq-item', q: f.question_3, a: f.reponse_3 -%}
+        {%- render 'acc-faq-item', q: f.question_4, a: f.reponse_4 -%}
+        {%- render 'acc-faq-item', q: f.question_5, a: f.reponse_5 -%}
+        {%- render 'acc-faq-item', q: f.question_6, a: f.reponse_6 -%}
+        {%- render 'acc-faq-item', q: f.question_7, a: f.reponse_7 -%}
+        {%- render 'acc-faq-item', q: f.question_8, a: f.reponse_8 -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{%- capture ld -%}
+  {%- if f.question_1 != blank -%},{"@type":"Question","name":{{ f.question_1 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_1 | strip_html | json }}}}{%- endif -%}
+  {%- if f.question_2 != blank -%},{"@type":"Question","name":{{ f.question_2 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_2 | strip_html | json }}}}{%- endif -%}
+  {%- if f.question_3 != blank -%},{"@type":"Question","name":{{ f.question_3 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_3 | strip_html | json }}}}{%- endif -%}
+  {%- if f.question_4 != blank -%},{"@type":"Question","name":{{ f.question_4 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_4 | strip_html | json }}}}{%- endif -%}
+  {%- if f.question_5 != blank -%},{"@type":"Question","name":{{ f.question_5 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_5 | strip_html | json }}}}{%- endif -%}
+  {%- if f.question_6 != blank -%},{"@type":"Question","name":{{ f.question_6 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_6 | strip_html | json }}}}{%- endif -%}
+  {%- if f.question_7 != blank -%},{"@type":"Question","name":{{ f.question_7 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_7 | strip_html | json }}}}{%- endif -%}
+  {%- if f.question_8 != blank -%},{"@type":"Question","name":{{ f.question_8 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_8 | strip_html | json }}}}{%- endif -%}
+{%- endcapture -%}
+{%- assign ld = ld | strip | remove_first: ',' -%}
+{%- if ld != blank -%}
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ ld }}]}</script>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accessoire — FAQ",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Questions frequentes" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Avant de commander." }
+  ],
+  "presets": [ { "name": "Accessoire — FAQ" } ]
+}
+{% endschema %}
