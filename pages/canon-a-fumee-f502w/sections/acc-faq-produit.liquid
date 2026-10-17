@@ -1,6 +1,10 @@
 {{ 'acc-premium.css' | asset_url | stylesheet_tag }}
 {%- assign f = product.metafields.custom.faq.value -%}
-{%- if f != blank -%}
+{%- comment -%}
+  Questions du metaobjet FAQ, puis questions ajoutees depuis le template
+  (blocs « question »). Sans bloc, rien ne change pour les autres fiches.
+{%- endcomment -%}
+{%- if f != blank or section.blocks.size > 0 -%}
 <style>
   .accp-faq-bande{background:var(--accp-clair)}
   .accp-faq-tete{text-align:center}
@@ -22,6 +26,13 @@
         {%- render 'acc-faq-item', q: f.question_6, a: f.reponse_6 -%}
         {%- render 'acc-faq-item', q: f.question_7, a: f.reponse_7 -%}
         {%- render 'acc-faq-item', q: f.question_8, a: f.reponse_8 -%}
+        {%- for block in section.blocks -%}
+          {%- if f == blank and forloop.first -%}
+            {%- render 'acc-faq-item', q: block.settings.question, a: block.settings.reponse, ouvert: true -%}
+          {%- else -%}
+            {%- render 'acc-faq-item', q: block.settings.question, a: block.settings.reponse -%}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     </div>
   </section>
@@ -36,6 +47,9 @@
   {%- if f.question_6 != blank -%},{"@type":"Question","name":{{ f.question_6 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_6 | strip_html | json }}}}{%- endif -%}
   {%- if f.question_7 != blank -%},{"@type":"Question","name":{{ f.question_7 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_7 | strip_html | json }}}}{%- endif -%}
   {%- if f.question_8 != blank -%},{"@type":"Question","name":{{ f.question_8 | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.reponse_8 | strip_html | json }}}}{%- endif -%}
+  {%- for block in section.blocks -%}
+    {%- if block.settings.question != blank -%},{"@type":"Question","name":{{ block.settings.question | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ block.settings.reponse | strip_html | json }}}}{%- endif -%}
+  {%- endfor -%}
 {%- endcapture -%}
 {%- assign ld = ld | strip | remove_first: ',' -%}
 {%- if ld != blank -%}
@@ -49,6 +63,16 @@
   "settings": [
     { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Questions frequentes" },
     { "type": "text", "id": "titre", "label": "Titre", "default": "Avant de commander." }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question en plus",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "textarea", "id": "reponse", "label": "Reponse" }
+      ]
+    }
   ],
   "presets": [ { "name": "Accessoire — FAQ" } ]
 }

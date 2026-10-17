@@ -19,6 +19,13 @@
 -%}
 {%- if contenu != blank -%}
   {%- assign lignes = contenu | newline_to_br | split: '<br />' -%}
+  {%- if section.settings.colonnes == '4' -%}
+<style>
+  .accp .accp-boite--4{grid-template-columns:repeat(2,1fr)}
+  @media(min-width:900px){.accp .accp-boite--4{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:599px){.accp .accp-boite--4 li{padding:20px 16px;font-size:16px}}
+</style>
+  {%- endif -%}
 <div class="accp">
   <section class="accp-bande accp-bande--serree">
     <div class="accp-wrap">
@@ -26,7 +33,7 @@
         <p class="accp-ref">{{ section.settings.surtitre }}</p>
         {%- if titre_boite != blank -%}<h2 style="margin-top:14px">{{ titre_boite }}</h2>{%- endif -%}
       </div>
-      <ul class="accp-boite">
+      <ul class="accp-boite{% if section.settings.colonnes == '4' %} accp-boite--4{% endif %}">
         {%- assign i = 0 -%}
         {%- for ligne in lignes -%}
           {%- assign texte = ligne | strip | remove_first: '•' | remove_first: '-' | strip -%}
@@ -47,7 +54,11 @@
   "settings": [
     { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Dans la boite" },
     { "type": "text", "id": "titre", "label": "Titre", "default": "Tout est fourni.", "info": "Surchargeable fiche par fiche avec le metachamp custom.titre_boite." },
-    { "type": "textarea", "id": "contenu", "label": "Contenu (facultatif)", "info": "Une ligne par element. Vide = metachamp custom.contenu_du_pack." }
+    { "type": "textarea", "id": "contenu", "label": "Contenu (facultatif)", "info": "Une ligne par element. Vide = metachamp custom.contenu_du_pack." },
+    {
+      "type": "select", "id": "colonnes", "label": "Colonnes sur ordinateur", "default": "auto",
+      "options": [ { "value": "auto", "label": "Automatique" }, { "value": "4", "label": "4 colonnes (2 sur mobile)" } ]
+    }
   ],
   "presets": [ { "name": "Accessoire — boite" } ]
 }

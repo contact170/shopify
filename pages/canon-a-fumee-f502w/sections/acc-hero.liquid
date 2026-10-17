@@ -23,6 +23,9 @@
     border-radius:980px;background:#fff;border:1px solid var(--accp-filet);font-size:13px;line-height:1.3}
   .accp-hero-surtitre::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;
     background:var(--accp-alerte);box-shadow:0 0 0 3px rgba(255,77,61,.16)}
+  /* lignes equilibrees, seulement sur les pages qui ont un surtitre */
+  .accp-hero-surtitre ~ .accp-sous-titre{text-wrap:balance}
+  .accp-hero-surtitre ~ .accp-chapo{text-wrap:pretty}
 </style>
 
 {%- liquid
@@ -281,9 +284,15 @@
 </script>
 {%- endunless -%}
 
+{%- comment -%}
+  Donnees structurees Shopify : masquables quand une autre section du
+  template (ex. « Fumee — SEO ») decrit deja le produit.
+{%- endcomment -%}
+{%- unless section.settings.masquer_jsonld -%}
 <script type="application/ld+json">
   {{- product | structured_data -}}
 </script>
+{%- endunless -%}
 
 {% schema %}
 {
@@ -302,7 +311,9 @@
     { "type": "header", "content": "Atouts" },
     { "type": "text", "id": "atout_1", "label": "Atout 1", "default": "Sans abonnement" },
     { "type": "text", "id": "atout_2", "label": "Atout 2", "default": "Installation autonome" },
-    { "type": "text", "id": "atout_3", "label": "Atout 3", "default": "Retour sous 14 jours" }
+    { "type": "text", "id": "atout_3", "label": "Atout 3", "default": "Retour sous 14 jours" },
+    { "type": "header", "content": "SEO" },
+    { "type": "checkbox", "id": "masquer_jsonld", "label": "Ne pas inclure les donnees structurees Shopify", "default": false, "info": "A cocher seulement si une autre section du template (ex. Fumee — SEO) decrit deja le produit." }
   ],
   "blocks": [ { "type": "@app" } ],
   "presets": [ { "name": "Accessoire — en-tete" } ]

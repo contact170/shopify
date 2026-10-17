@@ -1,0 +1,121 @@
+{%- comment -%}
+  Canon a fumee : donnees structurees Produit (schema.org) pour Google et
+  les moteurs de reponse IA. Section invisible.
+
+  Pourquoi : les donnees generees par Shopify prennent le champ
+  « fournisseur » comme marque (« Compatible toutes gammes ») et ne listent
+  ni les caracteristiques ni la note. Celles-ci donnent la vraie marque, le
+  GTIN, les caracteristiques cles, la note clients, l'offre et la politique
+  de retour.
+
+  A utiliser avec la case « Ne pas inclure les donnees structurees
+  Shopify » cochee dans la section d'en-tete, pour ne pas decrire le
+  produit deux fois.
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign url_produit = shop.url | append: '/products/' | append: product.handle
+  assign desc = section.settings.description
+  if desc == blank
+    assign desc = product.description | strip_html | strip_newlines | strip | truncate: 1500
+  endif
+  assign note = product.metafields.reviews.rating.value.rating
+  assign nb_avis = product.metafields.reviews.rating_count.value | default: 0
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": {{ '/products/' | append: product.handle | append: '#product' | json }},
+  "name": {{ product.title | json }},
+  {%- if section.settings.nom_alternatif != blank %}
+  "alternateName": {{ section.settings.nom_alternatif | json }},
+  {%- endif %}
+  "description": {{ desc | json }},
+  "url": {{ url_produit | json }},
+  {%- if v.sku != blank %}
+  "sku": {{ v.sku | json }},
+  "mpn": {{ v.sku | json }},
+  {%- endif %}
+  {%- if v.barcode != blank %}
+  "gtin": {{ v.barcode | json }},
+  {%- endif %}
+  "brand": { "@type": "Brand", "name": {{ section.settings.marque | json }} },
+  {%- if section.settings.categorie != blank %}
+  "category": {{ section.settings.categorie | json }},
+  {%- endif %}
+  "image": [
+    {%- for img in product.images limit: 10 -%}
+      {{ img | image_url: width: 1600 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ],
+  {%- if section.blocks.size > 0 %}
+  "additionalProperty": [
+    {%- for block in section.blocks -%}
+      { "@type": "PropertyValue", "name": {{ block.settings.nom | json }}, "value": {{ block.settings.valeur | json }} }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ],
+  {%- endif %}
+  {%- if note != blank and nb_avis > 0 %}
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ note | json }},
+    "reviewCount": {{ nb_avis | json }},
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  {%- endif %}
+  "offers": [
+    {%- for variante in product.variants -%}
+    {
+      "@type": "Offer",
+      "url": {{ url_produit | append: '?variant=' | append: variante.id | json }},
+      "price": {{ variante.price | divided_by: 100.0 | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "availability": "https://schema.org/{% if variante.available %}InStock{% else %}OutOfStock{% endif %}",
+      "itemCondition": "https://schema.org/NewCondition",
+      {%- if variante.sku != blank %}
+      "sku": {{ variante.sku | json }},
+      {%- endif %}
+      {%- if variante.barcode != blank %}
+      "gtin": {{ variante.barcode | json }},
+      {%- endif %}
+      {%- if section.settings.jours_retour > 0 %}
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "FR",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": {{ section.settings.jours_retour }}
+      },
+      {%- endif %}
+      "seller": { "@type": "Organization", "name": {{ shop.name | json }} }
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Fumee — SEO",
+  "settings": [
+    { "type": "paragraph", "content": "Section invisible : donnees structurees Produit pour Google et les moteurs IA. Cochez « Ne pas inclure les donnees structurees Shopify » dans l'en-tete pour eviter un doublon." },
+    { "type": "text", "id": "marque", "label": "Marque", "default": "Daewoo" },
+    { "type": "text", "id": "nom_alternatif", "label": "Autres noms du produit", "info": "Ex. : generateur de fumee, generateur de brouillard." },
+    { "type": "text", "id": "categorie", "label": "Categorie", "default": "Canon a fumee anti-intrusion" },
+    { "type": "textarea", "id": "description", "label": "Description courte", "info": "Vide = description du produit." },
+    { "type": "range", "id": "jours_retour", "min": 0, "max": 60, "step": 1, "unit": "j", "label": "Delai de retour", "default": 14, "info": "0 = ne pas indiquer de politique de retour." }
+  ],
+  "blocks": [
+    {
+      "type": "propriete",
+      "name": "Caracteristique",
+      "settings": [
+        { "type": "text", "id": "nom", "label": "Nom" },
+        { "type": "text", "id": "valeur", "label": "Valeur" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Fumee — SEO" } ]
+}
+{% endschema %}

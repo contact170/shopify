@@ -20,7 +20,8 @@
 {%- if nb_specs > 0 or nb_notes > 0 -%}
 <style>
   .fum-specs-tete{margin:0 auto;text-align:center}
-  .fum-specs-tete h2{margin-top:14px}
+  .fum-specs-tete h2{margin-top:14px;text-wrap:balance}
+  .fum-specs-tete .accp-chapo{text-wrap:pretty}
   .fum-specs-carte{margin:clamp(26px,3.6vw,42px) 0 0;background:#fff;border-radius:var(--accp-rayon);
     box-shadow:var(--accp-ombre);padding:0 26px;overflow:hidden}
   .fum-specs{margin:-1px 0 0;display:grid;grid-template-columns:1fr;column-gap:48px}
@@ -31,7 +32,7 @@
   @media(min-width:820px){
     .fum-specs{grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(var(--fum-lignes),auto)}
   }
-  .fum-notes-titre{margin:clamp(30px,4vw,44px) 0 0;font-size:clamp(19px,2.3vw,24px)}
+  .accp .fum-notes-titre{margin:clamp(34px,4.4vw,48px) 0 0;font-size:clamp(19px,2.3vw,24px)}
   .fum-notes{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:14px;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
   .fum-note{background:#fff;border-radius:var(--accp-rayon);box-shadow:var(--accp-ombre);padding:22px 22px 24px}
