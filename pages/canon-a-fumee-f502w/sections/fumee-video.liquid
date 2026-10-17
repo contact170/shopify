@@ -1,0 +1,104 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Canon a fumee : video de demonstration.
+  Accepte une video hebergee sur Shopify (reglage « video ») ou un lien
+  YouTube / Vimeo. Sans video, la section ne s'affiche pas sur la boutique ;
+  dans l'editeur de theme, un cadre indique ou la deposer.
+{%- endcomment -%}
+{%- liquid
+  assign video = section.settings.video
+  assign lien = section.settings.video_url
+  assign a_video = false
+  if video != blank or lien != blank
+    assign a_video = true
+  endif
+  case section.settings.format
+    when 'portrait'
+      assign ratio = '9 / 16'
+      assign largeur_max = '420px'
+    when 'carre'
+      assign ratio = '1 / 1'
+      assign largeur_max = '640px'
+    else
+      assign ratio = '16 / 9'
+      assign largeur_max = '100%'
+  endcase
+-%}
+{%- if a_video or request.design_mode -%}
+<style>
+  .fum-video{position:relative;margin:clamp(26px,3.6vw,44px) auto 0;width:100%;max-width:{{ largeur_max }};
+    aspect-ratio:{{ ratio }};border-radius:20px;overflow:hidden;background:#000;
+    box-shadow:0 2px 6px rgba(0,0,0,.25),0 30px 70px rgba(0,0,0,.35)}
+  .fum-video video,.fum-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover;max-width:none}
+  .fum-video--vide{display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;
+    background:rgba(255,255,255,.04);border:1.5px dashed rgba(255,255,255,.28);box-shadow:none;
+    color:#9aa4c2;font-size:16px;line-height:1.6}
+  .fum-video--vide b{display:block;color:#fff;font-size:18px;margin-bottom:6px}
+  .fum-video-tete{margin:0 auto;text-align:center}
+  .fum-video-tete h2{margin-top:14px}
+  .fum-video-tete .accp-ref{color:#ff8a7e}
+</style>
+<div class="accp">
+  <section class="accp-bande accp-bande--nuit">
+    <div class="accp-wrap">
+      <div class="accp-etroit fum-video-tete">
+        {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+        {%- if section.settings.titre != blank -%}<h2>{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.chapo != blank -%}
+          <p class="accp-chapo" style="margin-top:18px">{{ section.settings.chapo }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if video != blank -%}
+        <div class="fum-video">
+          {%- if section.settings.lecture_auto -%}
+            {{ video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: true, preload: 'metadata', image_size: '1600x' }}
+          {%- else -%}
+            {{ video | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '1600x' }}
+          {%- endif -%}
+        </div>
+      {%- elsif lien != blank -%}
+        <div class="fum-video">
+          {%- if lien.type == 'youtube' -%}
+            <iframe src="https://www.youtube-nocookie.com/embed/{{ lien.id }}?rel=0&amp;playsinline=1&amp;modestbranding=1{% if section.settings.lecture_auto %}&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist={{ lien.id }}{% endif %}"
+                    title="{{ section.settings.titre | escape }}" loading="lazy"
+                    allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+          {%- elsif lien.type == 'vimeo' -%}
+            <iframe src="https://player.vimeo.com/video/{{ lien.id }}?dnt=1{% if section.settings.lecture_auto %}&amp;autoplay=1&amp;muted=1&amp;loop=1{% endif %}"
+                    title="{{ section.settings.titre | escape }}" loading="lazy"
+                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <div class="fum-video fum-video--vide">
+          <p><b>Vidéo de démonstration</b>Ajoutez la vidéo dans les réglages de cette section (fichier Shopify ou lien YouTube / Vimeo). Ce cadre n'apparaît pas sur la boutique.</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Fumee — video demo",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "En situation" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Voyez-le en action." },
+    { "type": "textarea", "id": "chapo", "label": "Chapo" },
+    { "type": "header", "content": "Video" },
+    { "type": "video", "id": "video", "label": "Video hebergee sur Shopify", "info": "Prioritaire sur le lien YouTube / Vimeo." },
+    { "type": "video_url", "id": "video_url", "label": "Ou lien YouTube / Vimeo", "accept": ["youtube", "vimeo"] },
+    {
+      "type": "select", "id": "format", "label": "Format de la video", "default": "paysage",
+      "options": [
+        { "value": "paysage", "label": "Paysage 16:9" },
+        { "value": "portrait", "label": "Portrait 9:16 (filmee au telephone)" },
+        { "value": "carre", "label": "Carre 1:1" }
+      ]
+    },
+    { "type": "checkbox", "id": "lecture_auto", "label": "Lecture automatique en sourdine, en boucle", "default": true }
+  ],
+  "presets": [ { "name": "Fumee — video demo" } ]
+}
+{% endschema %}

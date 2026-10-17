@@ -1,0 +1,346 @@
+{
+  "sections": {
+    "hero": {
+      "type": "acc-hero",
+      "settings": {
+        "marque": "Daewoo",
+        "reference": "",
+        "libelle_bouton": "Ajouter au panier",
+        "mention_prix": "l'unité",
+        "quantite_max": 20,
+        "paiement": "Paiement en 3 ou 4 fois avec Alma · Livraison en 48 à 72 h",
+        "surtitre": "La protection la plus efficace contre le vol",
+        "sous_titre": "Ils ne voient plus rien. Ils ne volent plus rien.",
+        "accroche": "En 8 secondes, la pièce disparaît sous un brouillard opaque et non toxique. L'intrus ne voit plus rien, ne trouve plus rien et repart les mains vides.",
+        "atout_1": "Bouton panique et télécommande fournis",
+        "atout_2": "Sans abonnement",
+        "atout_3": "Retour sous 14 jours"
+      }
+    },
+    "option": {
+      "type": "acc-option",
+      "settings": { "label": "En option", "bouton": "Ajouter", "marge_basse": 32 }
+    },
+    "video": {
+      "type": "fumee-video",
+      "settings": {
+        "surtitre": "En situation",
+        "titre": "Voyez-le en action.",
+        "chapo": "Le temps de lire cette phrase, la pièce a déjà disparu.",
+        "format": "paysage",
+        "lecture_auto": true
+      }
+    },
+    "efficacite": {
+      "type": "fumee-efficacite",
+      "blocks": {
+        "sirene": {
+          "type": "solution",
+          "settings": {
+            "type_equipement": "Sirène",
+            "titre": "Elle prévient.",
+            "texte": "Elle alerte le voisinage et fait fuir les plus prudents. Les plus décidés savent qu'il leur reste quelques minutes pour se servir.",
+            "verdict": "Le vol peut continuer",
+            "mis_en_avant": false,
+            "pastille": ""
+          }
+        },
+        "camera": {
+          "type": "solution",
+          "settings": {
+            "type_equipement": "Caméra",
+            "titre": "Elle filme.",
+            "texte": "Elle vous montre l'intrusion en direct et garde une preuve. Mais elle regarde le vol se faire, sans pouvoir l'empêcher.",
+            "verdict": "Le vol peut continuer",
+            "mis_en_avant": false,
+            "pastille": ""
+          }
+        },
+        "canon": {
+          "type": "solution",
+          "settings": {
+            "type_equipement": "Canon à fumée F502W",
+            "titre": "Il arrête.",
+            "texte": "En 8 secondes, la pièce est noyée sous un brouillard opaque. L'intrus n'y voit plus rien : impossible de chercher, de trier ou d'emporter quoi que ce soit.",
+            "verdict": "Le vol s'arrête net",
+            "mis_en_avant": true,
+            "pastille": "Le plus efficace"
+          }
+        }
+      },
+      "block_order": ["sirene", "camera", "canon"],
+      "settings": {
+        "surtitre": "Pourquoi c'est la plus efficace",
+        "titre": "Les autres alertent. Lui, il arrête le vol.",
+        "chapo": "Une sirène prévient, une caméra filme, et pendant ce temps le cambrioleur se sert. Le canon à fumée agit au moment même de l'intrusion : sans visibilité, il n'y a plus rien à voler.",
+        "conclusion": "Votre alarme donne l'alerte, le canon à fumée empêche le vol : <strong>c'est le duo le plus efficace contre le cambriolage.</strong>",
+        "fond": "blanc"
+      }
+    },
+    "chrono": {
+      "type": "fumee-chrono",
+      "blocks": {
+        "t0": {
+          "type": "etape",
+          "settings": { "temps": "0 s", "titre": "Déclenchement", "texte": "Un appui sur le bouton panique, la télécommande ou l'application." }
+        },
+        "t1": {
+          "type": "etape",
+          "settings": { "temps": "1 s", "titre": "Première éjection", "texte": "Un jet de brouillard dense jaillit de la buse." }
+        },
+        "t3": {
+          "type": "etape",
+          "settings": { "temps": "3 s", "titre": "Zones sensibles noyées", "texte": "Le passage et les objets de valeur disparaissent." }
+        },
+        "t8": {
+          "type": "etape",
+          "settings": { "temps": "8 s", "titre": "Visibilité nulle", "texte": "La pièce entière est opaque, jusqu'à 150 m³." }
+        }
+      },
+      "block_order": ["t0", "t1", "t3", "t8"],
+      "settings": {
+        "surtitre": "Vitesse de diffusion",
+        "titre": "8 secondes. Pas une de plus.",
+        "chapo": "Le temps qu'un intrus repère le premier objet de valeur, la pièce a déjà disparu.",
+        "compteur": "8",
+        "unite": "s",
+        "legende": "pour rendre opaque une pièce de 100 à 150 m³",
+        "apres": "Le brouillard <strong>reste en place 30 à 45 minutes</strong> : l'intrus ne peut pas revenir se servir. Il se dissipe ensuite naturellement."
+      }
+    },
+    "declenchement": {
+      "type": "fumee-declenchement",
+      "blocks": {
+        "bouton": {
+          "type": "mode",
+          "settings": {
+            "icone": "bouton",
+            "badge": "Fourni",
+            "titre": "Bouton panique",
+            "texte": "Fixé près du lit, de l'entrée ou derrière le comptoir de votre commerce, il est relié au canon par un câble. Un appui, et la fumée part dans la seconde.",
+            "points": "Liaison filaire, impossible à brouiller\nFonctionne sans Wi-Fi ni internet",
+            "ideal": "Vous êtes chez vous, la nuit, et entendez un bruit suspect."
+          }
+        },
+        "telecommande": {
+          "type": "mode",
+          "settings": {
+            "icone": "telecommande",
+            "badge": "Fournie",
+            "titre": "Télécommande",
+            "texte": "Sur la table de nuit ou au porte-clés, elle déclenche le canon depuis une autre pièce. Il faut maintenir le bouton 2 secondes : pas de déclenchement par accident.",
+            "points": "Radio : fonctionne sans Wi-Fi ni internet\nAppui de 2 secondes anti-fausse manœuvre",
+            "ideal": "Vous êtes à la maison, mais pas dans la pièce protégée."
+          }
+        },
+        "application": {
+          "type": "mode",
+          "settings": {
+            "icone": "application",
+            "badge": "Gratuite",
+            "titre": "Application Daewoo Home Connect",
+            "texte": "Une alerte pendant votre absence ? Vérifiez sur vos caméras, puis lancez la fumée depuis votre téléphone, où que vous soyez. Une double confirmation évite toute erreur.",
+            "points": "De partout, depuis votre téléphone (Wi-Fi ou 4G)\nDouble confirmation avant le déclenchement",
+            "ideal": "Vous êtes au travail ou en vacances."
+          }
+        }
+      },
+      "block_order": ["bouton", "telecommande", "application"],
+      "settings": {
+        "surtitre": "Déclenchement",
+        "titre": "Trois façons de le déclencher.",
+        "chapo": "En pleine nuit chez vous ou à des centaines de kilomètres, vous gardez toujours la main. Le bouton panique et la télécommande sont fournis dans la boîte.",
+        "libelle_ideal": "Idéal quand",
+        "fond": "clair",
+        "encart_titre": "Box internet coupée ? Il se déclenche quand même.",
+        "encart_texte": "Le bouton panique et la télécommande parlent directement au canon, sans passer par le Wi-Fi. <strong>Seule condition : qu'il reste alimenté sur secteur</strong> — un petit onduleur suffit à le sécuriser."
+      }
+    },
+    "moast": {
+      "type": "apps",
+      "blocks": {
+        "moast_carousel": {
+          "type": "shopify://apps/moast/blocks/carousel/1ac7547b-5443-446c-868c-7fab4566ee16",
+          "settings": {
+            "dynamic": true,
+            "feed": "",
+            "feed_usage": "back_up",
+            "header": "",
+            "slide_type": "stories",
+            "product_cards": "none",
+            "autoplay_mode": "none",
+            "autoscroll_duration": 0,
+            "slide_size_mode": "fixed",
+            "slide_size": "250",
+            "slides_in_view_desktop": 4,
+            "slides_in_view_mobile": 2,
+            "aspect_ratio": "vertical",
+            "border": 0,
+            "border_color": "linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)",
+            "slide_rounding": "20",
+            "slide_spacing": 16,
+            "padding_top": 8,
+            "pagination": "below",
+            "alignment": "center",
+            "click_action": "fullscreen",
+            "float_location": "bottom_right",
+            "float_size": "medium",
+            "show_captions": false,
+            "show_handles": false,
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": ["moast_carousel"],
+      "settings": { "padding_top": 0, "padding_bottom": 16, "divider": false, "full_width": false, "rounded": false }
+    },
+    "compat": { "type": "acc-compat", "settings": { "surtitre": "Compatibilité" } },
+    "pose": {
+      "type": "acc-installation",
+      "settings": {
+        "surtitre": "Installation",
+        "titre": "Au mur ou au plafond.",
+        "texte": "Fixez le support à 2,50 – 3 m de hauteur, sur le passage obligé de l'intrus. Branchez l'adaptateur secteur, reliez le bouton panique au bornier fourni, puis ajoutez le canon dans l'application Daewoo Home Connect (Wi-Fi 2,4 GHz)."
+      }
+    },
+    "boite": {
+      "type": "acc-boite",
+      "settings": {
+        "surtitre": "Dans la boîte",
+        "titre": "Tout est fourni.",
+        "contenu": "1 canon à fumée F502W\n1 cartouche de fumée incluse\n1 bouton panique filaire\n1 télécommande\n1 adaptateur secteur 12 V\n1 support et kit de fixation\n1 bornier Phénix (raccordement du bouton)\n1 manuel d'utilisation"
+      }
+    },
+    "technique": {
+      "type": "fumee-specs",
+      "blocks": {
+        "s01": { "type": "spec", "settings": { "libelle": "Volume protégé", "valeur": "100 à 150 m³" } },
+        "s02": { "type": "spec", "settings": { "libelle": "Première éjection", "valeur": "1 seconde" } },
+        "s03": { "type": "spec", "settings": { "libelle": "Zones sensibles couvertes", "valeur": "3 secondes" } },
+        "s04": { "type": "spec", "settings": { "libelle": "Pièce entièrement opaque", "valeur": "8 secondes" } },
+        "s05": { "type": "spec", "settings": { "libelle": "Persistance du brouillard", "valeur": "30 à 45 minutes" } },
+        "s06": { "type": "spec", "settings": { "libelle": "Type de fumée", "valeur": "Non toxique" } },
+        "s07": { "type": "spec", "settings": { "libelle": "Déclenchement", "valeur": "Bouton panique, télécommande, application" } },
+        "s08": { "type": "spec", "settings": { "libelle": "Connexion", "valeur": "Wi-Fi 2,4 GHz" } },
+        "s09": { "type": "spec", "settings": { "libelle": "Compatibilité", "valeur": "Toutes les alarmes Daewoo" } },
+        "s10": { "type": "spec", "settings": { "libelle": "Alimentation", "valeur": "Secteur, adaptateur 12 V / 3 A fourni" } },
+        "s11": { "type": "spec", "settings": { "libelle": "Consommation", "valeur": "24 W maximum" } },
+        "s12": { "type": "spec", "settings": { "libelle": "Hauteur de pose conseillée", "valeur": "2,50 à 3 m" } },
+        "s13": { "type": "spec", "settings": { "libelle": "Fixation", "valeur": "Murale ou plafond" } },
+        "s14": { "type": "spec", "settings": { "libelle": "Environnement", "valeur": "Intérieur, pièce close ou semi-ouverte" } },
+        "s15": { "type": "spec", "settings": { "libelle": "Température de fonctionnement", "valeur": "−10 °C à +50 °C" } },
+        "s16": { "type": "spec", "settings": { "libelle": "Humidité de fonctionnement", "valeur": "0 à 60 %" } },
+        "s17": { "type": "spec", "settings": { "libelle": "Cartouche", "valeur": "Une diffusion, recharge F502R" } },
+        "s18": { "type": "spec", "settings": { "libelle": "Certifications", "valeur": "CE, RoHS, REACH" } },
+        "n1": { "type": "note", "settings": { "titre": "Une cartouche, un déclenchement.", "texte": "Après usage, remplacez la cartouche par une recharge F502R : le canon est de nouveau prêt." } },
+        "n2": { "type": "note", "settings": { "titre": "Laissez refroidir.", "texte": "La buse devient brûlante. Attendez environ 2 heures avant de manipuler l'appareil." } },
+        "n3": { "type": "note", "settings": { "titre": "Gardez-le alimenté.", "texte": "Le canon fonctionne sur secteur et s'arrête en cas de coupure de courant : un onduleur est recommandé." } },
+        "n4": { "type": "note", "settings": { "titre": "Orientez-le bien.", "texte": "Dirigez la buse vers le sol, jamais vers une personne. Usage intérieur uniquement, hors véhicule." } }
+      },
+      "block_order": ["s01", "s02", "s03", "s04", "s05", "s06", "s07", "s08", "s09", "s10", "s11", "s12", "s13", "s14", "s15", "s16", "s17", "s18", "n1", "n2", "n3", "n4"],
+      "settings": {
+        "surtitre": "Fiche technique",
+        "titre": "Les chiffres.",
+        "titre_notes": "Bon à savoir",
+        "fond": "clair"
+      }
+    },
+    "avis": { "type": "acc-avis", "settings": { "surtitre": "Avis clients", "marge_haute": 28 } },
+    "avis_widget": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_cards_carousel_LjJdWP": {
+          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "show_sample_reviews": false,
+            "reviews_selection": "current_product",
+            "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
+            "star_rating": "all",
+            "show_review_media": true,
+            "display_order": "media_first",
+            "no_image_fallback": "review_text_only",
+            "max_reviews": 20,
+            "review_length": "small",
+            "text_size": "small",
+            "image_ratio": "1",
+            "reviews_shown": 4,
+            "show_reviewer_name": true,
+            "show_product_name": true,
+            "hide_arrows_mobile": true,
+            "arrows_position": "sides",
+            "max_width": 1100,
+            "corner_styling": "soft",
+            "header_text_color": "#000000",
+            "text_color": "#000000",
+            "card_color": "#f9f9f9",
+            "stars_color": "",
+            "arrows_color": "#000000",
+            "transition_speed": 5,
+            "header_text": "Les avis de nos clients",
+            "show_average_rating": true,
+            "rating_display": "default"
+          }
+        }
+      },
+      "block_order": ["judge_me_reviews_cards_carousel_LjJdWP"],
+      "settings": { "padding_top": 4, "padding_bottom": 16, "divider": false, "full_width": false, "rounded": false }
+    },
+    "faq": { "type": "acc-faq-produit", "settings": { "surtitre": "Questions fréquentes", "titre": "Avant de commander." } },
+    "recommandations": {
+      "type": "acc-complements",
+      "settings": {
+        "surtitre": "Même gamme",
+        "titre": "Complétez votre système.",
+        "nombre": 4,
+        "collection_repli": "",
+        "exclusions": "centrale-am302, centrale-touch-am301-avec-ecran-tactile-4-3"
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "product_limit": 4,
+        "columns": 4,
+        "carousel_on_desktop": true,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "heading": "Vous avez consulté",
+        "heading_size": "title-sm",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "padding_top": 12,
+        "padding_bottom": 24,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "barre": { "type": "acc-barre", "settings": { "libelle_bouton": "Ajouter au panier" } }
+  },
+  "order": [
+    "hero",
+    "option",
+    "video",
+    "efficacite",
+    "chrono",
+    "declenchement",
+    "moast",
+    "compat",
+    "pose",
+    "boite",
+    "technique",
+    "avis",
+    "avis_widget",
+    "faq",
+    "recommandations",
+    "recently-viewed",
+    "barre"
+  ]
+}

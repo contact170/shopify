@@ -1,0 +1,112 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Canon a fumee : pourquoi c'est la protection la plus efficace.
+  Chaque bloc « solution » presente un equipement (sirene, camera...) et
+  ce qu'il fait reellement face a un cambrioleur. Le bloc coche « mis en
+  avant » passe en carte sombre, legerement surelevee sur ordinateur.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<style>
+  .fum-eff-tete{margin:0 auto;text-align:center}
+  .fum-eff-tete h2{margin-top:14px}
+  .fum-compare{list-style:none;margin:clamp(30px,4.4vw,54px) 0 0;padding:0;display:grid;gap:16px;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));align-items:stretch}
+  .fum-solution{position:relative;display:flex;flex-direction:column;background:#fff;
+    border-radius:var(--accp-rayon);box-shadow:var(--accp-ombre);padding:28px 26px 26px}
+  .fum-solution__type{margin:0;font-family:var(--accp-mono);font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--accp-doux)}
+  .accp .fum-solution h3{margin:14px 0 0;font-size:clamp(26px,3vw,32px);letter-spacing:-.03em;line-height:1.08}
+  .fum-solution__texte{margin:12px 0 0;flex:1 1 auto;font-size:17px;line-height:1.62;color:var(--accp-doux)}
+  .fum-verdict{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin:22px 0 0;
+    padding:8px 14px;border-radius:980px;background:var(--accp-gris);color:var(--accp-doux);
+    font-size:15px;font-weight:500;line-height:1.3}
+  .fum-verdict svg{flex:0 0 auto}
+  .fum-solution--fort{background:var(--accp-nuit);color:#fff;
+    box-shadow:0 2px 4px rgba(10,18,48,.14),0 22px 48px rgba(10,18,48,.30)}
+  .fum-solution--fort .fum-solution__type{color:#ff8a7e}
+  .accp .fum-solution--fort h3{color:#fff}
+  .fum-solution--fort .fum-solution__texte{color:#b5bdd6}
+  .fum-solution--fort .fum-verdict{background:rgba(53,208,127,.14);color:#fff}
+  .fum-solution--fort .fum-verdict svg{color:#35d07f}
+  .fum-solution__pastille{position:absolute;top:-13px;right:22px;padding:6px 13px;border-radius:980px;
+    background:var(--accp-alerte);color:#fff;font-size:13px;font-weight:600;letter-spacing:.01em;
+    box-shadow:0 6px 16px rgba(255,77,61,.35)}
+  .fum-conclusion{margin:clamp(30px,4vw,46px) auto 0;max-width:44ch;text-align:center;
+    font-size:clamp(19px,2.2vw,23px);line-height:1.5;font-weight:500;letter-spacing:-.015em;color:var(--accp-encre)}
+  .fum-conclusion strong{font-weight:600;color:var(--accp-bleu)}
+  @media(min-width:900px){.fum-solution--fort{transform:translateY(-12px)}}
+</style>
+<div class="accp">
+  <section class="accp-bande{% if section.settings.fond == 'clair' %} accp-bande--gris{% endif %}">
+    <div class="accp-wrap">
+      <div class="accp-etroit fum-eff-tete">
+        {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+        {%- if section.settings.titre != blank -%}<h2>{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.chapo != blank -%}
+          <p class="accp-chapo" style="margin-top:18px">{{ section.settings.chapo }}</p>
+        {%- endif -%}
+      </div>
+
+      <ul class="fum-compare">
+        {%- for block in section.blocks -%}
+          {%- assign fort = block.settings.mis_en_avant -%}
+          <li class="fum-solution{% if fort %} fum-solution--fort{% endif %}" {{ block.shopify_attributes }}>
+            {%- if fort and block.settings.pastille != blank -%}
+              <span class="fum-solution__pastille">{{ block.settings.pastille }}</span>
+            {%- endif -%}
+            {%- if block.settings.type_equipement != blank -%}<p class="fum-solution__type">{{ block.settings.type_equipement }}</p>{%- endif -%}
+            {%- if block.settings.titre != blank -%}<h3>{{ block.settings.titre }}</h3>{%- endif -%}
+            {%- if block.settings.texte != blank -%}<p class="fum-solution__texte">{{ block.settings.texte }}</p>{%- endif -%}
+            {%- if block.settings.verdict != blank -%}
+              <p class="fum-verdict">
+                {%- if fort -%}
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+                {%- else -%}
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                {%- endif -%}
+                {{ block.settings.verdict }}
+              </p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.conclusion != blank -%}
+        <p class="fum-conclusion">{{ section.settings.conclusion }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Fumee — efficacite",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Pourquoi c'est la plus efficace" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Les autres alertent. Lui, il arrete le vol." },
+    { "type": "textarea", "id": "chapo", "label": "Chapo" },
+    { "type": "inline_richtext", "id": "conclusion", "label": "Phrase de conclusion", "info": "Le gras s'affiche en bleu." },
+    {
+      "type": "select", "id": "fond", "label": "Fond", "default": "blanc",
+      "options": [ { "value": "blanc", "label": "Blanc" }, { "value": "clair", "label": "Bleu tres clair" } ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "solution",
+      "name": "Equipement compare",
+      "settings": [
+        { "type": "text", "id": "type_equipement", "label": "Equipement", "default": "Sirene" },
+        { "type": "text", "id": "titre", "label": "Ce qu'il fait", "default": "Elle previent." },
+        { "type": "textarea", "id": "texte", "label": "Explication" },
+        { "type": "text", "id": "verdict", "label": "Verdict", "default": "Le vol peut continuer" },
+        { "type": "checkbox", "id": "mis_en_avant", "label": "Mettre en avant (carte sombre)", "default": false },
+        { "type": "text", "id": "pastille", "label": "Pastille (carte mise en avant)", "default": "Le plus efficace" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [ { "name": "Fumee — efficacite" } ]
+}
+{% endschema %}

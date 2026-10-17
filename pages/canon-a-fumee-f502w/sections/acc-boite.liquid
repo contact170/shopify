@@ -1,6 +1,11 @@
 {{ 'acc-premium.css' | asset_url | stylesheet_tag }}
 {%- liquid
-  assign contenu = product.metafields.custom.contenu_du_pack.value
+  comment
+    Le reglage « contenu » du template, quand il est rempli, prime sur le
+    metachamp contenu_du_pack (page dediee du canon a fumee). Vide par
+    defaut : les autres fiches ne changent pas.
+  endcomment
+  assign contenu = section.settings.contenu | default: product.metafields.custom.contenu_du_pack.value
   comment
     Le titre par defaut (« Tout est fourni. ») ne convient pas partout :
     une centrale vendue seule ou une carte SIM n'ont rien d'un pack
@@ -41,7 +46,8 @@
   "name": "Accessoire — boite",
   "settings": [
     { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Dans la boite" },
-    { "type": "text", "id": "titre", "label": "Titre", "default": "Tout est fourni.", "info": "Surchargeable fiche par fiche avec le metachamp custom.titre_boite." }
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Tout est fourni.", "info": "Surchargeable fiche par fiche avec le metachamp custom.titre_boite." },
+    { "type": "textarea", "id": "contenu", "label": "Contenu (facultatif)", "info": "Une ligne par element. Vide = metachamp custom.contenu_du_pack." }
   ],
   "presets": [ { "name": "Accessoire — boite" } ]
 }

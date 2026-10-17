@@ -1,0 +1,196 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Canon a fumee : la vitesse de diffusion.
+  Un grand compteur (0 -> 8 s) et une frise d'etapes. Quand la frise entre
+  a l'ecran, le compteur defile en temps reel « accelere » et chaque etape
+  s'allume au moment ou le compteur atteint son repere (« 3 s » s'allume a
+  3). Sans JavaScript, ou si le visiteur a demande moins d'animations, tout
+  est affiche d'emblee.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<style>
+  .fum-chrono-tete{margin:0 auto;text-align:center}
+  .fum-chrono-tete h2{margin-top:14px}
+  .fum-chrono-tete .accp-ref{color:#ff8a7e}
+  .fum-chrono{margin-top:clamp(30px,4.4vw,52px)}
+  .fum-compteur{margin:0;text-align:center;font-weight:600;line-height:.9;letter-spacing:-.05em;
+    font-size:clamp(104px,17vw,196px);color:#fff;font-variant-numeric:tabular-nums}
+  .fum-compteur small{font-size:.3em;letter-spacing:-.01em;color:var(--accp-alerte);margin-left:.12em}
+  .fum-legende{margin:16px auto 0;max-width:34ch;text-align:center;font-size:17px;line-height:1.55;color:#9aa4c2}
+  .fum-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .fum-frise{position:relative;margin:clamp(40px,5vw,60px) 0 0;padding:28px 0 0;border-top:2px solid #22305c}
+  .fum-etapes{list-style:none;margin:0;padding:0;display:grid;gap:clamp(18px,3vw,32px);
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .fum-jauge{position:absolute;left:0;right:0;top:-2px;height:2px;transform-origin:left center;
+    background:linear-gradient(90deg,var(--accp-alerte) 0%,#ffb3aa 55%,#ffffff 100%)}
+  .fum-etape{position:relative}
+  .fum-etape::before{content:"";position:absolute;top:-35px;left:0;width:12px;height:12px;border-radius:50%;
+    background:var(--accp-alerte);box-shadow:0 0 0 4px var(--accp-nuit),0 0 0 9px rgba(255,77,61,.18);
+    transition:background .3s,box-shadow .3s}
+  .fum-etape__t{margin:0 0 10px;font-family:var(--accp-mono);font-size:13px;letter-spacing:.12em;color:#ff8a7e}
+  .fum-etape p:not(.fum-etape__t){margin:8px 0 0;color:#9aa4c2;font-size:16px;line-height:1.6}
+  .fum-apres{margin:clamp(30px,4vw,46px) auto 0;max-width:54ch;text-align:center;font-size:17px;line-height:1.65;color:#9aa4c2}
+  .fum-apres strong{color:#fff;font-weight:600}
+
+  /* etat anime : pose par le script, jamais sans lui */
+  .fum-pret .fum-etape > *{opacity:0;transform:translateY(10px);
+    transition:opacity .45s cubic-bezier(.2,.7,.3,1),transform .45s cubic-bezier(.2,.7,.3,1)}
+  .fum-pret .fum-etape::before{background:#22305c;box-shadow:0 0 0 4px var(--accp-nuit)}
+  .fum-pret .fum-etape.est-allumee > *{opacity:1;transform:none}
+  .fum-pret .fum-etape.est-allumee::before{background:var(--accp-alerte);
+    box-shadow:0 0 0 4px var(--accp-nuit),0 0 0 9px rgba(255,77,61,.18)}
+
+  @media(max-width:719px){
+    .fum-frise{border-top:0;padding-top:0;margin-top:36px}
+    .fum-etapes{gap:0;grid-template-columns:1fr}
+    .fum-jauge{display:none}
+    .fum-etape{padding:0 0 26px 28px;border-left:2px solid #22305c}
+    .fum-etape:last-child{padding-bottom:0;border-left-color:transparent}
+    .fum-etape::before{top:3px;left:-7px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .fum-pret .fum-etape > *{opacity:1;transform:none}
+  }
+</style>
+<div class="accp">
+  <section class="accp-bande accp-bande--nuit">
+    <div class="accp-wrap">
+      <div class="accp-etroit fum-chrono-tete">
+        {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+        {%- if section.settings.titre != blank -%}<h2>{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.chapo != blank -%}
+          <p class="accp-chapo" style="margin-top:18px">{{ section.settings.chapo }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="fum-chrono" data-fum-chrono>
+        {%- if section.settings.compteur != blank -%}
+          <p class="fum-compteur">
+            <span class="fum-sr">{{ section.settings.compteur }}{{ section.settings.unite }}</span>
+            <span data-fum-compteur data-cible="{{ section.settings.compteur | escape }}" aria-hidden="true">{{ section.settings.compteur }}</span><small aria-hidden="true">{{ section.settings.unite }}</small>
+          </p>
+          {%- if section.settings.legende != blank -%}<p class="fum-legende">{{ section.settings.legende }}</p>{%- endif -%}
+        {%- endif -%}
+
+        <div class="fum-frise" data-fum-frise>
+          <span class="fum-jauge" data-fum-jauge aria-hidden="true"></span>
+          <ol class="fum-etapes">
+            {%- for block in section.blocks -%}
+              <li class="fum-etape" data-fum-seconde="{{ block.settings.temps | escape }}" {{ block.shopify_attributes }}>
+                {%- if block.settings.temps != blank -%}<p class="fum-etape__t">{{ block.settings.temps }}</p>{%- endif -%}
+                {%- if block.settings.titre != blank -%}<h3>{{ block.settings.titre }}</h3>{%- endif -%}
+                {%- if block.settings.texte != blank -%}<p>{{ block.settings.texte }}</p>{%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ol>
+        </div>
+      </div>
+
+      {%- if section.settings.apres != blank -%}
+        <p class="fum-apres">{{ section.settings.apres }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+<script>
+  (function () {
+    function demarrer(bloc) {
+      if (bloc.dataset.fumInit) return;
+      bloc.dataset.fumInit = '1';
+      var compteur = bloc.querySelector('[data-fum-compteur]');
+      var liste = bloc.querySelector('[data-fum-frise]');
+      var jauge = bloc.querySelector('[data-fum-jauge]');
+      var etapes = Array.prototype.slice.call(bloc.querySelectorAll('[data-fum-seconde]'));
+      var cible = compteur ? parseFloat(String(compteur.dataset.cible).replace(',', '.')) : NaN;
+      if (!(cible > 0) || !etapes.length || !('IntersectionObserver' in window) ||
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      /* repere de chaque etape, en secondes (« 3 s » -> 3) */
+      var reperes = etapes.map(function (e) {
+        var s = parseFloat(String(e.dataset.fumSeconde).replace(',', '.'));
+        return isNaN(s) ? 0 : Math.min(s, cible);
+      });
+      var DUREE = 2600; /* ms pour parcourir 0 -> cible */
+
+      bloc.classList.add('fum-pret');
+      compteur.textContent = '0';
+      if (jauge) jauge.style.transform = 'scaleX(0)';
+
+      /* la jauge rejoint le point de chaque etape au moment ou elle s'allume */
+      function positions() {
+        var l = liste.clientWidth || 1;
+        return etapes.map(function (e) { return e.offsetLeft / l; });
+      }
+      function largeurJauge(s, pos) {
+        for (var i = reperes.length - 1; i >= 0; i--) {
+          if (s >= reperes[i]) {
+            var t0 = reperes[i], p0 = pos[i];
+            var t1 = i + 1 < reperes.length ? reperes[i + 1] : cible;
+            var p1 = i + 1 < reperes.length ? pos[i + 1] : 1;
+            if (t1 <= t0) return p1;
+            return p0 + (p1 - p0) * ((s - t0) / (t1 - t0));
+          }
+        }
+        return 0;
+      }
+
+      new IntersectionObserver(function (entrees, obs) {
+        if (!entrees[0].isIntersecting) return;
+        obs.disconnect();
+        var pos = positions();
+        var debut = null;
+        function image(t) {
+          if (debut === null) debut = t;
+          var p = Math.min((t - debut) / DUREE, 1);
+          var s = p * cible;
+          compteur.textContent = Math.floor(s + 1e-6);
+          if (jauge) jauge.style.transform = 'scaleX(' + largeurJauge(s, pos) + ')';
+          etapes.forEach(function (e, i) { if (s >= reperes[i]) e.classList.add('est-allumee'); });
+          if (p < 1) requestAnimationFrame(image);
+          else if (jauge) jauge.style.transform = 'none';
+        }
+        requestAnimationFrame(image);
+      }, { threshold: 0.3 }).observe(liste);
+    }
+    function pret(fn) {
+      if (document.readyState !== 'loading') fn();
+      else document.addEventListener('DOMContentLoaded', fn);
+    }
+    pret(function () { document.querySelectorAll('[data-fum-chrono]').forEach(demarrer); });
+    document.addEventListener('shopify:section:load', function (e) {
+      e.target.querySelectorAll('[data-fum-chrono]').forEach(demarrer);
+    });
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Fumee — chrono",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Vitesse de diffusion" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "8 secondes. Pas une de plus." },
+    { "type": "textarea", "id": "chapo", "label": "Chapo" },
+    { "type": "header", "content": "Compteur" },
+    { "type": "text", "id": "compteur", "label": "Valeur finale", "default": "8", "info": "Nombre seul. Vide = pas de compteur." },
+    { "type": "text", "id": "unite", "label": "Unite", "default": "s" },
+    { "type": "text", "id": "legende", "label": "Legende sous le compteur" },
+    { "type": "header", "content": "Apres la frise" },
+    { "type": "inline_richtext", "id": "apres", "label": "Texte de fin" }
+  ],
+  "blocks": [
+    {
+      "type": "etape",
+      "name": "Etape",
+      "settings": [
+        { "type": "text", "id": "temps", "label": "Repere de temps", "default": "1 s", "info": "Commence par un nombre (en secondes) : l'etape s'allume quand le compteur l'atteint." },
+        { "type": "text", "id": "titre", "label": "Titre", "default": "Premiere ejection" },
+        { "type": "textarea", "id": "texte", "label": "Texte" }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [ { "name": "Fumee — chrono" } ]
+}
+{% endschema %}

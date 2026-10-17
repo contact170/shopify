@@ -1,0 +1,146 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Canon a fumee : les modes de declenchement.
+  Un bloc « mode » par moyen de declencher (bouton panique, telecommande,
+  application). Les points cles se saisissent un par ligne. L'encart sombre
+  en bas rassure sur le fonctionnement sans internet.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<style>
+  .fum-decl-tete{margin:0 auto;text-align:center}
+  .fum-decl-tete h2{margin-top:14px}
+  .fum-modes{list-style:none;margin:clamp(30px,4.4vw,54px) 0 0;padding:0;display:grid;gap:16px;
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));align-items:stretch}
+  .fum-mode{display:flex;flex-direction:column;background:#fff;border-radius:var(--accp-rayon);
+    box-shadow:var(--accp-ombre);padding:26px 24px 22px}
+  .fum-mode__haut{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .fum-mode__icone{flex:0 0 auto;width:54px;height:54px;border-radius:15px;background:var(--accp-clair);
+    color:var(--accp-bleu);display:flex;align-items:center;justify-content:center}
+  .fum-mode__badge{padding:5px 11px;border-radius:980px;background:#e6f5ec;color:#0b6b31;
+    font-size:13px;font-weight:600;line-height:1.3;white-space:nowrap}
+  .accp .fum-mode h3{margin:20px 0 0}
+  .fum-mode__texte{margin:10px 0 0;font-size:16px;line-height:1.62;color:var(--accp-doux)}
+  .fum-points{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:9px}
+  .fum-points li{display:flex;gap:9px;font-size:15px;line-height:1.45;color:var(--accp-encre)}
+  .fum-points svg{flex:0 0 auto;margin-top:2px;color:#0b8a3d}
+  .fum-mode__ideal{margin:auto 0 0;padding-top:20px}
+  .fum-mode__ideal p{margin:0;border-top:1px solid var(--accp-filet);padding-top:15px;font-size:15px;
+    line-height:1.5;color:var(--accp-encre)}
+  .fum-mode__ideal b{display:block;margin-bottom:4px;font-family:var(--accp-mono);font-size:11px;
+    font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accp-bleu)}
+  .fum-encart{display:flex;gap:18px;align-items:flex-start;margin:clamp(18px,2.6vw,24px) 0 0;
+    background:var(--accp-nuit);color:#fff;border-radius:var(--accp-rayon);padding:clamp(22px,3vw,30px)}
+  .fum-encart__icone{flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:center;color:#fff}
+  .accp .fum-encart h3{margin:0;font-size:clamp(18px,2vw,21px);color:#fff}
+  .fum-encart p{margin:8px 0 0;font-size:16px;line-height:1.62;color:#b5bdd6}
+  .fum-encart strong{color:#fff;font-weight:600}
+  @media(max-width:480px){.fum-encart{flex-direction:column;gap:14px}}
+</style>
+<div class="accp">
+  <section class="accp-bande{% if section.settings.fond == 'clair' %} accp-bande--gris{% endif %}">
+    <div class="accp-wrap">
+      <div class="accp-etroit fum-decl-tete">
+        {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+        {%- if section.settings.titre != blank -%}<h2>{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.chapo != blank -%}
+          <p class="accp-chapo" style="margin-top:18px">{{ section.settings.chapo }}</p>
+        {%- endif -%}
+      </div>
+
+      <ul class="fum-modes">
+        {%- for block in section.blocks -%}
+          <li class="fum-mode" {{ block.shopify_attributes }}>
+            <div class="fum-mode__haut">
+              <span class="fum-mode__icone" aria-hidden="true">
+                {%- case block.settings.icone -%}
+                  {%- when 'telecommande' -%}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6.5" width="8" height="15" rx="4"/><circle cx="12" cy="11" r="1.6"/><path d="M11 16.5h2"/><path d="M9.2 3.6a5 5 0 0 1 5.6 0"/><path d="M7.4 1.8a8 8 0 0 1 9.2 0"/></svg>
+                  {%- when 'application' -%}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.6"/><path d="M10.5 18.6h3"/><circle cx="12" cy="10.5" r="3.2"/><path d="M12 9v1.6"/></svg>
+                  {%- else -%}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="15" rx="3"/><circle cx="12" cy="13" r="3.6"/><path d="M12 5.5V2.5"/><path d="M8.5 2.5h7"/></svg>
+                {%- endcase -%}
+              </span>
+              {%- if block.settings.badge != blank -%}<span class="fum-mode__badge">{{ block.settings.badge }}</span>{%- endif -%}
+            </div>
+
+            {%- if block.settings.titre != blank -%}<h3>{{ block.settings.titre }}</h3>{%- endif -%}
+            {%- if block.settings.texte != blank -%}<p class="fum-mode__texte">{{ block.settings.texte }}</p>{%- endif -%}
+
+            {%- if block.settings.points != blank -%}
+              {%- assign points = block.settings.points | newline_to_br | split: '<br />' -%}
+              <ul class="fum-points">
+                {%- for point in points -%}
+                  {%- assign texte = point | strip -%}
+                  {%- if texte != blank -%}
+                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>{{ texte }}</span></li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            {%- if block.settings.ideal != blank -%}
+              <div class="fum-mode__ideal"><p><b>{{ section.settings.libelle_ideal }}</b>{{ block.settings.ideal }}</p></div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.encart_titre != blank or section.settings.encart_texte != blank -%}
+        <div class="fum-encart">
+          <span class="fum-encart__icone" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.4-7.5 9.5-4.3-1.1-7.5-4.9-7.5-9.5V6L12 3z"/><path d="M8.8 12.2l2.2 2.2 4.3-4.4"/></svg>
+          </span>
+          <div>
+            {%- if section.settings.encart_titre != blank -%}<h3>{{ section.settings.encart_titre }}</h3>{%- endif -%}
+            {%- if section.settings.encart_texte != blank -%}<p>{{ section.settings.encart_texte }}</p>{%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Fumee — declenchement",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Declenchement" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Trois facons de le declencher." },
+    { "type": "textarea", "id": "chapo", "label": "Chapo" },
+    { "type": "text", "id": "libelle_ideal", "label": "Libelle du pied de carte", "default": "Ideal quand" },
+    {
+      "type": "select", "id": "fond", "label": "Fond", "default": "clair",
+      "options": [ { "value": "blanc", "label": "Blanc" }, { "value": "clair", "label": "Bleu tres clair" } ]
+    },
+    { "type": "header", "content": "Encart sombre" },
+    { "type": "text", "id": "encart_titre", "label": "Titre" },
+    { "type": "inline_richtext", "id": "encart_texte", "label": "Texte" }
+  ],
+  "blocks": [
+    {
+      "type": "mode",
+      "name": "Mode de declenchement",
+      "settings": [
+        {
+          "type": "select", "id": "icone", "label": "Icone", "default": "bouton",
+          "options": [
+            { "value": "bouton", "label": "Bouton panique" },
+            { "value": "telecommande", "label": "Telecommande" },
+            { "value": "application", "label": "Application" }
+          ]
+        },
+        { "type": "text", "id": "badge", "label": "Pastille", "default": "Fourni" },
+        { "type": "text", "id": "titre", "label": "Titre", "default": "Bouton panique" },
+        { "type": "textarea", "id": "texte", "label": "Texte" },
+        { "type": "textarea", "id": "points", "label": "Points cles", "info": "Un point par ligne." },
+        { "type": "text", "id": "ideal", "label": "Ideal quand..." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [ { "name": "Fumee — declenchement" } ]
+}
+{% endschema %}

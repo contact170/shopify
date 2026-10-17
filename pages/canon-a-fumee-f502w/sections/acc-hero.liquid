@@ -19,6 +19,10 @@
   .accp-format input:focus-visible + span{outline:2px solid var(--accp-bleu);outline-offset:3px}
   .accp-format input:disabled + span{opacity:.45;cursor:not-allowed}
   .accp-prix s{color:var(--accp-doux);font-weight:400;font-size:.72em;margin-right:6px}
+  .accp-hero-surtitre{display:inline-flex;align-items:center;gap:9px;margin:0 0 16px;padding:7px 15px 7px 13px;
+    border-radius:980px;background:#fff;border:1px solid var(--accp-filet);font-size:13px;line-height:1.3}
+  .accp-hero-surtitre::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;
+    background:var(--accp-alerte);box-shadow:0 0 0 3px rgba(255,77,61,.16)}
 </style>
 
 {%- liquid
@@ -62,12 +66,19 @@
     assign identite = nom_court
   endif
 
-  assign sous = product.metafields.custom.titre_page.value
+  comment
+    Surtitre, sous-titre et accroche : les reglages du template, quand ils
+    sont remplis, priment sur les metachamps (titre_page, accroche). Ils
+    servent aux pages qui meritent un discours sur mesure (canon a fumee).
+    Vides par defaut : les autres fiches ne changent pas.
+  endcomment
+  assign surtitre = section.settings.surtitre
+  assign sous = section.settings.sous_titre | default: product.metafields.custom.titre_page.value
   if sous == blank
     assign sous = nom_court
   endif
 
-  assign accroche = product.metafields.custom.accroche.value
+  assign accroche = section.settings.accroche | default: product.metafields.custom.accroche.value
   assign compat = product.metafields.custom.compatibilite.value.compatibilite
 
   assign note = product.metafields.reviews.rating.value.rating
@@ -86,6 +97,7 @@
   <section class="accp-hero">
     <div class="accp-wrap">
 
+      {%- if surtitre != blank -%}<p class="accp-ref accp-hero-surtitre">{{ surtitre }}</p>{%- endif -%}
       <h1>{{ identite }}</h1>
       {%- if sous != blank and sous != identite -%}<p class="accp-sous-titre">{{ sous }}</p>{%- endif -%}
       {%- if accroche != blank -%}
@@ -283,6 +295,10 @@
     { "type": "text", "id": "mention_prix", "label": "Mention a cote du prix", "default": "l'unite" },
     { "type": "range", "id": "quantite_max", "min": 1, "max": 50, "step": 1, "label": "Quantite maximum", "default": 20 },
     { "type": "text", "id": "paiement", "label": "Ligne paiement / livraison", "default": "Paiement en 3 ou 4 fois avec Alma" },
+    { "type": "header", "content": "Discours sur mesure (facultatif)" },
+    { "type": "text", "id": "surtitre", "label": "Surtitre au-dessus du nom", "info": "Vide = rien n'est affiche." },
+    { "type": "text", "id": "sous_titre", "label": "Sous-titre", "info": "Vide = metachamp custom.titre_page." },
+    { "type": "textarea", "id": "accroche", "label": "Accroche", "info": "Vide = metachamp custom.accroche." },
     { "type": "header", "content": "Atouts" },
     { "type": "text", "id": "atout_1", "label": "Atout 1", "default": "Sans abonnement" },
     { "type": "text", "id": "atout_2", "label": "Atout 2", "default": "Installation autonome" },
