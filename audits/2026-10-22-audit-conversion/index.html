@@ -1,0 +1,1140 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}</style>
+</head>
+<body>
+<title>Audit conversion Daewoo Security</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mise en page : rapport d'audit, colonne de lecture + sommaire collant à gauche sur grand écran. */
+:root{
+  --bg:#f5f6fa; --surface:#ffffff; --ink:#0c1a3d; --ink-2:#465271; --muted:#6b7590; --line:#e2e5ee;
+  --accent:#1d4fd1; --accent-soft:#e9effd;
+  --crit:#b4232f; --crit-bg:#fbe9eb; --high:#b8541a; --high-bg:#fcefe5; --med:#8a6a00; --med-bg:#fbf3d9; --low:#2f6b4a; --low-bg:#e5f2ea;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --grid:#e6e8ef; --ref:#8a93ab;
+  --font-sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1323; --surface:#141b2f; --ink:#e8ecf6; --ink-2:#b3bcd3; --muted:#8a94ad; --line:#253049;
+  --accent:#7aa2ff; --accent-soft:#1b2a4f;
+  --crit:#ff8a93; --crit-bg:#3a1a20; --high:#ffab73; --high-bg:#3a2416; --med:#e8c35a; --med-bg:#35290e; --low:#7fd3a3; --low-bg:#13301f;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --grid:#232c43; --ref:#7d87a3; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1323; --surface:#141b2f; --ink:#e8ecf6; --ink-2:#b3bcd3; --muted:#8a94ad; --line:#253049;
+  --accent:#7aa2ff; --accent-soft:#1b2a4f;
+  --crit:#ff8a93; --crit-bg:#3a1a20; --high:#ffab73; --high-bg:#3a2416; --med:#e8c35a; --med-bg:#35290e; --low:#7fd3a3; --low-bg:#13301f;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --grid:#232c43; --ref:#7d87a3; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3,h4{text-wrap:balance;line-height:1.2;margin:0}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:32px}
+@media (min-width:1000px){.layout{grid-template-columns:220px minmax(0,1fr)}}
+/* En-tête */
+.top{display:grid;gap:14px;padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top h1{font-size:clamp(30px,4.4vw,44px);font-weight:700;letter-spacing:-.02em}
+.top .lede{font-size:18px;color:var(--ink-2);max-width:66ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.meta span{white-space:nowrap}
+/* Sommaire */
+nav.toc{font-size:14px}
+nav.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+nav.toc a{display:block;text-decoration:none;color:var(--ink-2);padding:5px 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface)}
+nav.toc a:hover{color:var(--accent);border-color:var(--accent)}
+@media (min-width:1000px){
+  nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 20px);align-self:start;max-height:calc(100vh - 40px);overflow:auto}
+  nav.toc ol{display:grid;gap:2px}
+  nav.toc a{border:0;background:none;padding:5px 8px}
+  nav.toc .toc-title{display:block}
+}
+.toc-title{display:none;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px 8px}
+main{min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:56px}
+section{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;scroll-margin-top:20px;min-width:0}
+section>h2{font-size:clamp(23px,2.6vw,29px);font-weight:700;letter-spacing:-.01em;display:flex;gap:12px;align-items:baseline}
+section>h2 .n{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--muted)}
+.intro{color:var(--ink-2);max-width:72ch}
+h3{font-size:19px;font-weight:600;margin-top:6px}
+/* Chiffres clés */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:4px;align-content:start}
+.tile .k{font-size:13px;color:var(--muted)}
+.tile .v{font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.tile .v small{font-size:16px;font-weight:500;color:var(--ink-2)}
+.tile .d{font-size:13.5px;color:var(--ink-2)}
+/* Messages clés */
+.keys{display:grid;gap:10px;counter-reset:k;padding:0;margin:0;list-style:none}
+.keys li{counter-increment:k;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.keys li::before{content:counter(k);font-family:var(--font-mono);font-weight:500;color:var(--accent);background:var(--accent-soft);border-radius:6px;height:28px;display:grid;place-items:center;font-size:14px}
+.keys b{font-weight:600}
+/* Puces de sévérité */
+.sev{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.02em;padding:2px 9px 2px 7px;border-radius:999px;white-space:nowrap;line-height:1.6}
+.sev::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.sev.crit{color:var(--crit);background:var(--crit-bg)}
+.sev.crit::before{border-radius:1px;transform:rotate(45deg)}
+.sev.high{color:var(--high);background:var(--high-bg)}
+.sev.med{color:var(--med);background:var(--med-bg)}
+.sev.low{color:var(--low);background:var(--low-bg)}
+.tag{display:inline-block;font-size:12px;color:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:1px 9px;max-width:100%;overflow-wrap:anywhere}
+/* Tableau de priorités */
+.tbl{min-width:0;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;background:var(--surface);position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td .why{display:block;color:var(--ink-2);font-size:13.5px;margin-top:2px}
+.prio td:first-child{font-family:var(--font-mono);color:var(--muted);width:36px}
+/* Constats */
+.findings{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.f{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr);gap:10px;min-width:0}
+.f header{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.f h4{font-size:17px;font-weight:600;flex:1 1 240px;min-width:0}
+.f dl{display:grid;grid-template-columns:1fr;gap:4px 16px;margin:0;font-size:15px}
+@media (min-width:720px){.f dl{grid-template-columns:110px minmax(0,1fr)}}
+.f dt{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:3px}
+.f dd{margin:0;color:var(--ink);min-width:0}
+.f dd ul{margin:2px 0 0;padding-left:18px}
+.f footer{display:flex;flex-wrap:wrap;gap:6px;font-size:12.5px;color:var(--muted)}
+.mono{font-family:var(--font-mono);font-size:.88em}
+code{font-family:var(--font-mono);font-size:.86em;background:var(--accent-soft);padding:1px 5px;border-radius:4px;word-break:break-word}
+.note{font-size:14px;color:var(--ink-2);border-left:3px solid var(--line);padding:4px 0 4px 14px;max-width:80ch}
+/* Graphiques */
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 16px 12px;display:grid;gap:10px;min-width:0}
+figcaption{font-size:14px;color:var(--ink-2)}
+figcaption b{color:var(--ink);font-weight:600;display:block;font-size:15px}
+.chart{width:100%;height:auto;display:block;font-family:var(--font-sans)}
+.chart .grid{stroke:var(--grid);stroke-width:1}
+.chart .ref{stroke:var(--ref);stroke-width:1.5;stroke-dasharray:3 3}
+.chart .tick{fill:var(--muted);font-size:11.5px;font-family:var(--font-mono)}
+.chart .lab{fill:var(--ink);font-size:13px;font-weight:500}
+.chart .sub{fill:var(--muted);font-size:11px}
+.chart .val{fill:var(--ink-2);font-size:12px;font-family:var(--font-mono);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.chart .s1{fill:var(--s1)} .chart .s2{fill:var(--s2)} .chart .s3{fill:var(--s3)}
+.chart path:hover{opacity:.82}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.legend .k1{background:var(--s1)} .legend .k2{background:var(--s2)} .legend .k3{background:var(--s3)}
+details.data{font-size:13.5px}
+details.data summary{cursor:pointer;color:var(--accent);width:max-content}
+details.data table{font-size:13px;margin-top:8px}
+.two{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.chart-scroll{overflow-x:auto;min-width:0}
+.chart-scroll .chart{min-width:600px}
+/* Captures */
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.shot{margin:0;display:grid;gap:8px;align-content:start;background:none;border:0;padding:0}
+.shot img{width:100%;max-width:100%;height:auto;border-radius:14px;border:1px solid var(--line);display:block;background:#fff}
+.shot figcaption{font-size:13.5px}
+.shot figcaption b{font-size:14px}
+.ok{color:var(--low)}
+/* Plan */
+.plan{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:900px){.plan{grid-template-columns:repeat(3,1fr)}}
+.col{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px;align-content:start}
+.col h3{margin:0;font-size:17px}
+.col .when{font-family:var(--font-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.col ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:14.5px}
+.keep{columns:2 260px;column-gap:28px;padding-left:18px;margin:0}
+.keep li{break-inside:avoid;margin-bottom:6px}
+footer.end{border-top:1px solid var(--line);padding-top:18px;font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">daewoo-security.fr · audit du 22 octobre 2026</div>
+  <h1>Audit conversion Daewoo Security</h1>
+  <p class="lede">SEO, GEO, UX/UI, performance, données et conformité : ce qui freine encore les ventes, classé par impact, avec l'action à mener et qui peut la faire.</p>
+  <div class="meta">
+    <span>Données Shopify : 90 derniers jours (24/07 → 22/10/2026)</span>
+    <span>232 URL explorées</span>
+    <span>Tests iPhone 13, Pixel 7, 360 px, ordinateur</span>
+    <span>Lighthouse 12.8</span>
+    <span>11 requêtes de recherche testées</span>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Sommaire">
+  <span class="toc-title">Sommaire</span>
+  <ol>
+    <li><a href="#synthese">Synthèse</a></li>
+    <li><a href="#priorites">Les 20 actions</a></li>
+    <li><a href="#chiffres">Ce que disent les chiffres</a></li>
+    <li><a href="#mesure">1 · Mesure et données</a></li>
+    <li><a href="#fiches">2 · Fiches produits mobile</a></li>
+    <li><a href="#parcours">3 · Accueil et navigation</a></li>
+    <li><a href="#configurateur">4 · Configurateur et pages Lovable</a></li>
+    <li><a href="#panier">5 · Panier et paiement</a></li>
+    <li><a href="#offres">6 · Offres, prix, conformité</a></li>
+    <li><a href="#confiance">7 · Confiance et cohérence</a></li>
+    <li><a href="#performance">8 · Performance</a></li>
+    <li><a href="#seo">9 · SEO technique</a></li>
+    <li><a href="#contenu">10 · Contenu et blog</a></li>
+    <li><a href="#geo">11 · GEO et réputation</a></li>
+    <li><a href="#catalogue">12 · Catalogue et Google Shopping</a></li>
+    <li><a href="#preserver">À préserver</a></li>
+    <li><a href="#plan">Plan 30 / 60 / 90 jours</a></li>
+    <li><a href="#methode">Méthode et limites</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============ SYNTHÈSE ============ -->
+<section id="synthese">
+  <h2>Synthèse</h2>
+  <div class="tiles">
+    <div class="tile"><span class="k">Conversion mobile / ordinateur</span><span class="v">0,62 % <small>/ 2,48 %</small></span><span class="d">78 % des visites sont sur mobile. Le mobile convertit 4 fois moins.</span></div>
+    <div class="tile"><span class="k">Page d'accueil</span><span class="v">0,35 %</span><span class="d">42 % des entrées sur le site (21 393 sessions), 0,21 % sur mobile.</span></div>
+    <div class="tile"><span class="k">Comparateur</span><span class="v">3,0 %</span><span class="d">La meilleure page du site : 8 fois l'accueil. Son modèle est à reproduire.</span></div>
+    <div class="tile"><span class="k">Ventes hors statistiques</span><span class="v">154 <small>cmd</small></span><span class="d">69,5 k€ passés par le canal Lovable, invisibles dans le tunnel de la boutique.</span></div>
+  </div>
+  <ol class="keys">
+    <li><div><b>Votre taux de conversion réel est plus élevé que ce qu'affiche Shopify.</b> Les commandes passées via le configurateur et les offres (canal « Lovable », panier moyen 466 €) ne sont pas rattachées aux sessions de la boutique. Avec elles, on est autour de 1,8 % au lieu de 1,0 %. La « chute » du taux de finalisation du paiement depuis mai est en grande partie un effet de mesure. Il faut d'abord fiabiliser les chiffres.</div></li>
+    <li><div><b>Le mobile est le plus gros levier.</b> Sur 5 des 7 fiches produits principales, le premier écran mobile n'affiche aucune photo : seulement un grand titre et du texte. La meilleure vente (caméra W512MW) et le Starter Pack Vigilia (0,19 % sur mobile) sont concernés. Votre page <span class="mono">/pages/offre-speciale</span> montre déjà le bon modèle.</div></li>
+    <li><div><b>L'accueil éloigne le visiteur des produits.</b> Aucun produit avant le 2<sup>e</sup> écran. Le quiz renvoie vers une collection où les packs n'apparaissent qu'au 12<sup>e</sup> écran. « Voir tous les packs » ouvre une page dont le contenu est une application externe (iframe Lovable).</div></li>
+    <li><div><b>Plusieurs détails font douter un acheteur prudent.</b> On voit 6 nombres d'avis différents selon les pages (1 061, 981, 84, 77, 68, 59), un retour annoncé à 14 jours ici et 30 jours là, et deux numéros de téléphone. La durée d'installation varie de 10 à 60 minutes selon les pages. Pour un produit de sécurité, chaque contradiction coûte des ventes.</div></li>
+    <li><div><b>Le paiement a deux défauts faciles à corriger.</b> La case newsletter est pré-cochée, ce qui pose un risque RGPD, et le téléphone est obligatoire. Le panier coulissant ne propose ni paiement express ni accessoire.</div></li>
+    <li><div><b>Les prix barrés et certaines offres posent un risque juridique et de cohérence.</b> Aucune mention du prix de référence n'accompagne les « -30 % ». Un pack à 359,90 € contient moins que le Pack Sécurité Intégrale à 299,90 €.</div></li>
+    <li><div><b>Hors du site, la marque est peu visible et mal décrite.</b> daewoo-security.fr n'apparaît sur aucune des 11 requêtes stratégiques testées. Les comparatifs qui citent Daewoo parlent de l'ancienne gamme SA501. Les avis tiers (Trustpilot ≈ 2,7/5) contredisent le 4,6/5 du site. Côté catalogue, près de la moitié des fiches envoient une marque erronée à Google, parce que le champ « Fournisseur » sert à noter la compatibilité.</div></li>
+  </ol>
+  <p class="note">Ordre de grandeur : faire passer la conversion mobile de 0,62 % à 1,0 % sur le trafic actuel représente environ 150 commandes de plus par trimestre, soit près de 27 000 € au panier moyen de la boutique (180 €). C'est une estimation, pas une promesse.</p>
+</section>
+
+<!-- ============ PRIORITÉS ============ -->
+<section id="priorites">
+  <h2>Les 20 actions, par ordre de priorité</h2>
+  <p class="intro">Classement selon l'impact attendu sur les ventes et l'effort. « Vous » désigne ce qui se règle dans l'administration Shopify ou par la rédaction, sans développeur.</p>
+  <div class="tbl">
+  <table class="prio">
+    <thead><tr><th>#</th><th>Action</th><th>Impact</th><th>Effort</th><th>Qui</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Réunir boutique et canal Lovable dans un seul indicateur de conversion, et faire passer le configurateur et la page packs par le panier Shopify natif<span class="why">Sans cela, chaque décision se prend sur des chiffres faux.</span></td><td><span class="sev crit">Critique</span></td><td>Moyen</td><td>Développeur</td></tr>
+      <tr><td>2</td><td>Fiches packs mobile : photo, note, prix et choix de variante dans le premier écran<span class="why">Vigilia SP, W512MW, AM301, AM343, Offres exclusives.</span></td><td><span class="sev crit">Critique</span></td><td>Moyen</td><td>Développeur</td></tr>
+      <tr><td>3</td><td>Checkout : décocher la case newsletter par défaut, rendre le téléphone facultatif<span class="why">Conformité RGPD et un champ de moins sur mobile.</span></td><td><span class="sev high">Élevé</span></td><td>Faible</td><td>Vous</td></tr>
+      <tr><td>4</td><td>Ligne de réassurance sous chaque bouton « Ajouter au panier » : livraison offerte, expédition avant midi, 14 jours, 3x/4x Alma</td><td><span class="sev high">Élevé</span></td><td>Faible</td><td>Développeur</td></tr>
+      <tr><td>5</td><td>Accueil : 3 packs avec prix sous le premier écran ; résultat du quiz qui affiche directement 2 à 3 packs</td><td><span class="sev high">Élevé</span></td><td>Moyen</td><td>Développeur</td></tr>
+      <tr><td>6</td><td>Remplacer l'iframe de <span class="mono">/pages/pack-alarmes</span> par une grille Shopify native</td><td><span class="sev high">Élevé</span></td><td>Moyen</td><td>Développeur</td></tr>
+      <tr><td>7</td><td>Harmoniser les chiffres de confiance : avis (note produit vs note boutique), retours, téléphone, durée d'installation, contenu des packs</td><td><span class="sev high">Élevé</span></td><td>Faible</td><td>Vous</td></tr>
+      <tr><td>8</td><td>Prix barrés : libeller « prix des éléments achetés séparément » ou indiquer le prix le plus bas des 30 derniers jours ; retirer « Durée limitée » non daté</td><td><span class="sev high">Élevé</span></td><td>Faible</td><td>Vous</td></tr>
+      <tr><td>9</td><td>Revoir la gamme d'offres Vigilia (pack à 359,90 € moins bien doté que le PSI à 299,90 €) et fixer des noms de packs stables</td><td><span class="sev high">Élevé</span></td><td>Faible</td><td>Vous</td></tr>
+      <tr><td>10</td><td>Champ « Fournisseur » = Daewoo sur tout le catalogue, compatibilité dans un métachamp ; EAN des packs ; notes Judge.me dans les données structurées</td><td><span class="sev high">Élevé</span></td><td>Faible</td><td>Vous + développeur</td></tr>
+      <tr><td>11</td><td>Nettoyer la mesure : trafic robot (Yahoo, pays hors cible, référents spam), UTM sur les publicités Meta, vérifier le double comptage Google Ads</td><td><span class="sev high">Élevé</span></td><td>Faible</td><td>Vous / agence</td></tr>
+      <tr><td>12</td><td>Brancher le domaine <span class="mono">www.daewoo-security.fr</span> (il ne répond pas aujourd'hui)</td><td><span class="sev med">Moyen</span></td><td>Faible</td><td>Vous</td></tr>
+      <tr><td>13</td><td>Panier coulissant : paiement express, 1 ou 2 accessoires suggérés, date de livraison estimée</td><td><span class="sev med">Moyen</span></td><td>Moyen</td><td>Développeur</td></tr>
+      <tr><td>14</td><td>Accueil : barre collante qui masque le panier du dock, titre final illisible</td><td><span class="sev med">Moyen</span></td><td>Faible</td><td>Développeur</td></tr>
+      <tr><td>15</td><td>Performance mobile : alléger les pixels de suivi, Judge.me, la police Poppins du comparateur, les images principales des collections et du blog</td><td><span class="sev med">Moyen</span></td><td>Moyen</td><td>Développeur</td></tr>
+      <tr><td>16</td><td>Relance des 372 paniers abandonnés (90 j) : vérifier qu'une séquence automatique est active</td><td><span class="sev med">Moyen</span></td><td>Faible</td><td>Vous</td></tr>
+      <tr><td>17</td><td>SEO technique : doublons de collections, H1 manquants, produits « Configurateur » à masquer, URL en « -copie »</td><td><span class="sev med">Moyen</span></td><td>Faible</td><td>Vous</td></tr>
+      <tr><td>18</td><td>Réputation hors site : invitations Trustpilot ou Avis clients Google, fiche Google Business, avis sur les marketplaces</td><td><span class="sev med">Moyen</span></td><td>Moyen</td><td>Vous</td></tr>
+      <tr><td>19</td><td>Faire mettre à jour les comparatifs tiers (Selectra, Meilleurtest, Echosdunet…) et obtenir des tests de la gamme actuelle</td><td><span class="sev med">Moyen</span></td><td>Moyen</td><td>Vous / RP</td></tr>
+      <tr><td>20</td><td>Blog : auteurs réels, articles « vs » factuels et chiffrés, fusion des articles qui se concurrencent</td><td><span class="sev low">Faible à moyen</span></td><td>Élevé</td><td>Contenu</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ CHIFFRES ============ -->
+<section id="chiffres">
+  <h2>Ce que disent les chiffres</h2>
+  <p class="intro">Source : Shopify Analytics. Les taux sont des sessions qui commandent sur la boutique en ligne. Ils n'incluent pas les commandes du canal Lovable (voir la partie 1).</p>
+  <div class="two">
+    <figure>
+      <figcaption><b>Le mobile décroche dès l'ajout au panier</b>Part des sessions qui atteignent chaque étape, 90 jours.</figcaption>
+      <div class="legend"><span><i class="k1"></i>Mobile (40 104 sessions)</span><span><i class="k2"></i>Ordinateur (10 314 sessions)</span></div>
+      <div class="chart-scroll"><svg viewBox="0 0 680 236" role="img" aria-labelledby="cd-t cd-d" class="chart">
+<title id="cd-t">Tunnel de conversion par appareil</title>
+<desc id="cd-d">Part des sessions qui ajoutent au panier, arrivent au paiement et commandent, mobile contre ordinateur, 90 derniers jours.</desc>
+<line x1="170.0" y1="14" x2="170.0" y2="200" class="grid"/>
+<text x="170.0" y="220" class="tick" text-anchor="middle">0 %</text>
+<line x1="277.5" y1="14" x2="277.5" y2="200" class="grid"/>
+<text x="277.5" y="220" class="tick" text-anchor="middle">2 %</text>
+<line x1="385.0" y1="14" x2="385.0" y2="200" class="grid"/>
+<text x="385.0" y="220" class="tick" text-anchor="middle">4 %</text>
+<line x1="492.5" y1="14" x2="492.5" y2="200" class="grid"/>
+<text x="492.5" y="220" class="tick" text-anchor="middle">6 %</text>
+<line x1="600.0" y1="14" x2="600.0" y2="200" class="grid"/>
+<text x="600.0" y="220" class="tick" text-anchor="middle">8 %</text>
+<text x="158" y="46" class="lab" text-anchor="end">Ajout au panier</text>
+<path d="M170.0 24.0H323.9Q327.9 24.0 327.9 28.0V36.0Q327.9 40.0 323.9 40.0H170.0Z" class="s1"><title>Mobile · Ajout au panier : 2,94 %</title></path>
+<text x="333.9" y="36" class="val">2,9 %</text>
+<path d="M170.0 42.0H542.8Q546.8 42.0 546.8 46.0V54.0Q546.8 58.0 542.8 58.0H170.0Z" class="s2"><title>Ordinateur · Ajout au panier : 7,01 %</title></path>
+<text x="552.8" y="54" class="val">7,0 %</text>
+<text x="158" y="104" class="lab" text-anchor="end">Arrivée au paiement</text>
+<path d="M170.0 82.0H265.4Q269.4 82.0 269.4 86.0V94.0Q269.4 98.0 265.4 98.0H170.0Z" class="s1"><title>Mobile · Arrivée au paiement : 1,85 %</title></path>
+<text x="275.4" y="94" class="val">1,9 %</text>
+<path d="M170.0 100.0H451.1Q455.1 100.0 455.1 104.0V112.0Q455.1 116.0 451.1 116.0H170.0Z" class="s2"><title>Ordinateur · Arrivée au paiement : 5,30 %</title></path>
+<text x="461.1" y="112" class="val">5,3 %</text>
+<text x="158" y="162" class="lab" text-anchor="end">Commande passée</text>
+<path d="M170.0 140.0H199.5Q203.5 140.0 203.5 144.0V152.0Q203.5 156.0 199.5 156.0H170.0Z" class="s1"><title>Mobile · Commande passée : 0,62 %</title></path>
+<text x="209.5" y="152" class="val">0,62 %</text>
+<path d="M170.0 158.0H299.4Q303.4 158.0 303.4 162.0V170.0Q303.4 174.0 299.4 174.0H170.0Z" class="s2"><title>Ordinateur · Commande passée : 2,48 %</title></path>
+<text x="309.4" y="170" class="val">2,48 %</text>
+</svg></div>
+      <details class="data"><summary>Voir les données</summary>
+        <table><thead><tr><th>Étape</th><th class="num">Mobile</th><th class="num">Ordinateur</th></tr></thead><tbody>
+          <tr><td>Sessions</td><td class="num">40 104</td><td class="num">10 314</td></tr>
+          <tr><td>Ajout au panier</td><td class="num">1 178 (2,9 %)</td><td class="num">723 (7,0 %)</td></tr>
+          <tr><td>Arrivée au paiement</td><td class="num">742 (1,9 %)</td><td class="num">547 (5,3 %)</td></tr>
+          <tr><td>Commande</td><td class="num">250 (0,62 %)</td><td class="num">256 (2,48 %)</td></tr>
+          <tr><td>Paiement finalisé / arrivé au paiement</td><td class="num">34 %</td><td class="num">47 %</td></tr>
+        </tbody></table>
+      </details>
+    </figure>
+    <figure>
+      <figcaption><b>Le canal Lovable pèse de plus en plus</b>Commandes par mois et par canal de vente.</figcaption>
+      <div class="legend"><span><i class="k1"></i>Boutique en ligne</span><span><i class="k2"></i>Lovable (configurateur, offres)</span><span><i class="k3"></i>Amazon et devis</span></div>
+      <div class="chart-scroll"><svg viewBox="0 0 680 290" role="img" aria-labelledby="cc-t cc-d" class="chart">
+<title id="cc-t">Commandes par canal de vente et par mois</title>
+<desc id="cc-d">Commandes mensuelles de mars à octobre 2026 : boutique en ligne, canal Lovable (configurateur et offres), autres canaux (Amazon et devis).</desc>
+<line x1="52" y1="250.0" x2="640" y2="250.0" class="grid"/>
+<text x="44" y="254.0" class="tick" text-anchor="end">0</text>
+<line x1="52" y1="198.9" x2="640" y2="198.9" class="grid"/>
+<text x="44" y="202.9" class="tick" text-anchor="end">100</text>
+<line x1="52" y1="147.8" x2="640" y2="147.8" class="grid"/>
+<text x="44" y="151.8" class="tick" text-anchor="end">200</text>
+<line x1="52" y1="96.7" x2="640" y2="96.7" class="grid"/>
+<text x="44" y="100.7" class="tick" text-anchor="end">300</text>
+<line x1="52" y1="45.6" x2="640" y2="45.6" class="grid"/>
+<text x="44" y="49.6" class="tick" text-anchor="end">400</text>
+<path d="M76.8 117.6H100.8V250.0H76.8Z" class="s1"><title>mars · Boutique en ligne : 259 commandes</title></path>
+<path d="M76.8 117.6V115.8Q76.8 114.0 78.6 114.0H98.9Q100.8 114.0 100.8 115.8V117.6Z" class="s3"><title>mars · Autres canaux : 11 commandes</title></path>
+<text x="88.8" y="106.0" class="val" text-anchor="middle">270</text>
+<text x="88.8" y="268" class="tick" text-anchor="middle">mars</text>
+<path d="M150.2 48.1H174.2V250.0H150.2Z" class="s1"><title>avr. · Boutique en ligne : 395 commandes</title></path>
+<path d="M150.2 46.0H174.2V48.1H150.2Z" class="s2"><title>avr. · Lovable : 8 commandes</title></path>
+<path d="M150.2 44.0V40.7Q150.2 37.3 153.6 37.3H170.9Q174.2 37.3 174.2 40.7V44.0Z" class="s3"><title>avr. · Autres canaux : 17 commandes</title></path>
+<text x="162.2" y="29.3" class="val" text-anchor="middle">420</text>
+<text x="162.2" y="268" class="tick" text-anchor="middle">avr.</text>
+<path d="M223.8 142.2H247.8V250.0H223.8Z" class="s1"><title>mai · Boutique en ligne : 211 commandes</title></path>
+<path d="M223.8 109.4H247.8V142.2H223.8Z" class="s2"><title>mai · Lovable : 68 commandes</title></path>
+<path d="M223.8 107.4V104.3Q223.8 101.2 226.8 101.2H244.7Q247.8 101.2 247.8 104.3V107.4Z" class="s3"><title>mai · Autres canaux : 16 commandes</title></path>
+<text x="235.8" y="93.2" class="val" text-anchor="middle">295</text>
+<text x="235.8" y="268" class="tick" text-anchor="middle">mai</text>
+<path d="M297.2 116.6H321.2V250.0H297.2Z" class="s1"><title>juin · Boutique en ligne : 261 commandes</title></path>
+<path d="M297.2 100.7H321.2V116.6H297.2Z" class="s2"><title>juin · Lovable : 35 commandes</title></path>
+<path d="M297.2 98.7V91.4Q297.2 87.4 301.2 87.4H317.2Q321.2 87.4 321.2 91.4V98.7Z" class="s3"><title>juin · Autres canaux : 26 commandes</title></path>
+<text x="309.2" y="79.4" class="val" text-anchor="middle">322</text>
+<text x="309.2" y="268" class="tick" text-anchor="middle">juin</text>
+<path d="M370.8 130.4H394.8V250.0H370.8Z" class="s1"><title>juil. · Boutique en ligne : 234 commandes</title></path>
+<path d="M370.8 89.5H394.8V130.4H370.8Z" class="s2"><title>juil. · Lovable : 84 commandes</title></path>
+<path d="M370.8 87.5V64.3Q370.8 60.3 374.8 60.3H390.8Q394.8 60.3 394.8 64.3V87.5Z" class="s3"><title>juil. · Autres canaux : 57 commandes</title></path>
+<text x="382.8" y="52.3" class="val" text-anchor="middle">375</text>
+<text x="382.8" y="268" class="tick" text-anchor="middle">juil.</text>
+<path d="M444.2 134.5H468.2V250.0H444.2Z" class="s1"><title>août · Boutique en ligne : 226 commandes</title></path>
+<path d="M444.2 112.5H468.2V134.5H444.2Z" class="s2"><title>août · Lovable : 47 commandes</title></path>
+<path d="M444.2 110.5V90.4Q444.2 86.4 448.2 86.4H464.2Q468.2 86.4 468.2 90.4V110.5Z" class="s3"><title>août · Autres canaux : 51 commandes</title></path>
+<text x="456.2" y="78.4" class="val" text-anchor="middle">324</text>
+<text x="456.2" y="268" class="tick" text-anchor="middle">août</text>
+<path d="M517.8 138.1H541.8V250.0H517.8Z" class="s1"><title>sept. · Boutique en ligne : 219 commandes</title></path>
+<path d="M517.8 117.6H541.8V138.1H517.8Z" class="s2"><title>sept. · Lovable : 44 commandes</title></path>
+<path d="M517.8 115.6V95.5Q517.8 91.5 521.8 91.5H537.8Q541.8 91.5 541.8 95.5V115.6Z" class="s3"><title>sept. · Autres canaux : 51 commandes</title></path>
+<text x="529.8" y="83.5" class="val" text-anchor="middle">314</text>
+<text x="529.8" y="268" class="tick" text-anchor="middle">sept.</text>
+<path d="M591.2 119.7H615.2V250.0H591.2Z" class="s1"><title>oct.* · Boutique en ligne : 255 commandes</title></path>
+<path d="M591.2 98.7H615.2V119.7H591.2Z" class="s2"><title>oct.* · Lovable : 45 commandes</title></path>
+<path d="M591.2 96.7V76.6Q591.2 72.6 595.2 72.6H611.2Q615.2 72.6 615.2 76.6V96.7Z" class="s3"><title>oct.* · Autres canaux : 51 commandes</title></path>
+<text x="603.2" y="64.6" class="val" text-anchor="middle">351</text>
+<text x="603.2" y="268" class="tick" text-anchor="middle">oct.*</text>
+<text x="52" y="286" class="sub">* octobre arrêté au 22/10/2026</text>
+</svg></div>
+      <details class="data"><summary>Voir les données</summary>
+        <table><thead><tr><th>Mois</th><th class="num">Boutique</th><th class="num">Lovable</th><th class="num">Autres</th></tr></thead><tbody>
+          <tr><td>Mars</td><td class="num">259</td><td class="num">0</td><td class="num">11</td></tr>
+          <tr><td>Avril</td><td class="num">395</td><td class="num">8</td><td class="num">17</td></tr>
+          <tr><td>Mai</td><td class="num">211</td><td class="num">68</td><td class="num">16</td></tr>
+          <tr><td>Juin</td><td class="num">261</td><td class="num">35</td><td class="num">26</td></tr>
+          <tr><td>Juillet</td><td class="num">234</td><td class="num">84</td><td class="num">57</td></tr>
+          <tr><td>Août</td><td class="num">226</td><td class="num">47</td><td class="num">51</td></tr>
+          <tr><td>Septembre</td><td class="num">219</td><td class="num">44</td><td class="num">51</td></tr>
+          <tr><td>Octobre (au 22)</td><td class="num">255</td><td class="num">45</td><td class="num">51</td></tr>
+        </tbody></table>
+        <p>Panier moyen sur 90 jours : boutique 180 €, Lovable 466 €, Amazon 187 €, devis 461 €.</p>
+      </details>
+    </figure>
+  </div>
+  <figure>
+    <figcaption><b>Les pages d'entrée ne se valent pas</b>Taux de conversion selon la page d'arrivée, 90 jours, pages classées par nombre de sessions. Les pages à choix simple (comparateur, caméras, accessoires) convertissent le mieux.</figcaption>
+    <div class="chart-scroll"><svg viewBox="0 0 680 353" role="img" aria-labelledby="cl-t cl-d" class="chart">
+<title id="cl-t">Taux de conversion par page d'entrée</title>
+<desc id="cl-d">Taux de conversion des sessions selon la page d'arrivée, 90 derniers jours, pages classées par nombre de sessions.</desc>
+<line x1="250.0" y1="10" x2="250.0" y2="313" class="grid"/>
+<text x="250.0" y="331" class="tick" text-anchor="middle">0 %</text>
+<line x1="322.0" y1="10" x2="322.0" y2="313" class="grid"/>
+<text x="322.0" y="331" class="tick" text-anchor="middle">1 %</text>
+<line x1="394.0" y1="10" x2="394.0" y2="313" class="grid"/>
+<text x="394.0" y="331" class="tick" text-anchor="middle">2 %</text>
+<line x1="466.0" y1="10" x2="466.0" y2="313" class="grid"/>
+<text x="466.0" y="331" class="tick" text-anchor="middle">3 %</text>
+<line x1="538.0" y1="10" x2="538.0" y2="313" class="grid"/>
+<text x="538.0" y="331" class="tick" text-anchor="middle">4 %</text>
+<line x1="610.0" y1="10" x2="610.0" y2="313" class="grid"/>
+<text x="610.0" y="331" class="tick" text-anchor="middle">5 %</text>
+<line x1="322.0" y1="10" x2="322.0" y2="313" class="ref"/>
+<text x="326.0" y="347" class="tick">moyenne affichée 1,0 %</text>
+<text x="240" y="27" class="lab" text-anchor="end">Accueil</text>
+<text x="240" y="39" class="sub" text-anchor="end">21 393 sessions</text>
+<path d="M250.0 18.0H271.3Q275.3 18.0 275.3 22.0V28.0Q275.3 32.0 271.3 32.0H250.0Z" class="s1"><title>Accueil : 0,35 % (21393 sessions)</title></path>
+<text x="281.3" y="30" class="val">0,35 %</text>
+<text x="240" y="54" class="lab" text-anchor="end">Comparateur</text>
+<text x="240" y="66" class="sub" text-anchor="end">4 205 sessions</text>
+<path d="M250.0 45.0H461.7Q465.7 45.0 465.7 49.0V55.0Q465.7 59.0 461.7 59.0H250.0Z" class="s1"><title>Comparateur : 3,00 % (4205 sessions)</title></path>
+<text x="471.7" y="57" class="val">3,00 %</text>
+<text x="240" y="81" class="lab" text-anchor="end">Starter Pack Vigilia</text>
+<text x="240" y="93" class="sub" text-anchor="end">2 469 sessions</text>
+<path d="M250.0 72.0H278.1Q282.1 72.0 282.1 76.0V82.0Q282.1 86.0 278.1 86.0H250.0Z" class="s1"><title>Starter Pack Vigilia : 0,45 % (2469 sessions)</title></path>
+<text x="288.1" y="84" class="val">0,45 %</text>
+<text x="240" y="108" class="lab" text-anchor="end">Configurateur</text>
+<text x="240" y="120" class="sub" text-anchor="end">1 383 sessions</text>
+<path d="M250.0 99.0H365.7Q369.7 99.0 369.7 103.0V109.0Q369.7 113.0 365.7 113.0H250.0Z" class="s1"><title>Configurateur : 1,66 % (1383 sessions)</title></path>
+<text x="375.7" y="111" class="val">1,66 %</text>
+<text x="240" y="135" class="lab" text-anchor="end">Caméra W512MW</text>
+<text x="240" y="147" class="sub" text-anchor="end">970 sessions</text>
+<path d="M250.0 126.0H357.3Q361.3 126.0 361.3 130.0V136.0Q361.3 140.0 357.3 140.0H250.0Z" class="s1"><title>Caméra W512MW : 1,55 % (970 sessions)</title></path>
+<text x="367.3" y="138" class="val">1,55 %</text>
+<text x="240" y="162" class="lab" text-anchor="end">Starter Pack AM301</text>
+<text x="240" y="174" class="sub" text-anchor="end">957 sessions</text>
+<path d="M250.0 153.0H291.1Q295.1 153.0 295.1 157.0V163.0Q295.1 167.0 291.1 167.0H250.0Z" class="s1"><title>Starter Pack AM301 : 0,63 % (957 sessions)</title></path>
+<text x="301.1" y="165" class="val">0,63 %</text>
+<text x="240" y="189" class="lab" text-anchor="end">Offre spéciale</text>
+<text x="240" y="201" class="sub" text-anchor="end">797 sessions</text>
+<path d="M250.0 180.0H372.5Q376.5 180.0 376.5 184.0V190.0Q376.5 194.0 372.5 194.0H250.0Z" class="s1"><title>Offre spéciale : 1,76 % (797 sessions)</title></path>
+<text x="382.5" y="192" class="val">1,76 %</text>
+<text x="240" y="216" class="lab" text-anchor="end">Collection Vigilia</text>
+<text x="240" y="228" class="sub" text-anchor="end">579 sessions</text>
+<path d="M250.0 207.0H295.8Q299.8 207.0 299.8 211.0V217.0Q299.8 221.0 295.8 221.0H250.0Z" class="s1"><title>Collection Vigilia : 0,69 % (579 sessions)</title></path>
+<text x="305.8" y="219" class="val">0,69 %</text>
+<text x="240" y="243" class="lab" text-anchor="end">Offres du mois</text>
+<text x="240" y="255" class="sub" text-anchor="end">526 sessions</text>
+<path d="M250.0 234.0H287.0Q291.0 234.0 291.0 238.0V244.0Q291.0 248.0 287.0 248.0H250.0Z" class="s1"><title>Offres du mois : 0,57 % (526 sessions)</title></path>
+<text x="297.0" y="246" class="val">0,57 %</text>
+<text x="240" y="270" class="lab" text-anchor="end">Collection caméras</text>
+<text x="240" y="282" class="sub" text-anchor="end">365 sessions</text>
+<path d="M250.0 261.0H522.2Q526.2 261.0 526.2 265.0V271.0Q526.2 275.0 522.2 275.0H250.0Z" class="s1"><title>Collection caméras : 3,84 % (365 sessions)</title></path>
+<text x="532.2" y="273" class="val">3,84 %</text>
+<text x="240" y="297" class="lab" text-anchor="end">Tous les accessoires</text>
+<text x="240" y="309" class="sub" text-anchor="end">242 sessions</text>
+<path d="M250.0 288.0H573.2Q577.2 288.0 577.2 292.0V298.0Q577.2 302.0 573.2 302.0H250.0Z" class="s1"><title>Tous les accessoires : 4,54 % (242 sessions)</title></path>
+<text x="583.2" y="300" class="val">4,54 %</text>
+</svg></div>
+  </figure>
+  <div class="tbl">
+  <table>
+    <thead><tr><th>Source de trafic (90 j)</th><th class="num">Sessions</th><th class="num">Ajout panier</th><th class="num">Commandes</th><th class="num">Conversion</th><th>Lecture</th></tr></thead>
+    <tbody>
+      <tr><td>Direct</td><td class="num">28 050</td><td class="num">767</td><td class="num">235</td><td class="num">0,84 %</td><td>Mélange de clients fidèles, de navigateurs d'applications (Instagram, Facebook) et de robots. 14 470 de ces sessions arrivent sur l'accueil mobile, pour 20 commandes.</td></tr>
+      <tr><td>Google</td><td class="num">13 823</td><td class="num">808</td><td class="num">214</td><td class="num">1,55 %</td><td>Le canal le plus sain. Contient les campagnes Google Ads (brand, search_broad, pmax_alarme).</td></tr>
+      <tr><td>Facebook</td><td class="num">4 206</td><td class="num">128</td><td class="num">3</td><td class="num">0,07 %</td><td>Quasiment aucune vente. Si ce sont des publicités, elles ne sont pas mesurables (seulement 14 sessions marquées « payant »).</td></tr>
+      <tr><td>Yahoo</td><td class="num">1 984</td><td class="num">16</td><td class="num">2</td><td class="num">0,10 %</td><td>4,6 fois plus que Bing, qui fournit pourtant l'index de Yahoo en France : très probablement des robots.</td></tr>
+      <tr><td>Instagram</td><td class="num">601</td><td class="num">24</td><td class="num">0</td><td class="num">0 %</td><td>Aucune vente.</td></tr>
+      <tr><td>E-mails Brevo (sendibm1)</td><td class="num">497</td><td class="num">37</td><td class="num">10</td><td class="num">2,0 %</td><td>Bon rendement, volume faible.</td></tr>
+      <tr><td>Bing</td><td class="num">434</td><td class="num">31</td><td class="num">9</td><td class="num">2,1 %</td><td>Petit volume, mais Bing alimente ChatGPT et Copilot.</td></tr>
+      <tr><td>Appmall (application Daewoo)</td><td class="num">347</td><td class="num">48</td><td class="num">14</td><td class="num">4,0 %</td><td>Vos clients équipés : excellent taux.</td></tr>
+      <tr><td>ChatGPT</td><td class="num">32</td><td class="num">1</td><td class="num">0</td><td class="num">0 %</td><td>La visibilité dans les IA est encore marginale.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ 1. MESURE ============ -->
+<section id="mesure">
+  <h2><span class="n">1</span>Mesure et données</h2>
+  <p class="intro">À traiter en premier : plusieurs constats de cet audit dépendent de chiffres que la configuration actuelle fausse.</p>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev crit">Critique</span><h4>Les ventes du configurateur et des offres sortent des statistiques de la boutique</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Depuis avril, un canal de vente « Lovable » est apparu : 154 commandes et 69,5 k€ en 90 jours, avec un panier moyen de 466 €. Les parcours clients de ces commandes partent bien du site : Google Ads, puis <span class="mono">/pages/offre-speciale</span>, le comparateur ou une fiche. Mais la commande est enregistrée dans un autre canal et n'est pas rattachée à la session de la boutique.</dd>
+        <dt>Effet</dt><dd><ul>
+          <li>Le taux de conversion affiché (≈ 1,0 %) sous-estime la réalité : ≈ 1,8 % en comptant ces commandes, probablement près de 2 % hors robots.</li>
+          <li>Le taux de finalisation du paiement semble s'effondrer (≈ 68 % en avril, 33 à 41 % en septembre-octobre). Or la baisse coïncide avec la montée du canal Lovable : des visiteurs arrivent au paiement depuis la boutique et la commande est comptée ailleurs.</li>
+          <li>Les pages qui alimentent Lovable (configurateur, offre spéciale) paraissent moins performantes qu'elles ne le sont.</li>
+        </ul></dd>
+        <dt>Action</dt><dd>Court terme : suivre chaque semaine un indicateur unique, « commandes boutique + Lovable / sessions France-Belgique ». Moyen terme : faire ajouter les produits au panier Shopify natif depuis les applications Lovable, par message vers la page parente. Votre site le fait déjà pour l'Appmall (<span class="mono">/cart/add.js</span>). Les commandes repassent alors dans le canal Boutique, les pixels et le panier coulissant (ventes additionnelles) s'appliquent, et le suivi redevient complet.</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span><span class="tag">Preuve : rapport ventes par canal, parcours client des commandes #202220877, 878, 880</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Une part importante du trafic n'est pas du vrai trafic acheteur</h4></header>
+      <dl>
+        <dt>Constat</dt><dd><ul>
+          <li>Yahoo : 1 984 sessions, 2 commandes.</li>
+          <li>Hors France et Belgique : ≈ 5 000 sessions (États-Unis 2 689, Israël 851, Maroc, Tunisie, Turquie, Chine).</li>
+          <li>Référents de spam : bestdailydealsfindnow, seetrueworth, thecurrentpost, ricetta.</li>
+          <li>Entre le 17/08 et le 14/09, les sessions hebdomadaires ont doublé (4 600 à 6 800 contre ≈ 2 400) sans hausse des ajouts au panier.</li>
+        </ul></dd>
+        <dt>Action</dt><dd>Piloter sur un segment « France + Belgique, hors sources suspectes ». Dans GA4, exclure les référents de spam et créer un groupe de canaux « IA générative » (chatgpt, perplexity, gemini, copilot, claude). Si une campagne a tourné fin août, vérifier son ciblage.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous / agence</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Les publicités Meta ne sont pas mesurables</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Facebook a apporté 4 206 sessions et Instagram 601, pour 3 commandes au total. Seules 14 sessions sont classées « payant » : les liens n'ont pas de paramètres UTM. Une partie des 14 470 sessions « directes » sur l'accueil mobile vient probablement des navigateurs intégrés d'Instagram et de Facebook. Les visiteurs Facebook arrivent surtout sur l'accueil (766 sessions mobiles), la page qui convertit le moins.</dd>
+        <dt>Action</dt><dd>Paramètres UTM sur toutes les publicités. Pages d'arrivée dédiées sur le modèle de <span class="mono">/pages/offre-speciale</span> plutôt que l'accueil. Puis décider, chiffres en main, de couper ou de réorienter le budget.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous / agence</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Suivi Google probablement en double, et 9 outils de suivi chargés sur chaque page</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Sont chargés :
+          <ul>
+            <li>l'application Google &amp; YouTube (balises <span class="mono">GT-NBB2D83</span> et <span class="mono">AW-824979732</span>) ;</li>
+            <li>un Google Tag Manager côté serveur via Addingwell (<span class="mono">GTM-T567FBZ</span>) ;</li>
+            <li>le pixel Meta ;</li>
+            <li>Microsoft Clarity ;</li>
+            <li>Moast ;</li>
+            <li>Judge.me ;</li>
+            <li>un pixel OpenAI ;</li>
+            <li>une fonction AWS personnalisée ;</li>
+            <li>Consentmo.</li>
+          </ul>
+          Le même achat peut donc être remonté deux fois à Google Ads, ce qui fausse le pilotage des enchères. Ce gestionnaire de pixels coûte aussi 1 à 2,5 s de calcul sur un mobile moyen (voir la partie 8).</dd>
+        <dt>Action</dt><dd>Dans Google Ads, vérifier qu'une seule action de conversion « Achat » est principale. Faire l'inventaire des pixels et supprimer ceux qui ne servent plus.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Agence / développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>372 paniers abandonnés avec e-mail en 90 jours</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Ces visiteurs ont saisi leur e-mail au paiement sans finaliser leur commande. Les e-mails Brevo convertissent déjà à 2 %.</dd>
+        <dt>Action</dt><dd>Vérifier qu'une relance automatique est active (Shopify Messaging ou Brevo) : un e-mail à 1 h, puis à 24 h, avec réassurance (sans abonnement, garantie 2 ans, assistance en France) plutôt qu'un code promo dès le premier envoi.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 2. FICHES ============ -->
+<section id="fiches">
+  <h2><span class="n">2</span>Fiches produits sur mobile</h2>
+  <p class="intro">Fiches testées sur iPhone 13 (écran utile de 390 × 664 px), Pixel 7 et écran de 360 px.</p>
+  <div class="shots">
+    <figure class="shot"><img src="img/fiche-vigilia-1er-ecran.jpg" alt="Premier écran mobile de la fiche Starter Pack Vigilia : grand titre et texte, aucune photo" width="360" height="612" loading="lazy"><figcaption><b>Starter Pack Vigilia</b>Premier écran : titre de 4 lignes et texte. Ni photo, ni avis, ni choix de variante. 0,19 % de conversion sur mobile.</figcaption></figure>
+    <figure class="shot"><img src="img/fiche-w512mw-1er-ecran.jpg" alt="Premier écran mobile de la fiche caméra W512MW : slogan en grand titre, aucune photo" width="360" height="612" loading="lazy"><figcaption><b>Caméra W512MW, meilleure vente</b>Un slogan en guise de titre, sans nom de produit lisible ni photo. Le prix est sous la ligne de flottaison.</figcaption></figure>
+    <figure class="shot"><img src="img/offre-speciale-1er-ecran.jpg" alt="Premier écran mobile de la page Offre spéciale : nom du pack, sous-titre et grande photo du contenu" width="360" height="612" loading="lazy"><figcaption><b class="ok">Le modèle à suivre : offre spéciale</b>Nom du pack, promesse, photo du contenu, puis prix au 2<sup>e</sup> écran.</figcaption></figure>
+  </div>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev crit">Critique</span><h4>Pas de photo produit au premier écran sur 5 fiches majeures sur 7</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Sur Starter Pack Vigilia, Offre exclusive Vigilia, W512MW, Starter Pack AM301 et Pack AM343, le premier écran affiche un titre de 4 à 6 lignes et un ou deux paragraphes gris. Sur Vigilia, le prix et le choix Wi-Fi / 4G ne sont visibles qu'après défilement (hors barre collante). C'est identique sur Pixel 7 et en 360 px.</dd>
+        <dt>Pourquoi</dt><dd>Un visiteur venu d'une publicité ou de Google Shopping cherche d'abord à reconnaître le produit. Sur ces 5 fiches, la conversion mobile va de 0 à 0,27 %.</dd>
+        <dt>Action</dt><dd>Ordre du premier écran et demi :
+          <ol>
+            <li>carrousel photo d'environ 320 px, avec badge « Sans abonnement » ;</li>
+            <li>titre court de 2 lignes maximum ;</li>
+            <li>note et nombre d'avis ;</li>
+            <li>prix et « 0 €/mois » ;</li>
+            <li>variantes avec leur prix ;</li>
+            <li>bouton d'achat ;</li>
+            <li>ligne de garanties.</li>
+          </ol>
+          Le texte de positionnement passe dessous. Charger la photo en priorité (<code>fetchpriority="high"</code>, sans chargement différé).</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span><span class="tag">À tester en A/B sur Vigilia SP</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Livraison, délai, retours et paiement en plusieurs fois absents près du bouton</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Sur les fiches à gabarit personnalisé, le bouton n'est suivi que de « paiement sécurisé » et des logos. « Expédié sous 24 h » et « Retour 14 jours » n'apparaissent qu'entre 8 000 et 10 000 px plus bas. Le seuil « livraison offerte dès 50 € » n'est visible que dans le panier. Alma (3x, 4x) manque sur la W512MW et les fiches Touch, alors qu'il représente ≈ 8,5 % des encaissements.</dd>
+        <dt>Action</dt><dd>Sous chaque bouton : « Livraison offerte · expédié aujourd'hui si commandé avant 12 h · 14 jours pour changer d'avis · 3x ou 4x sans frais ». La fiche du détecteur WPS305 le fait déjà.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Choix Wi-Fi / Wi-Fi + 4G sans prix, et barre collante qui ajoute la version par défaut</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Les pastilles de variante n'affichent pas le prix. La version Wi-Fi (139,90 €) est présélectionnée alors que « Recommandé » est sur la 4G (189,90 €). La barre d'achat collante est visible dès l'arrivée et ajoute la version par défaut sans montrer le choix. Dans le panier, le produit s'appelle « Pack Alarme Maison Sans Fil Daewoo Vigilia – Sécurité Connectée Sans Abonnement » et non plus « Starter Pack Vigilia ».</dd>
+        <dt>Action</dt><dd>Pastilles « Wi-Fi · 139,90 € » et « Wi-Fi + 4G · 189,90 € », avec une aide d'une ligne (« 4G = alertes même si la box est coupée »). Barre collante affichée seulement après le choix, avec la variante. Un nom unique du produit partout.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Développeur + vous (titres)</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Pack AM343 : 429 sessions mobiles, 0 commande</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Le titre fait 6 lignes et reprend le titre du flux Google Shopping. Le texte parle de « la centrale AM301 ». À 599,90 €, aucune valeur à l'unité n'est montrée. La page propose ensuite 7 autres packs de 349,90 à 809,90 €.</dd>
+        <dt>Action</dt><dd>Titre court (« Pack Touch Intégral : 18 accessoires + 2 caméras »), photo du contenu, « valeur à l'unité : X € ». Une seule alternative, la version 7 pouces.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous + développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Fiches trop longues, blocs répétés</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Les fiches mesurent de 11 000 à 20 000 px (Offre exclusive Vigilia : 19 898 px, soit ≈ 30 écrans), avec 4 à 5 boutons « Ajouter au panier » et des blocs « Protégez votre maison » ou « En résumé » répétés. Les avis arrivent tard.</dd>
+        <dt>Action</dt><dd>Viser 6 à 8 écrans. Navigation d'ancres collante (Contenu · Avis · FAQ), avis remontés, « En résumé » replié. Garder le bloc « Dans la boîte » et le comparatif Wi-Fi / 4G avec prix, qui sont très bons, mais plus haut.</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Fiche du Pack Sécurité Intégrale sur le gabarit par défaut, avec « Retours sous 30 jours »</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>La fiche produit du PSI (différente de la landing) cache tout le contenu dans « Description », n'affiche aucune économie et annonce « Retours sous 30 jours », contre 14 jours partout ailleurs.</dd>
+        <dt>Action</dt><dd>Lui appliquer le gabarit de la landing, ou la rediriger vers <span class="mono">/pages/offre-speciale</span> pendant l'offre. Corriger la durée de retour.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev low">Faible</span><h4>Texte de remplissage anglais dans la fiche la plus vendue</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Le code de la fiche W512MW contient 4 fois « Use this text to answer questions in as much detail as possible… » (texte d'exemple du thème), ainsi que « Let customers speak for us » et des dates au format américain. Ce n'est pas visible à l'écran, mais Google et les IA le lisent.</dd>
+        <dt>Action</dt><dd>Supprimer les blocs vides du gabarit, traduire les textes Judge.me.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 3. PARCOURS ============ -->
+<section id="parcours">
+  <h2><span class="n">3</span>Accueil, collections et navigation</h2>
+  <div class="shots">
+    <figure class="shot"><img src="img/accueil-1er-ecran.jpg" alt="Premier écran mobile de l'accueil : note, slogan, bouton Trouver mon alarme, prix d'entrée" width="360" height="612" loading="lazy"><figcaption><b>Accueil, premier écran</b>Clair et rassurant, mais sans aucun produit. Le premier pack apparaît vers le 2<sup>e</sup> écran.</figcaption></figure>
+    <figure class="shot"><img src="img/accueil-barre-sur-dock.jpg" alt="Accueil mobile : la barre Trouver mon alarme / Tous les packs recouvre le dock de navigation" width="360" height="612" loading="lazy"><figcaption><b>Barre collante sur le dock</b>« Trouver mon alarme / Tous les packs » recouvre le dock : Panier et Compte ne sont plus cliquables pendant le défilement.</figcaption></figure>
+    <figure class="shot"><img src="img/accueil-titre-final.jpg" alt="Bas de l'accueil mobile : le titre Prêt à protéger votre maison est presque invisible sur fond bleu nuit" width="360" height="612" loading="lazy"><figcaption><b>Titre final invisible</b>« Prêt à protéger votre maison ? » : contraste 1,13:1. Probablement une animation d'apparition qui ne se déclenche pas.</figcaption></figure>
+  </div>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Depuis l'accueil, le chemin vers un produit est trop long</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>L'accueil mobile fait ≈ 16 écrans. Le bouton principal « Trouver mon alarme en 3 clics » lance un quiz de 3 questions. Le résultat (« Centrale Vigilia – Packs dès 139,90 € ») renvoie vers la collection Vigilia, dont les packs commencent vers 7 000 px (12<sup>e</sup> écran). Il faut donc au moins 5 interactions et 12 écrans de défilement pour atteindre une fiche. Sur mobile, l'accueil ne génère que 1 % d'ajouts au panier.</dd>
+        <dt>Action</dt><dd><ul>
+          <li>Sous le premier écran, un carrousel de 3 packs avec prix et bouton : Starter Vigilia 139,90 €, Starter Touch 199,90 €, PSI 299,90 €.</li>
+          <li>À la fin du quiz, afficher 2 à 3 packs recommandés (photo, prix, bouton) au lieu d'un lien vers la collection.</li>
+          <li>Reprendre en haut de l'accueil le bloc « 3 gammes, 3 prix d'entrée » du comparateur.</li>
+          <li>Réduire la maquette de téléphone animée.</li>
+        </ul></dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Collections : les produits arrivent trop tard</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>La collection Vigilia mesure 14 425 px, avec les packs au 12<sup>e</sup> écran. Elle montre un témoignage sur une centrale Touch XL. La collection caméras (3,8 % de conversion) n'affiche aucun prix. Les collections qui marchent sont celles à choix simple : caméras par usage, accessoires par centrale.</dd>
+        <dt>Action</dt><dd>Une grille « Nos packs Vigilia » dans les deux premiers écrans de chaque collection de gamme. Une rangée « Les plus vendues » avec prix et ajout rapide sur la collection caméras.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible à moyen</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Barre collante sur le dock, et titre final illisible</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Voir les captures ci-dessus. Deux barres se disputent le pouce en bas d'écran, et le dernier appel à l'action de la page est presque invisible.</dd>
+        <dt>Action</dt><dd>Une seule barre en bas : masquer le dock quand la barre collante est visible, ou intégrer « Trouver mon alarme » au dock (« Mon alarme » y est déjà). Passer le titre final en blanc, visible sans animation.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev low">Faible</span><h4>Recherche et accessibilité mobile</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>La recherche prédictive est bonne, mais les cartes de résultats affichent les titres SEO sur jusqu'à 8 lignes. Accessibilité :
+          <ul>
+            <li>libellés du dock en 9 px ;</li>
+            <li>40 à 55 % des textes des fiches sous 14 px ;</li>
+            <li>beaucoup de zones tactiles sous 44 px (pastilles de variante de 36 px, lien « Retirer » du panier de 35 × 16 px) ;</li>
+            <li>gris à 3,1–3,6:1 de contraste ;</li>
+            <li>bandeau défilant sans pause ;</li>
+            <li>logo CB grisé, qui semble désactivé.</li>
+          </ul></dd>
+        <dt>Action</dt><dd>Titre court dans les cartes (métachamp). Textes de 14 px minimum (16 px pour le courant), zones tactiles de 44 px, contraste d'au moins 4,5:1. Ces points pèsent aussi pour les clients âgés, une cible importante de l'alarme maison.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Développeur</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 4. CONFIGURATEUR ============ -->
+<section id="configurateur">
+  <h2><span class="n">4</span>Configurateur, comparateur et pages Lovable</h2>
+    <p class="intro">Trois pages clés reposent sur des applications externes hébergées chez Lovable : le configurateur (<span class="mono">configurateur-daewoo.lovable.app</span>), la page « Tous les packs » (<span class="mono">security-pack-unpacker.lovable.app</span>) et la boutique de l'application (<span class="mono">appmall.lovable.app</span>). Elles reçoivent tous les clics « Voir tous les packs », la barre collante de l'accueil, le dock « Mon alarme » et la première entrée du menu.</p>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>La page « Tous les packs » est une iframe : invisible pour Google, les IA et vos statistiques</h4></header>
+      <dl>
+        <dt>Constat</dt><dd><span class="mono">/pages/pack-alarmes</span> contient un H1 « pack alarmes », une phrase et une iframe d'au moins 1 000 px de haut. Le HTML ne contient aucun lien vers un produit, aucun prix, aucune donnée structurée. llms.txt la présente pourtant comme la page de référence des packs. Une iframe d'un autre domaine pose aussi deux risques sur iPhone : Safari limite les cookies tiers, et le panier risque donc de ne pas suivre ; et chaque chargement ajoute un point de panne externe.</dd>
+        <dt>Action</dt><dd>Une grille de packs en section Shopify native, filtrable par gamme (Vigilia, Touch, Élite), avec photo, prix, note et ajout au panier. À défaut, une redirection 301 vers la collection <span class="mono">starters-packs</span> enrichie.</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Configurateur : 0,5 % sur mobile contre 3,4 % sur ordinateur, mais une partie des ventes est comptée ailleurs</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Dans les statistiques de la boutique, le configurateur convertit 0,5 % des sessions mobiles (799) contre 3,4 % sur ordinateur (551). Les commandes qu'il génère semblent en partie passer par le canal Lovable (panier moyen 466 €), non rattaché aux sessions : son vrai rendement est donc sous-estimé, surtout là où il est le plus utilisé. Le script intégré porte la version <span class="mono">20260913-iphone-safari</span>, signe que des correctifs pour l'iPhone ont déjà été nécessaires. Le contenu de repli (≈ 620 mots) est bien lisible par Google.</dd>
+        <dt>Action</dt><dd><ol>
+          <li>Tester sur un vrai iPhone (Safari, navigation privée) et sur Android Chrome jusqu'à l'ajout au panier.</li>
+          <li>Faire ajouter les produits au panier Shopify natif par message vers la page parente, comme le fait déjà l'Appmall, plutôt qu'un paiement séparé.</li>
+          <li>Suivre chaque étape du configurateur comme un événement (démarrage, étapes, ajout au panier) pour voir où les mobinautes abandonnent.</li>
+        </ol></dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Comparateur : la meilleure page du site, à rendre plus visible et plus rapide</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>4 205 entrées, 3,0 % de conversion (2,2 % mobile, 5,0 % ordinateur). Les 3 gammes et leur prix d'entrée apparaissent dès le 2<sup>e</sup> écran, suivis de profils « Reconnaissez-vous dans une de ces phrases ». C'est aussi la page la plus riche en faits (SIM 72 € et 85 €, dB, batterie, 60, 90 et 200 accessoires). Mais :
+          <ul>
+            <li>sur mobile, le texte principal n'apparaît qu'après 6,3 s, à cause de 6 imports de la police Poppins ;</li>
+            <li>le tableau est construit en blocs <code>&lt;div&gt;</code> ;</li>
+            <li>la page n'a aucune donnée structurée ;</li>
+            <li>son titre et son adresse mentionnent « SA501 », une gamme absente du contenu.</li>
+          </ul></dd>
+        <dt>Action</dt><dd>Corriger la police. Lier le comparateur depuis l'accueil, les collections de gamme et la fin du quiz. Le décliner pour les caméras (la page <span class="mono">comparaison-cameras</span> n'a pas de H1). Tableau HTML, date de mise à jour, adresse et titre « Vigilia, Touch ou Élite » avec redirection.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev low">Faible</span><h4>Adresses d'entrée anormales</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Plusieurs adresses inhabituelles reçoivent des visites d'entrée :
+          <ul>
+            <li><span class="mono">/fr-com</span> (525 sessions) et <span class="mono">/password</span> (322) redirigent vers l'accueil ;</li>
+            <li><span class="mono">/blogs/news/10-septembre-blocage</span> (308 sessions, aucun ajout au panier) est un article d'actualité hors sujet, en noindex ;</li>
+            <li><span class="mono">/pages/appmall</span> (boutique de l'application) est en noindex, ce qui est normal.</li>
+          </ul>
+          La page 404 est personnalisée et correcte.</dd>
+        <dt>Action</dt><dd>Identifier d'où vient <span class="mono">/fr-com</span> (ancienne publicité, QR code, lien partenaire) et le rediriger vers la page la plus pertinente plutôt que l'accueil.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+  </div>
+
+</section>
+
+<!-- ============ 5. PANIER ============ -->
+<section id="panier">
+  <h2><span class="n">5</span>Panier et paiement</h2>
+  <div class="shots">
+    <figure class="shot"><img src="img/checkout-newsletter-precochee.jpg" alt="Première page du paiement Shopify sur mobile : case Envoyez-moi des nouvelles et des offres déjà cochée" width="360" height="612" loading="lazy"><figcaption><b>Case newsletter pré-cochée</b>« Envoyez-moi des nouvelles et des offres par e-mail » est cochée par défaut.</figcaption></figure>
+    <figure class="shot"><img src="img/panier-logos-paiement.jpg" alt="Page panier mobile : logos de paiement dont Bancontact, Bizum, EPS et MB WAY" width="360" height="612" loading="lazy"><figcaption><b>Logos de paiement étrangers</b>Bizum, MB WAY, EPS, Bancontact : des moyens espagnols, portugais, autrichiens et belges, sans intérêt pour un client français.</figcaption></figure>
+  </div>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Case newsletter pré-cochée et téléphone obligatoire au paiement</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Au paiement, l'inscription marketing est cochée par défaut et le téléphone est obligatoire.</dd>
+        <dt>Pourquoi</dt><dd>Une case pré-cochée n'est pas un consentement valable au sens du RGPD et de la CNIL (arrêt CJUE <i>Planet49</i>). L'exception pour les clients existants reste discutable ici. Le téléphone obligatoire est un frein classique sur mobile.</dd>
+        <dt>Action</dt><dd>Réglages → Paiement : décocher la présélection de l'inscription, passer le téléphone en facultatif (ou « facultatif, pour le livreur »). À valider avec votre conseil juridique pour la partie RGPD.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Le panier coulissant ne vend pas assez</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Le tiroir panier est propre : garanties, barre « livraison gratuite », bouton jaune. Mais :
+          <ul>
+            <li>aucun bouton de paiement express (Apple Pay, PayPal, Shop Pay) ;</li>
+            <li>aucune suggestion d'accessoire (détecteur à 34,90 €, contacteur à 39,90 €) ;</li>
+            <li>aucune date de livraison ;</li>
+            <li>le logo « 10x Alma » est affiché alors que le paiement ne propose que 3x et 4x pour 189,90 €.</li>
+          </ul>
+          Sur la page <span class="mono">/cart</span>, le bouton de commande est sous la ligne de flottaison et un champ « Instructions spéciales » prend de la place.</dd>
+        <dt>Action</dt><dd>Ajouter les boutons express et un bloc « Complétez votre pack » (1 ou 2 accessoires compatibles avec le pack du panier), plus « Livré jeudi 24 octobre si commandé avant 12 h ». N'afficher le 10x que lorsque le panier y est éligible. Retirer le champ d'instructions.</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev low">Faible</span><h4>Logos de paiement inadaptés et libellé de newsletter</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Les logos affichés suivent les moyens activés dans Shopify Payments (Bizum, MB WAY, EPS, Bancontact). La newsletter du pied de page dit « Abonnez-vous aux messages privés ».</dd>
+        <dt>Action</dt><dd>Afficher seulement CB, Visa, Mastercard, PayPal, Apple Pay, Alma (et Bancontact pour la Belgique). Remplacer le libellé par « Recevoir nos conseils et offres ».</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Développeur</span></footer>
+    </article>
+  </div>
+  <p class="note">Non vérifié dans notre environnement (domaines bloqués par le proxy de test) : l'affichage des boutons de paiement express et la saisie de carte. Un achat test réel sur iPhone et sur Android, jusqu'à la page de paiement, est recommandé. Le passage par <span class="mono">shop.app</span> avant le paiement est un mécanisme standard de Shopify.</p>
+</section>
+
+<!-- ============ 6. OFFRES ============ -->
+<section id="offres">
+  <h2><span class="n">6</span>Offres, prix et conformité</h2>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Réductions affichées sans prix de référence</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>On trouve :
+          <ul>
+            <li>« Jusqu'à -30 % » et « 299,90 € au lieu de 433,08 € » (accueil) ;</li>
+            <li>« BAISSE DE PRIX », -34 %, « vous économisez 369,00 € » (offres du mois) ;</li>
+            <li>« 249,90 € au lieu de 349,60 € » (offre exclusive) ;</li>
+            <li>« 239,85 € au lieu de 319,80 € » (pack duo W512MW).</li>
+          </ul>
+          Seule une FAQ de l'offre spéciale explique que le prix barré est la somme des éléments achetés séparément. Au total, 20 variantes ont un prix barré. Une étiquette « Offre exclusive ! *Durée limitée », sans date, est incrustée dans les photos des packs Vigilia. Le prix barré de la version Wi-Fi du Starter Pack est égal au prix de vente.</dd>
+        <dt>Pourquoi</dt><dd>L'article L112-1-1 du Code de la consommation impose, pour toute annonce de réduction, d'indiquer comme prix antérieur le prix le plus bas des 30 derniers jours. Une comparaison « pack contre éléments séparés » est une autre logique, qui doit être présentée comme telle. La DGCCRF contrôle régulièrement ce point.</dd>
+        <dt>Action</dt><dd>Sous chaque prix barré de pack : « Prix des éléments à l'unité : 433,08 € ». Réserver « Baisse de prix » et « -X % » aux vraies baisses, avec le prix des 30 derniers jours. Dater ou retirer « Durée limitée ». Retirer le compte à rebours de l'offre spéciale le 1<sup>er</sup> novembre sans le prolonger. Écrire « 1 068,90 € » et non « 1.068,90 € ». Faire valider par un juriste.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Les packs Vigilia se font concurrence et le plus cher est le moins bien doté</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Le Pack Sécurité Intégrale coûte 299,90 € avec une caméra W512MW (159,90 € seule). L'« Offre exclusive Pack Vigilia 2 caméras &amp; sirène solaire » coûte 359,90 € (barré 504,40 €) avec une W503 (119,90 € seule) et un détecteur de plus. Il existe aussi le Starter (139,90 €), l'Offre exclusive -2 (249,90 €) et d'autres packs, dont les noms changent entre fiche et panier. Les offres exclusives Vigilia convertissent de 0,2 à 0,9 % sur mobile.</dd>
+        <dt>Action</dt><dd>Masquer ou repositionner le pack à 359,90 € pendant l'offre PSI. Construire une gamme lisible à 3 niveaux (Essentiel, Renforcé, Intégral) avec les mêmes noms sur toutes les pages, dans le panier et dans les e-mails.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 7. CONFIANCE ============ -->
+<section id="confiance">
+  <h2><span class="n">7</span>Confiance et cohérence des informations</h2>
+  <p class="intro">Pour un produit qui protège la maison, la cohérence est un argument de vente. Les IA aussi recoupent les chiffres : une contradiction fait baisser la confiance qu'elles accordent à la page.</p>
+  <div class="tbl">
+  <table>
+    <thead><tr><th>Information</th><th>Valeurs trouvées sur le site</th><th>À faire</th></tr></thead>
+    <tbody>
+      <tr><td>Nombre d'avis</td><td>1 061 (accueil), 981 et 1 061 sur la même page panier, 1 356 (llms.txt), 1 064 (histogramme)</td><td>Un seul chiffre dynamique, libellé « Note boutique »</td></tr>
+      <tr><td>Note produit</td><td>4,46/5 · 59 avis identique pour AM301 et AM343 ; 4.6 · 68 ; 4,62 sur 5 ; 4.81 sans nombre ; formats « 4.6 » et « 4,6 »</td><td>Note du produit au format « 4,6/5 · 68 avis » ; signaler les notes de gamme</td></tr>
+      <tr><td>Retours</td><td>14 jours (partout) ; 30 jours (fiche PSI)</td><td>Une seule durée</td></tr>
+      <tr><td>Téléphone</td><td>05 47 74 29 40 (accueil, mentions) ; 06 60 89 74 83 (livraison-retour, retours SAV)</td><td>Un seul numéro, partout et dans les données structurées</td></tr>
+      <tr><td>Installation</td><td>10 min (Starter Vigilia), 20 min (pages installation, llms.txt), 30 min (collection, comparateur), 1 heure (blog)</td><td>Une fourchette unique, par exemple « 20 à 30 min »</td></tr>
+      <tr><td>Contenu Starter Vigilia</td><td>« caméra + 6 accessoires » (titre) ; « une caméra et huit accessoires, soit dix éléments » (données structurées)</td><td>Même liste partout</td></tr>
+      <tr><td>Accessoires par centrale</td><td>60 (llms.txt), 90 (Touch), 200 (Élite, comparateur)</td><td>Valeur par gamme</td></tr>
+      <tr><td>Sirène</td><td>85, 90, 100 ou 110 dB selon les pages</td><td>Une valeur par produit, mesurée</td></tr>
+      <tr><td>Historique</td><td>« Marque créée en 1971 » ; « activité lancée en 2020 » ; « 60 000 alarmes vendues » ou « 60 000 foyers équipés »</td><td>Formulation exacte de la licence Daewoo et un seul chiffre</td></tr>
+      <tr><td>Assistance</td><td>Téléphone du lundi au samedi (accueil) ; e-mail 5 jours sur 7 (llms.txt)</td><td>Horaires uniques</td></tr>
+      <tr><td>Livraison Belgique</td><td>Chronopost 3-4 jours (llms.txt) ; DPD 3-5 jours (réglages Shopify)</td><td>Aligner llms.txt</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Créer une fiche d'identité unique et la recopier partout</h4></header>
+      <dl>
+        <dt>Action</dt><dd>Un document interne d'une page : raison sociale, adresse, téléphone, horaires, chiffres clés, garanties, délais, caractéristiques par gamme. Le recopier sur le site, dans llms.txt, les données structurées, les fiches marketplaces, Google Business et les réseaux. Le vérifier à chaque nouvelle page.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 8. PERFORMANCE ============ -->
+<section id="performance">
+  <h2><span class="n">8</span>Performance</h2>
+  <p class="intro">Sur ordinateur, le site est rapide (93 à 98/100). Sur un mobile moyen simulé, c'est le temps de calcul JavaScript qui pénalise, pas le réseau. Aucun décalage de mise en page (CLS ≈ 0) : c'est un point fort.</p>
+  <div class="tbl">
+  <table>
+    <thead><tr><th>Page (mobile simulé)</th><th class="num">Score</th><th class="num">Contenu principal affiché</th><th class="num">Blocage du processeur</th><th>Cause principale</th></tr></thead>
+    <tbody>
+      <tr><td>Accueil</td><td class="num">58–67</td><td class="num">2,9–3,2 s</td><td class="num">1,1–2,2 s</td><td>Scripts de suivi, Judge.me, 150 Ko de scripts dans la page</td></tr>
+      <tr><td>Starter Pack Vigilia</td><td class="num">81</td><td class="num">2,0 s</td><td class="num">0,64 s</td><td>Correct</td></tr>
+      <tr><td>Caméra W512MW</td><td class="num">82</td><td class="num">2,1 s</td><td class="num">0,61 s</td><td>Correct</td></tr>
+      <tr><td>Offre spéciale</td><td class="num">72</td><td class="num">3,2 s</td><td class="num">0,80 s</td><td>Image principale découverte tard</td></tr>
+      <tr><td>Comparateur</td><td class="num">59</td><td class="num">6,3 s</td><td class="num">0,68 s</td><td>Police Poppins importée 6 fois : le texte attend</td></tr>
+      <tr><td>Collection Vigilia</td><td class="num">54</td><td class="num">7,4 s</td><td class="num">0,70 s</td><td>Image principale de 260 Ko trop lourde, chargée tard</td></tr>
+      <tr><td>Article de blog</td><td class="num">56</td><td class="num">7,7 s</td><td class="num">0,57 s</td><td>Image d'article non redimensionnée (208 Ko de trop)</td></tr>
+      <tr><td>Accueil (ordinateur)</td><td class="num">97</td><td class="num">1,0 s</td><td class="num">0,02 s</td><td>Très bon</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Le suivi publicitaire coûte plusieurs secondes sur mobile</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Les plus gros consommateurs de calcul sur l'accueil (mesures sur deux passages) :
+          <ul>
+            <li>les scripts écrits dans la page : 2,3 à 3,9 s ;</li>
+            <li>le gestionnaire de pixels de Shopify : 1,1 à 2,4 s ;</li>
+            <li>Judge.me (une vingtaine de feuilles de style et un framework) : 0,5 à 0,8 s ;</li>
+            <li>la bibliothèque lazysizes : 0,5 à 0,8 s, alors que le chargement différé natif des navigateurs (<code>loading="lazy"</code>) suffit.</li>
+          </ul>
+          Au total, 9 à 14 s de travail du processeur. L'accueil fait ≈ 300 requêtes et 1,9 Mo. Dans notre test, plusieurs scripts tiers étaient bloqués par le proxy : le coût réel est donc plus élevé.</dd>
+        <dt>Action</dt><dd>Supprimer les pixels inutiles (voir la partie 1). Retirer lazysizes. Passer Judge.me en widget léger sur l'accueil et les collections. Déplacer les gros scripts dans la page (réglages Judge.me de 34 Ko, Addingwell de 25 Ko) vers des fichiers chargés en différé. Contrôler les vraies données de terrain dans la Search Console (rapport « Signaux Web essentiels »).</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Images principales et polices</h4></header>
+      <dl>
+        <dt>Action</dt><dd><ul>
+          <li>Comparateur : supprimer les 6 imports de Poppins et utiliser la police du thème. Le site charge aujourd'hui 3 familles de polices.</li>
+          <li>Collection Vigilia : servir l'image principale via <code>image_url</code> avec <code>srcset</code> et <code>fetchpriority="high"</code> (aujourd'hui un fichier « Visuels_amazon » brut).</li>
+          <li>Blog : redimensionner les images d'article et précharger la première.</li>
+          <li>Fiches : quand la photo remontera en haut (partie 2), la charger en priorité.</li>
+        </ul></dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Développeur</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 9. SEO ============ -->
+<section id="seo">
+  <h2><span class="n">9</span>SEO technique</h2>
+  <p class="intro">La base est saine : les 232 URL du sitemap répondent en 200, sans redirection, avec des balises canonical correctes. Aucun titre ni aucune méta-description ne sont dupliqués. Le robots.txt est nettoyé (recherche interne, liens marque obsolètes) et la langue est bien déclarée. Il reste des finitions.</p>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>www.daewoo-security.fr ne répond pas</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Deux résolveurs différents renvoient « domaine introuvable » pour <span class="mono">www.daewoo-security.fr</span>. Un client qui tape « www » devant l'adresse, ou un lien ancien, tombe sur une erreur.</dd>
+        <dt>Action</dt><dd>Chez le registraire : enregistrement CNAME <span class="mono">www → shops.myshopify.com</span>. Puis dans Shopify → Domaines : connecter www, avec redirection vers le domaine principal.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Contenus en double et pages sans contenu lisible</h4></header>
+      <dl>
+        <dt>Constat</dt><dd><ul>
+          <li><span class="mono">/collections/offres-du-mois-1</span> et <span class="mono">/collections/offres-exclusives-copie</span> sont identiques (même H1, 1 270 mots). Le blog renvoie vers la « copie ».</li>
+          <li>4 collections caméras (<span class="mono">cameras-de-surveillance</span>, <span class="mono">-interieures</span>, <span class="mono">-exterieures</span>, <span class="mono">-nvr</span>) ont le même H1 « Caméras de surveillance » et le même texte.</li>
+          <li><span class="mono">/pages/pack-alarmes</span> : 26 mots et un H1 « pack alarmes » ; tout le contenu est dans une iframe externe.</li>
+          <li><span class="mono">/collections/tous-les-accessoires</span> : 23 mots.</li>
+        </ul></dd>
+        <dt>Action</dt><dd>Supprimer la collection « copie » avec une redirection 301. Un H1 et une introduction propres à chaque collection caméras. Contenu natif pour la page packs (voir la partie 4). Un court texte d'introduction pour les accessoires.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev low">Faible</span><h4>Finitions</h4></header>
+      <dl>
+        <dt>Constat</dt><dd><ul>
+          <li><b>H1 absent :</b> NVR 4 caméras, caméra IPC504M, 2 produits configurateur, <span class="mono">avis-clients-2</span>, <span class="mono">comparaison-cameras</span>, <span class="mono">ils-ont-choisi-daewoo-security</span>, <span class="mono">installation-elite</span>, <span class="mono">caracteristiques-touch</span>.</li>
+          <li><b>H1 multiples :</b> <span class="mono">livraison-retour</span>, <span class="mono">retours-sav</span>, 3 articles « Test… ». Sur 8 fiches, le H1 est un slogan sans nom de modèle.</li>
+          <li><b>Méta-description absente :</b> les 4 pages d'installation et <span class="mono">offres-du-mois-1</span>. 34 titres dépassent 65 caractères.</li>
+          <li><b>Indexation contradictoire :</b> 5 produits « Configurateur » sont en noindex mais présents dans le sitemap. 59 produits « Configurateur | … » sont publiés en tout.</li>
+          <li><b>Adresses peu propres :</b> <span class="mono">-copie</span>, <span class="mono">-1</span>, <span class="mono">-2</span>, <span class="mono">configurateur_2</span>, <span class="mono">avis-clients-2</span>, <span class="mono">assistance-1</span>.</li>
+          <li><b>Titre anglais :</b> « Let customers speak for us » dans le code de la collection Vigilia (traduit à l'écran, mais lu par Google).</li>
+        </ul></dd>
+        <dt>Action</dt><dd>Masquer les produits « Configurateur » avec le métachamp <code>seo.hidden</code> (les retire aussi du sitemap) et les dépublier des canaux Google et Shop. Renommer les adresses en « -copie » avec redirection. Compléter les H1 et les méta-descriptions.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 10. CONTENU ============ -->
+<section id="contenu">
+  <h2><span class="n">10</span>Contenu et blog</h2>
+  <p class="intro">72 articles, dont 34 publiés en 2026. Le maillage vers les produits est en place (≈ 3 liens produits par article) et 25 articles ont de vrais tableaux. Le volume est là ; c'est la crédibilité qui manque.</p>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Aucun auteur identifié</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>34 articles sont signés « Admin » et 38 « Daewoo Security », y compris dans les données structurées. Aucune page auteur, aucune mention de relecture. La date de modification est toujours égale à la date de publication. Les articles de 2026 portent les marques techniques d'un outil de génération automatique.</dd>
+        <dt>Action</dt><dd>Signer avec une personne réelle (vous, un technicien SAV), avec une courte page auteur et la mention « Relu par… ». Afficher « Mis à jour le » seulement lors d'une vraie révision.</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Contenu</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Articles comparatifs trop promotionnels pour être cités</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>« Verisure vs Daewoo » : 508 mots, aucun chiffre, aucune limite de Daewoo. Somfy, Ring et Tike suivent le même schéma. Le « Top 10 » classe Daewoo premier, sans prix ni test. L'article « Comparatif selon 60 Millions » ne contient aucune donnée de 60 Millions. Dans les tableaux, Daewoo est décrit vaguement (« longue durée ») face à des chiffres précis pour les concurrents.</dd>
+        <dt>Action</dt><dd>Réécrire les comparatifs avec des prix datés et sourcés, le coût sur 3 et 5 ans (SIM comprise) et un paragraphe « quand préférer le concurrent ». Supprimer ou renommer l'article « 60 Millions ».</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Contenu</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Articles qui se concurrencent, et contenus manquants</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Plusieurs articles se disputent les mêmes requêtes :
+          <ul>
+            <li>≈ 9 sur « alarme sans abonnement » ;</li>
+            <li>5 variantes revendeur ou pays ;</li>
+            <li>8 sur GSM ou sans Wi-Fi ;</li>
+            <li>8 sur caméras et stockage ;</li>
+            <li>7 sur détecteurs et sirènes ;</li>
+            <li>2 pages « pourquoi Daewoo ».</li>
+          </ul>
+          Les articles Leroy Merlin, Castorama et Amazon ne disent jamais que Daewoo y est vendu. Aucun article ne vise « caméra extérieure solaire sans abonnement », la catégorie de votre meilleure vente, que le blog d'Eufy occupe.</dd>
+        <dt>Action</dt><dd>Un article pilier par thème et ≈ 15 fusions avec redirection. Nouvelles pages :
+          <ul>
+            <li>caméra solaire sans abonnement ;</li>
+            <li>coût réel de la carte SIM 4G ;</li>
+            <li>alarme, assurance et certification NF&amp;A2P (dire honnêtement ce qu'il en est) ;</li>
+            <li>« Daewoo Security avis », une synthèse franche des avis et des réponses.</li>
+          </ul></dd>
+      </dl>
+      <footer><span class="tag">Effort élevé</span><span class="tag">Contenu</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 11. GEO ============ -->
+<section id="geo">
+  <h2><span class="n">11</span>GEO (visibilité dans les IA) et réputation hors site</h2>
+  <p class="intro">Techniquement, le site est en avance sur la plupart des boutiques : <span class="mono">/llms.txt</span> soigné, <span class="mono">agents.md</span> et protocole UCP actifs, robots IA autorisés (GPTBot, PerplexityBot, ClaudeBot répondent en 200), contenu lisible sans JavaScript. Le frein est ailleurs : ce que le reste du web dit de Daewoo.</p>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Absent des réponses sur les requêtes stratégiques</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Sur 11 requêtes testées (« alarme maison sans abonnement », « meilleure alarme sans abonnement 2026 », « Daewoo alarme avis », « caméra extérieure solaire sans abonnement »…), daewoo-security.fr n'apparaît dans aucun résultat. Les sources citées sont Selectra, Meilleurtest, Echosdunet, Futura, Clubic, Matmut et Groupama, plus le blog d'Eufy pour les caméras. Interrogé sur « Daewoo vs Verisure », le moteur IA répond n'avoir trouvé aucun comparatif.</dd>
+        <dt>Limite</dt><dd>Test fait avec un moteur basé aux États-Unis, proche des index utilisés par les assistants IA, mais ce n'est pas Google.fr. Vos 13 823 sessions Google montrent un positionnement réel, probablement sur la marque. À confirmer dans la Search Console.</dd>
+      </dl>
+      <footer><span class="tag">Constat</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Les comparatifs qui citent Daewoo décrivent l'ancienne gamme</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Plusieurs comparatifs citent Daewoo, mais avec des produits retirés et des prix périmés (379,90 €) :
+          <ul>
+            <li>Meilleurtest (4<sup>e</sup>, « Pack Premium ») ;</li>
+            <li>Selectra (7<sup>e</sup>, comparatif de décembre 2023) ;</li>
+            <li>Echosdunet et Futura ;</li>
+            <li>Que Choisir, qui a testé le SA501 en 2023 avec une rubrique « Que Choisir regrette ».</li>
+          </ul>
+          Aucun test indépendant de Vigilia, Touch ou Élite n'a été trouvé. Le seul banc d'essai de blogueur a mesuré 75–80 dB pour 90 annoncés.</dd>
+        <dt>Action</dt><dd>Écrire à ces sites avec la gamme actuelle, les prix et des visuels. Prêter du matériel à 5 ou 6 testeurs (Les Numériques, Clubic, Tom's Guide, Frandroid, YouTubeurs domotique) et demander un nouveau test à Que Choisir. Publier un petit banc d'essai maison : décibels, autonomie, portée radio, délai de notification. Ce sont des données originales que les IA aiment citer.</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Vous / RP</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Avis tiers faibles et dispersés</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>D'après les extraits de recherche (pages non ouvertes, à reconfirmer) :
+          <ul>
+            <li>Trustpilot : ≈ 2,7/5 sur une dizaine d'avis ;</li>
+            <li>Amazon : 3,7 à 4,2/5, surtout sur les anciennes gammes, et 1 à 3 avis sur les Vigilia ;</li>
+            <li>LDLC et Boulanger : 0 à 3 avis ;</li>
+            <li>fiche Google Business : introuvable.</li>
+          </ul>
+          À l'inverse, l'application Daewoo Home Connect a 4,5/5 sur 648 notes dans l'App Store, un atout que le site n'utilise pas.</dd>
+        <dt>Action</dt><dd>Invitations automatiques après livraison vers Trustpilot ou Avis clients Google. Répondre à 100 % des avis sous 48 h. Créer la fiche Google Business « Daewoo Security – Mérignac ». Mettre un encart dans les colis pour les avis marketplaces. Afficher la note App Store sur le site.</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Vous</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Confusion avec les autres « Daewoo »</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Une recherche sur le domaine renvoie vers Daewoo Motors, le conglomérat disparu (Wikidata Q321772) et POSCO International, propriétaire de la marque. Un moteur IA a confondu Daewoo Security avec Daewoo Securities, un courtier coréen. La mention « marque créée en 1971 » correspond à Daewoo Electronics, pas à la marque elle-même.</dd>
+        <dt>Action</dt><dd>Une section « Daewoo Security et la marque Daewoo » sur la page À propos : licence, société française Liz Invest, différence avec les autres Daewoo. Ajouter LinkedIn dans les liens d'identité (<code>sameAs</code>). Personnaliser les adresses Facebook (<span class="mono">profile.php?id=…</span>) et YouTube (<span class="mono">@daewoosecurity3029</span>).</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Rendre les pages clés plus citables</h4></header>
+      <dl>
+        <dt>Action</dt><dd><ul>
+          <li>Comparateur : vrai tableau HTML (<code>&lt;table&gt;</code>), date de mise à jour et données structurées. Retirer « SA501 » du titre et de l'adresse, puisque la gamme Key n'y figure plus (avec redirection).</li>
+          <li>llms.txt : ajouter les caméras, le prix des SIM (72 € / 85 €), les caractéristiques par centrale, les limites (pas de télésurveillance, pas de NF&amp;A2P) et les liens App Store, Amazon et LinkedIn. Corriger les incohérences.</li>
+          <li>Ouvrir Bing Webmaster Tools et activer IndexNow : ChatGPT et Copilot s'appuient sur l'index de Bing.</li>
+          <li>Suivre chaque mois un panel d'une trentaine de questions posées aux IA.</li>
+        </ul></dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 12. CATALOGUE ============ -->
+<section id="catalogue">
+  <h2><span class="n">12</span>Catalogue et Google Shopping</h2>
+  <div class="findings">
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Le champ « Fournisseur » sert à la compatibilité, et Google le lit comme la marque</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Le Fournisseur (vendor) contient 13 valeurs comme « Compatible Touch/Vigilia (AM30x) » ou « Compatible Key &amp; Élite (SA501 &amp; PA501Z) ». Sur 102 fiches indexables, 48 déclarent ainsi une marque erronée. L'application Google &amp; YouTube transmet ce champ comme marque à Merchant Center, et Shopify Catalog le transmet aux agents d'achat IA. Les produits Konyks sont déclarés « Daewoo Security ».</dd>
+        <dt>Action</dt><dd>Fournisseur = « Daewoo » (« Konyks » pour Konyks). Déplacer la compatibilité dans un métachamp ou des tags (vos filtres et le robots.txt l'utilisent : à adapter en même temps). Vérifier ensuite les diagnostics dans Merchant Center.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Vous + développeur (filtres)</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Packs sans EAN et notes absentes des données structurées</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Les 35 fiches sans GTIN sont tous les packs. Pour plusieurs, l'EAN existe dans Shopify (Starter Vigilia 3760285864304, AM301 3760285862270, Élite 3760285865349) mais le gabarit ne l'expose pas. Seules 23 fiches sur 107 déclarent leur note : ni le Starter Vigilia (4,6 · 68 avis) ni la W512MW (4,81 · 16 avis) n'ont d'étoiles possibles dans Google.</dd>
+        <dt>Action</dt><dd>Exposer <code>gtin13</code> et <code>mpn</code> dans le gabarit des packs, et saisir les EAN manquants. Ajouter <code>aggregateRating</code> depuis les métachamps Judge.me (<code>reviews.rating</code>, <code>reviews.rating_count</code>) sur tous les gabarits. Activer le flux d'avis produits Judge.me vers Google Shopping. Ajouter la livraison et les retours aux données d'offre : aujourd'hui sur 22 fiches seulement.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev low">Faible</span><h4>Qualité des fiches dans l'administration</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Aucune des 895 images produits n'a de texte alternatif dans Shopify : le thème met le titre par défaut. Le type de produit est vide pour 63 produits sur 161. Certains produits « Configurateur » ont des titres SEO hérités d'un autre modèle (la W503 configurateur porte le titre SEO « W502 »).</dd>
+        <dt>Action</dt><dd>Textes alternatifs descriptifs sur les 20 produits les plus vendus d'abord, et types de produit renseignés (utiles pour les filtres et Google).</dd>
+      </dl>
+      <footer><span class="tag">Effort moyen</span><span class="tag">Vous</span></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ À PRÉSERVER ============ -->
+<section id="preserver">
+  <h2>Ce qui fonctionne, à ne pas casser</h2>
+  <ul class="keep">
+    <li>La promesse « sans abonnement · 0 €/mois » et le calcul face à un concurrent à 35–40 €/mois.</li>
+    <li>Le comparateur (3,0 % de conversion) : un choix simple entre 3 gammes, prix d'entrée visibles.</li>
+    <li>La landing <span class="mono">/pages/offre-speciale</span> : photo, prix, économie, contenu, FAQ, compte à rebours sur une vraie date.</li>
+    <li>Le choix des accessoires par centrale (4,5 %) et les caméras par usage (3,8 %).</li>
+    <li>Le bloc « Dans la boîte », le comparatif Wi-Fi / 4G avec prix, les FAQ produits.</li>
+    <li>Les ventes additionnelles « Ajoutez ce qui manque » et Pack Duo -50 %.</li>
+    <li>Le panier coulissant avec barre de livraison offerte, Alma 3x / 4x, PayPal.</li>
+    <li>La vitesse sur ordinateur (97/100) et l'absence de décalage de mise en page.</li>
+    <li>Le socle technique SEO et GEO : titres uniques, données produit partout, llms.txt, robots.txt nettoyé, protocole UCP.</li>
+    <li>L'assistant Chatbase chargé seulement à la première interaction.</li>
+    <li>L'Appmall dans l'application : 4,0 % de conversion.</li>
+    <li>Un pied de page complet (mentions légales, CGV, cookies, téléphone).</li>
+  </ul>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section id="plan">
+  <h2>Plan 30 / 60 / 90 jours</h2>
+  <div class="plan">
+    <div class="col"><span class="when">Semaines 1 à 2</span><h3>Corriger et mesurer</h3><ul>
+      <li>Checkout : newsletter décochée, téléphone facultatif</li>
+      <li>Indicateur unique boutique + Lovable ; segment hors robots ; UTM Meta</li>
+      <li>Une seule conversion Google Ads principale ; inventaire des pixels</li>
+      <li>Fiche d'identité et harmonisation (avis, retours, téléphone, durées)</li>
+      <li>Prix barrés libellés, « Durée limitée » retiré, gamme Vigilia clarifiée</li>
+      <li>Domaine www, Fournisseur = Daewoo, EAN, notes en données structurées</li>
+      <li>Relance des paniers abandonnés active</li>
+      <li>Barre collante et dock, titre final, logos de paiement</li>
+    </ul></div>
+    <div class="col"><span class="when">Semaines 3 à 6</span><h3>Refondre ce qui convertit</h3><ul>
+      <li>Haut des fiches packs mobile (photo, avis, prix, variante, bouton, garanties), testé sur Vigilia SP</li>
+      <li>Ligne de réassurance et Alma sur toutes les fiches</li>
+      <li>Accueil : 3 packs sous le hero ; quiz qui propose des packs</li>
+      <li>Page packs native à la place de l'iframe ; configurateur branché au panier Shopify</li>
+      <li>Panier : paiement express, accessoires suggérés, date de livraison</li>
+      <li>Performance : pixels, Judge.me, polices, images</li>
+      <li>SEO : doublons, H1, produits Configurateur masqués</li>
+    </ul></div>
+    <div class="col"><span class="when">Mois 2 à 6</span><h3>Construire la réputation</h3><ul>
+      <li>Trustpilot ou Avis Google, fiche Google Business, avis marketplaces</li>
+      <li>Mise à jour des comparatifs tiers ; tests presse et YouTube</li>
+      <li>Banc d'essai maison publié (dB, autonomie, portée)</li>
+      <li>Blog : auteurs réels, comparatifs factuels, fusions, nouvelles pages</li>
+      <li>Désambiguïsation de la marque ; Bing Webmaster Tools ; suivi des IA</li>
+      <li>À étudier : essai 30 jours, garantie étendue, télésurveillance en option</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ MÉTHODE ============ -->
+<section id="methode">
+  <h2>Méthode et limites</h2>
+  <div class="tbl">
+  <table>
+    <thead><tr><th>Volet</th><th>Méthode</th><th>Fiabilité</th></tr></thead>
+    <tbody>
+      <tr><td>Données de vente et de trafic</td><td>Shopify Analytics et API Admin : sessions, tunnel, canaux, pages d'entrée, paiements, livraison, paniers abandonnés, parcours client de commandes récentes</td><td>Vérifié</td></tr>
+      <tr><td>SEO technique</td><td>Exploration des 232 URL du sitemap (statut, titres, H1, canonical, données structurées, images), <span class="mono">products.json</span> (161 produits)</td><td>Vérifié</td></tr>
+      <tr><td>UX mobile et paiement</td><td>Navigateur automatisé en émulation iPhone 13, Pixel 7, 360 px ; ajout au panier et première page du paiement, sans saisie ni commande</td><td>Vérifié, hors domaines bloqués</td></tr>
+      <tr><td>Performance</td><td>Lighthouse 12.8 en local, mobile simulé (4G lente, processeur ×4), deux passages</td><td>Mesure de laboratoire, pas de données de terrain</td></tr>
+      <tr><td>GEO et réputation</td><td>11 requêtes et leurs variantes, lecture du HTML brut, extraits de résultats pour Trustpilot, Amazon, Que Choisir</td><td>Indicatif, à reconfirmer depuis la France</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Limites. Le proxy de test sortait par une adresse IP américaine et bloquait plusieurs domaines tiers : applications Lovable, Shop Pay, PayPal, Judge.me, Consentmo, Trustpilot. Le bandeau cookies, les boutons de paiement express, le configurateur Lovable et la page packs n'ont donc pas pu être vus comme un vrai visiteur les voit : un contrôle sur un vrai téléphone, depuis la France, est recommandé. Les données de la Search Console, de GA4 et de Merchant Center n'étaient pas accessibles. Les points juridiques (RGPD, prix de référence) sont signalés comme risques et sont à valider avec un conseil.</p>
+  <footer class="end">Audit réalisé le 22 octobre 2026 pour Daewoo Security (Liz Invest), Mérignac.</footer>
+</section>
+
+</main>
+</div>
+</div>
+
+</body>
+</html>
