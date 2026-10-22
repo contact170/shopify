@@ -80,8 +80,15 @@ nouvelles sections.
    Dans cet ordre : si le produit passe sur `canon-fumee` avant la
    publication, la page s'afficherait avec le template par défaut.
 
-## Ajouter la vidéo
+## Vidéo
 
-Éditeur de thème > page produit `canon-fumee` > section « Fumee — video demo » :
-choisir la vidéo (fichier Shopify) ou coller un lien YouTube / Vimeo, puis
-choisir le format (paysage, portrait si filmée au téléphone, carré).
+La vidéo de démonstration est hébergée sur Shopify (Contenu > Fichiers :
+`canon-a-fumee-daewoo-f502w-demonstration.mp4`, 1280×720, 45 s). Elle démarre
+en sourdine quand elle arrive à l'écran et se met en pause quand on la
+quitte. La section « Video — SEO » la décrit pour Google (VideoObject :
+adresse du MP4, vignette, durée calculée).
+
+Le lien YouTube reste en secours dans les réglages : il ne sert que si la
+vidéo Shopify est retirée. Dans ce cas, la page affiche une vignette et ne
+charge le lecteur YouTube qu'au clic, pour éviter le contrôle « Confirmez
+que vous n'êtes pas un robot ».

@@ -80,13 +80,40 @@
       </div>
 
       {%- if video != blank -%}
-        <div class="fum-video">
+        {%- comment -%}
+          Lecture auto : la video demarre (en sourdine) quand elle arrive a
+          l'ecran et se met en pause quand on la quitte. Le visiteur la voit
+          donc depuis le debut, et rien n'est telecharge s'il ne descend pas
+          jusque-la. Si le visiteur a demande moins d'animations, pas de
+          lecture auto : les controles restent disponibles.
+        {%- endcomment -%}
+        <div class="fum-video"{% if section.settings.lecture_auto %} data-fum-auto{% endif %}>
           {%- if section.settings.lecture_auto -%}
-            {{ video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: true, preload: 'metadata', image_size: '1600x' }}
+            {{ video | video_tag: loop: true, muted: true, playsinline: true, controls: true, preload: 'none', image_size: '1600x' }}
           {%- else -%}
             {{ video | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '1600x' }}
           {%- endif -%}
         </div>
+        {%- if section.settings.lecture_auto -%}
+        <script>
+          (function () {
+            document.querySelectorAll('[data-fum-auto] video').forEach(function (v) {
+              if (v.dataset.fumAuto) return;
+              v.dataset.fumAuto = '1';
+              v.muted = true;
+              if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+              function lire() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+              if (!('IntersectionObserver' in window)) { lire(); return; }
+              new IntersectionObserver(function (entrees) {
+                entrees.forEach(function (e) {
+                  if (e.isIntersecting) lire();
+                  else if (!v.paused) v.pause();
+                });
+              }, { threshold: 0.4 }).observe(v);
+            });
+          })();
+        </script>
+        {%- endif -%}
       {%- elsif lien != blank -%}
         {%- liquid
           assign titre_video = section.settings.titre | default: product.title | strip_html | escape
@@ -176,7 +203,7 @@
         { "value": "carre", "label": "Carre 1:1" }
       ]
     },
-    { "type": "checkbox", "id": "lecture_auto", "label": "Lecture automatique en sourdine, en boucle", "default": true, "info": "Pour la video hebergee sur Shopify uniquement. YouTube / Vimeo se lancent au clic." }
+    { "type": "checkbox", "id": "lecture_auto", "label": "Lecture automatique en sourdine, en boucle", "default": true, "info": "Video hebergee sur Shopify uniquement : elle demarre quand elle arrive a l'ecran. YouTube / Vimeo se lancent au clic." }
   ],
   "presets": [ { "name": "Fumee — video demo" } ]
 }
