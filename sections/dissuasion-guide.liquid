@@ -1,0 +1,41 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Page collection Dissuasion : texte explicatif (SEO / moteurs IA).
+  Un titre et un texte riche, en colonne etroite et lisible.
+{%- endcomment -%}
+{%- if section.settings.texte != blank -%}
+<style>
+  .dg h2{text-align:left;font-size:clamp(26px,3.4vw,38px)}
+  .dg-texte{margin-top:20px;font-size:17px;line-height:1.75;color:var(--accp-doux)}
+  .dg-texte h3{margin:30px 0 0;color:var(--accp-encre)}
+  .dg-texte p{margin:12px 0 0}
+  .dg-texte strong{color:var(--accp-encre);font-weight:600}
+  .dg-texte a{color:var(--accp-bleu)}
+  .dg-texte ul{margin:12px 0 0;padding-left:20px}
+  .dg-texte li{margin-top:6px}
+  .accp .dg .accp-ref{text-align:left}
+</style>
+<div class="accp">
+  <section class="accp-bande accp-bande--serree dg">
+    <div class="accp-wrap">
+      <div class="accp-etroit">
+        {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+        {%- if section.settings.titre != blank -%}<h2 style="margin-top:14px">{{ section.settings.titre }}</h2>{%- endif -%}
+        <div class="dg-texte">{{ section.settings.texte }}</div>
+      </div>
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Dissuasion — texte",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Le guide" },
+    { "type": "text", "id": "titre", "label": "Titre" },
+    { "type": "richtext", "id": "texte", "label": "Texte" }
+  ],
+  "presets": [ { "name": "Dissuasion — texte" } ]
+}
+{% endschema %}

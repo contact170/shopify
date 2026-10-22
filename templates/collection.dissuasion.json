@@ -1,0 +1,429 @@
+{
+  "sections": {
+    "hero": {
+      "type": "dissuasion-hero",
+      "settings": {
+        "produit": "canon-a-fumee-f502w",
+        "surtitre": "Dissuasion active",
+        "mot_cle": "Canon à fumée anti-intrusion",
+        "titre": "Le cambriolage s'arrête en 8 secondes.",
+        "chapo": "Une sirène prévient, une caméra filme. Le canon à fumée Daewoo F502W, lui, noie la pièce sous un brouillard opaque : l'intrus ne voit plus rien et repart les mains vides.",
+        "chiffre_1": "8 s",
+        "legende_1": "pour une pièce opaque",
+        "chiffre_2": "150 m³",
+        "legende_2": "protégés par appareil",
+        "chiffre_3": "0 €",
+        "legende_3": "d'abonnement",
+        "bouton": "Découvrir le canon à fumée",
+        "lien_2_texte": "Voir la gamme et la recharge",
+        "lien_2_url": "#produits",
+        "mention_prix": "À partir de",
+        "image": "shopify://shop_images/canon-fumee-daewoo-f502w-declenchement-fumee.webp",
+        "image_alt": "Canon à fumée Daewoo F502W fixé au mur d'un salon, en train de remplir la pièce d'un brouillard opaque",
+        "badge_chiffre": "8 s",
+        "badge_texte": "pour une pièce\nentièrement opaque"
+      }
+    },
+    "efficacite": {
+      "type": "fumee-efficacite",
+      "blocks": {
+        "sirene": {
+          "type": "solution",
+          "settings": {
+            "type_equipement": "Sirène",
+            "titre": "Elle prévient.",
+            "texte": "Elle alerte le voisinage et fait fuir les plus prudents. Les plus décidés savent qu'il leur reste quelques minutes pour se servir.",
+            "verdict": "Le vol peut continuer",
+            "mis_en_avant": false,
+            "pastille": ""
+          }
+        },
+        "camera": {
+          "type": "solution",
+          "settings": {
+            "type_equipement": "Caméra",
+            "titre": "Elle filme.",
+            "texte": "Elle vous montre l'intrusion en direct et garde une preuve. Mais elle regarde le vol se faire, sans pouvoir l'empêcher.",
+            "verdict": "Le vol peut continuer",
+            "mis_en_avant": false,
+            "pastille": ""
+          }
+        },
+        "canon": {
+          "type": "solution",
+          "settings": {
+            "type_equipement": "Canon à fumée F502W",
+            "titre": "Il arrête.",
+            "texte": "En 8 secondes, la pièce est noyée sous un brouillard opaque. L'intrus n'y voit plus rien : impossible de chercher, de trier ou d'emporter quoi que ce soit.",
+            "verdict": "Le vol s'arrête net",
+            "mis_en_avant": true,
+            "pastille": "Le plus efficace"
+          }
+        }
+      },
+      "block_order": [
+        "sirene",
+        "camera",
+        "canon"
+      ],
+      "settings": {
+        "surtitre": "Pourquoi c'est la plus efficace",
+        "titre": "Les autres alertent. Le canon à fumée arrête le vol.",
+        "chapo": "Une sirène prévient, une caméra filme, et pendant ce temps le cambrioleur se sert. Le canon à fumée agit au moment même de l'intrusion : sans visibilité, il n'y a plus rien à voler.",
+        "conclusion": "Votre alarme donne l'alerte, le canon à fumée empêche le vol : <strong>c'est le duo le plus efficace contre le cambriolage.</strong>",
+        "fond": "blanc"
+      }
+    },
+    "chrono": {
+      "type": "fumee-chrono",
+      "blocks": {
+        "t0": {
+          "type": "etape",
+          "settings": {
+            "temps": "0 s",
+            "titre": "Déclenchement",
+            "texte": "Un appui sur le bouton panique, la télécommande ou l'application."
+          }
+        },
+        "t1": {
+          "type": "etape",
+          "settings": {
+            "temps": "1 s",
+            "titre": "Première éjection",
+            "texte": "Un jet de brouillard dense jaillit de la buse."
+          }
+        },
+        "t3": {
+          "type": "etape",
+          "settings": {
+            "temps": "3 s",
+            "titre": "Zones sensibles noyées",
+            "texte": "Le passage et les objets de valeur disparaissent."
+          }
+        },
+        "t8": {
+          "type": "etape",
+          "settings": {
+            "temps": "8 s",
+            "titre": "Visibilité nulle",
+            "texte": "La pièce entière est opaque, jusqu'à 150 m³."
+          }
+        }
+      },
+      "block_order": [
+        "t0",
+        "t1",
+        "t3",
+        "t8"
+      ],
+      "settings": {
+        "surtitre": "Vitesse de diffusion",
+        "titre": "8 secondes. Pas une de plus.",
+        "chapo": "Le temps qu'un intrus repère le premier objet de valeur, la pièce a déjà disparu.",
+        "compteur": "8",
+        "unite": "s",
+        "legende": "pour rendre opaque une pièce de 100 à 150 m³",
+        "apres": "Le brouillard <strong>reste en place 30 à 45 minutes</strong> : l'intrus ne peut pas revenir se servir. Il se dissipe ensuite naturellement."
+      }
+    },
+    "produits": {
+      "type": "dissuasion-produits",
+      "settings": {
+        "surtitre": "La gamme",
+        "titre": "Équipez-vous.",
+        "chapo": "Un canon à fumée par pièce à protéger, et une recharge à garder sous la main après un déclenchement.",
+        "ancre": "produits",
+        "fond": "clair"
+      },
+      "blocks": {
+        "canon": {
+          "type": "produit",
+          "settings": {
+            "produit": "canon-a-fumee-f502w",
+            "nom": "Canon à fumée F502W",
+            "badge": "Le plus efficace contre le vol",
+            "badge_doux": false,
+            "texte": "Connecté en Wi-Fi, il rend une pièce de 100 à 150 m³ opaque en 8 secondes. Livré prêt à l'emploi avec sa cartouche, son bouton panique et sa télécommande.",
+            "points": "Pièce opaque en 8 secondes, jusqu'à 150 m³\nBouton panique filaire et télécommande fournis\nDéclenchement à distance avec l'application Daewoo Home Connect\nCompatible avec toutes les alarmes Daewoo, sans abonnement",
+            "bouton": "Ajouter au panier",
+            "lien_fiche": "Voir la fiche complète"
+          }
+        },
+        "recharge": {
+          "type": "produit",
+          "settings": {
+            "produit": "recharge-f502r-pour-canon-a-fumee-f502w",
+            "nom": "Recharge F502R",
+            "badge": "Après un déclenchement",
+            "badge_doux": true,
+            "texte": "La cartouche de remplacement du canon à fumée F502W. Une cartouche = un déclenchement : remplacez-la pour remettre le canon en service.",
+            "points": "",
+            "bouton": "Ajouter au panier",
+            "lien_fiche": "Voir la fiche"
+          }
+        }
+      },
+      "block_order": [
+        "canon",
+        "recharge"
+      ]
+    },
+    "video": {
+      "type": "fumee-video",
+      "settings": {
+        "surtitre": "En situation",
+        "titre": "Le canon à fumée en action.",
+        "chapo": "Le temps de lire cette phrase, la pièce a déjà disparu.",
+        "format": "paysage",
+        "lecture_auto": true,
+        "video_url": "https://www.youtube.com/watch?v=yqqbwr84LiA"
+      }
+    },
+    "video_seo": {
+      "type": "fumee-video-seo",
+      "settings": {
+        "video_url": "https://www.youtube.com/watch?v=yqqbwr84LiA",
+        "nom": "Canon à fumée Daewoo F502W en action : une pièce opaque en 8 secondes",
+        "description": "Démonstration du canon à fumée anti-intrusion Daewoo F502W : déclenché lors d'une intrusion, il remplit une pièce de 100 à 150 m³ d'un brouillard opaque et non toxique en 8 secondes. Le cambrioleur ne voit plus rien et repart les mains vides. Sans abonnement, compatible avec toutes les alarmes Daewoo.",
+        "date": "2026-10-22",
+        "duree": ""
+      }
+    },
+    "declenchement": {
+      "type": "fumee-declenchement",
+      "blocks": {
+        "bouton": {
+          "type": "mode",
+          "settings": {
+            "icone": "bouton",
+            "badge": "Fourni",
+            "titre": "Bouton panique",
+            "texte": "Fixé près du lit, de l'entrée ou derrière le comptoir de votre commerce, il est relié au canon par un câble. Un appui, et la fumée part dans la seconde.",
+            "points": "Liaison filaire, impossible à brouiller\nFonctionne sans Wi-Fi ni internet",
+            "ideal": "Vous êtes chez vous, la nuit, et entendez un bruit suspect."
+          }
+        },
+        "telecommande": {
+          "type": "mode",
+          "settings": {
+            "icone": "telecommande",
+            "badge": "Fournie",
+            "titre": "Télécommande",
+            "texte": "Sur la table de nuit ou au porte-clés, elle déclenche le canon depuis une autre pièce. Il faut maintenir le bouton 2 secondes : pas de déclenchement par accident.",
+            "points": "Radio : fonctionne sans Wi-Fi ni internet\nAppui de 2 secondes anti-fausse manœuvre",
+            "ideal": "Vous êtes à la maison, mais pas dans la pièce protégée."
+          }
+        },
+        "application": {
+          "type": "mode",
+          "settings": {
+            "icone": "application",
+            "badge": "Gratuite",
+            "titre": "Application Daewoo Home Connect",
+            "texte": "Une alerte pendant votre absence ? Vérifiez sur vos caméras, puis lancez la fumée depuis votre téléphone, où que vous soyez. Une double confirmation évite toute erreur.",
+            "points": "De partout, depuis votre téléphone (Wi-Fi ou 4G)\nDouble confirmation avant le déclenchement",
+            "ideal": "Vous êtes au travail ou en vacances."
+          }
+        }
+      },
+      "block_order": [
+        "bouton",
+        "telecommande",
+        "application"
+      ],
+      "settings": {
+        "surtitre": "Déclenchement",
+        "titre": "Trois façons de déclencher le canon à fumée.",
+        "chapo": "En pleine nuit chez vous ou à des centaines de kilomètres, vous gardez toujours la main. Le bouton panique et la télécommande sont fournis dans la boîte.",
+        "libelle_ideal": "Idéal quand",
+        "fond": "clair",
+        "encart_titre": "Box internet coupée ? Il se déclenche quand même.",
+        "encart_texte": "Le bouton panique et la télécommande parlent directement au canon, sans passer par le Wi-Fi. <strong>Seule condition : qu'il reste alimenté sur secteur</strong> — un petit onduleur suffit à le sécuriser."
+      }
+    },
+    "usages": {
+      "type": "dissuasion-usages",
+      "settings": {
+        "surtitre": "Pour qui ?",
+        "titre": "Là où un vol coûte le plus cher.",
+        "chapo": "Un canon à fumée protège une pièce de 100 à 150 m³, soit environ 40 à 60 m² sous un plafond de 2,50 m.",
+        "conseil": "<strong>Un appareil par pièce à protéger</strong>, fixé entre 2,50 et 3 m de hauteur, sur le passage obligé de l'intrus, buse orientée vers le sol.",
+        "fond": "clair"
+      },
+      "blocks": {
+        "maison": {
+          "type": "usage",
+          "settings": {
+            "icone": "maison",
+            "titre": "Maison",
+            "texte": "Dans l'entrée ou le séjour, sur le passage obligé : l'intrus est arrêté avant d'atteindre les pièces de vie."
+          }
+        },
+        "appartement": {
+          "type": "usage",
+          "settings": {
+            "icone": "appartement",
+            "titre": "Appartement",
+            "texte": "Près de la porte d'entrée, là où le cambrioleur passe forcément. La nuit, le bouton panique reste à portée de main."
+          }
+        },
+        "commerce": {
+          "type": "usage",
+          "settings": {
+            "icone": "commerce",
+            "titre": "Commerce",
+            "texte": "Derrière le comptoir ou dans la réserve : en quelques secondes, plus rien n'est visible ni accessible."
+          }
+        },
+        "bureau": {
+          "type": "usage",
+          "settings": {
+            "icone": "bureau",
+            "titre": "Bureau",
+            "texte": "Matériel informatique, documents, coffre : protégés même quand les locaux sont vides."
+          }
+        },
+        "garage": {
+          "type": "usage",
+          "settings": {
+            "icone": "garage",
+            "titre": "Garage et atelier",
+            "texte": "Outillage, vélos, matériel de jardin : des cibles faciles, protégées sans abonnement."
+          }
+        }
+      },
+      "block_order": [
+        "maison",
+        "appartement",
+        "commerce",
+        "bureau",
+        "garage"
+      ]
+    },
+    "guide": {
+      "type": "dissuasion-guide",
+      "settings": {
+        "surtitre": "Le guide",
+        "titre": "Canon à fumée anti-intrusion : comment ça marche ?",
+        "texte": "<p>Un <strong>canon à fumée anti-intrusion</strong>, aussi appelé générateur de brouillard ou générateur de fumée de sécurité, diffuse en quelques secondes un brouillard opaque dans la pièce où se trouve le cambrioleur. Sans visibilité, impossible de chercher, de trier ou d'emporter quoi que ce soit : le vol s'arrête au moment même de l'intrusion.</p><p>Le <a href=\"/products/canon-a-fumee-f502w\">canon à fumée Daewoo F502W</a> rend une pièce de 100 à 150 m³ opaque en 8 secondes. Le brouillard reste en place environ 30 à 45 minutes, selon le volume et la ventilation, puis se dissipe naturellement. La fumée est déclarée non toxique par le fabricant dans les conditions normales d'utilisation.</p><p><strong>Comment le déclencher ?</strong> Avec le bouton panique filaire ou la télécommande fournis, même sans internet, ou à distance depuis l'application gratuite Daewoo Home Connect, après avoir vérifié l'intrusion sur vos caméras. Le canon fonctionne avec toutes les alarmes Daewoo et sans abonnement. Pas encore équipé ? <a href=\"/pages/configurateur_2\">Configurez votre alarme Daewoo</a>.</p><p><strong>Après un déclenchement</strong>, aérez la pièce, laissez refroidir l'appareil environ 2 heures, puis remplacez la cartouche par une <a href=\"/products/recharge-f502r-pour-canon-a-fumee-f502w\">recharge F502R</a> : le canon est de nouveau opérationnel.</p>"
+      }
+    },
+    "faq": {
+      "type": "acc-faq-produit",
+      "settings": {
+        "surtitre": "Questions fréquentes",
+        "titre": "Vos questions sur le canon à fumée."
+      },
+      "blocks": {
+        "q_temps": {
+          "type": "question",
+          "settings": {
+            "question": "Combien de temps faut-il au canon à fumée pour remplir une pièce ?",
+            "reponse": "8 secondes pour rendre opaque une pièce de 100 à 150 m³ : le premier jet sort en 1 seconde et les zones sensibles sont couvertes en 3 secondes. Le brouillard reste ensuite en place 30 à 45 minutes."
+          }
+        },
+        "q_surface": {
+          "type": "question",
+          "settings": {
+            "question": "Quelle surface protège un canon à fumée F502W ?",
+            "reponse": "Une pièce de 100 à 150 m³, soit environ 40 à 60 m² sous un plafond de 2,50 m. Pour un logement plus grand, prévoyez un appareil par pièce à protéger, en priorité sur le passage obligé d'un intrus : entrée, séjour, bureau."
+          }
+        },
+        "q_legal": {
+          "type": "question",
+          "settings": {
+            "question": "Un canon à fumée est-il légal en France ?",
+            "reponse": "Oui. Particuliers comme professionnels peuvent installer un canon à fumée chez eux ou dans leur commerce, sans autorisation ni déclaration. Le F502W agit uniquement sur la visibilité : la fumée, déclarée non toxique par le fabricant, empêche l'intrus de voir et de trouver vos biens."
+          }
+        },
+        "q_danger": {
+          "type": "question",
+          "settings": {
+            "question": "La fumée est-elle dangereuse ?",
+            "reponse": "Non, la fumée est non toxique. Par précaution, ne restez pas longtemps dans le brouillard, éloignez-en les personnes asthmatiques ou allergiques et aérez la pièce après usage. Ne dirigez jamais la buse vers une personne : orientez-la vers le sol."
+          }
+        },
+        "q_internet": {
+          "type": "question",
+          "settings": {
+            "question": "Le canon à fumée fonctionne-t-il sans internet ?",
+            "reponse": "Oui. Le bouton panique (relié par câble) et la télécommande (radio) déclenchent le canon en direct, même si votre box internet est coupée. Seule l'application a besoin que le canon soit connecté au Wi-Fi. L'appareil doit en revanche rester alimenté sur secteur : un onduleur le protège des coupures de courant."
+          }
+        },
+        "q_compat": {
+          "type": "question",
+          "settings": {
+            "question": "Avec quelles alarmes le canon à fumée est-il compatible ?",
+            "reponse": "Avec toutes les alarmes Daewoo : Key (SA501), Élite (PA501Z), Touch (AM301), Touch XL (AM302) et Vigilia. Le canon est un appareil indépendant, connecté en Wi-Fi : il se pilote depuis la même application, Daewoo Home Connect."
+          }
+        },
+        "q_abonnement": {
+          "type": "question",
+          "settings": {
+            "question": "Faut-il un abonnement ?",
+            "reponse": "Non. Le canon à fumée, l'application Daewoo Home Connect, le bouton panique et la télécommande fonctionnent sans abonnement ni frais mensuels. Seule la cartouche est à remplacer après un déclenchement (recharge F502R)."
+          }
+        },
+        "q_apres": {
+          "type": "question",
+          "settings": {
+            "question": "Que faire après un déclenchement ?",
+            "reponse": "Aérez la pièce une fois le danger écarté. Laissez refroidir l'appareil environ 2 heures, car la buse devient brûlante, puis remplacez la cartouche par une recharge F502R : le canon est de nouveau opérationnel."
+          }
+        }
+      },
+      "block_order": [
+        "q_temps",
+        "q_surface",
+        "q_legal",
+        "q_danger",
+        "q_internet",
+        "q_compat",
+        "q_abonnement",
+        "q_apres"
+      ]
+    },
+    "avis": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_BCRqVX": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_BCRqVX"
+      ],
+      "settings": {
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "efficacite",
+    "chrono",
+    "produits",
+    "video",
+    "video_seo",
+    "declenchement",
+    "usages",
+    "guide",
+    "faq",
+    "avis"
+  ]
+}

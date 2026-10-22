@@ -1,0 +1,93 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Page collection Dissuasion : ou installer un canon a fumee.
+  Un bloc « usage » par type de lieu, avec une icone.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<style>
+  .du-tete{margin:0 auto;text-align:center}
+  .du-tete h2{margin-top:14px;text-wrap:balance}
+  .du-tete .accp-chapo{text-wrap:pretty}
+  .du-grille{list-style:none;margin:clamp(30px,4.4vw,52px) 0 0;padding:0;display:grid;gap:16px;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .du-carte{background:#fff;border-radius:var(--accp-rayon);box-shadow:var(--accp-ombre);padding:24px 22px}
+  .du-icone{width:50px;height:50px;border-radius:14px;background:var(--accp-clair);color:var(--accp-bleu);
+    display:flex;align-items:center;justify-content:center}
+  .accp .du-carte h3{margin:18px 0 0}
+  .du-carte p{margin:9px 0 0;font-size:16px;line-height:1.6;color:var(--accp-doux)}
+  .du-conseil{margin:clamp(24px,3vw,34px) auto 0;max-width:62ch;text-align:center;font-size:17px;line-height:1.65;color:var(--accp-doux)}
+  .du-conseil strong{color:var(--accp-encre)}
+</style>
+<div class="accp">
+  <section class="accp-bande{% if section.settings.fond == 'clair' %} accp-bande--gris{% endif %}">
+    <div class="accp-wrap">
+      <div class="accp-etroit du-tete">
+        {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+        {%- if section.settings.titre != blank -%}<h2>{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.chapo != blank -%}<p class="accp-chapo" style="margin-top:18px">{{ section.settings.chapo }}</p>{%- endif -%}
+      </div>
+      <ul class="du-grille">
+        {%- for block in section.blocks -%}
+          <li class="du-carte" {{ block.shopify_attributes }}>
+            <span class="du-icone" aria-hidden="true">
+              {%- case block.settings.icone -%}
+                {%- when 'appartement' -%}
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2.5" width="16" height="19" rx="1.5"/><path d="M8 6.5h2M14 6.5h2M8 10.5h2M14 10.5h2M8 14.5h2M14 14.5h2M10.5 21.5v-3h3v3"/></svg>
+                {%- when 'commerce' -%}
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.5 5 3.5h14l1.5 6"/><path d="M3.5 9.5h17a2.8 2.8 0 0 1-5.6 0 2.8 2.8 0 0 1-5.8 0 2.8 2.8 0 0 1-5.6 0z"/><path d="M5 12.3v8.2h14v-8.2"/><path d="M10 20.5v-5h4v5"/></svg>
+                {%- when 'bureau' -%}
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8.5 7V5a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 5v2"/><path d="M3 12.5h18"/><path d="M10.5 12.5v1.5h3v-1.5"/></svg>
+                {%- when 'garage' -%}
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9 12 3.5 21.5 9v11.5h-19z"/><path d="M6 20.5v-8h12v8"/><path d="M6 15h12M6 17.8h12"/></svg>
+                {%- else -%}
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v11.5h14V9"/><path d="M10 20.5v-6h4v6"/></svg>
+              {%- endcase -%}
+            </span>
+            {%- if block.settings.titre != blank -%}<h3>{{ block.settings.titre }}</h3>{%- endif -%}
+            {%- if block.settings.texte != blank -%}<p>{{ block.settings.texte }}</p>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if section.settings.conseil != blank -%}<p class="du-conseil">{{ section.settings.conseil }}</p>{%- endif -%}
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Dissuasion — usages",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "Pour qui ?" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "La ou un vol coute le plus cher." },
+    { "type": "textarea", "id": "chapo", "label": "Chapo" },
+    { "type": "inline_richtext", "id": "conseil", "label": "Conseil sous les cartes" },
+    {
+      "type": "select", "id": "fond", "label": "Fond", "default": "clair",
+      "options": [ { "value": "blanc", "label": "Blanc" }, { "value": "clair", "label": "Bleu tres clair" } ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "usage",
+      "name": "Lieu",
+      "settings": [
+        {
+          "type": "select", "id": "icone", "label": "Icone", "default": "maison",
+          "options": [
+            { "value": "maison", "label": "Maison" },
+            { "value": "appartement", "label": "Appartement" },
+            { "value": "commerce", "label": "Commerce" },
+            { "value": "bureau", "label": "Bureau" },
+            { "value": "garage", "label": "Garage / atelier" }
+          ]
+        },
+        { "type": "text", "id": "titre", "label": "Titre", "default": "Maison" },
+        { "type": "textarea", "id": "texte", "label": "Texte" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [ { "name": "Dissuasion — usages" } ]
+}
+{% endschema %}

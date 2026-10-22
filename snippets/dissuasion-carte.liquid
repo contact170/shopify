@@ -1,0 +1,64 @@
+{%- comment -%}
+  Carte produit de la page Dissuasion.
+  p : produit · b : reglages du bloc (ou nil) · grande : carte principale
+{%- endcomment -%}
+{%- liquid
+  assign v = p.selected_or_first_available_variant
+  assign nom = b.nom | default: p.title
+  assign note = p.metafields.reviews.rating.value.rating
+  assign nb_avis = p.metafields.reviews.rating_count.value
+  assign texte = b.texte | default: p.metafields.custom.accroche.value
+  assign libelle = b.bouton | default: 'Ajouter au panier'
+  assign lien_fiche = b.lien_fiche | default: 'Voir la fiche'
+  assign alt_img = p.featured_image.alt | default: nom
+  assign form_id = 'dp-form-' | append: p.id
+  if grande
+    assign largeur_img = 900
+  else
+    assign largeur_img = 400
+  endif
+-%}
+<article class="dp-carte {% if grande %}dp-carte--grande{% else %}dp-carte--petite{% endif %}" {{ attrs }}>
+  <a class="dp-carte__img" href="{{ p.url }}" tabindex="-1" aria-hidden="true">
+    {%- if p.featured_image -%}
+      {{ p.featured_image | image_url: width: largeur_img | image_tag: loading: 'lazy', alt: alt_img }}
+    {%- endif -%}
+  </a>
+  <div class="dp-carte__corps">
+    {%- if b.badge != blank -%}<p class="dp-badge{% if b.badge_doux %} dp-badge--doux{% endif %}">{{ b.badge }}</p>{%- endif -%}
+    <h3><a href="{{ p.url }}">{{ nom }}</a></h3>
+    {%- if note != blank and nb_avis > 0 -%}
+      {%- assign largeur = note | times: 20 -%}
+      <a class="dp-note" href="{{ p.url }}#avis-clients">
+        <span class="accp-etoiles" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:{{ largeur }}%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span>
+        <span>{{ note | replace: '.', ',' }}/5 · {{ nb_avis }} avis</span>
+      </a>
+    {%- endif -%}
+    {%- if texte != blank -%}<p class="dp-texte">{{ texte }}</p>{%- endif -%}
+    {%- if b.points != blank -%}
+      {%- assign points = b.points | newline_to_br | split: '<br />' -%}
+      <ul class="dp-points">
+        {%- for point in points -%}
+          {%- assign t = point | strip -%}
+          {%- if t != blank -%}
+            <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>{{ t }}</span></li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    <div class="dp-achat">
+      <p class="dp-prix">
+        {%- if v.compare_at_price > v.price -%}<s>{{ v.compare_at_price | money }}</s>{%- endif -%}
+        {{ v.price | money }}
+      </p>
+      {%- form 'product', p, id: form_id, novalidate: 'novalidate', is: 'product-form' -%}
+        <input type="hidden" name="id" value="{{ v.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="accp-bouton" {% unless v.available %}disabled{% endunless %}>
+          {%- if v.available -%}{{ libelle }}{%- else -%}Rupture de stock{%- endif -%}
+        </button>
+      {%- endform -%}
+      <a class="accp-lien dp-fiche" href="{{ p.url }}">{{ lien_fiche }}</a>
+    </div>
+  </div>
+</article>

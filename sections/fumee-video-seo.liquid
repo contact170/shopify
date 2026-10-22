@@ -19,7 +19,7 @@
       assign url_embed = 'https://player.vimeo.com/video/' | append: lien.id
       assign vignette = product.featured_image | image_url: width: 1280 | prepend: 'https:'
     endif
-    assign nom = section.settings.nom | default: product.title
+    assign nom = section.settings.nom | default: product.title | default: page_title
     assign desc = section.settings.description | strip
     if desc == blank
       assign desc = product.description | strip_html | strip_newlines | strip | truncate: 500
@@ -39,8 +39,10 @@
   "contentUrl": {{ url_video | json }},
   "embedUrl": {{ url_embed | json }},
   "inLanguage": "fr",
-  "publisher": { "@type": "Organization", "name": {{ shop.name | json }}, "url": {{ shop.url | json }} },
-  "about": { "@id": {{ '/products/' | append: product.handle | append: '#product' | json }} }
+  {%- if product %}
+  "about": { "@id": {{ '/products/' | append: product.handle | append: '#product' | json }} },
+  {%- endif %}
+  "publisher": { "@type": "Organization", "name": {{ shop.name | json }}, "url": {{ shop.url | json }} }
 }
 </script>
 {%- endif -%}

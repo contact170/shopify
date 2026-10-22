@@ -1,0 +1,134 @@
+{{ 'acc-premium.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Page collection Dissuasion : les produits.
+  Un bloc « produit » par article. Le premier bloc s'affiche en grande carte,
+  les suivants en cartes horizontales. Sans bloc, les produits de la
+  collection sont listes automatiquement.
+  Le bouton passe par le composant panier du theme (is="product-form").
+{%- endcomment -%}
+<style>
+  .dp-tete{margin:0 auto;text-align:center}
+  .dp-tete h2{margin-top:14px;text-wrap:balance}
+  .dp-tete .accp-chapo{text-wrap:pretty}
+  .dp-liste{display:grid;gap:18px;margin-top:clamp(30px,4.4vw,52px)}
+  .dp-carte{display:grid;background:#fff;border-radius:22px;box-shadow:var(--accp-ombre);overflow:hidden}
+  .dp-carte__img{display:block;background:#fff;padding:clamp(18px,3vw,34px)}
+  .dp-carte__img img{width:100%;aspect-ratio:1/1;object-fit:contain;display:block}
+  .dp-carte__corps{display:flex;flex-direction:column;padding:clamp(22px,3.2vw,40px)}
+  .dp-badge{align-self:flex-start;margin:0 0 14px;padding:6px 13px;border-radius:980px;background:var(--accp-alerte);
+    color:#fff;font-size:13px;font-weight:600;line-height:1.3}
+  .dp-badge--doux{background:var(--accp-clair);color:var(--accp-bleu)}
+  .accp .dp-carte h3{margin:0;font-size:clamp(24px,2.8vw,34px);letter-spacing:-.03em;line-height:1.1}
+  .dp-carte h3 a{color:inherit;text-decoration:none}
+  .dp-carte h3 a:hover{color:var(--accp-bleu)}
+  .dp-note{display:inline-flex;align-items:center;gap:8px;margin:12px 0 0;font-size:15px;color:var(--accp-doux);text-decoration:none}
+  .dp-texte{margin:14px 0 0;font-size:17px;line-height:1.62;color:var(--accp-doux)}
+  .dp-points{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
+  .dp-points li{display:flex;gap:10px;font-size:16px;line-height:1.45}
+  .dp-points svg{flex:0 0 auto;margin-top:2px;color:#0b8a3d}
+  .dp-achat{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:auto;padding-top:26px}
+  .dp-prix{margin:0;font-size:26px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .dp-prix s{margin-right:8px;font-size:.66em;font-weight:400;color:var(--accp-doux)}
+  .dp-achat form{margin:0}
+  .dp-achat .accp-bouton{padding:15px 32px;font-size:17px}
+  .dp-fiche{font-size:16px}
+  @media(min-width:860px){
+    .dp-carte--grande{grid-template-columns:1fr 1fr}
+    .dp-carte--grande .dp-carte__img{padding:clamp(28px,4vw,56px);background:linear-gradient(180deg,#f6f8fe 0%,#fff 100%)}
+  }
+  .dp-carte--petite{grid-template-columns:1fr}
+  @media(min-width:600px){
+    .dp-carte--petite{grid-template-columns:200px 1fr;align-items:center}
+    .dp-carte--petite .dp-carte__img{padding:20px}
+    .dp-carte--petite .dp-carte__corps{padding:24px 28px 24px 4px}
+  }
+  .accp .dp-carte--petite h3{font-size:clamp(20px,2.2vw,24px)}
+  .dp-carte--petite .dp-achat{padding-top:16px}
+  .dp-carte--petite .dp-prix{font-size:21px}
+  .dp-carte--petite .accp-bouton{padding:12px 24px;font-size:16px}
+</style>
+
+{%- capture cartes -%}
+  {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.settings.produit != blank -%}
+        {%- render 'dissuasion-carte', p: block.settings.produit, b: block.settings, grande: forloop.first, attrs: block.shopify_attributes -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- for p in collection.products limit: 8 -%}
+      {%- render 'dissuasion-carte', p: p, b: nil, grande: forloop.first -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+<div class="accp" id="{{ section.settings.ancre | default: 'produits' }}">
+  <section class="accp-bande{% if section.settings.fond == 'clair' %} accp-bande--gris{% endif %}">
+    <div class="accp-wrap">
+      <div class="accp-etroit dp-tete">
+        {%- if section.settings.surtitre != blank -%}<p class="accp-ref">{{ section.settings.surtitre }}</p>{%- endif -%}
+        {%- if section.settings.titre != blank -%}<h2>{{ section.settings.titre }}</h2>{%- endif -%}
+        {%- if section.settings.chapo != blank -%}<p class="accp-chapo" style="margin-top:18px">{{ section.settings.chapo }}</p>{%- endif -%}
+      </div>
+      <div class="dp-liste">{{ cartes }}</div>
+    </div>
+  </section>
+</div>
+
+{%- comment -%} Liste des produits pour Google et les moteurs IA {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": {{ collection.title | json }},
+  "itemListElement": [
+    {%- if section.blocks.size > 0 -%}
+      {%- assign n = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.settings.produit != blank -%}
+          {%- assign n = n | plus: 1 -%}
+          {%- if n > 1 %},{% endif -%}
+          { "@type": "ListItem", "position": {{ n }}, "url": {{ shop.url | append: block.settings.produit.url | json }}, "name": {{ block.settings.produit.title | json }} }
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for p in collection.products limit: 8 -%}
+        { "@type": "ListItem", "position": {{ forloop.index }}, "url": {{ shop.url | append: p.url | json }}, "name": {{ p.title | json }} }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    {%- endif -%}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Dissuasion — produits",
+  "settings": [
+    { "type": "text", "id": "surtitre", "label": "Surtitre", "default": "La gamme" },
+    { "type": "text", "id": "titre", "label": "Titre", "default": "Equipez-vous." },
+    { "type": "textarea", "id": "chapo", "label": "Chapo" },
+    { "type": "text", "id": "ancre", "label": "Ancre (pour un lien #...)", "default": "produits" },
+    {
+      "type": "select", "id": "fond", "label": "Fond", "default": "clair",
+      "options": [ { "value": "blanc", "label": "Blanc" }, { "value": "clair", "label": "Bleu tres clair" } ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "produit",
+      "name": "Produit",
+      "settings": [
+        { "type": "product", "id": "produit", "label": "Produit" },
+        { "type": "text", "id": "nom", "label": "Nom affiche", "info": "Vide = titre du produit." },
+        { "type": "text", "id": "badge", "label": "Pastille" },
+        { "type": "checkbox", "id": "badge_doux", "label": "Pastille discrete (bleue)", "default": false },
+        { "type": "textarea", "id": "texte", "label": "Texte" },
+        { "type": "textarea", "id": "points", "label": "Points cles", "info": "Un point par ligne." },
+        { "type": "text", "id": "bouton", "label": "Bouton", "default": "Ajouter au panier" },
+        { "type": "text", "id": "lien_fiche", "label": "Lien vers la fiche", "default": "Voir la fiche" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Dissuasion — produits" } ]
+}
+{% endschema %}
