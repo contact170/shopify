@@ -4,6 +4,14 @@
   Accepte une video hebergee sur Shopify (reglage « video ») ou un lien
   YouTube / Vimeo. Sans video, la section ne s'affiche pas sur la boutique ;
   dans l'editeur de theme, un cadre indique ou la deposer.
+
+  YouTube / Vimeo : la page n'affiche d'abord qu'une vignette et un bouton
+  lecture ; le lecteur ne se charge qu'au clic. Raison : charge directement
+  (surtout en lecture auto, en domaine youtube-nocookie), le lecteur YouTube
+  affichait a certains visiteurs « Connectez-vous pour confirmer que vous
+  n'etes pas un robot ». Au clic, on charge youtube.com, qui reconnait les
+  visiteurs connectes a Google. Bonus : page plus legere, pas de cookies
+  YouTube avant le clic.
 {%- endcomment -%}
 {%- liquid
   assign video = section.settings.video
@@ -38,6 +46,27 @@
   .fum-video-tete h2{margin-top:14px;text-wrap:balance}
   .fum-video-tete .accp-chapo{text-wrap:pretty}
   .fum-video-tete .accp-ref{color:#ff8a7e}
+  .fum-video__facade{position:absolute;inset:0;display:block;width:100%;height:100%;padding:0;margin:0;
+    border:0;background:#000;cursor:pointer;color:#fff}
+  .fum-video__facade img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;
+    transition:transform .5s cubic-bezier(.2,.7,.3,1),filter .3s}
+  .fum-video__facade::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at center,rgba(10,18,48,.05) 0%,rgba(10,18,48,.38) 100%)}
+  .fum-video__lecture{position:absolute;z-index:1;top:50%;left:50%;width:84px;height:84px;margin:-42px 0 0 -42px;
+    border-radius:50%;background:var(--accp-alerte);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px rgba(255,77,61,.45),0 0 0 10px rgba(255,255,255,.14);
+    transition:transform .2s cubic-bezier(.2,.7,.3,1),box-shadow .2s}
+  .fum-video__lecture svg{margin-left:5px}
+  .fum-video__facade:hover img{transform:scale(1.02);filter:brightness(1.05)}
+  .fum-video__facade:hover .fum-video__lecture{transform:scale(1.06)}
+  .fum-video__facade:active .fum-video__lecture{transform:scale(.97)}
+  .fum-video__facade:focus-visible{outline:3px solid #fff;outline-offset:-6px}
+  .fum-video__secours{margin:14px 0 0;text-align:center;font-size:15px;color:#9aa4c2}
+  .fum-video__secours a{color:#c9d1ea;text-decoration:underline;text-underline-offset:3px}
+  .fum-video__secours a:hover{color:#fff}
+  @media(max-width:600px){
+    .fum-video__lecture{width:68px;height:68px;margin:-34px 0 0 -34px}
+  }
 </style>
 <div class="accp">
   <section class="accp-bande accp-bande--nuit">
@@ -59,17 +88,65 @@
           {%- endif -%}
         </div>
       {%- elsif lien != blank -%}
+        {%- liquid
+          assign titre_video = section.settings.titre | default: product.title | strip_html | escape
+          if lien.type == 'youtube'
+            assign url_lecteur = 'https://www.youtube.com/embed/' | append: lien.id | append: '?autoplay=1&rel=0&playsinline=1&modestbranding=1'
+            assign url_page = 'https://www.youtube.com/watch?v=' | append: lien.id
+            assign nom_service = 'YouTube'
+            assign vignette = 'https://i.ytimg.com/vi/' | append: lien.id | append: '/maxresdefault.jpg'
+            assign vignette_repli = 'https://i.ytimg.com/vi/' | append: lien.id | append: '/hqdefault.jpg'
+          else
+            assign url_lecteur = 'https://player.vimeo.com/video/' | append: lien.id | append: '?autoplay=1&dnt=1'
+            assign url_page = 'https://vimeo.com/' | append: lien.id
+            assign nom_service = 'Vimeo'
+            assign vignette = product.featured_image | image_url: width: 1600
+            assign vignette_repli = ''
+          endif
+          if section.settings.vignette != blank
+            assign vignette = section.settings.vignette | image_url: width: 1600
+            assign vignette_repli = ''
+          endif
+        -%}
         <div class="fum-video">
-          {%- if lien.type == 'youtube' -%}
-            <iframe src="https://www.youtube-nocookie.com/embed/{{ lien.id }}?rel=0&amp;playsinline=1&amp;modestbranding=1{% if section.settings.lecture_auto %}&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist={{ lien.id }}{% endif %}"
-                    title="{{ section.settings.titre | escape }}" loading="lazy"
-                    allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
-          {%- elsif lien.type == 'vimeo' -%}
-            <iframe src="https://player.vimeo.com/video/{{ lien.id }}?dnt=1{% if section.settings.lecture_auto %}&amp;autoplay=1&amp;muted=1&amp;loop=1{% endif %}"
-                    title="{{ section.settings.titre | escape }}" loading="lazy"
-                    allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-          {%- endif -%}
+          <button type="button" class="fum-video__facade" data-fum-lecteur="{{ url_lecteur | escape }}"
+                  aria-label="Lire la vidéo : {{ titre_video }}">
+            <img src="{{ vignette }}" alt="" width="1280" height="720" loading="lazy"
+                 {%- if vignette_repli != blank %} data-repli="{{ vignette_repli }}"{% endif %}>
+            <span class="fum-video__lecture" aria-hidden="true">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l10.5-6.5L8 5.5z"/></svg>
+            </span>
+          </button>
         </div>
+        <p class="fum-video__secours">La vidéo ne se lance pas ? <a href="{{ url_page }}" target="_blank" rel="noopener">Regardez-la sur {{ nom_service }}</a></p>
+        <script>
+          (function () {
+            /* vignette YouTube : la haute definition n'existe pas toujours (image grise de 120 px) */
+            document.querySelectorAll('.fum-video__facade img[data-repli]').forEach(function (img) {
+              function repli() {
+                if (!img.dataset.repli) return;
+                var u = img.dataset.repli; img.removeAttribute('data-repli'); img.src = u;
+              }
+              if (img.complete && img.naturalWidth && img.naturalWidth <= 120) repli();
+              img.addEventListener('load', function () { if (img.naturalWidth <= 120) repli(); });
+              img.addEventListener('error', repli);
+            });
+            if (window.fumLecteurPret) return;
+            window.fumLecteurPret = true;
+            /* au clic : le vrai lecteur remplace la vignette et demarre */
+            document.addEventListener('click', function (e) {
+              var b = e.target.closest ? e.target.closest('[data-fum-lecteur]') : null;
+              if (!b) return;
+              var f = document.createElement('iframe');
+              f.src = b.getAttribute('data-fum-lecteur');
+              f.title = b.getAttribute('aria-label') || 'Vidéo';
+              f.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+              f.setAttribute('allowfullscreen', '');
+              b.replaceWith(f);
+              f.focus();
+            });
+          })();
+        </script>
       {%- else -%}
         <div class="fum-video fum-video--vide">
           <p><b>Vidéo de démonstration</b>Ajoutez la vidéo dans les réglages de cette section (fichier Shopify ou lien YouTube / Vimeo). Ce cadre n'apparaît pas sur la boutique.</p>
@@ -89,7 +166,8 @@
     { "type": "textarea", "id": "chapo", "label": "Chapo" },
     { "type": "header", "content": "Video" },
     { "type": "video", "id": "video", "label": "Video hebergee sur Shopify", "info": "Prioritaire sur le lien YouTube / Vimeo." },
-    { "type": "video_url", "id": "video_url", "label": "Ou lien YouTube / Vimeo", "accept": ["youtube", "vimeo"] },
+    { "type": "video_url", "id": "video_url", "label": "Ou lien YouTube / Vimeo", "accept": ["youtube", "vimeo"], "info": "Affiche une vignette ; le lecteur se charge au clic (evite le controle « robot » de YouTube)." },
+    { "type": "image_picker", "id": "vignette", "label": "Vignette personnalisee (facultatif)", "info": "Vide = vignette YouTube. Format 16:9 conseille." },
     {
       "type": "select", "id": "format", "label": "Format de la video", "default": "paysage",
       "options": [
@@ -98,7 +176,7 @@
         { "value": "carre", "label": "Carre 1:1" }
       ]
     },
-    { "type": "checkbox", "id": "lecture_auto", "label": "Lecture automatique en sourdine, en boucle", "default": true }
+    { "type": "checkbox", "id": "lecture_auto", "label": "Lecture automatique en sourdine, en boucle", "default": true, "info": "Pour la video hebergee sur Shopify uniquement. YouTube / Vimeo se lancent au clic." }
   ],
   "presets": [ { "name": "Fumee — video demo" } ]
 }

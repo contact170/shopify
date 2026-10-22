@@ -3,8 +3,8 @@
     "hero": {
       "type": "acc-hero",
       "settings": {
-        "marque": "Daewoo",
-        "reference": "",
+        "marque": "",
+        "reference": "anti-intrusion Daewoo F502W",
         "libelle_bouton": "Ajouter au panier",
         "mention_prix": "l'unité",
         "quantite_max": 20,
@@ -33,7 +33,8 @@
         "titre": "Le canon à fumée en action.",
         "chapo": "Le temps de lire cette phrase, la pièce a déjà disparu.",
         "format": "paysage",
-        "lecture_auto": true
+        "lecture_auto": true,
+        "video_url": "https://www.youtube.com/watch?v=yqqbwr84LiA"
       }
     },
     "efficacite": {
@@ -385,7 +386,7 @@
           "type": "spec",
           "settings": {
             "libelle": "Certifications",
-            "valeur": "CE, RoHS, REACH"
+            "valeur": "CE (RED), RoHS"
           }
         },
         "n1": {
@@ -553,10 +554,34 @@
             "question": "Que faire après un déclenchement ?",
             "reponse": "Aérez la pièce une fois le danger écarté. Laissez refroidir l'appareil environ 2 heures, car la buse devient brûlante, puis remplacez la cartouche par une recharge F502R : le canon est de nouveau opérationnel."
           }
+        },
+        "q_surface": {
+          "type": "question",
+          "settings": {
+            "question": "Quelle surface protège un canon à fumée F502W ?",
+            "reponse": "Une pièce de 100 à 150 m³, soit environ 40 à 60 m² sous un plafond de 2,50 m. Pour un logement plus grand, prévoyez un appareil par pièce à protéger, en priorité sur le passage obligé d'un intrus : entrée, séjour, bureau."
+          }
+        },
+        "q_difference": {
+          "type": "question",
+          "settings": {
+            "question": "Quelle différence entre un canon à fumée et une alarme ?",
+            "reponse": "Une alarme détecte et alerte : la sirène prévient, la caméra filme, mais le cambrioleur peut continuer à se servir. Le canon à fumée agit au moment même de l'intrusion : en 8 secondes la pièce devient opaque et il n'y a plus rien à voler. Les deux se complètent : l'alarme donne l'alerte, le canon à fumée empêche le vol."
+          }
+        },
+        "q_legal": {
+          "type": "question",
+          "settings": {
+            "question": "Un canon à fumée est-il légal en France ?",
+            "reponse": "Oui. Particuliers comme professionnels peuvent installer un canon à fumée chez eux ou dans leur commerce, sans autorisation ni déclaration. Le F502W agit uniquement sur la visibilité : la fumée, déclarée non toxique par le fabricant, empêche l'intrus de voir et de trouver vos biens."
+          }
         }
       },
       "block_order": [
         "q_temps",
+        "q_surface",
+        "q_difference",
+        "q_legal",
         "q_danger",
         "q_internet",
         "q_abonnement",
@@ -710,6 +735,16 @@
       "settings": {
         "surtitre": "En résumé"
       }
+    },
+    "video_seo": {
+      "type": "fumee-video-seo",
+      "settings": {
+        "video_url": "https://www.youtube.com/watch?v=yqqbwr84LiA",
+        "nom": "Canon à fumée Daewoo F502W en action : une pièce opaque en 8 secondes",
+        "description": "Démonstration du canon à fumée anti-intrusion Daewoo F502W : déclenché lors d'une intrusion, il remplit une pièce de 100 à 150 m³ d'un brouillard opaque et non toxique en 8 secondes. Le cambrioleur ne voit plus rien et repart les mains vides. Sans abonnement, compatible avec toutes les alarmes Daewoo.",
+        "date": "2026-10-22",
+        "duree": ""
+      }
     }
   },
   "order": [
@@ -717,6 +752,7 @@
     "seo",
     "option",
     "video",
+    "video_seo",
     "efficacite",
     "chrono",
     "declenchement",

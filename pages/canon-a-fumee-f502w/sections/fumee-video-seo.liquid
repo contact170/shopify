@@ -1,0 +1,61 @@
+{%- comment -%}
+  Donnees structurees VideoObject (schema.org) pour une video YouTube ou
+  Vimeo affichee sur la page. Section invisible : elle aide Google
+  (resultats video) et les moteurs de reponse IA a comprendre la video.
+  Rien n'est emis si le lien ou la date de mise en ligne manque.
+{%- endcomment -%}
+{%- liquid
+  assign lien = section.settings.video_url
+  assign date_video = section.settings.date | strip
+-%}
+{%- if lien != blank and date_video != blank -%}
+  {%- liquid
+    if lien.type == 'youtube'
+      assign url_video = 'https://www.youtube.com/watch?v=' | append: lien.id
+      assign url_embed = 'https://www.youtube-nocookie.com/embed/' | append: lien.id
+      assign vignette = 'https://i.ytimg.com/vi/' | append: lien.id | append: '/hqdefault.jpg'
+    else
+      assign url_video = 'https://vimeo.com/' | append: lien.id
+      assign url_embed = 'https://player.vimeo.com/video/' | append: lien.id
+      assign vignette = product.featured_image | image_url: width: 1280 | prepend: 'https:'
+    endif
+    assign nom = section.settings.nom | default: product.title
+    assign desc = section.settings.description | strip
+    if desc == blank
+      assign desc = product.description | strip_html | strip_newlines | strip | truncate: 500
+    endif
+  -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": {{ nom | json }},
+  "description": {{ desc | json }},
+  "thumbnailUrl": [{{ vignette | json }}],
+  "uploadDate": {{ date_video | json }},
+  {%- if section.settings.duree != blank %}
+  "duration": {{ section.settings.duree | json }},
+  {%- endif %}
+  "contentUrl": {{ url_video | json }},
+  "embedUrl": {{ url_embed | json }},
+  "inLanguage": "fr",
+  "publisher": { "@type": "Organization", "name": {{ shop.name | json }}, "url": {{ shop.url | json }} },
+  "about": { "@id": {{ '/products/' | append: product.handle | append: '#product' | json }} }
+}
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Video — SEO",
+  "settings": [
+    { "type": "paragraph", "content": "Section invisible : decrit la video de demonstration pour Google et les moteurs IA." },
+    { "type": "video_url", "id": "video_url", "label": "Lien YouTube / Vimeo (le meme que la video affichee)", "accept": ["youtube", "vimeo"] },
+    { "type": "text", "id": "nom", "label": "Titre de la video" },
+    { "type": "textarea", "id": "description", "label": "Description de la video", "info": "Vide = description du produit." },
+    { "type": "text", "id": "date", "label": "Date de mise en ligne", "info": "Format AAAA-MM-JJ, ex. 2026-10-22. Obligatoire." },
+    { "type": "text", "id": "duree", "label": "Duree (facultatif)", "info": "Format ISO 8601, ex. PT1M30S pour 1 min 30 s." }
+  ],
+  "presets": [ { "name": "Video — SEO" } ]
+}
+{% endschema %}
