@@ -20,7 +20,10 @@
       assign vignette = product.featured_image | image_url: width: 1280 | prepend: 'https:'
     endif
     assign nom = section.settings.nom | default: product.title
-    assign desc = section.settings.description | default: product.description | strip_html | strip_newlines | strip | truncate: 300
+    assign desc = section.settings.description | strip
+    if desc == blank
+      assign desc = product.description | strip_html | strip_newlines | strip | truncate: 500
+    endif
   -%}
 <script type="application/ld+json">
 {
