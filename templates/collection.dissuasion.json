@@ -290,6 +290,14 @@
             "titre": "Garage et atelier",
             "texte": "Outillage, vélos, matériel de jardin : des cibles faciles, protégées sans abonnement."
           }
+        },
+        "secondaire": {
+          "type": "usage",
+          "settings": {
+            "icone": "maison",
+            "titre": "Résidence secondaire",
+            "texte": "Absent pendant des semaines ? Une alerte, un coup d'œil aux caméras, et vous déclenchez le canon à distance depuis l'application."
+          }
         }
       },
       "block_order": [
@@ -297,7 +305,8 @@
         "appartement",
         "commerce",
         "bureau",
-        "garage"
+        "garage",
+        "secondaire"
       ]
     },
     "guide": {
