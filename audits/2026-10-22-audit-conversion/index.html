@@ -458,7 +458,7 @@ html{scroll-behavior:smooth}
     <article class="f">
       <header><span class="sev crit">Critique</span><h4>Les ventes du configurateur et des offres sortent des statistiques de la boutique</h4></header>
       <dl>
-        <dt>Constat</dt><dd>Depuis avril, un canal de vente « Lovable » est apparu : 154 commandes et 69,5 k€ en 90 jours, avec un panier moyen de 466 €. Les parcours clients de ces commandes partent bien du site : Google Ads, puis <span class="mono">/pages/offre-speciale</span>, le comparateur ou une fiche. Mais la commande est enregistrée dans un autre canal et n'est pas rattachée à la session de la boutique.</dd>
+        <dt>Constat</dt><dd>Depuis avril, un canal de vente « Lovable » est apparu : 154 commandes et 69,5 k€ en 90 jours, avec un panier moyen de 466 €. Les parcours clients de ces commandes partent bien du site : Google Ads, puis <span class="mono">/pages/offre-speciale</span>, le comparateur ou une fiche. Mais la commande est enregistrée dans un autre canal et n'est pas rattachée à la session de la boutique. Le code du configurateur le confirme : il crée son propre panier Shopify (attribut <span class="mono">Source=Lovable</span>) et envoie directement au paiement (voir la partie 4).</dd>
         <dt>Effet</dt><dd><ul>
           <li>Le taux de conversion affiché (≈ 1,0 %) sous-estime la réalité : ≈ 1,8 % en comptant ces commandes, probablement près de 2 % hors robots.</li>
           <li>Le taux de finalisation du paiement semble s'effondrer (≈ 68 % en avril, 33 à 41 % en septembre-octobre). Or la baisse coïncide avec la montée du canal Lovable : des visiteurs arrivent au paiement depuis la boutique et la commande est comptée ailleurs.</li>
@@ -660,25 +660,61 @@ html{scroll-behavior:smooth}
 <!-- ============ 4. CONFIGURATEUR ============ -->
 <section id="configurateur">
   <h2><span class="n">4</span>Configurateur, comparateur et pages Lovable</h2>
-    <p class="intro">Trois pages clés reposent sur des applications externes hébergées chez Lovable : le configurateur (<span class="mono">configurateur-daewoo.lovable.app</span>), la page « Tous les packs » (<span class="mono">security-pack-unpacker.lovable.app</span>) et la boutique de l'application (<span class="mono">appmall.lovable.app</span>). Elles reçoivent tous les clics « Voir tous les packs », la barre collante de l'accueil, le dock « Mon alarme » et la première entrée du menu.</p>
+    <p class="intro">Trois pages clés reposent sur des applications externes hébergées chez Lovable : le configurateur (<span class="mono">configurateur-daewoo.lovable.app</span>), la page « Tous les packs » (<span class="mono">security-pack-unpacker.lovable.app</span>) et la boutique de l'application (<span class="mono">appmall.lovable.app</span>). Elles reçoivent tous les clics « Voir tous les packs », la barre collante de l'accueil, le dock « Mon alarme » et la première entrée du menu. Le domaine du configurateur étant bloqué dans notre environnement de test, son code source a été lu directement dans votre projet Lovable (« Configurateur Site Daewoo Security », lecture seule).</p>
   <div class="findings">
     <article class="f">
-      <header><span class="sev high">Élevé</span><h4>La page « Tous les packs » est une iframe : invisible pour Google, les IA et vos statistiques</h4></header>
+      <header><span class="sev crit">Critique</span><h4>Le configurateur contourne le panier Shopify et envoie directement au paiement</h4></header>
       <dl>
-        <dt>Constat</dt><dd><span class="mono">/pages/pack-alarmes</span> contient un H1 « pack alarmes », une phrase et une iframe d'au moins 1 000 px de haut. Le HTML ne contient aucun lien vers un produit, aucun prix, aucune donnée structurée. llms.txt la présente pourtant comme la page de référence des packs. Une iframe d'un autre domaine pose aussi deux risques sur iPhone : Safari limite les cookies tiers, et le panier risque donc de ne pas suivre ; et chaque chargement ajoute un point de panne externe.</dd>
-        <dt>Action</dt><dd>Une grille de packs en section Shopify native, filtrable par gamme (Vigilia, Touch, Élite), avec photo, prix, note et ajout au panier. À défaut, une redirection 301 vers la collection <span class="mono">starters-packs</span> enrichie.</dd>
+        <dt>Constat</dt><dd>Le configurateur garde son propre panier. Au clic sur « Commander », il crée un nouveau panier Shopify via l'API Storefront, avec les codes <span class="mono">PACKxx</span>, l'attribut <span class="mono">Source=Lovable</span> et la note « Commande passée via le configurateur Lovable — Devis X ». Puis il envoie le client directement sur la page de paiement, en sautant volontairement la page panier pour qu'on ne retire pas le kit en gardant la remise. C'est l'origine du canal de vente « Lovable » (154 commandes, 69,5 k€).</dd>
+        <dt>Effet</dt><dd><ul>
+          <li>Le panier n'est pas partagé : les articles déjà dans le panier du visiteur ne suivent pas, et le tiroir panier et ses ventes additionnelles ne voient jamais la configuration.</li>
+          <li>Aucun « ajout au panier » n'est enregistré par Shopify, GA4 ou Meta. Les 0,5 % (mobile) et 3,4 % (ordinateur) affichés pour cette page ne mesurent pas le configurateur.</li>
+          <li>À l'inverse, l'Appmall utilise déjà le bon mécanisme : un message vers la page, puis ajout au panier Shopify natif.</li>
+        </ul></dd>
+        <dt>Action</dt><dd><ol>
+          <li>Tout de suite : votre projet Lovable enregistre déjà chaque étape du parcours, avec le type d'appareil (table <span class="mono">funnel_events</span>, page <span class="mono">/admin/funnel</span>). S'en servir pour calculer le vrai tunnel par appareil, et ajouter l'appareil et les UTM aux attributs du panier créé.</li>
+          <li>Ensuite : faire passer le configurateur par le panier natif, comme l'Appmall (plusieurs lignes par message, puis ouverture du tiroir panier). Protéger la remise par une réduction automatique Shopify conditionnée au kit complet, ou par un produit groupé.</li>
+        </ol></dd>
+      </dl>
+      <footer><span class="tag">Effort faible (mesure), moyen (bascule)</span><span class="tag">Développeur</span><span class="tag">Preuve : code src/lib/shopify.ts du projet Lovable</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Sur iPhone, le bouton « Commander » démarre hors de l'écran</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Sur iPhone Safari, le script d'intégration fixe le cadre du configurateur à la hauteur de l'écran et fait défiler l'application à l'intérieur. Sur iPhone 13, ce cadre commence à 186 px du haut de la page, sous la barre promo et l'en-tête. Sa partie basse, où se trouvent le prix total et le bouton « Commander », est donc 186 px sous l'écran tant que la page n'a pas défilé, et le doigt fait défiler le cadre plutôt que la page. Des corrections récentes de Lovable (12 et 13 septembre) portent déjà sur ce double défilement.</dd>
+        <dt>Action</dt><dd>Sur mobile, afficher le configurateur en plein écran : collé en haut de page (hauteur <code>100dvh</code>, barre promo et pied de page masqués), ou ouvert sur une page dédiée, par exemple <span class="mono">configurateur.daewoo-security.fr</span>. Valider sur un vrai iPhone.</dd>
       </dl>
       <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span></footer>
     </article>
     <article class="f">
-      <header><span class="sev high">Élevé</span><h4>Configurateur : 0,5 % sur mobile contre 3,4 % sur ordinateur, mais une partie des ventes est comptée ailleurs</h4></header>
+      <header><span class="sev high">Élevé</span><h4>Navigateurs Instagram et Facebook : probablement le mode le moins stable</h4></header>
       <dl>
-        <dt>Constat</dt><dd>Dans les statistiques de la boutique, le configurateur convertit 0,5 % des sessions mobiles (799) contre 3,4 % sur ordinateur (551). Les commandes qu'il génère semblent en partie passer par le canal Lovable (panier moyen 466 €), non rattaché aux sessions : son vrai rendement est donc sous-estimé, surtout là où il est le plus utilisé. Le script intégré porte la version <span class="mono">20260913-iphone-safari</span>, signe que des correctifs pour l'iPhone ont déjà été nécessaires. Le contenu de repli (≈ 620 mots) est bien lisible par Google.</dd>
-        <dt>Action</dt><dd><ol>
-          <li>Tester sur un vrai iPhone (Safari, navigation privée) et sur Android Chrome jusqu'à l'ajout au panier.</li>
-          <li>Faire ajouter les produits au panier Shopify natif par message vers la page parente, comme le fait déjà l'Appmall, plutôt qu'un paiement séparé.</li>
-          <li>Suivre chaque étape du configurateur comme un événement (démarrage, étapes, ajout au panier) pour voir où les mobinautes abandonnent.</li>
-        </ol></dd>
+        <dt>Constat</dt><dd>Le script ne reconnaît Safari que si son nom figure dans l'identifiant du navigateur. Les navigateurs intégrés d'Instagram et de Facebook sur iPhone ne l'indiquent généralement pas. Ils basculent donc dans le mode que le code lui-même juge instable sur iPhone. C'est une hypothèse forte, cohérente avec les 3 commandes pour 4 800 visites venues de Facebook et Instagram.</dd>
+        <dt>Action</dt><dd>Tester le parcours complet dans Instagram et Facebook (iPhone et Android) et dans Chrome Android. Appliquer le mode iPhone à tout navigateur iOS, pas seulement à Safari.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible</span><span class="tag">Développeur</span><span class="tag">À tester sur appareil réel</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>Le passage au paiement peut échouer sans message sur mobile</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Jusqu'au 13 septembre, le configurateur ouvrait un onglet vierge puis le remplissait 1 à 2 s plus tard. Or les navigateurs intégrés aux applications bloquent souvent ce type d'ouverture, comme le note le plan de correction de Lovable lui-même. Ce mécanisme a tourné pendant près de la moitié de la période analysée. Depuis, l'application redirige la page entière après l'appel réseau qui crée le panier. Un cadre d'un autre domaine ne peut faire cela que juste après un clic : si la 4G est lente, le navigateur peut bloquer la redirection sans rien afficher.</dd>
+        <dt>Action</dt><dd>Comparer la conversion mobile du configurateur avant et après le 14 septembre, grâce aux étapes enregistrées dans votre projet Lovable. Faire rediriger la page Shopify elle-même : l'application lui envoie le lien de paiement par message.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible à moyen</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev med">Moyen</span><h4>Trop d'étapes et d'éléments avant la première question</h4></header>
+      <dl>
+        <dt>Constat</dt><dd>Sous l'en-tête Shopify, l'application affiche son propre en-tête, une page d'accueil (« Quelle alarme pour votre logement ? Réponse en 2 minutes », chiffres clés, « Comment ça marche ») et, selon les réglages, plusieurs bandeaux et fenêtres promotionnels. La même page charge aussi l'assistant Chatbase et le dock mobile du thème. Si l'application ne se charge pas, le visiteur voit au bout de 8 s « Le configurateur nécessite JavaScript pour fonctionner » (message faux), puis environ 700 px de blanc. Enfin, le script d'intégration est chargé sans <code>defer</code> au milieu de la page.</dd>
+        <dt>Action</dt><dd>Version intégrée qui démarre directement à la question 1, sans en-tête ni pied de page propres. Une seule barre collante (prix + Commander). Chatbase et dock désactivés sur cette page. Un vrai écran de secours si l'application ne répond pas : packs prêts, comparateur, téléphone. Script en <code>defer</code> avec <code>preconnect</code>.</dd>
+      </dl>
+      <footer><span class="tag">Effort faible à moyen</span><span class="tag">Développeur</span></footer>
+    </article>
+    <article class="f">
+      <header><span class="sev high">Élevé</span><h4>La page « Tous les packs » est une iframe : invisible pour Google, les IA et vos statistiques</h4></header>
+      <dl>
+        <dt>Constat</dt><dd><span class="mono">/pages/pack-alarmes</span> contient un H1 « pack alarmes », une phrase et une iframe d'au moins 1 000 px de haut. Le HTML ne contient aucun lien vers un produit, aucun prix, aucune donnée structurée. llms.txt la présente pourtant comme la page de référence des packs. Son mode d'ajout au panier n'a pas pu être vérifié : le pont vers le panier natif du thème n'accepte que les messages de l'Appmall.</dd>
+        <dt>Action</dt><dd>Une grille de packs en section Shopify native, filtrable par gamme (Vigilia, Touch, Élite), avec photo, prix, note et ajout au panier. À défaut, une redirection 301 vers la collection <span class="mono">starters-packs</span> enrichie.</dd>
       </dl>
       <footer><span class="tag">Effort moyen</span><span class="tag">Développeur</span></footer>
     </article>
@@ -1124,6 +1160,7 @@ html{scroll-behavior:smooth}
       <tr><td>SEO technique</td><td>Exploration des 232 URL du sitemap (statut, titres, H1, canonical, données structurées, images), <span class="mono">products.json</span> (161 produits)</td><td>Vérifié</td></tr>
       <tr><td>UX mobile et paiement</td><td>Navigateur automatisé en émulation iPhone 13, Pixel 7, 360 px ; ajout au panier et première page du paiement, sans saisie ni commande</td><td>Vérifié, hors domaines bloqués</td></tr>
       <tr><td>Performance</td><td>Lighthouse 12.8 en local, mobile simulé (4G lente, processeur ×4), deux passages</td><td>Mesure de laboratoire, pas de données de terrain</td></tr>
+      <tr><td>Configurateur</td><td>Lecture du code source du projet Lovable « Configurateur Site Daewoo Security » (lecture seule) et du HTML de la page ; mesures de position sur iPhone 13</td><td>Vérifié dans le code ; comportement réel à tester sur téléphone</td></tr>
       <tr><td>GEO et réputation</td><td>11 requêtes et leurs variantes, lecture du HTML brut, extraits de résultats pour Trustpilot, Amazon, Que Choisir</td><td>Indicatif, à reconfirmer depuis la France</td></tr>
     </tbody>
   </table>
