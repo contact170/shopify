@@ -1,0 +1,517 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "guide": {
+      "type": "guide-elite",
+      "blocks": {
+        "check_wifi": {
+          "type": "check",
+          "settings": {
+            "title": "Votre téléphone est connecté au Wi-Fi 2,4 GHz de votre box",
+            "detail": "La centrale ne capte pas le 5 GHz. Si votre box mélange les deux, voir l'aide de l'étape 3."
+          }
+        },
+        "check_pwd": {
+          "type": "check",
+          "settings": {
+            "title": "Votre mot de passe Wi-Fi est simple",
+            "detail": "20 caractères maximum, sans caractères spéciaux (@ # $ % & …), sécurité WPA/WPA2."
+          }
+        },
+        "check_cable": {
+          "type": "check",
+          "settings": {
+            "title": "Le câble Ethernet fourni est à portée de main",
+            "detail": "C'est le plan B si l'installation en Wi-Fi ne passe pas : par câble, c'est encore plus simple."
+          }
+        },
+        "check_near": {
+          "type": "check",
+          "settings": {
+            "title": "Vous êtes à côté de la centrale et de votre box",
+            "detail": "Vous fixerez la centrale au mur à la fin, une fois tout testé."
+          }
+        },
+        "step_app": {
+          "type": "step",
+          "settings": {
+            "title": "Téléchargez l'appli et créez votre compte",
+            "summary": "Daewoo Home Connect, gratuite sur iPhone et Android",
+            "duration": "3 min",
+            "content": "<ol><li>Sur votre téléphone, cherchez <strong>« Daewoo Home Connect »</strong> dans l'App Store ou Google Play et installez l'appli.</li><li>Ouvrez-la et entrez votre <strong>adresse e-mail</strong>.</li><li>Recopiez le <strong>code reçu par e-mail</strong>.</li><li>Choisissez un <strong>mot de passe</strong>.</li></ol>",
+            "show_store_buttons": true,
+            "warning": "<p><strong>Notez bien votre mot de passe.</strong> Le partage d'appareil n'est pas disponible sur l'Élite : pour que vos proches pilotent l'alarme, vous leur donnerez ces identifiants.</p>",
+            "help_title": "Je ne reçois pas le code par e-mail",
+            "help_content": "<ul><li>Regardez dans vos <strong>courriers indésirables (spams)</strong>.</li><li>Vérifiez que l'adresse e-mail saisie ne contient pas de faute.</li><li>Patientez une minute puis redemandez un code.</li></ul>"
+          }
+        },
+        "step_power": {
+          "type": "step",
+          "settings": {
+            "title": "Branchez et allumez la centrale",
+            "summary": "Puis laissez-la démarrer 1 minute",
+            "duration": "2 min",
+            "content": "<ol><li>Au dos de la centrale, <strong>tirez et retirez le panneau arrière</strong>.</li><li><strong>Branchez</strong> l'adaptateur secteur fourni (12V 1A) sur le port d'alimentation.</li><li>Appuyez sur le <strong>bouton d'alimentation</strong>.</li><li>Le voyant passe par toutes les couleurs : <strong>patientez environ 1 minute</strong>, le temps que la centrale termine son démarrage.</li></ol>",
+            "image": "shopify://shop_images/centrale-alarme-daewoo-pa501z-elite-image-principale.webp",
+            "caption": "La centrale Élite PA501Z",
+            "image_2": "shopify://shop_images/centrale-elite-pa501z-face-arriere-legendes.webp",
+            "caption_2": "Panneau arrière retiré : bouton reset, ports Ethernet et alimentation, fente SIM, bouton d'alimentation",
+            "tip": "<p><strong>Après chaque mise sous tension, attendez environ 1 minute avant d'appuyer sur RESET.</strong> Si vous appuyez trop tôt, la remise à zéro peut ne pas fonctionner.</p>",
+            "help_title": "La centrale ne s'allume pas ?",
+            "help_content": "<ul><li>Vérifiez que l'adaptateur fourni (<strong>12V 1A</strong>) est bien branché, et essayez une autre prise.</li><li>Appuyez à nouveau sur le <strong>bouton d'alimentation</strong>.</li><li>La batterie de secours peut être vide : laissez la centrale branchée quelques minutes.</li></ul>"
+          }
+        },
+        "step_install": {
+          "type": "step",
+          "settings": {
+            "title": "Ajoutez la centrale dans l'appli",
+            "summary": "En Wi-Fi (mode AP), ou par câble Ethernet",
+            "duration": "5 min",
+            "content": "<ol><li>Dans l'appli, touchez le <strong>+ orange</strong> en haut à droite › <strong>« Ajouter un appareil »</strong> › menu <strong>« Sécurité »</strong> › <strong>centrale PA501Z</strong>.</li><li>En haut à droite, choisissez <strong>« Mode AP »</strong>, puis touchez « Suivant ».</li><li>Appuyez sur le <strong>bouton RESET</strong> au dos de la centrale : le voyant <strong>clignote vite en bleu</strong>. Touchez « Suivant » et cochez « Vérifiez que le témoin clignote en bleu ».</li><li>Votre téléphone est sur le Wi-Fi 2,4 GHz : touchez <strong>« Déjà configuré »</strong>, puis entrez le <strong>mot de passe de votre Wi-Fi</strong>.</li><li>Touchez <strong>« Se connecter maintenant »</strong> : dans les réglages Wi-Fi du téléphone, connectez-vous au réseau <strong>Smartlife-XXXX</strong>, puis revenez dans l'appli.</li><li>L'appli trouve la centrale : renommez-la si besoin et touchez <strong>« Terminé »</strong>.</li></ol>",
+            "image": "shopify://shop_images/Videos_scenarios_manuel_vigilia_1.png",
+            "caption": "Touchez le + orange",
+            "video_url": "https://www.youtube.com/watch?v=TcLyHDCRFPo",
+            "video_label": "Voir l'installation en vidéo",
+            "tip": "<p>Renommez la centrale avec le crayon ✏️ (ex : « Alarme Maison ») : ce sera plus clair dans vos notifications.</p>",
+            "help_title": "Le Wi-Fi ne passe pas ? Installez-la par câble",
+            "help_content": "<p><strong>Installation par câble Ethernet</strong></p><ol><li>Reliez la centrale à votre box avec le <strong>câble Ethernet fourni</strong>, et branchez-la sur secteur.</li><li>Dans l'appli : <strong>+</strong> › « Ajouter un appareil » › « Sécurité » › PA501Z, puis <strong>« Mode câble »</strong> en haut à droite. Touchez « Suivant ».</li><li>Maintenez le bouton <strong>RESET 8 secondes</strong> : le voyant clignote vite en bleu. Touchez « Suivant ».</li><li>L'appli trouve la centrale : touchez <strong>« Terminé »</strong>.</li></ol><p>La centrale n'apparaît pas sur la page d'accueil ? Touchez « Tous les appareils », restez appuyé sur la centrale et choisissez <strong>« Ajouter au domicile »</strong>.</p><p><strong>Votre box mélange 2,4 GHz et 5 GHz ?</strong> Dans les réglages de votre box, séparez les deux réseaux ou coupez le 5 GHz le temps de l'installation. Votre box a un <strong>VPN ou un antivirus</strong> ? Désactivez-les le temps de l'installation.</p><p><strong>Le voyant ne clignote pas en bleu après RESET ?</strong> Voir la question « Le bouton RESET ne fait rien » en bas de la page.</p>"
+          }
+        },
+        "step_protect": {
+          "type": "step",
+          "settings": {
+            "title": "Activez la protection intelligente",
+            "summary": "Pour faire apparaître les boutons Armé, Désarmé et Mode maison",
+            "duration": "1 min",
+            "content": "<ol><li>En bas de l'appli, touchez l'onglet <strong>« Intelligent »</strong>, puis <strong>« Protection intelligente »</strong>.</li><li>Touchez le <strong>bouclier 🛡️</strong> en haut à droite.</li><li>Activez <strong>« Protection intelligente »</strong>.</li><li>Revenez sur l'onglet « Intelligent » : les boutons <strong>Armé</strong>, <strong>Désarmé</strong> et <strong>Mode maison</strong> sont là. ✅</li></ol>"
+          }
+        },
+        "step_acc": {
+          "type": "step",
+          "settings": {
+            "title": "Ajoutez vos accessoires",
+            "summary": "Détecteurs, contacteurs, clavier, télécommandes, sirènes…",
+            "duration": "1 min / accessoire",
+            "alert": "<p><strong>Important : un accessoire à la fois.</strong> Au fur et à mesure, posez chaque accessoire installé <strong>ailleurs, hors de vue</strong> (dans une autre pièce ou un tiroir). Sinon, l'accessoire déjà installé et le nouveau peuvent envoyer un signal <strong>en même temps</strong>, et l'installation échoue.</p>",
+            "content": "<p>Le principe est toujours le même : dans l'appli, <strong>ouvrez votre centrale › Appareil › « Ajout rapide »</strong>. Le voyant de la centrale clignote en vert : vous avez <strong>2 minutes</strong> pour réveiller l'accessoire (bouton PAIRING, bouton au dos…).</p><p>La centrale émet <strong>2 bips</strong> quand l'ajout est réussi (3 bips : accessoire déjà ajouté). Confirmez dans l'appli.</p>",
+            "show_accessories": true,
+            "video_url": "https://www.youtube.com/watch?v=1bIcX8cG3-Q",
+            "video_label": "Voir l'ajout d'un accessoire en vidéo",
+            "tip": "<p>Les accessoires s'ajoutent <strong>uniquement depuis la page de la centrale</strong>, pas avec le + de la page d'accueil. Ajoutez-les un par un, à côté de la centrale : vous les poserez à leur place ensuite.</p>",
+            "help_title": "L'accessoire n'est pas détecté ?",
+            "help_content": "<ul><li>Touchez à nouveau <strong>« Ajout rapide »</strong> : le voyant de la centrale doit clignoter en vert.</li><li>Rapprochez l'accessoire de la centrale (moins de 10 mètres).</li><li>Vérifiez les <strong>piles</strong> et retirez la <strong>languette de sécurité</strong> si elle est encore là.</li><li>Pour les accessoires Zigbee (WDS502Z, WVD502Z), restez appuyé plus longtemps sur le bouton <strong>PAIRING</strong>.</li><li><strong>3 bips</strong> : l'accessoire est déjà ajouté. Retrouvez-le dans votre centrale › Appareil.</li></ul>"
+          }
+        },
+        "step_modes": {
+          "type": "step",
+          "settings": {
+            "title": "Dites à l'alarme quand chaque accessoire surveille",
+            "summary": "Indispensable : sinon l'accessoire est ignoré",
+            "duration": "3 min",
+            "alert": "<p><strong>Indispensable :</strong> un accessoire qui n'est coché dans aucun mode <strong>n'est pas pris en compte</strong> par l'alarme.</p>",
+            "content": "<ol><li>Touchez l'onglet <strong>« Intelligent »</strong> (en bas de l'appli) › <strong>« Protection intelligente »</strong> › le <strong>bouclier 🛡️</strong> en haut à droite › <strong>« Paramètres des accessoires »</strong>.</li><li>Dans <strong>« Actif en mode armé »</strong>, cochez les accessoires qui surveillent quand vous êtes absent : en général, tous les détecteurs et contacteurs.</li><li>Dans <strong>« Actif en mode maison »</strong>, cochez ceux qui restent actifs quand vous êtes chez vous : portes et fenêtres extérieures, mais <strong>pas</strong> les détecteurs de mouvement intérieurs.</li><li>Dans <strong>« Actif 24/24h »</strong>, cochez les détecteurs de <strong>fumée</strong> et de <strong>fuite d'eau</strong> : ils restent actifs même alarme désarmée.</li><li>Enregistrez. ✅</li></ol><p>Un accessoire peut être coché à la fois en mode armé et en mode maison.</p><p><strong>Temporisations</strong> (même page) : le <strong>délai de sortie</strong> vous laisse le temps de partir après avoir armé, le <strong>délai d'entrée</strong> le temps de désarmer en rentrant (0 à 180 secondes). Ils se règlent séparément pour le mode armé et le mode maison, et s'appliquent à tous les accessoires.</p>",
+            "tip": "<p>Conseil : 30 secondes de délai d'entrée, et 30 à 60 secondes de délai de sortie selon la taille de votre logement.</p>"
+          }
+        },
+        "step_cam": {
+          "type": "step",
+          "settings": {
+            "title": "Installez votre caméra IP506P",
+            "summary": "Si votre pack en contient une : elle s'ajoute en Bluetooth en 2 minutes",
+            "duration": "3 min",
+            "content": "<ol><li><strong>Branchez</strong> la caméra sur une prise avec l'adaptateur et le câble fournis.</li><li>Mettez la caméra en mode appairage : repliez la tête de la caméra vers le bas (voir photo), puis appuyez <strong>8 à 10 secondes sur le bouton RESET</strong>, jusqu'au <strong>signal sonore</strong>.</li><li><strong>Avec le Bluetooth activé</strong> : la caméra apparaît en haut de l'appli, dans <strong>« Détection des appareils »</strong>. Touchez <strong>« Ajouter »</strong>.</li><li>Choisissez votre <strong>Wi-Fi 2,4 GHz</strong>, entrez son mot de passe et patientez.</li><li>Donnez-lui un nom (ex : « Caméra Salon »). ✅</li></ol><p><strong>La caméra n'apparaît pas ?</strong> Ajoutez-la par QR code : voir l'aide en bas de cette étape.</p><p><strong>Pour enregistrer les vidéos en cas de détection de mouvement</strong>, vous avez 2 possibilités :</p><ul><li><strong>Une carte microSD</strong> (non fournie, jusqu'à 128 Go) : insérez-la dans l'emplacement prévu <strong>caméra débranchée</strong>, puis rebranchez-la. Si l'appli propose de formater la carte, patientez environ 2 minutes.</li><li><strong>Ou un abonnement de stockage Cloud</strong>, à souscrire directement dans l'appli Daewoo Home Connect.</li></ul><p>Sans l'un ou l'autre, la caméra fonctionne en direct et vous envoie les alertes avec photo, mais n'enregistre pas de vidéo.</p>",
+            "image": "shopify://shop_images/camera-daewoo-ip506p-mode-vie-privee.webp",
+            "caption": "Tête repliée : le bouton RESET et l'emplacement de la carte microSD apparaissent",
+            "tip": "<p>Posez la caméra sur un meuble ou fixez son support au mur avec les vis fournies. Évitez de la placer face à un miroir, et gardez-la à au moins 1 mètre des autres appareils sans fil.</p>",
+            "help_title": "La caméra n'apparaît pas ? Installation par QR code",
+            "help_content": "<ol><li>Refaites l'appui long sur <strong>RESET</strong> (8 à 10 s) jusqu'au signal sonore.</li><li>Dans l'appli : touchez le <strong>+</strong> en haut à droite › <strong>« Ajouter un appareil »</strong> › choisissez <strong>IP506P</strong> dans la liste.</li><li>Choisissez votre <strong>Wi-Fi 2,4 GHz</strong> et entrez son mot de passe.</li><li>Un <strong>QR code</strong> s'affiche sur votre téléphone : montrez-le à l'objectif de la caméra. Dès que la caméra bipe, touchez <strong>« J'ai entendu un bip »</strong>.</li><li>La caméra est détectée : touchez <strong>+</strong> pour confirmer, puis donnez-lui un nom. ✅</li></ol><ul><li>Vérifiez que votre téléphone est sur le <strong>Wi-Fi 2,4 GHz</strong> et que le mot de passe est simple (20 caractères max, sans caractère spécial).</li><li>Pour le QR code : augmentez la luminosité de votre téléphone et avancez-le ou reculez-le doucement devant l'objectif.</li><li>Rapprochez la caméra de votre box le temps de l'installation.</li></ul><p>Le manuel de la caméra est disponible en bas de cette page.</p>"
+          }
+        },
+        "step_test": {
+          "type": "step",
+          "settings": {
+            "title": "Testez votre alarme",
+            "summary": "Armer, désarmer : vérifiez que tout répond",
+            "duration": "2 min",
+            "content": "<ol><li>Dans l'appli, onglet <strong>« Intelligent »</strong> › <strong>« Protection intelligente »</strong>, touchez <strong>Armé</strong>. Le voyant de la centrale fait <strong>1 éclair rouge</strong>.</li><li>Touchez <strong>Désarmé</strong> : <strong>2 éclairs rouges</strong>.</li><li>Touchez <strong>Mode maison</strong> : <strong>3 éclairs rouges</strong>.</li><li>Refaites l'essai avec la <strong>télécommande</strong> ou le <strong>clavier</strong>.</li></ol><p><strong>Testez aussi un déclenchement</strong> : alarme armée, ouvrez une porte équipée d'un contacteur. Après le délai d'entrée, la sirène sonne et le voyant clignote vite en rouge. Désarmez.</p>",
+            "warning": "<p>Si le volume de la sirène de la centrale est réglé sur <strong>« Silencieux »</strong>, les sirènes déportées ne sonnent pas non plus. Réglage : page de la centrale › <strong>Paramètres</strong> › Alarme.</p>",
+            "tip": "<p>Ajoutez des <strong>contacts d'urgence</strong> (nom, téléphone au format +336…, e-mail) : ils sont prévenus par appel, SMS et e-mail en cas de déclenchement. Touchez l'onglet <strong>« Intelligent »</strong> (en bas de l'appli) › <strong>« Protection intelligente »</strong> › le <strong>bouclier 🛡️</strong> en haut à droite › « Contacts d'urgence ».</p>"
+          }
+        },
+        "step_wall": {
+          "type": "step",
+          "settings": {
+            "title": "Fixez la centrale au mur",
+            "summary": "Au centre de la maison, près d'une prise",
+            "duration": "5 min",
+            "content": "<ol><li>Choisissez un endroit <strong>central</strong> dans la maison, <strong>près d'une prise</strong> (et de la box si vous utilisez le câble Ethernet).</li><li>Vissez le <strong>panneau arrière</strong> au mur avec les chevilles et vis fournies.</li><li>Branchez l'alimentation (et le câble Ethernet), puis bloquez les câbles avec la <strong>cale plastique</strong> fournie, vissée.</li><li><strong>Accrochez</strong> la centrale sur le panneau arrière.</li></ol>",
+            "tip": "<p>Évitez les surfaces métalliques, les murs porteurs très épais et les pièces humides. La <strong>protection anti-sabotage</strong> déclenche une alerte si quelqu'un arrache la centrale.</p>"
+          }
+        },
+        "step_sim": {
+          "type": "step",
+          "settings": {
+            "bonus": true,
+            "title": "Vous avez une carte SIM ?",
+            "summary": "L'alarme reste connectée en 4G si Internet est coupé",
+            "duration": "5 min",
+            "alert": "<p><strong>Important : centrale débranchée</strong> pour installer la carte SIM. Format <strong>Micro SIM</strong> (pas Nano).</p>",
+            "content": "<p><strong>1. Préparez la carte SIM</strong></p><ul><li><strong>Carte SIM Afone</strong> : activez-la d'abord sur <a href=\"https://m2minstallateur.afonemobile.fr/\" target=\"_blank\" rel=\"noopener\">m2minstallateur.afonemobile.fr</a>.</li><li><strong>Carte SIM d'un autre opérateur</strong> : vérifiez qu'elle n'a <strong>pas de code PIN</strong>. Si besoin, mettez-la dans un téléphone pour désactiver le code PIN.</li></ul><p><strong>2. Installez la carte</strong></p><ol><li>Débranchez la centrale et retirez le <strong>panneau arrière</strong>.</li><li>Glissez la <strong>Micro SIM</strong> dans la fente, <strong>puce vers le bas</strong>, en respectant le sens de la photo.</li><li>Rebranchez la centrale.</li></ol><p><strong>3. Enregistrez vos numéros</strong></p><ol><li>Ouvrez la page de votre centrale › <strong>Paramètres</strong> › partie <strong>« Communication »</strong>.</li><li>Ajoutez vos numéros dans <strong>« Numéros d'appel en cas d'alarme »</strong> et/ou <strong>« Numéros de SMS en cas d'alarme »</strong>, au format <strong>+336xxxxxxxx</strong>. Le même numéro peut être dans les deux.</li><li>Activez <strong>« Notification par appel »</strong> et <strong>« Notification par SMS »</strong> : sans elles, aucune alerte n'est envoyée.</li></ol><p>Quand la centrale vous appelle, appuyez sur <strong>0</strong> pendant l'appel : l'alarme est désarmée et les numéros suivants ne sont pas appelés.</p>",
+            "image": "shopify://shop_images/centrale-elite-pa501z-insertion-carte-sim.webp",
+            "caption": "Fente SIM au dos de la centrale (panneau arrière retiré) : respectez le sens de la carte",
+            "warning": "<p><strong>Attention au sens :</strong> une carte mal insérée reste bloquée dans la fente, et ce n'est pas couvert par la garantie.</p>",
+            "help_title": "Pas d'appel ni de SMS ?",
+            "help_content": "<ul><li>Vérifiez que la carte SIM est <strong>activée</strong>, <strong>sans code PIN</strong> et qu'elle a du <strong>crédit</strong>.</li><li>Vérifiez le format des numéros : <strong>+336xxxxxxxx</strong>.</li><li>Vérifiez que « Notification par appel » et « Notification par SMS » sont activées.</li></ul><p>Les réglages <strong>APN</strong> (page de la centrale › Paramètres) ne servent que si votre opérateur les demande.</p>"
+          }
+        },
+        "step_scen": {
+          "type": "step",
+          "settings": {
+            "bonus": true,
+            "title": "Je ne veux pas que ma caméra me détecte quand je suis à la maison",
+            "summary": "Sa détection s'active seulement quand l'alarme est armée",
+            "duration": "5 min",
+            "content": "<p>Le principe : vous créez <strong>2 scénarios</strong> dans l'appli. Le 1er <strong>active</strong> la détection de mouvement de la caméra quand vous <strong>armez</strong> l'alarme. Le 2e la <strong>désactive</strong> quand vous <strong>désarmez</strong>. Résultat : plus d'alertes inutiles quand vous êtes chez vous.</p><p><strong>Scénario 1 : quand j'arme l'alarme</strong></p><ol><li>Dans l'appli, touchez le <strong>+ orange</strong> › <strong>« Créer une scène »</strong> › <strong>« Lorsque le statut de l'appareil change »</strong>.</li><li>Touchez <strong>« Sélectionner un seul appareil »</strong> et choisissez votre <strong>centrale Élite PA501Z</strong>.</li><li>Touchez <strong>« Mode système »</strong> › <strong>« Armer »</strong> › <strong>« Confirmer »</strong>.</li><li>Touchez le <strong>+</strong> à côté de <strong>« Alors »</strong> › <strong>« Sélectionner un seul appareil »</strong> › votre <strong>caméra</strong>.</li><li>Réglez <strong>Détection de mouvement sur ON</strong>, choisissez la sensibilité (faible, moyenne ou élevée), puis <strong>Filtrage corps humain sur ON</strong>.</li><li>Touchez <strong>« Enregistrer »</strong> et donnez-lui un nom, par exemple « Caméra ON à l'armement ».</li></ol><p><strong>Scénario 2 : quand je désarme l'alarme</strong></p><p>Refaites exactement les mêmes étapes, avec 2 différences : choisissez <strong>« Désarmer »</strong> à l'étape 3, et mettez <strong>Détection de mouvement</strong> et <strong>Filtrage corps humain</strong> sur <strong>OFF</strong> à l'étape 5. Nommez-le « Caméra OFF au désarmement ».</p><p>✅ C'est terminé : votre caméra surveille quand vous êtes absent et vous laisse tranquille quand vous êtes là.</p>",
+            "tip": "<p>Vous avez plusieurs caméras ? Faites <strong>un scénario par caméra</strong>. Le même principe fonctionne pour d'autres appareils connectés : allumer une prise connectée ou fermer un volet roulant quand vous armez l'alarme.</p>",
+            "help_title": "Le scénario ne fonctionne pas ?",
+            "help_content": "<ul><li>Vérifiez que la caméra et la centrale sont sur le <strong>même compte</strong> et dans la <strong>même « Maison »</strong> de l'appli : c'est la cause la plus fréquente.</li><li>Certaines fonctions peuvent ne pas être disponibles selon le modèle de caméra.</li></ul><p><strong>Supprimer un scénario</strong> : touchez <strong>« Scène »</strong> en bas de l'écran d'accueil, ouvrez le scénario, puis les <strong>3 points</strong> en haut à droite › « Supprimer le scénario ».</p><p><a href=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Scenario_pour_activer_detection_de_mouvement_si_alarme_Armee_SA501_AM_VIGILIA.pdf?v=1760274100\" target=\"_blank\">Voir le guide illustré des scénarios (PDF)</a></p>"
+          }
+        },
+        "step_ext": {
+          "type": "step",
+          "settings": {
+            "bonus": true,
+            "title": "Vous avez une caméra extérieure W503 ou W512MW ?",
+            "summary": "Même principe que la caméra intérieure, avec une charge au départ",
+            "duration": "5 min + charge",
+            "alert": "<p><strong>Première installation : chargez d'abord la caméra</strong> pendant plusieurs heures, avec le câble fourni et un adaptateur secteur <strong>5V 2A</strong>.</p>",
+            "content": "<p><strong>Carte microSD (facultatif)</strong> : pour enregistrer les vidéos, insérez une carte microSD (64 Go maximum) <strong>caméra éteinte</strong>, dans le bon sens. Sur la <strong>W503</strong>, l'emplacement est à côté du port de charge et du bouton reset. Sur la <strong>W512MW</strong>, il se trouve sous l'objectif : tournez l'objectif pour y accéder. Sans carte, vous pouvez aussi souscrire un abonnement de stockage Cloud dans l'appli.</p><p><strong>Ajouter la caméra dans l'appli</strong></p><ol><li>Mettez la caméra en mode connexion : appuyez <strong>environ 8 secondes sur le bouton reset</strong>, puis patientez <strong>1 minute</strong>.</li><li><strong>Avec le Bluetooth activé</strong> : la caméra apparaît en haut de l'appli, dans « Détection des appareils ». Touchez <strong>« Ajouter »</strong>, entrez le mot de passe de votre Wi-Fi 2,4 GHz et patientez.</li><li><strong>Sinon, par QR code</strong> : touchez le <strong>+</strong> › « Ajouter un appareil » › choisissez votre caméra. Cochez « étape suivante », touchez « Suivant », entrez le mot de passe Wi-Fi, puis montrez le <strong>QR code</strong> affiché sur votre téléphone à l'objectif de la caméra.</li><li>Donnez-lui un nom clair (ex : « Caméra jardin »). ✅</li></ol>",
+            "image": "shopify://shop_images/camera-surveillance-autonome-daewoo-w503.webp",
+            "caption": "Caméra W503",
+            "image_2": "shopify://shop_images/camera-surveillance-solaire-daewoo-w512mw-produit.webp",
+            "caption_2": "Caméra W512MW avec panneau solaire",
+            "tip": "<p>Comme pour la centrale : Wi-Fi <strong>2,4 GHz</strong> et mot de passe de 20 caractères maximum. Rapprochez la caméra de votre box le temps de l'installation, puis fixez-la avec le kit fourni.</p>",
+            "help_title": "Les manuels des caméras",
+            "help_content": "<ul><li><a href=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Guide_installation_complet_W503_1.pdf?v=1763042891\" target=\"_blank\">Manuel de la caméra W503 (PDF)</a></li><li><a href=\"https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_complet_installation_W512MW.pdf?v=1758789550\" target=\"_blank\">Manuel de la caméra W512MW (PDF)</a></li></ul>"
+          }
+        },
+        "acc_wds502z": {
+          "type": "accessory",
+          "settings": {
+            "name": "Contacteur de porte / fenêtre Zigbee",
+            "ref": "WDS502Z",
+            "emoji": "🚪",
+            "product": "contacteur-de-porte-zigbee-wds502z-compatible-avec-la-centrale-pa501z",
+            "category": "Général",
+            "before": "Retirez la protection arrière du contacteur avec un tournevis plat.",
+            "action": "restez appuyé sur le bouton PAIRING blanc, jusqu'à ce que le voyant du contacteur clignote.",
+            "example_name": "Porte d'entrée",
+            "extra": "<p>Dans l'appli, activez le <strong>rappel d'ouverture / fermeture</strong> du contacteur pour être prévenu à chaque ouverture de cette porte.</p>"
+          }
+        },
+        "acc_wvd502z": {
+          "type": "accessory",
+          "settings": {
+            "name": "Détecteur de vibration Zigbee",
+            "ref": "WVD502Z",
+            "emoji": "📳",
+            "product": "detecteur-de-vibration-zigbee-wvd502z-compatible-avec-la-centrale-pa501z",
+            "category": "Général",
+            "before": "Retirez la protection arrière du détecteur avec un tournevis plat.",
+            "action": "appuyez quelques secondes sur le bouton PAIRING noir.",
+            "example_name": "Vitre salon",
+            "note": "La sensibilité se règle dans l'appli (roue dentée du détecteur) : 0 = le plus sensible, 100 = le moins sensible."
+          }
+        },
+        "acc_wps501": {
+          "type": "accessory",
+          "settings": {
+            "name": "Détecteur de mouvement",
+            "ref": "WPS501 / WMS501",
+            "emoji": "🚶",
+            "product": "detecteur-de-mouvement-pet-immune-wps501-pour-alarme-daewoo",
+            "category": "Mouvement",
+            "before": "",
+            "action": "appuyez sur le bouton situé au dos du détecteur.",
+            "example_name": "Mouvement salon",
+            "note": "Accessoire radio de la gamme 501 : compatible avec l'Élite, mais certaines fonctions avancées peuvent manquer."
+          }
+        },
+        "acc_wrc501": {
+          "type": "accessory",
+          "settings": {
+            "name": "Télécommande",
+            "ref": "WRC501",
+            "emoji": "🎛️",
+            "product": "telecommande-pour-alarme-daewoo",
+            "category": "Général",
+            "before": "",
+            "action": "appuyez sur un bouton de la télécommande (le cadenas blanc par exemple).",
+            "example_name": "Télécommande Papa",
+            "note": "Accessoire radio de la gamme 501 : compatible avec l'Élite, mais certaines fonctions avancées peuvent manquer."
+          }
+        },
+        "acc_wke502z": {
+          "type": "accessory",
+          "settings": {
+            "name": "Clavier sans fil Zigbee",
+            "ref": "WKE502Z",
+            "emoji": "⌨️",
+            "product": "clavier-sans-fil-zigbee-wke502z-compatible-avec-la-centrale-pa501z",
+            "category": "Général",
+            "before": "",
+            "action": "sur le clavier, tapez 123456 puis # (mode maintenance), puis 4210#. Patientez quelques secondes.",
+            "example_name": "Clavier entrée",
+            "note": "Si le clavier n'arme pas l'alarme, activez « Activer Armer/Désarmer » dans ses paramètres, dans l'appli.",
+            "extra": "<p><strong>Utilisation</strong> : votre code puis le <strong>cadenas noir</strong> pour armer, le <strong>cadenas blanc</strong> pour désarmer, la <strong>maison</strong> pour le mode maison, <strong>SOS</strong> pour une alerte. Avec un badge : appuyez sur une touche pour réveiller le clavier, puis passez le badge sur le lecteur, au-dessus des touches.</p><p><strong>Codes</strong> (à taper en mode maintenance, après 123456#) : <strong>38</strong> + nouveau code utilisateur + # ; <strong>39</strong> + nouveau code admin (6 chiffres) + #. Pensez à changer le code admin 123456.</p><p><strong>Réinitialiser le clavier</strong> : retirez le capot arrière et les piles, attendez quelques secondes, remettez les piles (bip), puis appuyez 5 fois sur le bouton anti-arrachement au dos. Supprimez-le de l'appli et ajoutez-le à nouveau.</p>"
+          }
+        },
+        "acc_wrf501": {
+          "type": "accessory",
+          "settings": {
+            "name": "Badge RFID",
+            "ref": "WRF501",
+            "emoji": "🏷️",
+            "product": "badge-rfid-wrf501-pour-alarme-daewoo-sa501",
+            "category": "Général",
+            "custom_steps": "<p><strong>Les badges s'ajoutent depuis le clavier WKE502Z</strong>, une fois le clavier ajouté à la centrale.</p><ol><li>Sur le clavier, tapez le code admin <strong>123456</strong> puis <strong>#</strong> : mode maintenance.</li><li>Tapez <strong>4110#</strong> : le clavier bipe.</li><li>Passez le badge sur le lecteur du clavier : <strong>2 bips</strong>, le badge est ajouté. ✅</li><li>Pour un autre badge, recommencez à l'étape 2.</li></ol><p><strong>Utilisation</strong> : appuyez sur une touche pour réveiller le clavier, puis passez le badge pour désarmer.</p>"
+          }
+        },
+        "acc_wdg501": {
+          "type": "accessory",
+          "settings": {
+            "name": "Contacteur de porte de garage",
+            "ref": "WDG501",
+            "emoji": "🚗",
+            "product": "detecteur-douverture-de-porte-de-garage",
+            "category": "Général",
+            "before": "Gardez l'aimant collé au contacteur.",
+            "action": "séparez l'aimant du contacteur.",
+            "example_name": "Porte garage",
+            "note": "Accessoire radio de la gamme 501 : compatible avec l'Élite, mais certaines fonctions avancées peuvent manquer."
+          }
+        },
+        "acc_wsd501": {
+          "type": "accessory",
+          "settings": {
+            "name": "Détecteur de fumée",
+            "ref": "WSD501",
+            "emoji": "🔥",
+            "product": "detecteur-de-fumee-wsd501-pour-alarme-daewoo-sa501",
+            "category": "Général",
+            "before": "",
+            "action": "appuyez sur le bouton test, sur la face avant du détecteur.",
+            "example_name": "Fumée couloir",
+            "note": "Indispensable : cochez-le dans « Actif 24/24h » (étape « Dites à l'alarme quand chaque accessoire surveille »)."
+          }
+        },
+        "acc_wwf501": {
+          "type": "accessory",
+          "settings": {
+            "name": "Détecteur de fuite d'eau",
+            "ref": "WWF501",
+            "emoji": "💧",
+            "product": "detecteur-de-fuite-deau-compatible-avec-lalarme-daewoo",
+            "category": "Général",
+            "before": "",
+            "action": "appuyez sur le bouton de test, dans l'émetteur, en haut à droite de la pile.",
+            "example_name": "Fuite buanderie",
+            "note": "Indispensable : cochez-le dans « Actif 24/24h » (étape « Dites à l'alarme quand chaque accessoire surveille »)."
+          }
+        },
+        "acc_wmo501": {
+          "type": "accessory",
+          "settings": {
+            "name": "Détecteur de mouvement extérieur",
+            "ref": "WMO501",
+            "emoji": "🌳",
+            "product": "detecteur-de-mouvement-exterieur-wmo501-pour-alarme-daewoo",
+            "category": "Mouvement",
+            "before": "Allumez le détecteur (bouton ON/OFF) et attendez que son voyant arrête de clignoter.",
+            "action": "à l'intérieur du détecteur, appuyez 2 secondes sur le bouton blanc.",
+            "example_name": "Mouvement jardin",
+            "note": "Accessoire radio de la gamme 501 : compatible avec l'Élite, mais certaines fonctions avancées peuvent manquer."
+          }
+        },
+        "acc_wos501s": {
+          "type": "accessory",
+          "settings": {
+            "name": "Sirène extérieure solaire",
+            "ref": "WOS501S",
+            "emoji": "🔊",
+            "product": "sirene-exterieure-solaire-pour-alarme-daewoo-sa501",
+            "category": "Général",
+            "custom_steps": "<p><strong>Les sirènes ne s'ajoutent pas avec « Ajout rapide »</strong> : c'est la centrale qui les « appelle » quand vous l'armez. Elles n'apparaissent pas ensuite dans la liste des accessoires de l'appli.</p><p><strong>Avant tout :</strong> mettez le <strong>délai de sortie à 0</strong> (protection intelligente › bouclier › Paramètres des accessoires). Vous le remettrez ensuite.</p><ol><li>Laissez la sirène <strong>charger au soleil au moins 2 heures</strong>.</li><li>Ouvrez la sirène (vis en dessous) et choisissez la <strong>durée de l'alarme</strong> (repère 1).</li><li>Mettez le bouton <strong>ON/OFF sur ON</strong> (repère 2).</li><li>Dans l'appli, ouvrez la page <strong>« Protection intelligente »</strong>.</li><li>Appuyez sur le <strong>bouton d'appairage</strong> de la sirène (repère 3) : ses voyants s'allument et restent fixes.</li><li>Dans l'appli, touchez <strong>Armé</strong> : la sirène bipe et ses voyants s'éteignent. ✅ Désarmez.</li></ol><p><strong>Vérification</strong> : déclenchez le mode SOS de la centrale, la sirène doit sonner.</p>"
+          }
+        },
+        "acc_wis502": {
+          "type": "accessory",
+          "settings": {
+            "name": "Sirène intérieure",
+            "ref": "WIS502",
+            "emoji": "📢",
+            "category": "Général",
+            "custom_steps": "<p><strong>Les sirènes ne s'ajoutent pas avec « Ajout rapide »</strong> : c'est la centrale qui les « appelle » quand vous l'armez. Elles n'apparaissent pas ensuite dans la liste des accessoires de l'appli.</p><p><strong>Avant tout :</strong> mettez le <strong>délai de sortie à 0</strong> (protection intelligente › bouclier › Paramètres des accessoires). Vous le remettrez ensuite.</p><ol><li>Branchez l'alimentation USB de la sirène.</li><li>Avec un objet pointu, appuyez sur le bouton <strong>ON/OFF</strong> jusqu'au bip.</li><li>Appuyez quelques secondes sur le <strong>bouton de connexion</strong> : les voyants s'allument, la sirène attend pendant <strong>30 secondes</strong>.</li><li>Tout de suite, <strong>armez</strong> la centrale depuis l'appli : la sirène bipe. ✅ Désarmez.</li></ol>"
+          }
+        },
+        "acc_wos501": {
+          "type": "accessory",
+          "settings": {
+            "name": "Sirène extérieure filaire",
+            "ref": "WOS501",
+            "emoji": "🔈",
+            "category": "Général",
+            "custom_steps": "<p><strong>Les sirènes ne s'ajoutent pas avec « Ajout rapide »</strong> : c'est la centrale qui les « appelle » quand vous l'armez. Elles n'apparaissent pas ensuite dans la liste des accessoires de l'appli.</p><p><strong>Avant tout :</strong> mettez le <strong>délai de sortie à 0</strong> (protection intelligente › bouclier › Paramètres des accessoires). Vous le remettrez ensuite.</p><ol><li>Branchez la sirène, puis ouvrez-la (vis en dessous).</li><li>Mettez le bouton <strong>ON/OFF sur ON</strong> (repère 1).</li><li>Dans l'appli, ouvrez la page <strong>« Protection intelligente »</strong>.</li><li>Appuyez sur le <strong>bouton d'appairage</strong> de la sirène (repère 2) : ses voyants s'allument et restent fixes.</li><li>Dans l'appli, touchez <strong>Armé</strong> : la sirène bipe et ses voyants s'éteignent. ✅ Désarmez.</li></ol><p><strong>Vérification</strong> : déclenchez le mode SOS de la centrale, la sirène doit sonner.</p>"
+          }
+        },
+        "faq_reset_blocked": {
+          "type": "faq",
+          "settings": {
+            "question": "🔁 Le bouton RESET ne fait rien / impossible de réinstaller la centrale",
+            "answer": "<p><strong>D'abord :</strong> branchez la centrale, attendez <strong>1 minute</strong> sans toucher à RESET, puis réessayez. Appuyer sur RESET juste après la mise sous tension peut bloquer la remise à zéro.</p><p><strong>Toujours bloquée ? Récupération par câble :</strong></p><ol><li>Reliez la centrale à votre box avec le câble Ethernet. Votre téléphone doit être sur la même box.</li><li>Allumez la centrale et attendez environ 1 minute.</li><li>Dans l'appli, attendez que la centrale apparaisse <strong>en ligne</strong>.</li><li>Supprimez (dissociez) la centrale de l'appli : cela efface l'ancienne configuration qui bloque.</li><li>Débranchez le câble Ethernet et attendez 30 secondes : le voyant doit clignoter <strong>vite en bleu</strong>.</li><li>Ajoutez de nouveau la centrale en Wi-Fi (étape 3).</li></ol><p>Si le voyant ne clignote jamais en bleu après la dissociation, essayez un autre câble ou un autre port de la box, puis contactez l'assistance.</p>"
+          }
+        },
+        "faq_blue": {
+          "type": "faq",
+          "settings": {
+            "question": "🔵 Le voyant clignote lentement en bleu",
+            "answer": "<p>La centrale ne trouve pas de réseau.</p><ul><li><strong>En Wi-Fi</strong> : réseau 2,4 GHz, mot de passe de 20 caractères maximum sans caractère spécial, sécurité WPA/WPA2.</li><li><strong>Par câble</strong> : vérifiez que le câble Ethernet est bien branché et que la box fonctionne.</li><li><strong>En 4G</strong> : vérifiez la carte SIM (bien insérée, sans code PIN, avec du crédit).</li></ul>"
+          }
+        },
+        "faq_acc": {
+          "type": "faq",
+          "settings": {
+            "question": "🔁 Mon accessoire ne s'ajoute pas",
+            "answer": "<p>Touchez à nouveau <strong>« Ajout rapide »</strong> depuis la page de la centrale (pas depuis la page d'accueil) : le voyant doit clignoter en vert. Vous avez alors 2 minutes. Rapprochez l'accessoire, vérifiez ses piles et sa languette de sécurité.</p>"
+          }
+        },
+        "faq_ignored": {
+          "type": "faq",
+          "settings": {
+            "question": "🚫 Un accessoire ne déclenche pas l'alarme",
+            "answer": "<p>Il n'est sans doute coché dans aucun mode. Touchez l'onglet <strong>« Intelligent »</strong> (en bas de l'appli) › <strong>« Protection intelligente »</strong> › le <strong>bouclier 🛡️</strong> en haut à droite › « Paramètres des accessoires » et cochez-le dans « Actif en mode armé », « Actif en mode maison » ou « Actif 24/24h ».</p>"
+          }
+        },
+        "faq_siren": {
+          "type": "faq",
+          "settings": {
+            "question": "🔇 Ma sirène ne sonne pas",
+            "answer": "<ul><li>Page de la centrale › <strong>Paramètres</strong> › Alarme : le volume de la sirène ne doit pas être sur « Silencieux » (sinon les sirènes déportées restent muettes aussi).</li><li>Sirènes déportées : refaites l'appairage avec le <strong>délai de sortie à 0</strong>.</li><li>Testez avec le mode SOS de la centrale.</li></ul>"
+          }
+        },
+        "faq_sms": {
+          "type": "faq",
+          "settings": {
+            "question": "📞 Je ne reçois ni appel ni SMS",
+            "answer": "<p>Vérifiez la carte <strong>Micro SIM</strong> (bien insérée, sans code PIN, avec du crédit), le format des numéros (<strong>+336xxxxxxxx</strong>) et que « Notification par appel » et « Notification par SMS » sont activées (page de la centrale › Paramètres › Communication).</p>"
+          }
+        },
+        "faq_notif": {
+          "type": "faq",
+          "settings": {
+            "question": "🔔 Je ne reçois pas les notifications",
+            "answer": "<p>Autorisez les notifications pour Daewoo Home Connect dans les réglages de votre téléphone :</p><ul><li>iPhone : Réglages › Daewoo Home Connect › Notifications</li><li>Android : Paramètres › Applications › Daewoo Home Connect › Notifications</li></ul>"
+          }
+        },
+        "faq_cam": {
+          "type": "faq",
+          "settings": {
+            "question": "📷 Je n'arrive pas à installer ma caméra",
+            "answer": "<p>Remettez la caméra en mode appairage en appuyant <strong>8 à 10 secondes sur RESET</strong> jusqu'au signal sonore. Vérifiez le Wi-Fi 2,4 GHz, puis refaites l'étape « Installez votre caméra IP506P ».</p>"
+          }
+        },
+        "faq_reset": {
+          "type": "faq",
+          "settings": {
+            "question": "♻️ Remettre la centrale à zéro (réglages d'usine)",
+            "answer": "<p><strong>Attention : c'est irréversible</strong>.</p><p>Page de la centrale › <strong>Paramètres</strong> › <strong>« Paramètres d'origine »</strong>, puis confirmez.</p><p>Pour retirer complètement la centrale de l'appli (accessoires compris) : crayon ✏️ en haut à droite de la page de la centrale › « Retirer l'appareil » › « Déconnecter l'appareil et vider les données ». Il faudra ensuite la réinstaller entièrement.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "check_wifi",
+        "check_pwd",
+        "check_cable",
+        "check_near",
+        "step_app",
+        "step_power",
+        "step_install",
+        "step_protect",
+        "step_acc",
+        "step_modes",
+        "step_cam",
+        "step_test",
+        "step_wall",
+        "step_sim",
+        "step_scen",
+        "step_ext",
+        "acc_wds502z",
+        "acc_wvd502z",
+        "acc_wps501",
+        "acc_wrc501",
+        "acc_wke502z",
+        "acc_wrf501",
+        "acc_wdg501",
+        "acc_wsd501",
+        "acc_wwf501",
+        "acc_wmo501",
+        "acc_wos501s",
+        "acc_wis502",
+        "acc_wos501",
+        "faq_reset_blocked",
+        "faq_blue",
+        "faq_acc",
+        "faq_ignored",
+        "faq_siren",
+        "faq_sms",
+        "faq_notif",
+        "faq_cam",
+        "faq_reset"
+      ],
+      "settings": {
+        "eyebrow": "Guide d'installation",
+        "title": "Installez votre alarme Élite PA501Z en 20 minutes",
+        "subtitle": "<p>Suivez les étapes une par une, sans jargon. Validez chaque étape quand elle est faite : on vous guide jusqu'au bout.</p>",
+        "duration": "≈ 20 minutes",
+        "checklist_title": "Avant de commencer",
+        "checklist_text": "4 vérifications rapides qui évitent la plupart des problèmes d'installation.",
+        "acc_question": "Quel accessoire voulez-vous ajouter ? Touchez-le :",
+        "bonus_title": "Pour aller plus loin",
+        "bonus_text": "Votre alarme fonctionne. Quand vous voulez, rendez-la encore plus pratique :",
+        "done_title": "Bravo, votre alarme est prête !",
+        "done_text": "Votre maison est protégée. Pensez à changer vos codes par défaut si ce n'est pas encore fait.",
+        "show_leds": true,
+        "faq_title": "Un souci ? Les solutions rapides",
+        "docs_title": "Manuels à télécharger",
+        "docs_text": "Toutes les notices de votre système, au même endroit.",
+        "manual_title": "Manuel complet Élite PA501Z",
+        "manual_text": "Installation en Wi-Fi ou par câble, accessoires, clavier, sirènes, carte SIM, réglages… tout y est.",
+        "manual_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_Complet_PA501Z_12_12_23_compressed.pdf?v=1702980364",
+        "camera_manual_title": "Caméra intérieure IP506P",
+        "camera_manual_url": "https://cdn.shopify.com/s/files/1/0326/3132/4811/files/Manuel_camera_ip506p_2.pdf?v=1701429637",
+        "links_title": "Aller plus loin",
+        "links_text": "Votre alarme fonctionne. Quand vous voulez, profitez de toutes ses possibilités :",
+        "support_title": "Toujours bloqué ? On est là.",
+        "support_text": "Notre équipe basée à Bordeaux vous aide à finaliser votre installation.",
+        "support_label": "Demander de l'aide",
+        "support_url": "/pages/assistance-1",
+        "contact_label": "Nous écrire",
+        "contact_url": "/pages/nous-contacter",
+        "youtube_url": "https://www.youtube.com/@daewoosecurity3029",
+        "padding_top": 48,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "guide"
+  ]
+}
