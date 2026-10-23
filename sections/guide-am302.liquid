@@ -245,6 +245,11 @@
   #vg-{{ sid }} .vg-link small { color: var(--vg-muted); font-size: 14px; }
 
   /* Photo / notice accessoire */
+  /* Vidéo dans la fiche d'un accessoire (verticale = format téléphone) */
+  #vg-{{ sid }} .vg-acc__video { margin: 14px auto 18px; }
+  #vg-{{ sid }} .vg-acc__video video { display: block; width: 100%; height: auto; border-radius: 14px; background: #0c1e4a; }
+  #vg-{{ sid }} .vg-acc__video.is-portrait { max-width: 340px; }
+  #vg-{{ sid }} .vg-acc__video figcaption { font-size: 13px; color: var(--vg-muted); margin-top: 8px; text-align: center; }
   #vg-{{ sid }} .vg-acc__photo { margin: 16px 0 0; }
   #vg-{{ sid }} .vg-acc__photo img { width: 100%; border-radius: 14px; background: #fff; }
   #vg-{{ sid }} .vg-acc__photo figcaption { font-size: 13px; color: var(--vg-muted); margin-top: 6px; text-align: center; }
@@ -450,6 +455,13 @@
                     {%- for acc in accessories -%}
                       <div class="vg-acc__panel" id="vg-acc-{{ acc.id }}" hidden data-acc-panel>
                         <h4>{{ acc.settings.name }}{% if acc.settings.ref != blank %} <span style="font-weight:400;color:var(--vg-muted)">· {{ acc.settings.ref }}</span>{% endif %}</h4>
+                        {%- if acc.settings.video != blank -%}
+                          {%- assign vid = acc.settings.video -%}
+                          <figure class="vg-acc__video{% if vid.aspect_ratio < 1 %} is-portrait{% endif %}">
+                            {{ vid | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '720x' }}
+                            {%- if acc.settings.video_label != blank -%}<figcaption>▶ {{ acc.settings.video_label }}</figcaption>{%- endif -%}
+                          </figure>
+                        {%- endif -%}
                         {%- if acc.settings.custom_steps != blank -%}
                           <div class="vg-rte">{{ acc.settings.custom_steps }}</div>
                         {%- else -%}
@@ -874,6 +886,8 @@
         { "type": "text", "id": "action", "label": "Juste après avoir appuyé sur +", "default": "rallumez l'accessoire." },
         { "type": "text", "id": "example_name", "label": "Exemple de nom" },
         { "type": "text", "id": "note", "label": "Remarque (encadré orange)" },
+        { "type": "video", "id": "video", "label": "Vidéo d'installation (en haut de la fiche)" },
+        { "type": "text", "id": "video_label", "label": "Légende de la vidéo" },
         { "type": "image_picker", "id": "photo", "label": "Photo d'installation (dans la fiche)" },
         { "type": "text", "id": "photo_caption", "label": "Légende de la photo" },
         { "type": "richtext", "id": "extra", "label": "Texte complémentaire (installation physique…)" },
