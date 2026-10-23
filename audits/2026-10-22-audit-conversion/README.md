@@ -2,6 +2,8 @@
 
 Rapport complet : ouvrir `index.html` dans un navigateur (graphiques et captures inclus).
 
+Version auditée : thème en ligne « Vidéo Shopify 22102026 (Claude) » (id 206712471892), publié le 22/10/2026 à 18 h 47. Constats revérifiés sur le site en ligne le 23/10/2026. L'export de thème du 18/05/2026 présent dans ce dépôt n'a pas servi de base à l'audit.
+
 Périmètre : SEO technique, GEO (visibilité dans les IA), UX/UI mobile et ordinateur, configurateur, panier et paiement, performance, catalogue et Google Shopping, conformité des prix. Données Shopify des 90 derniers jours (24/07 → 22/10/2026), exploration des 232 URL du sitemap, tests iPhone 13 / Pixel 7 / 360 px, Lighthouse 12.8, 11 requêtes de recherche.
 
 ## Chiffres clés (90 jours)
