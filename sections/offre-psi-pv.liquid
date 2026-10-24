@@ -79,6 +79,8 @@
           "priceCents": {{ v.price | json }},
           "sku": {{ v.sku | json }},
           "nom": {{ block.settings.title | json }},
+          "court": {{ block.settings.tab_label | json }},
+          "pct": {% if eco > 0 %}{{ eco | times: 100.0 | divided_by: ref | floor }}{% else %}0{% endif %},
           "available": {{ v.available | json }},
           "sim": {{ block.settings.has_sim | json }},
           "rfid": {{ block.settings.has_rfid | json }},
@@ -167,6 +169,8 @@
 
     /* ---- haut de page : galerie à gauche, achat à droite (ordinateur) ---- */
     .psi-des{margin:14px auto 0;font-size:15px;color:var(--pv-gray);}
+    .psi-pastille{display:inline-block;padding:3px 9px;border-radius:999px;background:var(--pv-promo);color:#fff;font-size:13px;font-weight:700;line-height:1.3;vertical-align:2px;white-space:nowrap;}
+    .psi-pastille[hidden]{display:none;}
     .psi-des a{color:inherit;text-decoration:none;}
     .psi-des b{color:var(--pv-ink);font-size:18px;}
     .psi-alma{margin:0;font-size:13.5px;color:var(--pv-gray);}
@@ -528,7 +532,17 @@
           endfor
         -%}
         {%- if prix_min > 0 -%}
-          <p class="psi-des"><a href="#PSIChoix-{{ section.id }}">Dès <b>{{ prix_min | money }}</b> · 4× sans frais avec Alma</a></p>
+          {%- liquid
+            assign ref_min = 0
+            if c0.settings.ref_value != blank
+              assign ref_min = c0.settings.ref_value | remove: ' ' | remove: '€' | replace: ',', '.' | times: 100 | round
+            endif
+            assign pct_min = 0
+            if ref_min > c0.settings.product.price
+              assign pct_min = ref_min | minus: c0.settings.product.price | times: 100.0 | divided_by: ref_min | floor
+            endif
+          -%}
+          <p class="psi-des"><a href="#PSIChoix-{{ section.id }}"><span data-psi-des-label>Dès</span> <b data-psi-des-prix>{{ prix_min | money }}</b>{% if pct_min > 0 %} <span class="psi-pastille" data-psi-pct>-{{ pct_min }}&nbsp;%</span>{% endif %} · 4× sans frais avec Alma</a></p>
         {%- endif -%}
         </div>
         <div class="pv-hero__galeries">
@@ -562,8 +576,7 @@
               {%- assign chargement = 'lazy' -%}
               {%- if forloop.first -%}{%- assign chargement = 'eager' -%}{%- endif -%}
               <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="1">
-                {%- if pct > 0 -%}<span class="psi-remise">-{{ pct }}&nbsp;%</span>{%- endif -%}
-                {{ p.featured_image | image_url: width: 1200 | image_tag: loading: chargement, widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', data-psi-hero: '', alt: block.settings.title }}
+                  {{ p.featured_image | image_url: width: 1200 | image_tag: loading: chargement, widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', data-psi-hero: '', alt: block.settings.title }}
               </li>
             {%- endif -%}
             {%- for ligne in lignes_photos -%}
@@ -665,7 +678,7 @@
           -%}
           <div class="pv-hero__price">
             <span class="pv-price-compare{% if eco0 > 0 %} is-visible{% endif %}" data-psi-barre>{{ ref0 | money }}</span>
-            <strong class="pv-price-amount">{{ v0.price | money }}</strong> · 0&nbsp;€ d'abonnement
+            <strong class="pv-price-amount">{{ v0.price | money }}</strong>{% if pct_min > 0 %} <span class="psi-pastille" data-psi-pct>-{{ pct_min }}&nbsp;%</span>{% endif %} · 0&nbsp;€ d'abonnement
           </div>
           {%- liquid
           assign alma_base = v0.price | divided_by: 4
@@ -760,7 +773,7 @@
     <div class="pv-wrap">
       <div class="pv-head pv-reveal">
         <h2>Quelle centrale choisir&nbsp;?</h2>
-        <p>Le reste du pack est le même pour les quatre&nbsp;: choisissez la centrale selon votre façon de vivre.</p>
+        <p>Le reste du pack est le même pour les quatre, à une exception près&nbsp;: les 2 badges RFID sont inclus uniquement avec la Vigilia et la Vigilia +. Choisissez la centrale selon votre façon de vivre.</p>
       </div>
       <div class="pv-compare__grid pv-reveal">
         {%- for block in centrales -%}
@@ -813,7 +826,8 @@
           <h2>Chez vous, elle se fait oublier.</h2>
           <p class="pv-feature__text">
             Le <strong>mode Maison</strong> garde les portes et fenêtres sous surveillance pendant que vous
-            circulez librement à l'intérieur&nbsp;: le détecteur de mouvement se met en pause. Idéal la nuit.
+            circulez librement à l'intérieur. Vous choisissez dans l'application les détecteurs qui restent
+            actifs&nbsp;: le plus souvent, on y désactive le détecteur de mouvement. Idéal la nuit.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>Temporisation de sortie</strong>&nbsp;: vous armez en partant et vous avez le temps de fermer la porte.</span></li>
@@ -873,9 +887,10 @@
         </div>
         <div class="pv-feature__body">
           <span class="pv-feature__num">DISSUASION</span>
-          <h2>Visible depuis la rue. Entendue par tout le quartier.</h2>
+          <h2>Visible depuis la rue. Assez puissante pour alerter le voisinage.</h2>
           <p class="pv-feature__text">
-            La sirène extérieure WOS305S se déclenche dès que la centrale détecte une intrusion.
+            La sirène extérieure WOS305S se déclenche dès que la centrale détecte une intrusion&nbsp;:
+            signal sonore puissant et flash lumineux pour faire fuir l'intrus et attirer l'attention autour de chez vous.
             Rechargée par son panneau solaire, elle s'installe sans aucun câblage.
           </p>
           <ul>
@@ -1082,7 +1097,7 @@
       echo "Jusqu'à quand l'offre est-elle valable ?|Les prix du Pack Sécurité Intégrale sont valables jusqu'au 31 octobre 2026 inclus, dans la limite des stocks disponibles."
       echo "~Que contient le Pack Sécurité Intégrale ?|Une centrale d'alarme au choix (Vigilia, Vigilia +, Touch AM301 ou Touch XL AM302), 4 contacteurs d'ouverture et de vibration WDV301, 1 détecteur de mouvement compatible animaux WPS305, 1 télécommande WRC305, 1 caméra intérieure rotative IP506P, 1 caméra extérieure solaire W512MW, 1 sirène extérieure solaire WOS305S et 2 autocollants de dissuasion. Avec la Vigilia et la Vigilia +, 2 badges RFID WRF301 sont inclus en plus."
       echo "~Ai-je besoin d'un abonnement ?|Non. Vous achetez le pack une seule fois : pas de mensualité, pas de frais cachés. Le pilotage se fait avec l'application Daewoo Home Connect, incluse et gratuite."
-      echo "~Quelle centrale choisir ?|Le reste du pack est le même pour les quatre. La Vigilia est la plus simple, au clavier ou au badge, en Wi-Fi. La Vigilia + ajoute la 4G en secours. Avec l'une comme l'autre, 2 badges RFID sont inclus. La Touch a un écran tactile couleur de 4,3 pouces et la 4G. La Touch XL a un grand écran de 7 pouces, la 4G et 20 heures de batterie de secours."
+      echo "~Quelle centrale choisir ?|Le reste du pack est le même pour les quatre, sauf les 2 badges RFID, inclus uniquement avec la Vigilia et la Vigilia +. La Vigilia est la plus simple, au clavier ou au badge, en Wi-Fi. La Vigilia + ajoute la 4G en secours. La Touch a un écran tactile couleur de 4,3 pouces et la 4G. La Touch XL a un grand écran de 7 pouces, la 4G et 20 heures de batterie de secours."
       echo "~À quoi correspond le prix barré ?|C'est le prix des mêmes éléments (centrale, contacteurs, détecteur, télécommande, caméras, sirène…) achetés séparément sur notre site, via notre configurateur. Le pack vous fait économiser la différence."
       echo "~Que se passe-t-il en cas de coupure de courant ou d'internet ?|En cas de coupure de courant, la centrale bascule sur sa batterie de secours : 4 heures pour la Vigilia, la Vigilia + et la Touch, 20 heures pour la Touch XL. Sans internet, la sirène et la détection continuent de fonctionner. Avec la Vigilia +, la Touch ou la Touch XL et une carte SIM installée (non fournie), vous continuez de recevoir les alertes par SMS et appel. Les caméras, elles, ont besoin du Wi-Fi."
       echo "~Quelle carte SIM utiliser avec la Vigilia +, la Touch ou la Touch XL ?|Une carte SIM M2M, conçue pour les alarmes, comme la carte Afone que nous proposons (1 mois inclus ou 1 an prépayé). Les forfaits mobiles grand public sont réservés aux téléphones et peuvent être suspendus par l'opérateur s'ils sont utilisés dans une alarme. La carte SIM n'est pas fournie avec le pack."
@@ -1289,6 +1304,9 @@
         root.querySelectorAll('[data-psi-barre]').forEach(function (el) { el.textContent = d.compare; el.classList.toggle('is-visible', d.hasCompare); });
         root.querySelectorAll('[data-psi-eco]').forEach(function (el) { el.hidden = !d.hasCompare; });
         root.querySelectorAll('[data-psi-saving]').forEach(function (el) { el.textContent = d.saving; });
+        root.querySelectorAll('[data-psi-pct]').forEach(function (el) { el.hidden = !(d.pct > 0); el.textContent = '-' + d.pct + '\u00a0%'; });
+        root.querySelectorAll('[data-psi-des-label]').forEach(function (el) { el.textContent = d.court + ' :'; });
+        root.querySelectorAll('[data-psi-des-prix]').forEach(function (el) { el.textContent = d.price; });
         if (d.priceCents) {
           var base = Math.floor(d.priceCents / 4), premier = d.priceCents - 3 * base;
           var euros = function (c) { return (c / 100).toFixed(2).replace('.', ',') + '€'; };
