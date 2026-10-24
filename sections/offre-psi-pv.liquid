@@ -150,7 +150,7 @@
     .pv-galerie__piste{list-style:none;margin:0;padding:0;display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
     .pv-galerie__piste::-webkit-scrollbar{display:none;}
     .pv-galerie__piste:focus-visible{outline:3px solid var(--pv-navy);outline-offset:-3px;}
-    .pv-galerie__diapo{flex:0 0 100%;height:100%;scroll-snap-align:center;scroll-snap-stop:always;}
+    .pv-galerie__diapo{position:relative;flex:0 0 100%;height:100%;scroll-snap-align:center;scroll-snap-stop:always;}
     .pv-galerie__diapo img{display:block;width:100%;height:100%;object-fit:cover;}
     .pv-galerie__fleche{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-top:-22px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:var(--pv-ink,#111);box-shadow:0 6px 18px -6px rgba(0,0,0,.35);cursor:pointer;opacity:0;transition:opacity .2s ease,transform .2s ease;}
     .pv-galerie__fleche--prec{left:14px;}
@@ -158,7 +158,7 @@
     .pv-hero__media:hover .pv-galerie__fleche,.pv-galerie__fleche:focus-visible{opacity:1;}
     .pv-galerie__fleche:active{transform:scale(.94);}
     .pv-galerie__compteur{position:absolute;right:14px;bottom:14px;z-index:2;padding:5px 11px;border-radius:999px;background:rgba(17,24,39,.62);color:#fff;font-size:13px;font-variant-numeric:tabular-nums;pointer-events:none;}
-    @media (hover:none){.pv-galerie__fleche{opacity:1;width:38px;height:38px;margin-top:-19px;}}
+    @media (hover:none){.pv-galerie__fleche{display:none;}}
     .pv-thumbs{display:flex;justify-content:center;gap:10px;margin:14px auto 0;max-width:640px;overflow-x:auto;padding:2px 2px 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
     .pv-thumbs::-webkit-scrollbar{display:none;}
     .pv-thumbs__item{flex-shrink:0;width:56px;height:56px;padding:0;border-radius:12px;overflow:hidden;background:var(--pv-bg-alt);border:2px solid transparent;cursor:pointer;opacity:.6;transition:opacity .15s ease,border-color .15s ease;}
@@ -390,8 +390,7 @@
       .psi-compte{flex-wrap:nowrap;gap:8px;padding:7px 12px;font-size:12px;margin-bottom:14px;text-align:left;}
       .psi-compte__point{flex-shrink:0;}
       .pv .pv-hero__summary{display:none;}
-      .pv-hero__img{aspect-ratio:4/3;}
-      .pv-hero__img img{object-fit:contain;}
+      .pv-hero__img{aspect-ratio:1/1;}
       .pv-thumbs{justify-content:flex-start;}
       .pv-thumbs__item{width:48px;height:48px;}
       .pv-strip{display:grid;grid-template-columns:1fr 1fr;}
@@ -504,6 +503,7 @@
             {%- assign chargement = 'lazy' -%}
             {%- if forloop.first -%}{%- assign chargement = 'eager' -%}{%- endif -%}
             <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="1">
+              {%- if pct > 0 -%}<span class="psi-remise">-{{ pct }}&nbsp;%</span>{%- endif -%}
               {{ p.featured_image | image_url: width: 1200 | image_tag: loading: chargement, widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', data-psi-hero: '', alt: block.settings.title }}
             </li>
           {%- endif -%}
@@ -546,7 +546,6 @@
         <div class="pv-hero__media" data-psi-idx="{{ idx_bloc }}" data-pv-galerie {% if idx_bloc > 0 %}hidden{% endif %}
           role="region" aria-roledescription="carrousel" aria-label="Photos du {{ block.settings.title | escape }}">
           <div class="pv-hero__img">
-            {%- if pct > 0 -%}<span class="psi-remise">-{{ pct }}&nbsp;%</span>{%- endif -%}
             <ul class="pv-galerie__piste" data-pv-piste tabindex="0">{{ diapos }}</ul>
             {%- if n > 1 -%}
               <button type="button" class="pv-galerie__fleche pv-galerie__fleche--prec" data-pv-prec aria-label="Photo précédente">
