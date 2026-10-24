@@ -723,10 +723,44 @@
         </div>
 
         <div class="pv-hero__galeries">
-          {%- assign n_photos = gallery.size | at_most: 8 -%}
+          {%- comment -%}
+            Photos du carrousel : photo principale du produit, puis les visuels
+            du réglage « Photos du carrousel » (un nom de fichier par ligne).
+            Réglage vide : photos du produit, comme avant.
+          {%- endcomment -%}
+          {%- liquid
+            assign photos_txt = section.settings.galerie_photos | strip
+            assign liste_noms = ''
+            if photos_txt != blank
+              assign lignes = photos_txt | newline_to_br | split: '<br />'
+              for l in lignes
+                assign nom = l | strip
+                if nom != blank and images[nom] != blank
+                  assign liste_noms = liste_noms | append: nom | append: '|'
+                endif
+              endfor
+            endif
+            assign noms = liste_noms | split: '|'
+            if noms.size > 0
+              assign n_photos = noms.size | plus: 1
+            else
+              assign n_photos = gallery.size | at_most: 8
+            endif
+          -%}
           <div class="pv-hero__media" data-pv-galerie role="region" aria-roledescription="carrousel" aria-label="Photos du Starter Pack Vigilia">
             <div class="pv-hero__img">
               <ul class="pv-galerie__piste" data-pv-piste tabindex="0">
+                {%- if noms.size > 0 -%}
+                  <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="1">
+                    {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '400,600,900,1200', sizes: '(min-width: 990px) 560px, 100vw', alt: hero_image.alt | default: product.title }}
+                  </li>
+                  {%- for nom in noms -%}
+                    {%- assign img = images[nom] -%}
+                    <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="{{ forloop.index | plus: 1 }}">
+                      {{ img | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 990px) 560px, 100vw', alt: img.alt }}
+                    </li>
+                  {%- endfor -%}
+                {%- else -%}
                 {%- for img in gallery limit: 8 -%}
                   {%- liquid
                     assign chargement = 'lazy'
@@ -743,6 +777,7 @@
                     {%- endif -%}
                   </li>
                 {%- endfor -%}
+                {%- endif -%}
               </ul>
               {%- if n_photos > 1 -%}
                 <button type="button" class="pv-galerie__fleche pv-galerie__fleche--prec" data-pv-prec aria-label="Photo précédente">
@@ -756,9 +791,16 @@
             </div>
             {%- if n_photos > 1 -%}
               <div class="pv-thumbs" role="group" aria-label="Choisir une photo">
+                {%- if noms.size > 0 -%}
+                  <button type="button" class="pv-thumbs__item is-active" data-pv-thumb="0" aria-label="Photo 1">{{ hero_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
+                  {%- for nom in noms -%}
+                    <button type="button" class="pv-thumbs__item" data-pv-thumb="{{ forloop.index }}" aria-label="Photo {{ forloop.index | plus: 1 }}">{{ images[nom] | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
+                  {%- endfor -%}
+                {%- else -%}
                 {%- for img in gallery limit: 8 -%}
                   <button type="button" class="pv-thumbs__item{% if forloop.first %} is-active{% endif %}" data-pv-thumb="{{ forloop.index0 }}" aria-label="Photo {{ forloop.index }}">{{ img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
                 {%- endfor -%}
+                {%- endif -%}
               </div>
             {%- endif -%}
           </div>
@@ -1862,6 +1904,8 @@
 {% schema %}
 {
   "name": "Starter Pack Vigilia",
-  "settings": []
+  "settings": [
+    { "type": "textarea", "id": "galerie_photos", "label": "Photos du carrousel (après la photo du produit)", "info": "Un nom de fichier (Contenu › Fichiers) par ligne. Vide = photos du produit.", "default": "daewoo-starter-vigilia-01-application.webp\ndaewoo-starter-vigilia-02-ouverture-vibration.webp\ndaewoo-starter-vigilia-03-mode-maison.webp\ndaewoo-starter-vigilia-04-camera-interieure.webp\ndaewoo-starter-vigilia-05-installation.webp\ndaewoo-starter-vigilia-06-wifi-4g-coupures.webp\ndaewoo-starter-vigilia-07-evolutif-commandes.webp" }
+  ]
 }
 {% endschema %}
