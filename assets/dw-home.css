@@ -1,0 +1,706 @@
+/* ==========================================================================
+   Daewoo Security — Home V3 « premium », mobile first
+   Toutes les classes sont préfixées .dwh : aucun impact sur le reste du thème.
+
+   Palette
+     Nuit       #0A1330  fonds sombres (hero, calcul, CTA final)
+     Encre      #0C1E4A  texte, couleur de marque
+     Porcelaine #F5F6FA  fonds clairs alternés
+     Bleu       #1552D6  une seule couleur d'action
+     Protégé    #16A765  réservé au « 0 € » et à l'état « armé »
+     Brume      #A3B2D6  texte secondaire sur fond sombre
+   ========================================================================== */
+
+.dwh {
+  --nuit: #0a1330;
+  --encre: #0c1e4a;
+  --porcelaine: #f5f6fa;
+  --bleu: #1552d6;
+  --bleu-hover: #0f45ba;
+  --protege: #16a765;
+  --protege-clair: #4fd79a;
+  --protege-doux: #e5f6ed;
+  --brume: #a3b2d6;
+  --gris: #5a6582;
+  --trait: #e4e7ef;
+
+  --f-display: 'Instrument Sans', var(--font-heading-family, 'Poppins'), sans-serif;
+  --f-texte: 'Instrument Sans', var(--font-body-family, 'Poppins'), sans-serif;
+  --f-systeme: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ombre: 0 1px 2px rgba(12, 30, 74, 0.05), 0 16px 40px -16px rgba(12, 30, 74, 0.18);
+
+  font-family: var(--f-texte);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--encre);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.dwh *, .dwh *::before, .dwh *::after { box-sizing: border-box; }
+.dwh :where(h1, h2, h3, p, ul, ol, figure) { margin: 0; }
+.dwh :where(ul, ol) { padding: 0; list-style: none; }
+.dwh img { display: block; max-width: 100%; }
+:where(.dwh) a { color: inherit; }
+.dwh :focus-visible { outline: 2px solid var(--bleu); outline-offset: 3px; border-radius: 6px; }
+.dwh-sombre :focus-visible { outline-color: #fff; }
+
+/* ---------- Mise en page ---------- */
+.dwh-bloc { padding: 64px 20px; background: #fff; }
+.dwh-bloc--porcelaine { background: var(--porcelaine); }
+.dwh-sombre { background: var(--nuit); color: #fff; }
+.dwh-large { max-width: 1120px; margin: 0 auto; }
+
+/* ---------- Typographie ---------- */
+.dwh-surtitre {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--bleu);
+  margin-bottom: 12px;
+}
+.dwh-sombre .dwh-surtitre { color: var(--brume); }
+.dwh-titre {
+  font-family: var(--f-display);
+  font-stretch: 88%;
+  font-variation-settings: 'wdth' 88;
+  font-size: clamp(32px, 8.4vw, 52px);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.dwh-titre em { font-style: normal; color: var(--gris); }
+.dwh-sombre .dwh-titre em { color: var(--brume); }
+.dwh-chapo {
+  margin-top: 16px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--gris);
+  max-width: 32em;
+  text-wrap: pretty;
+}
+.dwh-sombre .dwh-chapo { color: var(--brume); }
+.dwh-entete { margin-bottom: 32px; }
+
+/* ---------- Boutons ---------- */
+.dwh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 24px;
+  border: 0;
+  border-radius: 999px;
+  font: 600 17px/1.2 var(--f-texte);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, box-shadow 200ms ease;
+}
+.dwh-btn:active { transform: scale(0.97); }
+.dwh-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.dwh-btn--bleu { background: var(--bleu); color: #fff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 12px 28px -10px rgba(21, 82, 214, 0.75); }
+.dwh-btn--blanc { background: #fff; color: var(--encre); }
+.dwh-btn--contour { background: transparent; color: var(--encre); box-shadow: inset 0 0 0 1.5px var(--trait); }
+@media (hover: hover) and (pointer: fine) {
+  .dwh-btn--bleu:hover { background: var(--bleu-hover); }
+  .dwh-btn--contour:hover { box-shadow: inset 0 0 0 1.5px var(--encre); }
+}
+.dwh-lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--bleu);
+  text-decoration: none;
+  padding: 10px 0;
+}
+.dwh-lien svg { width: 16px; height: 16px; transition: transform 200ms var(--ease-out); }
+.dwh-sombre .dwh-lien { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .dwh-lien:hover svg { transform: translateX(3px); } }
+
+.dwh-puces { display: grid; gap: 10px; }
+.dwh-puces li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.4; }
+.dwh-puces li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='%2316a765' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 9.5l3.2 3.2L14 5.8'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.dwh-etoiles { color: #ffc93c; letter-spacing: 1px; }
+
+/* ==========================================================================
+   1. HERO — signature : un vrai téléphone, écran verrouillé, notifications
+   ========================================================================== */
+.dwh-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 36px 20px 0;
+  background:
+    radial-gradient(60% 38% at 50% 78%, rgba(21, 82, 214, 0.20) 0%, transparent 70%),
+    radial-gradient(80% 50% at 50% 0%, #ffffff 0%, transparent 70%),
+    linear-gradient(180deg, #f6f8fd 0%, #e8eefb 100%);
+  color: var(--encre);
+  text-align: center;
+}
+.dwh-hero__grille { display: grid; gap: 28px; max-width: 1120px; margin: 0 auto; }
+.dwh-hero__note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--gris);
+  margin-bottom: 18px;
+}
+.dwh-hero__note strong { color: var(--encre); font-weight: 600; }
+.dwh-hero .dwh-titre { font-size: clamp(36px, 10vw, 64px); }
+.dwh-hero .dwh-titre em { display: block; margin-top: 6px; color: #7282ad; }
+.dwh-hero__actions { display: grid; gap: 2px; justify-items: center; margin-top: 26px; }
+.dwh-hero__prix { margin-top: 6px; font-size: 14px; color: var(--gris); }
+.dwh-hero__prix strong { color: var(--encre); font-weight: 600; }
+.dwh-hero__prix .dwh-zero { color: var(--protege); font-weight: 600; white-space: nowrap; }
+
+/* Scène : le téléphone sort du bas de l'écran */
+.dwh-scene {
+  position: relative;
+  height: 480px;
+  margin: 0 -20px;
+  overflow: hidden;
+}
+.dwh-scene--centrale { height: 590px; }
+.dwh-scene .dwh-tel {
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 96%);
+  mask-image: linear-gradient(180deg, #000 70%, transparent 96%);
+}
+.dwh-scene:not(.dwh-scene--centrale) .dwh-tel {
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 92%);
+  mask-image: linear-gradient(180deg, #000 78%, transparent 92%);
+}
+
+/* Carte « appareil connecté » : la centrale reliée au téléphone */
+.dwh-centrale {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 14px;
+  align-items: center;
+  width: min(330px, 88vw);
+  padding: 10px 16px 10px 10px;
+  border-radius: 24px;
+  background: #fff;
+  color: var(--encre);
+  text-align: left;
+  box-shadow: 0 0 0 1px rgba(12, 30, 74, 0.06), 0 28px 50px -18px rgba(12, 30, 74, 0.35);
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: dwh-centrale 600ms var(--ease-out) 1700ms forwards;
+}
+@keyframes dwh-centrale { from { opacity: 0; transform: translate(-50%, 14px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.dwh-centrale__photo {
+  width: 92px;
+  height: 92px;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+}
+.dwh-centrale__photo img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.dwh-centrale__label { display: block; font-size: 12px; font-weight: 500; color: var(--gris); }
+.dwh-centrale__nom { display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; margin-top: 1px; }
+.dwh-centrale__etat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--protege-doux);
+  color: #0d7a48;
+  font-size: 12px;
+  font-weight: 600;
+}
+.dwh-centrale__etat::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--protege); box-shadow: 0 0 0 3px rgba(22, 167, 101, 0.2); }
+.dwh-tel {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: min(300px, 80vw);
+  aspect-ratio: 9 / 19.2;
+  transform: translateX(-50%);
+  padding: 9px;
+  border-radius: 52px;
+  background: linear-gradient(145deg, #3a4460 0%, #151b2e 40%, #262e45 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 50px 80px -30px rgba(12, 30, 74, 0.55),
+    0 0 100px -30px rgba(21, 82, 214, 0.45);
+}
+.dwh-tel__ecran {
+  position: relative;
+  height: 100%;
+  border-radius: 44px;
+  overflow: hidden;
+  padding: 14px 12px;
+  font-family: var(--f-systeme);
+  color: #fff;
+  background:
+    radial-gradient(120% 60% at 15% 0%, rgba(126, 160, 255, 0.55) 0%, transparent 55%),
+    radial-gradient(90% 60% at 100% 55%, rgba(21, 82, 214, 0.65) 0%, transparent 60%),
+    radial-gradient(80% 50% at 0% 100%, rgba(79, 215, 154, 0.25) 0%, transparent 60%),
+    #111a3d;
+}
+.dwh-tel__statut {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 14px 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+.dwh-tel__statut svg { height: 11px; width: auto; }
+.dwh-tel__ilot {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  width: 92px;
+  height: 26px;
+  transform: translateX(-50%);
+  border-radius: 20px;
+  background: #000;
+}
+.dwh-tel__heure { text-align: center; margin: 18px 0 16px; }
+.dwh-tel__heure span { display: block; font-size: 14px; font-weight: 500; opacity: 0.85; }
+.dwh-tel__heure b { display: block; font-size: 58px; font-weight: 600; line-height: 1; letter-spacing: -0.03em; margin-top: 2px; }
+.dwh-notifs { display: grid; gap: 8px; text-align: left; }
+.dwh-notif {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  gap: 10px;
+  align-items: start;
+  padding: 11px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  backdrop-filter: blur(24px) saturate(1.8);
+  color: #0a1330;
+  font-family: var(--f-systeme);
+  opacity: 0;
+  transform: translateY(-12px) scale(0.97);
+  animation: dwh-notif 560ms var(--ease-out) forwards;
+}
+.dwh-notif:nth-child(1) { animation-delay: 1250ms; }
+.dwh-notif:nth-child(2) { animation-delay: 750ms; }
+.dwh-notif:nth-child(3) { animation-delay: 300ms; }
+.dwh-notif:nth-child(4) { animation-delay: 100ms; }
+@keyframes dwh-notif { to { opacity: 1; transform: none; } }
+.dwh-notif__app {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--encre);
+  color: #fff;
+  display: grid;
+  place-items: center;
+}
+.dwh-notif__app svg { width: 18px; height: 18px; }
+.dwh-notif--ok .dwh-notif__app { background: var(--protege); }
+.dwh-notif__txt { min-width: 0; }
+.dwh-notif__titre { display: block; font-size: 14px; font-weight: 600; line-height: 1.25; }
+.dwh-notif__corps { display: block; font-size: 13px; line-height: 1.3; color: #3a4460; margin-top: 1px; }
+.dwh-notif__quand { font-size: 12px; color: #5a6582; white-space: nowrap; padding-top: 1px; }
+
+/* Bande de réassurance, sobre */
+.dwh-rassure { background: #fff; border-bottom: 1px solid var(--trait); padding: 18px 20px; }
+.dwh-rassure__liste {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.dwh-rassure__item { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; line-height: 1.25; }
+.dwh-rassure__item svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--protege); }
+
+/* Barre d'action collante (mobile) */
+.dwh-collant {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 40;
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  backdrop-filter: blur(16px) saturate(1.5);
+  border-top: 1px solid var(--trait);
+  transform: translateY(110%);
+  transition: transform 300ms var(--ease-out);
+}
+.dwh-collant.est-visible { transform: none; }
+.dwh-collant .dwh-btn { min-height: 48px; font-size: 15px; padding: 10px 12px; }
+.dwh-collant .dwh-btn--bleu { flex: 1.5; }
+.dwh-collant .dwh-btn--contour { flex: 1; }
+
+/* ==========================================================================
+   2. PACKS — un seul choix à la fois
+   ========================================================================== */
+.dwh-selecteur {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n, 3), 1fr);
+  padding: 4px;
+  margin-bottom: 20px;
+  border-radius: 999px;
+  background: var(--porcelaine);
+}
+.dwh-selecteur__curseur {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / var(--n, 3));
+  border-radius: 999px;
+  background: var(--encre);
+  box-shadow: 0 6px 16px -6px rgba(12, 30, 74, 0.5);
+  transform: translateX(calc(100% * var(--i, 0)));
+  transition: transform 280ms var(--ease-in-out);
+}
+.dwh-onglet {
+  position: relative;
+  z-index: 1;
+  appearance: none;
+  border: 0;
+  background: none;
+  min-height: 50px;
+  padding: 6px 4px;
+  font: 600 14px/1.15 var(--f-texte);
+  color: var(--gris);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 220ms ease;
+}
+.dwh-onglet small { display: block; margin-top: 2px; font-size: 11.5px; font-weight: 500; opacity: 0.8; }
+.dwh-onglet[aria-selected="true"] { color: #fff; }
+
+.dwh-packs { display: grid; gap: 16px; }
+.dwh-packs.est-pilote .dwh-pack[hidden] { display: none; }
+.dwh-pack {
+  display: flex;
+  flex-direction: column;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: var(--ombre);
+  overflow: hidden;
+}
+.dwh-packs.est-pilote .dwh-pack { animation: dwh-apparait 300ms var(--ease-out); }
+@keyframes dwh-apparait { from { opacity: 0; transform: translateY(8px); } }
+.dwh-pack__visuel {
+  position: relative;
+  display: block;
+  aspect-ratio: 5 / 4;
+  background: radial-gradient(70% 70% at 50% 45%, #ffffff 0%, #eef1f8 100%);
+}
+.dwh-pack__visuel img { width: 100%; height: 100%; object-fit: contain; padding: 20px; mix-blend-mode: multiply; }
+.dwh-pack__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--encre);
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px -4px rgba(12, 30, 74, 0.25);
+}
+.dwh-pack__corps { display: flex; flex-direction: column; gap: 18px; padding: 22px 22px 24px; flex: 1; }
+.dwh-pack__gamme { font-size: 13px; font-weight: 600; color: var(--bleu); }
+.dwh-pack__nom {
+  font-family: var(--f-display);
+  font-variation-settings: 'wdth' 88;
+  font-stretch: 88%;
+  font-size: 30px;
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin-top: 4px;
+}
+.dwh-pack__pour { font-size: 15px; color: var(--gris); margin-top: 8px; }
+.dwh-pack__prix { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding-top: 18px; border-top: 1px solid var(--trait); margin-top: auto; }
+.dwh-pack__montant { font-size: 32px; font-weight: 600; line-height: 1; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+.dwh-pack__des { display: block; font-size: 13px; font-weight: 500; color: var(--gris); margin-bottom: 6px; }
+.dwh-pack__barre { font-size: 15px; color: var(--gris); text-decoration: line-through; margin-left: 6px; }
+.dwh-pack__mois { flex-shrink: 0; padding: 6px 12px; border-radius: 999px; background: var(--protege-doux); color: #0d7a48; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.dwh-pack__alma { font-size: 13px; color: var(--gris); margin-top: -10px; }
+
+/* Parcours d'achat en 3 étapes (une vraie séquence : numérotée) */
+.dwh-parcours { position: relative; display: grid; gap: 36px; counter-reset: none; }
+.dwh-parcours::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 17px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--bleu) 0%, rgba(21, 82, 214, 0.15) 100%);
+}
+.dwh-parcours__etape { position: relative; }
+.dwh-parcours__tete { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; margin-bottom: 18px; }
+.dwh-parcours__num {
+  position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--bleu);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 0 0 0 6px var(--porcelaine);
+}
+.dwh-parcours__titre { font-size: 21px; line-height: 1.2; font-weight: 600; letter-spacing: -0.015em; margin-top: 5px; }
+.dwh-parcours__texte { font-size: 15px; line-height: 1.5; color: var(--gris); margin-top: 6px; }
+.dwh-parcours__etape > :not(.dwh-parcours__tete) { margin-left: 50px; }
+
+.dwh-gamme {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: var(--ombre);
+  overflow: hidden;
+}
+.dwh-packs.est-pilote .dwh-gamme { animation: dwh-apparait 300ms var(--ease-out); }
+.dwh-packs.est-pilote .dwh-gamme[hidden] { display: none; }
+.dwh-gamme__visuel { position: relative; aspect-ratio: 16 / 11; background: radial-gradient(70% 70% at 50% 45%, #ffffff 0%, #eef1f8 100%); }
+.dwh-gamme__visuel img { width: 100%; height: 100%; object-fit: contain; padding: 18px; mix-blend-mode: multiply; }
+.dwh-gamme__corps { display: flex; flex-direction: column; gap: 14px; padding: 20px; }
+.dwh-gamme__nom { font-family: var(--f-display); font-variation-settings: 'wdth' 88; font-stretch: 88%; font-size: 26px; line-height: 1.05; font-weight: 600; letter-spacing: -0.025em; margin: 0; }
+.dwh-gamme__pour { font-size: 15px; line-height: 1.5; color: var(--gris); }
+.dwh-gamme .dwh-pack__prix { margin-top: 4px; }
+.dwh-gamme .dwh-lien { padding: 4px 0 0; }
+
+.dwh-formules { display: grid; gap: 12px; }
+.dwh-formule {
+  display: grid;
+  gap: 6px;
+  padding: 20px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: var(--ombre);
+  text-decoration: none;
+  color: var(--encre);
+  transition: transform 160ms var(--ease-out), box-shadow 200ms ease;
+}
+.dwh-formule:active { transform: scale(0.98); }
+.dwh-formule--pack { background: var(--nuit); color: #fff; }
+.dwh-formule__tag { justify-self: start; padding: 4px 10px; border-radius: 999px; background: var(--porcelaine); color: var(--bleu); font-size: 12px; font-weight: 600; }
+.dwh-formule--pack .dwh-formule__tag { background: rgba(255, 255, 255, 0.12); color: #fff; }
+.dwh-formule__titre { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin-top: 4px; }
+.dwh-formule__texte { font-size: 15px; line-height: 1.5; color: var(--gris); }
+.dwh-formule--pack .dwh-formule__texte { color: var(--brume); }
+.dwh-formule__cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-weight: 600; color: var(--bleu); }
+.dwh-formule--pack .dwh-formule__cta { color: #fff; }
+.dwh-formule__cta svg { width: 16px; height: 16px; }
+@media (hover: hover) and (pointer: fine) { .dwh-formule:hover { transform: translateY(-2px); } }
+
+/* Alternative principale (configurateur) + liens secondaires */
+.dwh-autre {
+  display: grid;
+  grid-template-columns: 48px 1fr 20px;
+  gap: 14px;
+  align-items: center;
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 24px;
+  background: var(--nuit);
+  color: #fff;
+  text-decoration: none;
+  transition: transform 160ms var(--ease-out);
+}
+.dwh-autre:active { transform: scale(0.98); }
+.dwh-autre__ico { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: rgba(255, 255, 255, 0.1); }
+.dwh-autre__ico svg { width: 22px; height: 22px; }
+.dwh-autre__titre { display: block; font-weight: 600; font-size: 16px; line-height: 1.25; }
+.dwh-autre__texte { display: block; font-size: 14px; line-height: 1.35; color: var(--brume); margin-top: 2px; }
+.dwh-autre > svg { width: 18px; height: 18px; opacity: 0.6; }
+.dwh-liens { display: grid; margin-top: 40px; border-top: 1px solid var(--trait); }
+.dwh-liens a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--trait);
+  font-size: 15px;
+  text-decoration: none;
+  color: var(--encre);
+}
+.dwh-liens a span { color: var(--gris); }
+.dwh-liens a b { font-weight: 600; }
+.dwh-liens svg { width: 16px; height: 16px; flex-shrink: 0; color: var(--bleu); }
+
+/* ==========================================================================
+   3. COMMENT ÇA MARCHE — séquence réelle : chiffres en grand
+   ========================================================================== */
+.dwh-etapes { display: grid; gap: 28px; counter-reset: etape; }
+.dwh-etape { display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start; }
+.dwh-etape::before {
+  counter-increment: etape;
+  content: counter(etape);
+  font-family: var(--f-display);
+  font-variation-settings: 'wdth' 80;
+  font-stretch: 80%;
+  font-size: 64px;
+  line-height: 0.85;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--bleu);
+}
+.dwh-etape h3 { font-size: 19px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; }
+.dwh-etape p { font-size: 15px; color: var(--gris); margin-top: 6px; }
+
+/* ==========================================================================
+   4. LE CALCUL — sans abonnement
+   ========================================================================== */
+.dwh-calcul { display: grid; gap: 24px; }
+.dwh-ligne__tete { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+.dwh-ligne__nom { font-size: 15px; color: var(--brume); }
+.dwh-ligne__val { font-size: 30px; font-weight: 600; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+.dwh-ligne--nous .dwh-ligne__nom { color: #fff; font-weight: 600; }
+.dwh-ligne--nous .dwh-ligne__val { color: var(--protege-clair); }
+.dwh-jauge { height: 10px; border-radius: 5px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.dwh-jauge__rempli {
+  height: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #5e6fa0, #a3b2d6);
+  transform-origin: left center;
+  transform: scaleX(var(--p, 1));
+  transition: transform 1100ms var(--ease-out);
+}
+.dwh-ligne--nous .dwh-jauge__rempli { background: var(--protege-clair); }
+.dwh-calcul.attend .dwh-jauge__rempli { transform: scaleX(0); }
+.dwh-calcul__note { font-size: 15px; line-height: 1.55; color: var(--brume); }
+.dwh-mention { font-size: 12px; color: rgba(163, 178, 214, 0.7); margin-top: 20px; }
+
+/* ==========================================================================
+   5. POURQUOI NOUS
+   ========================================================================== */
+.dwh-atouts { display: grid; border-top: 1px solid var(--trait); }
+.dwh-atout { display: grid; grid-template-columns: 24px 1fr; gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--trait); }
+.dwh-atout svg { width: 24px; height: 24px; color: var(--bleu); margin-top: 1px; }
+.dwh-atout h3 { font-size: 17px; line-height: 1.3; font-weight: 600; }
+.dwh-atout p { font-size: 15px; color: var(--gris); margin-top: 4px; }
+
+/* ==========================================================================
+   6. FAQ
+   ========================================================================== */
+.dwh-faq { border-top: 1px solid var(--trait); }
+.dwh-faq details { border-bottom: 1px solid var(--trait); }
+.dwh-faq.est-replie .dwh-faq__extra { display: none; }
+.dwh-faq summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0;
+  min-height: 60px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.dwh-faq summary::-webkit-details-marker { display: none; }
+.dwh-faq summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%230c1e4a' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M10 4v12M4 10h12'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform 220ms var(--ease-out);
+}
+.dwh-faq details[open] summary::after { transform: rotate(45deg); }
+.dwh-faq__rep { padding: 0 0 20px; font-size: 15px; line-height: 1.6; color: var(--gris); }
+.dwh-faq__rep p + p { margin-top: 10px; }
+.dwh-faq__rep strong { color: var(--encre); font-weight: 600; }
+.dwh-faq__rep a { color: var(--bleu); font-weight: 600; }
+.dwh-faq__tout {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 16px 0 0;
+  font: 600 15px/1.3 var(--f-texte);
+  color: var(--bleu);
+  cursor: pointer;
+}
+.dwh-faq__plus { margin-top: 20px; font-size: 15px; color: var(--gris); }
+
+/* ==========================================================================
+   7. CTA FINAL — rappel de la notification du hero
+   ========================================================================== */
+.dwh-final { text-align: center; overflow: hidden; background: radial-gradient(70% 60% at 50% 0%, rgba(40, 96, 230, 0.35) 0%, transparent 70%), var(--nuit); }
+.dwh-final .dwh-chapo { margin-left: auto; margin-right: auto; }
+.dwh-final__notif { max-width: 340px; margin: 0 auto 32px; opacity: 1; transform: none; animation: none; text-align: left; }
+.dwh-final__actions { display: grid; gap: 2px; justify-items: center; max-width: 420px; margin: 30px auto 0; }
+.dwh-final__mentions { margin-top: 16px; font-size: 13px; color: var(--brume); }
+.dwh-espace-collant { height: 80px; background: var(--nuit); }
+
+/* ==========================================================================
+   Tablette et ordinateur
+   ========================================================================== */
+@media (min-width: 750px) {
+  .dwh-bloc { padding: 96px 32px; }
+  .dwh-hero { padding: 72px 32px 0; text-align: left; }
+  .dwh-hero__grille { grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: end; }
+  .dwh-hero__texte { padding-bottom: 96px; }
+  .dwh-hero__actions { justify-items: start; }
+  .dwh-hero__actions .dwh-btn { width: auto; padding-inline: 36px; }
+  .dwh-scene { height: 560px; margin: 0; }
+  .dwh-scene--centrale { height: 640px; }
+  .dwh-centrale { left: 0; transform: none; animation-name: dwh-centrale-d; }
+  @keyframes dwh-centrale-d { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .dwh-tel { width: 320px; }
+  .dwh-rassure__liste { grid-template-columns: repeat(4, 1fr); justify-items: center; }
+  .dwh-selecteur { max-width: 560px; }
+  .dwh-gamme { flex-direction: row; }
+  .dwh-gamme__visuel { flex: 0 0 44%; aspect-ratio: auto; min-height: 340px; }
+  .dwh-gamme__corps { padding: 32px; justify-content: center; }
+  .dwh-formules { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .dwh-parcours::before { left: 17px; }
+  .dwh-liens { grid-template-columns: repeat(3, 1fr); column-gap: 24px; border-top: 0; }
+  .dwh-bas-packs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-top: 8px; }
+  .dwh-deux { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 72px; align-items: start; }
+  .dwh-deux .dwh-entete { position: sticky; top: 120px; }
+  .dwh-etapes { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .dwh-etape { grid-template-columns: 1fr; gap: 12px; }
+  .dwh-calcul { max-width: 760px; }
+  .dwh-atouts { grid-template-columns: 1fr 1fr; column-gap: 40px; border-top: 0; }
+  .dwh-final__actions { grid-template-columns: auto auto; justify-content: center; gap: 16px; align-items: center; max-width: none; }
+  .dwh-final__actions .dwh-btn { width: auto; padding-inline: 36px; }
+  .dwh-collant, .dwh-espace-collant { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dwh-notif { animation: none; opacity: 1; transform: none; }
+  .dwh-centrale { animation: none; opacity: 1; }
+  .dwh-packs.est-pilote .dwh-pack, .dwh-packs.est-pilote .dwh-gamme { animation: none; }
+  .dwh-selecteur__curseur, .dwh-jauge__rempli, .dwh-collant { transition: none; }
+  .dwh-calcul.attend .dwh-jauge__rempli { transform: scaleX(var(--p, 1)); }
+}
