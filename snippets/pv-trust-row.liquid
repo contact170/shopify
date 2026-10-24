@@ -4,7 +4,7 @@
   trust signals travel with each CTA, not just the hero's.
 
   Params: has_rating, rating_value, rating_max, rating_count, rating_pct,
-  reviews_anchor.
+  reviews_anchor, avis_libelle (facultatif, ex. « avis gamme Vigilia »).
 {%- enddoc -%}
 
 {%- liquid
@@ -23,14 +23,14 @@
 -%}
 {%- if has_rating -%}
   <div class="pv-hero__rating">
-    <a href="#{{ reviews_anchor }}" class="pv-rating-badge" aria-label="Note {{ rating_value }} sur {{ rating_max }}, {{ rating_count }} avis — voir les avis">
+    <a href="#{{ reviews_anchor }}" class="pv-rating-badge" aria-label="Note {{ rating_value }} sur {{ rating_max }}, {{ rating_count }} {{ avis_libelle | default: 'avis' }} — voir les avis">
       <span class="pv-rating-badge__stars" aria-hidden="true">
         <span class="pv-rating-badge__stars-bg">★★★★★</span>
         <span class="pv-rating-badge__stars-fg" style="width:{{ rating_pct }}%">★★★★★</span>
       </span>
       <strong class="pv-rating-badge__score">{{ rating_value }}</strong>
       <span class="pv-rating-badge__sep" aria-hidden="true">·</span>
-      <span class="pv-rating-badge__count">{{ rating_count }} avis</span>
+      <span class="pv-rating-badge__count">{{ rating_count }} {{ avis_libelle | default: 'avis' }}</span>
       <svg class="pv-rating-badge__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
     </a>
   </div>

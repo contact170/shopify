@@ -469,6 +469,9 @@
     .psi-sim__tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--pv-navy);background:var(--pv-bg-alt);border-radius:999px;padding:4px 10px;margin-bottom:10px;}
     .psi-sim__intro h3{margin:0 0 8px;font-size:20px;line-height:1.25;color:var(--pv-ink);}
     .psi-sim__intro p{font-size:14px;line-height:1.5;color:var(--pv-gray);}
+    .pv .psi-sim__choix{margin-top:10px;}
+    .psi-sim__detail strong{color:var(--pv-ink);font-weight:600;}
+    .pv .pv-reviews__origine{margin:8px auto 0;max-width:640px;font-size:13px;line-height:1.5;color:var(--pv-gray);}
     .psi-sim__offres{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
     .psi-sim__offre{position:relative;display:flex;flex-direction:column;gap:4px;border:1.5px solid var(--pv-line);border-radius:16px;padding:16px;}
     .psi-sim__offre--top{border-color:var(--pv-navy);}
@@ -689,7 +692,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
             Vous économisez <span data-psi-saving>{{ eco0 | money }}</span>
           </span>
-          {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
+          {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor, avis_libelle: 'avis gamme Vigilia' -%}
         </div>
 
         </div>
@@ -721,7 +724,7 @@
     <div class="pv-wrap">
       <div class="pv-head pv-reveal">
         <h2>Tout ce qu'il faut, dans une seule boîte</h2>
-        <p>Le même équipement complet, quelle que soit la centrale choisie&nbsp;: intérieur, extérieur, jour et nuit.</p>
+        <p>Le même équipement complet, quelle que soit la centrale choisie&nbsp;: intérieur, extérieur, jour et nuit. Seule exception&nbsp;: les 2 badges RFID, inclus uniquement avec la Vigilia et la Vigilia +.</p>
       </div>
       <div class="pv-contents__grid pv-reveal">
         {%- for block in centrales -%}
@@ -851,7 +854,7 @@
           <h2>Deux caméras. Dedans et dehors.</h2>
           <p class="pv-feature__text">
             En cas d'alerte, vous regardez en direct depuis votre téléphone et vous vérifiez avant de réagir.
-            La caméra extérieure fonctionne à l'énergie solaire&nbsp;: aucun câble à tirer.
+            La caméra extérieure fonctionne sur batterie, rechargeable par le panneau solaire inclus&nbsp;: aucun câble à tirer.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Extérieur&nbsp;: W512MW rotative, vidéo 1440p, panneau solaire inclus</li>
@@ -933,13 +936,14 @@
             <span class="psi-sim__tag">Carte SIM M2M Afone</span>
             <h3>Pas encore de carte SIM&nbsp;? Ajoutez-la à votre commande.</h3>
             <p>Conçue pour les alarmes, compatible Vigilia + et Touch. Les forfaits grand public peuvent être coupés par l'opérateur s'ils sont utilisés dans une alarme.</p>
+            <p class="psi-sim__choix"><strong>Laquelle choisir&nbsp;?</strong> Au mois, vous payez le moins et restez libre de résilier. Le prépayé coûte un peu plus cher (72&nbsp;€ contre 67,15&nbsp;€ sur un an) mais vous n'y pensez plus pendant 12 mois et il offre plus de SMS, utiles pour les alertes. Dans les deux cas, activation en ligne chez Afone avec un RIB&nbsp;; carte valable en France.</p>
           </div>
           <div class="psi-sim__offres">
             {%- if sim_mois.id -%}
               {%- assign sv = sim_mois.selected_or_first_available_variant -%}
               <div class="psi-sim__offre">
-                <div class="psi-sim__nom">1 mois inclus</div>
-                <div class="psi-sim__detail">Puis 4,75&nbsp;€/mois sans engagement</div>
+                <div class="psi-sim__nom">Au mois</div>
+                <div class="psi-sim__detail">1<sup>er</sup> mois inclus, puis 4,75&nbsp;€/mois sans engagement, résiliable à tout moment. 40&nbsp;min ou 100&nbsp;SMS ou 40&nbsp;Mo par mois.<br><strong>Le moins cher&nbsp;: 67,15&nbsp;€ la première année.</strong></div>
                 <div class="psi-sim__prix">{{ sv.price | money }}</div>
                 <button type="button" class="psi-sim__btn" data-psi-ajout="{{ sv.id }}" {% unless sv.available %}disabled{% endunless %}>{% if sv.available %}Ajouter{% else %}Épuisée{% endif %}</button>
               </div>
@@ -949,7 +953,7 @@
               <div class="psi-sim__offre psi-sim__offre--top">
                 <span class="psi-sim__reco">Tranquillité</span>
                 <div class="psi-sim__nom">1 an prépayé</div>
-                <div class="psi-sim__detail">12 mois réglés d'avance, aucun prélèvement pendant 1 an</div>
+                <div class="psi-sim__detail">12 mois réglés en une fois, aucun prélèvement pendant un an&nbsp;: pas de ligne suspendue pour une carte bancaire expirée. 30&nbsp;min ou 150&nbsp;SMS ou 50&nbsp;Mo par mois.<br><strong>Ensuite 6&nbsp;€/mois ou une nouvelle carte 1 an.</strong></div>
                 <div class="psi-sim__prix">{{ sv.price | money }}</div>
                 <button type="button" class="psi-sim__btn" data-psi-ajout="{{ sv.id }}" {% unless sv.available %}disabled{% endunless %}>{% if sv.available %}Ajouter{% else %}Épuisée{% endif %}</button>
               </div>
@@ -1083,7 +1087,8 @@
         <span class="pv-eyebrow">Avis clients</span>
         <h2>Ce qu'en disent nos clients</h2>
         {%- if has_rating -%}
-          <p class="pv-reviews__summary"><strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés</p><br>
+          <p class="pv-reviews__summary"><strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés</p>
+          <p class="pv-reviews__origine">Avis Judge.me laissés par des acheteurs de la gamme Vigilia&nbsp;: centrales et packs, accessoires (détecteurs, contacteurs, sirènes, télécommandes, badges, claviers), caméras IP506P, EP506, W503 et W512MW, et carte SIM M2M. Ils ne portent pas tous sur ce pack. Textes publiés tels quels.</p><br>
         {%- endif -%}
         <button type="button" class="pv-reviews__all-btn" data-pv-reviews-open>Lire tous les avis</button>
       </div>
@@ -1096,7 +1101,7 @@
     capture faq
       echo "Jusqu'à quand l'offre est-elle valable ?|Les prix du Pack Sécurité Intégrale sont valables jusqu'au 31 octobre 2026 inclus, dans la limite des stocks disponibles."
       echo "~Que contient le Pack Sécurité Intégrale ?|Une centrale d'alarme au choix (Vigilia, Vigilia +, Touch AM301 ou Touch XL AM302), 4 contacteurs d'ouverture et de vibration WDV301, 1 détecteur de mouvement compatible animaux WPS305, 1 télécommande WRC305, 1 caméra intérieure rotative IP506P, 1 caméra extérieure solaire W512MW, 1 sirène extérieure solaire WOS305S et 2 autocollants de dissuasion. Avec la Vigilia et la Vigilia +, 2 badges RFID WRF301 sont inclus en plus."
-      echo "~Ai-je besoin d'un abonnement ?|Non. Vous achetez le pack une seule fois : pas de mensualité, pas de frais cachés. Le pilotage se fait avec l'application Daewoo Home Connect, incluse et gratuite."
+      echo "~Ai-je besoin d'un abonnement ?|Aucun abonnement Daewoo obligatoire : vous achetez le pack une seule fois et l'application Daewoo Home Connect est incluse et gratuite. Si vous utilisez le secours SIM (Vigilia +, Touch, Touch XL), un forfait opérateur est nécessaire."
       echo "~Quelle centrale choisir ?|Le reste du pack est le même pour les quatre, sauf les 2 badges RFID, inclus uniquement avec la Vigilia et la Vigilia +. La Vigilia est la plus simple, au clavier ou au badge, en Wi-Fi. La Vigilia + ajoute la 4G en secours. La Touch a un écran tactile couleur de 4,3 pouces et la 4G. La Touch XL a un grand écran de 7 pouces, la 4G et 20 heures de batterie de secours."
       echo "~À quoi correspond le prix barré ?|C'est le prix des mêmes éléments (centrale, contacteurs, détecteur, télécommande, caméras, sirène…) achetés séparément sur notre site, via notre configurateur. Le pack vous fait économiser la différence."
       echo "~Que se passe-t-il en cas de coupure de courant ou d'internet ?|En cas de coupure de courant, la centrale bascule sur sa batterie de secours : 4 heures pour la Vigilia, la Vigilia + et la Touch, 20 heures pour la Touch XL. Sans internet, la sirène et la détection continuent de fonctionner. Avec la Vigilia +, la Touch ou la Touch XL et une carte SIM installée (non fournie), vous continuez de recevoir les alertes par SMS et appel. Les caméras, elles, ont besoin du Wi-Fi."
@@ -1152,7 +1157,7 @@
         <div class="pv-final__ctas">
           {%- render 'pv-atc-button', form_id: form_id, variant: v0, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
-        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
+        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor, avis_libelle: 'avis gamme Vigilia' -%}
         <p class="pv-final__legal">Expédié sous 24 h · Retour sous 14 jours · Service client basé en France</p>
       </div>
     </div>
@@ -1183,7 +1188,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
       </button>
       <h3>Tous les avis clients</h3>
-      {%- if has_rating -%}<p><strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés</p>{%- endif -%}
+      {%- if has_rating -%}<p><strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés, gamme Vigilia (centrales, packs, accessoires, caméras et carte SIM). Ils ne portent pas tous sur ce pack.</p>{%- endif -%}
       <div class="pv-all-reviews" data-pv-all-reviews-list></div>
     </div>
   </dialog>
@@ -1204,7 +1209,7 @@
     "@type": "ProductGroup",
     "name": "Pack Sécurité Intégrale",
     "productGroupID": "PSI",
-    "description": {{ section.settings.summary | append: ' ' | append: section.settings.sub | strip | json }},
+    "description": {{ section.settings.summary | append: ' ' | append: section.settings.sub | append: " Si vous utilisez le secours SIM, un forfait opérateur est nécessaire." | strip | json }},
     "brand": { "@type": "Brand", "name": "Daewoo Security" },
     "url": {{ canonical_url | json }},
     "hasVariant": [
@@ -1544,7 +1549,7 @@
     { "type": "textarea", "id": "summary", "label": "Résumé sous l'accroche", "default": "Une centrale au choix, 4 contacteurs, 1 détecteur de mouvement, 1 télécommande, 2 caméras, 1 sirène solaire et 2 autocollants." },
     { "type": "image_picker", "id": "stickers_image", "label": "Photo des 2 autocollants (contenu du pack)", "info": "Le produit Shopify est un lot de 10 : sa photo n'est pas utilisée ici." },
     { "type": "textarea", "id": "galerie_photos", "label": "Photos du carrousel (après la photo du pack)", "info": "Un nom de fichier (Contenu › Fichiers) par ligne. Pour réserver une photo à certaines centrales, mettez leurs identifiants devant, ex. « touch,touch-xl: » (ou « rfid: » pour les centrales avec badges).", "default": "vigilia,vigilia-plus:daewoo-pack-01-application.webp\ntouch:daewoo-pack-01-application-touch.webp\ntouch-xl:daewoo-pack-01-application-touch-xl.webp\ndaewoo-pack-02-ouverture-vibration.webp\ndaewoo-pack-03-mode-maison.webp\ndaewoo-pack-04-deux-cameras.webp\ndaewoo-pack-05-installation-sirene.webp\ndaewoo-pack-06-coupures.webp\nvigilia,vigilia-plus:daewoo-pack-07-evolutif.webp\ntouch:daewoo-pack-07-evolutif-touch.webp\ntouch-xl:daewoo-pack-07-evolutif-touch-xl.webp" },
-    { "type": "textarea", "id": "sub", "label": "Texte sous le bouton", "default": "Tout pour protéger votre maison, dedans comme dehors. Vous l'installez vous-même, sans technicien, et vous ne payez jamais d'abonnement." }
+    { "type": "textarea", "id": "sub", "label": "Texte sous le bouton", "default": "Tout pour protéger votre maison, dedans comme dehors. Vous l'installez vous-même, sans technicien, et aucun abonnement Daewoo n'est obligatoire." }
   ],
   "blocks": [
     {
