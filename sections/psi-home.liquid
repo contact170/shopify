@@ -71,10 +71,10 @@
         <h2 class="dwh-titre psih__titre" id="PsiHomeTitre-{{ section.id }}">{{ section.settings.title }}</h2>
       </div>
 
-      <a class="psih__visuel" href="{{ lien }}" tabindex="-1" aria-hidden="true" data-psih-visuel>
+      <a class="psih__visuel" href="{{ lien }}" tabindex="-1" data-psih-visuel>
         {%- if pct_max > 0 -%}<span class="psih__remise"><small data-psih-remise-av>jusqu'à</small><b data-psih-remise>-{{ pct_max }}&nbsp;%</b></span>{%- endif -%}
         {%- if visuel -%}
-          {{ visuel | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 750px) 540px, 100vw', alt: '', data-psih-img: '' }}
+          {{ visuel | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 750px) 540px, 100vw', alt: section.settings.image_alt, data-psih-img: '' }}
         {%- endif -%}
       </a>
 
@@ -329,6 +329,7 @@
     { "type": "text", "id": "price_label", "label": "Texte au-dessus du prix", "default": "Le pack complet, dès" },
     { "type": "text", "id": "choice_label", "label": "Titre du choix de centrale", "default": "Choisissez votre centrale" },
     { "type": "image_picker", "id": "image", "label": "Visuel", "info": "Vide : photo du premier pack." },
+    { "type": "text", "id": "image_alt", "label": "Description du visuel (texte alternatif)", "default": "Pack Sécurité Intégrale Daewoo : centrale, détecteurs, deux caméras et sirène solaire" },
     { "type": "text", "id": "cta_label", "label": "Bouton", "default": "Découvrir le Pack Sécurité Intégrale" },
     { "type": "text", "id": "cta_link", "label": "Lien du bouton", "default": "/pages/offre-speciale" },
     { "type": "textarea", "id": "note", "label": "Mention sous le bouton", "default": "Prix barré : valeur des mêmes éléments achetés séparément sur notre site. Offre valable jusqu'au 31 octobre 2026 inclus." }
