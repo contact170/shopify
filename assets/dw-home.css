@@ -728,6 +728,9 @@
   .dwh-hero { padding-top: 28px; }
   .dwh-hero .dwh-titre { font-size: clamp(38px, 3.9vw, 52px); }
   .dwh-hero__note { margin-bottom: 12px; }
-  .dwh-scene { height: 440px; }
-  .dwh-scene--centrale { height: 500px; }
+  .dwh-scene { height: 460px; }
+  .dwh-scene--centrale { height: 520px; }
+  /* horloge plus compacte : les 3 notifications restent au-dessus de la carte « centrale » */
+  .dwh-tel__heure { margin-top: 2px; margin-bottom: 8px; }
+  .dwh-tel__heure b { font-size: 40px; }
 }
