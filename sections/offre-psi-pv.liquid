@@ -469,6 +469,11 @@
     .psi-sim__tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--pv-navy);background:var(--pv-bg-alt);border-radius:999px;padding:4px 10px;margin-bottom:10px;}
     .psi-sim__intro h3{margin:0 0 8px;font-size:20px;line-height:1.25;color:var(--pv-ink);}
     .psi-sim__intro p{font-size:14px;line-height:1.5;color:var(--pv-gray);}
+    /* Mobile : la bulle d'aide (Chatbase) s'efface tant que le bloc d'achat
+       (choix de la centrale, bouton) est à l'écran, pour ne pas le masquer. */
+    @media (max-width:767px){
+      html.pv-achat-visible #chatbase-bubble-button{opacity:0 !important;pointer-events:none !important;}
+    }
     .pv .psi-sim__choix{margin-top:10px;}
     .psi-sim__detail strong{color:var(--pv-ink);font-weight:600;}
     .pv .pv-reviews__origine{margin:8px auto 0;max-width:640px;font-size:13px;line-height:1.5;color:var(--pv-gray);}
@@ -1463,6 +1468,8 @@
         var majBarre = function () {
           prevu = false;
           sticky.classList.toggle('is-shown', heroCta.getBoundingClientRect().bottom < 64);
+          var achatEl = document.querySelector('.pv-hero__achat');
+          if (achatEl) { var ra = achatEl.getBoundingClientRect(); document.documentElement.classList.toggle('pv-achat-visible', ra.top < window.innerHeight && ra.bottom > 0); }
         };
         window.addEventListener('scroll', function () { if (!prevu) { prevu = true; requestAnimationFrame(majBarre); } }, { passive: true });
         window.addEventListener('resize', majBarre);
