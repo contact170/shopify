@@ -3,12 +3,22 @@
   Les entrées ne changent pas ; seul l'écart entre les mots est ajusté pour
   que le menu tienne sur une ligne à partir de 1280 px de large (20 px
   d'écart à 1280 px, 40 px dès 1440 px, comme avant).
+  Aussi : titre du carrousel d'avis Judge.me sur plusieurs lignes au lieu
+  d'être coupé par « … » sur mobile.
 {%- endcomment -%}
 <style>
   @media (min-width: 1280px) {
     header .header__menu .list-menu { column-gap: clamp(20px, calc((100vw - 1280px) * 0.125 + 20px), 40px); }
     header .header__menu .list-menu > li > a.menu__item,
     header .header__menu .list-menu > li > details > summary > .menu__item { padding-left: 0; padding-right: 0; }
+  }
+  .jdgm-widget .jdgm-header .jdgm-title {
+    white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+    -webkit-line-clamp: unset !important; max-height: none !important; height: auto !important;
+    text-wrap: balance;
+  }
+  @media (max-width: 749px) {
+    .jdgm-widget .jdgm-header .jdgm-title { font-size: clamp(26px, 7.4vw, 32px) !important; line-height: 1.15 !important; }
   }
 </style>
 
