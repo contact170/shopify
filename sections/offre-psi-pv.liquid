@@ -477,7 +477,8 @@
       {%- comment -%}
         Photos du pack choisi : photo du pack en premier, puis les visuels
         listés dans le réglage « Photos du carrousel » (un nom de fichier par
-        ligne ; « rfid: » devant = seulement pour les centrales avec badges).
+        ligne). « touch,touch-xl: » devant = seulement pour ces centrales
+        (identifiants des blocs) ; « rfid: » = centrales avec badges.
         Défilement au doigt, flèches, vignettes ; défilement automatique
         toutes les 5 s, arrêté dès que le visiteur touche au carrousel.
       {%- endcomment -%}
@@ -510,10 +511,16 @@
           {%- for ligne in lignes_photos -%}
             {%- assign nom = ligne | strip -%}
             {%- if nom == blank -%}{%- continue -%}{%- endif -%}
-            {%- assign debut = nom | slice: 0, 5 -%}
-            {%- if debut == 'rfid:' -%}
-              {%- unless block.settings.has_rfid -%}{%- continue -%}{%- endunless -%}
-              {%- assign nom = nom | remove_first: 'rfid:' | strip -%}
+            {%- if nom contains ':' -%}
+              {%- assign cibles = nom | split: ':' | first | split: ',' -%}
+              {%- assign nom = nom | split: ':' | last | strip -%}
+              {%- assign pour_moi = false -%}
+              {%- for c in cibles -%}
+                {%- assign c = c | strip -%}
+                {%- if c == block.settings.slug -%}{%- assign pour_moi = true -%}{%- endif -%}
+                {%- if c == 'rfid' and block.settings.has_rfid -%}{%- assign pour_moi = true -%}{%- endif -%}
+              {%- endfor -%}
+              {%- unless pour_moi -%}{%- continue -%}{%- endunless -%}
             {%- endif -%}
             {%- assign photo = images[nom] -%}
             {%- if photo == blank -%}{%- continue -%}{%- endif -%}
@@ -532,10 +539,16 @@
           {%- for ligne in lignes_photos -%}
             {%- assign nom = ligne | strip -%}
             {%- if nom == blank -%}{%- continue -%}{%- endif -%}
-            {%- assign debut = nom | slice: 0, 5 -%}
-            {%- if debut == 'rfid:' -%}
-              {%- unless block.settings.has_rfid -%}{%- continue -%}{%- endunless -%}
-              {%- assign nom = nom | remove_first: 'rfid:' | strip -%}
+            {%- if nom contains ':' -%}
+              {%- assign cibles = nom | split: ':' | first | split: ',' -%}
+              {%- assign nom = nom | split: ':' | last | strip -%}
+              {%- assign pour_moi = false -%}
+              {%- for c in cibles -%}
+                {%- assign c = c | strip -%}
+                {%- if c == block.settings.slug -%}{%- assign pour_moi = true -%}{%- endif -%}
+                {%- if c == 'rfid' and block.settings.has_rfid -%}{%- assign pour_moi = true -%}{%- endif -%}
+              {%- endfor -%}
+              {%- unless pour_moi -%}{%- continue -%}{%- endunless -%}
             {%- endif -%}
             {%- assign photo = images[nom] -%}
             {%- if photo == blank -%}{%- continue -%}{%- endif -%}
@@ -1430,7 +1443,7 @@
     { "type": "text", "id": "tagline", "label": "Accroche", "default": "Alarme maison sans fil, 2 caméras et sirène solaire. Sans abonnement." },
     { "type": "textarea", "id": "summary", "label": "Résumé sous l'accroche", "default": "Une centrale au choix, 4 contacteurs, 1 détecteur de mouvement, 1 télécommande, 2 caméras, 1 sirène solaire et 2 autocollants." },
     { "type": "image_picker", "id": "stickers_image", "label": "Photo des 2 autocollants (contenu du pack)", "info": "Le produit Shopify est un lot de 10 : sa photo n'est pas utilisée ici." },
-    { "type": "textarea", "id": "galerie_photos", "label": "Photos du carrousel (après la photo du pack)", "info": "Un nom de fichier (Contenu › Fichiers) par ligne. Ajoutez « rfid: » devant pour réserver une photo aux centrales avec badges (Vigilia, Vigilia +).", "default": "rfid:daewoo-pack-securite-integrale-01-application.webp\ndaewoo-pack-securite-integrale-02-ouverture-vibration.webp\ndaewoo-pack-securite-integrale-03-mode-maison.webp\ndaewoo-pack-securite-integrale-04-deux-cameras.webp\ndaewoo-pack-securite-integrale-05-installation-sirene.webp\ndaewoo-pack-securite-integrale-06-coupures.webp\nrfid:daewoo-pack-securite-integrale-07-evolutif.webp" },
+    { "type": "textarea", "id": "galerie_photos", "label": "Photos du carrousel (après la photo du pack)", "info": "Un nom de fichier (Contenu › Fichiers) par ligne. Pour réserver une photo à certaines centrales, mettez leurs identifiants devant, ex. « touch,touch-xl: » (ou « rfid: » pour les centrales avec badges).", "default": "vigilia,vigilia-plus:daewoo-pack-01-application.webp\ntouch:daewoo-pack-01-application-touch.webp\ntouch-xl:daewoo-pack-01-application-touch-xl.webp\ndaewoo-pack-02-ouverture-vibration.webp\ndaewoo-pack-03-mode-maison.webp\ndaewoo-pack-04-deux-cameras.webp\ndaewoo-pack-05-installation-sirene.webp\ndaewoo-pack-06-coupures.webp\nvigilia,vigilia-plus:daewoo-pack-07-evolutif.webp\ntouch:daewoo-pack-07-evolutif-touch.webp\ntouch-xl:daewoo-pack-07-evolutif-touch-xl.webp" },
     { "type": "textarea", "id": "sub", "label": "Texte sous le bouton", "default": "Tout pour protéger votre maison, dedans comme dehors. Vous l'installez vous-même, sans technicien, et vous ne payez jamais d'abonnement." }
   ],
   "blocks": [
