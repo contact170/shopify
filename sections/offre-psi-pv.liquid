@@ -147,6 +147,18 @@
     .pv-hero__img{position:relative;aspect-ratio:1/1;border-radius:28px;overflow:hidden;background:var(--pv-bg-alt);}
     .pv-hero__img img{width:100%;height:100%;object-fit:cover;}
     .psi-remise{position:absolute;top:16px;left:16px;z-index:1;padding:8px 14px;border-radius:999px;background:var(--pv-promo);color:#fff;font-size:15px;font-weight:700;letter-spacing:.01em;box-shadow:0 8px 20px -8px rgba(225,29,72,.6);}
+    .pv-galerie__piste{list-style:none;margin:0;padding:0;display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+    .pv-galerie__piste::-webkit-scrollbar{display:none;}
+    .pv-galerie__piste:focus-visible{outline:3px solid var(--pv-navy);outline-offset:-3px;}
+    .pv-galerie__diapo{flex:0 0 100%;height:100%;scroll-snap-align:center;scroll-snap-stop:always;}
+    .pv-galerie__diapo img{display:block;width:100%;height:100%;object-fit:cover;}
+    .pv-galerie__fleche{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-top:-22px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:var(--pv-ink,#111);box-shadow:0 6px 18px -6px rgba(0,0,0,.35);cursor:pointer;opacity:0;transition:opacity .2s ease,transform .2s ease;}
+    .pv-galerie__fleche--prec{left:14px;}
+    .pv-galerie__fleche--suiv{right:14px;}
+    .pv-hero__media:hover .pv-galerie__fleche,.pv-galerie__fleche:focus-visible{opacity:1;}
+    .pv-galerie__fleche:active{transform:scale(.94);}
+    .pv-galerie__compteur{position:absolute;right:14px;bottom:14px;z-index:2;padding:5px 11px;border-radius:999px;background:rgba(17,24,39,.62);color:#fff;font-size:13px;font-variant-numeric:tabular-nums;pointer-events:none;}
+    @media (hover:none){.pv-galerie__fleche{opacity:1;width:38px;height:38px;margin-top:-19px;}}
     .pv-thumbs{display:flex;justify-content:center;gap:10px;margin:14px auto 0;max-width:640px;overflow-x:auto;padding:2px 2px 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
     .pv-thumbs::-webkit-scrollbar{display:none;}
     .pv-thumbs__item{flex-shrink:0;width:56px;height:56px;padding:0;border-radius:12px;overflow:hidden;background:var(--pv-bg-alt);border:2px solid transparent;cursor:pointer;opacity:.6;transition:opacity .15s ease,border-color .15s ease;}
@@ -463,11 +475,17 @@
       <h1>{{ section.settings.title }}{% if section.settings.tagline != blank %} <span class="pv-hero__tagline">{{ section.settings.tagline }}</span>{% endif %}</h1>
       <p class="pv-hero__summary">{{ section.settings.summary }}</p>
 
-      {%- comment -%} Photos du pack choisi {%- endcomment -%}
+      {%- comment -%}
+        Photos du pack choisi : photo du pack en premier, puis les visuels
+        listés dans le réglage « Photos du carrousel » (un nom de fichier par
+        ligne ; « rfid: » devant = seulement pour les centrales avec badges).
+        Défilement au doigt, flèches, vignettes ; défilement automatique
+        toutes les 5 s, arrêté dès que le visiteur touche au carrousel.
+      {%- endcomment -%}
+      {%- assign lignes_photos = section.settings.galerie_photos | newline_to_br | split: '<br />' -%}
       {%- for block in centrales -%}
         {%- liquid
           assign p = block.settings.product
-          assign galerie = p.images
           assign ref = 0
           if block.settings.ref_value != blank
             assign ref = block.settings.ref_value | remove: ' ' | remove: '€' | replace: ',', '.' | times: 100 | round
@@ -477,28 +495,71 @@
           if eco > 0
             assign pct = eco | times: 100.0 | divided_by: ref | floor
           endif
+          assign idx_bloc = forloop.index0
         -%}
-        <div class="pv-hero__media" data-psi-idx="{{ forloop.index0 }}" {% unless forloop.first %}hidden{% endunless %}>
+        {%- capture diapos -%}
+          {%- assign n = 0 -%}
+          {%- if p.featured_image -%}
+            {%- assign n = 1 -%}
+            {%- assign chargement = 'lazy' -%}
+            {%- if forloop.first -%}{%- assign chargement = 'eager' -%}{%- endif -%}
+            <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="1">
+              {{ p.featured_image | image_url: width: 1200 | image_tag: loading: chargement, widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', data-psi-hero: '', alt: block.settings.title }}
+            </li>
+          {%- endif -%}
+          {%- for ligne in lignes_photos -%}
+            {%- assign nom = ligne | strip -%}
+            {%- if nom == blank -%}{%- continue -%}{%- endif -%}
+            {%- assign debut = nom | slice: 0, 5 -%}
+            {%- if debut == 'rfid:' -%}
+              {%- unless block.settings.has_rfid -%}{%- continue -%}{%- endunless -%}
+              {%- assign nom = nom | remove_first: 'rfid:' | strip -%}
+            {%- endif -%}
+            {%- assign photo = images[nom] -%}
+            {%- if photo == blank -%}{%- continue -%}{%- endif -%}
+            {%- assign n = n | plus: 1 -%}
+            <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="{{ n }}">
+              {{ photo | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', alt: photo.alt }}
+            </li>
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- capture vignettes -%}
+          {%- assign k = 0 -%}
+          {%- if p.featured_image -%}
+            {%- assign k = 1 -%}
+            <button type="button" class="pv-thumbs__item is-active" data-pv-thumb="0" aria-label="Photo 1">{{ p.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
+          {%- endif -%}
+          {%- for ligne in lignes_photos -%}
+            {%- assign nom = ligne | strip -%}
+            {%- if nom == blank -%}{%- continue -%}{%- endif -%}
+            {%- assign debut = nom | slice: 0, 5 -%}
+            {%- if debut == 'rfid:' -%}
+              {%- unless block.settings.has_rfid -%}{%- continue -%}{%- endunless -%}
+              {%- assign nom = nom | remove_first: 'rfid:' | strip -%}
+            {%- endif -%}
+            {%- assign photo = images[nom] -%}
+            {%- if photo == blank -%}{%- continue -%}{%- endif -%}
+            <button type="button" class="pv-thumbs__item" data-pv-thumb="{{ k }}" aria-label="Photo {{ k | plus: 1 }}">{{ photo | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
+            {%- assign k = k | plus: 1 -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        <div class="pv-hero__media" data-psi-idx="{{ idx_bloc }}" data-pv-galerie {% if idx_bloc > 0 %}hidden{% endif %}
+          role="region" aria-roledescription="carrousel" aria-label="Photos du {{ block.settings.title | escape }}">
           <div class="pv-hero__img">
             {%- if pct > 0 -%}<span class="psi-remise">-{{ pct }}&nbsp;%</span>{%- endif -%}
-            {%- if p.featured_image -%}
-              {%- assign chargement = 'lazy' -%}
-              {%- if forloop.first -%}{%- assign chargement = 'eager' -%}{%- endif -%}
-              {{ p.featured_image | image_url: width: 1200 | image_tag: loading: chargement, widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', data-psi-hero: '', alt: block.settings.title }}
+            <ul class="pv-galerie__piste" data-pv-piste tabindex="0">{{ diapos }}</ul>
+            {%- if n > 1 -%}
+              <button type="button" class="pv-galerie__fleche pv-galerie__fleche--prec" data-pv-prec aria-label="Photo précédente">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button type="button" class="pv-galerie__fleche pv-galerie__fleche--suiv" data-pv-suiv aria-label="Photo suivante">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+              <span class="pv-galerie__compteur" aria-hidden="true"><b data-pv-num>1</b> / {{ n }}</span>
             {%- endif -%}
           </div>
-          {%- if galerie.size > 1 -%}
-            <div class="pv-thumbs" role="group" aria-label="Photos du {{ block.settings.title | escape }}">
-              {%- for img in galerie limit: 6 -%}
-                <button type="button" class="pv-thumbs__item{% if forloop.first %} is-active{% endif %}" data-pv-thumb
-                  data-full="{{ img | image_url: width: 1200 }}"
-                  data-full-srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1200 }} 1200w"
-                  aria-label="Photo {{ forloop.index }} sur {{ galerie.size | at_most: 6 }}">
-                  {%- assign alt_img = img.alt | default: block.settings.title -%}
-                  {{ img | image_url: width: 120 | image_tag: loading: 'lazy', alt: alt_img }}
-                </button>
-              {%- endfor -%}
-            </div>
+          {%- if n > 1 -%}
+            <div class="pv-thumbs" role="group" aria-label="Choisir une photo">{{ vignettes }}</div>
           {%- endif -%}
         </div>
       {%- endfor -%}
@@ -1199,14 +1260,69 @@
         });
       });
 
-      /* Vignettes : changent la grande photo du pack affiché */
-      root.querySelectorAll('[data-pv-thumb]').forEach(function (t) {
-        t.addEventListener('click', function () {
-          var bloc = t.closest('.pv-hero__media');
-          var img = bloc.querySelector('[data-psi-hero]');
-          if (img) { img.src = t.getAttribute('data-full'); img.srcset = t.getAttribute('data-full-srcset'); }
-          bloc.querySelectorAll('[data-pv-thumb]').forEach(function (x) { x.classList.toggle('is-active', x === t); });
+      /* Carrousel photos : doigt, flèches, vignettes, défilement auto */
+      var mouvementReduit = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      root.querySelectorAll('[data-pv-galerie]').forEach(function (g) {
+        var piste = g.querySelector('[data-pv-piste]');
+        var diapos = g.querySelectorAll('[data-pv-diapo]');
+        var vignettes = g.querySelectorAll('[data-pv-thumb]');
+        var num = g.querySelector('[data-pv-num]');
+        if (!piste || diapos.length < 2) return;
+        var actuel = 0, minuteur = null, arrete = mouvementReduit, visible = false, survol = false;
+
+        function aller(i, doux) {
+          i = (i + diapos.length) % diapos.length;
+          piste.scrollTo({ left: i * piste.clientWidth, behavior: (doux === false || mouvementReduit) ? 'auto' : 'smooth' });
+        }
+        function marquer(i) {
+          if (i === actuel) return;
+          actuel = i;
+          if (num) num.textContent = i + 1;
+          vignettes.forEach(function (v, j) {
+            v.classList.toggle('is-active', j === i);
+            if (j === i && v.parentNode.scrollWidth > v.parentNode.clientWidth) {
+              v.parentNode.scrollTo({ left: v.offsetLeft - v.parentNode.clientWidth / 2 + v.offsetWidth / 2, behavior: 'smooth' });
+            }
+          });
+        }
+        var attente;
+        piste.addEventListener('scroll', function () {
+          clearTimeout(attente);
+          attente = setTimeout(function () { marquer(Math.round(piste.scrollLeft / piste.clientWidth)); }, 60);
+        }, { passive: true });
+
+        function stop() { arrete = true; clearInterval(minuteur); minuteur = null; }
+        function lancer() {
+          clearInterval(minuteur); minuteur = null;
+          if (arrete || !visible || survol || g.hidden || document.hidden) return;
+          minuteur = setInterval(function () { aller(actuel + 1); }, 5000);
+        }
+
+        g.querySelector('[data-pv-prec]').addEventListener('click', function () { stop(); aller(actuel - 1); });
+        g.querySelector('[data-pv-suiv]').addEventListener('click', function () { stop(); aller(actuel + 1); });
+        vignettes.forEach(function (v, j) { v.addEventListener('click', function () { stop(); aller(j); }); });
+        piste.addEventListener('pointerdown', stop, { passive: true });
+        piste.addEventListener('touchstart', stop, { passive: true });
+        piste.addEventListener('wheel', function (e) { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) stop(); }, { passive: true });
+        piste.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight') { e.preventDefault(); stop(); aller(actuel + 1); }
+          if (e.key === 'ArrowLeft') { e.preventDefault(); stop(); aller(actuel - 1); }
         });
+        g.addEventListener('mouseenter', function () { survol = true; lancer(); });
+        g.addEventListener('mouseleave', function () { survol = false; lancer(); });
+        g.addEventListener('focusin', function () { survol = true; lancer(); });
+        g.addEventListener('focusout', function () { survol = false; lancer(); });
+        document.addEventListener('visibilitychange', lancer);
+        window.addEventListener('resize', function () { aller(actuel, false); });
+
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (e) { visible = e[0].isIntersecting; lancer(); }, { threshold: 0.5 }).observe(g);
+        }
+        /* Changement de centrale : la galerie affichée repart sur la photo du pack */
+        if ('MutationObserver' in window) {
+          new MutationObserver(function () { if (!g.hidden) { aller(0, false); marquer(0); } lancer(); })
+            .observe(g, { attributes: true, attributeFilter: ['hidden'] });
+        }
       });
 
       /* Comptes à rebours */
@@ -1315,6 +1431,7 @@
     { "type": "text", "id": "tagline", "label": "Accroche", "default": "Alarme maison sans fil, 2 caméras et sirène solaire. Sans abonnement." },
     { "type": "textarea", "id": "summary", "label": "Résumé sous l'accroche", "default": "Une centrale au choix, 4 contacteurs, 1 détecteur de mouvement, 1 télécommande, 2 caméras, 1 sirène solaire et 2 autocollants." },
     { "type": "image_picker", "id": "stickers_image", "label": "Photo des 2 autocollants (contenu du pack)", "info": "Le produit Shopify est un lot de 10 : sa photo n'est pas utilisée ici." },
+    { "type": "textarea", "id": "galerie_photos", "label": "Photos du carrousel (après la photo du pack)", "info": "Un nom de fichier (Contenu › Fichiers) par ligne. Ajoutez « rfid: » devant pour réserver une photo aux centrales avec badges (Vigilia, Vigilia +).", "default": "rfid:daewoo-pack-securite-integrale-01-application.webp\ndaewoo-pack-securite-integrale-02-ouverture-vibration.webp\ndaewoo-pack-securite-integrale-03-mode-maison.webp\ndaewoo-pack-securite-integrale-04-deux-cameras.webp\ndaewoo-pack-securite-integrale-05-installation-sirene.webp\ndaewoo-pack-securite-integrale-06-coupures.webp\nrfid:daewoo-pack-securite-integrale-07-evolutif.webp" },
     { "type": "textarea", "id": "sub", "label": "Texte sous le bouton", "default": "Tout pour protéger votre maison, dedans comme dehors. Vous l'installez vous-même, sans technicien, et vous ne payez jamais d'abonnement." }
   ],
   "blocks": [
