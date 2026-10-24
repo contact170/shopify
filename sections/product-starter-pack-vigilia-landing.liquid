@@ -510,6 +510,10 @@
     @media (max-width:767px){
       html.pv-achat-visible #chatbase-bubble-button{opacity:0 !important;pointer-events:none !important;}
     }
+    .pv .pv-guide-lien{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--pv-navy);text-decoration:underline;text-underline-offset:3px;}
+    .pv .pv-guide-lien:hover{text-decoration-thickness:2px;}
+    .pv a.pv-strip__item{color:inherit;text-decoration:none;}
+    .pv a.pv-strip__item span{text-decoration:underline;text-underline-offset:3px;}
     .pv .pv-reviews__origine{margin:8px auto 0;max-width:640px;font-size:13px;line-height:1.5;color:var(--pv-gray);text-align:center;}
     .pv-all-reviews__loading{font-size:13.5px;color:var(--pv-gray);}
 
@@ -862,10 +866,10 @@
   {%- comment -%} Trust strip {%- endcomment -%}
   <div class="pv-wrap">
     <div class="pv-strip pv-reveal">
-      <div class="pv-strip__item">
+      <a class="pv-strip__item" href="/pages/installation-alarme-vigilia" target="_blank" rel="noopener" aria-label="Installation guidée, à réaliser vous-même : voir le guide d'installation interactif (nouvel onglet)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-        Installation guidée, à réaliser vous-même
-      </div>
+        <span>Installation guidée, à réaliser vous-même</span>
+      </a>
       <div class="pv-strip__item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
         Sans abonnement, à vie
@@ -1123,7 +1127,7 @@
         </div>
         <div class="pv-specs__item">
           <dt>Commande &amp; pilotage</dt>
-          <dd>Clavier physique intégré&#10;Application Daewoo Home Connect, notifications push ou SMS</dd>
+          <dd>Clavier physique intégré&#10;Application Daewoo Home Connect&#10;Notifications via Internet ; SMS et appels avec la version 4G équipée d'une SIM</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Caméra incluse</dt>
@@ -1135,7 +1139,7 @@
         </div>
         <div class="pv-specs__item">
           <dt>Installation</dt>
-          <dd>Détecteurs sans fil&#10;Centrale et caméra à brancher sur secteur&#10;Installation guidée par l'application, à réaliser vous-même</dd>
+          <dd>Détecteurs sans fil&#10;Centrale et caméra à brancher sur secteur&#10;Installation guidée par l'application, à réaliser vous-même&#10;<a class="pv-guide-lien" href="/pages/installation-alarme-vigilia" target="_blank" rel="noopener" aria-label="Voir le guide d'installation interactif (nouvel onglet)">Voir le guide d'installation interactif <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a></dd>
         </div>
         <div class="pv-specs__item">
           <dt>Compatibilité</dt>
@@ -1337,6 +1341,7 @@
         <details>
           <summary>Comment se passe l'installation&nbsp;?<span class="pv-faq__icon">＋</span></summary>
           <p class="pv-faq__a">Aucune compétence technique requise&nbsp;: c'est une installation guidée, à réaliser vous-même. Les détecteurs sont sans fil&nbsp;; la centrale et la caméra se branchent sur secteur. Suivez les étapes affichées dans l'application Daewoo Home Connect&nbsp;: connectez la centrale, associez et testez les accessoires, puis fixez-les.</p>
+          <p class="pv-faq__a"><a class="pv-guide-lien" href="/pages/installation-alarme-vigilia" target="_blank" rel="noopener" aria-label="Voir le guide d'installation interactif (nouvel onglet)">Voir le guide d'installation interactif <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a></p>
         </details>
       </div>
     </div>
@@ -1516,7 +1521,7 @@
   {%- capture faq_q6 -%}Puis-je agrandir mon système plus tard ?{%- endcapture -%}
   {%- capture faq_a6 -%}Oui. La centrale Vigilia accepte jusqu'à 60 accessoires radio (détecteurs, sirènes, claviers, télécommandes) ; les caméras s'ajoutent à part, dans l'application. Utilisez notre configurateur pour composer un pack plus complet dès maintenant, ou découvrez directement le Pack Vigilia complet avec 2 caméras et sirène solaire.{%- endcapture -%}
   {%- capture faq_q7 -%}Comment se passe l'installation ?{%- endcapture -%}
-  {%- capture faq_a7 -%}Aucune compétence technique requise : c'est une installation guidée, à réaliser vous-même. Les détecteurs sont sans fil ; la centrale et la caméra se branchent sur secteur. Suivez les étapes affichées dans l'application Daewoo Home Connect : connectez la centrale, associez et testez les accessoires, puis fixez-les.{%- endcapture -%}
+  {%- capture faq_a7 -%}Aucune compétence technique requise : c'est une installation guidée, à réaliser vous-même. Les détecteurs sont sans fil ; la centrale et la caméra se branchent sur secteur. Suivez les étapes affichées dans l'application Daewoo Home Connect : connectez la centrale, associez et testez les accessoires, puis fixez-les. Un guide d'installation interactif vous accompagne étape par étape : https://daewoo-security.fr/pages/installation-alarme-vigilia{%- endcapture -%}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
