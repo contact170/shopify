@@ -86,6 +86,12 @@
               <b class="psih__grand" data-psih-prix>{{ prix_min | money }}</b>
               {%- if ref_min > prix_min -%}<s class="psih__barre" data-psih-barre>{{ ref_min | money }}</s>{%- endif -%}
             </p>
+            {%- comment -%} Paiement en 4 fois sans frais (frais pris en charge par la boutique). Alma arrondit au centime : l'écart va sur la 1re échéance. {%- endcomment -%}
+            {%- liquid
+              assign alma_base = prix_min | divided_by: 4
+              assign alma_1 = alma_base | times: 3 | minus: prix_min | times: -1
+            -%}
+            <p class="psih__alma" data-psih-alma>Disponible en 4× sans frais avec Alma : <b>{{ alma_1 | money }}</b> puis 3 × {{ alma_base | money }}</p>
             {%- if eco_max > 0 -%}<p class="psih__eco" data-psih-eco>Jusqu'à <b>{{ eco_max | money }}</b> d'économie</p>{%- endif -%}
           </div>
         {%- endif -%}
@@ -126,7 +132,8 @@
                   data-url="{{ url_centrale }}" data-nom="{{ block.settings.label | escape }}" data-pct="{{ pct }}"
                   data-prix="{% if p %}{{ p.price | money | strip_html }}{% endif %}"
                   data-barre="{% if ref > 0 %}{{ ref | money | strip_html }}{% endif %}"
-                  data-eco="{% if eco_c > 0 %}{{ eco_c | money | strip_html }}{% endif %}">
+                  data-eco="{% if eco_c > 0 %}{{ eco_c | money | strip_html }}{% endif %}"
+                  {%- if p -%}{%- assign a_base = p.price | divided_by: 4 -%}{%- assign a_1 = a_base | times: 3 | minus: p.price | times: -1 %} data-alma1="{{ a_1 | money | strip_html }}" data-alma="{{ a_base | money | strip_html }}"{%- endif -%}>
                   {%- if block.settings.badge != blank -%}<span class="psih__badge">{{ block.settings.badge }}</span>{%- endif -%}
                   <span class="psih__nom">{{ block.settings.label }}</span>
                   <span class="psih__sous">{{ block.settings.sub }}</span>
@@ -184,6 +191,8 @@
   .psih .psih__barre{font-size:22px;color:var(--brume);text-decoration-thickness:2px;}
   .psih .psih__eco{display:inline-block;margin-top:14px;padding:8px 14px;border-radius:12px;background:#ffd500;color:#0a1330;font-size:16px;font-weight:600;}
   .psih .psih__eco b{font-weight:800;}
+  .psih .psih__alma{margin-top:10px;font-size:15px;color:var(--brume);}
+  .psih .psih__alma b{color:#fff;font-weight:700;}
   .psih .psih__texte{margin-top:20px;font-size:16px;line-height:1.55;color:var(--brume);}
   .psih .psih__puces{margin-top:16px;}
   .psih .psih__puces li{color:#fff;}
@@ -252,7 +261,13 @@
         var cta = q('[data-psih-cta]');
         if (cta) cta.href = c.getAttribute('data-url');
         var ctaTexte = q('[data-psih-cta-texte]');
-        if (ctaTexte) ctaTexte.textContent = 'Je profite du pack ' + nom;
+        if (ctaTexte) ctaTexte.textContent = 'Découvrir le Pack Sécurité Intégrale ' + nom;
+        var alma = q('[data-psih-alma]');
+        if (alma && c.getAttribute('data-alma')) {
+          alma.textContent = 'Disponible en 4× sans frais avec Alma : ';
+          var a1 = document.createElement('b'); a1.textContent = c.getAttribute('data-alma1'); alma.appendChild(a1);
+          alma.appendChild(document.createTextNode(' puis 3 × ' + c.getAttribute('data-alma')));
+        }
         var des = q('[data-psih-des]');
         if (des) des.textContent = 'Pack Sécurité Intégrale ' + nom;
         var prix = q('[data-psih-prix]');
@@ -314,7 +329,7 @@
     { "type": "text", "id": "price_label", "label": "Texte au-dessus du prix", "default": "Le pack complet, dès" },
     { "type": "text", "id": "choice_label", "label": "Titre du choix de centrale", "default": "Choisissez votre centrale" },
     { "type": "image_picker", "id": "image", "label": "Visuel", "info": "Vide : photo du premier pack." },
-    { "type": "text", "id": "cta_label", "label": "Bouton", "default": "J'en profite" },
+    { "type": "text", "id": "cta_label", "label": "Bouton", "default": "Découvrir le Pack Sécurité Intégrale" },
     { "type": "text", "id": "cta_link", "label": "Lien du bouton", "default": "/pages/offre-speciale" },
     { "type": "textarea", "id": "note", "label": "Mention sous le bouton", "default": "Prix barré : valeur des mêmes éléments achetés séparément sur notre site. Offre valable jusqu'au 31 octobre 2026 inclus." }
   ],

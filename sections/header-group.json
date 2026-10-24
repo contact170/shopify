@@ -347,12 +347,17 @@
         "link": "/pages/offre-speciale",
         "hide_ticker": true
       }
+    },
+    "menu_espacement": {
+      "type": "menu-espacement",
+      "settings": {}
     }
   },
   "order": [
     "announcement-bar",
     "psi_bandeau",
     "custom_liquid_ArzAHN",
-    "header"
+    "header",
+    "menu_espacement"
   ]
 }

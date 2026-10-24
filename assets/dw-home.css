@@ -704,3 +704,30 @@
   .dwh-selecteur__curseur, .dwh-jauge__rempli, .dwh-collant { transition: none; }
   .dwh-calcul.attend .dwh-jauge__rempli { transform: scaleX(var(--p, 1)); }
 }
+
+
+/* ==========================================================================
+   Premier écran compact (24/10/2026)
+   Objectif : titre, prix et bouton visibles sans défiler, y compris sur les
+   portables à écran bas (1280 × 720, 1366 × 768).
+   ========================================================================== */
+.dwh-hero__prix { margin: 16px 0 0; font-size: 15px; }
+.dwh-hero__actions { margin-top: 20px; }
+@media (min-width: 750px) {
+  .dwh-hero { padding-top: 40px; }
+  .dwh-hero__grille { align-items: center; }
+  .dwh-hero__texte { padding-bottom: 40px; }
+  .dwh-hero .dwh-titre { font-size: clamp(40px, 4.3vw, 60px); }
+  .dwh-tel { width: 290px; }
+  .dwh-scene { height: 500px; }
+  .dwh-scene--centrale { height: 560px; }
+}
+/* Écrans peu hauts : on resserre encore */
+@media (min-width: 750px) and (max-height: 820px) {
+  .dwh-hero { padding-top: 28px; }
+  .dwh-hero .dwh-titre { font-size: clamp(38px, 3.9vw, 52px); }
+  .dwh-hero__note { margin-bottom: 12px; }
+  .dwh-tel { width: 260px; }
+  .dwh-scene { height: 440px; }
+  .dwh-scene--centrale { height: 500px; }
+}

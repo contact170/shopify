@@ -38,6 +38,13 @@
         {%- endif -%}
         <h1 class="dwh-titre" id="dwh-h1-{{ section.id }}">{{ section.settings.title }}</h1>
 
+        {%- comment -%} Prix d'appel juste sous la promesse, avant le bouton {%- endcomment -%}
+        {%- if produit_appel != blank -%}
+          <p class="dwh-hero__prix">
+            {{ section.settings.prix_avant }} <strong>{{ produit_appel.price_min | money }}</strong>
+            · <span class="dwh-zero">0&nbsp;€ par mois, à vie</span>
+          </p>
+        {%- endif -%}
         <div class="dwh-hero__actions">
           <a class="dwh-btn dwh-btn--bleu" href="{{ lien_1 }}">
             {{ section.settings.cta_1_label }}
@@ -48,12 +55,6 @@
               {{ section.settings.cta_2_label }}
               {% render 'dw-home-icon', icon: 'arrow' %}
             </a>
-          {%- endif -%}
-          {%- if produit_appel != blank -%}
-            <p class="dwh-hero__prix">
-              {{ section.settings.prix_avant }} <strong>{{ produit_appel.price_min | money }}</strong>
-              · <span class="dwh-zero">0&nbsp;€ par mois, à vie</span>
-            </p>
           {%- endif -%}
         </div>
       </div>
