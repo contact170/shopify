@@ -165,6 +165,38 @@
     .pv-thumbs__item img{width:100%;height:100%;object-fit:cover;}
     .pv-thumbs__item.is-active{opacity:1;border-color:var(--pv-navy);}
 
+    /* ---- haut de page : galerie à gauche, achat à droite (ordinateur) ---- */
+    .psi-des{margin:14px auto 0;font-size:15px;color:var(--pv-gray);}
+    .psi-des a{color:inherit;text-decoration:none;}
+    .psi-des b{color:var(--pv-ink);font-size:18px;}
+    .psi-alma{margin:0;font-size:13.5px;color:var(--pv-gray);}
+    .psi-alma b{color:var(--pv-ink);}
+    @media (min-width:990px){
+      .pv-hero{padding:28px 0 48px;text-align:left;}
+      .pv-hero__grille{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-template-areas:"galerie tete" "galerie achat" "galerie bas";grid-template-rows:auto auto 1fr;column-gap:56px;align-items:start;}
+      .pv-hero__tete{grid-area:tete;}
+      .pv-hero__galeries{grid-area:galerie;position:sticky;top:96px;}
+      .pv-hero__achat{grid-area:achat;}
+      .pv-hero__bas{grid-area:bas;}
+      .pv-hero .psi-compte{margin-bottom:14px;}
+      .pv-hero h1{font-size:clamp(34px,3.3vw,46px);margin:0;max-width:none;}
+      .pv .pv-hero__tagline{font-size:clamp(17px,1.5vw,20px);margin:10px 0 0;max-width:none;}
+      .pv .pv-hero__summary{margin:10px 0 0;max-width:none;}
+      .psi-des{display:none;}
+      .pv-hero__media{margin:0;max-width:none;}
+      .pv-thumbs{max-width:none;}
+      .psi-choix{margin:22px 0 0;max-width:none;}
+      .psi-choix__titre{text-align:left;margin-bottom:16px;}
+      .psi-carte{min-height:80px;padding:12px 14px 10px;}
+      .pv-hero__cta{margin-top:18px;align-items:flex-start;gap:12px;}
+      .pv-hero__cta > *{order:2;}
+      .pv-hero__price,.psi-alma,.psi-eco{order:1;}
+      .pv-hero__cta #PVHeroCta-{{ section.id }}{justify-content:flex-start !important;}
+      .pv-hero__cta .pv-btn{width:100%;}
+      .pv .pv-hero__sub{margin:22px 0 0;font-size:16px;max-width:none;}
+      .pv-hero__trust{justify-content:flex-start;}
+    }
+
     /* ---- choix de la centrale ---- */
     .psi-choix{margin:32px auto 0;max-width:640px;text-align:left;}
     .psi-choix__titre{font-size:15px;font-weight:600;margin-bottom:24px;text-align:center;}
@@ -464,162 +496,190 @@
   {%- comment -%} ============ Hero ============ {%- endcomment -%}
   <section class="pv-hero">
     <div class="pv-wrap">
-      {%- if section.settings.end_date != blank -%}
-        <div class="psi-compte" data-psi-compte data-fin="{{ section.settings.end_date | escape }}">
-          <span class="psi-compte__point" aria-hidden="true"></span>
-          <span data-psi-encours>Offre spéciale · se termine dans <span class="psi-compte__temps" data-psi-temps>—</span></span>
-          <span data-psi-fini hidden>Cette offre est terminée</span>
-        </div>
-      {%- endif -%}
-      <h1>{{ section.settings.title }}{% if section.settings.tagline != blank %} <span class="pv-hero__tagline">{{ section.settings.tagline }}</span>{% endif %}</h1>
-      <p class="pv-hero__summary">{{ section.settings.summary }}</p>
+      <div class="pv-hero__grille">
+        <div class="pv-hero__tete">
+        {%- if section.settings.end_date != blank -%}
+          <div class="psi-compte" data-psi-compte data-fin="{{ section.settings.end_date | escape }}">
+            <span class="psi-compte__point" aria-hidden="true"></span>
+            <span data-psi-encours>Offre spéciale · se termine dans <span class="psi-compte__temps" data-psi-temps>—</span></span>
+            <span data-psi-fini hidden>Cette offre est terminée</span>
+          </div>
+        {%- endif -%}
+        <h1>{{ section.settings.title }}{% if section.settings.tagline != blank %} <span class="pv-hero__tagline">{{ section.settings.tagline }}</span>{% endif %}</h1>
+        <p class="pv-hero__summary">{{ section.settings.summary }}</p>
 
-      {%- comment -%}
-        Photos du pack choisi : photo du pack en premier, puis les visuels
-        listés dans le réglage « Photos du carrousel » (un nom de fichier par
-        ligne). « touch,touch-xl: » devant = seulement pour ces centrales
-        (identifiants des blocs) ; « rfid: » = centrales avec badges.
-        Défilement au doigt, flèches, vignettes ; défilement automatique
-        toutes les 5 s, arrêté dès que le visiteur touche au carrousel.
-      {%- endcomment -%}
-      {%- assign lignes_photos = section.settings.galerie_photos | newline_to_br | split: '<br />' -%}
-      {%- for block in centrales -%}
+        {%- comment -%} Mobile : le prix d'entrée et Alma avant la galerie {%- endcomment -%}
         {%- liquid
-          assign p = block.settings.product
-          assign ref = 0
-          if block.settings.ref_value != blank
-            assign ref = block.settings.ref_value | remove: ' ' | remove: '€' | replace: ',', '.' | times: 100 | round
-          endif
-          assign eco = ref | minus: p.price
-          assign pct = 0
-          if eco > 0
-            assign pct = eco | times: 100.0 | divided_by: ref | floor
-          endif
-          assign idx_bloc = forloop.index0
+          assign prix_min = 0
+          for block in centrales
+            assign pp = block.settings.product.price
+            if prix_min == 0 or pp < prix_min
+              assign prix_min = pp
+            endif
+          endfor
         -%}
-        {%- capture diapos -%}
-          {%- assign n = 0 -%}
-          {%- if p.featured_image -%}
-            {%- assign n = 1 -%}
-            {%- assign chargement = 'lazy' -%}
-            {%- if forloop.first -%}{%- assign chargement = 'eager' -%}{%- endif -%}
-            <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="1">
-              {%- if pct > 0 -%}<span class="psi-remise">-{{ pct }}&nbsp;%</span>{%- endif -%}
-              {{ p.featured_image | image_url: width: 1200 | image_tag: loading: chargement, widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', data-psi-hero: '', alt: block.settings.title }}
-            </li>
-          {%- endif -%}
-          {%- for ligne in lignes_photos -%}
-            {%- assign nom = ligne | strip -%}
-            {%- if nom == blank -%}{%- continue -%}{%- endif -%}
-            {%- if nom contains ':' -%}
-              {%- assign cibles = nom | split: ':' | first | split: ',' -%}
-              {%- assign nom = nom | split: ':' | last | strip -%}
-              {%- assign pour_moi = false -%}
-              {%- for c in cibles -%}
-                {%- assign c = c | strip -%}
-                {%- if c == block.settings.slug -%}{%- assign pour_moi = true -%}{%- endif -%}
-                {%- if c == 'rfid' and block.settings.has_rfid -%}{%- assign pour_moi = true -%}{%- endif -%}
-              {%- endfor -%}
-              {%- unless pour_moi -%}{%- continue -%}{%- endunless -%}
+        {%- if prix_min > 0 -%}
+          <p class="psi-des"><a href="#PSIChoix-{{ section.id }}">Dès <b>{{ prix_min | money }}</b> · 4× sans frais avec Alma</a></p>
+        {%- endif -%}
+        </div>
+        <div class="pv-hero__galeries">
+        {%- comment -%}
+          Photos du pack choisi : photo du pack en premier, puis les visuels
+          listés dans le réglage « Photos du carrousel » (un nom de fichier par
+          ligne). « touch,touch-xl: » devant = seulement pour ces centrales
+          (identifiants des blocs) ; « rfid: » = centrales avec badges.
+          Défilement au doigt, flèches, vignettes ; défilement automatique
+          toutes les 5 s, arrêté dès que le visiteur touche au carrousel.
+        {%- endcomment -%}
+        {%- assign lignes_photos = section.settings.galerie_photos | newline_to_br | split: '<br />' -%}
+        {%- for block in centrales -%}
+          {%- liquid
+            assign p = block.settings.product
+            assign ref = 0
+            if block.settings.ref_value != blank
+              assign ref = block.settings.ref_value | remove: ' ' | remove: '€' | replace: ',', '.' | times: 100 | round
+            endif
+            assign eco = ref | minus: p.price
+            assign pct = 0
+            if eco > 0
+              assign pct = eco | times: 100.0 | divided_by: ref | floor
+            endif
+            assign idx_bloc = forloop.index0
+          -%}
+          {%- capture diapos -%}
+            {%- assign n = 0 -%}
+            {%- if p.featured_image -%}
+              {%- assign n = 1 -%}
+              {%- assign chargement = 'lazy' -%}
+              {%- if forloop.first -%}{%- assign chargement = 'eager' -%}{%- endif -%}
+              <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="1">
+                {%- if pct > 0 -%}<span class="psi-remise">-{{ pct }}&nbsp;%</span>{%- endif -%}
+                {{ p.featured_image | image_url: width: 1200 | image_tag: loading: chargement, widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', data-psi-hero: '', alt: block.settings.title }}
+              </li>
             {%- endif -%}
-            {%- assign photo = images[nom] -%}
-            {%- if photo == blank -%}{%- continue -%}{%- endif -%}
-            {%- assign n = n | plus: 1 -%}
-            <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="{{ n }}">
-              {{ photo | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', alt: photo.alt }}
-            </li>
-          {%- endfor -%}
-        {%- endcapture -%}
-        {%- capture vignettes -%}
-          {%- assign k = 0 -%}
-          {%- if p.featured_image -%}
-            {%- assign k = 1 -%}
-            <button type="button" class="pv-thumbs__item is-active" data-pv-thumb="0" aria-label="Photo 1">{{ p.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
-          {%- endif -%}
-          {%- for ligne in lignes_photos -%}
-            {%- assign nom = ligne | strip -%}
-            {%- if nom == blank -%}{%- continue -%}{%- endif -%}
-            {%- if nom contains ':' -%}
-              {%- assign cibles = nom | split: ':' | first | split: ',' -%}
-              {%- assign nom = nom | split: ':' | last | strip -%}
-              {%- assign pour_moi = false -%}
-              {%- for c in cibles -%}
-                {%- assign c = c | strip -%}
-                {%- if c == block.settings.slug -%}{%- assign pour_moi = true -%}{%- endif -%}
-                {%- if c == 'rfid' and block.settings.has_rfid -%}{%- assign pour_moi = true -%}{%- endif -%}
-              {%- endfor -%}
-              {%- unless pour_moi -%}{%- continue -%}{%- endunless -%}
+            {%- for ligne in lignes_photos -%}
+              {%- assign nom = ligne | strip -%}
+              {%- if nom == blank -%}{%- continue -%}{%- endif -%}
+              {%- if nom contains ':' -%}
+                {%- assign cibles = nom | split: ':' | first | split: ',' -%}
+                {%- assign nom = nom | split: ':' | last | strip -%}
+                {%- assign pour_moi = false -%}
+                {%- for c in cibles -%}
+                  {%- assign c = c | strip -%}
+                  {%- if c == block.settings.slug -%}{%- assign pour_moi = true -%}{%- endif -%}
+                  {%- if c == 'rfid' and block.settings.has_rfid -%}{%- assign pour_moi = true -%}{%- endif -%}
+                {%- endfor -%}
+                {%- unless pour_moi -%}{%- continue -%}{%- endunless -%}
+              {%- endif -%}
+              {%- assign photo = images[nom] -%}
+              {%- if photo == blank -%}{%- continue -%}{%- endif -%}
+              {%- assign n = n | plus: 1 -%}
+              <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="{{ n }}">
+                {{ photo | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 700px) 640px, 100vw', alt: photo.alt }}
+              </li>
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- capture vignettes -%}
+            {%- assign k = 0 -%}
+            {%- if p.featured_image -%}
+              {%- assign k = 1 -%}
+              <button type="button" class="pv-thumbs__item is-active" data-pv-thumb="0" aria-label="Photo 1">{{ p.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
             {%- endif -%}
-            {%- assign photo = images[nom] -%}
-            {%- if photo == blank -%}{%- continue -%}{%- endif -%}
-            <button type="button" class="pv-thumbs__item" data-pv-thumb="{{ k }}" aria-label="Photo {{ k | plus: 1 }}">{{ photo | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
-            {%- assign k = k | plus: 1 -%}
-          {%- endfor -%}
-        {%- endcapture -%}
-        <div class="pv-hero__media" data-psi-idx="{{ idx_bloc }}" data-pv-galerie {% if idx_bloc > 0 %}hidden{% endif %}
-          role="region" aria-roledescription="carrousel" aria-label="Photos du {{ block.settings.title | escape }}">
-          <div class="pv-hero__img">
-            <ul class="pv-galerie__piste" data-pv-piste tabindex="0">{{ diapos }}</ul>
+            {%- for ligne in lignes_photos -%}
+              {%- assign nom = ligne | strip -%}
+              {%- if nom == blank -%}{%- continue -%}{%- endif -%}
+              {%- if nom contains ':' -%}
+                {%- assign cibles = nom | split: ':' | first | split: ',' -%}
+                {%- assign nom = nom | split: ':' | last | strip -%}
+                {%- assign pour_moi = false -%}
+                {%- for c in cibles -%}
+                  {%- assign c = c | strip -%}
+                  {%- if c == block.settings.slug -%}{%- assign pour_moi = true -%}{%- endif -%}
+                  {%- if c == 'rfid' and block.settings.has_rfid -%}{%- assign pour_moi = true -%}{%- endif -%}
+                {%- endfor -%}
+                {%- unless pour_moi -%}{%- continue -%}{%- endunless -%}
+              {%- endif -%}
+              {%- assign photo = images[nom] -%}
+              {%- if photo == blank -%}{%- continue -%}{%- endif -%}
+              <button type="button" class="pv-thumbs__item" data-pv-thumb="{{ k }}" aria-label="Photo {{ k | plus: 1 }}">{{ photo | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
+              {%- assign k = k | plus: 1 -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+          <div class="pv-hero__media" data-psi-idx="{{ idx_bloc }}" data-pv-galerie {% if idx_bloc > 0 %}hidden{% endif %}
+            role="region" aria-roledescription="carrousel" aria-label="Photos du {{ block.settings.title | escape }}">
+            <div class="pv-hero__img">
+              <ul class="pv-galerie__piste" data-pv-piste tabindex="0">{{ diapos }}</ul>
+              {%- if n > 1 -%}
+                <button type="button" class="pv-galerie__fleche pv-galerie__fleche--prec" data-pv-prec aria-label="Photo précédente">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <button type="button" class="pv-galerie__fleche pv-galerie__fleche--suiv" data-pv-suiv aria-label="Photo suivante">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+                </button>
+                <span class="pv-galerie__compteur" aria-hidden="true"><b data-pv-num>1</b> / {{ n }}</span>
+              {%- endif -%}
+            </div>
             {%- if n > 1 -%}
-              <button type="button" class="pv-galerie__fleche pv-galerie__fleche--prec" data-pv-prec aria-label="Photo précédente">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-              </button>
-              <button type="button" class="pv-galerie__fleche pv-galerie__fleche--suiv" data-pv-suiv aria-label="Photo suivante">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-              </button>
-              <span class="pv-galerie__compteur" aria-hidden="true"><b data-pv-num>1</b> / {{ n }}</span>
+              <div class="pv-thumbs" role="group" aria-label="Choisir une photo">{{ vignettes }}</div>
             {%- endif -%}
           </div>
-          {%- if n > 1 -%}
-            <div class="pv-thumbs" role="group" aria-label="Choisir une photo">{{ vignettes }}</div>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
+        {%- endfor -%}
 
-      {%- comment -%} Choix de la centrale : 2 × 2 sur mobile {%- endcomment -%}
-      <div class="psi-choix" role="group" aria-labelledby="PSIChoix-{{ section.id }}">
-        <p class="psi-choix__titre" id="PSIChoix-{{ section.id }}">Choisissez votre centrale</p>
-        <div class="psi-choix__grille">
-          {%- for block in centrales -%}
-            <button type="button" class="psi-carte{% if forloop.first %} is-selected{% endif %}" data-pv-connectivity="{{ block.settings.slug }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>
-              <span class="psi-carte__radio" aria-hidden="true"></span>
-              {%- if block.settings.badge != blank -%}<span class="psi-carte__badge">{{ block.settings.badge }}</span>{%- endif -%}
-              <span class="psi-carte__nom">{{ block.settings.tab_label }}</span>
-              <span class="psi-carte__sous">{{ block.settings.tab_sub }}</span>
-              <span class="psi-carte__prix">{{ block.settings.product.price | money }}</span>
-            </button>
-          {%- endfor -%}
         </div>
-      </div>
+        <div class="pv-hero__achat">
+        {%- comment -%} Choix de la centrale : 2 × 2 sur mobile {%- endcomment -%}
+        <div class="psi-choix" role="group" aria-labelledby="PSIChoix-{{ section.id }}">
+          <p class="psi-choix__titre" id="PSIChoix-{{ section.id }}">Choisissez votre centrale</p>
+          <div class="psi-choix__grille">
+            {%- for block in centrales -%}
+              <button type="button" class="psi-carte{% if forloop.first %} is-selected{% endif %}" data-pv-connectivity="{{ block.settings.slug }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>
+                <span class="psi-carte__radio" aria-hidden="true"></span>
+                {%- if block.settings.badge != blank -%}<span class="psi-carte__badge">{{ block.settings.badge }}</span>{%- endif -%}
+                <span class="psi-carte__nom">{{ block.settings.tab_label }}</span>
+                <span class="psi-carte__sous">{{ block.settings.tab_sub }}</span>
+                <span class="psi-carte__prix">{{ block.settings.product.price | money }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
 
-      <div class="pv-hero__cta">
-        <div id="PVHeroCta-{{ section.id }}" style="width:100%;display:flex;justify-content:center;">
-          {%- render 'pv-atc-button', form_id: form_id, variant: v0, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
-        </div>
-        {%- liquid
-          assign ref0 = 0
-          if c0.settings.ref_value != blank
-            assign ref0 = c0.settings.ref_value | remove: ' ' | remove: '€' | replace: ',', '.' | times: 100 | round
-          endif
-          assign eco0 = ref0 | minus: v0.price
+        <div class="pv-hero__cta">
+          <div id="PVHeroCta-{{ section.id }}" style="width:100%;display:flex;justify-content:center;">
+            {%- render 'pv-atc-button', form_id: form_id, variant: v0, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+          </div>
+          {%- liquid
+            assign ref0 = 0
+            if c0.settings.ref_value != blank
+              assign ref0 = c0.settings.ref_value | remove: ' ' | remove: '€' | replace: ',', '.' | times: 100 | round
+            endif
+            assign eco0 = ref0 | minus: v0.price
+          -%}
+          <div class="pv-hero__price">
+            <span class="pv-price-compare{% if eco0 > 0 %} is-visible{% endif %}" data-psi-barre>{{ ref0 | money }}</span>
+            <strong class="pv-price-amount">{{ v0.price | money }}</strong> · 0&nbsp;€ d'abonnement
+          </div>
+          {%- liquid
+          assign alma_base = v0.price | divided_by: 4
+          assign alma_1 = alma_base | times: 3 | minus: v0.price | abs
         -%}
-        <div class="pv-hero__price">
-          <span class="pv-price-compare{% if eco0 > 0 %} is-visible{% endif %}" data-psi-barre>{{ ref0 | money }}</span>
-          <strong class="pv-price-amount">{{ v0.price | money }}</strong> · 0&nbsp;€ d'abonnement
-        </div>
+        <p class="psi-alma" data-psi-alma>ou 4× sans frais avec Alma : <b data-psi-alma1>{{ alma_1 | money }}</b> puis 3&nbsp;×&nbsp;<span data-psi-alma3>{{ alma_base | money }}</span></p>
         <span class="psi-eco" data-psi-eco {% unless eco0 > 0 %}hidden{% endunless %}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
-          Vous économisez <span data-psi-saving>{{ eco0 | money }}</span>
-        </span>
-        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
-      </div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+            Vous économisez <span data-psi-saving>{{ eco0 | money }}</span>
+          </span>
+          {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
+        </div>
 
-      <p class="pv-hero__sub">{{ section.settings.sub }}</p>
-      <div class="pv-hero__trust">
-        <span>🔒 Sans abonnement</span>
-        <span>📷 2 caméras incluses</span>
-        <span>☀️ Sirène solaire extérieure</span>
-        <span>🧩 Évolutif</span>
+        </div>
+        <div class="pv-hero__bas">
+        <p class="pv-hero__sub">{{ section.settings.sub }}</p>
+        <div class="pv-hero__trust">
+          <span>🔒 Sans abonnement</span>
+          <span>📷 2 caméras incluses</span>
+          <span>☀️ Sirène solaire extérieure</span>
+          <span>🧩 Évolutif</span>
+        </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1220,6 +1280,12 @@
         root.querySelectorAll('[data-psi-barre]').forEach(function (el) { el.textContent = d.compare; el.classList.toggle('is-visible', d.hasCompare); });
         root.querySelectorAll('[data-psi-eco]').forEach(function (el) { el.hidden = !d.hasCompare; });
         root.querySelectorAll('[data-psi-saving]').forEach(function (el) { el.textContent = d.saving; });
+        if (d.priceCents) {
+          var base = Math.floor(d.priceCents / 4), premier = d.priceCents - 3 * base;
+          var euros = function (c) { return (c / 100).toFixed(2).replace('.', ',') + '€'; };
+          root.querySelectorAll('[data-psi-alma1]').forEach(function (el) { el.textContent = euros(premier); });
+          root.querySelectorAll('[data-psi-alma3]').forEach(function (el) { el.textContent = euros(base); });
+        }
         root.querySelectorAll('[data-psi-sku]').forEach(function (el) { el.textContent = d.sku; });
         root.querySelectorAll('[data-psi-nom]').forEach(function (el) { el.textContent = d.nom; });
         root.querySelectorAll('[data-psi-thumb]').forEach(function (el) { if (d.thumb) { el.src = d.thumb; el.removeAttribute('srcset'); } });
