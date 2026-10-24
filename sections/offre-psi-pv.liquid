@@ -678,7 +678,7 @@
           -%}
           <div class="pv-hero__price">
             <span class="pv-price-compare{% if eco0 > 0 %} is-visible{% endif %}" data-psi-barre>{{ ref0 | money }}</span>
-            <strong class="pv-price-amount">{{ v0.price | money }}</strong>{% if pct_min > 0 %} <span class="psi-pastille" data-psi-pct>-{{ pct_min }}&nbsp;%</span>{% endif %} · 0&nbsp;€ d'abonnement
+            <strong class="pv-price-amount">{{ v0.price | money }}</strong>{% if pct_min > 0 %} <span class="psi-pastille" data-psi-pct>-{{ pct_min }}&nbsp;%</span>{% endif %} <span style="white-space:nowrap">· 0&nbsp;€ d'abonnement</span>
           </div>
           {%- liquid
           assign alma_base = v0.price | divided_by: 4
