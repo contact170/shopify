@@ -62,6 +62,8 @@
   margin-bottom: 12px;
 }
 .dwh-sombre .dwh-surtitre { color: var(--brume); }
+/* Titres sur fond sombre : blancs, quel que soit le style de titre du thème */
+.dwh-sombre .dwh-titre { color: #fff; }
 .dwh-titre {
   font-family: var(--f-display);
   font-stretch: 88%;
