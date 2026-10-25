@@ -159,7 +159,7 @@
         "priceCents": {{ wifi_variant.price | json }},
         "config": "/pages/configurateur_2",
         "sku": {{ wifi_variant.sku | json }},
-        "centraleDesc": "Wi-Fi 2.4 GHz. Clavier tactile + sirène 85 dB intégrés. Batterie de secours 4h. Jusqu'à 60 accessoires connectables."
+        "centraleDesc": "Vigilia Wi-Fi 2,4 GHz. Clavier tactile et sirène 85 dB intégrés. Batterie de secours (environ 4 h). Jusqu'à 60 accessoires radio."
       },
       "{{ gsm_variant.id }}": {
         "key": "gsm",
@@ -169,7 +169,7 @@
         "priceCents": {{ gsm_variant.price | json }},
         "config": "/pages/configurateur_2",
         "sku": {{ gsm_variant.sku | json }},
-        "centraleDesc": "Wi-Fi + GSM 4G. Clavier tactile + sirène 85 dB intégrés. Batterie de secours 4h. Relais GSM automatique si le Wi-Fi est coupé. Jusqu'à 60 accessoires connectables."
+        "centraleDesc": "Vigilia + Wi-Fi + 4G (carte SIM non fournie). Clavier tactile et sirène 85 dB intégrés. Batterie de secours (environ 4 h). Alertes par SMS et appels en cas de coupure Internet. Jusqu'à 60 accessoires radio."
       }
     }
   </script>
@@ -916,12 +916,12 @@
         </div>
 
         <div class="pv-hero__bas">
-          <p class="pv-hero__sub">Centrale d'alarme à clavier, détecteurs et caméra intérieure réunis dans un kit essentiel. Toute votre sécurité, pilotée depuis votre téléphone.</p>
+          <p class="pv-hero__sub">Centrale d'alarme Vigilia, caméra intérieure rotative, caméra extérieure sur batterie et sirène solaire : intérieur et extérieur surveillés depuis la même application.</p>
           <div class="pv-hero__trust">
-            <span>🔒 Sans abonnement</span>
-            <span>📷 Caméra intérieure incluse</span>
-            <span>🎛️ Clavier physique intégré</span>
-            <span>🧩 Évolutif jusqu'à 60 accessoires</span>
+            <span>🔒 Sans abonnement Daewoo</span>
+            <span>📷 2 caméras : intérieur + extérieur</span>
+            <span>☀️ Sirène extérieure solaire</span>
+            <span>🧩 Jusqu'à 60 accessoires radio</span>
           </div>
         </div>
       </div>
@@ -931,17 +931,14 @@
   {%- comment -%} Trust strip {%- endcomment -%}
   <div class="pv-wrap">
     <div class="pv-strip pv-reveal">
-      <div class="pv-strip__item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-        Installation sans technicien, en 30 minutes
-      </div>
+      <a class="pv-strip__item" href="/pages/installation-alarme-vigilia" target="_blank" rel="noopener" aria-label="Installation guidée, à réaliser vous-même : voir le guide d'installation interactif (nouvel onglet)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span>Installation guidée, à réaliser vous-même</span></a>
       <div class="pv-strip__item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
         Sans abonnement, à vie
       </div>
       <div class="pv-strip__item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-        Compatible avec 60 accessoires Daewoo
+        Jusqu'à 60 accessoires radio
       </div>
       <div class="pv-strip__item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
@@ -955,62 +952,62 @@
     <div class="pv-wrap">
       <div class="pv-contents__head pv-reveal">
         <h2>Tout ce qu'il faut, dans une seule boîte</h2>
-        <p>2 caméras et 9 accessoires pensés pour couvrir votre logement de l'intérieur à l'extérieur, dès le déballage.</p>
+        <p>Centrale, 2 caméras et 9 accessoires de sécurité, avec 2 autocollants inclus.</p>
       </div>
       <div class="pv-contents__grid pv-reveal">
         <div class="pv-contents__item">
           <span class="pv-contents__qty">1×</span>
           <div>
-            <div class="pv-contents__name">Centrale d'alarme VIGILIA</div>
-            <div class="pv-contents__desc pv-centrale-desc">{% if selected_key == 'gsm' %}Wi-Fi + GSM 4G. Clavier tactile + sirène 85 dB intégrés. Batterie de secours 4h. Relais GSM automatique si le Wi-Fi est coupé. Jusqu'à 60 accessoires connectables.{% else %}Wi-Fi 2.4 GHz. Clavier tactile + sirène 85 dB intégrés. Batterie de secours 4h. Jusqu'à 60 accessoires connectables.{% endif %}</div>
+            <div class="pv-contents__name">Centrale d'alarme Vigilia (Wi-Fi) ou Vigilia + (Wi-Fi + 4G)</div>
+            <div class="pv-contents__desc pv-centrale-desc">{% if selected_key == 'gsm' %}Vigilia + Wi-Fi + 4G (carte SIM non fournie). Clavier tactile et sirène 85 dB intégrés. Batterie de secours (environ 4 h). Alertes par SMS et appels en cas de coupure Internet. Jusqu'à 60 accessoires radio.{% else %}Vigilia Wi-Fi 2,4 GHz. Clavier tactile et sirène 85 dB intégrés. Batterie de secours (environ 4 h). Jusqu'à 60 accessoires radio.{% endif %}</div>
           </div>
         </div>
         <div class="pv-contents__item">
           <span class="pv-contents__qty">1×</span>
           <div>
-            <div class="pv-contents__name">Caméra intérieure motorisée IP506P</div>
-            <div class="pv-contents__desc">Full HD, alimentation secteur, mode confidentialité mécanique</div>
+            <div class="pv-contents__name">Caméra intérieure rotative IP506P</div>
+            <div class="pv-contents__desc">Full HD, Wi-Fi, à brancher sur secteur. Mode vie privée&nbsp;: l'objectif se tourne vers le bas, à la demande ou via un scénario de l'application</div>
           </div>
         </div>
         <div class="pv-contents__item">
           <span class="pv-contents__qty">1×</span>
           <div>
-            <div class="pv-contents__name">Caméra extérieure autonome W503</div>
-            <div class="pv-contents__desc">3 MP sur batterie, vision nocturne, audio bidirectionnel</div>
+            <div class="pv-contents__name">Caméra extérieure sur batterie W503</div>
+            <div class="pv-contents__desc">3 MP, Wi-Fi, batterie rechargeable, vision nocturne, audio bidirectionnel</div>
           </div>
         </div>
         <div class="pv-contents__item">
           <span class="pv-contents__qty">1×</span>
           <div>
             <div class="pv-contents__name">Sirène extérieure solaire sans fil WOS305S</div>
-            <div class="pv-contents__desc">Flash stroboscopique rouge, alimentation solaire intégrée</div>
+            <div class="pv-contents__desc">Jusqu'à 110 dB (réglable 80, 100 ou 110 dB), flash stroboscopique rouge, panneau solaire fourni et batterie intégrée</div>
           </div>
         </div>
         <div class="pv-contents__item">
           <span class="pv-contents__qty">4×</span>
           <div>
-            <div class="pv-contents__name">Contacteurs + détecteurs de vibration WDV301</div>
-            <div class="pv-contents__desc">2-en-1, pour portes, fenêtres et surfaces vitrées</div>
+            <div class="pv-contents__name">Contacteurs 2-en-1 ouverture + vibration WDV301</div>
+            <div class="pv-contents__desc">Pour portes, fenêtres et surfaces vitrées</div>
           </div>
         </div>
         <div class="pv-contents__item">
           <span class="pv-contents__qty">1×</span>
           <div>
             <div class="pv-contents__name">Détecteur de mouvement WPS305</div>
-            <div class="pv-contents__desc">Compatible animaux de moins de 10 kg, sans fausses alertes</div>
+            <div class="pv-contents__desc">Compatible avec les petits animaux jusqu'à 10 kg, sous réserve de respecter les conditions d'installation</div>
           </div>
         </div>
         <div class="pv-contents__item">
           <span class="pv-contents__qty">1×</span>
           <div>
-            <div class="pv-contents__name">Télécommande</div>
+            <div class="pv-contents__name">Télécommande WRC305</div>
             <div class="pv-contents__desc">Armement / désarmement et SOS en un geste, clapet de protection</div>
           </div>
         </div>
         <div class="pv-contents__item">
           <span class="pv-contents__qty">2×</span>
           <div>
-            <div class="pv-contents__name">Badges RFID</div>
+            <div class="pv-contents__name">Badges RFID WRF301</div>
             <div class="pv-contents__desc">Désarmement instantané, sans code</div>
           </div>
         </div>
@@ -1030,17 +1027,17 @@
     <section class="pv-section pv-section--alt">
       <div class="pv-wrap">
         <div class="pv-compare__head pv-reveal">
-          <h2>Wi-Fi ou Wi-Fi + GSM 4G : la différence essentielle</h2>
-          <p>La centrale VIGILIA existe en deux versions. Le choix dépend du niveau de sécurité souhaité.</p>
+          <h2>Vigilia (Wi-Fi) ou Vigilia + (Wi-Fi + 4G)&nbsp;: la différence essentielle</h2>
+          <p>La centrale Vigilia existe en deux versions. Le choix dépend de la stabilité de votre connexion Internet et de l'usage du logement.</p>
         </div>
 
         <div class="pv-compare__grid pv-reveal">
           <button type="button" class="pv-compare__card{% if selected_key == 'wifi' %} is-selected{% endif %}" data-pv-connectivity="wifi" aria-pressed="{% if selected_key == 'wifi' %}true{% else %}false{% endif %}">
             <span class="pv-compare__radio" aria-hidden="true"></span>
-            <span class="pv-compare__name">Version Wi-Fi</span>
+            <span class="pv-compare__name">Vigilia (Wi-Fi)</span>
             <ul>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Connexion à votre box internet en Wi-Fi 2.4 GHz</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Alertes et pilotage via l'application Daewoo Home Connect</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Connexion à votre box Internet en Wi-Fi 2,4&nbsp;GHz</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Notifications via Internet et pilotage depuis l'application Daewoo Home Connect</li>
               <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Idéale si votre Wi-Fi est stable au quotidien</li>
             </ul>
             <span class="pv-compare__price">
@@ -1052,13 +1049,13 @@
           <button type="button" class="pv-compare__card{% if selected_key == 'gsm' %} is-selected{% endif %}" data-pv-connectivity="gsm" aria-pressed="{% if selected_key == 'gsm' %}true{% else %}false{% endif %}">
             <span class="pv-compare__radio" aria-hidden="true"></span>
             <span class="pv-compare__badge">Recommandé</span>
-            <span class="pv-compare__name">Version Wi-Fi + GSM 4G</span>
+            <span class="pv-compare__name">Vigilia + (Wi-Fi + 4G)</span>
             <ul>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Ajoutez une carte Nano SIM (non fournie) pour une connexion 4G de secours</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>En cas de coupure Internet ou d'électricité, la centrale reste joignable par SMS et appel</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Idéale pour résidence secondaire, Wi-Fi instable ou sécurité maximale</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Ajoutez une carte Nano SIM (non fournie) et un forfait opérateur pour les alertes de secours par SMS et appels</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>En cas de coupure Internet, la centrale vous alerte par SMS et appel&nbsp;; en cas de coupure de courant, elle continue de fonctionner grâce à sa batterie de secours (environ 4&nbsp;h)</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Idéale pour une résidence secondaire ou une connexion Internet instable</li>
             </ul>
-            <p class="pv-compare__note">La carte SIM sert uniquement aux alertes par SMS et aux appels. L'application et les caméras nécessitent toujours une connexion Wi‑Fi.</p>
+            <p class="pv-compare__note">La carte SIM sert uniquement aux alertes par SMS et aux appels. L'application et les caméras nécessitent toujours une connexion Internet.</p>
             <span class="pv-compare__price">
               {%- if gsm_has_compare -%}<span class="pv-price-compare is-visible">{{ gsm_variant.compare_at_price | money }}</span>{%- endif -%}
               <strong>{{ gsm_variant.price | money }}</strong>
@@ -1080,13 +1077,13 @@
           <span class="pv-feature__num">PROTECTION INTÉRIEURE</span>
           <h2>Elle veille pendant que vous vivez.</h2>
           <p class="pv-feature__text">
-            Un détecteur de mouvement WPS305 compatible animaux de moins de 10 kg et quatre contacteurs
-            2-en-1 WDV301 couvrent portes, fenêtres et pièces de vie sans jamais confondre
-            votre animal avec un intrus.
+            Un détecteur de mouvement WPS305 et quatre contacteurs 2-en-1 ouverture + vibration WDV301
+            surveillent portes, fenêtres et pièces de vie. Le détecteur est compatible avec les petits animaux
+            jusqu'à 10&nbsp;kg, sous réserve de respecter les conditions d'installation.
           </p>
           <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Détection fiable, sans fausses alertes liées aux animaux</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Alerte dès la tentative d'ouverture ou de choc, avant même l'intrusion</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Compatible avec les petits animaux jusqu'à 10&nbsp;kg, sous réserve de respecter les conditions d'installation</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Alerte en cas d'ouverture, mais aussi de choc ou de vibration sur une porte ou une fenêtre</li>
           </ul>
         </div>
       </div>
@@ -1105,12 +1102,13 @@
           <h2>Dissuasion immédiate, sans raccordement au secteur.</h2>
           <p class="pv-feature__text">
             La sirène extérieure solaire WOS305S se déclenche lorsque la centrale détecte une intrusion.
-            Son flash et sa puissance sonore de 110&nbsp;dB renforcent immédiatement la dissuasion. Livrée
-            avec son panneau solaire, elle ne nécessite aucun raccordement au secteur.
+            Son flash et sa puissance sonore réglable jusqu'à 110&nbsp;dB (80, 100 ou 110&nbsp;dB) renforcent la
+            dissuasion. Livrée avec son panneau solaire et dotée d'une batterie intégrée, elle ne nécessite aucun
+            raccordement au secteur.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Dissuasion sonore et visuelle immédiate en cas de détection</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>100&nbsp;% sans fil, alimentée par son propre panneau solaire</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Sans fil, alimentée par son panneau solaire fourni et sa batterie intégrée</li>
           </ul>
         </div>
       </div>
@@ -1128,13 +1126,13 @@
           <span class="pv-feature__num">VIDÉOSURVEILLANCE INTÉRIEURE</span>
           <h2>Un œil chez vous, sans perdre votre intimité.</h2>
           <p class="pv-feature__text">
-            La caméra intérieure motorisée IP506P diffuse en direct sur votre smartphone. Son mode
-            confidentialité est mécanique&nbsp;: l'objectif se rétracte physiquement dès que vous
-            désarmez l'alarme.
+            La caméra intérieure rotative IP506P (Full HD, Wi-Fi, à brancher sur secteur) diffuse en direct
+            sur votre smartphone. Mode vie privée&nbsp;: l'objectif se tourne vers le bas, à la demande ou via
+            un scénario de l'application.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Visualisation en direct depuis votre smartphone</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Objectif rétractable, vie privée protégée en mode désarmé</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Mode vie privée&nbsp;: l'objectif se tourne vers le bas, à la demande ou via un scénario de l'application</li>
           </ul>
         </div>
       </div>
@@ -1152,12 +1150,12 @@
           <span class="pv-feature__num">VIDÉOSURVEILLANCE EXTÉRIEURE</span>
           <h2>Entrée, terrasse ou jardin, surveillés sans branchement.</h2>
           <p class="pv-feature__text">
-            La caméra extérieure W503 fonctionne 100&nbsp;% sur batterie&nbsp;: aucun câblage
+            La caméra extérieure W503 (3&nbsp;MP, Wi-Fi) fonctionne sur batterie rechargeable&nbsp;: aucun câblage
             électrique nécessaire. Vision nocturne et audio bidirectionnel vous permettent de voir
             et de parler à vos visiteurs, de jour comme de nuit.
           </p>
           <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Installation libre, sans électricité à proximité</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Pas besoin de prise électrique à proximité, à portée de votre Wi-Fi</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Vision nocturne et audio bidirectionnel</li>
           </ul>
         </div>
@@ -1169,7 +1167,7 @@
   <div class="pv-wrap">
     <div class="pv-band pv-reveal">
       <h2>Protégez votre maison dès aujourd'hui</h2>
-      <p>Livraison rapide, garantie 2 ans, et un système qui s'installe seul en 30 minutes.</p>
+      <p>Livraison rapide, garantie 2 ans et installation guidée, à réaliser vous-même.</p>
       {%- if has_connectivity_choice -%}
         <div class="pv-band__toggle">
           {%- render 'pv-connectivity-toggle', selected: selected_key -%}
@@ -1199,7 +1197,7 @@
           <h2>Un système, pas juste des accessoires.</h2>
           <p class="pv-feature__text">
             L'application Daewoo Home Connect pilote l'ensemble du pack&nbsp;: armement,
-            désarmement, alertes et visualisation en direct de vos deux caméras, où que vous soyez dans le monde.
+            désarmement, alertes et visualisation en direct de vos deux caméras, où que vous soyez, via Internet.
           </p>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg>Armement / désarmement à distance, à tout moment</li>
@@ -1216,36 +1214,36 @@
     <div class="pv-wrap">
       <div class="pv-specs__head pv-reveal">
         <h2>En résumé</h2>
-        <p>Tout ce qu'il faut savoir sur le Pack Alarme VIG502.</p>
+        <p>Tout ce qu'il faut savoir sur le pack alarme Vigilia VIG502.</p>
       </div>
       <dl class="pv-specs__grid pv-reveal">
         <div class="pv-specs__item">
           <dt>Connectivité</dt>
-          <dd>Wi-Fi 2.4 GHz&#10;Version Wi-Fi + GSM 4G disponible (Pack VIG502+)</dd>
+          <dd>Wi-Fi 2,4&nbsp;GHz&#10;Disponible en version Vigilia + (Wi-Fi + 4G, carte SIM non fournie)</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Alimentation &amp; autonomie</dt>
-          <dd>Centrale sur secteur + batterie de secours intégrée (4h)&#10;Caméra extérieure W503 sur batterie autonome</dd>
+          <dd>Détecteurs sans fil&#10;Centrale et caméra intérieure à brancher sur secteur (batterie de secours de la centrale&nbsp;: environ 4&nbsp;h)&#10;Caméra extérieure W503 sur batterie rechargeable&#10;Sirène extérieure solaire sans fil</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Sécurité &amp; détection</dt>
-          <dd>Sirène intégrée 85 dB (centrale) + sirène extérieure solaire flash WOS305S&#10;Détection d'arrachement, communication cryptée</dd>
+          <dd>Sirène intégrée 85&nbsp;dB (centrale) + sirène extérieure solaire WOS305S avec flash, jusqu'à 110&nbsp;dB (réglable)&#10;Détection d'arrachement, communication chiffrée</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Commande &amp; pilotage</dt>
-          <dd>Application Daewoo Home Connect&#10;Notifications push ou SMS, scénarios automatiques</dd>
+          <dd>Application Daewoo Home Connect&#10;Notifications via Internet&nbsp;; SMS et appels avec la version 4G équipée d'une SIM&#10;Scénarios automatiques</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Caméras incluses</dt>
-          <dd>1 caméra intérieure motorisée IP506P (secteur)&#10;1 caméra extérieure autonome W503 (batterie, vision nocturne)</dd>
+          <dd>1 caméra intérieure rotative IP506P Full HD (Wi-Fi, à brancher sur secteur)&#10;1 caméra extérieure W503 3&nbsp;MP (Wi-Fi, batterie rechargeable, vision nocturne)</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Évolutivité</dt>
-          <dd>Jusqu'à 60 accessoires compatibles&#10;Détecteurs, caméras, sirènes, claviers, télécommandes</dd>
+          <dd>Jusqu'à 60 accessoires radio sur la centrale (détecteurs, sirènes, claviers, télécommandes)&#10;Les caméras s'ajoutent à part, dans l'application</dd>
         </div>
         <div class="pv-specs__item">
           <dt>Installation</dt>
-          <dd>Sans technicien ni câblage&#10;Environ 30 minutes, guidée par l'application</dd>
+          <dd>Installation guidée, à réaliser vous-même&#10;Étapes affichées dans l'application Daewoo Home Connect&#10;<a class="pv-guide-lien" href="/pages/installation-alarme-vigilia" target="_blank" rel="noopener" aria-label="Voir le guide d'installation interactif (nouvel onglet)">Voir le guide d'installation interactif <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a></dd>
         </div>
         <div class="pv-specs__item">
           <dt>Compatibilité</dt>
@@ -1388,7 +1386,7 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"></path></svg>
           </div>
           <h3>Besoin de plus ? Configurez votre pack sur mesure</h3>
-          <p>Ajoutez caméras, détecteurs et sirènes supplémentaires pour une protection adaptée à la taille exacte de votre logement.</p>
+          <p>Ajoutez des caméras, des détecteurs et des sirènes pour une protection adaptée à la taille de votre logement.</p>
           <a href="/pages/configurateur_2" class="pv-btn pv-btn--ghost pv-btn--sm">Ouvrir le configurateur</a>
         </div>
         <a href="{{ starter_pack.url }}" class="pv-crosssell__card pv-crosssell__card--photo">
@@ -1416,42 +1414,43 @@
 
         <details>
           <summary>Ai-je besoin d'un abonnement&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">Non. Vous achetez le pack une seule fois&nbsp;: pas de mensualité, pas de frais cachés. Le pilotage se fait via l'application Daewoo Home Connect, incluse et gratuite.</p>
+          <p class="pv-faq__a">Aucun abonnement Daewoo obligatoire&nbsp;: vous achetez le pack une seule fois et l'application Daewoo Home Connect est incluse et gratuite. Le secours GSM (Vigilia +) nécessite une carte SIM et un forfait opérateur.</p>
         </details>
 
         <details>
-          <summary>Quelle est la différence entre la version Wi-Fi et Wi-Fi + GSM 4G&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">La version Wi-Fi se connecte à votre box internet. La version Wi-Fi + GSM 4G ajoute une carte Nano SIM (non fournie) en secours&nbsp;: si votre Wi-Fi ou votre électricité est coupée, la centrale reste joignable et vous alerte par SMS et appel. Recommandée pour une résidence secondaire ou une sécurité maximale.</p>
+          <summary>Quelle est la différence entre Vigilia (Wi-Fi) et Vigilia + (Wi-Fi + 4G)&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">La centrale Vigilia se connecte à votre box Internet en Wi-Fi. La centrale Vigilia + ajoute la 4G&nbsp;: équipée d'une carte Nano SIM (non fournie) et d'un forfait opérateur, elle vous alerte par SMS et par appel en cas de coupure Internet, et continue de fonctionner grâce à sa batterie de secours (environ 4&nbsp;h) en cas de coupure de courant. Recommandée pour une résidence secondaire ou si votre connexion Internet est instable.</p>
         </details>
 
         <details>
-          <summary>Le GSM remplace-t-il le Wi-Fi&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">Non, il assure uniquement les appels et SMS de secours.</p>
+          <summary>La 4G remplace-t-elle le Wi-Fi&nbsp;?<span class="pv-faq__icon">＋</span></summary>
+          <p class="pv-faq__a">Non. La carte SIM sert uniquement aux alertes par SMS et aux appels. L'application et les caméras nécessitent toujours une connexion Internet.</p>
         </details>
 
         <details>
           <summary>Que se passe-t-il en cas de coupure de courant ou d'internet&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">En cas de coupure de courant, la centrale bascule sur sa batterie de secours intégrée (environ 4 heures d'autonomie). Sur la version Wi-Fi, si votre box internet est également coupée, la centrale continue de fonctionner en local (sirène et détection) mais ne peut plus vous notifier. Avec la version Wi-Fi + GSM 4G et une carte SIM installée, vous continuez de recevoir des alertes par SMS. Dans tous les cas, sans Wi-Fi ni électricité, les caméras IP506P et W503 ne sont pas accessibles à distance — la caméra extérieure W503 reste toutefois opérationnelle en local grâce à sa propre batterie.</p>
+          <p class="pv-faq__a">En cas de coupure de courant, la centrale bascule sur sa batterie de secours intégrée (environ 4&nbsp;heures d'autonomie). Sur la version Vigilia (Wi-Fi), si votre box Internet est également coupée, la centrale continue de fonctionner en local (sirène et détection) mais ne peut plus vous notifier. Avec la version Vigilia + (Wi-Fi + 4G) équipée d'une carte SIM, vous continuez de recevoir des alertes par SMS et par appel. Dans tous les cas, sans connexion Internet, les caméras IP506P et W503 ne sont pas accessibles à distance&nbsp;; en cas de coupure de courant, la caméra intérieure IP506P, branchée sur secteur, s'éteint, tandis que la caméra extérieure W503 reste alimentée par sa batterie.</p>
         </details>
 
         <details>
           <summary>Quelle est la différence entre les deux caméras&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">La caméra intérieure IP506P est motorisée, alimentée sur secteur, et protège votre vie privée grâce à un cache mécanique qui se referme dès que vous désarmez l'alarme. La caméra extérieure W503 est 100&nbsp;% autonome sur batterie, avec vision nocturne et audio bidirectionnel&nbsp;: elle s'installe où vous voulez, sans branchement électrique, pour surveiller entrée, terrasse ou jardin.</p>
+          <p class="pv-faq__a">La caméra intérieure rotative IP506P (Full HD, Wi-Fi) est à brancher sur secteur. Mode vie privée&nbsp;: l'objectif se tourne vers le bas, à la demande ou via un scénario de l'application. La caméra extérieure W503 (3&nbsp;MP, Wi-Fi) fonctionne sur batterie rechargeable, avec vision nocturne et audio bidirectionnel&nbsp;: elle s'installe sans branchement électrique, à portée de votre Wi-Fi, pour surveiller entrée, terrasse ou jardin.</p>
         </details>
 
         <details>
           <summary>Que contient exactement le pack&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">La centrale VIGILIA, 1 caméra intérieure motorisée IP506P, 1 caméra extérieure autonome W503, 1 sirène extérieure solaire sans fil WOS305S, 4 contacteurs/détecteurs de vibration WDV301, 1 détecteur de mouvement WPS305, 1 télécommande et 2 badges RFID — voir le détail complet plus haut sur cette page.</p>
+          <p class="pv-faq__a">La centrale Vigilia (Wi-Fi) ou Vigilia + (Wi-Fi + 4G, carte SIM non fournie) selon la version choisie, 1 caméra intérieure rotative IP506P, 1 caméra extérieure sur batterie W503, 1 sirène extérieure solaire sans fil WOS305S (panneau solaire fourni), 4 contacteurs 2-en-1 ouverture + vibration WDV301, 1 détecteur de mouvement WPS305, 1 télécommande WRC305, 2 badges RFID WRF301 et 2 autocollants. En résumé&nbsp;: centrale, 2 caméras et 9 accessoires de sécurité, avec 2 autocollants inclus. Voir le détail complet plus haut sur cette page.</p>
         </details>
 
         <details>
           <summary>Puis-je agrandir mon système plus tard&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">Oui. Le système VIGILIA accepte jusqu'à 60 accessoires (détecteurs, caméras, sirènes, claviers, télécommandes). Utilisez notre configurateur pour composer un pack plus complet dès maintenant, ou ajoutez des accessoires à tout moment depuis l'application.</p>
+          <p class="pv-faq__a">Oui. La centrale Vigilia accepte jusqu'à 60 accessoires radio (détecteurs, sirènes, claviers, télécommandes)&nbsp;; les caméras s'ajoutent à part, dans l'application. Utilisez notre configurateur pour composer un pack plus complet dès maintenant, ou ajoutez des accessoires à tout moment depuis l'application.</p>
         </details>
 
         <details>
           <summary>Comment se passe l'installation&nbsp;?<span class="pv-faq__icon">＋</span></summary>
-          <p class="pv-faq__a">Aucune compétence technique requise&nbsp;: branchez la centrale, fixez les capteurs et les caméras fournis et suivez les étapes affichées dans l'application Daewoo Home Connect. Comptez environ 20 minutes pour un système opérationnel.</p>
+          <p class="pv-faq__a">Aucune compétence technique requise&nbsp;: c'est une installation guidée, à réaliser vous-même. Suivez les étapes de l'application Daewoo Home Connect&nbsp;: connectez la centrale, associez et testez les accessoires, puis fixez-les et refaites un test. Côté alimentation&nbsp;: détecteurs sans fil&nbsp;; centrale et caméra intérieure à brancher sur secteur&nbsp;; caméra extérieure sur batterie rechargeable&nbsp;; sirène extérieure solaire sans fil.</p>
+          <p class="pv-faq__a"><a class="pv-guide-lien" href="/pages/installation-alarme-vigilia" target="_blank" rel="noopener" aria-label="Voir le guide d'installation interactif (nouvel onglet)">Voir le guide d'installation interactif <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a></p>
         </details>
       </div>
     </div>
@@ -1480,7 +1479,7 @@
   <section class="pv-section pv-final">
     <div class="pv-wrap">
       <div class="pv-reveal">
-        <h2>Pack Vigilia VIG502 — Double vidéosurveillance</h2>
+        <h2>Pack alarme Vigilia VIG502 — Double vidéosurveillance</h2>
         <p>
           <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
           <span class="pv-price-amount">{{ variant.price | money }}</span> · Sans abonnement · Garantie 2 ans
@@ -1553,7 +1552,7 @@
     {%- render 'pv-avis-vigilia' -%}
   </script>
 
-  {%- capture ld_description -%}Le VIG502 comprend une centrale Vigilia, deux caméras et neuf accessoires, soit douze éléments au total. Alarme connectée sans abonnement, installation en 30 minutes sans technicien.{%- endcapture -%}
+  {%- capture ld_description -%}Pack alarme Vigilia VIG502. Centrale, 2 caméras et 9 accessoires de sécurité, avec 2 autocollants inclus. Centrale Vigilia (Wi-Fi) ou Vigilia + (Wi-Fi + 4G, carte SIM non fournie) selon la version choisie. Aucun abonnement Daewoo obligatoire ; installation guidée, à réaliser vous-même.{%- endcapture -%}
   {%- assign ld_product_url = shop.url | append: product.url -%}
   {%- assign ld_wifi_price = wifi_variant.price | divided_by: 100.0 -%}
   {%- assign ld_gsm_price = gsm_variant.price | divided_by: 100.0 -%}
@@ -1599,13 +1598,13 @@
       }
     ],
     "additionalProperty": [
-      { "@type": "PropertyValue", "name": "Connectivité", "value": "Wi-Fi 2.4 GHz, version Wi-Fi + GSM 4G disponible (Pack VIG502+)" },
-      { "@type": "PropertyValue", "name": "Autonomie", "value": "Centrale sur secteur avec batterie de secours 4h ; caméra extérieure W503 sur batterie autonome" },
+      { "@type": "PropertyValue", "name": "Connectivité", "value": "Wi-Fi 2,4 GHz ; disponible en version Vigilia + (Wi-Fi + 4G, carte SIM non fournie)" },
+      { "@type": "PropertyValue", "name": "Alimentation et autonomie", "value": "Détecteurs sans fil ; centrale et caméra intérieure à brancher sur secteur (batterie de secours de la centrale : environ 4 h) ; caméra extérieure W503 sur batterie rechargeable ; sirène extérieure solaire sans fil" },
       { "@type": "PropertyValue", "name": "Résolution caméra intérieure (IP506P)", "value": "Full HD" },
       { "@type": "PropertyValue", "name": "Résolution caméra extérieure (W503)", "value": "3 MP" },
-      { "@type": "PropertyValue", "name": "Puissance sonore", "value": "110 dB (sirène extérieure WOS305S), 85 dB (sirène intégrée à la centrale)" },
-      { "@type": "PropertyValue", "name": "Capacité d'accessoires", "value": "Jusqu'à 60 accessoires compatibles" },
-      { "@type": "PropertyValue", "name": "Abonnement", "value": "Aucun abonnement requis" }
+      { "@type": "PropertyValue", "name": "Puissance sonore", "value": "Jusqu'à 110 dB, réglable 80/100/110 dB (sirène extérieure WOS305S) ; 85 dB (sirène intégrée à la centrale)" },
+      { "@type": "PropertyValue", "name": "Capacité d'accessoires", "value": "Jusqu'à 60 accessoires radio sur la centrale (détecteurs, sirènes, claviers, télécommandes) ; les caméras s'ajoutent à part, dans l'application" },
+      { "@type": "PropertyValue", "name": "Abonnement", "value": "Aucun abonnement Daewoo obligatoire ; le secours GSM (Vigilia +) nécessite une carte SIM et un forfait opérateur" }
     ]
   }
   </script>
@@ -1623,21 +1622,21 @@
   </script>
 
   {%- capture faq_q1 -%}Ai-je besoin d'un abonnement ?{%- endcapture -%}
-  {%- capture faq_a1 -%}Non. Vous achetez le pack une seule fois : pas de mensualité, pas de frais cachés. Le pilotage se fait via l'application Daewoo Home Connect, incluse et gratuite.{%- endcapture -%}
-  {%- capture faq_q2 -%}Quelle est la différence entre la version Wi-Fi et Wi-Fi + GSM 4G ?{%- endcapture -%}
-  {%- capture faq_a2 -%}La version Wi-Fi se connecte à votre box internet. La version Wi-Fi + GSM 4G ajoute une carte Nano SIM (non fournie) en secours : si votre Wi-Fi ou votre électricité est coupée, la centrale reste joignable et vous alerte par SMS et appel. Recommandée pour une résidence secondaire ou une sécurité maximale.{%- endcapture -%}
-  {%- capture faq_q3 -%}Le GSM remplace-t-il le Wi-Fi ?{%- endcapture -%}
-  {%- capture faq_a3 -%}Non, il assure uniquement les appels et SMS de secours.{%- endcapture -%}
+  {%- capture faq_a1 -%}Aucun abonnement Daewoo obligatoire : vous achetez le pack une seule fois et l'application Daewoo Home Connect est incluse et gratuite. Le secours GSM (Vigilia +) nécessite une carte SIM et un forfait opérateur.{%- endcapture -%}
+  {%- capture faq_q2 -%}Quelle est la différence entre Vigilia (Wi-Fi) et Vigilia + (Wi-Fi + 4G) ?{%- endcapture -%}
+  {%- capture faq_a2 -%}La centrale Vigilia se connecte à votre box Internet en Wi-Fi. La centrale Vigilia + ajoute la 4G : équipée d'une carte Nano SIM (non fournie) et d'un forfait opérateur, elle vous alerte par SMS et par appel en cas de coupure Internet, et continue de fonctionner grâce à sa batterie de secours (environ 4 h) en cas de coupure de courant. Recommandée pour une résidence secondaire ou si votre connexion Internet est instable.{%- endcapture -%}
+  {%- capture faq_q3 -%}La 4G remplace-t-elle le Wi-Fi ?{%- endcapture -%}
+  {%- capture faq_a3 -%}Non. La carte SIM sert uniquement aux alertes par SMS et aux appels. L'application et les caméras nécessitent toujours une connexion Internet.{%- endcapture -%}
   {%- capture faq_q4 -%}Que se passe-t-il en cas de coupure de courant ou d'internet ?{%- endcapture -%}
-  {%- capture faq_a4 -%}En cas de coupure de courant, la centrale bascule sur sa batterie de secours intégrée (environ 4 heures d'autonomie). Sur la version Wi-Fi, si votre box internet est également coupée, la centrale continue de fonctionner en local (sirène et détection) mais ne peut plus vous notifier. Avec la version Wi-Fi + GSM 4G et une carte SIM installée, vous continuez de recevoir des alertes par SMS. Dans tous les cas, sans Wi-Fi ni électricité, les caméras IP506P et W503 ne sont pas accessibles à distance — la caméra extérieure W503 reste toutefois opérationnelle en local grâce à sa propre batterie.{%- endcapture -%}
+  {%- capture faq_a4 -%}En cas de coupure de courant, la centrale bascule sur sa batterie de secours intégrée (environ 4 heures d'autonomie). Sur la version Vigilia (Wi-Fi), si votre box Internet est également coupée, la centrale continue de fonctionner en local (sirène et détection) mais ne peut plus vous notifier. Avec la version Vigilia + (Wi-Fi + 4G) équipée d'une carte SIM, vous continuez de recevoir des alertes par SMS et par appel. Dans tous les cas, sans connexion Internet, les caméras IP506P et W503 ne sont pas accessibles à distance ; en cas de coupure de courant, la caméra intérieure IP506P, branchée sur secteur, s'éteint, tandis que la caméra extérieure W503 reste alimentée par sa batterie.{%- endcapture -%}
   {%- capture faq_q5 -%}Quelle est la différence entre les deux caméras ?{%- endcapture -%}
-  {%- capture faq_a5 -%}La caméra intérieure IP506P est motorisée, alimentée sur secteur, et protège votre vie privée grâce à un cache mécanique qui se referme dès que vous désarmez l'alarme. La caméra extérieure W503 est 100 % autonome sur batterie, avec vision nocturne et audio bidirectionnel : elle s'installe où vous voulez, sans branchement électrique, pour surveiller entrée, terrasse ou jardin.{%- endcapture -%}
+  {%- capture faq_a5 -%}La caméra intérieure rotative IP506P (Full HD, Wi-Fi) est à brancher sur secteur. Mode vie privée : l'objectif se tourne vers le bas, à la demande ou via un scénario de l'application. La caméra extérieure W503 (3 MP, Wi-Fi) fonctionne sur batterie rechargeable, avec vision nocturne et audio bidirectionnel : elle s'installe sans branchement électrique, à portée de votre Wi-Fi, pour surveiller entrée, terrasse ou jardin.{%- endcapture -%}
   {%- capture faq_q6 -%}Que contient exactement le pack ?{%- endcapture -%}
-  {%- capture faq_a6 -%}La centrale VIGILIA, 1 caméra intérieure motorisée IP506P, 1 caméra extérieure autonome W503, 1 sirène extérieure solaire sans fil WOS305S, 4 contacteurs/détecteurs de vibration WDV301, 1 détecteur de mouvement WPS305, 1 télécommande et 2 badges RFID.{%- endcapture -%}
+  {%- capture faq_a6 -%}La centrale Vigilia (Wi-Fi) ou Vigilia + (Wi-Fi + 4G, carte SIM non fournie) selon la version choisie, 1 caméra intérieure rotative IP506P, 1 caméra extérieure sur batterie W503, 1 sirène extérieure solaire sans fil WOS305S (panneau solaire fourni), 4 contacteurs 2-en-1 ouverture + vibration WDV301, 1 détecteur de mouvement WPS305, 1 télécommande WRC305, 2 badges RFID WRF301 et 2 autocollants. En résumé : centrale, 2 caméras et 9 accessoires de sécurité, avec 2 autocollants inclus.{%- endcapture -%}
   {%- capture faq_q7 -%}Puis-je agrandir mon système plus tard ?{%- endcapture -%}
-  {%- capture faq_a7 -%}Oui. Le système VIGILIA accepte jusqu'à 60 accessoires (détecteurs, caméras, sirènes, claviers, télécommandes). Utilisez notre configurateur pour composer un pack plus complet dès maintenant, ou ajoutez des accessoires à tout moment depuis l'application.{%- endcapture -%}
+  {%- capture faq_a7 -%}Oui. La centrale Vigilia accepte jusqu'à 60 accessoires radio (détecteurs, sirènes, claviers, télécommandes) ; les caméras s'ajoutent à part, dans l'application. Utilisez notre configurateur pour composer un pack plus complet dès maintenant, ou ajoutez des accessoires à tout moment depuis l'application.{%- endcapture -%}
   {%- capture faq_q8 -%}Comment se passe l'installation ?{%- endcapture -%}
-  {%- capture faq_a8 -%}Aucune compétence technique requise : branchez la centrale, fixez les capteurs et les caméras fournis et suivez les étapes affichées dans l'application Daewoo Home Connect. Comptez environ 20 minutes pour un système opérationnel.{%- endcapture -%}
+  {%- capture faq_a8 -%}Aucune compétence technique requise : c'est une installation guidée, à réaliser vous-même. Suivez les étapes de l'application Daewoo Home Connect : connectez la centrale, associez et testez les accessoires, puis fixez-les et refaites un test. Côté alimentation : détecteurs sans fil ; centrale et caméra intérieure à brancher sur secteur ; caméra extérieure sur batterie rechargeable ; sirène extérieure solaire sans fil. Un guide d'installation interactif vous accompagne étape par étape : https://daewoo-security.fr/pages/installation-alarme-vigilia{%- endcapture -%}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
