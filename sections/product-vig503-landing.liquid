@@ -1107,7 +1107,18 @@
     <div class="pv-wrap">
       <div class="pv-feature pv-feature--reverse pv-reveal">
         <div class="pv-feature__media">
-          {{ feat_image_2 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Sirène extérieure solaire WOS305S du Pack Vigilia VIG503' }}
+          {%- comment -%} Photo d'ambiance de la sirène livrée dans ce pack, prise sur sa fiche produit ; photo du pack si elle est introuvable {%- endcomment -%}
+          {%- liquid
+            assign pv_sirene_photo = feat_image_2
+            assign pv_sirene_alt = 'Protection extérieure du Pack Vigilia VIG503'
+            for img in all_products['sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire'].images
+              if img.src contains 'WOS305S_panneau_deporte_proche'
+                assign pv_sirene_photo = img
+                assign pv_sirene_alt = 'Sirène extérieure solaire WOS305S et son panneau solaire fixés sur une façade'
+              endif
+            endfor
+          -%}
+          {{ pv_sirene_photo | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: pv_sirene_alt }}
         </div>
         <div class="pv-feature__body">
           <span class="pv-feature__num">SIRÈNE EXTÉRIEURE SOLAIRE</span>

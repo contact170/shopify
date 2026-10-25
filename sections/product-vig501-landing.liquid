@@ -1030,7 +1030,18 @@
     <div class="pv-wrap">
       <div class="pv-feature pv-feature--reverse pv-reveal">
         <div class="pv-feature__media">
-          {{ feat_image_2 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Protection extérieure du Pack Vigilia' }}
+          {%- comment -%} Photo d'ambiance de la sirène livrée dans ce pack, prise sur sa fiche produit ; photo du pack si elle est introuvable {%- endcomment -%}
+          {%- liquid
+            assign pv_sirene_photo = feat_image_2
+            assign pv_sirene_alt = 'Protection extérieure du Pack Vigilia VIG501'
+            for img in all_products['sirene-exterieure-wos305-filaire-compatible-panneau-solaire'].images
+              if img.src contains 'WOS305_flash_nuit_en_hauteur'
+                assign pv_sirene_photo = img
+                assign pv_sirene_alt = 'Sirène extérieure WOS305 installée en hauteur, flash rouge allumé de nuit'
+              endif
+            endfor
+          -%}
+          {{ pv_sirene_photo | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: pv_sirene_alt }}
         </div>
         <div class="pv-feature__body">
           <span class="pv-feature__num">PROTECTION EXTÉRIEURE</span>
@@ -1087,6 +1098,13 @@
       {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor, avis_libelle: 'avis gamme Vigilia' -%}
     </div>
   </div>
+
+  {%- comment -%} Accessoires à ajouter au pack, sans quitter la page {%- endcomment -%}
+  {%- render 'pv-accessoires',
+    form_id: form_id,
+    variant: variant,
+    variant_has_compare: variant_has_compare,
+    pack_name: 'Pack Vigilia VIG501' -%}
 
   {%- comment -%} Feature 4 — Contrôle total {%- endcomment -%}
   <section class="pv-section pv-section--alt">
@@ -1584,8 +1602,9 @@
 
       var toggleEls = root.querySelectorAll('[data-pv-connectivity]');
       var variantIdInput = root.querySelector('#PVVariantId-{{ section.id }}');
-      var priceAmounts = root.querySelectorAll('.pv-price-amount');
-      var priceCompares = root.querySelectorAll('.pv-price-compare');
+      function pvHorsComparatif(el) { return !el.closest('.pv-compare__price'); }
+      var priceAmounts = Array.prototype.filter.call(root.querySelectorAll('.pv-price-amount'), pvHorsComparatif);
+      var priceCompares = Array.prototype.filter.call(root.querySelectorAll('.pv-price-compare'), pvHorsComparatif);
       var configLinks = root.querySelectorAll('[data-pv-config-link]');
       var refEls = root.querySelectorAll('.pv-ref');
       var centraleDescEls = root.querySelectorAll('.pv-centrale-desc');
