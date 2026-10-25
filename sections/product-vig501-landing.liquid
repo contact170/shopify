@@ -99,10 +99,17 @@
   # Pack Vigilia page (average 4.6: 47 five-star, 16 four-star, 3 three-star,
   # 2 two-star) — genuinely applicable here since these are reviews of the
   # Vigilia alarm and its accessories, not a specific SKU.
-  assign rating_value = 4.6
-  assign rating_max = 5
-  assign rating_count = 68
-  assign has_rating = true
+  capture pv_stats
+    render 'pv-avis-vigilia', mode: 'stats'
+  endcapture
+  assign pv_ch = pv_stats | strip | split: '~|~'
+  assign rating_count = pv_ch[0] | plus: 0
+  assign rating_value = pv_ch[1] | times: 1.0 | round: 2
+  assign rating_max = 5.0
+  assign has_rating = false
+  if rating_count > 0
+    assign has_rating = true
+  endif
   assign rating_pct = rating_value | times: 100.0 | divided_by: rating_max
   assign reviews_anchor = 'PVReviews-' | append: section.id
 -%}
@@ -478,6 +485,16 @@
     .pv-all-review__text{margin-top:6px;font-size:13.5px;line-height:1.55;color:var(--pv-ink);}
     .pv-all-review__meta{margin-top:6px;font-size:12px;color:var(--pv-gray);}
     .pv-all-review__meta strong{color:var(--pv-ink);font-weight:600;}
+    /* Mobile : la bulle d'aide (Chatbase) s'efface tant que le bloc d'achat
+       (choix de la centrale, bouton) est à l'écran, pour ne pas le masquer. */
+    @media (max-width:767px){
+      html.pv-achat-visible #chatbase-bubble-button{opacity:0 !important;pointer-events:none !important;}
+    }
+    .pv .pv-guide-lien{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--pv-navy);text-decoration:underline;text-underline-offset:3px;}
+    .pv .pv-guide-lien:hover{text-decoration-thickness:2px;}
+    .pv a.pv-strip__item{color:inherit;text-decoration:none;}
+    .pv a.pv-strip__item span{text-decoration:underline;text-underline-offset:3px;}
+    .pv .pv-reviews__origine{margin:8px auto 0;max-width:640px;font-size:13px;line-height:1.5;color:var(--pv-gray);text-align:center;}
     .pv-all-reviews__loading{font-size:13.5px;color:var(--pv-gray);}
 
     /* ---- faq ---- */
@@ -525,6 +542,117 @@
       .pv-sticky{transition:none;}
     }
   </style>
+  <style>
+    /* ===== Haut de page façon Offre spéciale ===== */
+    .pv-hero{padding:32px 0 56px;}
+    .pv .pv-hero__media{position:relative;margin:28px auto 0;max-width:640px;}
+    .pv .pv-hero__media img{max-width:none;margin:0;border-radius:0;background:none;}
+    .pv-hero .pv-eyebrow{display:block;margin-bottom:10px;}
+    .pv .pv-hero__tagline{display:block;}
+    .pv-hero__bouton{width:100%;display:flex;justify-content:center;}
+    .pv .pv-hero .psi-carte__sous{font-size:12px;line-height:1.3;}
+    .pv-hero__img{position:relative;aspect-ratio:1/1;border-radius:28px;overflow:hidden;background:var(--pv-bg-alt);}
+    .pv-hero__img img{width:100%;height:100%;object-fit:cover;}
+    .psi-remise{position:absolute;top:16px;left:16px;z-index:1;padding:8px 14px;border-radius:999px;background:var(--pv-promo);color:#fff;font-size:15px;font-weight:700;letter-spacing:.01em;box-shadow:0 8px 20px -8px rgba(225,29,72,.6);}
+    .pv-galerie__piste{list-style:none;margin:0;padding:0;display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+    .pv-galerie__piste::-webkit-scrollbar{display:none;}
+    .pv-galerie__piste:focus-visible{outline:3px solid var(--pv-navy);outline-offset:-3px;}
+    .pv-galerie__diapo{position:relative;flex:0 0 100%;height:100%;scroll-snap-align:center;scroll-snap-stop:always;}
+    .pv-galerie__diapo img{display:block;width:100%;height:100%;object-fit:cover;}
+    .pv-galerie__fleche{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-top:-22px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:var(--pv-ink,#111);box-shadow:0 6px 18px -6px rgba(0,0,0,.35);cursor:pointer;opacity:0;transition:opacity .2s ease,transform .2s ease;}
+    .pv-galerie__fleche--prec{left:14px;}
+    .pv-galerie__fleche--suiv{right:14px;}
+    .pv-hero__media:hover .pv-galerie__fleche,.pv-galerie__fleche:focus-visible{opacity:1;}
+    .pv-galerie__fleche:active{transform:scale(.94);}
+    .pv-galerie__compteur{position:absolute;right:14px;top:14px;z-index:2;padding:5px 11px;border-radius:999px;background:rgba(17,24,39,.62);color:#fff;font-size:13px;font-variant-numeric:tabular-nums;pointer-events:none;}
+    @media (hover:none){.pv-galerie__fleche{display:none;}}
+    .pv-thumbs{display:flex;justify-content:center;gap:10px;margin:14px auto 0;max-width:640px;overflow-x:auto;padding:2px 2px 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+    .pv-thumbs::-webkit-scrollbar{display:none;}
+    .pv-thumbs__item{flex-shrink:0;width:56px;height:56px;padding:0;border-radius:12px;overflow:hidden;background:var(--pv-bg-alt);border:2px solid transparent;cursor:pointer;opacity:.6;transition:opacity .15s ease,border-color .15s ease;}
+    .pv-thumbs__item img{width:100%;height:100%;object-fit:cover;}
+    .pv-thumbs__item.is-active{opacity:1;border-color:var(--pv-navy);}
+
+    /* ---- choix de la centrale ---- */
+    .psi-choix{margin:32px auto 0;max-width:640px;text-align:left;}
+    .psi-choix__titre{font-size:15px;font-weight:600;margin-bottom:24px;text-align:center;}
+    .psi-choix__grille{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .psi-carte{position:relative;display:flex;flex-direction:column;gap:2px;width:100%;min-height:92px;padding:14px 14px 12px;border:2px solid var(--pv-line);border-radius:16px;background:#fff;font-family:inherit;text-align:left;color:var(--pv-ink);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color .15s ease,box-shadow .15s ease;}
+    .psi-carte.is-selected{border-color:var(--pv-navy);box-shadow:0 0 0 3px rgba(12,30,74,.08);}
+    .psi-carte__radio{position:absolute;top:14px;right:14px;width:18px;height:18px;border-radius:50%;border:2px solid var(--pv-line);}
+    .psi-carte.is-selected .psi-carte__radio{border-color:var(--pv-navy);}
+    .psi-carte.is-selected .psi-carte__radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--pv-navy);}
+    .psi-carte__nom{font-size:16px;font-weight:600;padding-right:24px;}
+    .psi-carte__sous{font-size:12.5px;color:var(--pv-gray);}
+    .psi-carte__prix{margin-top:auto;padding-top:8px;font-size:15px;font-weight:700;}
+    .psi-carte__badge{position:absolute;top:-10px;left:12px;font-size:11px;font-weight:700;color:#fff;background:var(--pv-promo);padding:3px 8px;border-radius:999px;}
+
+    /* ---- haut de page : galerie à gauche, achat à droite (ordinateur) ---- */
+    .psi-des{margin:14px auto 0;font-size:15px;color:var(--pv-gray);}
+    .psi-des a{color:inherit;text-decoration:none;}
+    .psi-des b{color:var(--pv-ink);font-size:18px;}
+    .psi-alma{margin:0;font-size:13.5px;color:var(--pv-gray);}
+    .psi-alma b{color:var(--pv-ink);}
+    @media (min-width:990px){
+      .pv-hero{padding:12px 0 48px;text-align:left;}
+      .pv-hero__grille{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-template-areas:"galerie tete" "galerie achat" "galerie bas";grid-template-rows:auto auto 1fr;column-gap:52px;align-items:start;}
+      .pv-hero__tete{grid-area:tete;}
+      .pv-hero__galeries{grid-area:galerie;position:sticky;top:96px;}
+      .pv-hero__achat{grid-area:achat;display:flex;flex-direction:column;align-items:flex-start;}
+      .pv-hero__bas{grid-area:bas;}
+      .pv-hero .psi-compte{margin-bottom:12px;}
+      .pv-hero h1{font-size:clamp(30px,2.9vw,42px);margin:0;max-width:none;}
+      .pv .pv-hero .pv-hero__tagline{font-size:clamp(16px,1.4vw,19px);margin:8px 0 0;max-width:none;}
+      .pv .pv-hero .pv-hero__summary{display:none;}
+      .pv-hero .psi-des{display:none;}
+      .pv-hero .pv-hero__media{margin:0;max-width:none;}
+      .pv-hero .pv-thumbs{max-width:none;}
+      /* Prix et Alma avant le choix, puis les 4 centrales sur une ligne, puis le bouton */
+      .pv-hero .pv-hero__cta{display:contents;}
+      .pv-hero .pv-hero__price{order:1;margin-top:16px;font-size:14px;}
+      .pv-hero .pv-hero__price strong{font-size:28px;}
+      .pv-hero .psi-eco{order:2;margin-top:8px;}
+      .pv-hero .psi-alma{order:3;margin-top:8px;}
+      .pv-hero .psi-choix{order:4;margin:18px 0 0;max-width:none;width:100%;}
+      .pv-hero .psi-choix__titre{text-align:left;margin-bottom:12px;font-size:14px;}
+      .pv-hero .psi-choix__grille{grid-template-columns:1fr 1fr;gap:10px;}
+      .pv-hero .psi-carte{min-height:0;padding:12px 10px 10px;border-radius:14px;}
+      .pv-hero .psi-carte__radio{top:10px;right:10px;width:16px;height:16px;}
+      .pv-hero .psi-carte__nom{font-size:15px;}
+      .pv-hero .psi-carte__sous{font-size:12px;}
+      .pv-hero .psi-carte__prix{font-size:14px;padding-top:6px;}
+      .pv-hero #PVHeroCta-{{ section.id }}{order:5;margin-top:16px;}
+      .pv-hero #PVHeroCta-{{ section.id }} .pv-btn{width:100%;}
+      .pv-hero .pv-hero__cta > .pv-hero__rating,.pv-hero .pv-hero__cta > .pv-pay{order:6;margin-top:14px;}
+      .pv .pv-hero .pv-hero__sub{margin:22px 0 0;font-size:16px;max-width:none;}
+      .pv-hero .pv-hero__trust{justify-content:flex-start;}
+    }
+
+    @media (max-width:699px){
+      .pv-hero{padding:20px 0 40px;}
+      .pv-hero h1{font-size:32px;}
+      .pv .pv-hero__tagline{font-size:17px;margin-top:10px;}
+      .pv .pv-hero__summary{display:none;}
+      .pv .pv-hero__media{margin-top:22px;}
+      .pv-hero__img{border-radius:20px;}
+      .pv-thumbs{justify-content:flex-start;}
+      .pv-thumbs__item{width:48px;height:48px;}
+      .psi-choix{margin-top:22px;}
+      .pv-hero__cta{margin-top:18px;}
+      .pv-hero__cta .pv-btn{width:100%;min-width:0;}
+      .pv .pv-hero__sub{font-size:16px;margin-top:22px;}
+      .pv-hero__trust{display:none;}
+    }
+    .pv .pv-hero .pv-hero__tagline{font-weight:500;}
+    .pv .psi-des{margin-top:12px;}
+    @media (min-width:990px){
+      .pv .pv-hero .pv-hero__media{margin:0;max-width:none;}
+      .pv-hero .pv-eyebrow{margin-bottom:8px;}
+      .pv .pv-hero__galeries{top:12px;}
+      .pv .pv-hero .pv-hero__tagline{text-align:left;margin:10px 0 0;max-width:none;font-style:italic;}
+      .pv .pv-hero .pv-hero__sub{text-align:left;}
+      .pv-hero .pv-pay,.pv-hero .pv-pay__methods{justify-content:flex-start;}
+    }
+  </style>
 
   {%- comment -%} Hidden product form shared by every "Add to cart" button on this page {%- endcomment -%}
   {%- form 'product', product, id: form_id, data-type: 'add-to-cart-form', is: 'product-form', class: 'pv-visually-hidden' -%}
@@ -553,7 +681,7 @@
         {%- endif -%}
       </div>
       <div class="pv-sticky__text">
-        <div class="pv-sticky__name">Pack Vigilia VIG501</div>
+        <div class="pv-sticky__name">Pack alarme Vigilia VIG501</div>
       </div>
     </div>
     {%- if has_connectivity_choice -%}
@@ -564,58 +692,181 @@
     {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
   </div>
 
-  {%- comment -%} Hero {%- endcomment -%}
+  {%- comment -%}
+    Haut de page, même construction que la page Offre spéciale :
+    ordinateur = galerie à gauche, achat à droite (prix, Alma, choix de la
+    centrale, bouton) ; mobile = prix d'entrée et Alma avant la galerie.
+  {%- endcomment -%}
+  {%- liquid
+    assign alma_base = variant.price | divided_by: 4
+    assign alma_1 = alma_base | times: 3 | minus: variant.price | abs
+  -%}
   <section class="pv-hero">
     <div class="pv-wrap">
-      <span class="pv-eyebrow">Daewoo Security · Pack Vigilia <span class="pv-ref">{{ variant.sku }}</span></span>
-      <h1>Pack alarme maison Vigilia VIG501 avec 1 caméra</h1>
-      <p class="pv-hero__tagline">Toute votre maison protégée. Intérieur, extérieur, jour et nuit.</p>
-      <p class="pv-hero__sub">
-        Alarme connectée, caméra intérieure motorisée et sirène flash filaire réunies dans un pack évolutif de 10 accessoires.
-        Installation en 20 minutes, sans technicien, sans abonnement.
-      </p>
-      <p class="pv-hero__summary">Le VIG501 comprend une centrale Vigilia, une caméra et dix accessoires, soit douze éléments au total.</p>
-      {%- if hero_image -%}
-        <div class="pv-hero__media pv-reveal">
-          {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '600,900,1200', alt: product.title }}
+      <div class="pv-hero__grille">
+        <div class="pv-hero__tete">
+          <span class="pv-eyebrow">Daewoo Security · Alarme sans abonnement</span>
+          <h1>Pack alarme Vigilia VIG501 avec caméra <span class="pv-hero__tagline">Caméra intérieure rotative et sirène extérieure avec flash. Sans abonnement Daewoo, à installer vous-même.</span></h1>
+          <p class="pv-hero__summary">Centrale, caméra intérieure et 8 accessoires de sécurité, avec 2 autocollants inclus.</p>
+          <p class="psi-des"><a href="#PVChoix-{{ section.id }}">Dès <b>{{ wifi_variant.price | money }}</b> · 4× sans frais avec Alma</a></p>
         </div>
-        {%- if gallery.size > 1 -%}
-          <div class="pv-thumbs" role="group" aria-label="Photos du produit">
-            {%- for img in gallery limit: 8 -%}
-              <button
-                type="button"
-                class="pv-thumbs__item{% if img.id == hero_image.id %} is-active{% endif %}"
-                data-pv-thumb
-                data-full="{{ img | image_url: width: 1200 }}"
-                data-full-srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1200 }} 1200w"
-                aria-label="Photo {{ forloop.index }} sur {{ gallery.size }}"
-              >
-                {{ img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+
+        <div class="pv-hero__galeries">
+          {%- comment -%}
+            Photos du carrousel : photo principale du produit, puis les visuels
+            du réglage « Photos du carrousel » (un nom de fichier par ligne).
+            Réglage vide : photos du produit, comme avant.
+          {%- endcomment -%}
+          {%- liquid
+            assign photos_txt = section.settings.galerie_photos | strip
+            assign liste_noms = ''
+            if photos_txt != blank
+              assign lignes = photos_txt | newline_to_br | split: '<br />'
+              for l in lignes
+                assign nom = l | strip
+                if nom == 'VERSION' or nom != blank and images[nom] != blank
+                  assign liste_noms = liste_noms | append: nom | append: '|'
+                endif
+              endfor
+            endif
+            assign noms = liste_noms | split: '|'
+            if noms.size > 0
+              assign n_photos = noms.size | plus: 1
+            else
+              assign n_photos = gallery.size | at_most: 8
+            endif
+          -%}
+          <div class="pv-hero__media" data-pv-galerie role="region" aria-roledescription="carrousel" aria-label="Photos du pack Vigilia VIG501">
+            <div class="pv-hero__img">
+              <ul class="pv-galerie__piste" data-pv-piste tabindex="0">
+                {%- if noms.size > 0 -%}
+                  <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="1">
+                    {{ hero_image | image_url: width: 1200 | image_tag: id: hero_img_id, loading: 'eager', widths: '400,600,900,1200', sizes: '(min-width: 990px) 560px, 100vw', alt: hero_image.alt | default: product.title }}
+                  </li>
+                  {%- for nom in noms -%}
+                    {%- if nom == 'VERSION' -%}
+                      {%- liquid
+                        assign img_w = images['daewoo-v01-vigilia-wifi.webp']
+                        assign img_g = images['daewoo-v02-vigilia-plus.webp']
+                        assign img = img_w
+                        if selected_key == 'gsm'
+                          assign img = img_g
+                        endif
+                      -%}
+                      {%- if img != blank -%}
+                      <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="{{ forloop.index | plus: 1 }}">
+                        <img data-pv-version-img src="{{ img | image_url: width: 1200 }}" srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1200 }} 1200w" sizes="(min-width: 990px) 560px, 100vw" width="1200" height="1200" loading="lazy" alt="{{ img.alt | escape }}"
+                          data-wifi-src="{{ img_w | image_url: width: 1200 }}" data-wifi-srcset="{{ img_w | image_url: width: 600 }} 600w, {{ img_w | image_url: width: 900 }} 900w, {{ img_w | image_url: width: 1200 }} 1200w" data-wifi-alt="{{ img_w.alt | escape }}"
+                          data-gsm-src="{{ img_g | image_url: width: 1200 }}" data-gsm-srcset="{{ img_g | image_url: width: 600 }} 600w, {{ img_g | image_url: width: 900 }} 900w, {{ img_g | image_url: width: 1200 }} 1200w" data-gsm-alt="{{ img_g.alt | escape }}">
+                      </li>
+                      {%- endif -%}
+                    {%- else -%}
+                    {%- assign img = images[nom] -%}
+                    <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="{{ forloop.index | plus: 1 }}">
+                      {{ img | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 990px) 560px, 100vw', alt: img.alt }}
+                    </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- else -%}
+                {%- for img in gallery limit: 8 -%}
+                  {%- liquid
+                    assign chargement = 'lazy'
+                    if forloop.first
+                      assign chargement = 'eager'
+                    endif
+                    assign alt_img = img.alt | default: product.title
+                  -%}
+                  <li class="pv-galerie__diapo" data-pv-diapo aria-roledescription="diapositive" aria-label="{{ forloop.index }}">
+                    {%- if forloop.first -%}
+                      {{ img | image_url: width: 1200 | image_tag: id: hero_img_id, loading: chargement, widths: '400,600,900,1200', sizes: '(min-width: 990px) 560px, 100vw', alt: alt_img }}
+                    {%- else -%}
+                      {{ img | image_url: width: 1200 | image_tag: loading: chargement, widths: '400,600,900,1200', sizes: '(min-width: 990px) 560px, 100vw', alt: alt_img }}
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+                {%- endif -%}
+              </ul>
+              {%- if n_photos > 1 -%}
+                <button type="button" class="pv-galerie__fleche pv-galerie__fleche--prec" data-pv-prec aria-label="Photo précédente">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <button type="button" class="pv-galerie__fleche pv-galerie__fleche--suiv" data-pv-suiv aria-label="Photo suivante">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+                </button>
+                <span class="pv-galerie__compteur" aria-hidden="true"><b data-pv-num>1</b> / {{ n_photos }}</span>
+              {%- endif -%}
+            </div>
+            {%- if n_photos > 1 -%}
+              <div class="pv-thumbs" role="group" aria-label="Choisir une photo">
+                {%- if noms.size > 0 -%}
+                  <button type="button" class="pv-thumbs__item is-active" data-pv-thumb="0" aria-label="Photo 1">{{ hero_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
+                  {%- for nom in noms -%}
+                    {%- if nom == 'VERSION' -%}
+                      {%- liquid
+                        assign img_w = images['daewoo-v01-vigilia-wifi.webp']
+                        assign img_g = images['daewoo-v02-vigilia-plus.webp']
+                        assign img = img_w
+                        if selected_key == 'gsm'
+                          assign img = img_g
+                        endif
+                      -%}
+                      {%- if img != blank -%}
+                      <button type="button" class="pv-thumbs__item" data-pv-thumb="{{ forloop.index }}" aria-label="Photo {{ forloop.index | plus: 1 }}"><img data-pv-version-vignette src="{{ img | image_url: width: 120 }}" data-wifi-src="{{ img_w | image_url: width: 120 }}" data-gsm-src="{{ img_g | image_url: width: 120 }}" width="120" height="120" loading="lazy" alt=""></button>
+                      {%- endif -%}
+                    {%- else -%}
+                    <button type="button" class="pv-thumbs__item" data-pv-thumb="{{ forloop.index }}" aria-label="Photo {{ forloop.index | plus: 1 }}">{{ images[nom] | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- else -%}
+                {%- for img in gallery limit: 8 -%}
+                  <button type="button" class="pv-thumbs__item{% if forloop.first %} is-active{% endif %}" data-pv-thumb="{{ forloop.index0 }}" aria-label="Photo {{ forloop.index }}">{{ img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</button>
+                {%- endfor -%}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="pv-hero__achat">
+          <div class="psi-choix" role="group" aria-labelledby="PVChoix-{{ section.id }}">
+            <p class="psi-choix__titre" id="PVChoix-{{ section.id }}">Choisissez votre centrale</p>
+            <div class="psi-choix__grille">
+              <button type="button" class="psi-carte{% if selected_key == 'wifi' %} is-selected{% endif %}" data-pv-connectivity="wifi" aria-pressed="{% if selected_key == 'wifi' %}true{% else %}false{% endif %}">
+                <span class="psi-carte__radio" aria-hidden="true"></span>
+                <span class="psi-carte__nom">Vigilia</span>
+                <span class="psi-carte__sous">Wi-Fi</span>
+                <span class="psi-carte__prix">{{ wifi_variant.price | money }}</span>
               </button>
-            {%- endfor -%}
+              <button type="button" class="psi-carte{% if selected_key == 'gsm' %} is-selected{% endif %}" data-pv-connectivity="gsm" aria-pressed="{% if selected_key == 'gsm' %}true{% else %}false{% endif %}">
+                <span class="psi-carte__radio" aria-hidden="true"></span>
+                <span class="psi-carte__nom">Vigilia +</span>
+                <span class="psi-carte__sous">Wi-Fi + 4G (carte SIM non fournie)</span>
+                <span class="psi-carte__prix">{{ gsm_variant.price | money }}</span>
+              </button>
+            </div>
           </div>
-        {%- endif -%}
-      {%- endif -%}
-      <div class="pv-hero__cta">
-        {%- if has_connectivity_choice -%}
-          <div class="pv-hero__toggle">
-            {%- render 'pv-connectivity-toggle', selected: selected_key -%}
+          <div class="pv-hero__cta">
+            <div id="PVHeroCta-{{ section.id }}" class="pv-hero__bouton">
+              {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
+            </div>
+            <div class="pv-hero__price">
+              <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
+              <strong class="pv-price-amount">{{ variant.price | money }}</strong> · 0&nbsp;€ d'abonnement
+            </div>
+            <p class="psi-alma">ou 4× sans frais avec Alma : <b data-psi-alma1>{{ alma_1 | money }}</b> puis 3&nbsp;×&nbsp;<span data-psi-alma3>{{ alma_base | money }}</span></p>
+            {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor, avis_libelle: 'avis gamme Vigilia' -%}
           </div>
-        {%- endif -%}
-        <div id="PVHeroCta-{{ section.id }}">
-          {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
-        <div class="pv-hero__price">
-          <span class="pv-price-compare{% if variant_has_compare %} is-visible{% endif %}">{{ variant.compare_at_price | money }}</span>
-          <strong class="pv-price-amount">{{ variant.price | money }}</strong> · paiement sécurisé
+
+        <div class="pv-hero__bas">
+          <p class="pv-hero__sub">Centrale d'alarme à clavier, détecteurs et caméra intérieure réunis dans un kit essentiel. Toute votre sécurité, pilotée depuis votre téléphone.</p>
+          <div class="pv-hero__trust">
+            <span>🔒 Sans abonnement</span>
+            <span>📷 Caméra intérieure incluse</span>
+            <span>🎛️ Clavier physique intégré</span>
+            <span>🧩 Évolutif jusqu'à 60 accessoires</span>
+          </div>
         </div>
-        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
-      </div>
-      <div class="pv-hero__trust">
-        <span>🔒 Sans abonnement</span>
-        <span>📷 Caméra intérieure incluse</span>
-        <span>🔔 Sirène flash + son puissant</span>
-        <span>🧩 Évolutif jusqu'à 60 accessoires</span>
       </div>
     </div>
   </section>
@@ -836,7 +1087,7 @@
         </div>
       {%- endif -%}
       {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
-      {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
+      {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor, avis_libelle: 'avis gamme Vigilia' -%}
     </div>
   </div>
 
@@ -950,6 +1201,7 @@
           <p class="pv-reviews__summary">
             <strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés
           </p>
+          <p class="pv-reviews__origine">Avis Judge.me laissés par des acheteurs de la gamme Vigilia&nbsp;: centrales et packs, accessoires (détecteurs, contacteurs, sirènes, télécommandes, badges, claviers), caméras IP506P, EP506, W503 et W512MW, et carte SIM M2M. Ils ne portent pas tous sur ce pack. Textes publiés tels quels.</p>
         {%- endif -%}
         <br>
         <button type="button" class="pv-reviews__all-btn" data-pv-reviews-open>Lire tous les avis</button>
@@ -957,47 +1209,29 @@
       <div class="pv-reviews__track pv-reveal">
         <div class="pv-review-card">
           <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
-          <p class="pv-review-card__text">Ce pack est parfait pour un bon démarrage surtout si on a un logement "basique" et s'il faut rajouter des éléments, cela est tout à fait possible.</p>
+          <p class="pv-review-card__text">Installé en toute simplicité pack sécurité complet t a un prix raisonnable. Merci.</p>
           <div class="pv-review-card__meta">
-            <span class="pv-review-card__name">Client vérifié</span>
+            <span class="pv-review-card__name">Pierre P.</span>
             <span class="pv-review-card__dot" aria-hidden="true"></span>
-            <span>Noyelles-sous-Lens</span>
+            <span>Marseille</span>
           </div>
         </div>
         <div class="pv-review-card">
           <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
-          <p class="pv-review-card__text">Une fois la prise en main de l'application fait, c'est top 👍</p>
+          <p class="pv-review-card__text">Ensemble suffisant pour sécuriser mon logement Facile a mettre en œuvre avec l'application</p>
           <div class="pv-review-card__meta">
-            <span class="pv-review-card__name">Stéphane B.</span>
-            <span class="pv-review-card__dot" aria-hidden="true"></span>
-            <span>Parmilieu</span>
-          </div>
-        </div>
-        <div class="pv-review-card">
-          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
-          <p class="pv-review-card__text">Ensemble suffisant pour sécuriser mon logement. Facile à mettre en œuvre avec l'application.</p>
-          <div class="pv-review-card__meta">
-            <span class="pv-review-card__name">Jean-Marie J.</span>
+            <span class="pv-review-card__name">Jean J.</span>
             <span class="pv-review-card__dot" aria-hidden="true"></span>
             <span>Gouzeaucourt</span>
           </div>
         </div>
         <div class="pv-review-card">
           <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
-          <p class="pv-review-card__text">Commande reçue très rapidement, facile d'installation, je recommande fortement.</p>
+          <p class="pv-review-card__text">1 mois de fonctionnement et tout fonctionne correctement. Facile à installer. Bonne résolution de la vidéo. La recharge solaire via les panneaux avec un fonctionnement en continu maintient un taux de charge &gt; 80%. Pleinement satisfait de mes 2 caméras. Je prévois d'en racheter l'année prochaine pour couvrir tous les angles de la maison.</p>
           <div class="pv-review-card__meta">
-            <span class="pv-review-card__name">Fabien D.</span>
+            <span class="pv-review-card__name">DAVID B.</span>
             <span class="pv-review-card__dot" aria-hidden="true"></span>
-            <span>Issoire</span>
-          </div>
-        </div>
-        <div class="pv-review-card">
-          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
-          <p class="pv-review-card__text">Très satisfait, montage facile, livraison rapide, je recommande vivement.</p>
-          <div class="pv-review-card__meta">
-            <span class="pv-review-card__name">Jean M.</span>
-            <span class="pv-review-card__dot" aria-hidden="true"></span>
-            <span>La Motte</span>
+            <span>Lyon</span>
           </div>
         </div>
         <div class="pv-review-card">
@@ -1010,21 +1244,35 @@
           </div>
         </div>
         <div class="pv-review-card">
-          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
-          <p class="pv-review-card__text">Sirène très sonore et facile à installer. Association avec la centrale AM302 bien expliquée.</p>
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★☆</div>
+          <p class="pv-review-card__text">Installation plus difficile qu'indiquée mais correspond vraiment à notre attente ! Matériel qui semble de qualité et performant</p>
           <div class="pv-review-card__meta">
-            <span class="pv-review-card__name">Brigitte T.</span>
+            <span class="pv-review-card__name">Laurent G.</span>
             <span class="pv-review-card__dot" aria-hidden="true"></span>
-            <span>Villeparisis</span>
+            <span>Grenoble</span>
+          </div>
+        </div>
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★☆</div>
+          <p class="pv-review-card__text">Je suis très satisfait de mon achat. Très facile à installer. Bonne qualité d'images.</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Patrick C.</span>
+            <span class="pv-review-card__dot" aria-hidden="true"></span>
+            <span>Wavre</span>
           </div>
         </div>
         <div class="pv-review-card">
           <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
-          <p class="pv-review-card__text">Matériel fiable et très facile à installer.</p>
+          <p class="pv-review-card__text">Alarme très bien application fluide et très simple d'utilisation Seul petit bémol une puce sur l ensemble du coffret ne fonctionne pas</p>
           <div class="pv-review-card__meta">
-            <span class="pv-review-card__name">Carole M.</span>
-            <span class="pv-review-card__dot" aria-hidden="true"></span>
-            <span>Toulouse</span>
+            <span class="pv-review-card__name">Vincent R.</span>
+          </div>
+        </div>
+        <div class="pv-review-card">
+          <div class="pv-review-card__stars" aria-hidden="true">★★★★★</div>
+          <p class="pv-review-card__text">Pour l'instant tres bonne alarme pour un appartement Seulement 1 semaine en utilisation wifi Installation rapide et facile</p>
+          <div class="pv-review-card__meta">
+            <span class="pv-review-card__name">Stephenson G.</span>
           </div>
         </div>
       </div>
@@ -1144,7 +1392,7 @@
         <div class="pv-final__ctas">
           {%- render 'pv-atc-button', form_id: form_id, variant: variant, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
         </div>
-        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor -%}
+        {%- render 'pv-trust-row', has_rating: has_rating, rating_value: rating_value, rating_max: rating_max, rating_count: rating_count, rating_pct: rating_pct, reviews_anchor: reviews_anchor, avis_libelle: 'avis gamme Vigilia' -%}
         <p class="pv-final__legal">Livraison en 48 à 72 h · Retour sous 14 jours · Service client basé en France</p>
       </div>
     </div>
@@ -1194,83 +1442,14 @@
       </button>
       <h3>Tous les avis clients</h3>
       {%- if has_rating -%}
-        <p><strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés</p>
+        <p><strong>{{ rating_value }}/5</strong> sur {{ rating_count }} avis vérifiés, gamme Vigilia (centrales, packs, accessoires, caméras et carte SIM). Ils ne portent pas tous sur ce pack.</p>
       {%- endif -%}
       <div class="pv-all-reviews" data-pv-all-reviews-list></div>
     </div>
   </dialog>
 
   <script type="application/json" id="PVAllReviews-{{ section.id }}">
-    [
-      {"r":4,"t":"Installation facile après que le technicien m'ai expliqué que une fois la sirène configurée, elle n'apparaît pas dans les éléments connectés sur la centrale M302 alors qu'elle l'est !","n":"Patrick B.","c":"","d":"janvier 2024"},
-      {"r":5,"t":"Très satisfait des produits qui fonctionnent très bien, sauf les télécommandes qui sont à mon goût trop sensibles et se déclenchent trop facilement dans la poche. J'ai eu besoin d'aide pour l'installation et j'ai eu toutes les solutions par mail pour résoudre mes petits problèmes très facilement et très rapidement. Merci encore pour le SAV, je recommande.","n":"Jean Claude C.","c":"Limoges","d":"janvier 2024"},
-      {"r":3,"t":"J'ai commandé deux détecteurs anti-vibration pour la centrale d'alarme, j'ai reçu ma commande très rapidement, par contre un détecteur sur les deux reste allumé en rouge, après contrôle la pile était à remplacer... Dommage que ce ne soit pas contrôlé avant l'envoi.","n":"Vincent F.","c":"","d":"septembre 2024"},
-      {"r":5,"t":"Achetée après que je ne puisse plus communiquer avec la centrale alarme via la carte SIM d'un célèbre fournisseur d'accès. Après avoir validé mon compte sur le site, un numéro à 14 chiffres m'a été communiqué. Le service client au téléphone est très réactif et aimable.","n":"Frédéric G.","c":"Marignane","d":"novembre 2024"},
-      {"r":4,"t":"J'ai acheté ce contacteur pour protéger ma porte d'entrée en remplacement d'un détecteur volumétrique que j'ai été obligé de mettre à l'arrêt car il me faisait à chaque détection des perturbations sur la réception de la télévision TNT, problème que j'ai signalé au service support. Le détecteur de porte, lui, marche bien.","n":"Jacky T.","c":"Châtellerault","d":"novembre 2024"},
-      {"r":5,"t":"Carte SIM Machine to Machine : elle a permis le dialogue entre la centrale d'alarme Daewoo et mon téléphone portable. Le processus de validation est très clair et rend la carte opérationnelle très rapidement. L'option à 72€/an est intéressante, avec une plateforme AFONE pour répondre aux questions.","n":"Lucien S.","c":"","d":"décembre 2024"},
-      {"r":4,"t":"Rapide à installer et à mettre en fonction. Restera à voir la durée des piles mais très satisfait de mon achat.","n":"Sébastien G.","c":"Uccle","d":"janvier 2025"},
-      {"r":5,"t":"Une sirène qui fait son travail, petite mais puissante. Pas de risque de ne pas l'entendre, et pour un prix tout à fait correct.","n":"Guy V.","c":"Verviers","d":"janvier 2025"},
-      {"r":5,"t":"RAS.","n":"Patrick J.","c":"Massy","d":"février 2025"},
-      {"r":5,"t":"Sirène très sonore et facile à installer. Association avec la centrale AM302 bien expliquée. Dommage qu'il ne soit pas possible de couper la lumière clignotante en dehors des périodes où la sirène se met en mode alarme.","n":"Brigitte T.","c":"Villeparisis","d":"février 2025"},
-      {"r":2,"t":"Bon fonctionnement mais il manque une protection sur les boutons, trop sensible sur un trousseau de clés.","n":"Client vérifié","c":"","d":"mars 2025"},
-      {"r":4,"t":"Ce capteur est plus fiable que le WDS301 car limité par la distance. Le gros reproche est qu'il n'est pas prévu pour transmettre la position de la porte (ouvert/fermé) sur la centrale AM302 comme le WDS301, qui lui affiche un signal d'ouverture.","n":"Client vérifié","c":"Elbeuf","d":"avril 2025"},
-      {"r":5,"t":"Simple à installer, fonctionne parfaitement.","n":"Laurent K.","c":"Illkirch-Graffenstaden","d":"avril 2025"},
-      {"r":4,"t":"Utile et rapide à mettre en œuvre.","n":"Patrick A.","c":"Lormont","d":"mai 2025"},
-      {"r":5,"t":"Bonne portée.","n":"Jean Marc G.","c":"Corbeil-Essonnes","d":"mai 2025"},
-      {"r":4,"t":"La sirène fonctionne bien, le son est très bien, mais on dirait un petit peu un jouet pour enfants, dommage que ce ne soit pas un peu plus volumineux.","n":"Christophe P.","c":"Fontenay-Trésigny","d":"mai 2025"},
-      {"r":5,"t":"Fonctionne parfaitement, très qualitatif.","n":"Christophe P.","c":"Fontenay-Trésigny","d":"mai 2025"},
-      {"r":5,"t":"Excellent, très bien comme accessoires.","n":"Véronique","c":"Rouen","d":"août 2025"},
-      {"r":5,"t":"Très bon, on apprécie beaucoup.","n":"Véronique","c":"Rouen","d":"août 2025"},
-      {"r":5,"t":"Facile à installer, excellent produit.","n":"Marie Pierre","c":"Limoges","d":"août 2025"},
-      {"r":5,"t":"Excellent produit.","n":"Marie Pierre","c":"Limoges","d":"août 2025"},
-      {"r":5,"t":"Parfait pour compléter mon système d'alarme, convient aussi bien pour une baie coulissante qu'en ouverture à la française. Facile à installer et à configurer.","n":"Olivier B.","c":"Jallais","d":"septembre 2025"},
-      {"r":5,"t":"Pas d'appel intempestif. Qualité des images caméras.","n":"Christian C.","c":"Braine-l'Alleud","d":"septembre 2025"},
-      {"r":3,"t":"Problème d'appareillage avec la centrale. Équipement retourné au SAV pour vérification.","n":"Serge B.","c":"Limoges","d":"septembre 2025"},
-      {"r":4,"t":"Très bien, la seule chose importante c'est qu'il n'est pas expliqué que pour paramétrer les contacteurs il faut enlever le capot et appuyer sur le bouton on.","n":"Client vérifié","c":"","d":"octobre 2025"},
-      {"r":5,"t":"Très bien.","n":"Yoland B.","c":"Voreppe","d":"novembre 2025"},
-      {"r":4,"t":"Le produit est facile à installer, attention DAEWOO ne précise pas que le modèle avec carte SIM nécessite un abonnement. Excellent service clients et service technique qui répondent très rapidement.","n":"JJB","c":"Boulogne-Billancourt","d":"novembre 2025"},
-      {"r":4,"t":"Bonne télécommande, plus pratique que celle par défaut fournie avec la station.","n":"Jean-Pierre S.","c":"","d":"décembre 2025"},
-      {"r":5,"t":"Facilité d'installation.","n":"Patrick D.","c":"Angoulême","d":"décembre 2025"},
-      {"r":5,"t":"Ras, bon produit, je recommande.","n":"Christophe J.","c":"Virsac","d":"décembre 2025"},
-      {"r":5,"t":"Super, facile installé.","n":"TAM Flexibles","c":"Nîmes","d":"janvier 2026"},
-      {"r":5,"t":"Matériel fiable et très facile à installer.","n":"Carole M.","c":"Toulouse","d":"janvier 2026"},
-      {"r":5,"t":"Très performant.","n":"Philippe C.","c":"Carcassonne","d":"janvier 2026"},
-      {"r":5,"t":"Cette petite télécommande est très pratique et a un look super sympa, très bien en guise de porte-clé, à recommander.","n":"Philippe Z.","c":"Montlhéry","d":"janvier 2026"},
-      {"r":3,"t":"Quel dommage que sur la notice de vos contacteurs de porte vous ayez omis le plus important pour la mise en service ! Ce petit interrupteur noir, quasiment invisible, n'est notifié nulle part, c'est ballot.","n":"Velasco J.","c":"Paris","d":"janvier 2026"},
-      {"r":5,"t":"Installé en toute simplicité, pack sécurité complet et à un prix raisonnable. Merci.","n":"Pierre P.","c":"Marseille","d":"janvier 2026"},
-      {"r":5,"t":"Tous fonctionnent bien.","n":"Jan Z.","c":"Nancy","d":"janvier 2026"},
-      {"r":5,"t":"En fait j'ai mis 3 étoiles au départ, mais elle est installée que depuis deux jours, je verrai dans le temps. J'apprécie le fait qu'il y a un flash clignotant lorsque l'alarme est active, c'est bien visible de la rue.","n":"Berndt","c":"Maule","d":"février 2026"},
-      {"r":5,"t":"Je le conseillerai à mes amis.","n":"Francois T.","c":"Blagnac","d":"février 2026"},
-      {"r":5,"t":"Ce petit badge est hyper pratique, peu encombrant avec mes clés et plutôt joli, je le recommande sans hésiter.","n":"Philippe Z.","c":"Montlhéry","d":"février 2026"},
-      {"r":5,"t":"C'est une super alarme.","n":"Michel C.","c":"Istres","d":"février 2026"},
-      {"r":4,"t":"Facile à installer et à utiliser.","n":"Stephane G.","c":"Nice","d":"février 2026"},
-      {"r":5,"t":"Parfait, il fait le travail.","n":"Christophe H.","c":"Kédange-sur-Canner","d":"février 2026"},
-      {"r":2,"t":"J'ai été obligé de reprendre les soudures du système de batterie.","n":"Dominique B.","c":"Moussac","d":"février 2026"},
-      {"r":5,"t":"Commande reçue très rapidement, facile d'installation, je recommande fortement.","n":"Fabien D.","c":"Issoire","d":"mars 2026"},
-      {"r":5,"t":"Une fois la prise en main de l'application fait, c'est top 👍","n":"Stephane B.","c":"Parmilieu","d":"mars 2026"},
-      {"r":5,"t":"Parfait, réception et installation rapide.","n":"Berndt","c":"Maule","d":"mars 2026"},
-      {"r":5,"t":"Alarme très bien, application fluide et très simple d'utilisation. Seul petit bémol, une puce sur l'ensemble du coffret ne fonctionne pas.","n":"Vincent R.","c":"","d":"avril 2026"},
-      {"r":4,"t":"Montage sans problème à l'exception de la synchronisation de la sirène WOS305 (appui sur le symbole engrenage) qui doit être synchronisée dans la minute qui suit l'allumage. Cette contrainte n'est mentionnée nulle part, il m'a fallu interroger la hotline pour obtenir l'information.","n":"Joel L.","c":"La Rochelle","d":"avril 2026"},
-      {"r":5,"t":"Correspond à mon attente.","n":"Eric B.","c":"Marseille","d":"avril 2026"},
-      {"r":5,"t":"Très satisfait, montage facile, livraison rapide, je recommande vivement.","n":"Jean M.","c":"La Motte","d":"avril 2026"},
-      {"r":4,"t":"Mériterait un peu plus d'explications en vidéo.","n":"Eric B.","c":"Anglet","d":"mai 2026"},
-      {"r":5,"t":"Très bon produit, facile à mettre en place.","n":"Cedric J.","c":"","d":"juin 2026"},
-      {"r":5,"t":"Bien, mais peut-être commercialiser des cales de différentes épaisseurs en option pour l'installation.","n":"Laurent L.","c":"Rezé","d":"juin 2026"},
-      {"r":4,"t":"Je suis tout à fait ravi de cette alarme. Facile à programmer et à installer, et le service après-vente est sans faille. Le seul bémol : la résolution des photos prises par les caméras est floue lors de leur agrandissement. Mais dans l'ensemble, je conseille vivement Daewoo Security.","n":"Tony D.","c":"","d":"juin 2026"},
-      {"r":4,"t":"Élément de base qui fonctionne bien. Peu élaboré sur la question des fixations mais correct. La documentation papier de la gamme Vigilia est en revanche mauvaise : il manque des informations essentielles. La documentation web est meilleure mais il faut lire jusqu'au bout pour les indications de mise en service.","n":"Michel N.","c":"Saint-Orens-de-Gameville","d":"juin 2026"},
-      {"r":5,"t":"Très bon produit, facile à installer. Le support répond très bien et de façon précise à toutes les questions.","n":"Christophe C.","c":"Lorient","d":"juin 2026"},
-      {"r":5,"t":"Facile d'emploi.","n":"Christian K.","c":"Hénin-Beaumont","d":"juin 2026"},
-      {"r":5,"t":"Ensemble suffisant pour sécuriser mon logement. Facile à mettre en œuvre avec l'application.","n":"Jean-Marie J.","c":"Gouzeaucourt","d":"juin 2026"},
-      {"r":5,"t":"Super.","n":"Nadia D.","c":"Châteauroux","d":"juin 2026"},
-      {"r":5,"t":"Je recommande.","n":"Nadia D.","c":"Châteauroux","d":"juin 2026"},
-      {"r":4,"t":"Problème de piles malgré que la télécommande soit neuve. Sinon les produits en général sont impeccables.","n":"Tony D.","c":"Castelnau-sur-Gupie","d":"juin 2026"},
-      {"r":5,"t":"C'est parfait.","n":"Philippe B.","c":"Marlenheim","d":"juin 2026"},
-      {"r":5,"t":"Excellente acquisition, facile à appairer, design superbe, format mini, et j'apprécie beaucoup le volet glissant recouvrant les touches qui empêche toute manœuvre involontaire.","n":"Jean Luc M.","c":"","d":"juillet 2026"},
-      {"r":5,"t":"Bien. Dommage qu'il n'y ait pas de LED quand il charge.","n":"Michael S.","c":"Étrépagny","d":"juillet 2026"},
-      {"r":4,"t":"Bien.","n":"Christian R.","c":"Le Neubourg","d":"juillet 2026"},
-      {"r":5,"t":"Pour l'instant rien à redire, facile à installer, facile à faire fonctionner, top.","n":"Angeline B.","c":"Montmélian","d":"juillet 2026"},
-      {"r":5,"t":"Je ne peux me prononcer que sur le contacteur, car je l'ai déjà utilisé. Ma commande était toujours en attente, bloquée en transit à Lyon.","n":"Douadi A.","c":"","d":"août 2026"}
-    ]
+    {%- render 'pv-avis-vigilia' -%}
   </script>
 
   {%- capture ld_description -%}Le VIG501 comprend une centrale Vigilia, une caméra et dix accessoires, soit douze éléments au total. Alarme connectée sans abonnement, installation en 20 minutes sans technicien.{%- endcapture -%}
@@ -1425,6 +1604,20 @@
         });
         if (variantIdInput) variantIdInput.value = variantId;
         priceAmounts.forEach(function (el) { el.textContent = data.price; });
+        if (data.priceCents) {
+          var base = Math.floor(data.priceCents / 4), premier = data.priceCents - 3 * base;
+          var euros = function (c) { return (c / 100).toFixed(2).replace('.', ',') + '€'; };
+          root.querySelectorAll('[data-psi-alma1]').forEach(function (el) { el.textContent = euros(premier); });
+          root.querySelectorAll('[data-psi-alma3]').forEach(function (el) { el.textContent = euros(base); });
+        }
+        /* Visuel de la centrale (Wi-Fi ou Wi-Fi + 4G) dans le carrousel */
+        root.querySelectorAll('[data-pv-version-img]').forEach(function (im) {
+          var src = im.getAttribute('data-' + key + '-src');
+          if (src) { im.setAttribute('srcset', im.getAttribute('data-' + key + '-srcset')); im.src = src; im.alt = im.getAttribute('data-' + key + '-alt'); }
+        });
+        root.querySelectorAll('[data-pv-version-vignette]').forEach(function (im) {
+          var src = im.getAttribute('data-' + key + '-src'); if (src) im.src = src;
+        });
         priceCompares.forEach(function (el) {
           el.textContent = data.compare;
           el.classList.toggle('is-visible', !!data.hasCompare);
@@ -1440,31 +1633,94 @@
         });
       });
 
-      /* Sticky add-to-cart bar: show once the hero CTA has scrolled out of view */
-      var heroCta = root.querySelector('#PVHeroCta-{{ section.id }}');
+      /* Barre d'achat fixe */
       var stickyBar = root.querySelector('#PVSticky-{{ section.id }}');
-      if (heroCta && stickyBar && 'IntersectionObserver' in window) {
-        var stickyIo = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            stickyBar.classList.toggle('is-shown', !entry.isIntersecting);
-          });
-        }, { threshold: 0, rootMargin: '-64px 0px 0px 0px' });
-        stickyIo.observe(heroCta);
+      var heroCtaEl = document.getElementById('PVHeroCta-{{ section.id }}');
+      var autresCta = ['PVBandCta-{{ section.id }}', 'PVFinalCta-{{ section.id }}'].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+      if (stickyBar && heroCtaEl) {
+        /* Visible une fois le bouton du haut dépassé ; masquée quand un autre
+           bouton « Ajouter au panier » est à l'écran ; recalculée à chaque
+           défilement (fonctionne aussi en remontant d'un coup). */
+        var prevuBarre = false;
+        var majBarre = function () {
+          prevuBarre = false;
+          var h = window.innerHeight;
+          var passe = heroCtaEl.getBoundingClientRect().bottom < 64;
+          var autreVisible = autresCta.some(function (el) { var r = el.getBoundingClientRect(); return r.bottom > 64 && r.top < h - 90; });
+          stickyBar.classList.toggle('is-shown', passe && !autreVisible);
+          var achatEl = document.querySelector('.pv-hero__achat');
+          if (achatEl) { var ra = achatEl.getBoundingClientRect(); document.documentElement.classList.toggle('pv-achat-visible', ra.top < window.innerHeight && ra.bottom > 0); }
+        };
+        window.addEventListener('scroll', function () { if (!prevuBarre) { prevuBarre = true; requestAnimationFrame(majBarre); } }, { passive: true });
+        window.addEventListener('resize', majBarre);
+        majBarre();
       }
 
-      /* Hero photo carousel: clicking a thumbnail swaps the main image */
-      var heroImg = document.getElementById('PVHeroImg-{{ section.id }}');
-      var thumbs = root.querySelectorAll('[data-pv-thumb]');
-      if (heroImg && thumbs.length) {
-        thumbs.forEach(function (thumb) {
-          thumb.addEventListener('click', function () {
-            heroImg.src = thumb.getAttribute('data-full');
-            heroImg.srcset = thumb.getAttribute('data-full-srcset');
-            thumbs.forEach(function (t) { t.classList.remove('is-active'); });
-            thumb.classList.add('is-active');
+      /* Carrousel photos : doigt, flèches, vignettes, défilement auto */
+      var mouvementReduit = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      root.querySelectorAll('[data-pv-galerie]').forEach(function (g) {
+        var piste = g.querySelector('[data-pv-piste]');
+        var diapos = g.querySelectorAll('[data-pv-diapo]');
+        var vignettes = g.querySelectorAll('[data-pv-thumb]');
+        var num = g.querySelector('[data-pv-num]');
+        if (!piste || diapos.length < 2) return;
+        var actuel = 0, minuteur = null, arrete = mouvementReduit, visible = false, survol = false;
+
+        function aller(i, doux) {
+          i = (i + diapos.length) % diapos.length;
+          piste.scrollTo({ left: i * piste.clientWidth, behavior: (doux === false || mouvementReduit) ? 'auto' : 'smooth' });
+        }
+        function marquer(i) {
+          if (i === actuel) return;
+          actuel = i;
+          if (num) num.textContent = i + 1;
+          vignettes.forEach(function (v, j) {
+            v.classList.toggle('is-active', j === i);
+            if (j === i && v.parentNode.scrollWidth > v.parentNode.clientWidth) {
+              v.parentNode.scrollTo({ left: v.offsetLeft - v.parentNode.clientWidth / 2 + v.offsetWidth / 2, behavior: 'smooth' });
+            }
           });
+        }
+        var attente;
+        piste.addEventListener('scroll', function () {
+          clearTimeout(attente);
+          attente = setTimeout(function () { marquer(Math.round(piste.scrollLeft / piste.clientWidth)); }, 60);
+        }, { passive: true });
+
+        function stop() { arrete = true; clearInterval(minuteur); minuteur = null; }
+        function lancer() {
+          clearInterval(minuteur); minuteur = null;
+          if (arrete || !visible || survol || g.hidden || document.hidden) return;
+          minuteur = setInterval(function () { aller(actuel + 1); }, 5000);
+        }
+
+        g.querySelector('[data-pv-prec]').addEventListener('click', function () { stop(); aller(actuel - 1); });
+        g.querySelector('[data-pv-suiv]').addEventListener('click', function () { stop(); aller(actuel + 1); });
+        vignettes.forEach(function (v, j) { v.addEventListener('click', function () { stop(); aller(j); }); });
+        piste.addEventListener('pointerdown', stop, { passive: true });
+        piste.addEventListener('touchstart', stop, { passive: true });
+        piste.addEventListener('wheel', function (e) { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) stop(); }, { passive: true });
+        piste.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight') { e.preventDefault(); stop(); aller(actuel + 1); }
+          if (e.key === 'ArrowLeft') { e.preventDefault(); stop(); aller(actuel - 1); }
         });
-      }
+        g.addEventListener('mouseenter', function () { survol = true; lancer(); });
+        g.addEventListener('mouseleave', function () { survol = false; lancer(); });
+        g.addEventListener('focusin', function () { survol = true; lancer(); });
+        g.addEventListener('focusout', function () { survol = false; lancer(); });
+        document.addEventListener('visibilitychange', lancer);
+        window.addEventListener('resize', function () { aller(actuel, false); });
+
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (e) { visible = e[0].isIntersecting; lancer(); }, { threshold: 0.5 }).observe(g);
+        }
+        /* Changement de centrale : la galerie affichée repart sur la photo du pack */
+        if ('MutationObserver' in window) {
+          new MutationObserver(function () { if (!g.hidden) { aller(0, false); marquer(0); } lancer(); })
+            .observe(g, { attributes: true, attributeFilter: ['hidden'] });
+        }
+      });
+
       /* Generic modal open/close (Alma installments + full reviews list),
          both plain dialog elements so Escape/backdrop dismissal and
          focus-trapping come from the browser for free. The .is-open class
@@ -1590,6 +1846,8 @@
 {% schema %}
 {
   "name": "Pack VIG501",
-  "settings": []
+  "settings": [
+    { "type": "textarea", "id": "galerie_photos", "label": "Photos du carrousel (après la photo du produit)", "info": "Un nom de fichier (Contenu › Fichiers) par ligne. VERSION = visuel Wi-Fi ou Wi-Fi + 4G selon la version choisie. Vide = photos du produit.", "default": "daewoo-p501-dissuasion.webp\ndaewoo-c01-application.webp\ndaewoo-c02-ouverture-vibration.webp\ndaewoo-c03-mode-maison.webp\ndaewoo-c04-camera-interieure.webp\nVERSION\ndaewoo-c06-commandes-evolution.webp\ndaewoo-c05-installation.webp" }
+  ]
 }
 {% endschema %}
