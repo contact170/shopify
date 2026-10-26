@@ -476,6 +476,15 @@
                           </figure>
                         {%- endif -%}
                         {%- if acc.settings.extra != blank -%}<div class="vg-rte vg-acc__extra">{{ acc.settings.extra }}</div>{%- endif -%}
+                        {%- if acc.settings.video_url != blank and acc.settings.video_url.type == 'youtube' -%}
+                          <div class="vg-video">
+                            <button type="button" class="vg-video__poster" data-yt="{{ acc.settings.video_url.id }}" aria-label="Lire la vidéo : {{ acc.settings.video_label | default: acc.settings.name | escape }}">
+                              <img src="https://i.ytimg.com/vi/{{ acc.settings.video_url.id }}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+                              <span class="vg-video__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></span>
+                              <span class="vg-video__label">▶ {{ acc.settings.video_label | default: 'Voir la vidéo' }}</span>
+                            </button>
+                          </div>
+                        {%- endif -%}
                         {%- if acc.settings.note != blank -%}
                           <div class="vg-note vg-note--warn"><span class="vg-note__icon">⚠️</span><div>{{ acc.settings.note }}</div></div>
                         {%- endif -%}
@@ -882,7 +891,9 @@
         { "type": "text", "id": "photo_caption", "label": "Légende de la photo" },
         { "type": "richtext", "id": "extra", "label": "Texte complémentaire (installation physique…)" },
         { "type": "url", "id": "manual", "label": "Notice PDF", "info": "Apparaît dans la fiche et dans « Manuels à télécharger »." },
-        { "type": "richtext", "id": "custom_steps", "label": "Procédure spécifique (remplace la procédure standard)", "info": "Pour les sirènes par exemple, qui ne s'ajoutent pas avec le bouton +." }
+        { "type": "richtext", "id": "custom_steps", "label": "Procédure spécifique (remplace la procédure standard)", "info": "Pour les sirènes par exemple, qui ne s'ajoutent pas avec le bouton +." },
+        { "type": "video_url", "id": "video_url", "label": "Vidéo YouTube (dans la fiche)", "accept": ["youtube"] },
+        { "type": "text", "id": "video_label", "label": "Texte sur la vidéo", "default": "Voir la vidéo" }
       ]
     },
     {
