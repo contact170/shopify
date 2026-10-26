@@ -1,0 +1,186 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   assets/pv-accessoires.css — Daewoo Security, 19/09/2026
+   Sélecteur d'accessoires des pages Vigilia (snippets/pv-accessoires.liquid).
+
+   Les variables --pv-* sont déclarées par la section hôte sur `.pv`.
+   Des valeurs de repli sont malgré tout fournies : si la feuille est
+   chargée par une page qui n'a pas ce bloc <style>, le composant reste
+   lisible au lieu de tomber en noir sur blanc sans marges.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Le bloc est souvent suivi d'une autre section sur fond gris : sans ce
+   filet, les deux bandes se rejoignent en un seul aplat et la séparation
+   de lecture disparaît. */
+.pva + .pv-section--alt { border-top: 1px solid var(--pv-line, #d2d2d7); }
+
+.pva__head { max-width: 720px; margin-bottom: 36px; }
+.pva__head h2 { margin: 10px 0 12px; }
+.pva__head p {
+  color: var(--pv-gray, #6e6e73);
+  font-size: 17px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.pva__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.pva__card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--pv-line, #d2d2d7);
+  border-radius: 16px;
+  padding: 18px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+/* La carte choisie se distingue au trait, pas au fond : le fond blanc
+   reste le repère de lecture du prix et de la référence. */
+.pva__card.is-picked {
+  border-color: var(--pv-navy, #0c1e4a);
+  box-shadow: 0 0 0 1px var(--pv-navy, #0c1e4a);
+}
+
+.pva__photo {
+  background: var(--pv-bg-alt, #f5f5f7);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pva__photo img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+
+.pva__body { display: flex; flex-direction: column; flex: 1 1 auto; }
+
+.pva__ref {
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--pv-gray, #6e6e73);
+  margin-bottom: 4px;
+}
+
+.pva__nom {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.pva__pour {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--pv-gray, #6e6e73);
+  margin: 0 0 14px;
+}
+.pva__pour:empty { display: none; }
+
+/* Le prix est poussé en bas de carte par le margin-top:auto pour que les
+   quatre cartes alignent prix et compteur quelle que soit la longueur du
+   texte au-dessus. */
+.pva__prix {
+  margin-top: auto;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.pva__step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid var(--pv-line, #d2d2d7);
+  border-radius: 999px;
+  padding: 4px;
+}
+.pva__step button {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--pv-bg-alt, #f5f5f7);
+  color: var(--pv-ink, #1d1d1f);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s ease, opacity .15s ease;
+}
+.pva__step button:hover:not(:disabled) { background: #e8e8ed; }
+.pva__step button:disabled { opacity: .35; cursor: default; }
+.pva__step button:focus-visible { outline: 2px solid var(--pv-navy, #0c1e4a); outline-offset: 2px; }
+.pva__qty { font-size: 15px; font-weight: 600; min-width: 20px; text-align: center; }
+
+/* ---- pied : total + actions ---- */
+
+.pva__foot {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #fff;
+  border: 1px solid var(--pv-line, #d2d2d7);
+  border-radius: 16px;
+  padding: 22px 24px;
+}
+
+.pva__total-k {
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--pv-gray, #6e6e73);
+  margin-bottom: 4px;
+}
+.pva__total-v { font-size: 28px; font-weight: 600; line-height: 1.1; }
+.pva__total-d {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--pv-gray, #6e6e73);
+}
+
+.pva__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pva__lien {
+  font-size: 14px;
+  color: var(--pv-navy, #0c1e4a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pva__lien:hover { opacity: .75; }
+
+@media (max-width: 989px) {
+  .pva__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 749px) {
+  .pva__head { margin-bottom: 28px; }
+  .pva__head p { font-size: 16px; }
+  .pva__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .pva__card { padding: 12px; border-radius: 14px; }
+  .pva__photo { margin-bottom: 10px; }
+  .pva__nom { font-size: 14px; }
+  /* Sur deux colonnes étroites, le « pourquoi » ferait glisser le
+     compteur sous la ligne de flottaison : la carte garde la photo, le
+     nom, le prix et le compteur, qui sont ce dont on se sert ici. */
+  .pva__pour { display: none; }
+  .pva__step button { width: 30px; height: 30px; flex: 0 0 30px; }
+  .pva__foot { flex-direction: column; align-items: stretch; padding: 18px; }
+  .pva__actions { align-items: stretch; }
+  .pva__actions .pv-btn { width: 100%; }
+  .pva__lien { text-align: center; }
+}
