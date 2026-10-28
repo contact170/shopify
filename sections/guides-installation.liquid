@@ -142,7 +142,7 @@
           {%- liquid
             assign guide_url = b.settings.guide_page.url | default: '#'
             assign guide_handle = b.settings.guide_page.handle
-            assign img_alt = 'Centrale d\'alarme Daewoo ' | append: b.settings.name
+            assign img_alt = "Centrale d'alarme Daewoo " | append: b.settings.name
           -%}
           <li>
             <article class="hg-card" data-hg-key="vg-{{ guide_handle }}" {{ b.shopify_attributes }}>
@@ -247,7 +247,7 @@
         "@type": "ItemList",
         "itemListElement": [
           {%- for b in guides -%}
-            { "@type": "ListItem", "position": {{ forloop.index }}, "name": {{ 'Guide d\'installation ' | append: b.settings.name | json }}, "url": {{ shop.url | append: b.settings.guide_page.url | json }} }{% unless forloop.last %},{% endunless %}
+            { "@type": "ListItem", "position": {{ forloop.index }}, "name": {{ "Guide d'installation " | append: b.settings.name | json }}, "url": {{ shop.url | append: b.settings.guide_page.url | json }} }{% unless forloop.last %},{% endunless %}
           {%- endfor -%}
         ]
       }
