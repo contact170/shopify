@@ -58,6 +58,10 @@
   #vg-{{ sid }} .vg-rte li { margin: .35em 0; }
   #vg-{{ sid }} .vg-rte strong { color: var(--vg-navy); }
 
+  /* Retour vers la page des guides */
+  #vg-{{ sid }} .vg-back { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--vg-muted); text-decoration: none; margin-bottom: 14px; padding: 4px 0; }
+  #vg-{{ sid }} .vg-back:hover { color: var(--vg-blue); text-decoration: underline; }
+
   /* Hero */
   #vg-{{ sid }} .vg-hero { display: grid; gap: 24px; align-items: center; margin-bottom: 28px; }
   @media (min-width: 750px) { #vg-{{ sid }} .vg-hero--media { grid-template-columns: 1.2fr .8fr; gap: 40px; } }
@@ -283,6 +287,7 @@
   <div class="vg-wrap">
 
     {%- comment -%} ===== HERO ===== {%- endcomment -%}
+    <a class="vg-back" href="/pages/guides-installation"><span aria-hidden="true">←</span> Tous les guides d'installation</a>
     <header class="vg-hero{% if section.settings.hero_image != blank %} vg-hero--media{% endif %}">
       <div>
         {%- if section.settings.eyebrow != blank -%}<span class="vg-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
