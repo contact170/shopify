@@ -1,0 +1,115 @@
+{
+  "sections": {
+    "guides": {
+      "type": "guides-installation",
+      "blocks": {
+        "guide_vigilia": {
+          "type": "guide",
+          "settings": {
+            "guide_page": "installation-alarme-vigilia",
+            "name": "Vigilia",
+            "ref": "Vigilia · Vigilia +",
+            "image": "shopify://shop_images/Daewoo_Vigilia_-_Alarme_-_Photo_Produit_1600_x_1600_px_2.png",
+            "image_cover": true,
+            "description": "Centrale à clavier, en Wi-Fi ou en Wi-Fi + 4G.",
+            "recognize": "Un clavier à touches et un lecteur de badges en façade.",
+            "meta": "7 étapes, avec photos et vidéos"
+          }
+        },
+        "guide_am301": {
+          "type": "guide",
+          "settings": {
+            "guide_page": "installation-alarme-am301-touch",
+            "name": "Touch",
+            "ref": "AM301",
+            "image": "shopify://shop_images/centrale-am301-touch-face.webp",
+            "image_cover": false,
+            "description": "Centrale à écran tactile, en Wi-Fi, 4G en option.",
+            "recognize": "Un écran tactile couleur de 4,3 pouces.",
+            "meta": "7 étapes, avec photos et vidéos"
+          }
+        },
+        "guide_am302": {
+          "type": "guide",
+          "settings": {
+            "guide_page": "installation-alarme-am302-touch-xl",
+            "name": "Touch XL",
+            "ref": "AM302",
+            "image": "shopify://shop_images/centrale-am302-touch-xl-face.webp",
+            "image_cover": false,
+            "description": "Centrale à grand écran tactile, en Wi-Fi, 4G en option.",
+            "recognize": "Un grand écran tactile de 7 pouces.",
+            "meta": "7 étapes, avec photos et vidéos"
+          }
+        },
+        "guide_elite": {
+          "type": "guide",
+          "settings": {
+            "guide_page": "installation-alarme-elite-pa501z",
+            "name": "Élite",
+            "ref": "PA501Z",
+            "image": "shopify://shop_images/centrale-alarme-daewoo-pa501z-elite-image-principale.webp",
+            "image_cover": false,
+            "description": "Centrale discrète Zigbee, en Wi-Fi, Ethernet ou 4G.",
+            "recognize": "Un boîtier sans écran ni clavier, avec une bande lumineuse.",
+            "meta": "9 étapes, avec photos et vidéos"
+          }
+        },
+        "avant_appli": {
+          "type": "avant",
+          "settings": {
+            "title": "Installez l'appli Daewoo Home Connect",
+            "text": "Gratuite sur iPhone et Android. Le guide vous montre comment créer votre compte."
+          }
+        },
+        "avant_wifi": {
+          "type": "avant",
+          "settings": {
+            "title": "Connectez votre téléphone au Wi-Fi 2,4 GHz",
+            "text": "Gardez sous la main le nom et le mot de passe du Wi-Fi de votre box."
+          }
+        },
+        "avant_box": {
+          "type": "avant",
+          "settings": {
+            "title": "Installez-vous près de votre box",
+            "text": "Faites tous les réglages et les tests d'abord : vous fixerez la centrale au mur à la fin."
+          }
+        }
+      },
+      "block_order": [
+        "guide_vigilia",
+        "guide_am301",
+        "guide_am302",
+        "guide_elite",
+        "avant_appli",
+        "avant_wifi",
+        "avant_box"
+      ],
+      "settings": {
+        "eyebrow": "Assistance",
+        "title": "Guides d'installation",
+        "subtitle": "<p>Choisissez votre centrale : le guide vous accompagne étape par étape, de la mise en route à l'ajout de vos accessoires, sans jargon.</p>",
+        "pill_1": "🛠️ Installation guidée, à réaliser vous-même",
+        "pill_2": "📸 Photos et vidéos à chaque étape",
+        "pill_3": "✅ Votre progression est mémorisée",
+        "cta_label": "Commencer l'installation",
+        "resume_label": "Reprendre l'installation",
+        "note": "<p>Vous ne savez pas quelle centrale vous avez ? Son nom figure sur votre confirmation de commande. Sinon, <a href=\"/pages/nous-contacter\">écrivez-nous</a>, on vous aide à la reconnaître.</p>",
+        "avant_title": "Avant de commencer",
+        "help_title": "Bloqué pendant l'installation ?",
+        "help_text": "Notre équipe basée près de Bordeaux vous aide à finaliser votre installation.",
+        "help_label": "Demander de l'aide",
+        "help_url": "/pages/assistance-1",
+        "contact_label": "Nous écrire",
+        "contact_url": "/pages/nous-contacter",
+        "youtube_url": "https://www.youtube.com/@daewoosecurity3029",
+        "padding_top": 32,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "guides"
+  ]
+}
