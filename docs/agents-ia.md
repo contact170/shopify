@@ -2,8 +2,7 @@
 
 Cette note permet à une nouvelle session Claude de reprendre le système
 d'agents IA sans contexte préalable. Elle décrit l'existant et les règles à
-respecter. La bascule du rédacteur SEO vers GSC Wizard est terminée depuis
-le 29/10/2026 (voir « Historique »).
+respecter. Dernières évolutions dans « Historique ».
 
 ## Vue d'ensemble
 
@@ -13,6 +12,10 @@ le 29/10/2026 (voir « Historique »).
 |---|---|---|
 | Analyste ventes | `analyste-ventes.md` | Actif, testé, fusionné dans `main` |
 | Rédacteur SEO (blog) | `redacteur-seo.md` | Actif, testé sur données réelles le 29/10/2026 (GSC Wizard) |
+| Optimisation du site | `optimisation-site.md` + `scripts/audit-site.js` | Actif, testé sur données réelles le 29/10/2026 |
+
+L'agent « Optimisation du site » remplace l'agent proposé « Audit fiches
+produits / SEO » (fusion décidée par le dirigeant le 29/10/2026).
 
 ### Tableau de bord Notion (privé)
 
@@ -23,15 +26,16 @@ le 29/10/2026 (voir « Historique »).
 - Base « 🔒 Résultats des agents » : data source
   `collection://7911a038-548e-452c-ad97-e12aa51b0349`.
   Propriétés : `Rapport` (titre), `Agent` (Analyste ventes, Veille stock,
-  Audit fiches produits, Veille concurrence, Rédacteur SEO), `Date`,
+  Optimisation du site, Veille concurrence, Rédacteur SEO), `Date`,
   `Priorité` (Haute, Normale, Basse), `Statut` (À lire, À traiter, Fait),
   `Résumé`.
 - Base « Agents » : data source
   `collection://bcaaf2ff-48d8-4334-8599-6d734584e81d`.
   Propriétés : `Agent` (titre), `État` (Actif, En attente, En pause, Proposé),
   `Mission`, `Planning`, `Accès autorisés`, `Notification`,
-  `Fiche technique`. Ligne « Rédacteur SEO (blog) » : page
-  `40883a31dd678125a908e9e046bf4fb1`.
+  `Fiche technique`. Lignes : « Rédacteur SEO (blog) », page
+  `40883a31dd678125a908e9e046bf4fb1` ; « Optimisation du site », page
+  `40883a31dd6781ba9ba4dcf80cccc6fe`.
 
 ### Connecteur GSC Wizard (Search Console)
 
@@ -44,9 +48,15 @@ le 29/10/2026 (voir « Historique »).
 - **Le connecteur n'est pas entièrement en lecture seule.** L'accès Google
   Search Console l'est (`webmasters.readonly`), mais la clé GSC Wizard est en
   écriture et certains outils modifient des réglages ou consomment des
-  quotas (sites, IndexNow, annotations, URL suivies, inspections…). Le
-  rédacteur SEO n'a donc accès qu'à deux outils de lecture :
-  `score_opportunities` et `query_search_analytics`.
+  quotas (sites, IndexNow, annotations, URL suivies, inspections…). Chaque
+  agent n'a donc accès qu'à des outils de lecture : `score_opportunities` et
+  `query_search_analytics` pour le rédacteur SEO, `audit_onpage_seo` et
+  `query_top_pages` pour l'optimisation du site.
+- `get_core_web_vitals` (vitesse mesurée chez les vrais visiteurs) renvoie
+  `notConfigured` : il faut enregistrer une clé d'API Chrome UX Report dans
+  l'application GSC Wizard (propriété › Core Web Vitals › « API Key »).
+  L'API PageSpeed Insights sans clé répond 429. L'agent d'optimisation
+  mesure donc la vitesse lui-même avec `scripts/audit-site.js`.
 - Différences avec Windsor : le CTR est un pourcentage de 0 à 100, la
   période par défaut est les 28 derniers jours consolidés (2 à 3 jours de
   retard), et les adresses `/fr-ch/`, `/fr-com/`… sont des variantes de
@@ -71,6 +81,7 @@ Wizard) ») n'a plus de tâche.
 |---|---|---|---|
 | Rapport ventes hebdo | `trig_0135d9x7u61HvZ5HS9uD9fyU` | lundi 6h41 | actif |
 | Article SEO hebdo | `trig_01SwJUzM3793Tso6WRRn6Wbv` | mercredi 6h44 | actif |
+| Audit du site hebdo | `trig_01Qs6W29kZhAavyhtwjPZxdG` | vendredi 6h47 | actif à partir du 6/11/2026 (mis en pause pour sauter le 30/10, réactivation automatique le 30/10 à 7h30) |
 
 Le paramètre `connectors` de `create_trigger` n'est pas disponible pour
 cette organisation. Une tâche lancée dans une nouvelle session à chaque fois
@@ -90,6 +101,13 @@ défaut de `create_trigger`, sans `create_new_session_on_fire`).
 - **Ventes :** chaque montant porte la mention HT ou TTC. Le rapport commence
   par le total des ventes TTC (le chiffre affiché par Shopify), suivi des
   ventes nettes HT.
+- **Optimisation du site :** seul agent à disposer de Bash, pour lancer
+  `node scripts/audit-site.js` (Playwright, pages publiques de
+  daewoo-security.fr uniquement : le script refuse les autres domaines) et
+  `curl` en lecture sur le site et le CDN Shopify. Sa fiche lui interdit
+  `git` et toute écriture hors de son dossier de travail. Il ne modifie rien
+  sur la boutique : le dirigeant demande à Claude d'appliquer les
+  corrections numérotées qu'il retient.
 - **Blog :** l'ancien outil Sorank (en pause, bientôt désactivé) produisait
   des articles en doublon et hors sujet. Le rédacteur SEO donne la priorité à
   la vérification des doublons et à la pertinence. Il ne publie rien : il
@@ -105,9 +123,9 @@ disparaît :
 
 1. ouvrir une nouvelle session sur ce dépôt et vérifier que les outils
    `mcp__Shopify__*`, `mcp__Notion__*` et `mcp__GSC__*` sont disponibles ;
-2. recréer les deux tâches dans cette session avec les consignes
-   ci-dessous (`CRON_TZ=Europe/Paris 41 6 * * 1` et
-   `CRON_TZ=Europe/Paris 44 6 * * 3`, mode par défaut de `create_trigger`) ;
+2. recréer les tâches dans cette session avec les consignes ci-dessous
+   (`CRON_TZ=Europe/Paris 41 6 * * 1`, `CRON_TZ=Europe/Paris 44 6 * * 3` et
+   `CRON_TZ=Europe/Paris 47 6 * * 5`, mode par défaut de `create_trigger`) ;
 3. supprimer ensuite les anciennes (`delete_trigger`) et mettre à jour la
    section « Tâches planifiées » de cette note.
 
@@ -129,6 +147,27 @@ disparaît :
   ligne, faits conformes à la fiche produit IVR501W, HTML correct.
 - Tâches planifiées déplacées dans la session « Agents et tableau de bord »,
   anciennes tâches supprimées.
+
+### Création de l'agent « Optimisation du site » (29/10/2026)
+
+- Choix du dirigeant : vitesse, images et textes alternatifs, contrôle
+  visuel, SEO technique ; lecture seule (il propose, Claude applique sur
+  demande) ; chaque vendredi ; fusion avec l'agent proposé « Audit fiches
+  produits / SEO » (option Notion renommée « Optimisation du site »).
+- `scripts/audit-site.js` écrit et testé : environ 1 minute par page en 4G
+  lente simulée. Le préchargement du paiement Shopify (environ 900 Ko par
+  page, basse priorité) est compté à part pour ne pas fausser les poids.
+- Premier test réel (17 min 30) : rapport « Optimisation du site – semaine
+  44 », priorité Haute, 2 problèmes Fort (collection Caméras à 6,8 s,
+  fiche Montre SW101 à 4,2 s et 3,1 Mo à cause de 4 vidéos), 10 Moyen,
+  13 Faible, 15 corrections numérotées. Vérifiés à la main : longueurs des
+  titres proposés, vidéos de la SW101, logo invisible sur l'en-tête
+  transparent des articles.
+- Retours du test intégrés : produits par lots de 15 (au-delà, la réponse
+  est trop volumineuse), script en deux lots de 4 pages (limite de 10 min
+  de Bash), services tiers bloqués par l'environnement de mesure à ne pas
+  signaler comme erreurs, rangs numérotés à partir de 0, 3 images au plus
+  par fiche, comptage des caractères avec `node -e`.
 
 ## Consignes des tâches planifiées
 
@@ -189,3 +228,33 @@ disparaît :
 > 4. Termine par une réponse courte en français : lien de la page Notion,
 >    titre de l'article, mot-clé principal et produits mis en avant, ou
 >    l'explication du problème.
+
+### Audit du site hebdo (vendredi 6h47)
+
+> Exécution hebdomadaire planifiée : audit graphique et technique du site
+> daewoo-security.fr (demandée par le dirigeant).
+>
+> 1. Lance le sous-agent `optimisation-site` avec l'outil Agent
+>    (subagent_type « optimisation-site »), en lui donnant la date du jour, le
+>    numéro de semaine ISO, le chemin du dépôt et un dossier de travail dans
+>    ton scratchpad (`audit-site-<AAAA-MM-JJ>`). Il mesure les pages clés,
+>    regarde les captures, vérifie les images, les textes alternatifs et le
+>    SEO technique, puis dépose son rapport dans la base Notion privée « 🔒
+>    Résultats des agents » (page « Centre des agents Daewoo »). Si le type
+>    d'agent « optimisation-site » n'est pas disponible, lis
+>    `.claude/agents/optimisation-site.md` et lance un agent general-purpose
+>    avec exactement ces consignes, en lui imposant de n'utiliser que les
+>    outils listés dans l'en-tête de la fiche.
+> 2. Ne fais rien d'autre que les étapes 1 et 3 : n'utilise pas toi-même
+>    Shopify, GSC Wizard ou Notion, ne modifie aucun fichier, ne crée ni
+>    commit, ni branche, ni pull request, et ne modifie rien sur la boutique.
+> 3. Préviens le dirigeant avec l'outil PushNotification (charge-le avec
+>    ToolSearch « select:PushNotification » si besoin ; status
+>    « proactive »). Message d'une ligne, moins de 200 caractères, sans
+>    markdown. Succès : « 🎨 Audit du site S44 prêt : <n> corrections
+>    proposées, priorité <priorité>. À lire dans Notion › Centre des agents. »
+>    Échec : « ⚠️ Audit du site non produit : <raison courte>. Voir la
+>    conversation Agents et tableau de bord. »
+> 4. Termine par une réponse courte en français : lien de la page Notion,
+>    priorité, nombre de problèmes par impact et les 3 premières corrections,
+>    ou l'explication du problème.
