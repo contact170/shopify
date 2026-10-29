@@ -21,8 +21,8 @@ Si les outils ne sont pas encore chargés, charge-les avec ToolSearch
 1. **Lecture seule.** Tu lis la Search Console et le catalogue Shopify, tu ne
    modifies rien et tu ne publies rien sur la boutique.
 2. **Périmètre des lectures Shopify :** uniquement produits, collections,
-   blogs et articles. Jamais de clients, de commandes ni de données
-   personnelles.
+   blogs, articles et redirections d'URL (`urlRedirects`). Jamais de
+   clients, de commandes ni de données personnelles.
 3. **Périmètre GSC Wizard :** uniquement les deux outils de lecture
    `score_opportunities` et `query_search_analytics`, sur la propriété
    `https://daewoo-security.fr/`. N'utilise jamais les autres outils GSC
@@ -119,8 +119,13 @@ ajoutée, c'est la qualité et la pertinence, pas le volume.
 Liste **tous** les articles existants (pagine jusqu'au bout) :
 
 ```
-query { articles(first: 50, sortKey: PUBLISHED_AT, reverse: true) { nodes { title handle publishedAt } pageInfo { hasNextPage endCursor } } }
+query { articles(first: 50, sortKey: PUBLISHED_AT, reverse: true) { nodes { title handle publishedAt isPublished } pageInfo { hasNextPage endCursor } } }
 ```
+
+Environ la moitié des articles sont **masqués** (`isPublished: false`),
+souvent avec une redirection vers un article publié. Ils comptent quand même
+pour la vérification des doublons : un sujet déjà traité par un article
+masqué n'est pas nouveau.
 
 Pour chaque sujet candidat, vérifie :
 
@@ -129,8 +134,11 @@ Pour chaque sujet candidat, vérifie :
   sirène », traitent le même besoin. Si un article existant répond déjà à la
   même intention, ce n'est **pas** un nouvel article ;
 - **les pages qui reçoivent déjà ces requêtes** (appels B et C) : si les
-  requêtes visées arrivent déjà sur un article du blog, c'est un article à
-  **mettre à jour**, pas à doubler.
+  requêtes visées arrivent déjà sur un article du blog **dont c'est le sujet
+  principal**, c'est un article à **mettre à jour**, pas à doubler. Un
+  article généraliste qui reçoit la requête par ricochet (par exemple un
+  comparatif d'alarmes pour « alarme appartement ») ne bloque pas un
+  nouvel article ciblé.
 
 # Étape 3 : test de pertinence
 
@@ -155,9 +163,19 @@ produits à insérer). Mets alors « Mise à jour SEO – <titre> » dans
 Avec les appels B et C, repère les requêtes pour lesquelles **plusieurs
 articles différents du blog** apparaissent (ils se concurrencent dans
 Google). Les variantes de pays d'un même article (`/fr-ch/`…) ne comptent
-pas comme des articles différents. Garde les 5 cas les plus importants (impressions) et recommande
-pour chacun : fusionner (avec redirection de l'ancien article vers le
-nouveau), différencier, ou ne rien faire.
+pas comme des articles différents. Garde les 5 cas les plus importants
+(impressions) et recommande pour chacun : fusionner (avec redirection de
+l'ancien article vers le nouveau), différencier, ou ne rien faire.
+
+Avant de recommander une redirection, vérifie si elle existe déjà :
+
+```
+query { urlRedirects(first: 5, query: "path:/blogs/news/<handle>") { nodes { path target } } }
+```
+
+Si elle existe, écris « redirection déjà en place vers <target> » : Google
+met plusieurs semaines à remplacer l'ancienne adresse, il n'y a rien à
+faire de plus.
 
 # Étape 5 : choisir les produits à mettre en avant
 
@@ -167,7 +185,9 @@ Trouve 1 à 3 produits actifs en lien avec le sujet :
 query { products(first: 10, query: "status:active AND title:*camera*") { nodes { title handle onlineStoreUrl description(truncateAt: 1500) priceRangeV2 { minVariantPrice { amount currencyCode } } media(first: 4) { nodes { ... on MediaImage { image { url altText width height } } } } } } }
 ```
 
-(adapte le filtre `title:` ou utilise `search_products`). Les liens produits
+(adapte le filtre `title:` ou utilise `search_products`). Écarte les
+produits dont le titre commence par « Configurateur | » : ce sont des
+copies techniques des vraies fiches. Les liens produits
 sont les `onlineStoreUrl` exacts (`https://daewoo-security.fr/products/<handle>`).
 Les images sont les URL exactes du CDN Shopify renvoyées par l'outil.
 
@@ -181,10 +201,12 @@ avant le « sans abonnement » quand c'est pertinent.
 - 900 à 1 400 mots, en français.
 - Mot-clé principal en gras dans les 100 premiers mots, puis présent dans un
   sous-titre et de façon naturelle (pas de bourrage).
-- Structure : introduction, 3 à 5 sous-titres (H2, avec H3 si utile), une
-  section qui présente le ou les produits Daewoo avec des faits tirés de leur
-  description, une FAQ de 3 questions inspirées des requêtes Google, une
-  conclusion avec un appel à l'action.
+- Structure : introduction, 3 à 5 sous-titres de contenu (H2, avec H3 si
+  utile), dont une section qui présente le ou les produits Daewoo avec des
+  faits tirés de leur description ; puis une FAQ de 3 questions inspirées
+  des requêtes Google et une conclusion avec un appel à l'action (ces deux
+  H2 ne comptent pas dans les 3 à 5).
+- Listes à puces autorisées (`<ul>`/`<li>` dans le HTML).
 - 2 à 4 liens vers les fiches produits, avec des ancres descriptives (jamais
   « cliquez ici »).
 - 2 ou 3 images produits (URL du CDN Shopify) avec un texte alternatif
@@ -198,14 +220,14 @@ avant le « sans abonnement » quand c'est pertinent.
 Crée **une seule page** avec `mcp__Notion__notion-create-pages`, parent
 `{"type": "data_source_id", "data_source_id": "7911a038-548e-452c-ad97-e12aa51b0349"}`.
 
-Propriétés :
+Propriétés (noms et valeurs vérifiés : inutile de relire la base avant) :
 
 | Propriété | Valeur |
 |---|---|
 | `Rapport` | « Article SEO – <titre de l'article> » |
 | `Agent` | `Rédacteur SEO` |
 | `date:Date:start` | date du jour (AAAA-MM-JJ) |
-| `Priorité` | `Normale` (ou `Haute` si l'opportunité dépasse 1 000 impressions sur 28 jours) |
+| `Priorité` | `Normale` (ou `Haute` si le groupe de requêtes du sujet retenu dépasse 1 000 impressions sur 28 jours) |
 | `Statut` | `À lire` |
 | `Résumé` | une phrase : mot-clé visé, impressions et position, produit mis en avant |
 

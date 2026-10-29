@@ -1,8 +1,9 @@
 # Agents IA Daewoo Security : note de reprise
 
 Cette note permet à une nouvelle session Claude de reprendre le système
-d'agents IA sans contexte préalable. Elle décrit l'existant, les règles à
-respecter et la tâche en cours : basculer le rédacteur SEO vers GSC Wizard.
+d'agents IA sans contexte préalable. Elle décrit l'existant et les règles à
+respecter. La bascule du rédacteur SEO vers GSC Wizard est terminée depuis
+le 29/10/2026 (voir « Historique »).
 
 ## Vue d'ensemble
 
@@ -11,7 +12,7 @@ respecter et la tâche en cours : basculer le rédacteur SEO vers GSC Wizard.
 | Agent | Fiche | État |
 |---|---|---|
 | Analyste ventes | `analyste-ventes.md` | Actif, testé, fusionné dans `main` |
-| Rédacteur SEO (blog) | `redacteur-seo.md` | En attente : bascule de Windsor vers GSC Wizard, non testé, pas encore dans `main` |
+| Rédacteur SEO (blog) | `redacteur-seo.md` | Actif, testé sur données réelles le 29/10/2026 (GSC Wizard) |
 
 ### Tableau de bord Notion (privé)
 
@@ -32,6 +33,25 @@ respecter et la tâche en cours : basculer le rédacteur SEO vers GSC Wizard.
   `Fiche technique`. Ligne « Rédacteur SEO (blog) » : page
   `40883a31dd678125a908e9e046bf4fb1`.
 
+### Connecteur GSC Wizard (Search Console)
+
+- Connecteur claude.ai `https://mcp.gscwizard.com/mcp`, dont les outils
+  s'appellent `mcp__GSC__*`. Compte `contact@be-connected.com`, plan
+  starter. Une seule propriété : `https://daewoo-security.fr/`.
+- Le plugin `seo-gsc-wizard` (serveur `plugin:seo-gsc-wizard:gsc-wizard`)
+  échoue au démarrage (erreur proxy 403). Il n'est pas nécessaire : le
+  connecteur `GSC` suffit.
+- **Le connecteur n'est pas entièrement en lecture seule.** L'accès Google
+  Search Console l'est (`webmasters.readonly`), mais la clé GSC Wizard est en
+  écriture et certains outils modifient des réglages ou consomment des
+  quotas (sites, IndexNow, annotations, URL suivies, inspections…). Le
+  rédacteur SEO n'a donc accès qu'à deux outils de lecture :
+  `score_opportunities` et `query_search_analytics`.
+- Différences avec Windsor : le CTR est un pourcentage de 0 à 100, la
+  période par défaut est les 28 derniers jours consolidés (2 à 3 jours de
+  retard), et les adresses `/fr-ch/`, `/fr-com/`… sont des variantes de
+  pays d'une même page.
+
 ### Notifications
 
 À la fin de chaque exécution planifiée, la session envoie une notification
@@ -41,13 +61,16 @@ du dirigeant, et Notion ne notifie pas ses propres actions.
 
 ### Tâches planifiées
 
-Elles sont rattachées à la session d'origine
-`session_01LiMrJG4zhCAQ3781eUKv2r` (« Agents et tableau de bord ») :
+Elles sont rattachées à la session
+`session_01LiMrJGgZbi75nzwpQWg7uB` (« Agents et tableau de bord »), qui
+possède les connecteurs Shopify, Notion et GSC Wizard. L'ancienne session
+`session_01LiMrJG4zhCAQ3781eUKv2r` (renommée « … (ancienne, sans GSC
+Wizard) ») n'a plus de tâche.
 
 | Nom | ID | Planning (Europe/Paris) | État |
 |---|---|---|---|
-| Rapport ventes hebdo | `trig_0168PGipkh2FwEwHAbrbgbVH` | lundi 6h41 | actif |
-| Article SEO hebdo | `trig_012dv29VRoSUDy4swhx2yeYv` | mercredi 6h44 | désactivé jusqu'à la bascule |
+| Rapport ventes hebdo | `trig_0135d9x7u61HvZ5HS9uD9fyU` | lundi 6h41 | actif |
+| Article SEO hebdo | `trig_01SwJUzM3793Tso6WRRn6Wbv` | mercredi 6h44 | actif |
 
 Le paramètre `connectors` de `create_trigger` n'est pas disponible pour
 cette organisation. Une tâche lancée dans une nouvelle session à chaque fois
@@ -74,44 +97,38 @@ défaut de `create_trigger`, sans `create_new_session_on_fire`).
 - **Processus :** tester un agent sur des données réelles avant de fusionner
   sa fiche dans `main`. Le dirigeant valide les fusions.
 
-## Reprise : basculer le rédacteur SEO vers GSC Wizard
+## Reprendre dans une nouvelle session
 
-Prérequis : le connecteur GSC Wizard (`https://mcp.gscwizard.com/mcp`) est
-ajouté sur claude.ai, et une **nouvelle** session est ouverte, car les
-connecteurs ne sont chargés qu'au démarrage d'une session.
+Les connecteurs ne sont chargés qu'au démarrage d'une session. Si un
+connecteur est ajouté ou si la session « Agents et tableau de bord »
+disparaît :
 
-1. **Récupérer le travail :**
-   `git fetch origin claude/beautiful-rubin-p673kt`, puis fusionner cette
-   branche dans la branche de travail de la session.
-2. **Tester GSC Wizard :**
-   - charger ses outils (ToolSearch avec « gsc » ou « wizard ») et les lister ;
-   - vérifier qu'ils sont en lecture seule ;
-   - interroger daewoo-security.fr sur 28 jours, par requête et par page :
-     clics, impressions, CTR, position.
-3. **Mettre à jour `.claude/agents/redacteur-seo.md` :**
-   - dans `tools:`, remplacer les outils Windsor par les outils de lecture
-     GSC Wizard ;
-   - réécrire l'« Étape 1 » avec l'appel testé ;
-   - adapter les règles de sécurité 3 et la ligne « sources » du livrable.
-4. **Tester l'agent sur données réelles.** Utiliser le sous-agent
-   `redacteur-seo`, ou un agent `general-purpose` avec la fiche si le type
-   n'est pas encore chargé. Vérifier la page Notion produite :
-   - pas de doublon ;
-   - sujet pertinent ;
-   - liens produits valides ;
-   - images issues du CDN Shopify ;
-   - HTML correct.
-5. **Fusionner :** ouvrir une pull request vers `main` (fiches + cette note)
-   et la fusionner après validation du dirigeant.
-6. **Déplacer les tâches planifiées :**
-   - recréer les deux tâches dans la nouvelle session avec les consignes
-     ci-dessous (`CRON_TZ=Europe/Paris 41 6 * * 1` et
-     `CRON_TZ=Europe/Paris 44 6 * * 3`) ;
-   - supprimer ensuite les deux anciennes (`delete_trigger` sur les deux
-     ID ci-dessus).
-7. **Mettre à jour Notion :** dans la ligne « Rédacteur SEO (blog) », passer
-   `État` à « Actif » et mettre à jour `Planning`, `Accès autorisés` (GSC
-   Wizard) et `Fiche technique` (lien vers `main`).
+1. ouvrir une nouvelle session sur ce dépôt et vérifier que les outils
+   `mcp__Shopify__*`, `mcp__Notion__*` et `mcp__GSC__*` sont disponibles ;
+2. recréer les deux tâches dans cette session avec les consignes
+   ci-dessous (`CRON_TZ=Europe/Paris 41 6 * * 1` et
+   `CRON_TZ=Europe/Paris 44 6 * * 3`, mode par défaut de `create_trigger`) ;
+3. supprimer ensuite les anciennes (`delete_trigger`) et mettre à jour la
+   section « Tâches planifiées » de cette note.
+
+## Historique
+
+### Bascule du rédacteur SEO vers GSC Wizard (29/10/2026)
+
+- Outils GSC Wizard testés sur daewoo-security.fr (28 jours : 4 785 clics,
+  148 102 impressions). `analyze_cannibalization` a été écarté : il est
+  dominé par les requêtes de marque, ne filtre ni la marque ni le blog, et sa
+  réponse est trop volumineuse pour un sous-agent sans accès aux fichiers.
+- Fiche réécrite : outils, Étape 1 (trois appels testés), règle de sécurité
+  3, ligne « sources », plus les retours du premier test (articles masqués
+  avec `isPublished`, vérification des redirections avec `urlRedirects`,
+  produits « Configurateur | » écartés, consignes clarifiées).
+- Premier test réel : « Interrupteur pour volet roulant connecté : comment
+  bien le choisir ? » (groupe de requêtes : 1 393 impressions, 2 clics).
+  Vérifié : pas de doublon, liens produits et images du CDN Shopify en
+  ligne, faits conformes à la fiche produit IVR501W, HTML correct.
+- Tâches planifiées déplacées dans la session « Agents et tableau de bord »,
+  anciennes tâches supprimées.
 
 ## Consignes des tâches planifiées
 
