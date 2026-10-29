@@ -12,8 +12,9 @@
 //   - ordinateur (1366 x 900) : 1 capture du haut de page, débordement.
 // Puis vérifie les liens internes trouvés (150 au maximum).
 //
-// Écrit le détail dans <dossier>/audit.json et les captures PNG dans
-// <dossier>, et affiche un résumé JSON sur la sortie standard.
+// Écrit le détail dans <dossier>/audit-<n>.json (un fichier par lancement)
+// et les captures PNG dans <dossier>, et affiche le JSON sur la sortie
+// standard. Compter environ 1 minute par page.
 // Lecture seule : le script ne fait que charger des pages publiques.
 
 const { chromium } = require('playwright');
@@ -328,6 +329,10 @@ async function checkLinks(pages) {
     links,
     outDir: out,
   };
-  fs.writeFileSync(path.join(out, 'audit.json'), JSON.stringify(report, null, 2));
+  // Un fichier par lancement (audit-1.json, audit-2.json…) : on peut mesurer
+  // les pages en plusieurs lots dans le même dossier.
+  let n = 1;
+  while (fs.existsSync(path.join(out, `audit-${n}.json`))) n++;
+  fs.writeFileSync(path.join(out, `audit-${n}.json`), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report));
 })();

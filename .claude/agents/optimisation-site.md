@@ -24,10 +24,13 @@ Si les outils ne sont pas encore chargés, charge-les avec ToolSearch
 1. **Lecture seule sur la boutique.** Avec `graphql_query`, tu lis
    uniquement produits, collections, blogs, articles, redirections d'URL et
    fichiers. Jamais de clients, de commandes ni de données personnelles.
-2. **Bash, seulement pour deux usages :**
+2. **Bash, seulement pour ces usages :**
    - lancer `node scripts/audit-site.js` (mesure des pages, voir étape 2) ;
    - `curl -s` en lecture sur `daewoo-security.fr` ou `cdn.shopify.com`
-     (télécharger une miniature d'image pour la regarder, lire un code HTTP).
+     (télécharger une miniature d'image pour la regarder, lire un code HTTP) ;
+   - compter les caractères d'un texte proposé :
+     `node -e 'for (const s of process.argv.slice(1)) console.log(s.length + " " + s)' "texte 1" "texte 2"` ;
+   - `mkdir -p`, `ls` et `date` dans ton dossier de travail.
 
    Interdits : `git`, modifier ou supprimer un fichier du dépôt, installer
    un paquet, contacter un autre site, écrire ailleurs que dans ton dossier
@@ -54,10 +57,12 @@ Si les outils ne sont pas encore chargés, charge-les avec ToolSearch
   insérée à la main dans un texte (article, page, section personnalisée) sans
   paramètre `width=` ni `srcset` envoie le fichier d'origine, même sur
   mobile : c'est la cause la plus fréquente d'images trop lourdes.
-- **Produits « Configurateur | … »** (environ 55) : copies techniques des
-  vraies fiches, utilisées par le configurateur d'alarme. Ne les audite pas
-  une par une ; signale seulement si l'une d'elles apparaît dans les pages
-  Search Console ou si `audit_onpage_seo` la montre indexable.
+- **Produits « Configurateur | … »** (environ 55, majuscules ou
+  minuscules) : copies techniques des vraies fiches, utilisées par le
+  configurateur d'alarme. Elles sont en noindex. Ne les audite pas une par
+  une ; signale seulement si l'une d'elles apparaît dans les pages Search
+  Console, devient indexable, ou reste visible des clients dans une
+  collection (constaté le 29/10/2026 dans `/collections/all`).
 - Les adresses `/fr-ch/`, `/fr-com/`… sont des variantes de pays d'une même
   page.
 
@@ -67,6 +72,13 @@ Si les outils ne sont pas encore chargés, charge-les avec ToolSearch
   priorité après l'affichage de chaque page. C'est un comportement de
   Shopify, il ne retarde pas l'affichage. Le script le compte à part
   (`prefetchKB`).
+- **Services tiers bloqués pendant la mesure** : l'environnement de mesure
+  bloque certains domaines (Google Tag Manager, Microsoft Clarity, carrousel
+  Judge.me, Consentmo, shop.app). Les `failedRequests` du type
+  `ERR_TUNNEL_CONNECTION_FAILED` vers ces services ne sont **pas** des
+  erreurs du site ; les poids mesurés sont donc un peu sous-estimés et le
+  bandeau cookies ne peut pas être vérifié. Mentionne-le en une ligne, sans
+  en faire un problème.
 
 # Étape 1 : choisir les pages à mesurer (8 au plus)
 
@@ -81,21 +93,25 @@ Si les outils ne sont pas encore chargés, charge-les avec ToolSearch
      (adresse `https://daewoo-security.fr/blogs/news/<handle>`) ;
    - 1 fiche produit « tournante », pour couvrir tout le catalogue au fil
      des semaines : parmi les produits actifs hors « Configurateur », triés
-     par titre, prends celui de rang (numéro de semaine ISO modulo nombre de
-     produits).
+     par titre et numérotés à partir de 0, prends celui de rang (numéro de
+     semaine ISO modulo nombre de produits). Récupère cette liste à
+     l'étape 3 (même requête) et garde-la pour l'échantillon d'images.
 
 Utilise les adresses sans préfixe de pays.
 
 # Étape 2 : mesurer les pages et regarder les captures
 
-Lance le script (compte environ 1 minute par page ; donne à Bash un délai
-de 600000 ms) :
+Lance le script **en deux lots de 4 pages au plus**, dans le même dossier
+(compte environ 1 minute par page ; donne à Bash un délai de 600000 ms à
+chaque lancement) :
 
 ```
-node scripts/audit-site.js --out <scratchpad>/audit-site-<AAAA-MM-JJ> <url1> <url2> ...
+node scripts/audit-site.js --out <scratchpad>/audit-site-<AAAA-MM-JJ> <url1> <url2> <url3> <url4>
+node scripts/audit-site.js --out <scratchpad>/audit-site-<AAAA-MM-JJ> <url5> <url6> <url7> <url8>
 ```
 
-Il affiche un résumé JSON (le détail est dans `audit.json`) et enregistre
+Chaque lancement affiche son résultat en JSON (copie dans `audit-1.json`,
+`audit-2.json`) et enregistre
 pour chaque page 3 captures mobile (`-mobile-1-haut`, `-2-milieu`,
 `-3-bas`) et 1 capture ordinateur (`-ordinateur`). Profil mobile : téléphone
 390 × 844 en 4G lente simulée ; ce sont des mesures de laboratoire,
@@ -138,13 +154,15 @@ Si le script échoue, note l'erreur dans le rapport et continue avec les
 
 # Étape 3 : images et textes alternatifs du catalogue
 
-Liste les produits actifs (pagine jusqu'au bout) :
+Liste les produits actifs (pagine jusqu'au bout ; garde `first: 15`, au-delà
+la réponse dépasse la taille que tu peux lire) :
 
 ```
-query { products(first: 50, query: "status:active", sortKey: TITLE) { nodes { title handle onlineStoreUrl seo { title description } media(first: 10) { nodes { ... on MediaImage { alt image { url width height } originalSource { fileSize } } } } } pageInfo { hasNextPage endCursor } } }
+query { products(first: 15, query: "status:active", sortKey: TITLE) { nodes { title handle onlineStoreUrl seo { title description } media(first: 10) { nodes { ... on MediaImage { alt image { url width height } originalSource { fileSize } } } } } pageInfo { hasNextPage endCursor } } }
 ```
 
-Ignore les produits dont le titre commence par « Configurateur | ».
+Ignore les produits dont le titre commence par « Configurateur | », en
+majuscules ou en minuscules.
 Relève, par fiche :
 
 - les images sans texte alternatif (`alt` vide) ou avec un texte générique
@@ -154,10 +172,12 @@ Relève, par fiche :
 - un titre SEO absent ou trop long, une méta description absente, trop
   courte ou trop longue (voir les limites plus haut).
 
-**Contrôle visuel des textes alternatifs** (10 images par semaine) : prends
-les images des 3 produits de rang (semaine ISO × 3) à (semaine ISO × 3 + 2)
-dans la liste triée, plus celles de la fiche tournante, jusqu'à 10 images.
-Pour chacune, télécharge une miniature et regarde-la :
+**Contrôle visuel des textes alternatifs** (10 images par semaine) : dans
+la liste triée et numérotée à partir de 0, prends les 3 produits de rang
+(semaine ISO × 3) à (semaine ISO × 3 + 2), chaque rang modulo le nombre de
+produits, et prends **au plus 3 images par fiche** ; complète avec la
+fiche tournante, sans dépasser 10 images. Pour chacune, télécharge une
+miniature et regarde-la :
 
 ```
 curl -s "<url de l'image>&width=400" -o <dossier>/img-<n>.jpg
@@ -167,7 +187,10 @@ curl -s "<url de l'image>&width=400" -o <dossier>/img-<n>.jpg
 texte alternatif. S'il ne décrit pas ce qu'elle montre (par exemple un
 schéma de câblage décrit comme « volets roulants connectés »), propose un
 texte alternatif juste : factuel, 125 caractères au plus, avec le nom du
-produit quand il est visible.
+produit quand il est visible. Ne propose un texte exact que pour une image
+que tu as vue (miniature ou capture) ; pour les autres, écris « à
+contrôler à l'œil » : elles entreront dans l'échantillon d'une prochaine
+semaine.
 
 **Articles du blog** :
 

@@ -12,7 +12,7 @@ respecter. Dernières évolutions dans « Historique ».
 |---|---|---|
 | Analyste ventes | `analyste-ventes.md` | Actif, testé, fusionné dans `main` |
 | Rédacteur SEO (blog) | `redacteur-seo.md` | Actif, testé sur données réelles le 29/10/2026 (GSC Wizard) |
-| Optimisation du site | `optimisation-site.md` + `scripts/audit-site.js` | En test sur données réelles (29/10/2026) |
+| Optimisation du site | `optimisation-site.md` + `scripts/audit-site.js` | Actif, testé sur données réelles le 29/10/2026 |
 
 L'agent « Optimisation du site » remplace l'agent proposé « Audit fiches
 produits / SEO » (fusion décidée par le dirigeant le 29/10/2026).
@@ -81,6 +81,7 @@ Wizard) ») n'a plus de tâche.
 |---|---|---|---|
 | Rapport ventes hebdo | `trig_0135d9x7u61HvZ5HS9uD9fyU` | lundi 6h41 | actif |
 | Article SEO hebdo | `trig_01SwJUzM3793Tso6WRRn6Wbv` | mercredi 6h44 | actif |
+| Audit du site hebdo | `trig_01Qs6W29kZhAavyhtwjPZxdG` | vendredi 6h47 | actif à partir du 6/11/2026 (mis en pause pour sauter le 30/10, réactivation automatique le 30/10 à 7h30) |
 
 Le paramètre `connectors` de `create_trigger` n'est pas disponible pour
 cette organisation. Une tâche lancée dans une nouvelle session à chaque fois
@@ -146,6 +147,27 @@ disparaît :
   ligne, faits conformes à la fiche produit IVR501W, HTML correct.
 - Tâches planifiées déplacées dans la session « Agents et tableau de bord »,
   anciennes tâches supprimées.
+
+### Création de l'agent « Optimisation du site » (29/10/2026)
+
+- Choix du dirigeant : vitesse, images et textes alternatifs, contrôle
+  visuel, SEO technique ; lecture seule (il propose, Claude applique sur
+  demande) ; chaque vendredi ; fusion avec l'agent proposé « Audit fiches
+  produits / SEO » (option Notion renommée « Optimisation du site »).
+- `scripts/audit-site.js` écrit et testé : environ 1 minute par page en 4G
+  lente simulée. Le préchargement du paiement Shopify (environ 900 Ko par
+  page, basse priorité) est compté à part pour ne pas fausser les poids.
+- Premier test réel (17 min 30) : rapport « Optimisation du site – semaine
+  44 », priorité Haute, 2 problèmes Fort (collection Caméras à 6,8 s,
+  fiche Montre SW101 à 4,2 s et 3,1 Mo à cause de 4 vidéos), 10 Moyen,
+  13 Faible, 15 corrections numérotées. Vérifiés à la main : longueurs des
+  titres proposés, vidéos de la SW101, logo invisible sur l'en-tête
+  transparent des articles.
+- Retours du test intégrés : produits par lots de 15 (au-delà, la réponse
+  est trop volumineuse), script en deux lots de 4 pages (limite de 10 min
+  de Bash), services tiers bloqués par l'environnement de mesure à ne pas
+  signaler comme erreurs, rangs numérotés à partir de 0, 3 images au plus
+  par fiche, comptage des caractères avec `node -e`.
 
 ## Consignes des tâches planifiées
 
