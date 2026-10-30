@@ -1,0 +1,48 @@
+# Mailing du 30/10/2026 : Sécurité Intégrale, caméras, prises, canon à fumée
+
+Fichier à importer dans Klaviyo : `mailing-klaviyo.html`.
+
+## Objet et pré-header
+
+| | Objet | Angle |
+|---|---|---|
+| **A (recommandé)** | Dernière chance : alarme + 2 caméras dès 299,90 € | Urgence + prix concret |
+| B (test A/B) | 8 secondes pour faire fuir un cambrioleur | Curiosité, met en avant le canon à fumée |
+| C | Votre Pack Sécurité Intégrale se termine samedi | Urgence pure |
+
+Pré-header (texte d'aperçu) : déjà intégré dans le HTML. Si Klaviyo demande
+un « Preview text », coller :
+
+> Et aussi : la 2ème caméra à -50 %, 3 prises à 49,90 € et le canon à fumée qui rend une pièce opaque en 8 secondes.
+
+## Structure
+
+1. **Pack Sécurité Intégrale** : badge « Dernière chance · jusqu'au 31/10 à 23h59 », contenu du pack, argument
+   « les 2 caméras et la sirène solaire valent déjà 359,70 € à l'unité », choix des 4 centrales, CTA.
+2. **Canon à fumée F502W** (bloc vedette, fond bleu nuit) : prix inchangé 249,90 €, chiffres clés
+   (8 s, 150 m³, 30-45 min, 0 € d'abonnement), 3 modes de déclenchement, duo caméras + canon.
+3. **Caméras W503 et W512MW, la 2ème à -50 %** : 2 cartes produits avec prix « les 2 ».
+4. **Pack de 3 prises SP502F** : simulation de présence, 3 étapes, 49,90 € au lieu de 89,70 €.
+5. Réassurance, aide (contact + configurateur), pied de page.
+
+## Sources des chiffres (vérifiés dans Shopify le 30/10/2026)
+
+- Packs Sécurité Intégrale : 299,90 / 349,90 / 399,90 / 449,90 € ; fin de l'offre
+  2026-10-31T23:59:59+01:00 (compte à rebours de `/pages/offre-speciale`).
+- « 359,70 € à l'unité » = caméra IP506P 69,90 € + caméra W512MW 159,90 € + sirène WOS305S 129,90 €.
+- Caméras : réductions automatiques actives « W503 – La 2ème à -50% » et « W512MW – La 2ème à -50% »
+  (même modèle uniquement, non cumulables). W503 : 119,90 + 59,95 = 179,85 € ; W512MW : 159,90 + 79,95 = 239,85 €.
+- Prises : variante « Pack de 3 prises connectées SP502F » 49,90 € (prix barré 89,70 € = 3 × 29,90 €).
+- Canon F502W : 249,90 €, caractéristiques reprises de la fiche produit.
+
+## Avant d'envoyer
+
+- [ ] **Stock du pack de 3 prises** : la variante n'a que 3 unités et la vente est bloquée à 0.
+      Mettre à jour le stock de la variante `DASP502FP3` avant l'envoi.
+- [ ] Klaviyo : Campagne › Créer un template › « Import HTML » (ou « Code your own ») › coller le fichier.
+- [ ] Vérifier que l'adresse de l'entreprise est renseignée dans Klaviyo (Paramètres › Organisation) :
+      le pied de page l'affiche via `{{ organization.full_address }}`.
+- [ ] Lien de désinscription : `{% unsubscribe_link %}`. Si Klaviyo le signale comme manquant,
+      remplacer la ligne par `{% unsubscribe 'Se désinscrire' %}`.
+- [ ] Activer le suivi UTM de Klaviyo (les liens n'ont pas d'UTM en dur).
+- [ ] S'envoyer un test et vérifier sur mobile et sur Gmail.
