@@ -1,6 +1,6 @@
 # Mailing du 30/10/2026 : Sécurité Intégrale, caméras, prises, canon à fumée
 
-Fichier à importer dans Klaviyo : `mailing-klaviyo.html`.
+Fichier à importer dans Brevo : `mailing-brevo.html`.
 
 ## Objet et pré-header
 
@@ -10,8 +10,8 @@ Fichier à importer dans Klaviyo : `mailing-klaviyo.html`.
 | B (test A/B) | 8 secondes pour faire fuir un cambrioleur | Curiosité, met en avant le canon à fumée |
 | C | Votre Pack Sécurité Intégrale se termine samedi | Urgence pure |
 
-Pré-header (texte d'aperçu) : déjà intégré dans le HTML. Si Klaviyo demande
-un « Preview text », coller :
+Pré-header : déjà intégré dans le HTML. Le coller aussi dans le champ « Texte d'aperçu »
+de la campagne Brevo :
 
 > Et aussi : la 2ème caméra à -50 %, 3 prises à 49,90 € et le canon à fumée qui rend une pièce opaque en 8 secondes.
 
@@ -39,10 +39,12 @@ un « Preview text », coller :
 
 - [x] **Stock du pack de 3 prises** : passé de 3 à 100 unités (variante `DASP502FP3`,
       entrepôt 6 rue Léon Morane) le 30/10/2026.
-- [ ] Klaviyo : Campagne › Créer un template › « Import HTML » (ou « Code your own ») › coller le fichier.
-- [ ] Vérifier que l'adresse de l'entreprise est renseignée dans Klaviyo (Paramètres › Organisation) :
-      le pied de page l'affiche via `{{ organization.full_address }}`.
-- [ ] Lien de désinscription : `{% unsubscribe_link %}`. Si Klaviyo le signale comme manquant,
-      remplacer la ligne par `{% unsubscribe 'Se désinscrire' %}`.
-- [ ] Activer le suivi UTM de Klaviyo (les liens n'ont pas d'UTM en dur).
-- [ ] S'envoyer un test et vérifier sur mobile et sur Gmail.
+- [ ] Brevo : Campagnes › Créer une campagne › E-mail. Renseigner l'objet et le texte d'aperçu,
+      puis à l'étape « Concevoir », choisir « Coder votre propre HTML » et coller tout le fichier.
+- [ ] Liens Brevo déjà en place dans le pied de page : `{{ unsubscribe }}` (désinscription,
+      obligatoire) et `{{ mirror }}` (version en ligne). Ils ne fonctionnent qu'une fois dans Brevo.
+- [ ] Adresse du pied de page écrite en clair : Daewoo Security (Liz Invest SAS),
+      6 rue Léon Morane, 33700 Mérignac (adresse de la boutique dans Shopify).
+- [ ] Dans les paramètres avancés de la campagne, cocher « Activer le suivi Google Analytics »
+      (les liens n'ont pas d'UTM en dur).
+- [ ] « Envoyer un test » et vérifier sur mobile et sur Gmail.
