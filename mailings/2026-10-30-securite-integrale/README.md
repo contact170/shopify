@@ -35,6 +35,12 @@ de la campagne Brevo :
 - Prises : variante « Pack de 3 prises connectées SP502F » 49,90 € (prix barré 89,70 € = 3 × 29,90 €).
 - Canon F502W : 249,90 €, caractéristiques reprises de la fiche produit.
 
+## Liens
+
+Les 4 cartes « Choisissez votre centrale » ouvrent la page d'offre avec la centrale déjà
+sélectionnée : `/pages/offre-speciale?centrale=vigilia` (ou `vigilia-plus`, `touch`, `touch-xl`).
+Les fiches produits des packs Sécurité Intégrale utilisent le modèle Shopify de base : ne pas y envoyer.
+
 ## Avant d'envoyer
 
 - [x] **Stock du pack de 3 prises** : passé de 3 à 100 unités (variante `DASP502FP3`,
