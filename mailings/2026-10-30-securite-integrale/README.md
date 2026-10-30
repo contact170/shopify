@@ -37,8 +37,8 @@ un « Preview text », coller :
 
 ## Avant d'envoyer
 
-- [ ] **Stock du pack de 3 prises** : la variante n'a que 3 unités et la vente est bloquée à 0.
-      Mettre à jour le stock de la variante `DASP502FP3` avant l'envoi.
+- [x] **Stock du pack de 3 prises** : passé de 3 à 100 unités (variante `DASP502FP3`,
+      entrepôt 6 rue Léon Morane) le 30/10/2026.
 - [ ] Klaviyo : Campagne › Créer un template › « Import HTML » (ou « Code your own ») › coller le fichier.
 - [ ] Vérifier que l'adresse de l'entreprise est renseignée dans Klaviyo (Paramètres › Organisation) :
       le pied de page l'affiche via `{{ organization.full_address }}`.
