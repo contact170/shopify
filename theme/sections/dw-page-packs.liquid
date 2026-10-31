@@ -1,0 +1,1396 @@
+{%- comment -%}
+  Page « Packs alarme » : les 6 packs de la gamme 2026 (une variante par
+  centrale) et les packs Élite, rendus par le thème.
+
+  Remplace l'iframe Lovable de /pages/pack-alarmes : le contenu est lu par
+  Google, la page s'affiche sans attendre une application externe, et
+  « Ajouter au panier » ajoute la variante exacte dans le panier Shopify.
+
+  Rien n'est recopié à la main : prix, prix barrés, photos, contenus et
+  disponibilités viennent des produits.
+  - Packs de la gamme : bloc « Pack ». Contenu lu dans le métachamp
+    custom.contenu_pack, « idéal pour » dans custom.ideal_pour, caméras
+    extérieures dans custom.cameras_exterieures. Prix barré : métachamp de
+    variante custom.prix_reference (même règle que la fiche pack-gamme).
+  - Centrales : bloc « Centrale ». La valeur d'option doit être identique à
+    celle de l'option « Centrale » des produits. Le slug est celui que la
+    fiche produit accepte dans ?centrale=.
+  - Packs Élite : bloc « Pack Élite ». Leur contenu est saisi dans le bloc
+    (une ligne par élément, « quantité|libellé ») car ces produits n'ont pas
+    de métachamp custom.contenu_pack. S'il est rempli un jour, il est utilisé.
+
+  Un produit en brouillon ou introuvable est simplement ignoré (un message
+  le signale dans l'éditeur de thème).
+
+  Sélecteur de centrale : ?centrale=vigilia | vigilia-plus | touch | touch-xl
+  dans l'adresse de la page présélectionne la centrale.
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign centrales = section.blocks | where: 'type', 'centrale'
+  assign pack_blocks = section.blocks | where: 'type', 'pack'
+  assign elite_blocks = section.blocks | where: 'type', 'elite'
+  assign faq_blocks = section.blocks | where: 'type', 'faq'
+  assign c0 = centrales | first
+
+  assign prix_min = 0
+  assign nb_packs = 0
+  for b in pack_blocks
+    assign p = b.settings.product
+    if p == blank
+      continue
+    endif
+    assign nb_packs = nb_packs | plus: 1
+    if prix_min == 0 or p.price_min < prix_min
+      assign prix_min = p.price_min
+    endif
+  endfor
+
+  assign elite_min = 0
+  assign nb_elite = 0
+  for b in elite_blocks
+    assign p = b.settings.product
+    if p == blank
+      continue
+    endif
+    assign nb_elite = nb_elite | plus: 1
+    if elite_min == 0 or p.price_min < elite_min
+      assign elite_min = p.price_min
+    endif
+  endfor
+
+  assign hero_img = section.settings.hero_image
+  if hero_img == blank
+    assign last_pack = pack_blocks | last
+    if last_pack.settings.product != blank
+      for vv in last_pack.settings.product.variants
+        if vv.option1 == c0.settings.option_value and vv.featured_media
+          assign hero_img = vv.featured_media.preview_image
+        endif
+      endfor
+      if hero_img == blank
+        assign hero_img = last_pack.settings.product.featured_media.preview_image
+      endif
+    endif
+  endif
+
+  assign has_rating = false
+  if section.settings.show_rating
+    capture dpk_stats
+      render 'pv-avis-vigilia', mode: 'stats'
+    endcapture
+    assign dpk_st = dpk_stats | strip | split: '~|~'
+    assign rating_count = dpk_st[0] | plus: 0
+    if rating_count > 0
+      assign has_rating = true
+      # Arrondi vers le bas (4,45 s'affiche 4,4) : la note n'est jamais gonflée.
+      assign rating_exact = dpk_st[1] | times: 1.0
+      assign rating_dixiemes = rating_exact | times: 10 | floor
+      assign rating_ent = rating_dixiemes | divided_by: 10
+      assign rating_dec = rating_dixiemes | modulo: 10
+      assign rating_txt = rating_ent | append: ',' | append: rating_dec
+    endif
+  endif
+
+  assign conf_url = section.settings.configurateur_url | default: '/pages/configurateur_2'
+  assign contact_url = section.settings.contact_url | default: '/pages/nous-contacter'
+-%}
+
+<style>
+  #dpk-{{ sid }}{
+    --dpk-navy:#0c1e4a;--dpk-navy-2:#081430;--dpk-ink:#1d1d1f;--dpk-gray:#6e6e73;--dpk-soft:#f5f5f7;
+    --dpk-line:#d2d2d7;--dpk-line-2:#e8e8ed;--dpk-ok:#037e05;--dpk-promo:#e11d48;--dpk-blue:#0066cc;
+    --dpk-gold:#c8a96e;--dpk-gold-2:#e3c993;--dpk-dark:#14110c;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--dpk-ink);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  #dpk-{{ sid }} *,#dpk-{{ sid }} *::before,#dpk-{{ sid }} *::after{box-sizing:border-box;}
+  /* Remise à zéro de poids faible (une classe) : elle neutralise les styles
+     d'éléments du thème, sans écraser les règles de la section ci-dessous. */
+  .dpk :where(h1,h2,h3,p,ul,ol,li,figure,fieldset,legend){margin:0;padding:0;border:0;}
+  .dpk :where(ul){list-style:none;}
+  .dpk :where(li)::before,.dpk :where(li)::marker{content:none;}
+  .dpk :where(img){max-width:100%;height:auto;display:block;}
+  .dpk :where(a){color:inherit;}
+  .dpk :where(button){font-family:inherit;}
+  #dpk-{{ sid }} [hidden]{display:none !important;}
+  #dpk-{{ sid }} :focus-visible{outline:3px solid var(--dpk-blue);outline-offset:2px;border-radius:8px;}
+  #dpk-{{ sid }} [id]{scroll-margin-top:96px;}
+  .dpk-wrap{max-width:1200px;margin:0 auto;padding:0 20px;}
+  .dpk-eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dpk-blue);}
+  .dpk-h2{font-size:clamp(26px,3.4vw,40px);font-weight:700;letter-spacing:-.03em;line-height:1.12;color:var(--dpk-navy);}
+  .dpk-lead{font-size:16.5px;color:var(--dpk-gray);max-width:640px;}
+  .dpk-head{text-align:center;margin:0 auto 32px;display:grid;gap:10px;justify-items:center;}
+  .dpk-sec{padding:72px 0;}
+  .dpk-sec--soft{background:var(--dpk-soft);}
+
+  /* Boutons */
+  .dpk-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 22px;border-radius:999px;font-size:15px;font-weight:600;line-height:1.2;text-decoration:none;cursor:pointer;border:1.5px solid transparent;transition:background-color .15s ease,border-color .15s ease,transform .15s ease,box-shadow .15s ease;-webkit-tap-highlight-color:transparent;}
+  .dpk-btn:active{transform:scale(.98);}
+  .dpk-btn--primary{background:var(--dpk-navy);color:#fff !important;box-shadow:0 10px 24px -12px rgba(12,30,74,.6);}
+  .dpk-btn--primary:hover{background:var(--dpk-navy-2);}
+  .dpk-btn--ghost{background:#fff;color:var(--dpk-navy) !important;border-color:var(--dpk-line);}
+  .dpk-btn--ghost:hover{border-color:var(--dpk-navy);}
+  .dpk-btn--light{background:#fff;color:var(--dpk-navy) !important;}
+  .dpk-btn--gold{background:var(--dpk-gold);color:#17120a !important;}
+  .dpk-btn--gold:hover{background:var(--dpk-gold-2);}
+  .dpk-btn[aria-busy="true"]{opacity:.7;cursor:progress;}
+  .dpk-btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .dpk-btn svg{width:18px;height:18px;flex-shrink:0;}
+
+  /* Hero */
+  .dpk-hero{background:linear-gradient(180deg,#eef1f8 0%,#fff 100%);padding:56px 0 40px;overflow:hidden;}
+  .dpk-hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;}
+  .dpk-hero h1{font-size:clamp(32px,4.6vw,54px);font-weight:700;letter-spacing:-.035em;line-height:1.05;color:var(--dpk-navy);margin:12px 0 16px;}
+  .dpk-hero__sub{font-size:18px;color:#3d3d42;max-width:560px;}
+  .dpk-hero__price{margin-top:18px;font-size:15px;color:var(--dpk-gray);}
+  .dpk-hero__price b{font-size:22px;color:var(--dpk-ink);letter-spacing:-.02em;}
+  .dpk-hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
+  .dpk-hero__media{position:relative;}
+  .dpk-hero__media img{width:100%;aspect-ratio:1/1;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(12,30,74,.18));}
+  .dpk-rating{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:14px;color:var(--dpk-gray);}
+  .dpk-stars{position:relative;display:inline-block;font-size:16px;letter-spacing:2px;line-height:1;color:#d2d2d7;}
+  .dpk-stars span{position:absolute;inset:0 auto 0 0;overflow:hidden;color:#f5a623;white-space:nowrap;}
+  .dpk-trust{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:36px;}
+  .dpk-trust li{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--dpk-line-2);border-radius:16px;padding:14px;font-size:13.5px;line-height:1.35;color:#3d3d42;}
+  .dpk-trust b{display:block;color:var(--dpk-ink);font-size:14px;}
+  .dpk-trust svg{width:22px;height:22px;flex-shrink:0;color:var(--dpk-ok);margin-top:1px;}
+  .dpk-nav{position:relative;margin-top:28px;}
+  .dpk-nav ul{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
+  .dpk-nav ul::-webkit-scrollbar{display:none;}
+  .dpk-nav a{display:inline-block;white-space:nowrap;padding:9px 16px;border-radius:999px;background:#fff;border:1px solid var(--dpk-line);font-size:14px;font-weight:500;text-decoration:none;color:var(--dpk-navy);}
+  .dpk-nav a:hover{border-color:var(--dpk-navy);}
+
+  /* Conseiller */
+  .dpk-adv{max-width:980px;margin:0 auto;background:#fff;border-radius:28px;padding:32px;box-shadow:0 24px 60px -34px rgba(12,30,74,.45);border:1px solid var(--dpk-line-2);}
+  .dpk-adv__top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;color:var(--dpk-gray);}
+  .dpk-adv__bar{height:4px;border-radius:4px;background:#ececf1;margin:14px 0 22px;overflow:hidden;}
+  .dpk-adv__bar span{display:block;height:100%;width:0;background:var(--dpk-blue);border-radius:4px;transition:width .35s ease;}
+  .dpk-adv h2{font-size:clamp(22px,2.6vw,30px);font-weight:700;letter-spacing:-.02em;color:var(--dpk-navy);margin-bottom:18px;}
+  .dpk-opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+  .dpk-opts--5{grid-template-columns:repeat(5,minmax(0,1fr));}
+  .dpk-opt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;min-height:96px;padding:16px;border-radius:18px;border:1.5px solid var(--dpk-line);background:#fbfbfd;text-align:left;cursor:pointer;color:var(--dpk-ink);transition:border-color .15s ease,background-color .15s ease,transform .15s ease;}
+  .dpk-opt:hover{border-color:var(--dpk-blue);transform:translateY(-1px);}
+  .dpk-opt[aria-pressed="true"]{border-color:var(--dpk-blue);background:rgba(0,102,204,.06);}
+  .dpk-opt b{font-size:16px;}
+  .dpk-opt small{font-size:13px;color:var(--dpk-gray);line-height:1.35;}
+  .dpk-opt__ico{font-size:22px;line-height:1;margin-bottom:4px;}
+  .dpk-adv__nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;font-size:14px;}
+  .dpk-link{background:none;border:0;padding:6px 0;color:var(--dpk-blue) !important;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;}
+  .dpk-link:hover{text-decoration:underline;}
+  .dpk-link--muted{color:var(--dpk-gray) !important;font-weight:500;}
+  .dpk-res{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:center;}
+  .dpk-res__img{background:var(--dpk-soft);border-radius:20px;padding:10px;}
+  .dpk-res__img img{width:100%;aspect-ratio:1/1;object-fit:contain;}
+  .dpk-res__tag{display:inline-block;background:var(--dpk-blue);color:#fff;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;margin-bottom:8px;}
+  .dpk-res h3{font-size:26px;font-weight:700;letter-spacing:-.02em;color:var(--dpk-navy);}
+  .dpk-res__why{margin-top:6px;color:#3d3d42;font-size:15px;}
+  .dpk-res__price{margin-top:12px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;}
+  .dpk-res__price b{font-size:28px;letter-spacing:-.02em;}
+  .dpk-res__alt{margin-top:14px;font-size:14px;color:var(--dpk-gray);}
+  .dpk-res__alt a{color:var(--dpk-blue);font-weight:600;}
+
+  /* Sélecteur de centrale */
+  .dpk-switch{max-width:980px;margin:0 auto 28px;}
+  .dpk-switch legend{display:block;width:100%;text-align:center;font-size:15px;font-weight:600;color:var(--dpk-navy);margin-bottom:12px;}
+  .dpk-switch__opts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;background:#fff;padding:8px;border-radius:22px;border:1px solid var(--dpk-line-2);box-shadow:0 14px 34px -26px rgba(12,30,74,.5);}
+  .dpk-switch label{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:72px;padding:10px 8px;border-radius:16px;cursor:pointer;text-align:center;border:1.5px solid transparent;transition:background-color .15s ease,border-color .15s ease;}
+  .dpk-switch input{position:absolute;opacity:0;pointer-events:none;}
+  .dpk-switch label:hover{background:var(--dpk-soft);}
+  .dpk-switch input:checked + span{color:#fff;}
+  .dpk-switch label:has(input:checked){background:var(--dpk-navy);border-color:var(--dpk-navy);color:#fff;}
+  .dpk-switch label.is-on{background:var(--dpk-navy);border-color:var(--dpk-navy);color:#fff;}
+  .dpk-switch label:has(input:focus-visible){outline:3px solid var(--dpk-blue);outline-offset:2px;}
+  .dpk-switch__name{font-size:15.5px;font-weight:700;}
+  .dpk-switch__sub{font-size:12.5px;opacity:.75;}
+  .dpk-switch__delta{font-size:12px;font-weight:600;opacity:.85;}
+  .dpk-switch__badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--dpk-ok);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:999px;white-space:nowrap;}
+  .dpk-switch__desc{text-align:center;margin-top:12px;font-size:14.5px;color:#3d3d42;min-height:22px;}
+  .dpk-switch__desc b{color:var(--dpk-ink);}
+
+  /* Cartes packs */
+  .dpk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;}
+  .dpk-card{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--dpk-line-2);border-radius:24px;overflow:hidden;transition:box-shadow .2s ease,border-color .2s ease;}
+  .dpk-card:hover{box-shadow:0 24px 50px -32px rgba(12,30,74,.45);}
+  .dpk-card.is-featured{border:2px solid var(--dpk-navy);}
+  .dpk-card.is-match{border:2px solid var(--dpk-blue);box-shadow:0 0 0 6px rgba(0,102,204,.12);}
+  .dpk-card--empty{padding:24px;border-style:dashed;color:var(--dpk-gray);font-size:14px;}
+  .dpk-card__badge{position:absolute;top:14px;left:14px;z-index:1;background:var(--dpk-navy);color:#fff;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;}
+  .dpk-card__media{display:block;background:var(--dpk-soft);padding:14px;}
+  .dpk-card__media img{width:100%;aspect-ratio:4/3;object-fit:contain;transition:opacity .2s ease;}
+  .dpk-card__body{display:flex;flex-direction:column;flex:1;padding:20px 22px 22px;}
+  .dpk-card__name{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--dpk-navy);}
+  .dpk-card__name a{text-decoration:none;}
+  .dpk-card__ideal{margin-top:4px;font-size:14.5px;color:var(--dpk-gray);min-height:44px;}
+  .dpk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+  .dpk-chips li{font-size:12.5px;background:var(--dpk-soft);border-radius:999px;padding:4px 9px;color:#3d3d42;}
+  .dpk-chips b{color:var(--dpk-ink);}
+  .dpk-chips .is-cam{background:#e8f1fb;}
+  .dpk-chips .is-fire{background:#fdeeee;}
+  .dpk-contenu{margin-top:14px;border-top:1px solid var(--dpk-line-2);padding-top:10px;}
+  .dpk-contenu summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--dpk-blue);list-style:none;display:flex;align-items:center;gap:6px;padding:4px 0;}
+  .dpk-contenu summary::-webkit-details-marker{display:none;}
+  .dpk-contenu summary::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s ease;}
+  .dpk-contenu[open] summary::after{transform:rotate(-135deg) translateY(-2px);}
+  .dpk-contenu ul{display:grid;gap:6px;margin-top:8px;}
+  .dpk-contenu li{display:grid;grid-template-columns:18px 1fr;gap:6px;font-size:13.5px;color:#3d3d42;line-height:1.4;}
+  .dpk-contenu li::before{content:"✓" !important;color:var(--dpk-ok);font-weight:700;}
+  .dpk-card__foot{margin-top:auto;padding-top:16px;}
+  .dpk-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;}
+  .dpk-price__now{font-size:28px;font-weight:700;letter-spacing:-.02em;color:var(--dpk-ink);}
+  .dpk-price s{font-size:15px;color:var(--dpk-gray);}
+  .dpk-pct{font-size:12.5px;font-weight:700;color:#fff;background:var(--dpk-promo);padding:2px 8px;border-radius:999px;}
+  .dpk-alma{margin-top:2px;font-size:13px;color:var(--dpk-gray);}
+  .dpk-card__centrale{margin-top:8px;font-size:13.5px;color:var(--dpk-gray);}
+  .dpk-card__centrale b{color:var(--dpk-ink);}
+  .dpk-card__centrale a{color:var(--dpk-blue);font-weight:600;text-decoration:none;}
+  .dpk-actions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px;}
+  .dpk-actions .dpk-btn{padding:12px 16px;font-size:14.5px;}
+  .dpk-note{margin-top:18px;text-align:center;font-size:13px;color:var(--dpk-gray);}
+
+  /* Comparatif */
+  .dpk-table-wrap{overflow-x:auto;border:1px solid var(--dpk-line-2);border-radius:20px;background:#fff;-webkit-overflow-scrolling:touch;}
+  .dpk-table{width:100%;min-width:860px;border-collapse:separate;border-spacing:0;font-size:14px;}
+  .dpk-table th,.dpk-table td{padding:13px 12px;border-bottom:1px solid var(--dpk-line-2);text-align:center;vertical-align:middle;}
+  .dpk-table tbody tr:last-child th,.dpk-table tbody tr:last-child td{border-bottom:0;}
+  .dpk-table thead th{background:var(--dpk-soft);font-size:15px;font-weight:700;color:var(--dpk-navy);}
+  .dpk-table thead th a{text-decoration:none;}
+  .dpk-table th[scope="row"]{text-align:left;font-weight:600;color:#3d3d42;background:#fff;position:sticky;left:0;z-index:1;min-width:190px;box-shadow:1px 0 0 var(--dpk-line-2);}
+  .dpk-table thead th:first-child{position:sticky;left:0;z-index:2;}
+  .dpk-table td{color:var(--dpk-ink);}
+  .dpk-table .is-zero{color:#b0b0b5;}
+  .dpk-table small{display:block;font-size:12px;color:var(--dpk-gray);line-height:1.3;margin-top:2px;}
+  .dpk-table__price td{font-size:16px;font-weight:700;}
+  .dpk-table__cta .dpk-btn{min-height:40px;padding:8px 14px;font-size:13.5px;}
+
+  /* Élite */
+  .dpk-elite{background:radial-gradient(120% 80% at 50% 0%,#2a2214 0%,#14110c 55%,#0d0b08 100%);color:#f3eee4;padding:80px 0;}
+  .dpk-elite .dpk-eyebrow{color:var(--dpk-gold);}
+  .dpk-elite .dpk-h2{color:#fff;}
+  .dpk-elite .dpk-lead{color:#cfc6b5;}
+  .dpk-elite__points{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:28px 0 34px;}
+  .dpk-elite__points li{border:1px solid rgba(200,169,110,.28);border-radius:16px;padding:16px;background:rgba(255,255,255,.03);font-size:14px;color:#d9d1c2;}
+  .dpk-elite__points b{display:block;color:#fff;font-size:15px;margin-bottom:2px;}
+  .dpk-elist{display:grid;gap:16px;}
+  .dpk-erow{position:relative;display:grid;grid-template-columns:220px 1.1fr 1.2fr 230px;gap:24px;align-items:center;background:#fff;color:var(--dpk-ink);border-radius:22px;padding:18px 22px 18px 18px;}
+  .dpk-erow.is-match{box-shadow:0 0 0 4px var(--dpk-gold);}
+  .dpk-erow__img{background:#f4f1ea;border-radius:16px;padding:8px;}
+  .dpk-erow__img img{width:100%;aspect-ratio:1/1;object-fit:contain;}
+  .dpk-erow__badge{display:inline-block;background:#17120a;color:var(--dpk-gold-2);font-size:11.5px;font-weight:700;letter-spacing:.04em;padding:4px 10px;border-radius:999px;margin-bottom:8px;}
+  .dpk-erow__ref{font-size:12.5px;font-weight:600;color:#8a7346;letter-spacing:.06em;text-transform:uppercase;}
+  .dpk-erow h3{font-size:22px;font-weight:700;letter-spacing:-.02em;color:#17120a;margin-top:2px;}
+  .dpk-erow h3 a{text-decoration:none;}
+  .dpk-erow__ideal{margin-top:4px;font-size:14.5px;color:var(--dpk-gray);}
+  .dpk-erow .dpk-chips li{background:#f4f1ea;}
+  .dpk-erow__list{display:grid;grid-template-columns:1fr;gap:5px;font-size:13.5px;color:#3d3d42;}
+  .dpk-erow__list li{display:grid;grid-template-columns:30px 1fr;gap:4px;line-height:1.35;}
+  .dpk-erow__list b{color:#8a7346;font-variant-numeric:tabular-nums;}
+  .dpk-erow__buy{display:grid;gap:8px;}
+  .dpk-erow__buy .dpk-price__now{font-size:26px;}
+  .dpk-erow__buy .dpk-btn{width:100%;}
+  .dpk-elite__foot{margin-top:26px;text-align:center;font-size:14.5px;color:#cfc6b5;}
+  .dpk-elite__foot a{color:var(--dpk-gold-2);font-weight:600;}
+
+  /* Réassurance */
+  .dpk-why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+  .dpk-why li{background:#fff;border:1px solid var(--dpk-line-2);border-radius:20px;padding:22px;}
+  .dpk-why__ico{font-size:26px;line-height:1;}
+  .dpk-why h3{font-size:17px;font-weight:700;color:var(--dpk-navy);margin:10px 0 4px;}
+  .dpk-why p{font-size:14.5px;color:#3d3d42;}
+
+  /* FAQ */
+  .dpk-faq{max-width:860px;margin:0 auto;}
+  .dpk-faq details{border-bottom:1px solid var(--dpk-line);}
+  .dpk-faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;list-style:none;padding:20px 0;font-size:17px;font-weight:600;color:var(--dpk-navy);}
+  .dpk-faq summary::-webkit-details-marker{display:none;}
+  .dpk-faq summary::after{content:"+";font-size:26px;font-weight:300;line-height:1;color:var(--dpk-gray);flex-shrink:0;}
+  .dpk-faq details[open] summary::after{content:"–";}
+  .dpk-faq__a{padding:0 0 20px;font-size:15.5px;color:#3d3d42;}
+  .dpk-faq__a p + p{margin-top:10px;}
+  .dpk-faq__a a{color:var(--dpk-blue);}
+
+  /* Appel final */
+  .dpk-final{background:var(--dpk-navy);color:#fff;border-radius:28px;padding:44px 32px;text-align:center;display:grid;gap:14px;justify-items:center;}
+  .dpk-final h2{font-size:clamp(24px,3vw,34px);font-weight:700;letter-spacing:-.02em;color:#fff;}
+  .dpk-final p{color:#c9d2e6;max-width:620px;}
+  .dpk-final__cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:6px;}
+  .dpk-final .dpk-btn--ghost{background:transparent;color:#fff !important;border-color:rgba(255,255,255,.4);}
+  .dpk-final .dpk-btn--ghost:hover{border-color:#fff;}
+
+  .dpk-toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--dpk-ink);color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;z-index:2147483000;transition:opacity .2s ease,transform .2s ease;}
+  .dpk-toast.is-on{opacity:1;transform:translate(-50%,0);}
+
+  @media (max-width:1100px){
+    .dpk-trust{grid-template-columns:repeat(3,minmax(0,1fr));}
+    .dpk-erow{grid-template-columns:180px 1fr 220px;}
+    .dpk-erow__list{grid-column:2 / 3;}
+    .dpk-erow__buy{grid-column:3;grid-row:1 / span 2;}
+    .dpk-elite__points{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .dpk-opts--5{grid-template-columns:repeat(3,minmax(0,1fr));}
+  }
+  @media (max-width:900px){
+    .dpk-hero__grid{grid-template-columns:1fr;}
+    .dpk-hero__media{max-width:420px;margin:0 auto;width:100%;}
+    .dpk-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .dpk-why{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .dpk-res{grid-template-columns:200px 1fr;}
+  }
+  @media (max-width:700px){
+    .dpk-sec{padding:52px 0;}
+    .dpk-wrap{padding:0 16px;}
+    .dpk-hero{padding:28px 0 32px;}
+    .dpk-hero__media{display:none;}
+    .dpk-hero__sub{font-size:16.5px;}
+    .dpk-hero__cta .dpk-btn{flex:1 1 100%;}
+    .dpk-trust{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:26px;}
+    .dpk-trust li{padding:10px 12px;align-items:center;}
+    .dpk-trust li span{font-size:0;}
+    .dpk-trust b{font-size:13.5px;}
+    .dpk-trust li:last-child{grid-column:1 / -1;}
+    .dpk-adv{padding:22px 18px;border-radius:22px;}
+    .dpk-opts,.dpk-opts--5{grid-template-columns:1fr;}
+    .dpk-opt{min-height:0;flex-direction:row;align-items:center;flex-wrap:wrap;column-gap:10px;}
+    .dpk-opt small{flex-basis:100%;}
+    .dpk-opt__ico{margin:0;}
+    .dpk-res{grid-template-columns:1fr;gap:16px;}
+    .dpk-res__img{max-width:260px;}
+    .dpk-switch__opts{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 6px;padding:10px 6px 6px;}
+    .dpk-grid{grid-template-columns:1fr;gap:16px;}
+    .dpk-card__ideal{min-height:0;}
+    .dpk-card__media img{aspect-ratio:16/10;}
+    .dpk-card__body{padding:16px 16px 18px;}
+    .dpk-table{font-size:13px;}
+    .dpk-table th,.dpk-table td{padding:10px 8px;}
+    .dpk-table th[scope="row"]{min-width:128px;}
+    .dpk-elite{padding:56px 0;}
+    .dpk-elite__points{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:22px 0 24px;}
+    .dpk-elite__points li{padding:12px;font-size:12.5px;}
+    .dpk-elite__points b{font-size:13.5px;}
+    .dpk-erow{grid-template-columns:104px minmax(0,1fr);gap:12px 14px;padding:14px;align-items:start;}
+    .dpk-erow__img{padding:4px;border-radius:12px;}
+    .dpk-erow h3{font-size:19px;}
+    .dpk-erow__ideal{font-size:13.5px;}
+    .dpk-erow__list{grid-column:1 / -1;grid-row:auto;font-size:13px;}
+    .dpk-erow__buy{grid-column:1 / -1;grid-row:auto;grid-template-columns:1fr 1fr;}
+    .dpk-erow__buy .dpk-price,.dpk-erow__buy .dpk-alma{grid-column:1 / -1;}
+    .dpk-erow__buy .dpk-btn{padding:12px 10px;font-size:14px;}
+    .dpk-why{grid-template-columns:1fr;}
+    .dpk-final{padding:34px 20px;border-radius:22px;}
+    .dpk-final__cta .dpk-btn{flex:1 1 100%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #dpk-{{ sid }} *{transition:none !important;scroll-behavior:auto !important;}
+  }
+</style>
+
+<div id="dpk-{{ sid }}" class="dpk" data-dpk-root data-c0="{{ c0.settings.slug }}">
+
+  {%- comment -%} ===================== HERO ===================== {%- endcomment -%}
+  <section class="dpk-hero" aria-labelledby="dpk-h1-{{ sid }}">
+    <div class="dpk-wrap">
+      <div class="dpk-hero__grid">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}<span class="dpk-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+          <h1 id="dpk-h1-{{ sid }}">{{ section.settings.title }}</h1>
+          {%- if section.settings.subtitle != blank -%}<p class="dpk-hero__sub">{{ section.settings.subtitle }}</p>{%- endif -%}
+          {%- if prix_min > 0 -%}
+            <p class="dpk-hero__price">Packs complets dès <b>{{ prix_min | money }}</b>, sans abonnement</p>
+          {%- endif -%}
+          <div class="dpk-hero__cta">
+            <a class="dpk-btn dpk-btn--primary" href="#trouver-mon-pack">Trouver mon pack en 3 questions</a>
+            <a class="dpk-btn dpk-btn--ghost" href="#packs-gamme">Voir les packs</a>
+          </div>
+          {%- if has_rating -%}
+            {%- assign rating_pct = rating_exact | times: 20 | round -%}
+            <p class="dpk-rating">
+              <span class="dpk-stars" aria-hidden="true">★★★★★<span style="width:{{ rating_pct }}%">★★★★★</span></span>
+              <span><b>{{ rating_txt }}/5</b> · {{ rating_count }} avis clients{% if section.settings.rating_scope != blank %} {{ section.settings.rating_scope }}{% endif %}</span>
+            </p>
+          {%- endif -%}
+        </div>
+        {%- if hero_img != blank -%}
+          <div class="dpk-hero__media">
+            <img src="{{ hero_img | image_url: width: 900 }}"
+              srcset="{{ hero_img | image_url: width: 480 }} 480w, {{ hero_img | image_url: width: 720 }} 720w, {{ hero_img | image_url: width: 900 }} 900w, {{ hero_img | image_url: width: 1200 }} 1200w"
+              sizes="(min-width: 900px) 520px, 80vw" width="900" height="900"
+              alt="{{ hero_img.alt | default: section.settings.title | escape }}" fetchpriority="high">
+          </div>
+        {%- endif -%}
+      </div>
+
+      <ul class="dpk-trust">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><span><b>0 € d'abonnement</b>Alertes gratuites sur votre téléphone</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span><b>Installation facile</b>Sans fil, sans technicien</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></svg><span><b>Garantie 2 ans</b>14 jours pour changer d'avis</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><span><b>Expédié le jour même</b>Commande avant midi, du lundi au vendredi</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg><span><b>3× ou 4× sans frais</b>Paiement en plusieurs fois avec Alma</span></li>
+      </ul>
+
+      <nav class="dpk-nav" aria-label="Dans cette page">
+        <ul>
+          <li><a href="#trouver-mon-pack">Trouver mon pack</a></li>
+          {%- if nb_packs > 0 -%}<li><a href="#packs-gamme">Les {{ nb_packs }} packs</a></li><li><a href="#comparatif-packs">Comparer</a></li>{%- endif -%}
+          {%- if nb_elite > 0 -%}<li><a href="#packs-elite">Packs Élite</a></li>{%- endif -%}
+          {%- if faq_blocks.size > 0 -%}<li><a href="#questions">Questions fréquentes</a></li>{%- endif -%}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  {%- comment -%} ===================== CONSEILLER ===================== {%- endcomment -%}
+  <section class="dpk-sec dpk-sec--soft" id="trouver-mon-pack" aria-label="Trouver mon pack">
+    <div class="dpk-wrap">
+      <div class="dpk-adv" data-dpk-adv>
+        <div class="dpk-adv__top">
+          <span class="dpk-eyebrow">Conseiller Daewoo</span>
+          <span data-dpk-step aria-live="polite">Question 1 sur 3</span>
+        </div>
+        <div class="dpk-adv__bar" aria-hidden="true"><span data-dpk-progress></span></div>
+
+        <div data-dpk-q="0">
+          <h2>Quel est votre logement&nbsp;?</h2>
+          <div class="dpk-opts">
+            <button type="button" class="dpk-opt" data-v="3" aria-pressed="false"><span class="dpk-opt__ico" aria-hidden="true">🏢</span><b>Appartement</b><small>Studio, T2, T3 · 3 ou 4 ouvertures</small></button>
+            <button type="button" class="dpk-opt" data-v="5" aria-pressed="false"><span class="dpk-opt__ico" aria-hidden="true">🏠</span><b>Maison</b><small>Maison familiale · 5 ou 6 ouvertures</small></button>
+            <button type="button" class="dpk-opt" data-v="8" aria-pressed="false"><span class="dpk-opt__ico" aria-hidden="true">🏡</span><b>Grande maison</b><small>Plusieurs façades ou étages · 8 ouvertures et plus</small></button>
+          </div>
+        </div>
+
+        <div data-dpk-q="1" hidden>
+          <h2>Combien de caméras extérieures&nbsp;?</h2>
+          <div class="dpk-opts">
+            <button type="button" class="dpk-opt" data-v="0" aria-pressed="false"><span class="dpk-opt__ico" aria-hidden="true">🚫</span><b>Aucune</b><small>Une caméra intérieure me suffit</small></button>
+            <button type="button" class="dpk-opt" data-v="1" aria-pressed="false"><span class="dpk-opt__ico" aria-hidden="true">📷</span><b>Une</b><small>L'entrée, l'allée ou le jardin</small></button>
+            <button type="button" class="dpk-opt" data-v="2" aria-pressed="false"><span class="dpk-opt__ico" aria-hidden="true">📷📷</span><b>Deux</b><small>Devant et derrière la maison</small></button>
+          </div>
+        </div>
+
+        <div data-dpk-q="2" hidden>
+          <h2>Quelle centrale vous ressemble&nbsp;?</h2>
+          <div class="dpk-opts{% if centrales.size > 3 or nb_elite > 0 %} dpk-opts--5{% endif %}">
+            {%- for c in centrales -%}
+              <button type="button" class="dpk-opt" data-v="{{ c.settings.slug }}" aria-pressed="false"><b>{{ c.settings.adv_label | default: c.settings.label }}</b><small>{{ c.settings.adv_hint | default: c.settings.sub }}</small></button>
+            {%- endfor -%}
+            {%- if nb_elite > 0 -%}
+              <button type="button" class="dpk-opt" data-v="elite" aria-pressed="false"><b>{{ section.settings.elite_adv_label }}</b><small>{{ section.settings.elite_adv_hint }}</small></button>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div data-dpk-result hidden>
+          <div class="dpk-res">
+            <div class="dpk-res__img"><img data-r-img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" width="540" height="540"></div>
+            <div>
+              <span class="dpk-res__tag">Notre recommandation</span>
+              <h3 data-r-name></h3>
+              <p class="dpk-res__why" data-r-why></p>
+              <p class="dpk-res__price"><b data-r-price></b><s data-r-ref hidden></s><span class="dpk-pct" data-r-pct hidden></span></p>
+              <p class="dpk-alma" data-r-alma></p>
+              <div class="dpk-actions">
+                <button type="button" class="dpk-btn dpk-btn--primary" data-dpk-add data-r-add>Ajouter au panier</button>
+                <a class="dpk-btn dpk-btn--ghost" data-r-link href="#packs-gamme">Voir le détail</a>
+              </div>
+              <p class="dpk-res__alt" data-r-alt hidden>Autre option&nbsp;: <a data-r-alt-link href="#packs-gamme"></a> <span data-r-alt-price></span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dpk-adv__nav">
+          <button type="button" class="dpk-link dpk-link--muted" data-dpk-back hidden>← Retour</button>
+          <button type="button" class="dpk-link dpk-link--muted" data-dpk-restart hidden>↺ Recommencer</button>
+          <a class="dpk-link" href="#packs-gamme" data-dpk-skip>Je préfère voir tous les packs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ===================== PACKS DE LA GAMME ===================== {%- endcomment -%}
+  {%- liquid
+    assign th_cells = ''
+    assign row_cont = ''
+    assign row_pir = ''
+    assign row_rc = ''
+    assign row_cint = ''
+    assign row_cext = ''
+    assign row_smoke = ''
+    assign row_siren = ''
+    assign row_price = ''
+    assign row_cta = ''
+  -%}
+  {%- if nb_packs > 0 or request.design_mode -%}
+  <section class="dpk-sec" id="packs-gamme" aria-labelledby="dpk-packs-h-{{ sid }}">
+    <div class="dpk-wrap">
+      <div class="dpk-head">
+        {%- if section.settings.packs_eyebrow != blank -%}<span class="dpk-eyebrow">{{ section.settings.packs_eyebrow }}</span>{%- endif -%}
+        <h2 class="dpk-h2" id="dpk-packs-h-{{ sid }}">{{ section.settings.packs_title }}</h2>
+        {%- if section.settings.packs_sub != blank -%}<p class="dpk-lead">{{ section.settings.packs_sub }}</p>{%- endif -%}
+      </div>
+
+      {%- if centrales.size > 0 -%}
+      <fieldset class="dpk-switch" id="choix-centrale" data-dpk-switch>
+        <legend>{{ section.settings.switch_title }}</legend>
+        <div class="dpk-switch__opts">
+          {%- for c in centrales -%}
+            {%- liquid
+              assign dmin = 999999
+              assign dmax = -1
+              for b in pack_blocks
+                assign p = b.settings.product
+                if p == blank
+                  continue
+                endif
+                assign pc = 0
+                assign pbase = 0
+                for vv in p.variants
+                  if vv.option1 == c.settings.option_value
+                    assign pc = vv.price
+                  endif
+                  if vv.option1 == c0.settings.option_value
+                    assign pbase = vv.price
+                  endif
+                endfor
+                if pc > 0 and pbase > 0
+                  assign d = pc | minus: pbase
+                  if d < dmin
+                    assign dmin = d
+                  endif
+                  if d > dmax
+                    assign dmax = d
+                  endif
+                endif
+              endfor
+            -%}
+            <label class="{% if forloop.first %}is-on{% endif %}" data-slug="{{ c.settings.slug }}" {{ c.shopify_attributes }}>
+              <input type="radio" name="dpk-centrale-{{ sid }}" value="{{ c.settings.slug }}"{% if forloop.first %} checked{% endif %}
+                data-label="{{ c.settings.label | escape }}"
+                data-desc="{{ c.settings.description | escape }}"
+                data-rfid="{{ c.settings.has_rfid }}">
+              {%- if c.settings.badge != blank -%}<span class="dpk-switch__badge">{{ c.settings.badge }}</span>{%- endif -%}
+              <span class="dpk-switch__name">{{ c.settings.label }}</span>
+              <span class="dpk-switch__sub">{{ c.settings.sub }}</span>
+              <span class="dpk-switch__delta">
+                {%- if forloop.first or dmax <= 0 -%}
+                  Prix de base
+                {%- elsif dmin == dmax -%}
+                  +{{ dmin | money_without_trailing_zeros }}
+                {%- else -%}
+                  dès +{{ dmin | money_without_trailing_zeros }}
+                {%- endif -%}
+              </span>
+            </label>
+          {%- endfor -%}
+        </div>
+        <p class="dpk-switch__desc" data-dpk-desc aria-live="polite"><b>{{ c0.settings.label }}</b> · {{ c0.settings.description }}</p>
+      </fieldset>
+      {%- endif -%}
+
+      <div class="dpk-grid">
+        {%- for b in pack_blocks -%}
+          {%- assign p = b.settings.product -%}
+          {%- if p == blank -%}
+            {%- if request.design_mode -%}
+              <div class="dpk-card dpk-card--empty" {{ b.shopify_attributes }}>Bloc « Pack » sans produit visible. Choisissez un produit actif (un produit en brouillon n'apparaît pas sur la boutique).</div>
+            {%- endif -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- liquid
+            assign name = b.settings.name
+            if name == blank
+              assign name = p.title | split: '|' | first | strip | remove: 'Pack Alarme ' | remove: 'Pack alarme ' | prepend: 'Pack '
+            endif
+            assign ideal = b.settings.ideal | default: p.metafields.custom.ideal_pour.value
+
+            assign v = p.selected_or_first_available_variant
+            for vv in p.variants
+              if vv.option1 == c0.settings.option_value
+                assign v = vv
+              endif
+            endfor
+
+            assign n_cont = 0
+            assign n_pir = 0
+            assign n_rc = 0
+            assign n_cint = 0
+            assign n_cext = 0
+            assign n_smoke = 0
+            assign n_siren = 0
+            assign n_items = 0
+            assign ext_desc = ''
+            assign lines = p.metafields.custom.contenu_pack.value
+            for line in lines
+              assign l = line | downcase
+              assign q = line | split: ' ' | first | plus: 0
+              if q == 0
+                assign q = 1
+              endif
+              if l contains 'centrale' or l contains 'autocollant'
+                continue
+              elsif l contains 'sirène' or l contains 'sirene'
+                assign n_siren = n_siren | plus: q
+              elsif l contains 'badge'
+                continue
+              elsif l contains 'fumée' or l contains 'fumee'
+                assign n_smoke = n_smoke | plus: q
+              elsif l contains 'caméra' or l contains 'camera'
+                if l contains 'intérieure' or l contains 'interieure'
+                  assign n_cint = n_cint | plus: q
+                else
+                  assign n_cext = n_cext | plus: q
+                  if l contains 'w512'
+                    assign ext_desc = 'Rotative 1440p, solaire'
+                  elsif l contains 'solaire'
+                    assign ext_desc = 'Autonome, avec panneau solaire'
+                  else
+                    assign ext_desc = 'Autonome sur batterie'
+                  endif
+                endif
+              elsif l contains 'contacteur'
+                assign n_cont = n_cont | plus: q
+              elsif l contains 'mouvement'
+                assign n_pir = n_pir | plus: q
+              elsif l contains 'commande'
+                assign n_rc = n_rc | plus: q
+              endif
+              assign n_items = n_items | plus: q
+            endfor
+            if p.metafields.custom.cameras_exterieures.value != blank
+              assign n_cext_mf = p.metafields.custom.cameras_exterieures.value | plus: 0
+            else
+              assign n_cext_mf = n_cext
+            endif
+            assign n_cams = n_cint | plus: n_cext
+
+            assign url0 = p.url | append: '?centrale=' | append: c0.settings.slug
+            assign ref0 = 0
+            if v.metafields.custom.prix_reference.value
+              assign ref0 = v.metafields.custom.prix_reference.value | times: 100 | round
+            endif
+            assign pct0 = 0
+            if ref0 > v.price
+              assign pct0 = ref0 | minus: v.price | times: 100 | divided_by: ref0
+            endif
+            assign alma_base = v.price | divided_by: 4
+            assign alma_1 = alma_base | times: 3 | minus: v.price | abs
+
+            assign img0 = v.featured_media.preview_image
+            if img0 == blank
+              assign img0 = p.featured_media.preview_image
+            endif
+          -%}
+          <article class="dpk-card{% if b.settings.highlight %} is-featured{% endif %}" id="pack-{{ p.handle }}" data-dpk-card
+            data-key="{{ b.id }}" data-name="{{ name | escape }}" data-ideal="{{ ideal | escape }}"
+            data-contacts="{{ n_cont }}" data-ext="{{ n_cext_mf }}" data-pir="{{ n_pir }}" data-smoke="{{ n_smoke }}" data-url="{{ p.url }}" {{ b.shopify_attributes }}>
+            <script type="application/json" data-dpk-variants>{
+              {%- assign sep = '' -%}
+              {%- for c in centrales -%}
+                {%- for vv in p.variants -%}
+                  {%- if vv.option1 == c.settings.option_value -%}
+                    {%- liquid
+                      assign ref = 0
+                      if vv.metafields.custom.prix_reference.value
+                        assign ref = vv.metafields.custom.prix_reference.value | times: 100 | round
+                      endif
+                      assign im = vv.featured_media.preview_image
+                      if im == blank
+                        assign im = p.featured_media.preview_image
+                      endif
+                    -%}
+                    {{- sep -}}{{ c.settings.slug | json }}:{"id":{{ vv.id }},"price":{{ vv.price }},"ref":{{ ref }},"available":{{ vv.available }}
+                    {%- if im != blank -%}
+                      {%- capture ss -%}{{ im | image_url: width: 360 }} 360w, {{ im | image_url: width: 540 }} 540w, {{ im | image_url: width: 720 }} 720w, {{ im | image_url: width: 960 }} 960w{%- endcapture -%}
+                      ,"img":{{ im | image_url: width: 720 | json }},"srcset":{{ ss | json }},"alt":{{ im.alt | default: p.title | json }}
+                    {%- endif -%}}
+                    {%- assign sep = ',' -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endfor -%}
+            }</script>
+            {%- if b.settings.badge != blank -%}<span class="dpk-card__badge">{{ b.settings.badge }}</span>{%- endif -%}
+            <a class="dpk-card__media" href="{{ url0 }}" data-dpk-link tabindex="-1" aria-hidden="true">
+              {%- if img0 != blank -%}
+                <img data-dpk-img src="{{ img0 | image_url: width: 720 }}"
+                  srcset="{{ img0 | image_url: width: 360 }} 360w, {{ img0 | image_url: width: 540 }} 540w, {{ img0 | image_url: width: 720 }} 720w, {{ img0 | image_url: width: 960 }} 960w"
+                  sizes="(min-width: 1200px) 370px, (min-width: 700px) 46vw, 92vw" width="720" height="540" loading="lazy"
+                  alt="{{ img0.alt | default: p.title | escape }}">
+              {%- endif -%}
+            </a>
+            <div class="dpk-card__body">
+              <h3 class="dpk-card__name"><a href="{{ url0 }}" data-dpk-link>{{ name }}</a></h3>
+              {%- if ideal != blank -%}<p class="dpk-card__ideal">{{ ideal }}</p>{%- endif -%}
+              <ul class="dpk-chips" aria-label="En bref">
+                {%- if n_cont > 0 -%}<li><b>{{ n_cont }}</b> contacteur{% if n_cont > 1 %}s{% endif %} 2-en-1</li>{%- endif -%}
+                {%- if n_pir > 0 -%}<li><b>{{ n_pir }}</b> détecteur{% if n_pir > 1 %}s{% endif %} de mouvement</li>{%- endif -%}
+                {%- if n_cams > 0 -%}<li class="is-cam"><b>{{ n_cams }}</b> caméra{% if n_cams > 1 %}s{% endif %}{% if n_cext > 0 %} dont {{ n_cext }} extérieure{% if n_cext > 1 %}s{% endif %}{% else %} intérieure{% endif %}</li>{%- endif -%}
+                {%- if n_smoke > 0 -%}<li class="is-fire"><b>{{ n_smoke }}</b> détecteur{% if n_smoke > 1 %}s{% endif %} de fumée</li>{%- endif -%}
+                {%- if n_siren > 0 -%}<li>Sirène solaire</li>{%- endif -%}
+              </ul>
+              {%- if lines != blank -%}
+                <details class="dpk-contenu">
+                  <summary>Voir tout le contenu du pack</summary>
+                  <ul>
+                    {%- for line in lines -%}
+                      {%- assign l = line | downcase -%}
+                      {%- if l contains 'centrale' -%}
+                        <li><span>1 centrale <b data-dpk-cname>{{ c0.settings.label }}</b></span></li>
+                      {%- elsif l contains 'badge' -%}
+                        <li data-dpk-rfid{% unless c0.settings.has_rfid %} hidden{% endunless %}><span>{{ line | split: ' (' | first }}</span></li>
+                      {%- else -%}
+                        <li><span>{{ line }}</span></li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </details>
+              {%- endif -%}
+              <div class="dpk-card__foot">
+                <p class="dpk-price">
+                  <span class="dpk-price__now" data-dpk-price>{{ v.price | money }}</span>
+                  <s data-dpk-ref{% if pct0 <= 0 %} hidden{% endif %}>{% if ref0 > v.price %}{{ ref0 | money }}{% endif %}</s>
+                  <span class="dpk-pct" data-dpk-pct{% if pct0 <= 0 %} hidden{% endif %}>-{{ pct0 }}&nbsp;%</span>
+                </p>
+                <p class="dpk-alma" data-dpk-alma>ou 4× sans frais&nbsp;: {{ alma_1 | money }} puis 3 × {{ alma_base | money }}</p>
+                <p class="dpk-card__centrale">Avec la centrale <b data-dpk-cname>{{ c0.settings.label }}</b> · <a href="#choix-centrale">changer</a></p>
+                <div class="dpk-actions">
+                  <button type="button" class="dpk-btn dpk-btn--primary" data-dpk-add="{{ v.id }}"{% unless v.available %} disabled{% endunless %}>{% if v.available %}Ajouter au panier{% else %}Indisponible{% endif %}</button>
+                  <a class="dpk-btn dpk-btn--ghost" href="{{ url0 }}" data-dpk-link>Détails</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          {%- liquid
+            capture cell
+              echo '<th scope="col"><a href="' | append: url0 | append: '" data-dpk-link>' | append: name | append: '</a></th>'
+            endcapture
+            assign th_cells = th_cells | append: cell
+
+            capture cell
+              if n_cont > 0
+                echo '<td>' | append: n_cont | append: '</td>'
+              else
+                echo '<td class="is-zero">—</td>'
+              endif
+            endcapture
+            assign row_cont = row_cont | append: cell
+
+            capture cell
+              if n_pir > 0
+                echo '<td>' | append: n_pir | append: '</td>'
+              else
+                echo '<td class="is-zero">—</td>'
+              endif
+            endcapture
+            assign row_pir = row_pir | append: cell
+
+            capture cell
+              if n_rc > 0
+                echo '<td>' | append: n_rc | append: '</td>'
+              else
+                echo '<td class="is-zero">—</td>'
+              endif
+            endcapture
+            assign row_rc = row_rc | append: cell
+
+            capture cell
+              if n_cint > 0
+                echo '<td>' | append: n_cint | append: '</td>'
+              else
+                echo '<td class="is-zero">—</td>'
+              endif
+            endcapture
+            assign row_cint = row_cint | append: cell
+
+            capture cell
+              if n_cext > 0
+                echo '<td>' | append: n_cext | append: '<small>' | append: ext_desc | append: '</small></td>'
+              else
+                echo '<td class="is-zero">—</td>'
+              endif
+            endcapture
+            assign row_cext = row_cext | append: cell
+
+            capture cell
+              if n_smoke > 0
+                echo '<td>' | append: n_smoke | append: '</td>'
+              else
+                echo '<td class="is-zero">—</td>'
+              endif
+            endcapture
+            assign row_smoke = row_smoke | append: cell
+
+            capture cell
+              if n_siren > 0
+                echo '<td>✓</td>'
+              else
+                echo '<td class="is-zero">—</td>'
+              endif
+            endcapture
+            assign row_siren = row_siren | append: cell
+
+            assign price_txt = v.price | money
+            capture cell
+              echo '<td data-dpk-tprice="' | append: b.id | append: '">' | append: price_txt | append: '</td>'
+            endcapture
+            assign row_price = row_price | append: cell
+
+            capture cell
+              echo '<td><a class="dpk-btn dpk-btn--ghost" href="' | append: url0 | append: '" data-dpk-link>Voir</a></td>'
+            endcapture
+            assign row_cta = row_cta | append: cell
+          -%}
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.ref_note != blank -%}<p class="dpk-note">{{ section.settings.ref_note }}</p>{%- endif -%}
+    </div>
+  </section>
+
+  {%- if nb_packs > 1 -%}
+  <section class="dpk-sec dpk-sec--soft" id="comparatif-packs" aria-labelledby="dpk-cmp-h-{{ sid }}">
+    <div class="dpk-wrap">
+      <div class="dpk-head">
+        <h2 class="dpk-h2" id="dpk-cmp-h-{{ sid }}">Comparez les {{ nb_packs }} packs</h2>
+        <p class="dpk-lead">Même centrale au choix, même application, mêmes accessoires : seuls le nombre de détecteurs et les caméras changent.</p>
+      </div>
+      <div class="dpk-table-wrap" role="region" aria-labelledby="dpk-cmp-h-{{ sid }}" tabindex="0">
+        <table class="dpk-table">
+          <thead><tr><th scope="col"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Élément</span></th>{{ th_cells }}</tr></thead>
+          <tbody>
+            <tr><th scope="row">Contacteurs 2-en-1<small>ouverture + vibration</small></th>{{ row_cont }}</tr>
+            <tr><th scope="row">Détecteurs de mouvement<small>compatibles animaux</small></th>{{ row_pir }}</tr>
+            <tr><th scope="row">Télécommandes</th>{{ row_rc }}</tr>
+            <tr><th scope="row">Caméra intérieure</th>{{ row_cint }}</tr>
+            <tr><th scope="row">Caméras extérieures</th>{{ row_cext }}</tr>
+            <tr><th scope="row">Détecteurs de fumée</th>{{ row_smoke }}</tr>
+            <tr><th scope="row">Sirène extérieure solaire</th>{{ row_siren }}</tr>
+            <tr class="dpk-table__price"><th scope="row">Prix avec <span data-dpk-cname>{{ c0.settings.label }}</span></th>{{ row_price }}</tr>
+            <tr class="dpk-table__cta"><th scope="row"><a class="dpk-link" href="#choix-centrale">Changer de centrale</a></th>{{ row_cta }}</tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+  {%- endif -%}
+
+  {%- comment -%} ===================== PACKS ÉLITE ===================== {%- endcomment -%}
+  {%- if nb_elite > 0 or request.design_mode -%}
+  <section class="dpk-elite" id="packs-elite" aria-labelledby="dpk-elite-h-{{ sid }}">
+    <div class="dpk-wrap">
+      <div class="dpk-head">
+        <span class="dpk-eyebrow">{{ section.settings.elite_eyebrow }}</span>
+        <h2 class="dpk-h2" id="dpk-elite-h-{{ sid }}">{{ section.settings.elite_title }}</h2>
+        {%- if section.settings.elite_text != blank -%}<p class="dpk-lead">{{ section.settings.elite_text }}</p>{%- endif -%}
+      </div>
+      <ul class="dpk-elite__points">
+        {%- for i in (1..4) -%}
+          {%- assign k_t = 'elite_point_' | append: i | append: '_title' -%}
+          {%- assign k_x = 'elite_point_' | append: i | append: '_text' -%}
+          {%- if section.settings[k_t] != blank -%}<li><b>{{ section.settings[k_t] }}</b>{{ section.settings[k_x] }}</li>{%- endif -%}
+        {%- endfor -%}
+      </ul>
+
+      <div class="dpk-elist">
+        {%- for b in elite_blocks -%}
+          {%- assign p = b.settings.product -%}
+          {%- if p == blank -%}
+            {%- if request.design_mode -%}<div class="dpk-erow" {{ b.shopify_attributes }}>Bloc « Pack Élite » sans produit visible.</div>{%- endif -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- liquid
+            assign v = p.selected_or_first_available_variant
+            assign name = b.settings.name
+            if name == blank
+              assign name = p.title | split: '|' | first | strip
+            endif
+            assign ideal = b.settings.ideal | default: p.metafields.custom.ideal_pour.value
+
+            if p.metafields.custom.contenu_pack.value != blank
+              assign elines = p.metafields.custom.contenu_pack.value
+              assign from_mf = true
+            else
+              assign elines = b.settings.contenu | newline_to_br | split: '<br />'
+              assign from_mf = false
+            endif
+
+            assign e_cont = 0
+            assign e_cams = 0
+            assign e_kbd = false
+            for line in elines
+              assign l = line | strip | downcase
+              if from_mf
+                assign q = l | split: ' ' | first | plus: 0
+              else
+                assign q = l | split: '|' | first | plus: 0
+              endif
+              if q == 0
+                assign q = 1
+              endif
+              if l contains 'caméra' or l contains 'camera'
+                assign e_cams = e_cams | plus: q
+              elsif l contains 'contacteur' or l contains 'wds502' or l contains "d'ouverture"
+                assign e_cont = e_cont | plus: q
+              elsif l contains 'clavier'
+                assign e_kbd = true
+              endif
+            endfor
+            assign e_ext = p.metafields.custom.cameras_exterieures.value | plus: 0
+            assign e_acc = p.metafields.custom.nb_accessoires.value | plus: 0
+            assign alma_base = v.price | divided_by: 4
+            assign alma_1 = alma_base | times: 3 | minus: v.price | abs
+            assign eimg = v.featured_media.preview_image | default: p.featured_media.preview_image
+            if eimg == blank
+              assign eimg = p.featured_media.preview_image
+            endif
+          -%}
+          <article class="dpk-erow" id="pack-{{ p.handle }}" data-dpk-elite data-key="{{ b.id }}" data-name="{{ name | escape }}" data-ideal="{{ ideal | escape }}"
+            data-contacts="{{ e_cont }}" data-ext="{{ e_ext }}" data-url="{{ p.url }}" data-id="{{ v.id }}" data-price="{{ v.price }}"
+            data-ref="{% if v.compare_at_price > v.price %}{{ v.compare_at_price }}{% else %}0{% endif %}"
+            data-img="{% if eimg != blank %}{{ eimg | image_url: width: 720 }}{% endif %}" data-alt="{{ eimg.alt | default: p.title | escape }}" {{ b.shopify_attributes }}>
+            <a class="dpk-erow__img" href="{{ p.url }}" tabindex="-1" aria-hidden="true">
+              {%- if eimg != blank -%}
+                <img src="{{ eimg | image_url: width: 480 }}" srcset="{{ eimg | image_url: width: 240 }} 240w, {{ eimg | image_url: width: 480 }} 480w, {{ eimg | image_url: width: 720 }} 720w"
+                  sizes="(min-width: 1100px) 220px, (min-width: 700px) 180px, 240px" width="480" height="480" loading="lazy" alt="{{ eimg.alt | default: p.title | escape }}">
+              {%- endif -%}
+            </a>
+            <div>
+              {%- if b.settings.badge != blank -%}<span class="dpk-erow__badge">{{ b.settings.badge }}</span>{%- endif -%}
+              {%- if v.sku != blank -%}<p class="dpk-erow__ref">Réf. {{ v.sku }}</p>{%- endif -%}
+              <h3><a href="{{ p.url }}">{{ name }}</a></h3>
+              {%- if ideal != blank -%}<p class="dpk-erow__ideal">{{ ideal }}</p>{%- endif -%}
+              <ul class="dpk-chips" aria-label="En bref">
+                {%- if e_acc > 0 -%}<li><b>{{ e_acc }}</b> accessoires</li>{%- endif -%}
+                {%- if e_cams > 0 -%}<li class="is-cam"><b>{{ e_cams }}</b> caméras{% if e_ext > 0 %} dont {{ e_ext }} extérieure{% if e_ext > 1 %}s{% endif %}{% endif %}</li>{%- endif -%}
+                {%- if e_kbd -%}<li>Clavier mural</li>{%- endif -%}
+              </ul>
+            </div>
+            <ul class="dpk-erow__list" aria-label="Contenu du pack">
+              {%- for line in elines -%}
+                {%- assign t = line | strip -%}
+                {%- if t == blank -%}{%- continue -%}{%- endif -%}
+                {%- if from_mf -%}
+                  {%- assign q = t | split: ' ' | first -%}
+                  {%- assign rest = t | remove_first: q | strip -%}
+                {%- else -%}
+                  {%- assign q = t | split: '|' | first | strip -%}
+                  {%- assign rest = t | split: '|' | last | strip -%}
+                {%- endif -%}
+                <li><b>{{ q }}×</b><span>{{ rest }}</span></li>
+              {%- endfor -%}
+            </ul>
+            <div class="dpk-erow__buy">
+              <p class="dpk-price">
+                <span class="dpk-price__now">{{ v.price | money }}</span>
+                {%- if v.compare_at_price > v.price -%}<s>{{ v.compare_at_price | money }}</s>{%- endif -%}
+              </p>
+              <p class="dpk-alma">ou 4× sans frais&nbsp;: {{ alma_1 | money }} puis 3 × {{ alma_base | money }}</p>
+              <button type="button" class="dpk-btn dpk-btn--primary" data-dpk-add="{{ v.id }}"{% unless v.available %} disabled{% endunless %}>{% if v.available %}Ajouter au panier{% else %}Indisponible{% endif %}</button>
+              <a class="dpk-btn dpk-btn--ghost" href="{{ p.url }}">Voir le pack</a>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.elite_foot != blank -%}<p class="dpk-elite__foot">{{ section.settings.elite_foot }}</p>{%- endif -%}
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- comment -%} ===================== RÉASSURANCE ===================== {%- endcomment -%}
+  <section class="dpk-sec dpk-sec--soft" aria-labelledby="dpk-why-h-{{ sid }}">
+    <div class="dpk-wrap">
+      <div class="dpk-head">
+        <h2 class="dpk-h2" id="dpk-why-h-{{ sid }}">Pourquoi choisir un pack Daewoo Security</h2>
+      </div>
+      <ul class="dpk-why">
+        <li><span class="dpk-why__ico" aria-hidden="true">🔓</span><h3>Aucun abonnement obligatoire</h3><p>Vous êtes alerté directement sur votre téléphone, sans frais mensuels, avec l'application gratuite Daewoo Home Connect.</p></li>
+        <li><span class="dpk-why__ico" aria-hidden="true">🧰</span><h3>Vous l'installez vous-même</h3><p>Tout est sans fil : branchez la centrale, fixez les détecteurs et laissez-vous guider par l'application. Ni technicien, ni travaux.</p></li>
+        <li><span class="dpk-why__ico" aria-hidden="true">🧩</span><h3>Un système qui évolue</h3><p>Ajoutez quand vous voulez détecteurs, sirènes, caméras ou prises connectées compatibles avec votre centrale.</p></li>
+        <li><span class="dpk-why__ico" aria-hidden="true">🚚</span><h3>Expédié le jour même</h3><p>Pour toute commande passée avant midi, du lundi au vendredi. Livraison en 48 à 72 h, offerte dès 50 € en France métropolitaine et en Belgique.</p></li>
+        <li><span class="dpk-why__ico" aria-hidden="true">🛡️</span><h3>Garantie 2 ans</h3><p>Et 14 jours pour changer d'avis. Paiement en 3× ou 4× sans frais avec Alma.</p></li>
+        <li><span class="dpk-why__ico" aria-hidden="true">📍</span><h3>Une équipe près de Bordeaux</h3><p>Nos conseillers basés à Mérignac vous aident avant et après l'achat. <a class="dpk-link" href="{{ contact_url }}">Nous contacter</a></p></li>
+      </ul>
+    </div>
+  </section>
+
+  {%- comment -%} ===================== FAQ ===================== {%- endcomment -%}
+  {%- if faq_blocks.size > 0 -%}
+  <section class="dpk-sec" id="questions" aria-labelledby="dpk-faq-h-{{ sid }}">
+    <div class="dpk-wrap">
+      <div class="dpk-head"><h2 class="dpk-h2" id="dpk-faq-h-{{ sid }}">Questions fréquentes</h2></div>
+      <div class="dpk-faq">
+        {%- for f in faq_blocks -%}
+          <details {{ f.shopify_attributes }}{% if forloop.first %} open{% endif %}>
+            <summary>{{ f.settings.question }}</summary>
+            <div class="dpk-faq__a">{{ f.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- comment -%} ===================== APPEL FINAL ===================== {%- endcomment -%}
+  <section class="dpk-sec" style="padding-top:0">
+    <div class="dpk-wrap">
+      <div class="dpk-final">
+        <h2>{{ section.settings.final_title }}</h2>
+        {%- if section.settings.final_text != blank -%}<p>{{ section.settings.final_text }}</p>{%- endif -%}
+        <div class="dpk-final__cta">
+          <a class="dpk-btn dpk-btn--light" href="{{ conf_url }}">Composer mon alarme sur mesure</a>
+          <a class="dpk-btn dpk-btn--ghost" href="{{ contact_url }}">Parler à un conseiller</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="dpk-toast" data-dpk-toast role="status" aria-live="polite"></div>
+</div>
+
+{%- comment -%} Données structurées : FAQ identique au texte visible, liste des packs {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ItemList",
+      "name": {{ section.settings.title | json }},
+      "itemListElement": [
+        {%- assign pos = 0 -%}
+        {%- for b in section.blocks -%}
+          {%- if b.type != 'pack' and b.type != 'elite' -%}{%- continue -%}{%- endif -%}
+          {%- if b.settings.product == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign pos = pos | plus: 1 -%}
+          {%- if pos > 1 -%},{%- endif -%}
+          { "@type": "ListItem", "position": {{ pos }}, "url": {{ shop.url | append: b.settings.product.url | json }}, "name": {{ b.settings.product.title | json }} }
+        {%- endfor -%}
+      ]
+    }
+    {%- if faq_blocks.size > 0 -%},
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for f in faq_blocks -%}
+          { "@type": "Question", "name": {{ f.settings.question | strip_html | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ f.settings.answer | strip_html | strip | json }} } }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+    {%- endif %}
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var root = document.getElementById('dpk-{{ sid }}');
+  if (!root) return;
+  var CART_URL = {{ routes.cart_url | json }};
+  var ROOT_URL = (window.Shopify && Shopify.routes && Shopify.routes.root) || '/';
+
+  /* Même rendu que le filtre money de Liquid (format de prix de la boutique) */
+  var MONEY_FORMAT = {{ shop.money_format | json }};
+  function euros(c) {
+    var parts = (Math.round(c) / 100).toFixed(2).split('.');
+    var dot = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.'), comma = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    if (!MONEY_FORMAT) return dot + ',' + parts[1] + ' €';
+    return MONEY_FORMAT.replace(/\{\{\s*(\w+)\s*\}\}/, function (m, k) {
+      if (k === 'amount_with_comma_separator') return dot + ',' + parts[1];
+      if (k === 'amount_no_decimals_with_comma_separator') return dot;
+      if (k === 'amount_no_decimals') return comma;
+      if (k === 'amount_with_space_separator') return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ',' + parts[1];
+      return comma + '.' + parts[1];
+    });
+  }
+  function alma(c) { var base = Math.floor(c / 4); return 'ou 4× sans frais : ' + euros(c - base * 3) + ' puis 3 × ' + euros(base); }
+  function pct(price, ref) { return ref > price ? Math.floor((ref - price) * 100 / ref) : 0; }
+  function $$(sel, el) { return Array.prototype.slice.call((el || root).querySelectorAll(sel)); }
+
+  /* ---------- Toast ---------- */
+  var toast = root.querySelector('[data-dpk-toast]'), toastT;
+  function say(msg) {
+    if (!toast) return;
+    toast.textContent = msg; toast.classList.add('is-on');
+    clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('is-on'); }, 2600);
+  }
+
+  /* ---------- Données des cartes ---------- */
+  var cards = $$('[data-dpk-card]').map(function (el) {
+    var data = {};
+    try { data = JSON.parse(el.querySelector('[data-dpk-variants]').textContent); } catch (e) {}
+    return { el: el, key: el.getAttribute('data-key'), name: el.getAttribute('data-name'), ideal: el.getAttribute('data-ideal'),
+      contacts: +el.getAttribute('data-contacts') || 0, ext: +el.getAttribute('data-ext') || 0,
+      pir: +el.getAttribute('data-pir') || 0, smoke: +el.getAttribute('data-smoke') || 0,
+      url: el.getAttribute('data-url'), v: data, elite: false };
+  });
+  var elites = $$('[data-dpk-elite]').map(function (el) {
+    var d = { id: +el.getAttribute('data-id'), price: +el.getAttribute('data-price'), ref: +el.getAttribute('data-ref') || 0,
+      available: true, img: el.getAttribute('data-img'), alt: el.getAttribute('data-alt') };
+    return { el: el, key: el.getAttribute('data-key'), name: el.getAttribute('data-name'), ideal: el.getAttribute('data-ideal'),
+      contacts: +el.getAttribute('data-contacts') || 0, ext: +el.getAttribute('data-ext') || 0,
+      url: el.getAttribute('data-url'), v: { elite: d }, elite: true };
+  });
+
+  /* ---------- Sélecteur de centrale ---------- */
+  var radios = $$('[data-dpk-switch] input[type="radio"]');
+  var current = root.getAttribute('data-c0');
+
+  function linkFor(card, slug) { return card.url + (card.url.indexOf('?') > -1 ? '&' : '?') + 'centrale=' + encodeURIComponent(slug); }
+
+  function applyCentrale(slug, opts) {
+    var radio = radios.filter(function (r) { return r.value === slug; })[0];
+    if (!radio) return;
+    current = slug;
+    radio.checked = true;
+    $$('[data-dpk-switch] label').forEach(function (l) { l.classList.toggle('is-on', l.getAttribute('data-slug') === slug); });
+    var label = radio.getAttribute('data-label');
+    var hasRfid = radio.getAttribute('data-rfid') === 'true';
+    $$('[data-dpk-cname]').forEach(function (n) { n.textContent = label; });
+    $$('[data-dpk-rfid]').forEach(function (n) { n.hidden = !hasRfid; });
+    var desc = root.querySelector('[data-dpk-desc]');
+    if (desc) { desc.innerHTML = ''; var b = document.createElement('b'); b.textContent = label; desc.appendChild(b); desc.appendChild(document.createTextNode(' · ' + radio.getAttribute('data-desc'))); }
+
+    cards.forEach(function (c) {
+      var d = c.v[slug]; var el = c.el;
+      var btn = el.querySelector('[data-dpk-add]');
+      if (!d) { if (btn) { btn.disabled = true; btn.textContent = 'Indisponible'; } return; }
+      el.querySelector('[data-dpk-price]').textContent = euros(d.price);
+      var p = pct(d.price, d.ref), s = el.querySelector('[data-dpk-ref]'), t = el.querySelector('[data-dpk-pct]');
+      if (s) { s.hidden = !p; s.textContent = p ? euros(d.ref) : ''; }
+      if (t) { t.hidden = !p; t.textContent = '-' + p + ' %'; }
+      var a = el.querySelector('[data-dpk-alma]'); if (a) a.textContent = alma(d.price);
+      var img = el.querySelector('[data-dpk-img]');
+      if (img && d.img && img.getAttribute('src') !== d.img) { img.src = d.img; if (d.srcset) img.srcset = d.srcset; img.alt = d.alt || img.alt; }
+      if (btn) { btn.setAttribute('data-dpk-add', d.id); btn.disabled = !d.available; btn.textContent = d.available ? 'Ajouter au panier' : 'Indisponible'; }
+      var href = linkFor(c, slug);
+      $$('[data-dpk-link]', el).forEach(function (l) { l.href = href; });
+      var cell = root.querySelector('[data-dpk-tprice="' + c.key + '"]'); if (cell) cell.textContent = euros(d.price);
+      var th = $$('#comparatif-packs [data-dpk-link]')[cards.indexOf(c)]; if (th) th.href = href;
+      var cta = $$('.dpk-table__cta [data-dpk-link]')[cards.indexOf(c)]; if (cta) cta.href = href;
+    });
+
+    if (!opts || !opts.silent) {
+      try { var u = new URL(location.href); u.searchParams.set('centrale', slug); history.replaceState(history.state, '', u); } catch (e) {}
+    }
+  }
+  radios.forEach(function (r) { r.addEventListener('change', function () { if (r.checked) applyCentrale(r.value); }); });
+  try {
+    var wanted = new URLSearchParams(location.search).get('centrale');
+    if (wanted && wanted !== current) applyCentrale(wanted, { silent: true });
+  } catch (e) {}
+
+  /* ---------- Ajout au panier ---------- */
+  function addToCart(btn) {
+    var id = Number(btn.getAttribute('data-dpk-add'));
+    if (!id || btn.getAttribute('aria-busy') === 'true') return;
+    btn.setAttribute('aria-busy', 'true');
+    var label = btn.textContent; btn.textContent = 'Ajout…';
+    fetch(ROOT_URL + 'cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ items: [{ id: id, quantity: 1 }] })
+    })
+      .then(function (r) { return r.json().then(function (d) { if (!r.ok) throw d; return d; }); })
+      .then(function () {
+        btn.textContent = 'Ajouté ✓';
+        setTimeout(function () { btn.textContent = label; }, 2200);
+        if (window.theme && theme.pubsub && theme.pubsub.PUB_SUB_EVENTS) {
+          fetch(ROOT_URL + 'cart.js').then(function (r) { return r.json(); }).then(function (cart) {
+            theme.pubsub.publish(theme.pubsub.PUB_SUB_EVENTS.cartUpdate, { source: 'dw-page-packs', cart: cart });
+          }).catch(function () {});
+        }
+        if (document.querySelector('cart-drawer')) {
+          document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true, detail: { open: true } }));
+        } else {
+          window.location.href = CART_URL;
+        }
+      })
+      .catch(function (e) {
+        btn.textContent = label;
+        say((e && (e.description || e.message)) || "Le pack n'a pas pu être ajouté au panier. Merci de réessayer.");
+      })
+      .finally(function () { btn.removeAttribute('aria-busy'); });
+  }
+  root.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-dpk-add]');
+    if (btn && !btn.disabled) { e.preventDefault(); addToCart(btn); }
+  });
+
+  /* ---------- Conseiller ---------- */
+  var adv = root.querySelector('[data-dpk-adv]');
+  if (adv) {
+    var steps = $$('[data-dpk-q]', adv), result = adv.querySelector('[data-dpk-result]');
+    var stepTxt = adv.querySelector('[data-dpk-step]'), bar = adv.querySelector('[data-dpk-progress]');
+    var back = adv.querySelector('[data-dpk-back]'), restart = adv.querySelector('[data-dpk-restart]');
+    var answers = [null, null, null], step = 0;
+
+    function show(i) {
+      step = i;
+      steps.forEach(function (s, k) { s.hidden = k !== i; });
+      result.hidden = i < steps.length;
+      back.hidden = i === 0 || i >= steps.length;
+      restart.hidden = i < steps.length;
+      bar.style.width = (Math.min(i, steps.length) / steps.length * 100) + '%';
+      stepTxt.textContent = i < steps.length ? 'Question ' + (i + 1) + ' sur ' + steps.length : 'Votre pack';
+    }
+
+    /* Plus le score est bas, mieux le pack correspond : ouvertures à protéger,
+       caméras extérieures (en manquer pèse plus qu'en avoir une de trop), puis prix. */
+    function score(c, contacts, ext, price) {
+      var miss = Math.max(0, ext - c.ext), extra = Math.max(0, c.ext - ext);
+      return Math.abs(c.contacts - contacts) * 10 + miss * 40 + extra * 20 + price / 5000;
+    }
+
+    function recommend() {
+      var contacts = +answers[0], ext = +answers[1], slug = answers[2];
+      var pool = slug === 'elite' ? elites : cards;
+      var key = slug === 'elite' ? 'elite' : slug;
+      var ranked = pool.filter(function (c) { return c.v[key]; }).map(function (c) {
+        return { c: c, d: c.v[key], s: score(c, contacts, ext, c.v[key].price) };
+      }).sort(function (a, b) { return a.s - b.s; });
+      if (!ranked.length) return;
+      if (slug !== 'elite') applyCentrale(slug);
+      var best = ranked[0], alt = ranked[1];
+      var d = best.d, c = best.c;
+
+      var img = result.querySelector('[data-r-img]');
+      if (d.img) { img.src = d.img; img.removeAttribute('srcset'); img.alt = d.alt || c.name; }
+      result.querySelector('[data-r-name]').textContent = c.name;
+      var why = [];
+      if (c.contacts) why.push(c.contacts + ' contacteur' + (c.contacts > 1 ? 's' : '') + ' pour vos ouvertures');
+      why.push(c.ext ? c.ext + ' caméra' + (c.ext > 1 ? 's' : '') + ' extérieure' + (c.ext > 1 ? 's' : '') : 'caméra intérieure incluse');
+      if (c.smoke) why.push(c.smoke + ' détecteur' + (c.smoke > 1 ? 's' : '') + ' de fumée');
+      result.querySelector('[data-r-why]').textContent = (c.ideal ? c.ideal + '. ' : '') + why.join(', ') + '.';
+      result.querySelector('[data-r-price]').textContent = euros(d.price);
+      var p = pct(d.price, d.ref), s = result.querySelector('[data-r-ref]'), t = result.querySelector('[data-r-pct]');
+      s.hidden = !p; s.textContent = p ? euros(d.ref) : '';
+      t.hidden = !p; t.textContent = '-' + p + ' %';
+      result.querySelector('[data-r-alma]').textContent = alma(d.price);
+      var add = result.querySelector('[data-r-add]');
+      add.setAttribute('data-dpk-add', d.id); add.disabled = !d.available; add.textContent = d.available ? 'Ajouter au panier' : 'Indisponible';
+      result.querySelector('[data-r-link]').href = c.elite ? c.url : linkFor(c, slug);
+
+      var altBox = result.querySelector('[data-r-alt]');
+      if (alt) {
+        var al = altBox.querySelector('[data-r-alt-link]');
+        al.textContent = alt.c.name; al.href = '#' + alt.c.el.id;
+        altBox.querySelector('[data-r-alt-price]').textContent = '(' + euros(alt.d.price) + ')';
+        altBox.hidden = false;
+      } else { altBox.hidden = true; }
+
+      cards.concat(elites).forEach(function (x) { x.el.classList.toggle('is-match', x === c); });
+      show(steps.length);
+    }
+
+    steps.forEach(function (s, i) {
+      $$('.dpk-opt', s).forEach(function (o) {
+        o.addEventListener('click', function () {
+          answers[i] = o.getAttribute('data-v');
+          $$('.dpk-opt', s).forEach(function (x) { x.setAttribute('aria-pressed', x === o ? 'true' : 'false'); });
+          if (i + 1 < steps.length) show(i + 1); else recommend();
+          var focusEl = i + 1 < steps.length ? steps[i + 1].querySelector('h2') : result.querySelector('h3');
+          if (focusEl) { focusEl.setAttribute('tabindex', '-1'); focusEl.focus({ preventScroll: true }); }
+        });
+      });
+    });
+    back.addEventListener('click', function () { if (step > 0) show(step - 1); });
+    restart.addEventListener('click', function () {
+      answers = [null, null, null];
+      $$('.dpk-opt', adv).forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      cards.concat(elites).forEach(function (x) { x.el.classList.remove('is-match'); });
+      show(0);
+    });
+    show(0);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Page packs alarme",
+  "tag": "section",
+  "class": "dw-page-packs",
+  "settings": [
+    { "type": "header", "content": "En-tête" },
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Alarme sans abonnement" },
+    { "type": "text", "id": "title", "label": "Titre (H1)", "default": "Packs alarme maison sans fil, prêts à installer" },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Six packs complets, chacun avec la centrale de votre choix, et la gamme Élite pour aller plus loin. Vous l'installez vous-même, sans abonnement." },
+    { "type": "image_picker", "id": "hero_image", "label": "Image de l'en-tête", "info": "Vide : photo du dernier pack, avec la première centrale." },
+    { "type": "checkbox", "id": "show_rating", "label": "Afficher la note des avis clients", "default": true, "info": "Note et nombre lus dans snippets/pv-avis-vigilia.liquid (mêmes avis que les fiches packs)." },
+    { "type": "text", "id": "rating_scope", "label": "Précision sous la note", "default": "sur la gamme Vigilia et ses accessoires" },
+    { "type": "header", "content": "Packs de la gamme" },
+    { "type": "text", "id": "packs_eyebrow", "label": "Surtitre", "default": "La gamme 2026" },
+    { "type": "text", "id": "packs_title", "label": "Titre", "default": "Un pack pour chaque logement" },
+    { "type": "textarea", "id": "packs_sub", "label": "Texte", "default": "Choisissez d'abord votre centrale : les prix, les photos et le contenu des six packs s'adaptent." },
+    { "type": "text", "id": "switch_title", "label": "Titre du choix de centrale", "default": "1. Choisissez votre centrale" },
+    { "type": "textarea", "id": "ref_note", "label": "Note sous les packs", "default": "Prix barré : prix des mêmes éléments achetés séparément dans le configurateur Daewoo. Carte SIM non fournie pour la 4G." },
+    { "type": "header", "content": "Conseiller" },
+    { "type": "text", "id": "elite_adv_label", "label": "Choix « Élite » : titre", "default": "La gamme Élite" },
+    { "type": "text", "id": "elite_adv_hint", "label": "Choix « Élite » : précision", "default": "Ethernet, Wi-Fi et 4G, capteurs Zigbee" },
+    { "type": "header", "content": "Packs Élite" },
+    { "type": "text", "id": "elite_eyebrow", "label": "Surtitre", "default": "Gamme Élite" },
+    { "type": "text", "id": "elite_title", "label": "Titre", "default": "Les packs Élite : la centrale haut de gamme" },
+    { "type": "textarea", "id": "elite_text", "label": "Texte", "default": "Une centrale discrète que vous installez à l'abri des regards, des capteurs Zigbee 3.0 et trois façons de rester connecté. Pour les grandes maisons, les résidences secondaires et ceux qui veulent le meilleur." },
+    { "type": "text", "id": "elite_point_1_title", "label": "Point 1 : titre", "default": "Triple connexion" },
+    { "type": "text", "id": "elite_point_1_text", "label": "Point 1 : texte", "default": "Ethernet (RJ45), Wi-Fi et 4G : les alertes passent même si la box tombe." },
+    { "type": "text", "id": "elite_point_2_title", "label": "Point 2 : titre", "default": "Capteurs Zigbee 3.0" },
+    { "type": "text", "id": "elite_point_2_text", "label": "Point 2 : texte", "default": "Contacteurs d'ouverture et détecteurs de vibration séparés, avant même l'effraction." },
+    { "type": "text", "id": "elite_point_3_title", "label": "Point 3 : titre", "default": "Batterie de secours 10 h" },
+    { "type": "text", "id": "elite_point_3_text", "label": "Point 3 : texte", "default": "La centrale continue de surveiller pendant une coupure de courant." },
+    { "type": "text", "id": "elite_point_4_title", "label": "Point 4 : titre", "default": "Centrale discrète" },
+    { "type": "text", "id": "elite_point_4_text", "label": "Point 4 : texte", "default": "Rangée à l'abri des regards, pilotée par l'application, un clavier mural ou les télécommandes." },
+    { "type": "inline_richtext", "id": "elite_foot", "label": "Note sous les packs Élite", "default": "Les accessoires Élite (Zigbee) ne sont pas compatibles avec les centrales Vigilia et Touch, et inversement : choisissez la gamme avant de compléter votre système." },
+    { "type": "header", "content": "Bas de page" },
+    { "type": "text", "id": "final_title", "label": "Titre", "default": "Vous ne trouvez pas le pack idéal ?" },
+    { "type": "textarea", "id": "final_text", "label": "Texte", "default": "Composez votre système pièce par pièce avec le configurateur, ou appelez notre équipe : nous vous aidons à choisir." },
+    { "type": "text", "id": "configurateur_url", "label": "Lien du configurateur", "default": "/pages/configurateur_2" },
+    { "type": "text", "id": "contact_url", "label": "Lien de contact", "default": "/pages/nous-contacter" }
+  ],
+  "blocks": [
+    {
+      "type": "centrale",
+      "name": "Centrale",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "option_value", "label": "Valeur exacte de l'option « Centrale »", "info": "Exemple : Vigilia (Wi-Fi)" },
+        { "type": "text", "id": "slug", "label": "Identifiant (?centrale=)", "info": "vigilia, vigilia-plus, touch ou touch-xl" },
+        { "type": "text", "id": "label", "label": "Nom affiché" },
+        { "type": "text", "id": "sub", "label": "Précision courte" },
+        { "type": "text", "id": "badge", "label": "Pastille (facultatif)" },
+        { "type": "text", "id": "description", "label": "Description (sous le choix)" },
+        { "type": "checkbox", "id": "has_rfid", "label": "Badges RFID inclus avec cette centrale", "default": false },
+        { "type": "text", "id": "adv_label", "label": "Conseiller : intitulé du choix" },
+        { "type": "text", "id": "adv_hint", "label": "Conseiller : précision" }
+      ]
+    },
+    {
+      "type": "pack",
+      "name": "Pack (gamme)",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produit" },
+        { "type": "text", "id": "name", "label": "Nom court", "info": "Vide : déduit du titre du produit." },
+        { "type": "text", "id": "ideal", "label": "Idéal pour", "info": "Vide : métachamp custom.ideal_pour." },
+        { "type": "text", "id": "badge", "label": "Pastille (facultatif)" },
+        { "type": "checkbox", "id": "highlight", "label": "Mettre en avant", "default": false }
+      ]
+    },
+    {
+      "type": "elite",
+      "name": "Pack Élite",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produit" },
+        { "type": "text", "id": "name", "label": "Nom court" },
+        { "type": "text", "id": "ideal", "label": "Idéal pour" },
+        { "type": "text", "id": "badge", "label": "Pastille (facultatif)" },
+        { "type": "textarea", "id": "contenu", "label": "Contenu du pack", "info": "Une ligne par élément : quantité|libellé. Ignoré si le produit a un métachamp custom.contenu_pack." }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Réponse" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Page packs alarme" } ],
+  "enabled_on": { "templates": ["page"] }
+}
+{% endschema %}

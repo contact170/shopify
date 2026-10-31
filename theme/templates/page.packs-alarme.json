@@ -1,0 +1,262 @@
+{
+  "sections": {
+    "main": {
+      "type": "dw-page-packs",
+      "blocks": {
+        "c_vigilia": {
+          "type": "centrale",
+          "settings": {
+            "option_value": "Vigilia (Wi-Fi)",
+            "slug": "vigilia",
+            "label": "Vigilia",
+            "sub": "Wi-Fi",
+            "badge": "",
+            "description": "La plus simple : clavier tactile et 2 badges RFID inclus, en Wi-Fi.",
+            "has_rfid": true,
+            "adv_label": "Le plus simple",
+            "adv_hint": "Clavier et badges, en Wi-Fi"
+          }
+        },
+        "c_vigilia_plus": {
+          "type": "centrale",
+          "settings": {
+            "option_value": "Vigilia+ (Wi-Fi + 4G)",
+            "slug": "vigilia-plus",
+            "label": "Vigilia +",
+            "sub": "Wi-Fi + 4G",
+            "badge": "Recommandé",
+            "description": "La Vigilia avec la 4G en secours : alertes par SMS et appel même si la box est coupée (carte SIM non fournie).",
+            "has_rfid": true,
+            "adv_label": "Alerté même box coupée",
+            "adv_hint": "Clavier, badges, Wi-Fi + 4G"
+          }
+        },
+        "c_touch": {
+          "type": "centrale",
+          "settings": {
+            "option_value": "Touch (écran 4,3\")",
+            "slug": "touch",
+            "label": "Touch",
+            "sub": "Écran 4,3\"",
+            "badge": "",
+            "description": "Écran tactile couleur 4,3\" pour tout voir d'un coup d'œil, Wi-Fi + 4G (carte SIM non fournie), batterie de secours 4 h.",
+            "has_rfid": false,
+            "adv_label": "Un écran tactile",
+            "adv_hint": "Écran couleur 4,3\", Wi-Fi + 4G"
+          }
+        },
+        "c_touch_xl": {
+          "type": "centrale",
+          "settings": {
+            "option_value": "Touch XL (écran 7\")",
+            "slug": "touch-xl",
+            "label": "Touch XL",
+            "sub": "Écran 7\"",
+            "badge": "",
+            "description": "Grand écran tactile couleur 7\", Wi-Fi + 4G (carte SIM non fournie) et 20 h de batterie de secours.",
+            "has_rfid": false,
+            "adv_label": "Le grand écran",
+            "adv_hint": "Écran 7\", batterie de secours 20 h"
+          }
+        },
+        "p_ess": {
+          "type": "pack",
+          "settings": {
+            "product": "pack-alarme-essentiel",
+            "name": "",
+            "ideal": "",
+            "badge": "Pour démarrer",
+            "highlight": false
+          }
+        },
+        "p_psi": {
+          "type": "pack",
+          "settings": {
+            "product": "pack-alarme-securite-integrale",
+            "name": "",
+            "ideal": "",
+            "badge": "Recommandé",
+            "highlight": true
+          }
+        },
+        "p_vdu": {
+          "type": "pack",
+          "settings": {
+            "product": "pack-alarme-vision-duo",
+            "name": "",
+            "ideal": "",
+            "badge": "",
+            "highlight": false
+          }
+        },
+        "p_pan": {
+          "type": "pack",
+          "settings": {
+            "product": "pack-alarme-panorama",
+            "name": "",
+            "ideal": "",
+            "badge": "",
+            "highlight": false
+          }
+        },
+        "p_vds": {
+          "type": "pack",
+          "settings": {
+            "product": "pack-alarme-vision-duo-solaire",
+            "name": "",
+            "ideal": "",
+            "badge": "",
+            "highlight": false
+          }
+        },
+        "p_pdu": {
+          "type": "pack",
+          "settings": {
+            "product": "pack-alarme-panorama-duo",
+            "name": "",
+            "ideal": "",
+            "badge": "Le plus complet",
+            "highlight": false
+          }
+        },
+        "e_pa570": {
+          "type": "elite",
+          "settings": {
+            "product": "daewoo-pack-alarme-maison-sans-fil-elite-zenguard-centrale-pa501z-kit-comprenant-13-accessoires-1-camera-autonome-exterieure-1-interieure",
+            "name": "Pack Élite ZenGuard",
+            "ideal": "Maison : l'essentiel de la gamme Élite, avec une caméra extérieure et une intérieure",
+            "badge": "Le plus accessible",
+            "contenu": "1|Centrale Élite PA501Z (Ethernet, Wi-Fi, 4G, Zigbee 3.0)\n5|Contacteurs d'ouverture Zigbee WDS502Z\n4|Détecteurs de vibration Zigbee WVD502Z\n1|Détecteur de mouvement WPS501, compatible animaux\n1|Caméra extérieure autonome W503\n1|Caméra intérieure motorisée IP506P\n1|Sirène extérieure solaire WOS501S\n2|Télécommandes WRC501"
+          }
+        },
+        "e_pa571": {
+          "type": "elite",
+          "settings": {
+            "product": "daewoo-pack-alarme-maison-sans-fil-elite-defense-centrale-pa501z-kit-comprenant-15-accessoires-2-cameras-autonomes-exterieure-1-interieur",
+            "name": "Pack Defense+",
+            "ideal": "Maison avec plusieurs accès : 3 caméras, dont 2 extérieures sur batterie",
+            "badge": "",
+            "contenu": "1|Centrale Élite PA501Z (Ethernet, Wi-Fi, 4G, Zigbee 3.0)\n6|Contacteurs d'ouverture Zigbee WDS502Z\n5|Détecteurs de vibration Zigbee WVD502Z\n1|Détecteur de mouvement WPS501, compatible animaux\n2|Caméras extérieures autonomes W503\n1|Caméra intérieure motorisée IP506P\n1|Sirène extérieure solaire WOS501S\n2|Télécommandes WRC501"
+          }
+        },
+        "e_pa573": {
+          "type": "elite",
+          "settings": {
+            "product": "daewoo-pack-alarme-maison-sans-fil-elite-harmonie-centrale-pa501z-kit-xxl-19-accessoires-1-camera-solaire-motorisee-1-interieure",
+            "name": "Pack Harmonie+",
+            "ideal": "Grande maison : une caméra extérieure motorisée et solaire, et un clavier mural",
+            "badge": "",
+            "contenu": "1|Centrale Élite PA501Z (Ethernet, Wi-Fi, 4G, Zigbee 3.0)\n7|Contacteurs d'ouverture Zigbee WDS502Z\n6|Détecteurs de vibration Zigbee WVD502Z\n2|Détecteurs de mouvement WPS501, compatibles animaux\n1|Caméra extérieure motorisée W512MW avec panneau solaire\n1|Caméra intérieure motorisée IP506P\n1|Sirène extérieure solaire WOS501S\n1|Clavier mural sans fil WKE502Z\n2|Télécommandes WRC501"
+          }
+        },
+        "e_pa572": {
+          "type": "elite",
+          "settings": {
+            "product": "daewoo-pack-alarme-maison-sans-fil-elite-horizon-centrale-pa501z-kit-xxl-18-accessoires-2-cameras-solaires-exterieures-1-interieure",
+            "name": "Pack Horizon+",
+            "ideal": "Grande propriété : 2 caméras extérieures alimentées par panneau solaire, et un clavier mural",
+            "badge": "",
+            "contenu": "1|Centrale Élite PA501Z (Ethernet, Wi-Fi, 4G, Zigbee 3.0)\n7|Contacteurs d'ouverture Zigbee WDS502Z\n6|Détecteurs de vibration Zigbee WVD502Z\n1|Détecteur de mouvement WPS501, compatible animaux\n2|Caméras extérieures autonomes W503\n2|Panneaux solaires SPW503 (alimentation des W503)\n1|Caméra intérieure motorisée IP506P\n1|Sirène extérieure solaire WOS501S\n1|Clavier mural sans fil WKE502Z\n2|Télécommandes WRC501"
+          }
+        },
+        "e_pa574": {
+          "type": "elite",
+          "settings": {
+            "product": "daewoo-pack-alarme-maison-sans-fil-elite-tranquillite-centrale-pa501z-kit-xxl-20-accessoires-2-cameras-solaires-motorisees",
+            "name": "Pack Tranquillité+",
+            "ideal": "Grande maison ou résidence secondaire : 3 caméras, rien n'est laissé de côté",
+            "badge": "Le plus vendu de la gamme Élite",
+            "contenu": "1|Centrale Élite PA501Z (Ethernet, Wi-Fi, 4G, Zigbee 3.0)\n8|Contacteurs d'ouverture Zigbee WDS502Z\n6|Détecteurs de vibration Zigbee WVD502Z\n2|Détecteurs de mouvement WPS501, compatibles animaux\n2|Caméras extérieures motorisées W512MW avec panneau solaire\n1|Caméra intérieure motorisée IP506P\n1|Sirène extérieure solaire WOS501S\n1|Clavier mural sans fil WKE502Z\n2|Télécommandes WRC501"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Quelle centrale choisir ?",
+            "answer": "<p><strong>Vigilia</strong> : la plus simple, avec clavier tactile et 2 badges RFID, en Wi-Fi. <strong>Vigilia +</strong> : la même, avec la 4G en secours pour recevoir les alertes par SMS et appel même si la box est coupée. <strong>Touch</strong> : écran tactile couleur 4,3\", Wi-Fi + 4G, batterie de secours 4 h. <strong>Touch XL</strong> : grand écran 7\", Wi-Fi + 4G et 20 h de batterie de secours.</p><p>Le contenu des six packs est identique quelle que soit la centrale : seul le prix change.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Faut-il un abonnement ?",
+            "answer": "<p>Non. Les alertes arrivent gratuitement sur votre téléphone grâce à l'application Daewoo Home Connect, et aucun abonnement Daewoo n'est obligatoire.</p><p>Pour le secours 4G (Vigilia +, Touch, Touch XL et Élite), la centrale a besoin d'une carte SIM, non fournie. Une carte SIM prépayée est proposée sur la boutique.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Puis-je installer l'alarme moi-même ?",
+            "answer": "<p>Oui. Tous les éléments sont sans fil : il suffit de brancher la centrale, de fixer les détecteurs et de suivre les étapes dans l'application Daewoo Home Connect. Aucun technicien ni travaux ne sont nécessaires.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Puis-je ajouter des accessoires plus tard ?",
+            "answer": "<p>Oui, tous les packs sont évolutifs. Vous pouvez ajouter à tout moment des détecteurs, des sirènes, des badges, des caméras ou des prises connectées compatibles avec votre centrale.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Que se passe-t-il en cas de coupure de courant ou d'Internet ?",
+            "answer": "<p>La centrale dispose d'une batterie de secours qui prend le relais en cas de coupure de courant. Sans Internet, l'alarme continue de fonctionner sur place (détection et sirène). Avec la 4G et une carte SIM, vous restez prévenu par SMS et appel même si la box est coupée.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "L'alarme est-elle compatible avec mes animaux ?",
+            "answer": "<p>Oui. Les détecteurs de mouvement fournis dans les packs ignorent les animaux de moins de 10 kg, pour éviter les fausses alertes.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "Quelle différence entre les six packs et les packs Élite ?",
+            "answer": "<p>Les six packs fonctionnent avec les centrales Vigilia et Touch : vous choisissez la centrale, le contenu reste le même. Les packs Élite reposent sur la centrale PA501Z : connexion Ethernet, Wi-Fi et 4G, capteurs Zigbee 3.0, batterie de secours 10 h, et davantage de capteurs (contacteurs d'ouverture et détecteurs de vibration séparés).</p><p>Les accessoires des deux gammes ne sont pas interchangeables.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "Quels sont les délais de livraison et la garantie ?",
+            "answer": "<p>Les commandes passées avant midi, du lundi au vendredi, sont expédiées le jour même, puis livrées en 48 à 72 h. La livraison est offerte dès 50 € en France métropolitaine et en Belgique. Tous nos produits sont garantis 2 ans et vous disposez de 14 jours pour changer d'avis.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c_vigilia",
+        "c_vigilia_plus",
+        "c_touch",
+        "c_touch_xl",
+        "p_ess",
+        "p_psi",
+        "p_vdu",
+        "p_pan",
+        "p_vds",
+        "p_pdu",
+        "e_pa570",
+        "e_pa571",
+        "e_pa573",
+        "e_pa572",
+        "e_pa574",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8"
+      ],
+      "settings": {
+        "elite_foot": "Vous préférez démarrer petit ? Le <a href=\"/products/starter-pack-elite-daewoo\">Starter pack Élite</a> (centrale et 5 accessoires) se complète à votre rythme. Les accessoires Élite (Zigbee) ne sont pas compatibles avec les centrales Vigilia et Touch."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
