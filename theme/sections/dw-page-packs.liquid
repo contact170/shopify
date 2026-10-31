@@ -468,10 +468,12 @@
 
         <div data-dpk-q="2" hidden>
           <h2>Quelle centrale vous ressemble&nbsp;?</h2>
-          <div class="dpk-opts{% if centrales.size > 3 or nb_elite > 0 %} dpk-opts--5{% endif %}">
-            {%- for c in centrales -%}
-              <button type="button" class="dpk-opt" data-v="{{ c.settings.slug }}" aria-pressed="false"><b>{{ c.settings.adv_label | default: c.settings.label }}</b><small>{{ c.settings.adv_hint | default: c.settings.sub }}</small></button>
-            {%- endfor -%}
+          <div class="dpk-opts{% if nb_packs > 0 and centrales.size > 3 and nb_elite > 0 %} dpk-opts--5{% endif %}">
+            {%- if nb_packs > 0 -%}
+              {%- for c in centrales -%}
+                <button type="button" class="dpk-opt" data-v="{{ c.settings.slug }}" aria-pressed="false"><b>{{ c.settings.adv_label | default: c.settings.label }}</b><small>{{ c.settings.adv_hint | default: c.settings.sub }}</small></button>
+              {%- endfor -%}
+            {%- endif -%}
             {%- if nb_elite > 0 -%}
               <button type="button" class="dpk-opt" data-v="elite" aria-pressed="false"><b>{{ section.settings.elite_adv_label }}</b><small>{{ section.settings.elite_adv_hint }}</small></button>
             {%- endif -%}
