@@ -1,0 +1,161 @@
+{
+  "sections": {
+    "main": {
+      "type": "brezello-produit",
+      "blocks": {
+        "parfum-glaciale": {
+          "type": "parfum",
+          "settings": {
+            "nom": "Glaciale",
+            "humeur": "Fraîcheur glacée",
+            "notes": "Menthe poivrée · Eucalyptus",
+            "phrase": "Le coup de frais net et mentholé qui réveille.",
+            "inci": "[Liste INCI complète, fiche technique du fournisseur]",
+            "tint": "#D6EEF0",
+            "deep": "#0F5C63",
+            "body": "#7FC9CF"
+          }
+        },
+        "parfum-agrumi": {
+          "type": "parfum",
+          "settings": {
+            "nom": "Agrumi",
+            "humeur": "Éclat solaire",
+            "notes": "Citron · Orange douce · Romarin",
+            "phrase": "Un zeste lumineux pour relancer la journée.",
+            "inci": "[Liste INCI complète, fiche technique du fournisseur]",
+            "tint": "#F6E7B8",
+            "deep": "#7A5A00",
+            "body": "#F2C14E"
+          }
+        },
+        "parfum-dolce": {
+          "type": "parfum",
+          "settings": {
+            "nom": "Dolce",
+            "humeur": "Douceur enveloppante",
+            "notes": "Orange · Vanille · Camomille",
+            "phrase": "Une note ronde et réconfortante, tout en légèreté.",
+            "inci": "[Liste INCI complète, fiche technique du fournisseur]",
+            "tint": "#F6D9CF",
+            "deep": "#8A3B22",
+            "body": "#EFA58C"
+          }
+        },
+        "parfum-calma": {
+          "type": "parfum",
+          "settings": {
+            "nom": "Calma",
+            "humeur": "Pause sereine",
+            "notes": "Lavande · Menthe douce · Bergamote",
+            "phrase": "Le souffle tranquille des fins de journée.",
+            "inci": "[Liste INCI complète, fiche technique du fournisseur]",
+            "tint": "#E1DBF2",
+            "deep": "#4B3D84",
+            "body": "#A898DA"
+          }
+        }
+      },
+      "block_order": ["parfum-glaciale", "parfum-agrumi", "parfum-dolce", "parfum-calma"],
+      "settings": {
+        "parfum_option": "Parfum",
+        "accent": "#D4F36B",
+        "badge_left": "Nouveau",
+        "badge_right": "0 % nicotine",
+        "intro": "Deux embouts, un pour chaque narine : une bouffée d'arômes nette, où que vous soyez.",
+        "price_note": "TVA incluse · Livraison offerte dès [XX] €",
+        "add_label": "Ajouter au panier",
+        "soldout_label": "Épuisé",
+        "unavailable_label": "Indisponible",
+        "show_dynamic_checkout": true,
+        "plans_label": "Mode d'achat",
+        "one_time_label": "Achat unique",
+        "one_time_note": "Expédié depuis la France",
+        "reassure_1": "Sans nicotine",
+        "reassure_2": "Sans batterie",
+        "reassure_3": "Format poche",
+        "trust_note": "Paiement sécurisé · Retours 14 jours (produit non ouvert)",
+        "show_description": true,
+        "description_label": "Description",
+        "marquee_text": "Sans nicotine|Sans batterie|Sans vapeur|Menthol & huiles essentielles|Format poche",
+        "show_grid": true,
+        "grid_title": "Quatre humeurs. Une seule signature.",
+        "grid_text": "Chaque parfum a sa couleur, sa note et son moment. Choisissez le vôtre, ou collectionnez-les.",
+        "pick_label": "Choisir",
+        "selected_label": "Sélectionné",
+        "show_composition": true,
+        "compo_title": "Ce qu'il y a dedans. Rien de plus.",
+        "compo_text": "Transparence totale, parfum par parfum. La fiche se met à jour selon votre choix.",
+        "compo_sans": "Nicotine · Tabac · Combustion · Batterie",
+        "compo_contenance": "2 ml · environ [durée] d'utilisation après ouverture",
+        "compo_precautions": "Usage externe. Tenir hors de portée des enfants. Voir la FAQ."
+      }
+    },
+    "rituel": {
+      "type": "brezello-rituel",
+      "blocks": {
+        "etape-1": { "type": "etape", "settings": { "icon": "ouvrir", "title": "Ouvrez", "text": "Retirez les capuchons : les deux embouts sont prêts." } },
+        "etape-2": { "type": "etape", "settings": { "icon": "inspirer", "title": "Inspirez", "text": "Placez les embouts sous les narines et inspirez doucement par le nez, quelques secondes." } },
+        "etape-3": { "type": "etape", "settings": { "icon": "refermer", "title": "Refermez", "text": "Remettez les capuchons pour garder les arômes intacts jusqu'à la prochaine fois." } }
+      },
+      "block_order": ["etape-1", "etape-2", "etape-3"],
+      "settings": {
+        "title": "Le rituel. Trois gestes, c'est tout.",
+        "text": "Sans flamme, sans vapeur, sans bruit. Juste une bouffée d'arômes quand vous en avez envie, au bureau, en voiture ou entre deux trains."
+      }
+    },
+    "objet": {
+      "type": "brezello-objet",
+      "blocks": {
+        "point-1": { "type": "point", "settings": { "title": "Double embout", "text": "Un embout par narine, pour une diffusion équilibrée." } },
+        "point-2": { "type": "point", "settings": { "title": "Capuchons hermétiques", "text": "Les arômes restent concentrés entre deux usages." } },
+        "point-3": { "type": "point", "settings": { "title": "Mèche imprégnée", "text": "Menthol et huiles essentielles, sans chauffe ni combustion." } },
+        "point-4": { "type": "point", "settings": { "title": "Format poche", "text": "Se glisse dans une poche, un sac ou une trousse." } }
+      },
+      "block_order": ["point-1", "point-2", "point-3", "point-4"],
+      "settings": {
+        "eyebrow": "L'objet",
+        "title": "Pensé pour la poche. Dessiné pour durer.",
+        "label": "Glaciale",
+        "dimension": "[X] cm",
+        "accent": "#D4F36B",
+        "deep": "#0F5C63",
+        "body": "#7FC9CF"
+      }
+    },
+    "faq": {
+      "type": "brezello-faq",
+      "blocks": {
+        "q-1": { "type": "question", "settings": { "question": "Contient-il de la nicotine ?", "answer": "Non. Brezello ne contient ni nicotine ni tabac. Il ne chauffe pas, ne produit aucune vapeur et n'a pas de batterie : il diffuse simplement les arômes de sa mèche imprégnée." } },
+        "q-2": { "type": "question", "settings": { "question": "Combien de temps dure un inhaler ?", "answer": "Environ [durée à confirmer] d'utilisation régulière après ouverture. Remettez bien les capuchons après chaque usage pour préserver les arômes." } },
+        "q-3": { "type": "question", "settings": { "question": "Qui ne doit pas l'utiliser ?", "answer": "Déconseillé aux enfants de moins de [âge] ans, aux femmes enceintes ou allaitantes et aux personnes épileptiques. En cas d'asthme ou au moindre doute, demandez l'avis de votre médecin. Usage externe uniquement." } },
+        "q-4": { "type": "question", "settings": { "question": "Est-ce un médicament ?", "answer": "Non. Brezello est un produit de bien-être olfactif : il apporte une sensation de fraîcheur, mais ne soigne pas et ne remplace pas un traitement." } },
+        "q-5": { "type": "question", "settings": { "question": "Livraison et retours", "answer": "Expédition depuis la France sous [X] h ouvrées. Vous disposez de 14 jours pour retourner un produit non ouvert, dans son emballage scellé d'origine." } }
+      },
+      "block_order": ["q-1", "q-2", "q-3", "q-4", "q-5"],
+      "settings": {
+        "title": "Questions fréquentes.",
+        "text": "Une autre question ? Écrivez-nous à bonjour@brezello.com, réponse sous 24 h ouvrées.",
+        "open_first": true,
+        "accent": "#D4F36B"
+      }
+    },
+    "coffret": {
+      "type": "brezello-coffret",
+      "blocks": {
+        "c-1": { "type": "couleur", "settings": { "name": "Glaciale", "tint": "#D6EEF0", "deep": "#0F5C63", "body": "#7FC9CF" } },
+        "c-2": { "type": "couleur", "settings": { "name": "Agrumi", "tint": "#F6E7B8", "deep": "#7A5A00", "body": "#F2C14E" } },
+        "c-3": { "type": "couleur", "settings": { "name": "Dolce", "tint": "#F6D9CF", "deep": "#8A3B22", "body": "#EFA58C" } },
+        "c-4": { "type": "couleur", "settings": { "name": "Calma", "tint": "#E1DBF2", "deep": "#4B3D84", "body": "#A898DA" } }
+      },
+      "block_order": ["c-1", "c-2", "c-3", "c-4"],
+      "settings": {
+        "eyebrow": "Idée cadeau",
+        "title": "Le coffret Quatre Humeurs.",
+        "text": "Les quatre parfums réunis dans un étui à offrir, ou à garder pour soi.",
+        "button_label": "Découvrir le coffret"
+      }
+    }
+  },
+  "order": ["main", "rituel", "objet", "faq", "coffret"]
+}

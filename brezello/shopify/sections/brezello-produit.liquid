@@ -1,0 +1,385 @@
+{%- comment -%}
+  Brezello – fiche produit (galerie, choix des variantes, ajout au panier,
+  bandeau défilant, grille des parfums et composition).
+  Les couleurs de chaque parfum viennent des blocs « Parfum » : le nom du bloc
+  doit être identique à la valeur de variante (ex. Glaciale).
+{%- endcomment -%}
+{{ 'brezello.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'brezello.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign wanted_option = section.settings.parfum_option | downcase | strip
+  assign parfum_pos = 0
+  for option in product.options_with_values
+    assign option_name = option.name | downcase | strip
+    if option_name == wanted_option
+      assign parfum_pos = option.position
+    endif
+  endfor
+
+  assign display_name = product.title
+  assign current_parfum = ''
+  if parfum_pos > 0
+    assign parfum_index = parfum_pos | minus: 1
+    assign current_parfum = current_variant.options[parfum_index]
+    assign display_name = current_parfum
+  endif
+
+  assign current_block = nil
+  assign wanted_parfum = current_parfum | downcase | strip
+  for block in section.blocks
+    if block.type == 'parfum'
+      if current_block == nil
+        assign current_block = block
+      endif
+      assign block_name = block.settings.nom | downcase | strip
+      if block_name == wanted_parfum
+        assign current_block = block
+      endif
+    endif
+  endfor
+
+  assign featured_id = current_variant.featured_media.id | default: product.featured_media.id
+  assign form_id = 'bz-form-' | append: section.id
+-%}
+
+<div
+  class="bz bz-product"
+  id="bz-{{ section.id }}"
+  data-bz-product
+  data-parfum-pos="{{ parfum_pos }}"
+  data-label-add="{{ section.settings.add_label | escape }}"
+  data-label-soldout="{{ section.settings.soldout_label | escape }}"
+  data-label-unavailable="{{ section.settings.unavailable_label | escape }}"
+  data-label-pick="{{ section.settings.pick_label | escape }}"
+  data-label-selected="{{ section.settings.selected_label | escape }}"
+  style="--bz-accent: {{ section.settings.accent }};{% if current_block %} --bz-tint: {{ current_block.settings.tint }}; --bz-deep: {{ current_block.settings.deep }}; --bz-body: {{ current_block.settings.body }};{% endif %}"
+>
+  <div class="bz-wrap bz-hero">
+    {%- comment -%} Galerie {%- endcomment -%}
+    <div class="bz-gallery">
+      <div class="bz-stage">
+        {%- if section.settings.badge_left != blank -%}
+          <span class="bz-badge">{{ section.settings.badge_left }}</span>
+        {%- endif -%}
+        {%- if section.settings.badge_right != blank -%}
+          <span class="bz-badge bz-badge--right">{{ section.settings.badge_right }}</span>
+        {%- endif -%}
+        {%- if product.media.size > 0 -%}
+          {%- for media in product.media -%}
+            {%- liquid
+              assign loading = 'lazy'
+              if media.id == featured_id
+                assign loading = 'eager'
+              endif
+            -%}
+            <div class="bz-media" data-media-id="{{ media.id }}" {% unless media.id == featured_id %}hidden{% endunless %}>
+              {{ media.preview_image | image_url: width: 1400 | image_tag: loading: loading, widths: '480, 720, 960, 1200, 1400', sizes: '(min-width: 990px) 55vw, 100vw', alt: media.alt }}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="bz-ghost" aria-hidden="true" data-bz-field="name">{{ display_name }}</div>
+          {% render 'brezello-inhaler', label: display_name, open: true, live: true %}
+        {%- endif -%}
+      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="bz-thumbs">
+          {%- for media in product.media -%}
+            <button type="button" class="bz-thumb" data-bz-thumb="{{ media.id }}" aria-label="Voir l'image {{ forloop.index }}"{% if media.id == featured_id %} aria-current="true"{% endif %}>
+              {{ media.preview_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: '' }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Fiche d'achat {%- endcomment -%}
+    <div class="bz-buy">
+      <div class="bz-head">
+        <h1 class="bz-kicker">{{ product.title }}</h1>
+        <p class="bz-title" data-bz-field="name">{{ display_name }}</p>
+        {%- if current_block and parfum_pos > 0 -%}
+          <p class="bz-notes" data-bz-field="notes">{{ current_block.settings.notes }}</p>
+          <p class="bz-line"><span data-bz-field="line">{{ current_block.settings.phrase }}</span> {{ section.settings.intro }}</p>
+        {%- elsif section.settings.intro != blank -%}
+          <p class="bz-line">{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="bz-price-row">
+        <span class="bz-price" data-bz-price>{{ current_variant.price | money }}</span>
+        <s class="bz-compare" data-bz-compare{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}>{{ current_variant.compare_at_price | money }}</s>
+        {%- if section.settings.price_note != blank -%}
+          <span class="bz-mono-note">{{ section.settings.price_note }}</span>
+        {%- endif -%}
+      </div>
+
+      <hr class="bz-rule">
+
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          <fieldset class="bz-field" data-bz-fieldset>
+            <legend class="bz-legend">
+              <span>{{ option.name }}</span>
+              {%- if option.position == parfum_pos and current_block -%}
+                <span class="bz-legend-aside" data-bz-field="mood">{{ current_block.settings.humeur }}</span>
+              {%- endif -%}
+            </legend>
+            <div class="{% if option.position == parfum_pos %}bz-swatches{% else %}bz-pills{% endif %}">
+              {%- for value in option.values -%}
+                {%- assign input_id = 'bz-' | append: section.id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+                <input class="bz-vh" type="radio" id="{{ input_id }}" name="bz-{{ section.id }}-{{ option.position }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}>
+                {%- if option.position == parfum_pos -%}
+                  {%- liquid
+                    assign swatch = nil
+                    assign value_name = value | downcase | strip
+                    for block in section.blocks
+                      assign block_name = block.settings.nom | downcase | strip
+                      if block.type == 'parfum' and block_name == value_name
+                        assign swatch = block
+                      endif
+                    endfor
+                  -%}
+                  <label for="{{ input_id }}" class="bz-swatch"{% if swatch %} style="--bz-sw: {{ swatch.settings.body }};"{% endif %}>
+                    <span class="bz-swatch-dot" aria-hidden="true"></span>
+                    <span class="bz-swatch-name">{{ value }}</span>
+                  </label>
+                {%- else -%}
+                  <label for="{{ input_id }}" class="bz-pill">{{ value }}</label>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endfor -%}
+      {%- endunless -%}
+
+      {%- if product.selling_plan_groups.size > 0 -%}
+        {%- assign first_plan = product.selling_plan_groups.first.selling_plans.first -%}
+        <fieldset class="bz-field">
+          <legend class="bz-legend"><span>{{ section.settings.plans_label }}</span></legend>
+          <div class="bz-plans">
+            {%- unless product.requires_selling_plan -%}
+              <input class="bz-vh" type="radio" id="bz-{{ section.id }}-plan-0" name="bz-{{ section.id }}-plan" value="" checked data-bz-plan>
+              <label class="bz-plan" for="bz-{{ section.id }}-plan-0">
+                <span class="bz-radio" aria-hidden="true"></span>
+                <span class="bz-plan-text">
+                  <span class="bz-plan-title">{{ section.settings.one_time_label }}</span>
+                  {%- if section.settings.one_time_note != blank -%}<span class="bz-plan-note">{{ section.settings.one_time_note }}</span>{%- endif -%}
+                </span>
+              </label>
+            {%- endunless -%}
+            {%- for group in product.selling_plan_groups -%}
+              {%- for plan in group.selling_plans -%}
+                <input class="bz-vh" type="radio" id="bz-{{ section.id }}-plan-{{ plan.id }}" name="bz-{{ section.id }}-plan" value="{{ plan.id }}" data-bz-plan{% if product.requires_selling_plan and plan.id == first_plan.id %} checked{% endif %}>
+                <label class="bz-plan" for="bz-{{ section.id }}-plan-{{ plan.id }}">
+                  <span class="bz-radio" aria-hidden="true"></span>
+                  <span class="bz-plan-text">
+                    <span class="bz-plan-title">{{ plan.name }}</span>
+                    {%- if plan.description != blank -%}<span class="bz-plan-note">{{ plan.description }}</span>{%- endif -%}
+                  </span>
+                </label>
+              {%- endfor -%}
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- endif -%}
+
+      {%- form 'product', product, id: form_id, class: 'bz-form', novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-bz-id>
+        {%- if product.selling_plan_groups.size > 0 -%}
+          <input type="hidden" name="selling_plan" value="{% if product.requires_selling_plan %}{{ first_plan.id }}{% endif %}" data-bz-plan-input{% unless product.requires_selling_plan %} disabled{% endunless %}>
+        {%- endif -%}
+        <button type="submit" name="add" class="bz-cta" data-bz-add{% unless current_variant.available %} disabled{% endunless %}>
+          <span data-bz-add-label>{% if current_variant.available %}{{ section.settings.add_label }}{% else %}{{ section.settings.soldout_label }}{% endif %}</span>
+          <span class="bz-cta-price">
+            <span data-bz-price>{{ current_variant.price | money }}</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+        {%- if section.settings.show_dynamic_checkout -%}
+          {{ form | payment_button }}
+        {%- endif -%}
+      {%- endform -%}
+
+      <ul class="bz-reassure">
+        {%- if section.settings.reassure_1 != blank -%}
+          <li>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg>
+            {{ section.settings.reassure_1 }}
+          </li>
+        {%- endif -%}
+        {%- if section.settings.reassure_2 != blank -%}
+          <li>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M3 4l17 16"/></svg>
+            {{ section.settings.reassure_2 }}
+          </li>
+        {%- endif -%}
+        {%- if section.settings.reassure_3 != blank -%}
+          <li>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h14v8a7 7 0 0 1-14 0z"/><path d="M9 9h6"/></svg>
+            {{ section.settings.reassure_3 }}
+          </li>
+        {%- endif -%}
+      </ul>
+      {%- if section.settings.trust_note != blank -%}
+        <p class="bz-mono-note bz-trust">{{ section.settings.trust_note }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.show_description and product.description != blank -%}
+        <details class="bz-details">
+          <summary>{{ section.settings.description_label }}</summary>
+          <div class="bz-rte">{{ product.description }}</div>
+        </details>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} Bandeau défilant {%- endcomment -%}
+  {%- if section.settings.marquee_text != blank -%}
+    {%- assign marquee_items = section.settings.marquee_text | split: '|' -%}
+    <div class="bz-marquee" aria-hidden="true">
+      <div class="bz-marquee-track">
+        {%- for i in (1..2) -%}
+          <div class="bz-marquee-group">
+            {%- for item in marquee_items -%}
+              <span>{{ item | strip }}</span><span class="bz-marquee-star">✦</span>
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    <p class="bz-vh">{{ marquee_items | join: ', ' }}</p>
+  {%- endif -%}
+
+  {%- comment -%} Grille des parfums {%- endcomment -%}
+  {%- if section.settings.show_grid and current_block -%}
+    <div class="bz-wrap bz-moods">
+      <div class="bz-sec-head">
+        <h2 class="bz-h2">{{ section.settings.grid_title }}</h2>
+        {%- if section.settings.grid_text != blank -%}<p class="bz-lead">{{ section.settings.grid_text }}</p>{%- endif -%}
+      </div>
+      <div class="bz-mood-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'parfum' -%}
+            {%- assign block_name = block.settings.nom | downcase | strip -%}
+            <article
+              class="bz-mood{% if block_name == wanted_parfum %} is-current{% endif %}"
+              data-bz-mood="{{ block.settings.nom | escape }}"
+              style="--bz-tint: {{ block.settings.tint }}; --bz-deep: {{ block.settings.deep }}; --bz-body: {{ block.settings.body }};"
+              {{ block.shopify_attributes }}
+            >
+              <div class="bz-mood-top"><span>N°{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span><span>{{ block.settings.humeur }}</span></div>
+              <div class="bz-mood-visual">{% render 'brezello-inhaler', label: block.settings.nom, decorative: true %}</div>
+              <h3 class="bz-mood-name">{{ block.settings.nom }}</h3>
+              <p class="bz-mood-notes">{{ block.settings.notes }}</p>
+              {%- if parfum_pos > 0 -%}
+                <button type="button" class="bz-mood-btn" data-bz-pick aria-pressed="{% if block_name == wanted_parfum %}true{% else %}false{% endif %}">
+                  {%- if block_name == wanted_parfum -%}{{ section.settings.selected_label }}{%- else -%}{{ section.settings.pick_label }} {{ block.settings.nom }}{%- endif -%}
+                </button>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Composition {%- endcomment -%}
+  {%- if section.settings.show_composition -%}
+    <div class="bz-wrap bz-compo">
+      <div class="bz-compo-head">
+        <h2 class="bz-h2">{{ section.settings.compo_title }}</h2>
+        {%- if section.settings.compo_text != blank -%}<p class="bz-lead">{{ section.settings.compo_text }}</p>{%- endif -%}
+      </div>
+      <dl class="bz-table">
+        {%- if current_block -%}
+          <div class="bz-row">
+            <dt>{{ section.settings.parfum_option }}</dt>
+            <dd class="bz-strong"><span data-bz-field="name">{{ display_name }}</span> — <span data-bz-field="mood">{{ current_block.settings.humeur }}</span></dd>
+          </div>
+          <div class="bz-row"><dt>Notes olfactives</dt><dd data-bz-field="notes">{{ current_block.settings.notes }}</dd></div>
+          <div class="bz-row"><dt>Composition</dt><dd data-bz-field="inci">{{ current_block.settings.inci }}</dd></div>
+        {%- endif -%}
+        {%- if section.settings.compo_sans != blank -%}<div class="bz-row"><dt>Sans</dt><dd>{{ section.settings.compo_sans }}</dd></div>{%- endif -%}
+        {%- if section.settings.compo_contenance != blank -%}<div class="bz-row"><dt>Contenance</dt><dd>{{ section.settings.compo_contenance }}</dd></div>{%- endif -%}
+        {%- if section.settings.compo_precautions != blank -%}<div class="bz-row"><dt>Précautions</dt><dd>{{ section.settings.compo_precautions }}</dd></div>{%- endif -%}
+      </dl>
+    </div>
+  {%- endif -%}
+
+  <script type="application/json" data-bz-variants>
+    [{%- for v in product.variants -%}{"id":{{ v.id }},"options":{{ v.options | json }},"available":{% if v.available %}true{% else %}false{% endif %},"price":{{ v.price | money | json }},"compare":{{ v.compare_at_price | money | json }},"hasCompare":{% if v.compare_at_price > v.price %}true{% else %}false{% endif %},"media":{{ v.featured_media.id | default: 'null' }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+  </script>
+  <script type="application/json" data-bz-parfums>
+    [{%- assign first_written = false -%}{%- for block in section.blocks -%}{%- if block.type == 'parfum' -%}{%- if first_written -%},{%- endif -%}{"name":{{ block.settings.nom | json }},"mood":{{ block.settings.humeur | json }},"notes":{{ block.settings.notes | json }},"line":{{ block.settings.phrase | json }},"inci":{{ block.settings.inci | json }},"tint":"{{ block.settings.tint }}","deep":"{{ block.settings.deep }}","body":"{{ block.settings.body }}"}{%- assign first_written = true -%}{%- endif -%}{%- endfor -%}]
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Brezello – Produit",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "header", "content": "Parfums" },
+    {
+      "type": "text",
+      "id": "parfum_option",
+      "label": "Nom de l'option parfum",
+      "default": "Parfum",
+      "info": "Nom exact de l'option des variantes. Chaque bloc Parfum doit porter le même nom que sa valeur de variante (ex. Glaciale)."
+    },
+    { "type": "color", "id": "accent", "label": "Couleur d'accent", "default": "#D4F36B" },
+    { "type": "header", "content": "Visuel" },
+    { "type": "text", "id": "badge_left", "label": "Pastille gauche", "default": "Nouveau" },
+    { "type": "text", "id": "badge_right", "label": "Pastille droite", "default": "0 % nicotine" },
+    { "type": "header", "content": "Fiche d'achat" },
+    { "type": "text", "id": "intro", "label": "Texte après la phrase du parfum", "default": "Deux embouts, un pour chaque narine : une bouffée d'arômes nette, où que vous soyez." },
+    { "type": "text", "id": "price_note", "label": "Mention près du prix", "default": "TVA incluse · Livraison offerte dès [XX] €" },
+    { "type": "text", "id": "add_label", "label": "Bouton d'ajout", "default": "Ajouter au panier" },
+    { "type": "text", "id": "soldout_label", "label": "Libellé épuisé", "default": "Épuisé" },
+    { "type": "text", "id": "unavailable_label", "label": "Libellé combinaison indisponible", "default": "Indisponible" },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Boutons de paiement express", "default": true },
+    { "type": "text", "id": "plans_label", "label": "Titre du mode d'achat", "default": "Mode d'achat", "info": "Visible seulement si le produit propose un abonnement (application Shopify Subscriptions par exemple)." },
+    { "type": "text", "id": "one_time_label", "label": "Libellé achat unique", "default": "Achat unique" },
+    { "type": "text", "id": "one_time_note", "label": "Précision achat unique", "default": "Expédié depuis la France" },
+    { "type": "text", "id": "reassure_1", "label": "Réassurance 1", "default": "Sans nicotine" },
+    { "type": "text", "id": "reassure_2", "label": "Réassurance 2", "default": "Sans batterie" },
+    { "type": "text", "id": "reassure_3", "label": "Réassurance 3", "default": "Format poche" },
+    { "type": "text", "id": "trust_note", "label": "Mention de confiance", "default": "Paiement sécurisé · Retours 14 jours (produit non ouvert)" },
+    { "type": "checkbox", "id": "show_description", "label": "Afficher la description du produit", "default": true },
+    { "type": "text", "id": "description_label", "label": "Titre de la description", "default": "Description" },
+    { "type": "header", "content": "Bandeau défilant" },
+    { "type": "text", "id": "marquee_text", "label": "Textes du bandeau", "default": "Sans nicotine|Sans batterie|Sans vapeur|Menthol & huiles essentielles|Format poche", "info": "Séparez les textes par une barre verticale |. Laissez vide pour masquer le bandeau." },
+    { "type": "header", "content": "Grille des parfums" },
+    { "type": "checkbox", "id": "show_grid", "label": "Afficher la grille des parfums", "default": true },
+    { "type": "text", "id": "grid_title", "label": "Titre", "default": "Quatre humeurs. Une seule signature." },
+    { "type": "text", "id": "grid_text", "label": "Texte", "default": "Chaque parfum a sa couleur, sa note et son moment. Choisissez le vôtre, ou collectionnez-les." },
+    { "type": "text", "id": "pick_label", "label": "Bouton choisir", "default": "Choisir" },
+    { "type": "text", "id": "selected_label", "label": "Libellé du parfum choisi", "default": "Sélectionné" },
+    { "type": "header", "content": "Composition" },
+    { "type": "checkbox", "id": "show_composition", "label": "Afficher la composition", "default": true },
+    { "type": "text", "id": "compo_title", "label": "Titre", "default": "Ce qu'il y a dedans. Rien de plus." },
+    { "type": "text", "id": "compo_text", "label": "Texte", "default": "Transparence totale, parfum par parfum. La fiche se met à jour selon votre choix." },
+    { "type": "text", "id": "compo_sans", "label": "Ligne Sans", "default": "Nicotine · Tabac · Combustion · Batterie" },
+    { "type": "text", "id": "compo_contenance", "label": "Ligne Contenance", "default": "2 ml · environ [durée] d'utilisation après ouverture" },
+    { "type": "text", "id": "compo_precautions", "label": "Ligne Précautions", "default": "Usage externe. Tenir hors de portée des enfants. Voir la FAQ." }
+  ],
+  "blocks": [
+    {
+      "type": "parfum",
+      "name": "Parfum",
+      "settings": [
+        { "type": "text", "id": "nom", "label": "Nom (identique à la variante)", "default": "Glaciale" },
+        { "type": "text", "id": "humeur", "label": "Humeur", "default": "Fraîcheur glacée" },
+        { "type": "text", "id": "notes", "label": "Notes olfactives", "default": "Menthe poivrée · Eucalyptus" },
+        { "type": "text", "id": "phrase", "label": "Phrase d'accroche", "default": "Le coup de frais net et mentholé qui réveille." },
+        { "type": "textarea", "id": "inci", "label": "Composition (INCI)", "default": "[Liste INCI complète, fiche technique du fournisseur]" },
+        { "type": "color", "id": "tint", "label": "Couleur de fond", "default": "#D6EEF0" },
+        { "type": "color", "id": "deep", "label": "Couleur foncée (textes, capuchons)", "default": "#0F5C63" },
+        { "type": "color", "id": "body", "label": "Couleur du boîtier", "default": "#7FC9CF" }
+      ]
+    }
+  ]
+}
+{% endschema %}

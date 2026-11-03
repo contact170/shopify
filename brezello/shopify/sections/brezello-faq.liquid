@@ -1,0 +1,53 @@
+{%- comment -%} Brezello – questions fréquentes (accordéons natifs, sans JavaScript). {%- endcomment -%}
+{{ 'brezello.css' | asset_url | stylesheet_tag }}
+
+<div class="bz" id="bz-{{ section.id }}" style="--bz-accent: {{ section.settings.accent }};">
+  <div class="bz-wrap bz-faq">
+    <div class="bz-faq-head">
+      <h2 class="bz-h2">{{ section.settings.title }}</h2>
+      {%- if section.settings.text != blank -%}<p class="bz-lead">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="bz-faq-list">
+      {%- for block in section.blocks -%}
+        <details class="bz-q" {{ block.shopify_attributes }}{% if forloop.first and section.settings.open_first %} open{% endif %}>
+          <summary><span>{{ block.settings.question }}</span><span class="bz-q-sign" aria-hidden="true"></span></summary>
+          <div class="bz-q-a">{{ block.settings.answer | newline_to_br }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brezello – FAQ",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Questions fréquentes." },
+    { "type": "text", "id": "text", "label": "Texte", "default": "Une autre question ? Écrivez-nous à bonjour@brezello.com, réponse sous 24 h ouvrées." },
+    { "type": "checkbox", "id": "open_first", "label": "Ouvrir la première question", "default": true },
+    { "type": "color", "id": "accent", "label": "Couleur d'accent", "default": "#D4F36B" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Contient-il de la nicotine ?" },
+        { "type": "textarea", "id": "answer", "label": "Réponse", "default": "Non. Brezello ne contient ni nicotine ni tabac." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brezello – FAQ",
+      "blocks": [
+        { "type": "question", "settings": { "question": "Contient-il de la nicotine ?", "answer": "Non. Brezello ne contient ni nicotine ni tabac. Il ne chauffe pas, ne produit aucune vapeur et n'a pas de batterie : il diffuse simplement les arômes de sa mèche imprégnée." } },
+        { "type": "question", "settings": { "question": "Combien de temps dure un inhaler ?", "answer": "Environ [durée à confirmer] d'utilisation régulière après ouverture. Remettez bien les capuchons après chaque usage pour préserver les arômes." } },
+        { "type": "question", "settings": { "question": "Qui ne doit pas l'utiliser ?", "answer": "Déconseillé aux enfants de moins de [âge] ans, aux femmes enceintes ou allaitantes et aux personnes épileptiques. En cas d'asthme ou au moindre doute, demandez l'avis de votre médecin. Usage externe uniquement." } },
+        { "type": "question", "settings": { "question": "Est-ce un médicament ?", "answer": "Non. Brezello est un produit de bien-être olfactif : il apporte une sensation de fraîcheur, mais ne soigne pas et ne remplace pas un traitement." } },
+        { "type": "question", "settings": { "question": "Livraison et retours", "answer": "Expédition depuis la France sous [X] h ouvrées. Vous disposez de 14 jours pour retourner un produit non ouvert, dans son emballage scellé d'origine." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

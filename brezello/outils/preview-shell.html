@@ -1,0 +1,171 @@
+<title>Fiche produit Brezello</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Aperçu : bandeau + en-tête et pied de page de démonstration autour des sections Shopify Brezello. */
+:root {
+  --p-chalk: #F4F4F0;
+  --p-ink: #111413;
+  --p-soft: #B4B9B6;
+  --p-muted: #5B605D;
+  --p-panel: #1C211F;
+  --p-accent: #D4F36B;
+  --p-gutter-l: max(16px, 4vw, env(safe-area-inset-left, 0px));
+  --p-gutter-r: max(16px, 4vw, env(safe-area-inset-right, 0px));
+  color-scheme: light;
+}
+body { margin: 0; background: var(--p-chalk); color: var(--p-ink); }
+.p-inner { max-width: 1320px; margin-inline: auto; padding-left: var(--p-gutter-l); padding-right: var(--p-gutter-r); }
+.p-announce { background: var(--p-ink); color: var(--p-chalk); font: 400 12px/1.4 "Bz Mono", ui-monospace, monospace; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; }
+.p-announce .p-inner { padding-block: 10px; }
+.p-note { background: var(--p-accent); color: var(--p-ink); font: 500 12px/1.4 "Bz Mono", ui-monospace, monospace; letter-spacing: 0.04em; text-align: center; }
+.p-note .p-inner { padding-block: 8px; }
+.p-header .p-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px; padding-block: 18px; }
+.p-logo { display: flex; align-items: center; gap: 10px; color: var(--p-ink); text-decoration: none; }
+.p-logo span { font: 800 28px/1 "Bz Display", system-ui, sans-serif; letter-spacing: -0.04em; }
+.p-nav { order: 3; flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; font: 500 15px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.p-nav a { color: var(--p-ink); text-decoration: none; }
+.p-nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.p-icons { order: 4; display: flex; gap: 4px; }
+@media (max-width: 720px) {
+  .p-icons { order: 2; }
+  .p-nav { order: 3; flex-basis: 100%; justify-content: flex-start; gap: 8px 22px; }
+}
+.p-icon { width: 44px; height: 44px; border: 0; border-radius: 999px; background: transparent; color: var(--p-ink); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.p-cart { height: 44px; border: 0; border-radius: 999px; background: var(--p-ink); color: var(--p-chalk); display: flex; align-items: center; gap: 8px; padding: 0 16px; font: 600 14px/1 system-ui, -apple-system, sans-serif; font-variant-numeric: tabular-nums; cursor: pointer; }
+.p-icon:focus-visible, .p-cart:focus-visible, .p-nav a:focus-visible, .p-logo:focus-visible, .p-footer a:focus-visible, .p-footer button:focus-visible, .p-footer input:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.p-crumbs { font: 400 12px/1.4 "Bz Mono", ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--p-muted); }
+.p-crumbs .p-inner { padding-block: 0 4px; }
+.p-crumbs a { color: var(--p-muted); text-decoration: none; }
+
+.p-footer { background: var(--p-ink); color: var(--p-chalk); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+.p-footer .p-inner { display: flex; flex-direction: column; gap: 64px; padding-block: 96px 32px; }
+.p-foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px; }
+.p-news { flex: 1 1 360px; min-width: 0; max-width: 520px; display: flex; flex-direction: column; gap: 16px; }
+.p-news h2 { margin: 0; font: 800 clamp(36px, 4vw, 56px)/1 "Bz Display", system-ui, sans-serif; letter-spacing: -0.04em; }
+.p-news p { margin: 0; color: var(--p-soft); }
+.p-news label { font-size: 14px; font-weight: 500; }
+.p-news-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.p-news input { flex: 1 1 220px; min-width: 0; min-height: 52px; border: 0; border-radius: 999px; background: var(--p-panel); color: var(--p-chalk); box-shadow: inset 0 0 0 1px rgba(244, 244, 240, 0.2); padding: 0 20px; font: inherit; }
+.p-news input::placeholder { color: #8A908C; }
+.p-news button { min-height: 52px; border: 0; border-radius: 999px; background: var(--p-accent); color: var(--p-ink); padding: 0 24px; font: 600 15px/1 system-ui, sans-serif; cursor: pointer; }
+.p-news-ok { color: var(--p-accent); font-size: 14px; }
+.p-cols { display: flex; flex-wrap: wrap; gap: 32px 64px; }
+.p-col { display: flex; flex-direction: column; gap: 12px; }
+.p-col span { font: 400 12px/1.4 "Bz Mono", ui-monospace, monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--p-soft); }
+.p-col a { color: var(--p-chalk); text-decoration: none; }
+.p-col a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.p-giant { font: 800 clamp(88px, 21vw, 300px)/0.8 "Bz Display", system-ui, sans-serif; letter-spacing: -0.07em; overflow: hidden; }
+.p-legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-top: 24px; border-top: 1px solid rgba(244, 244, 240, 0.16); font-size: 13px; color: var(--p-soft); }
+.p-legal a { color: var(--p-soft); }
+.p-legal-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+
+.p-toast {
+  position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 20;
+  transform: translate(-50%, 24px); opacity: 0; pointer-events: none;
+  width: min(440px, calc(100% - 32px)); display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; border-radius: 18px; background: var(--p-ink); color: var(--p-chalk);
+  font: 500 14px/1.4 system-ui, -apple-system, sans-serif; box-shadow: 0 12px 32px rgba(17, 20, 19, 0.25);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.p-toast.is-on { transform: translate(-50%, 0); opacity: 1; }
+.p-toast-dot { flex: 0 0 10px; width: 10px; height: 10px; border-radius: 999px; background: var(--p-accent); }
+@media (prefers-reduced-motion: reduce) { .p-toast { transition: none; } }
+
+/*BZ_CSS*/
+</style>
+
+<div class="p-announce"><div class="p-inner">Livraison offerte dès [XX] € · Expédié depuis la France · Sans nicotine</div></div>
+<div class="p-note"><div class="p-inner">Aperçu de la fiche produit Shopify · prix et photos à venir</div></div>
+
+<header class="p-header">
+  <div class="p-inner">
+    <a class="p-logo" href="#shopify-section-template--brezello__main" aria-label="Brezello, accueil">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 8c3-2.5 6 2.5 9 0s6-2.5 9 0"/><path d="M3 13c3-2.5 6 2.5 9 0s6-2.5 9 0"/><path d="M3 18c3-2.5 6 2.5 9 0"/></svg>
+      <span>brezello</span>
+    </a>
+    <nav class="p-nav" aria-label="Navigation principale">
+      <a href="#shopify-section-template--brezello__main">Inhalers</a>
+      <a href="#shopify-section-template--brezello__coffret">Coffrets</a>
+      <a href="#shopify-section-template--brezello__rituel">Le rituel</a>
+      <a href="#shopify-section-template--brezello__faq">Aide</a>
+    </nav>
+    <div class="p-icons">
+      <button type="button" class="p-icon" aria-label="Rechercher"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <button type="button" class="p-icon" aria-label="Mon compte"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button>
+      <button type="button" class="p-cart" aria-label="Panier"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span id="p-cart-count">0</span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="p-crumbs" aria-label="Fil d'Ariane"><div class="p-inner"><a href="#shopify-section-template--brezello__main">Accueil</a> / <a href="#shopify-section-template--brezello__main">Inhalers</a> / <span>Inhaler nasal Brezello</span></div></nav>
+
+<main>
+<!--BZ_BODY-->
+</main>
+
+<footer class="p-footer">
+  <div class="p-inner">
+    <div class="p-foot-top">
+      <form class="p-news" id="p-news">
+        <h2>Recevez la brise.</h2>
+        <p>Nouveaux parfums, éditions limitées et offres réservées aux inscrits.</p>
+        <label for="p-email">Votre adresse e-mail</label>
+        <div class="p-news-row">
+          <input id="p-email" type="email" placeholder="prenom@exemple.fr" autocomplete="email" required>
+          <button type="submit">S'inscrire</button>
+        </div>
+        <p class="p-news-ok" id="p-news-ok" role="status" hidden>Merci, votre inscription est notée (aperçu).</p>
+      </form>
+      <div class="p-cols">
+        <div class="p-col"><span>Boutique</span><a href="#shopify-section-template--brezello__main">Inhalers</a><a href="#shopify-section-template--brezello__coffret">Coffrets</a><a href="#shopify-section-template--brezello__coffret">Cartes cadeaux</a></div>
+        <div class="p-col"><span>Aide</span><a href="#shopify-section-template--brezello__faq">Livraison</a><a href="#shopify-section-template--brezello__faq">Retours</a><a href="#shopify-section-template--brezello__faq">Contact</a></div>
+        <div class="p-col"><span>Suivez-nous</span><a href="https://www.instagram.com/">Instagram</a><a href="https://www.tiktok.com/">TikTok</a></div>
+      </div>
+    </div>
+    <div class="p-giant" aria-hidden="true">brezello</div>
+    <div class="p-legal">
+      <span>© 2026 Brezello · Produit de bien-être olfactif, ce n'est pas un médicament.</span>
+      <span class="p-legal-links"><a href="#shopify-section-template--brezello__faq">Mentions légales</a><a href="#shopify-section-template--brezello__faq">CGV</a><a href="#shopify-section-template--brezello__faq">Confidentialité</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="p-toast" id="p-toast" role="status" aria-live="polite"><span class="p-toast-dot" aria-hidden="true"></span><span id="p-toast-text"></span></div>
+
+<script>
+/* Dans l'aperçu, on ne modifie pas l'adresse de la page à chaque choix de variante. */
+window.Shopify = window.Shopify || {};
+window.Shopify.designMode = true;
+</script>
+<script>
+/*BZ_JS*/
+</script>
+<script>
+(function () {
+  var count = 0;
+  var toast = document.getElementById('p-toast');
+  var toastText = document.getElementById('p-toast-text');
+  var timer = null;
+  function showToast(message) {
+    toastText.textContent = message;
+    toast.classList.add('is-on');
+    clearTimeout(timer);
+    timer = setTimeout(function () { toast.classList.remove('is-on'); }, 3200);
+  }
+  document.querySelectorAll('form[action="/cart/add"]').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var root = form.closest('[data-bz-product]');
+      var picked = Array.prototype.map.call(root.querySelectorAll('[data-bz-fieldset] input:checked'), function (i) { return i.value; });
+      count += 1;
+      document.getElementById('p-cart-count').textContent = String(count);
+      showToast('Ajouté au panier : ' + picked.join(' · ') + '. Sur la boutique, le client irait au panier.');
+    });
+  });
+  var news = document.getElementById('p-news');
+  news.addEventListener('submit', function (event) {
+    event.preventDefault();
+    document.getElementById('p-news-ok').hidden = false;
+  });
+})();
+</script>

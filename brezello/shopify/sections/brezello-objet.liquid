@@ -1,0 +1,80 @@
+{%- comment -%} Brezello – présentation de l'objet sur fond sombre, avec schéma annoté. {%- endcomment -%}
+{{ 'brezello.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign marker_x = '58,86,78,2' | split: ','
+  assign marker_y = '16,9,58,95' | split: ','
+-%}
+<div
+  class="bz bz-dark"
+  id="bz-{{ section.id }}"
+  style="--bz-accent: {{ section.settings.accent }}; --bz-deep: {{ section.settings.deep }}; --bz-body: {{ section.settings.body }};"
+>
+  <div class="bz-wrap bz-object">
+    <div class="bz-object-text">
+      {%- if section.settings.eyebrow != blank -%}<p class="bz-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="bz-h2">{{ section.settings.title }}</h2>
+      <ol class="bz-points">
+        {%- for block in section.blocks -%}
+          <li class="bz-point" {{ block.shopify_attributes }}>
+            <span class="bz-point-num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+            <span>
+              <span class="bz-point-title">{{ block.settings.title }}</span>
+              {%- if block.settings.text != blank -%}<span class="bz-point-text">{{ block.settings.text }}</span>{%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+    <div class="bz-object-visual">
+      <div class="bz-diagram">
+        {% render 'brezello-inhaler', label: section.settings.label, open: true, decorative: true %}
+        {%- if section.settings.dimension != blank -%}
+          <div class="bz-dim" aria-hidden="true"><span>{{ section.settings.dimension }}</span></div>
+        {%- endif -%}
+        {%- for block in section.blocks limit: 4 -%}
+          {%- assign i = forloop.index0 -%}
+          <span class="bz-marker" aria-hidden="true" style="left: {{ marker_x[i] }}%; top: {{ marker_y[i] }}%;">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brezello – L'objet",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "L'objet" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Pensé pour la poche. Dessiné pour durer." },
+    { "type": "text", "id": "label", "label": "Parfum imprimé sur le schéma", "default": "Glaciale" },
+    { "type": "text", "id": "dimension", "label": "Cote de hauteur", "default": "[X] cm" },
+    { "type": "color", "id": "accent", "label": "Couleur d'accent", "default": "#D4F36B" },
+    { "type": "color", "id": "deep", "label": "Couleur des capuchons", "default": "#0F5C63" },
+    { "type": "color", "id": "body", "label": "Couleur du boîtier", "default": "#7FC9CF" },
+    { "type": "paragraph", "content": "Les repères 01 à 04 du schéma suivent l'ordre des 4 premiers points : embouts, capuchon, boîtier, taille." }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point fort",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre", "default": "Double embout" },
+        { "type": "text", "id": "text", "label": "Texte", "default": "Un embout par narine, pour une diffusion équilibrée." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brezello – L'objet",
+      "blocks": [
+        { "type": "point", "settings": { "title": "Double embout", "text": "Un embout par narine, pour une diffusion équilibrée." } },
+        { "type": "point", "settings": { "title": "Capuchons hermétiques", "text": "Les arômes restent concentrés entre deux usages." } },
+        { "type": "point", "settings": { "title": "Mèche imprégnée", "text": "Menthol et huiles essentielles, sans chauffe ni combustion." } },
+        { "type": "point", "settings": { "title": "Format poche", "text": "Se glisse dans une poche, un sac ou une trousse." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

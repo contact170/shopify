@@ -1,0 +1,36 @@
+{%- comment -%}
+  Illustration vectorielle de l'inhaler Brezello, affichée tant qu'il n'y a pas de photo produit.
+  Paramètres :
+  - label : nom du parfum imprimé sur le boîtier
+  - open : true pour montrer un capuchon retiré
+  - decorative : true pour masquer l'illustration aux lecteurs d'écran
+  - live : true pour que le nom suive le parfum choisi (fiche produit)
+  Les couleurs viennent des variables CSS --bz-deep et --bz-body du bloc parent.
+{%- endcomment -%}
+<svg
+  class="bz-inhaler{% if open %} bz-inhaler--open{% endif %}"
+  {% if live %}data-bz-live{% endif %}
+  viewBox="{% if open %}0 0 360 400{% else %}0 0 300 400{% endif %}"
+  {% if decorative %}aria-hidden="true" focusable="false"{% else %}role="img" aria-label="Inhaler Brezello {{ label | escape }}"{% endif %}
+>
+  <ellipse class="bz-i-shadow" cx="150" cy="388" rx="104" ry="9"/>
+  <path class="bz-i-deep" d="M66 132 V74 A36 36 0 0 1 138 74 V132 Z"/>
+  <rect class="bz-i-shine" x="78" y="62" width="10" height="56" rx="5"/>
+  {%- if open -%}
+    <rect class="bz-i-deep" x="172" y="86" width="52" height="50" rx="22"/>
+    <ellipse class="bz-i-hole" cx="198" cy="96" rx="12" ry="5"/>
+    <g transform="rotate(18 300 80)">
+      <path class="bz-i-deep" d="M264 128 V70 A36 36 0 0 1 336 70 V128 Z"/>
+      <rect class="bz-i-shine" x="276" y="58" width="10" height="56" rx="5"/>
+      <ellipse class="bz-i-hole" cx="300" cy="128" rx="36" ry="6"/>
+    </g>
+  {%- else -%}
+    <path class="bz-i-deep" d="M162 132 V74 A36 36 0 0 1 234 74 V132 Z"/>
+    <rect class="bz-i-shine" x="174" y="62" width="10" height="56" rx="5"/>
+  {%- endif -%}
+  <rect class="bz-i-body" x="40" y="124" width="220" height="256" rx="48"/>
+  <rect class="bz-i-shine bz-i-shine--soft" x="58" y="146" width="14" height="200" rx="7"/>
+  <text class="bz-i-word" x="150" y="262" text-anchor="middle">brezello</text>
+  <text class="bz-i-label" x="150" y="296" text-anchor="middle"{% if live %} data-bz-label{% endif %}>{{ label | upcase | escape }}</text>
+  <text class="bz-i-small" x="150" y="352" text-anchor="middle">SANS NICOTINE</text>
+</svg>

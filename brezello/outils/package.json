@@ -1,0 +1,11 @@
+{
+  "name": "brezello-apercu",
+  "private": true,
+  "description": "Génère l'aperçu HTML de la fiche produit Shopify Brezello à partir des fichiers Liquid.",
+  "scripts": {
+    "apercu": "node render-preview.js ../shopify apercu.html"
+  },
+  "dependencies": {
+    "liquidjs": "10.19.0"
+  }
+}
