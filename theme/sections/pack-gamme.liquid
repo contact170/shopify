@@ -1406,7 +1406,7 @@
               <span class="pk-gamme__nom">{{ g[2] }}</span>
               <span class="pk-gamme__cam">{{ g[3] }}</span>
               <span class="pk-gamme__det">{{ g[4] }}</span>
-              {%- if g_prod.id and g_prod.price_min > 0 -%}<span class="pk-gamme__prix">dès {{ g_prod.price_min | money }}</span>{%- endif -%}
+              {%- assign g_min = g_prod.price_min | plus: 0 -%}{%- if g_prod.id and g_min > 0 -%}<span class="pk-gamme__prix">dès {{ g_prod.price_min | money }}</span>{%- endif -%}
             </a>
           </li>
         {%- endfor -%}
