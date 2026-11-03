@@ -215,7 +215,65 @@
   endcase
 -%}
 
-<div class="pv" id="PSI-{{ section.id }}" data-psi="{{ section.id }}">
+{%- comment -%} ============ Identité propre au pack : couleur, pastille, plan, ordre des encarts ============ {%- endcomment -%}
+{%- liquid
+  # Chaque pack a sa couleur d'accent (surtitres, coches, bandeau d'appel,
+  # dégradé de l'en-tête), une pastille au-dessus du titre, un plan
+  # d'installation (snippets/pk-plan.liquid) et son propre ordre d'encarts.
+  # Les boutons et le choix de centrale restent bleu marine sur toutes les fiches.
+  assign pk_accent = '#0c1e4a'
+  assign pk_soft = '#f5f5f7'
+  assign pk_signature = ''
+  assign pk_plan_titre = ''
+  assign pk_plan_texte = ''
+  assign pk_ordre = 'maison,cam,sirene,fumee,sim,app'
+  case pk_code
+    when 'ess'
+      assign pk_accent = '#1d5fd1'
+      assign pk_soft = '#eaf1fd'
+      assign pk_signature = 'Pour démarrer'
+      assign pk_plan_titre = "Un appartement protégé, prêt à s'agrandir."
+      assign pk_plan_texte = "Les contacteurs surveillent la porte d'entrée et les fenêtres, le détecteur de mouvement et la caméra intérieure gardent la pièce de vie, la sirène solaire dissuade depuis le balcon. Les accessoires se connectent sans fil à la centrale : vous complétez quand vous voulez."
+      assign pk_ordre = 'maison,cam,sirene,app,sim'
+    when 'psi'
+      assign pk_accent = '#c81e2e'
+      assign pk_soft = '#fdeced'
+      assign pk_signature = 'Dedans et dehors'
+      assign pk_plan_titre = "L'intérieur et l'allée sous surveillance."
+      assign pk_plan_texte = "Dedans, la caméra intérieure et le détecteur de mouvement gardent le séjour. Dehors, la caméra rotative à panneau solaire balaie l'allée jusqu'au portail, et la sirène solaire dissuade depuis la façade."
+      assign pk_ordre = 'cam,sirene,maison,app,sim'
+    when 'vdu'
+      assign pk_accent = '#0f766e'
+      assign pk_soft = '#e4f4f1'
+      assign pk_signature = 'Devant et derrière'
+      assign pk_plan_titre = "Une caméra devant, une caméra derrière."
+      assign pk_plan_texte = "Les deux caméras extérieures sur batterie se fixent sans câble : l'une surveille l'entrée et l'allée, l'autre la terrasse et le jardin. À l'intérieur, cinq contacteurs et deux détecteurs de mouvement couvrent les accès et les pièces de passage."
+      assign pk_ordre = 'cam,maison,sirene,app,sim'
+    when 'pan'
+      assign pk_accent = '#2f7a3b'
+      assign pk_soft = '#e8f4e9'
+      assign pk_signature = 'Grand terrain'
+      assign pk_plan_titre = "Tout le terrain, d'un seul regard."
+      assign pk_plan_texte = "Placée à l'angle de la maison, la caméra rotative à panneau solaire pivote à distance pour suivre ce qui se passe dans le jardin. Six contacteurs, deux détecteurs de mouvement et un détecteur de fumée protègent l'intérieur."
+      assign pk_ordre = 'cam,fumee,sirene,maison,app,sim'
+    when 'vds'
+      assign pk_accent = '#b45309'
+      assign pk_soft = '#fdf2e3'
+      assign pk_signature = 'Caméras solaires'
+      assign pk_plan_titre = "Deux caméras qui se rechargent au soleil."
+      assign pk_plan_texte = "Devant et derrière, chaque caméra extérieure W503 est reliée à son panneau solaire : pas de batterie à décrocher pour la recharger. Six contacteurs, deux détecteurs de mouvement et un détecteur de fumée complètent la protection."
+      assign pk_ordre = 'cam,sirene,fumee,maison,app,sim'
+    when 'pdu'
+      assign pk_accent = '#5b2fb0'
+      assign pk_soft = '#f1ebfb'
+      assign pk_signature = 'Grande maison'
+      assign pk_plan_titre = "Chaque étage, chaque façade."
+      assign pk_plan_texte = "Deux caméras rotatives à panneau solaire surveillent deux façades. Les huit contacteurs et les trois détecteurs de mouvement se répartissent entre le rez-de-chaussée et l'étage, avec un détecteur de fumée par niveau."
+      assign pk_ordre = 'cam,maison,fumee,sirene,app,sim'
+  endcase
+-%}
+
+<div class="pv" id="PSI-{{ section.id }}" data-psi="{{ section.id }}" data-pack="{{ pk_code }}" style="--pk-accent:{{ pk_accent }};--pk-soft:{{ pk_soft }}">
 
   <nav class="pv-wrap pv-bread" aria-label="Fil d'Ariane">
     <ol>
@@ -683,6 +741,48 @@
     .pk-gamme__prix{margin-top:auto;padding-top:8px;font-size:15px;font-weight:700;color:var(--pv-navy);}
     @media (min-width:1100px){.pk-gamme__liste{grid-auto-flow:row;grid-template-columns:repeat(6,1fr);overflow:visible;}}
     @media (max-width:699px){.psi-sim{margin-top:28px;padding:20px 16px;}.psi-sim__offre{padding:14px 12px;}.psi-sim__intro h3{font-size:18px;}}
+
+    /* ---- identité propre au pack (couleur d'accent, pastille, plan) ---- */
+    .pv{--pk-accent:var(--pv-navy);--pk-soft:var(--pv-bg-alt);}
+    .pv .pv-hero{background:linear-gradient(180deg,var(--pk-soft) 0%,rgba(255,255,255,0) 78%);}
+    .pv .pk-signature{display:inline-flex;align-items:center;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pk-accent);background:#fff;border:1.5px solid var(--pk-accent);border-radius:999px;padding:5px 12px;margin-bottom:14px;}
+    .pv .pv-hero__tagline,.pv .pv-feature__num,.pv .pv-eyebrow{color:var(--pk-accent);}
+    .pv .pv-feature ul li svg{color:var(--pk-accent);}
+    .pv .pv-band{background:var(--pk-accent);}
+    .pv .pv-band p{color:rgba(255,255,255,.88);}
+    .pk-plan__grille{display:grid;grid-template-columns:1fr;gap:28px;align-items:center;}
+    .pk-plan__dessin{background:#fff;border-radius:24px;padding:12px;box-shadow:0 18px 40px -30px rgba(12,30,74,.35);}
+    .pk-plan__texte h2{font-size:clamp(26px,3.4vw,38px);}
+    .pk-plan__note{margin-top:16px;font-size:13px;color:var(--pv-gray);}
+    @media (min-width:900px){.pk-plan__grille{grid-template-columns:1.15fr 1fr;gap:64px;}}
+    .pk-plan__svg{width:100%;height:auto;display:block;font-family:inherit;}
+    .pk-p-ground{fill:#eef3ea;}
+    .pk-p-ground--flat{fill:#f1f1f4;}
+    .pk-p-street{fill:#dfe0e6;}
+    .pk-p-path{fill:#e6e1d6;}
+    .pk-p-terrace{fill:#e9e5dc;}
+    .pk-p-gate{stroke:#8a8a92;stroke-width:4;stroke-dasharray:8 5;}
+    .pk-p-house{fill:#fff;stroke:#1d1d1f;stroke-width:5;}
+    .pk-p-wall{fill:none;stroke:#1d1d1f;stroke-width:2.5;opacity:.55;}
+    .pk-p-lab{font-size:15px;fill:#6e6e73;font-weight:600;}
+    .pk-p-lab--muted{fill:#8a8f88;font-weight:500;}
+    .pk-p-lab--small{font-size:12px;}
+    .pk-p-lab--title{font-size:16px;fill:#1d1d1f;font-weight:700;}
+    .pk-p-lab--accent{fill:var(--pk-accent,#0c1e4a);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;}
+    .pk-p-cone{fill:var(--pk-accent,#0c1e4a);opacity:.18;}
+    .pk-p-cone--in{opacity:.12;}
+    .pk-p-fan{fill:#4b5770;opacity:.1;}
+    .pk-p-arc{fill:none;stroke:var(--pk-accent,#0c1e4a);stroke-width:2;stroke-dasharray:6 6;opacity:.7;}
+    .pk-p-m circle{stroke:#fff;stroke-width:3;}
+    .pk-p-m text{fill:#fff;font-size:13px;font-weight:700;}
+    .pk-p-ghost circle{fill:#fff;stroke:var(--pk-accent,#0c1e4a);stroke-width:2;stroke-dasharray:4 3;}
+    .pk-p-ghost text{fill:var(--pk-accent,#0c1e4a);font-size:18px;font-weight:700;}
+    .pk-p-sun circle{fill:#f5b400;}
+    .pk-p-sun line{stroke:#f5b400;stroke-width:2.5;stroke-linecap:round;}
+    .pk-plan__legende{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px;}
+    .pk-plan__legende li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.45;}
+    .pk-plan__sym{flex-shrink:0;width:26px;height:26px;border-radius:50%;color:#fff;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+    .pk-plan__sym--ghost{background:#fff;color:var(--pk-accent,#0c1e4a);border:2px dashed var(--pk-accent,#0c1e4a);}
   </style>
 
   {%- comment -%} Formulaire produit caché, partagé par tous les boutons « Ajouter au panier » {%- endcomment -%}
@@ -715,6 +815,7 @@
     <div class="pv-wrap">
       <div class="pv-hero__grille">
         <div class="pv-hero__tete">
+        {%- if pk_signature != blank -%}<span class="pk-signature">{{ pk_signature }}</span>{%- endif -%}
         <h1>{{ pk_titre }} <span class="pv-hero__tagline">{{ pk_accroche }}</span></h1>
         <p class="pv-hero__summary">{{ pk_resume }}</p>
 
@@ -898,6 +999,24 @@
     </div>
   </div>
 
+  {%- comment -%} ============ Plan d'installation propre au pack ============ {%- endcomment -%}
+  {%- if pk_plan_titre != blank -%}
+  <section class="pv-section pv-section--alt pk-plan">
+    <div class="pv-wrap">
+      <div class="pk-plan__grille pv-reveal">
+        <div class="pk-plan__dessin">{%- render 'pk-plan', code: pk_code, part: 'svg' -%}</div>
+        <div class="pk-plan__texte">
+          <span class="pv-feature__num">EXEMPLE D'INSTALLATION</span>
+          <h2>{{ pk_plan_titre }}</h2>
+          <p class="pv-feature__text">{{ pk_plan_texte | replace: ' :', '&nbsp;:' }}</p>
+          {%- render 'pk-plan', code: pk_code, part: 'legende' -%}
+          <p class="pk-plan__note">Exemple indicatif : chaque élément se place selon la configuration de votre logement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
   {%- comment -%} ============ Contenu du pack ============ {%- endcomment -%}
   <section class="pv-section">
     <div class="pv-wrap">
@@ -985,9 +1104,9 @@
   </section>
 
   {%- comment -%} ============ Encart 1 : mode Maison et temporisation ============ {%- endcomment -%}
-  <section class="pv-section">
+  {%- capture blk_maison -%}
     <div class="pv-wrap">
-      <div class="pv-feature pv-reveal">
+      <div class="pv-feature __PK_REV__ pv-reveal">
         <div class="pv-feature__media">
           {%- for block in centrales -%}
             {%- assign photo = block.settings.centrale_image | default: block.settings.centrale_product.featured_image | default: product.featured_image -%}
@@ -1012,7 +1131,7 @@
         </div>
       </div>
     </div>
-  </section>
+  {%- endcapture -%}
 
   {%- comment -%} ============ Encart 2 : caméras (selon le pack) ============ {%- endcomment -%}
   {%- liquid
@@ -1054,9 +1173,9 @@
         assign cam_l2 = 'Intérieur : IP506P rotative Full HD, avec mode vie privée'
     endcase
   -%}
-  <section class="pv-section pv-section--alt">
+  {%- capture blk_cam -%}
     <div class="pv-wrap">
-      <div class="pv-feature pv-feature--reverse pv-reveal">
+      <div class="pv-feature __PK_REV__ pv-reveal">
         <div class="pv-feature__media">
           {%- if cam_img -%}{{ cam_img | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: cam_alt }}{%- endif -%}
         </div>
@@ -1071,9 +1190,10 @@
         </div>
       </div>
     </div>
-  </section>
+  {%- endcapture -%}
 
   {%- comment -%} ============ Bande d'appel ============ {%- endcomment -%}
+  {%- capture blk_band -%}
   <div class="pv-wrap">
     <div class="pv-band pv-reveal">
       <h2>{{ pk_band_titre }}</h2>
@@ -1081,11 +1201,12 @@
       {%- render 'pv-atc-button', form_id: form_id, variant: v0, label: 'Ajouter au panier', style: 'primary', show_price: true -%}
     </div>
   </div>
+  {%- endcapture -%}
 
   {%- comment -%} ============ Encart 3 : sirène ============ {%- endcomment -%}
-  <section class="pv-section">
+  {%- capture blk_sirene -%}
     <div class="pv-wrap">
-      <div class="pv-feature pv-reveal">
+      <div class="pv-feature __PK_REV__ pv-reveal">
         <div class="pv-feature__media">
           {%- if img_sirene -%}{{ img_sirene | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Sirène extérieure solaire WOS305S' }}{%- endif -%}
         </div>
@@ -1104,13 +1225,12 @@
         </div>
       </div>
     </div>
-  </section>
+  {%- endcapture -%}
 
   {%- comment -%} ============ Encart : détecteur de fumée (packs qui en ont) ============ {%- endcomment -%}
-  {%- if pk_fumee > 0 -%}
-  <section class="pv-section pv-section--alt">
+  {%- capture blk_fumee -%}{%- if pk_fumee > 0 -%}
     <div class="pv-wrap">
-      <div class="pv-feature pv-feature--reverse pv-reveal">
+      <div class="pv-feature __PK_REV__ pv-reveal">
         <div class="pv-feature__media">
           {%- if img_fumee -%}{{ img_fumee | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Détecteur de fumée connecté WSD301' }}{%- endif -%}
         </div>
@@ -1128,13 +1248,12 @@
         </div>
       </div>
     </div>
-  </section>
-  {%- endif -%}
+  {%- endif -%}{%- endcapture -%}
 
   {%- comment -%} ============ Encart 4 : carte SIM (masqué pour la Vigilia Wi-Fi) ============ {%- endcomment -%}
-  <section class="pv-section pv-section--alt" data-psi-sim {% unless c0.settings.has_sim %}hidden{% endunless %}>
+  {%- capture blk_sim -%}
     <div class="pv-wrap">
-      <div class="pv-feature pv-feature--reverse pv-reveal">
+      <div class="pv-feature __PK_REV__ pv-reveal">
         <div class="pv-feature__media">
           {%- if img_sim -%}{{ img_sim | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Protection 4G en cas de coupure internet' }}{%- endif -%}
         </div>
@@ -1188,12 +1307,12 @@
         </div>
       {%- endif -%}
     </div>
-  </section>
+  {%- endcapture -%}
 
   {%- comment -%} ============ Encart 5 : application ============ {%- endcomment -%}
-  <section class="pv-section">
+  {%- capture blk_app -%}
     <div class="pv-wrap">
-      <div class="pv-feature pv-reveal">
+      <div class="pv-feature __PK_REV__ pv-reveal">
         <div class="pv-feature__media">
           {%- if img_app -%}{{ img_app | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', alt: 'Application Daewoo Home Connect' }}{%- endif -%}
         </div>
@@ -1212,7 +1331,49 @@
         </div>
       </div>
     </div>
+  {%- endcapture -%}
+
+  {%- comment -%}
+    Encarts dans l'ordre propre au pack (pk_ordre) : fond blanc et fond gris
+    en alternance, photo à gauche puis à droite. La bande d'appel vient après
+    le 2e encart. La carte SIM reste en dernier : elle est masquée pour la
+    Vigilia Wi-Fi, sans casser l'alternance des fonds.
+  {%- endcomment -%}
+  {%- assign pk_blocs = pk_ordre | split: ',' -%}
+  {%- assign n_bloc = 0 -%}
+  {%- for cle in pk_blocs -%}
+    {%- liquid
+      assign blk = ''
+      case cle
+        when 'maison'
+          assign blk = blk_maison
+        when 'cam'
+          assign blk = blk_cam
+        when 'sirene'
+          assign blk = blk_sirene
+        when 'fumee'
+          assign blk = blk_fumee
+        when 'sim'
+          assign blk = blk_sim
+        when 'app'
+          assign blk = blk_app
+      endcase
+      assign alt = n_bloc | modulo: 2
+      assign rev = ''
+      if alt == 1
+        assign rev = 'pv-feature--reverse'
+      endif
+    -%}
+    {%- if blk == blank -%}{%- continue -%}{%- endif -%}
+  <section class="pv-section{% if alt == 1 %} pv-section--alt{% endif %}"{% if cle == 'sim' %} data-psi-sim{% unless c0.settings.has_sim %} hidden{% endunless %}{% endif %}>
+{{ blk | replace: '__PK_REV__', rev }}
   </section>
+    {%- assign n_bloc = n_bloc | plus: 1 -%}
+    {%- if n_bloc == 2 -%}
+
+{{ blk_band }}
+    {%- endif -%}
+  {%- endfor -%}
 
   {%- comment -%} ============ La gamme : les 6 packs ============ {%- endcomment -%}
   {%- liquid
