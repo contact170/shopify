@@ -10,7 +10,8 @@ const OUT = process.argv[3];
 const engine = new Liquid({ root: [path.join(THEME, 'snippets')], extname: '.liquid', strictFilters: true });
 
 // Filtres Shopify simulés
-engine.registerFilter('money', (v) => (v == null ? '' : '[Prix] €'));
+// Format d'une boutique en euros et en français : 9,90 €
+engine.registerFilter('money', (v) => (v == null ? '' : (Number(v) / 100).toFixed(2).replace('.', ',') + ' €'));
 engine.registerFilter('asset_url', (name) => '__ASSET__/' + name);
 engine.registerFilter('stylesheet_tag', (url) => '<link rel="stylesheet" href="' + url + '">');
 engine.registerFilter('image_url', (img) => String(img || ''));
@@ -43,11 +44,13 @@ engine.registerTag('form', {
 // Produit fictif : 4 parfums x 3 formats, une offre d'abonnement
 const parfums = ['Glaciale', 'Agrumi', 'Dolce', 'Calma'];
 const formats = ['Solo', 'Duo', 'Pack de 4'];
+// Prix en centimes : 9,90 € l'unité, Duo et Pack au prix de 2 et 4 unités
+const prices = { 'Solo': 990, 'Duo': 1980, 'Pack de 4': 3960 };
 let vid = 4400000000;
 const variants = [];
 for (const p of parfums) for (const f of formats) {
   vid += 1;
-  variants.push({ id: vid, title: p + ' / ' + f, options: [p, f], option1: p, option2: f, available: true, price: 1490, compare_at_price: null, featured_media: null });
+  variants.push({ id: vid, title: p + ' / ' + f, options: [p, f], option1: p, option2: f, available: true, price: prices[f], compare_at_price: null, featured_media: null });
 }
 const product = {
   id: 9000000001,
@@ -68,7 +71,7 @@ const product = {
   selling_plan_groups: [
     { name: 'Livraison régulière', selling_plans: [{ id: 6900001, name: 'Livraison tous les 30 jours · −[X] %', description: 'Sans engagement, modifiable ou annulable à tout moment' }] }
   ],
-  price: 1490
+  price: 990
 };
 
 const template = JSON.parse(fs.readFileSync(path.join(THEME, 'templates/product.brezello.json'), 'utf8'));
