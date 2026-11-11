@@ -1,0 +1,309 @@
+{%- comment -%}
+  Mise en avant de la gamme de packs 2026 sur la page d'accueil (style home V2, sans compte à rebours).
+  - Un bloc « Pack » par produit de la gamme : nom court, sous-titre, prix « dès » lu sur le produit.
+  - Prix barré : métachamp de variante custom.prix_reference de la variante la moins chère
+    (valeur des mêmes éléments achetés séparément, même règle que les fiches pack-gamme).
+  - Un produit en brouillon ou introuvable est ignoré.
+  - Option Black Friday : fond noir, avantage sous le prix et pastille sur chaque pack (vides = rien).
+{%- endcomment -%}
+{%- liquid
+  assign packs = section.blocks | where: 'type', 'pack'
+  assign sel = nil
+  assign prix_min = 0
+  for b in packs
+    assign p = b.settings.product
+    if p == blank
+      continue
+    endif
+    if sel == nil
+      assign sel = b
+    endif
+    if b.settings.highlight
+      assign sel = b
+    endif
+    if prix_min == 0 or p.price_min < prix_min
+      assign prix_min = p.price_min
+    endif
+  endfor
+-%}
+{%- if sel != nil -%}
+{%- liquid
+  assign ps = sel.settings.product
+  assign vs = ps.variants.first
+  for v in ps.variants
+    if v.price < vs.price
+      assign vs = v
+    endif
+  endfor
+  assign ref_s = 0
+  if vs.metafields.custom.prix_reference.value
+    assign ref_s = vs.metafields.custom.prix_reference.value | times: 100 | round
+  endif
+  assign eco_s = 0
+  if ref_s > vs.price
+    assign eco_s = ref_s | minus: vs.price
+  endif
+  assign visuel = section.settings.image | default: ps.featured_image
+  assign nom_s = sel.settings.name | default: ps.title
+  assign alma_base = vs.price | divided_by: 4
+  assign alma_1 = alma_base | times: 3 | minus: vs.price | times: -1
+  assign tparts = section.settings.title | split: '[prix]'
+-%}
+{% render 'dw-home-head' %}
+<div class="dwh gmh{% if section.settings.bf %} gmh--bf{% endif %}" id="GammeHome-{{ section.id }}">
+  <section class="dwh-bloc gmh__bloc"{% if section.settings.anchor != blank %} id="{{ section.settings.anchor | handleize }}"{% endif %} aria-labelledby="GammeHomeTitre-{{ section.id }}">
+    <div class="dwh-large gmh__grille">
+
+      <div class="gmh__tete">
+        <p class="gmh__pastille"><span class="gmh__point" aria-hidden="true"></span>{{ section.settings.eyebrow }}</p>
+        <h2 class="dwh-titre gmh__titre" id="GammeHomeTitre-{{ section.id }}">{{ tparts[0] }}{% if section.settings.title contains '[prix]' %}{{ prix_min | money }}{{ tparts[1] }}{% endif %}</h2>
+      </div>
+
+      <a class="gmh__visuel" href="{{ ps.url }}" tabindex="-1" data-gmh-visuel>
+        {%- if visuel -%}
+          {{ visuel | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(min-width: 750px) 540px, 100vw', alt: section.settings.image_alt, data-gmh-img: '' }}
+        {%- endif -%}
+      </a>
+
+      <div class="gmh__offre">
+        <div class="gmh__prixbloc">
+          <p class="gmh__des" data-gmh-des>Pack {{ nom_s }}, dès</p>
+          <p class="gmh__ligne">
+            <b class="gmh__grand" data-gmh-prix>{{ vs.price | money }}</b>
+            <s class="gmh__barre" data-gmh-barre{% if ref_s <= vs.price %} hidden{% endif %}>{% if ref_s > vs.price %}{{ ref_s | money }}{% endif %}</s>
+          </p>
+          <p class="gmh__alma" data-gmh-alma>Disponible en 4× sans frais avec Alma : <b>{{ alma_1 | money }}</b> puis 3 × {{ alma_base | money }}</p>
+          <p class="gmh__eco" data-gmh-eco{% if eco_s == 0 %} hidden{% endif %}>Vous économisez <b>{{ eco_s | money }}</b> par rapport à l'achat séparé</p>
+          {%- if section.settings.promo != blank -%}
+            <p class="gmh__promo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 21V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"/></svg><span>{{ section.settings.promo }}</span></p>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.text != blank -%}<p class="gmh__texte">{{ section.settings.text }}</p>{%- endif -%}
+        {%- if section.settings.bullets != blank -%}
+          {%- assign puces = section.settings.bullets | newline_to_br | split: '<br />' -%}
+          <ul class="dwh-puces gmh__puces">
+            {%- for puce in puces -%}{%- assign t = puce | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <p class="gmh__choix-titre">{{ section.settings.choice_label }}</p>
+        <ul class="gmh__choix">
+          {%- for b in packs -%}
+            {%- liquid
+              assign p = b.settings.product
+              assign v = p.variants.first
+              for vv in p.variants
+                if vv.price < v.price
+                  assign v = vv
+                endif
+              endfor
+              assign ref = 0
+              if v.metafields.custom.prix_reference.value
+                assign ref = v.metafields.custom.prix_reference.value | times: 100 | round
+              endif
+              assign eco = 0
+              if ref > v.price
+                assign eco = ref | minus: v.price
+              endif
+              assign a_base = v.price | divided_by: 4
+              assign a_1 = a_base | times: 3 | minus: v.price | times: -1
+              assign nom = b.settings.name | default: p.title
+              assign photo = p.featured_image
+            -%}
+            {%- if p != blank -%}
+            <li {{ b.shopify_attributes }}>
+              <button type="button" class="gmh__carte" aria-pressed="{% if b.id == sel.id %}true{% else %}false{% endif %}" data-gmh-choix
+                {% if photo %}data-src="{{ photo | image_url: width: 900 }}" data-srcset="{{ photo | image_url: width: 400 }} 400w, {{ photo | image_url: width: 600 }} 600w, {{ photo | image_url: width: 900 }} 900w, {{ photo | image_url: width: 1200 }} 1200w"{% endif %}
+                data-url="{{ p.url }}" data-nom="{{ nom | escape }}"
+                data-prix="{{ v.price | money | strip_html }}"
+                data-barre="{% if ref > v.price %}{{ ref | money | strip_html }}{% endif %}"
+                data-eco="{% if eco > 0 %}{{ eco | money | strip_html }}{% endif %}"
+                data-alma1="{{ a_1 | money | strip_html }}" data-alma="{{ a_base | money | strip_html }}">
+                {%- if b.settings.badge != blank -%}<span class="gmh__badge">{{ b.settings.badge }}</span>{%- endif -%}
+                <span class="gmh__nom">{{ nom }}</span>
+                <span class="gmh__sous">{{ b.settings.sub }}</span>
+                <span class="gmh__prix"><small>dès</small> <b>{{ v.price | money }}</b></span>
+                {%- if section.settings.promo_badge != blank -%}<span class="gmh__promo-carte">{{ section.settings.promo_badge }}</span>{%- endif -%}
+              </button>
+            </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        <div class="gmh__cta">
+          <a class="dwh-btn gmh__btn" href="{{ ps.url }}" data-gmh-cta>
+            <span data-gmh-cta-texte>Découvrir le Pack {{ nom_s }}</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          {%- if section.settings.all_label != blank -%}
+            <a class="gmh__tous" href="{{ section.settings.all_link }}">{{ section.settings.all_label }}</a>
+          {%- endif -%}
+          {%- if section.settings.note != blank -%}<p class="gmh__note">{{ section.settings.note }}</p>{%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<style>
+  .gmh .gmh__bloc{position:relative;overflow:hidden;color:#fff;padding:56px 16px;
+    background:radial-gradient(90% 70% at 90% 10%,rgba(21,82,214,.45),transparent 60%),radial-gradient(70% 60% at 0% 100%,rgba(21,82,214,.22),transparent 60%),#0a1330;}
+  .gmh .gmh__grille{display:grid;gap:24px;grid-template-areas:"tete" "visuel" "offre";align-items:center;}
+  .gmh .gmh__tete{grid-area:tete;}
+  .gmh .gmh__visuel{grid-area:visuel;}
+  .gmh .gmh__offre{grid-area:offre;}
+
+  .gmh .gmh__pastille{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:#1552d6;color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+  .gmh .gmh__point{width:8px;height:8px;border-radius:50%;background:#ffd500;}
+  .gmh .gmh__titre{margin-top:20px;color:#fff;font-size:clamp(30px,7vw,48px);}
+  .gmh .gmh__titre em{color:var(--brume);}
+
+  .gmh .gmh__visuel{position:relative;display:block;border-radius:24px;background:#fff;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);}
+  .gmh .gmh__visuel img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;border-radius:24px;transition:opacity 200ms ease;}
+  .gmh .gmh__visuel img.is-changing{opacity:.25;}
+
+  .gmh .gmh__des{font-size:15px;color:var(--brume);}
+  .gmh .gmh__ligne{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px;margin-top:2px;}
+  .gmh .gmh__grand{font-size:clamp(52px,13vw,76px);line-height:1;font-weight:800;letter-spacing:-.03em;color:#fff;}
+  .gmh .gmh__barre{font-size:22px;color:var(--brume);text-decoration-thickness:2px;}
+  .gmh .gmh__eco{display:inline-block;margin-top:14px;padding:8px 14px;border-radius:12px;background:#ffd500;color:#0a1330;font-size:16px;font-weight:600;}
+  .gmh .gmh__eco b{font-weight:800;}
+  .gmh .gmh__alma{margin-top:10px;font-size:15px;color:var(--brume);}
+  .gmh .gmh__alma b{color:#fff;font-weight:700;}
+  .gmh .gmh__texte{margin-top:20px;font-size:16px;line-height:1.55;color:var(--brume);}
+  .gmh .gmh__puces{margin-top:16px;}
+  .gmh .gmh__puces li{color:#fff;}
+
+  .gmh .gmh__choix-titre{margin-top:28px;margin-bottom:16px;font-size:14px;font-weight:600;color:var(--brume);}
+  .gmh .gmh__choix{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .gmh .gmh__carte{position:relative;min-width:0;width:100%;height:100%;display:flex;flex-direction:column;gap:2px;padding:14px 14px 12px;border:0;border-radius:16px;text-align:left;font:inherit;cursor:pointer;color:#fff;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.16);transition:box-shadow 200ms ease,background-color 200ms ease,transform 160ms var(--ease-out);}
+  .gmh .gmh__carte:active{transform:scale(.98);}
+  @media (hover:hover) and (pointer:fine){.gmh .gmh__carte:hover{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5);}}
+  .gmh .gmh__carte[aria-pressed="true"]{background:rgba(255,213,0,.1);box-shadow:inset 0 0 0 2px #ffd500;}
+  .gmh .gmh__badge{position:absolute;top:-9px;left:12px;font-size:10.5px;font-weight:700;color:#0a1330;background:#ffd500;padding:2px 8px;border-radius:999px;}
+  .gmh .gmh__nom{font-weight:700;font-size:16px;}
+  .gmh .gmh__sous{font-size:13px;line-height:1.35;color:var(--brume);}
+  .gmh .gmh__prix{display:flex;align-items:baseline;gap:5px;margin-top:6px;}
+  .gmh .gmh__prix small{font-size:12.5px;color:var(--brume);}
+  .gmh .gmh__prix b{font-size:17px;}
+
+  .gmh .gmh__cta{margin-top:24px;}
+  .gmh .gmh__btn{background:#ffd500;color:#0a1330;font-weight:700;box-shadow:0 14px 34px -10px rgba(255,213,0,.6);}
+  @media (hover:hover) and (pointer:fine){.gmh .gmh__btn:hover{background:#ffe24d;}}
+  .gmh .gmh__tous{display:inline-block;margin-top:14px;color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;}
+  .gmh .gmh__note{margin-top:12px;font-size:12.5px;line-height:1.45;color:var(--brume);}
+  .gmh :focus-visible{outline-color:#ffd500;}
+  .gmh .gmh__bloc{scroll-margin-top:72px;}
+  .gmh .gmh__promo{display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 14px;border-radius:12px;background:rgba(255,213,0,.12);box-shadow:inset 0 0 0 1.5px #ffd500;color:#fff;font-size:15.5px;line-height:1.35;}
+  .gmh .gmh__promo svg{flex-shrink:0;width:22px;height:22px;color:#ffd500;}
+  .gmh .gmh__promo b,.gmh .gmh__promo strong{color:#ffd500;font-weight:800;}
+  .gmh .gmh__promo-carte{align-self:flex-start;margin-top:8px;padding:3px 8px;border-radius:8px;background:#ffd500;color:#0a1330;font-size:12px;font-weight:800;line-height:1.3;}
+  /* Habillage Black Friday */
+  .gmh--bf .gmh__bloc{background:radial-gradient(70% 60% at 100% 0%,rgba(255,213,0,.12),transparent 65%),radial-gradient(70% 60% at 0% 100%,rgba(21,82,214,.28),transparent 65%),#07080c;}
+  .gmh--bf .gmh__pastille{background:#e11d48;}
+  .gmh--bf .gmh__point{background:#fff;}
+  .gmh--bf .gmh__titre em{color:#ffd500;}
+  .gmh--bf .gmh__carte{background:rgba(255,255,255,.05);}
+  .gmh [hidden]{display:none !important;}
+
+  @media (min-width:750px){
+    .gmh .gmh__bloc{padding:80px 24px;}
+    .gmh .gmh__grille{grid-template-columns:1.05fr 1fr;grid-template-areas:"tete visuel" "offre visuel";column-gap:56px;row-gap:8px;align-items:start;}
+    .gmh .gmh__visuel{align-self:center;}
+    .gmh .gmh__prixbloc{margin-top:18px;}
+    .gmh .gmh__cta .dwh-btn{width:auto;min-width:320px;}
+    .gmh .gmh__tous{margin-left:18px;}
+  }
+  @media (min-width:1100px){.gmh .gmh__choix{grid-template-columns:repeat(3,1fr);}}
+</style>
+
+<script>
+  (function () {
+    if (window.gmhChoixInstalle) return;
+    window.gmhChoixInstalle = true;
+    document.addEventListener('click', function (e) {
+      var c = e.target.closest && e.target.closest('[data-gmh-choix]');
+      if (!c) return;
+      var bloc = c.closest('.gmh');
+      if (!bloc) return;
+      var q = function (sel) { return bloc.querySelector(sel); };
+      bloc.querySelectorAll('[data-gmh-choix]').forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+      var img = q('[data-gmh-img]') || q('.gmh__visuel img');
+      var src = c.getAttribute('data-src');
+      if (img && src && img.getAttribute('src') !== src) {
+        img.classList.add('is-changing');
+        var fini = function () { img.classList.remove('is-changing'); img.removeEventListener('load', fini); };
+        img.addEventListener('load', fini);
+        img.setAttribute('srcset', c.getAttribute('data-srcset') || src);
+        img.setAttribute('src', src);
+        img.loading = 'eager';
+        setTimeout(fini, 1500);
+      }
+      var nom = c.getAttribute('data-nom');
+      var url = c.getAttribute('data-url');
+      var vis = q('[data-gmh-visuel]'); if (vis) vis.href = url;
+      var cta = q('[data-gmh-cta]'); if (cta) cta.href = url;
+      var ctaTexte = q('[data-gmh-cta-texte]'); if (ctaTexte) ctaTexte.textContent = 'Découvrir le Pack ' + nom;
+      var des = q('[data-gmh-des]'); if (des) des.textContent = 'Pack ' + nom + ', dès';
+      var prix = q('[data-gmh-prix]'); if (prix) prix.textContent = c.getAttribute('data-prix');
+      var barre = q('[data-gmh-barre]');
+      if (barre) { barre.textContent = c.getAttribute('data-barre'); barre.hidden = !c.getAttribute('data-barre'); }
+      var eco = q('[data-gmh-eco]');
+      if (eco) {
+        eco.hidden = !c.getAttribute('data-eco');
+        eco.textContent = 'Vous économisez ';
+        var b = document.createElement('b'); b.textContent = c.getAttribute('data-eco'); eco.appendChild(b);
+        eco.appendChild(document.createTextNode(" par rapport à l'achat séparé"));
+      }
+      var alma = q('[data-gmh-alma]');
+      if (alma) {
+        alma.textContent = 'Disponible en 4× sans frais avec Alma : ';
+        var a1 = document.createElement('b'); a1.textContent = c.getAttribute('data-alma1'); alma.appendChild(a1);
+        alma.appendChild(document.createTextNode(' puis 3 × ' + c.getAttribute('data-alma')));
+      }
+    });
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Gamme packs · accueil",
+  "tag": "div",
+  "class": "gmh-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Nouveau · La gamme de packs 2026" },
+    { "type": "text", "id": "title", "label": "Titre", "info": "[prix] est remplacé par le prix du pack le moins cher.", "default": "6 packs, 4 centrales au choix. <em>Dès [prix].</em>" },
+    { "type": "textarea", "id": "text", "label": "Texte" },
+    { "type": "textarea", "id": "bullets", "label": "Points clés (un par ligne)" },
+    { "type": "text", "id": "choice_label", "label": "Titre du choix de pack", "default": "Choisissez votre pack" },
+    { "type": "image_picker", "id": "image", "label": "Visuel", "info": "Vide : photo du pack mis en avant." },
+    { "type": "text", "id": "image_alt", "label": "Description du visuel (texte alternatif)", "default": "Pack alarme Daewoo Security : centrale, détecteurs, caméras et sirène solaire" },
+    { "type": "text", "id": "all_label", "label": "Lien vers tous les packs", "default": "Voir les 6 packs et les packs Élite" },
+    { "type": "text", "id": "all_link", "label": "Adresse du lien", "default": "/pages/pack-alarmes" },
+    { "type": "textarea", "id": "note", "label": "Mention sous le bouton" },
+    { "type": "text", "id": "anchor", "label": "Ancre de la section", "info": "Permet un lien direct vers la section, ex. #packs-2026.", "default": "packs-2026" },
+    { "type": "header", "content": "Black Friday" },
+    { "type": "checkbox", "id": "bf", "label": "Habillage Black Friday (fond noir)", "default": false },
+    { "type": "text", "id": "promo", "label": "Avantage sous le prix", "info": "Ex. <b>+ 50 € offerts</b> sur votre prochaine commande. Vide : masqué." },
+    { "type": "text", "id": "promo_badge", "label": "Pastille sur chaque pack", "info": "Ex. +50 € offerts. Vide : masquée." }
+  ],
+  "blocks": [
+    {
+      "type": "pack",
+      "name": "Pack",
+      "limit": 8,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Pack" },
+        { "type": "text", "id": "name", "label": "Nom court", "default": "Essentiel" },
+        { "type": "text", "id": "sub", "label": "Sous-titre" },
+        { "type": "text", "id": "badge", "label": "Badge (optionnel)" },
+        { "type": "checkbox", "id": "highlight", "label": "Pack mis en avant au chargement", "default": false }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Gamme packs · accueil" } ]
+}
+{% endschema %}

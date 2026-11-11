@@ -1,0 +1,328 @@
+{%- comment -%}
+  Page collection Black Friday (modèle collection.black-friday), même décor que la section d'accueil bf-home.
+  - En-tête : grand titre (H1 de la page), texte, compte à rebours, ticket du bon de réduction.
+  - Grille : tous les produits de la collection, dans l'ordre de la collection.
+    Badge : celui du bon pour les produits listés dans « Produits avec le bon », sinon le badge par défaut.
+    Nom et sous-titre : les deux premières parties du titre produit (séparées par « | »).
+    Prix barré : prix barré Shopify de la variante la moins chère, sinon son métachamp custom.prix_reference.
+  - Étapes du bon et réassurance : masquées si leurs textes sont vides.
+{%- endcomment -%}
+{%- liquid
+  assign bon_handles = section.settings.bon_products | map: 'handle' | join: ','
+  assign bon_handles = ',' | append: bon_handles | append: ','
+-%}
+{% render 'dw-home-head' %}
+<div class="dwh bfc" id="BfCol-{{ section.id }}" data-fin="{{ section.settings.end_date | escape }}">
+
+  <section class="bfc__hero" aria-labelledby="BfColTitre-{{ section.id }}">
+    <div class="dwh-large bfc__haut">
+      <div class="bfc__tete">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="bfc__pastille"><span class="bfc__point" aria-hidden="true"></span>{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h1 class="bfc__titre" id="BfColTitre-{{ section.id }}">
+          <span>{{ section.settings.title_1 }}</span>
+          <span class="bfc__titre-jaune">{{ section.settings.title_2 }}</span>
+        </h1>
+        {%- if section.settings.text != blank -%}<p class="bfc__texte">{{ section.settings.text }}</p>{%- endif -%}
+        {%- if section.settings.end_date != blank -%}
+          <div class="bfc__compte" role="timer" aria-label="Temps restant avant la fin du Black Friday">
+            <p class="bfc__compte-titre">{{ section.settings.countdown_label }}</p>
+            <div class="bfc__cases">
+              <span class="bfc__case"><b data-bfc-j>--</b><small>jours</small></span>
+              <span class="bfc__case"><b data-bfc-h>--</b><small>heures</small></span>
+              <span class="bfc__case"><b data-bfc-m>--</b><small>min</small></span>
+              <span class="bfc__case"><b data-bfc-s>--</b><small>sec</small></span>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.coupon_amount != blank -%}
+        <div class="bfc__bon">
+          <div class="bfc__ticket">
+            <div class="bfc__talon">
+              <small>{{ section.settings.coupon_kicker }}</small>
+              <b>{{ section.settings.coupon_amount }}</b>
+            </div>
+            <div class="bfc__corps">
+              <p class="bfc__bon-titre">{{ section.settings.coupon_title }}</p>
+              {%- if section.settings.coupon_text != blank -%}<p class="bfc__bon-texte">{{ section.settings.coupon_text }}</p>{%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+
+  <section class="bfc__liste" aria-labelledby="BfColListe-{{ section.id }}">
+    <div class="dwh-large">
+      <div class="bfc__entete">
+        <h2 class="bfc__h2" id="BfColListe-{{ section.id }}">{{ section.settings.list_title }}</h2>
+        <p class="bfc__nb">{{ collection.products_count }} {% if collection.products_count > 1 %}offres{% else %}offre{% endif %}</p>
+      </div>
+
+      {%- paginate collection.products by 24 -%}
+        {%- if collection.products.size > 0 -%}
+          <ul class="bfc__grille" role="list">
+            {%- for p in collection.products -%}
+              {%- liquid
+                assign v = p.variants.first
+                for vv in p.variants
+                  if vv.price < v.price
+                    assign v = vv
+                  endif
+                endfor
+                assign barre = 0
+                if v.compare_at_price > v.price
+                  assign barre = v.compare_at_price
+                elsif v.metafields.custom.prix_reference.value
+                  assign ref = v.metafields.custom.prix_reference.value | times: 100 | round
+                  if ref > v.price
+                    assign barre = ref
+                  endif
+                endif
+                assign parts = p.title | split: '|'
+                assign nom = parts[0] | strip
+                assign sous = parts[1] | strip
+                assign cle = ',' | append: p.handle | append: ','
+                assign avec_bon = false
+                if bon_handles contains cle
+                  assign avec_bon = true
+                endif
+              -%}
+              <li>
+                <a class="bfc__carte" href="{{ p.url }}">
+                  <span class="bfc__photo">
+                    {%- if p.featured_image -%}
+                      {{ p.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '300,450,600,800', sizes: '(min-width: 1100px) 340px, (min-width: 750px) 45vw, 92vw', alt: '' }}
+                    {%- endif -%}
+                    {%- if avec_bon and section.settings.bon_badge != blank -%}
+                      <span class="bfc__badge">{{ section.settings.bon_badge }}</span>
+                    {%- elsif avec_bon == false and section.settings.default_badge != blank -%}
+                      <span class="bfc__badge bfc__badge--rouge">{{ section.settings.default_badge }}</span>
+                    {%- endif -%}
+                  </span>
+                  <span class="bfc__infos">
+                    <span class="bfc__nom">{{ nom }}</span>
+                    {%- if sous != blank -%}<span class="bfc__sous">{{ sous }}</span>{%- endif -%}
+                    <span class="bfc__prix">
+                      {%- if p.variants.size > 1 -%}<small>dès</small>{%- endif -%}
+                      <b>{{ v.price | money }}</b>
+                      {%- if barre > v.price -%}<s><span class="bfc__lecteur">au lieu de </span>{{ barre | money }}</s>{%- endif -%}
+                    </span>
+                    {%- if avec_bon and section.settings.bon_gift != blank -%}<span class="bfc__cadeau">{{ section.settings.bon_gift }}</span>{%- endif -%}
+                    <span class="bfc__voir">{{ section.settings.card_cta }} <span aria-hidden="true">→</span></span>
+                  </span>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+          {%- if paginate.pages > 1 -%}
+            <nav class="bfc__pages" aria-label="Pagination">{{ paginate | default_pagination }}</nav>
+          {%- endif -%}
+        {%- else -%}
+          <p class="bfc__vide">Les offres Black Friday arrivent très bientôt.</p>
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+  </section>
+
+  {%- if section.settings.steps_title != blank -%}
+    <section class="bfc__etapes" aria-labelledby="BfColEtapes-{{ section.id }}">
+      <div class="dwh-large">
+        <h2 class="bfc__h2" id="BfColEtapes-{{ section.id }}">{{ section.settings.steps_title }}</h2>
+        <ol class="bfc__etapes-liste" role="list">
+          {%- for i in (1..3) -%}
+            {%- assign k_t = 'step_' | append: i | append: '_title' -%}
+            {%- assign k_x = 'step_' | append: i | append: '_text' -%}
+            {%- if section.settings[k_t] != blank -%}
+              <li class="bfc__etape">
+                <span class="bfc__etape-num" aria-hidden="true">{{ i }}</span>
+                <p class="bfc__etape-titre">{{ section.settings[k_t] }}</p>
+                {%- if section.settings[k_x] != blank -%}<p class="bfc__etape-texte">{{ section.settings[k_x] }}</p>{%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ol>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <section class="bfc__fin">
+    <div class="dwh-large">
+      {%- if section.settings.reassurance != blank -%}
+        {%- assign rassure = section.settings.reassurance | newline_to_br | split: '<br />' -%}
+        <ul class="bfc__rassure" role="list">
+          {%- for r in rassure -%}{%- assign t = r | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}
+        </ul>
+      {%- endif -%}
+      {%- if section.settings.note != blank -%}<p class="bfc__note">{{ section.settings.note }}</p>{%- endif -%}
+    </div>
+  </section>
+</div>
+
+<style>
+  .bfc{--bf-noir:#07080c;--bf-jaune:#ffd500;--bf-rouge:#e11d48;--bf-gris:#c9cfdd;background:var(--bf-noir);color:#fff;}
+  .bfc .bfc__hero{position:relative;overflow:hidden;padding:44px 16px 48px;
+    background:radial-gradient(60% 55% at 100% 0%,rgba(255,213,0,.16),transparent 70%),radial-gradient(70% 60% at 0% 100%,rgba(21,82,214,.32),transparent 65%),var(--bf-noir);}
+  .bfc .bfc__hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 2px,transparent 2px 14px);
+    -webkit-mask-image:linear-gradient(to bottom,#000,transparent 75%);mask-image:linear-gradient(to bottom,#000,transparent 75%);}
+  .bfc .bfc__haut{position:relative;display:grid;gap:32px;align-items:center;}
+  .bfc .bfc__pastille{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:var(--bf-rouge);color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+  .bfc .bfc__point{width:8px;height:8px;border-radius:50%;background:#fff;animation:bfc-pulse 1.6s infinite;}
+  @keyframes bfc-pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7);}70%{box-shadow:0 0 0 8px rgba(255,255,255,0);}100%{box-shadow:0 0 0 0 rgba(255,255,255,0);}}
+  .bfc .bfc__titre{display:flex;flex-direction:column;margin-top:18px;font-family:var(--f-display);font-weight:700;font-stretch:75%;font-variation-settings:'wdth' 75;text-transform:uppercase;font-size:clamp(72px,22vw,150px);line-height:.84;letter-spacing:-.015em;color:#fff;}
+  .bfc .bfc__titre-jaune{color:var(--bf-jaune);}
+  .bfc .bfc__texte{margin-top:20px;max-width:32em;font-size:17px;line-height:1.55;color:var(--bf-gris);text-wrap:pretty;}
+  .bfc .bfc__texte strong,.bfc .bfc__texte b{color:#fff;}
+  .bfc .bfc__compte{margin-top:22px;}
+  .bfc .bfc__compte-titre{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--bf-gris);}
+  .bfc .bfc__cases{display:flex;gap:8px;margin-top:10px;}
+  .bfc .bfc__case{display:flex;flex-direction:column;align-items:center;min-width:64px;padding:10px 8px 8px;border-radius:14px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);}
+  .bfc .bfc__case b{font-size:28px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums;color:var(--bf-jaune);}
+  .bfc .bfc__case small{margin-top:5px;font-size:11px;color:var(--bf-gris);text-transform:uppercase;letter-spacing:.06em;}
+
+  .bfc .bfc__bon{transform:rotate(-2deg);filter:drop-shadow(0 24px 34px rgba(255,213,0,.28));}
+  .bfc .bfc__ticket{--talon:38%;display:flex;min-height:170px;border-radius:22px;background:var(--bf-jaune);color:var(--bf-noir);
+    -webkit-mask:radial-gradient(circle at var(--talon) 0,transparent 13px,#000 13.5px) top/100% 51% no-repeat,radial-gradient(circle at var(--talon) 100%,transparent 13px,#000 13.5px) bottom/100% 51% no-repeat;
+    mask:radial-gradient(circle at var(--talon) 0,transparent 13px,#000 13.5px) top/100% 51% no-repeat,radial-gradient(circle at var(--talon) 100%,transparent 13px,#000 13.5px) bottom/100% 51% no-repeat;}
+  .bfc .bfc__talon{flex:0 0 var(--talon);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 10px;border-right:2px dashed rgba(7,8,12,.35);text-align:center;}
+  .bfc .bfc__talon small{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+  .bfc .bfc__talon b{font-family:var(--f-display);font-weight:700;font-stretch:75%;font-variation-settings:'wdth' 75;font-size:clamp(48px,14vw,76px);line-height:.95;letter-spacing:-.02em;white-space:nowrap;}
+  .bfc .bfc__corps{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:20px 20px 20px 18px;}
+  .bfc .bfc__bon-titre{font-size:19px;line-height:1.2;font-weight:700;letter-spacing:-.01em;text-wrap:balance;}
+  .bfc .bfc__bon-texte{font-size:14px;line-height:1.45;color:rgba(7,8,12,.78);}
+
+  .bfc .bfc__liste{padding:40px 16px 48px;background:linear-gradient(to bottom,var(--bf-noir),#0d0f16);}
+  .bfc .bfc__entete{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
+  .bfc .bfc__h2{font-family:var(--f-display);font-stretch:88%;font-variation-settings:'wdth' 88;font-size:clamp(26px,6vw,38px);line-height:1.05;font-weight:600;letter-spacing:-.02em;color:#fff;text-wrap:balance;}
+  .bfc .bfc__nb{font-size:14px;color:var(--bf-gris);}
+  .bfc .bfc__grille{display:grid;grid-template-columns:1fr;gap:16px;}
+  .bfc .bfc__grille>li{min-width:0;}
+  .bfc .bfc__carte{display:flex;flex-direction:column;height:100%;border-radius:22px;overflow:hidden;text-decoration:none;color:#fff;background:#12141b;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);transition:transform 200ms var(--ease-out),box-shadow 200ms ease;}
+  .bfc .bfc__carte:active{transform:scale(.98);}
+  @media (hover:hover) and (pointer:fine){
+    .bfc .bfc__carte:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1.5px var(--bf-jaune),0 24px 40px -20px rgba(0,0,0,.8);}
+    .bfc .bfc__carte:hover .bfc__voir span{transform:translateX(3px);}
+  }
+  .bfc .bfc__photo{position:relative;display:block;background:#fff;}
+  .bfc .bfc__photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;}
+  .bfc .bfc__badge{position:absolute;top:12px;left:12px;padding:6px 11px;border-radius:999px;background:var(--bf-noir);color:var(--bf-jaune);font-size:13px;font-weight:800;box-shadow:0 6px 14px -6px rgba(0,0,0,.6);}
+  .bfc .bfc__badge--rouge{background:var(--bf-rouge);color:#fff;}
+  .bfc .bfc__infos{flex:1;display:flex;flex-direction:column;gap:3px;padding:16px 18px 18px;}
+  .bfc .bfc__nom{font-size:18px;font-weight:700;letter-spacing:-.01em;}
+  .bfc .bfc__sous{font-size:14px;line-height:1.4;color:var(--bf-gris);}
+  .bfc .bfc__prix{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 8px;margin-top:8px;}
+  .bfc .bfc__prix small{font-size:13px;color:var(--bf-gris);}
+  .bfc .bfc__prix b{font-size:24px;font-weight:800;letter-spacing:-.02em;}
+  .bfc .bfc__prix s{font-size:15px;color:var(--bf-gris);text-decoration-thickness:1.5px;}
+  .bfc .bfc__lecteur{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+  .bfc .bfc__cadeau{align-self:flex-start;margin-top:8px;padding:5px 10px;border-radius:10px;background:rgba(255,213,0,.12);box-shadow:inset 0 0 0 1px rgba(255,213,0,.45);color:var(--bf-jaune);font-size:13.5px;font-weight:600;line-height:1.3;}
+  .bfc .bfc__voir{margin-top:auto;padding-top:14px;font-size:15px;font-weight:700;color:var(--bf-jaune);}
+  .bfc .bfc__voir span{display:inline-block;transition:transform 200ms var(--ease-out);}
+  .bfc .bfc__vide{padding:40px 0;font-size:17px;color:var(--bf-gris);text-align:center;}
+  .bfc .bfc__pages{margin-top:24px;text-align:center;color:var(--bf-gris);}
+  .bfc .bfc__pages a{color:#fff;}
+
+  .bfc .bfc__etapes{padding:40px 16px;background:#0d0f16;border-top:1px solid rgba(255,255,255,.08);}
+  .bfc .bfc__etapes-liste{display:grid;gap:14px;margin-top:20px;}
+  .bfc .bfc__etape{position:relative;padding:20px 20px 20px 72px;border-radius:18px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);}
+  .bfc .bfc__etape-num{position:absolute;left:20px;top:18px;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--bf-jaune);color:var(--bf-noir);font-weight:800;font-size:17px;}
+  .bfc .bfc__etape-titre{font-size:17px;font-weight:700;}
+  .bfc .bfc__etape-texte{margin-top:4px;font-size:14.5px;line-height:1.5;color:var(--bf-gris);}
+
+  .bfc .bfc__fin{padding:28px 16px 44px;background:#0d0f16;}
+  .bfc .bfc__rassure{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .bfc .bfc__rassure li{display:flex;align-items:center;gap:8px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.05);font-size:14px;font-weight:600;line-height:1.3;}
+  .bfc .bfc__rassure li::before{content:"";flex-shrink:0;width:18px;height:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='%23ffd500' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 9.5l3.2 3.2L14 5.8'/%3E%3C/svg%3E") center/contain no-repeat;}
+  .bfc .bfc__note{max-width:52em;margin:20px auto 0;font-size:12.5px;line-height:1.5;color:#9aa2b5;text-align:center;}
+  .bfc :focus-visible{outline-color:var(--bf-jaune);}
+
+  @media (min-width:750px){
+    .bfc .bfc__hero{padding:64px 24px 72px;}
+    .bfc .bfc__liste,.bfc .bfc__etapes{padding-inline:24px;}
+    .bfc .bfc__fin{padding-inline:24px;}
+    .bfc .bfc__grille{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
+    .bfc .bfc__etapes-liste{grid-template-columns:repeat(3,minmax(0,1fr));}
+    .bfc .bfc__etape{padding:64px 20px 22px;}
+    .bfc .bfc__etape-num{top:20px;}
+    .bfc .bfc__rassure{grid-template-columns:repeat(4,minmax(0,1fr));}
+  }
+  @media (min-width:900px){
+    .bfc .bfc__haut{grid-template-columns:1.25fr 1fr;gap:56px;}
+    .bfc .bfc__ticket{min-height:210px;}
+    .bfc .bfc__bon-titre{font-size:22px;}
+  }
+  @media (min-width:1100px){.bfc .bfc__grille{grid-template-columns:repeat(3,minmax(0,1fr));}}
+  @media (max-width:389px){.bfc .bfc__case{min-width:0;flex:1;}.bfc .bfc__corps{padding:16px 14px;}}
+  @media (prefers-reduced-motion:reduce){.bfc .bfc__point{animation:none;}.bfc .bfc__bon{transform:none;}}
+</style>
+
+<script>
+  (function () {
+    var racine = document.getElementById('BfCol-{{ section.id }}');
+    if (!racine) return;
+    var fin = Date.parse(racine.getAttribute('data-fin') || '');
+    var bloc = racine.querySelector('.bfc__compte');
+    if (!fin || !bloc) return;
+    var cases = {
+      j: racine.querySelector('[data-bfc-j]'), h: racine.querySelector('[data-bfc-h]'),
+      m: racine.querySelector('[data-bfc-m]'), s: racine.querySelector('[data-bfc-s]')
+    };
+    var deux = function (n) { return (n < 10 ? '0' : '') + n; };
+    function tic() {
+      var s = Math.floor((fin - Date.now()) / 1000);
+      /* Offre terminée : on retire seulement le compte à rebours, la page reste consultable */
+      if (s <= 0) { bloc.remove(); return; }
+      cases.j.textContent = Math.floor(s / 86400);
+      cases.h.textContent = deux(Math.floor(s % 86400 / 3600));
+      cases.m.textContent = deux(Math.floor(s % 3600 / 60));
+      cases.s.textContent = deux(s % 60);
+      setTimeout(tic, 1000 - (Date.now() % 1000));
+    }
+    tic();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Black Friday · collection",
+  "tag": "div",
+  "class": "bfc-section",
+  "settings": [
+    { "type": "text", "id": "end_date", "label": "Fin (compte à rebours)", "default": "2026-11-30T23:59:59+01:00" },
+    { "type": "header", "content": "En-tête" },
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Black Friday · jusqu'au 30 novembre" },
+    { "type": "text", "id": "title_1", "label": "Titre, ligne 1", "default": "Black" },
+    { "type": "text", "id": "title_2", "label": "Titre, ligne 2 (en jaune)", "default": "Friday" },
+    { "type": "textarea", "id": "text", "label": "Texte" },
+    { "type": "text", "id": "countdown_label", "label": "Titre du compte à rebours", "default": "L'offre se termine dans" },
+    { "type": "header", "content": "Bon de réduction" },
+    { "type": "text", "id": "coupon_amount", "label": "Montant", "info": "Vide : le ticket est masqué.", "default": "50 €" },
+    { "type": "text", "id": "coupon_kicker", "label": "Au-dessus du montant", "default": "Bon de" },
+    { "type": "text", "id": "coupon_title", "label": "Titre", "default": "offerts sur votre prochaine commande" },
+    { "type": "textarea", "id": "coupon_text", "label": "Conditions" },
+    { "type": "product_list", "id": "bon_products", "label": "Produits avec le bon", "limit": 20 },
+    { "type": "text", "id": "bon_badge", "label": "Badge des produits avec le bon", "default": "+50 € offerts" },
+    { "type": "text", "id": "bon_gift", "label": "Mention des produits avec le bon", "default": "Bon de 50 € pour votre prochaine commande" },
+    { "type": "text", "id": "default_badge", "label": "Badge des autres produits", "default": "Prix Black Friday" },
+    { "type": "header", "content": "Liste" },
+    { "type": "text", "id": "list_title", "label": "Titre de la liste", "default": "Toutes nos offres Black Friday" },
+    { "type": "text", "id": "card_cta", "label": "Lien sur chaque carte", "default": "Voir l'offre" },
+    { "type": "header", "content": "Étapes du bon" },
+    { "type": "text", "id": "steps_title", "label": "Titre", "info": "Vide : section masquée.", "default": "Le bon de 50 €, comment ça marche ?" },
+    { "type": "text", "id": "step_1_title", "label": "Étape 1, titre" },
+    { "type": "textarea", "id": "step_1_text", "label": "Étape 1, texte" },
+    { "type": "text", "id": "step_2_title", "label": "Étape 2, titre" },
+    { "type": "textarea", "id": "step_2_text", "label": "Étape 2, texte" },
+    { "type": "text", "id": "step_3_title", "label": "Étape 3, titre" },
+    { "type": "textarea", "id": "step_3_text", "label": "Étape 3, texte" },
+    { "type": "header", "content": "Bas de page" },
+    { "type": "textarea", "id": "reassurance", "label": "Réassurance (une par ligne)" },
+    { "type": "textarea", "id": "note", "label": "Mention légale" }
+  ],
+  "presets": [ { "name": "Black Friday · collection" } ]
+}
+{% endschema %}

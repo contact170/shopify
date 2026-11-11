@@ -1,0 +1,63 @@
+{
+ "sections": {
+  "main": {
+   "type": "pack-gamme",
+   "blocks": {
+    "vigilia": {
+     "type": "centrale",
+     "settings": {
+      "option_value": "WiFi uniquement",
+      "slug": "vigilia",
+      "tab_label": "Vigilia",
+      "tab_sub": "Wi-Fi",
+      "badge": "",
+      "description": "La plus simple : clavier et badge, pour toute la famille.",
+      "bullet_1": "Clavier tactile et lecteur de badges intégrés",
+      "bullet_2": "2 badges RFID inclus",
+      "bullet_3": "Connexion Wi-Fi 2,4 GHz",
+      "has_sim": false,
+      "has_rfid": true,
+      "centrale_name": "Centrale d'alarme Vigilia",
+      "centrale_note": "Wi-Fi. Clavier tactile et sirène 85 dB intégrés, batterie de secours 4 h.",
+      "spec_centrale": "Vigilia · clavier tactile et lecteur de badges, sirène 85 dB intégrée",
+      "spec_connectivite": "Wi-Fi 2,4 GHz",
+      "spec_batterie": "4 heures",
+      "centrale_image": "shopify://shop_images/Centrale-Vigilia-alarme-daewoo-security.webp"
+     }
+    },
+    "vigilia_plus": {
+     "type": "centrale",
+     "settings": {
+      "option_value": "WiFi & GSM",
+      "slug": "vigilia-plus",
+      "tab_label": "Vigilia +",
+      "tab_sub": "Wi-Fi + 4G",
+      "badge": "Recommandé",
+      "description": "La Vigilia, avec la 4G en secours si la box est coupée.",
+      "bullet_1": "Clavier tactile et 2 badges RFID inclus",
+      "bullet_2": "Wi-Fi + 4G (carte SIM non fournie)",
+      "bullet_3": "Alertes SMS et appel même sans internet",
+      "has_sim": true,
+      "has_rfid": true,
+      "centrale_name": "Centrale d'alarme Vigilia +",
+      "centrale_note": "Wi-Fi + 4G. Clavier tactile et sirène 85 dB intégrés, batterie de secours 4 h.",
+      "spec_centrale": "Vigilia + · clavier tactile et lecteur de badges, sirène 85 dB intégrée",
+      "spec_connectivite": "Wi-Fi 2,4 GHz + 4G (carte SIM non fournie)",
+      "spec_batterie": "4 heures",
+      "centrale_image": "shopify://shop_images/Centrale-Vigilia-alarme-daewoo-security.webp"
+     }
+    }
+   },
+   "block_order": [
+    "vigilia",
+    "vigilia_plus"
+   ],
+   "settings": {
+    "stickers_image": "shopify://shop_images/pack-securite-integrale-2-autocollants-daewoo.webp"
+   }
+  }
+ },
+ "order": [
+  "main"
+ ]
+}

@@ -1,0 +1,344 @@
+{%- comment -%}
+  Black Friday sur la page d'accueil (style home V2, fond noir).
+  - En-tête : grand titre « Black Friday », texte et compte à rebours jusqu'à la date de fin.
+  - Bon de réduction (optionnel) : ticket jaune, masqué si le montant est vide.
+  - Un bloc « Offre » par produit : prix « dès » de la variante la moins chère.
+    Prix barré : prix barré Shopify (compare_at_price) de cette variante, sinon le métachamp
+    custom.prix_reference (valeur des mêmes éléments achetés séparément).
+    Pas de pourcentage automatique : nos prix barrés sont des valeurs d'achat séparé, pas d'anciens prix.
+  - La section s'affiche entre la date de début (optionnelle) et la date de fin, puis disparaît seule.
+{%- endcomment -%}
+{%- liquid
+  assign maintenant = 'now' | date: '%s' | plus: 0
+  assign actif = true
+  if section.settings.start_date != blank
+    assign debut = section.settings.start_date | date: '%s' | plus: 0
+    if maintenant < debut
+      assign actif = false
+    endif
+  endif
+  if section.settings.end_date != blank
+    assign fin = section.settings.end_date | date: '%s' | plus: 0
+    if maintenant > fin
+      assign actif = false
+    endif
+  endif
+  if request.design_mode
+    assign actif = true
+  endif
+  assign offres = section.blocks | where: 'type', 'offre'
+  assign nb = 0
+  for b in offres
+    if b.settings.product != blank
+      assign nb = nb | plus: 1
+    endif
+  endfor
+  # Colonnes : tablette jusqu'à 3, ordinateur jusqu'à 4 (4 cartes en 2 × 2 sur tablette)
+  assign col_tab = nb
+  if nb == 4
+    assign col_tab = 2
+  elsif nb > 3
+    assign col_tab = 3
+  endif
+  assign col_ord = nb
+  if nb > 4
+    assign col_ord = 3
+  endif
+-%}
+{%- if actif -%}
+{% render 'dw-home-head' %}
+<div class="dwh bfh" id="BfHome-{{ section.id }}"
+  data-debut="{{ section.settings.start_date | escape }}" data-fin="{{ section.settings.end_date | escape }}">
+  <section class="bfh__bloc" aria-labelledby="BfHomeTitre-{{ section.id }}">
+    <div class="dwh-large">
+
+      <div class="bfh__haut">
+        <div class="bfh__tete">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="bfh__pastille"><span class="bfh__point" aria-hidden="true"></span>{{ section.settings.eyebrow }}</p>
+          {%- endif -%}
+          <h2 class="bfh__titre" id="BfHomeTitre-{{ section.id }}">
+            <span class="bfh__mot">{{ section.settings.title_1 }}</span>
+            <span class="bfh__mot bfh__mot--contour">{{ section.settings.title_2 }}</span>
+          </h2>
+          {%- if section.settings.text != blank -%}<p class="bfh__texte">{{ section.settings.text }}</p>{%- endif -%}
+          {%- if section.settings.end_date != blank -%}
+            <div class="bfh__compte" role="timer" aria-label="Temps restant avant la fin du Black Friday">
+              <p class="bfh__compte-titre">{{ section.settings.countdown_label }}</p>
+              <div class="bfh__cases">
+                <span class="bfh__case"><b data-bfh-j>--</b><small>jours</small></span>
+                <span class="bfh__case"><b data-bfh-h>--</b><small>heures</small></span>
+                <span class="bfh__case"><b data-bfh-m>--</b><small>min</small></span>
+                <span class="bfh__case"><b data-bfh-s>--</b><small>sec</small></span>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.coupon_amount != blank -%}
+          <div class="bfh__bon">
+            <div class="bfh__ticket">
+            <div class="bfh__bon-talon">
+              <small>{{ section.settings.coupon_kicker }}</small>
+              <b>{{ section.settings.coupon_amount }}</b>
+            </div>
+            <div class="bfh__bon-corps">
+              <p class="bfh__bon-titre">{{ section.settings.coupon_title }}</p>
+              {%- if section.settings.coupon_text != blank -%}<p class="bfh__bon-texte">{{ section.settings.coupon_text }}</p>{%- endif -%}
+              {%- if section.settings.coupon_link_label != blank -%}
+                <a class="bfh__bon-lien" href="{{ section.settings.coupon_link }}">
+                  {{ section.settings.coupon_link_label }}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+              {%- endif -%}
+            </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if nb > 0 -%}
+        {%- if section.settings.offers_title != blank -%}<p class="bfh__offres-titre">{{ section.settings.offers_title }}</p>{%- endif -%}
+        <ul class="bfh__offres" role="list" style="--col-tab: {{ col_tab }}; --col-ord: {{ col_ord }};">
+          {%- for b in offres -%}
+            {%- liquid
+              assign p = b.settings.product
+              assign v = p.variants.first
+              for vv in p.variants
+                if vv.price < v.price
+                  assign v = vv
+                endif
+              endfor
+              assign barre = 0
+              if v.compare_at_price > v.price
+                assign barre = v.compare_at_price
+              elsif v.metafields.custom.prix_reference.value
+                assign ref = v.metafields.custom.prix_reference.value | times: 100 | round
+                if ref > v.price
+                  assign barre = ref
+                endif
+              endif
+              assign badge = b.settings.badge
+              assign nom = b.settings.name | default: p.title
+              assign photo = b.settings.image | default: p.featured_image
+              assign lien = b.settings.link | default: p.url
+              assign des = 'dès'
+              if p.variants.size == 1
+                assign des = ''
+              endif
+            -%}
+            {%- if p != blank -%}
+            <li {{ b.shopify_attributes }}>
+              <a class="bfh__carte" href="{{ lien }}">
+                <span class="bfh__photo">
+                  {%- if photo -%}
+                    {{ photo | image_url: width: 800 | image_tag: loading: 'lazy', widths: '300,450,600,800', sizes: '(min-width: 900px) 340px, 78vw', alt: '' }}
+                  {%- endif -%}
+                  {%- if badge != blank -%}<span class="bfh__badge{% if b.settings.badge_style == 'rouge' %} bfh__badge--rouge{% endif %}">{{ badge }}</span>{%- endif -%}
+                </span>
+                <span class="bfh__infos">
+                  <span class="bfh__nom">{{ nom }}</span>
+                  {%- if b.settings.sub != blank -%}<span class="bfh__sous">{{ b.settings.sub }}</span>{%- endif -%}
+                  <span class="bfh__prix">
+                    {%- if des != blank -%}<small>{{ des }}</small>{%- endif -%}
+                    <b>{{ v.price | money }}</b>
+                    {%- if barre > v.price -%}<s><span class="bfh__lecteur">au lieu de </span>{{ barre | money }}</s>{%- endif -%}
+                  </span>
+                  {%- if b.settings.gift != blank -%}<span class="bfh__cadeau">{{ b.settings.gift }}</span>{%- endif -%}
+                  <span class="bfh__voir">{{ section.settings.card_cta }} <span aria-hidden="true">→</span></span>
+                </span>
+              </a>
+            </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <div class="bfh__cta">
+        {%- if section.settings.cta_label != blank -%}
+          <a class="dwh-btn bfh__btn" href="{{ section.settings.cta_link }}">
+            <span>{{ section.settings.cta_label }}</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.note != blank -%}<p class="bfh__note">{{ section.settings.note }}</p>{%- endif -%}
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<style>
+  .bfh{--bf-noir:#07080c;--bf-jaune:#ffd500;--bf-rouge:#e11d48;}
+  .bfh .bfh__bloc{position:relative;overflow:hidden;color:#fff;padding:48px 16px 56px;
+    background:radial-gradient(60% 50% at 100% 0%,rgba(255,213,0,.16),transparent 70%),radial-gradient(70% 60% at 0% 100%,rgba(21,82,214,.32),transparent 65%),var(--bf-noir);}
+  .bfh .bfh__bloc::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 2px,transparent 2px 14px);
+    -webkit-mask-image:linear-gradient(to bottom,#000,transparent 70%);mask-image:linear-gradient(to bottom,#000,transparent 70%);}
+  .bfh .dwh-large{position:relative;}
+  .bfh .bfh__haut{display:grid;gap:32px;align-items:center;}
+
+  .bfh .bfh__pastille{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:var(--bf-rouge);color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+  .bfh .bfh__point{width:8px;height:8px;border-radius:50%;background:#fff;animation:bfh-pulse 1.6s infinite;}
+  @keyframes bfh-pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7);}70%{box-shadow:0 0 0 8px rgba(255,255,255,0);}100%{box-shadow:0 0 0 0 rgba(255,255,255,0);}}
+
+  .bfh .bfh__titre{display:flex;flex-direction:column;margin-top:18px;font-family:var(--f-display);font-weight:700;font-stretch:75%;font-variation-settings:'wdth' 75;text-transform:uppercase;font-size:clamp(72px,22vw,156px);line-height:.84;letter-spacing:-.015em;color:#fff;}
+  /* Jaune plein : un contour (text-stroke) laisse voir les tracés qui se chevauchent dans la police variable */
+  .bfh .bfh__mot--contour{color:var(--bf-jaune);}
+  .bfh .bfh__texte{margin-top:22px;max-width:32em;font-size:17px;line-height:1.55;color:#c9cfdd;text-wrap:pretty;}
+  .bfh .bfh__texte strong,.bfh .bfh__texte b{color:#fff;}
+
+  .bfh .bfh__compte{margin-top:24px;}
+  .bfh .bfh__compte-titre{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#c9cfdd;}
+  .bfh .bfh__cases{display:flex;gap:8px;margin-top:10px;}
+  .bfh .bfh__case{display:flex;flex-direction:column;align-items:center;min-width:64px;padding:10px 8px 8px;border-radius:14px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);}
+  .bfh .bfh__case b{font-size:28px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums;color:var(--bf-jaune);}
+  .bfh .bfh__case small{margin-top:5px;font-size:11px;color:#c9cfdd;text-transform:uppercase;letter-spacing:.06em;}
+
+  /* Ticket du bon de réduction : encoches découpées par un masque */
+  .bfh .bfh__bon{transform:rotate(-2deg);filter:drop-shadow(0 24px 34px rgba(255,213,0,.28));}
+  .bfh .bfh__ticket{--talon:38%;display:flex;min-height:180px;border-radius:22px;background:var(--bf-jaune);color:var(--bf-noir);
+    -webkit-mask:radial-gradient(circle at var(--talon) 0,transparent 13px,#000 13.5px) top/100% 51% no-repeat,radial-gradient(circle at var(--talon) 100%,transparent 13px,#000 13.5px) bottom/100% 51% no-repeat;
+    mask:radial-gradient(circle at var(--talon) 0,transparent 13px,#000 13.5px) top/100% 51% no-repeat,radial-gradient(circle at var(--talon) 100%,transparent 13px,#000 13.5px) bottom/100% 51% no-repeat;}
+  .bfh .bfh__bon-talon{flex:0 0 var(--talon);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 10px;border-right:2px dashed rgba(7,8,12,.35);text-align:center;}
+  .bfh .bfh__bon-talon small{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+  .bfh .bfh__bon-talon b{font-family:var(--f-display);font-weight:700;font-stretch:75%;font-variation-settings:'wdth' 75;font-size:clamp(48px,14vw,76px);line-height:.95;letter-spacing:-.02em;white-space:nowrap;}
+  .bfh .bfh__bon-corps{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:20px 20px 20px 18px;}
+  .bfh .bfh__bon-titre{font-size:19px;line-height:1.2;font-weight:700;letter-spacing:-.01em;text-wrap:balance;}
+  .bfh .bfh__bon-texte{font-size:14px;line-height:1.45;color:rgba(7,8,12,.78);}
+  .bfh .bfh__bon-lien{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:14px;font-weight:700;color:var(--bf-noir);text-decoration:underline;text-underline-offset:3px;}
+  .bfh .bfh__bon-lien svg{width:15px;height:15px;transition:transform 200ms var(--ease-out);}
+  @media (hover:hover) and (pointer:fine){.bfh .bfh__bon-lien:hover svg{transform:translateX(3px);}}
+  .bfh .bfh__bon :focus-visible,.bfh .bfh__bon-lien:focus-visible{outline-color:var(--bf-noir);}
+
+  /* Cartes offres : défilement horizontal sur mobile, grille sur ordinateur */
+  .bfh .bfh__offres-titre{margin-top:48px;font-size:14px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#c9cfdd;}
+  .bfh .bfh__offres{display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:14px;margin:16px -16px 0;padding:14px 16px 8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:16px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .bfh .bfh__offres::-webkit-scrollbar{display:none;}
+  .bfh .bfh__offres>li{scroll-snap-align:start;min-width:0;}
+  .bfh .bfh__carte{display:flex;flex-direction:column;height:100%;border-radius:22px;overflow:hidden;text-decoration:none;color:#fff;background:#12141b;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);transition:transform 200ms var(--ease-out),box-shadow 200ms ease;}
+  .bfh .bfh__carte:active{transform:scale(.98);}
+  @media (hover:hover) and (pointer:fine){
+    .bfh .bfh__carte:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1.5px var(--bf-jaune),0 24px 40px -20px rgba(0,0,0,.8);}
+    .bfh .bfh__carte:hover .bfh__voir span{transform:translateX(3px);}
+  }
+  .bfh .bfh__photo{position:relative;display:block;background:#fff;}
+  .bfh .bfh__photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;}
+  .bfh .bfh__badge{position:absolute;top:12px;left:12px;padding:6px 11px;border-radius:999px;background:var(--bf-noir);color:var(--bf-jaune);font-size:13px;font-weight:800;letter-spacing:.01em;box-shadow:0 6px 14px -6px rgba(0,0,0,.6);}
+  .bfh .bfh__badge--rouge{background:var(--bf-rouge);color:#fff;}
+  .bfh .bfh__infos{flex:1;display:flex;flex-direction:column;gap:3px;padding:16px 18px 18px;}
+  .bfh .bfh__nom{font-size:18px;font-weight:700;letter-spacing:-.01em;}
+  .bfh .bfh__sous{font-size:14px;line-height:1.4;color:#c9cfdd;}
+  .bfh .bfh__prix{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 8px;margin-top:8px;}
+  .bfh .bfh__prix small{font-size:13px;color:#c9cfdd;}
+  .bfh .bfh__prix b{font-size:24px;font-weight:800;letter-spacing:-.02em;}
+  .bfh .bfh__prix s{font-size:15px;color:#c9cfdd;text-decoration-thickness:1.5px;}
+  .bfh .bfh__lecteur{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+  .bfh .bfh__cadeau{align-self:flex-start;margin-top:8px;padding:5px 10px;border-radius:10px;background:rgba(255,213,0,.12);box-shadow:inset 0 0 0 1px rgba(255,213,0,.45);color:var(--bf-jaune);font-size:13.5px;font-weight:600;line-height:1.3;}
+  .bfh .bfh__voir{margin-top:auto;padding-top:14px;font-size:15px;font-weight:700;color:var(--bf-jaune);}
+  .bfh .bfh__voir span{display:inline-block;transition:transform 200ms var(--ease-out);}
+
+  .bfh .bfh__cta{margin-top:32px;text-align:center;}
+  .bfh .bfh__btn{background:var(--bf-jaune);color:var(--bf-noir);font-weight:700;box-shadow:0 14px 34px -10px rgba(255,213,0,.55);}
+  @media (hover:hover) and (pointer:fine){.bfh .bfh__btn:hover{background:#ffe24d;}}
+  .bfh .bfh__note{max-width:46em;margin:14px auto 0;font-size:12.5px;line-height:1.45;color:#9aa2b5;}
+  .bfh :focus-visible{outline-color:var(--bf-jaune);}
+
+  @media (min-width:750px){
+    .bfh .bfh__bloc{padding:72px 24px 80px;}
+    .bfh .bfh__offres{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:repeat(var(--col-tab),minmax(0,1fr));max-width:calc(var(--col-tab) * 380px);margin:16px auto 0;padding:14px 0 0;overflow:visible;}
+    .bfh .bfh__offres-titre{text-align:center;}
+    .bfh .bfh__cta .dwh-btn{width:auto;min-width:360px;}
+  }
+  @media (min-width:900px){
+    .bfh .bfh__haut{grid-template-columns:1.25fr 1fr;gap:56px;}
+    .bfh .bfh__ticket{min-height:220px;}
+    .bfh .bfh__offres{grid-template-columns:repeat(var(--col-ord),minmax(0,1fr));max-width:calc(var(--col-ord) * 380px);}
+    .bfh .bfh__bon-titre{font-size:22px;}
+  }
+  @media (max-width:389px){.bfh .bfh__case{min-width:0;flex:1;}.bfh .bfh__bon-corps{padding:16px 14px;}}
+  @media (prefers-reduced-motion:reduce){.bfh .bfh__point{animation:none;}.bfh .bfh__bon{transform:none;}}
+</style>
+
+<script>
+  (function () {
+    var racine = document.getElementById('BfHome-{{ section.id }}');
+    if (!racine) return;
+    var debut = Date.parse(racine.getAttribute('data-debut') || '');
+    var fin = Date.parse(racine.getAttribute('data-fin') || '');
+    var enEdition = {{ request.design_mode | json }};
+    /* Le cache des pages peut servir la section hors période : on vérifie côté navigateur. */
+    if (!enEdition && ((debut && Date.now() < debut) || (fin && Date.now() > fin))) { racine.remove(); return; }
+    if (!fin) return;
+    var cases = {
+      j: racine.querySelector('[data-bfh-j]'), h: racine.querySelector('[data-bfh-h]'),
+      m: racine.querySelector('[data-bfh-m]'), s: racine.querySelector('[data-bfh-s]')
+    };
+    var deux = function (n) { return (n < 10 ? '0' : '') + n; };
+    function tic() {
+      var s = Math.floor((fin - Date.now()) / 1000);
+      if (s <= 0) {
+        if (!enEdition) { racine.remove(); return; }
+        s = 0;
+      }
+      if (cases.j) cases.j.textContent = Math.floor(s / 86400);
+      if (cases.h) cases.h.textContent = deux(Math.floor(s % 86400 / 3600));
+      if (cases.m) cases.m.textContent = deux(Math.floor(s % 3600 / 60));
+      if (cases.s) cases.s.textContent = deux(s % 60);
+      setTimeout(tic, 1000 - (Date.now() % 1000));
+    }
+    tic();
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Black Friday · accueil",
+  "tag": "div",
+  "class": "bfh-section",
+  "settings": [
+    { "type": "header", "content": "Période" },
+    { "type": "text", "id": "start_date", "label": "Début (optionnel)", "info": "Format 2026-11-12T07:00:00+01:00. Vide : affiché tout de suite." },
+    { "type": "text", "id": "end_date", "label": "Fin", "default": "2026-11-30T23:59:59+01:00", "info": "La section disparaît automatiquement après cette date." },
+    { "type": "header", "content": "En-tête" },
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Black Friday · jusqu'au 30 novembre" },
+    { "type": "text", "id": "title_1", "label": "Titre, ligne 1", "default": "Black" },
+    { "type": "text", "id": "title_2", "label": "Titre, ligne 2 (en jaune)", "default": "Friday" },
+    { "type": "textarea", "id": "text", "label": "Texte" },
+    { "type": "text", "id": "countdown_label", "label": "Titre du compte à rebours", "default": "L'offre se termine dans" },
+    { "type": "header", "content": "Bon de réduction" },
+    { "type": "text", "id": "coupon_amount", "label": "Montant", "info": "Vide : le ticket est masqué.", "default": "50 €" },
+    { "type": "text", "id": "coupon_kicker", "label": "Au-dessus du montant", "default": "Bon de" },
+    { "type": "text", "id": "coupon_title", "label": "Titre", "default": "offerts sur votre prochaine commande" },
+    { "type": "textarea", "id": "coupon_text", "label": "Conditions" },
+    { "type": "text", "id": "coupon_link_label", "label": "Lien (libellé)", "default": "Voir les packs concernés" },
+    { "type": "text", "id": "coupon_link", "label": "Lien (adresse)", "default": "#packs-2026" },
+    { "type": "header", "content": "Offres" },
+    { "type": "text", "id": "offers_title", "label": "Titre au-dessus des offres", "default": "Nos offres Black Friday" },
+    { "type": "text", "id": "card_cta", "label": "Lien sur chaque carte", "default": "Voir l'offre" },
+    { "type": "header", "content": "Bouton et mention" },
+    { "type": "text", "id": "cta_label", "label": "Bouton", "default": "Voir toutes les offres Black Friday" },
+    { "type": "text", "id": "cta_link", "label": "Lien du bouton", "default": "/collections/black-friday" },
+    { "type": "textarea", "id": "note", "label": "Mention sous le bouton" }
+  ],
+  "blocks": [
+    {
+      "type": "offre",
+      "name": "Offre",
+      "limit": 6,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produit" },
+        { "type": "text", "id": "name", "label": "Nom court", "info": "Vide : titre du produit." },
+        { "type": "text", "id": "sub", "label": "Sous-titre" },
+        { "type": "text", "id": "badge", "label": "Badge sur la photo", "info": "Ex. « Prix Black Friday » ou « +50 € offerts ». Vide : pas de badge." },
+        { "type": "select", "id": "badge_style", "label": "Couleur du badge", "default": "noir", "options": [ { "value": "noir", "label": "Noir et jaune" }, { "value": "rouge", "label": "Rouge" } ] },
+        { "type": "text", "id": "gift", "label": "Cadeau ou avantage (optionnel)", "info": "Ex. « Caméra intérieure offerte »." },
+        { "type": "image_picker", "id": "image", "label": "Visuel (optionnel)", "info": "Vide : photo principale du produit." },
+        { "type": "url", "id": "link", "label": "Lien (optionnel)", "info": "Vide : fiche du produit." }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Black Friday · accueil" } ]
+}
+{% endschema %}

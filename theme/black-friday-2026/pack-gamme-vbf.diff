@@ -1,0 +1,70 @@
+--- /tmp/claude-0/-home-user-shopify/04686cff-0990-5fcc-a6e8-a46e769aad07/scratchpad/bfsrc/sections/pack-gamme.liquid	2026-11-10 16:01:14.197873660 +0000
++++ /tmp/claude-0/-home-user-shopify/04686cff-0990-5fcc-a6e8-a46e769aad07/scratchpad/bf/sections/pack-gamme.liquid	2026-11-10 16:03:09.889637986 +0000
+@@ -77,7 +77,7 @@
+ {%- liquid
+   assign pk_code = 'psi'
+   for t in product.tags
+-    if t == 'pack-ess' or t == 'pack-psi' or t == 'pack-vdu' or t == 'pack-pan' or t == 'pack-vds' or t == 'pack-pdu'
++    if t == 'pack-ess' or t == 'pack-psi' or t == 'pack-vdu' or t == 'pack-pan' or t == 'pack-vds' or t == 'pack-pdu' or t == 'pack-vbf'
+       assign pk_code = t | remove: 'pack-'
+     endif
+   endfor
+@@ -212,6 +212,27 @@
+       assign pk_faq_a = "Placez un contacteur sur chaque porte d'entrée et sur les fenêtres accessibles, un détecteur de mouvement dans les pièces de passage de chaque étage et un détecteur de fumée par niveau, de préférence près des chambres. Les deux caméras rotatives couvrent deux façades différentes."
+       assign pk_final = "La maison entière sous protection, du jardin à l'étage."
+       assign pk_fumee = 2
++    when 'vbf'
++      assign pk_nom = "Pack Vigilia Sécurité Renforcée"
++      assign pk_titre = "Deux caméras, et la fumée en plus."
++      assign pk_accroche = "Le Pack Vigilia Sécurité Renforcée."
++      assign pk_resume = "La centrale Vigilia (Wi-Fi ou Wi-Fi + 4G), 5 contacteurs 2-en-1, 2 détecteurs de mouvement, 1 télécommande, 2 badges RFID, 1 caméra intérieure, 1 caméra extérieure rotative à panneau solaire, 1 détecteur de fumée et 1 sirène solaire : protégé contre l'intrusion comme contre le feu."
++      assign pk_sub = "Idéal pour une maison avec jardin, avec la protection incendie en plus. Vous l'installez vous-même, sans technicien, et aucun abonnement Daewoo n'est obligatoire."
++      assign pk_plus = "Presque le contenu du Pack Panorama (un contacteur et une télécommande en moins), avec la centrale Vigilia uniquement et dans la limite des stocks."
++      assign pk_chips = "🔒 Sans abonnement|📷 Caméra rotative solaire|🔥 Détecteur de fumée|🧩 Évolutif"
++      assign pk_elements = "5|Contacteurs d'ouverture et de vibration WDV301|2-en-1, pour portes, fenêtres et surfaces vitrées|contacteur-2-en-1-porte-et-vibrations-compatible-avec-lalarme-am301-am302|~2|Détecteurs de mouvement WPS305|Compatibles animaux jusqu'à 10 kg|detecteur-de-mouvement-animaux-compatible-touch-vigilia-am30x|~1|Télécommande WRC305|Armement et désarmement en un geste|telecommande-compatible-vigilia-touch|~2|Badges RFID WRF301|Inclus avec la Vigilia et la Vigilia + : on passe le badge devant la centrale, elle se désarme sans code. Idéal pour les enfants|pack-de-2-badges-rfid-wrf301|rfid~1|Caméra intérieure IP506P|Rotative, Full HD, mode vie privée|camera-interieure-rotative-ip506p|~1|Caméra extérieure solaire W512MW|Rotative, 1440p, panneau solaire inclus|camera-w512mw-exterieure-rotative-1440p-avec-panneau-solaire|~1|Détecteur de fumée WSD301|Actif en permanence, même alarme désarmée|detecteur-de-fumee-wsd301|~1|Sirène extérieure solaire WOS305S|Dissuasive, rechargée par le soleil, sans câble|sirene-exterieure-wos305s-sirene-avec-batterie-de-secours-et-panneau-solaire|~2|Autocollants « Site protégé par Daewoo »|Alarme et caméras : la dissuasion dès l'entrée|autocollants-propriete-sous-video-surveillance-x10|"
++      assign pk_cam = "w512mw-1"
++      assign pk_band_titre = "Plus de pièces protégées, et la fumée en plus"
++      assign pk_band_texte = "Alarme, 2 caméras, détecteur de fumée et sirène solaire. Garantie 2 ans, sans abonnement Daewoo obligatoire."
++      assign pk_long = "Le Pack Vigilia Sécurité Renforcée de Daewoo Security est un kit d'alarme maison sans fil et sans abonnement, à installer soi-même. Il réunit la centrale Vigilia (Wi-Fi ou Wi-Fi + 4G), 7 détecteurs, un détecteur de fumée, 2 caméras dont une extérieure rotative solaire et une sirène extérieure solaire"
++      assign pk_spec_det = "5 contacteurs d'ouverture et de vibration&#10;2 détecteurs de mouvement compatibles animaux&#10;1 détecteur de fumée WSD301"
++      assign pk_spec_cams = "Extérieure solaire rotative W512MW (1440p)&#10;Intérieure rotative IP506P (Full HD)"
++      assign pk_spec_rc = "1 télécommande WRC305"
++      assign pk_faq_contenu = "La centrale d'alarme Vigilia (Wi-Fi) ou Vigilia + (Wi-Fi + 4G), 5 contacteurs d'ouverture et de vibration WDV301, 2 détecteurs de mouvement compatibles animaux WPS305, 1 télécommande WRC305, 2 badges RFID WRF301, 1 caméra intérieure rotative IP506P, 1 caméra extérieure solaire W512MW, 1 détecteur de fumée WSD301, 1 sirène extérieure solaire WOS305S et 2 autocollants de dissuasion."
++      assign pk_faq_q = "Le détecteur de fumée fonctionne-t-il quand l'alarme est désarmée ?"
++      assign pk_faq_a = "Oui. Le détecteur de fumée WSD301 reste actif en permanence : en cas de fumée, il sonne et vous recevez une notification sur votre téléphone, que l'alarme soit armée ou non. La notification nécessite une connexion internet."
++      assign pk_final = "La maison protégée contre l'intrusion comme contre la fumée."
++      assign pk_fumee = 1
+   endcase
+ -%}
+ 
+@@ -270,6 +291,11 @@
+       assign pk_plan_titre = "Chaque étage, chaque façade."
+       assign pk_plan_texte = "Deux caméras rotatives à panneau solaire surveillent deux façades. Les huit contacteurs et les trois détecteurs de mouvement se répartissent entre le rez-de-chaussée et l'étage, avec un détecteur de fumée par niveau."
+       assign pk_ordre = 'cam,maison,fumee,sirene,app,sim'
++    when 'vbf'
++      assign pk_accent = '#0b0b0f'
++      assign pk_soft = '#fff6cc'
++      assign pk_signature = 'Offre Black Friday'
++      assign pk_ordre = 'cam,fumee,sirene,maison,app,sim'
+   endcase
+ -%}
+ 
+@@ -1523,8 +1549,16 @@
+       echo pk_faq_q
+       echo "|"
+       echo pk_faq_a
+-      echo "~Quelle centrale choisir ?|Le reste du pack est le même pour les quatre, sauf les 2 badges RFID, inclus uniquement avec la Vigilia et la Vigilia +. La Vigilia est la plus simple, au clavier ou au badge, en Wi-Fi. La Vigilia + ajoute la 4G en secours. La Touch a un écran tactile couleur de 4,3 pouces et la 4G. La Touch XL a un grand écran de 7 pouces, la 4G et 20 heures de batterie de secours."
+-      echo "~À quoi correspond le prix barré ?|C'est le prix du même équipement (centrale, contacteurs, détecteurs, télécommandes, caméras, sirène…) composé sur notre site avec notre configurateur. Le pack vous fait économiser la différence."
++      if pk_code == 'vbf'
++        echo "~Vigilia ou Vigilia + ?|Le reste du pack est le même. La Vigilia se connecte en Wi-Fi, au clavier ou au badge. La Vigilia + ajoute la 4G en secours : avec une carte SIM (non fournie), elle continue d'envoyer des alertes par SMS et appel en cas de coupure internet."
++      else
++        echo "~Quelle centrale choisir ?|Le reste du pack est le même pour les quatre, sauf les 2 badges RFID, inclus uniquement avec la Vigilia et la Vigilia +. La Vigilia est la plus simple, au clavier ou au badge, en Wi-Fi. La Vigilia + ajoute la 4G en secours. La Touch a un écran tactile couleur de 4,3 pouces et la 4G. La Touch XL a un grand écran de 7 pouces, la 4G et 20 heures de batterie de secours."
++      endif
++      if pk_code == 'vbf'
++        echo "~À quoi correspond le prix barré ?|C'est une estimation prudente du prix du même équipement composé sur notre site avec notre configurateur : le prix réel est au moins égal. Le pack vous fait économiser au moins la différence."
++      else
++        echo "~À quoi correspond le prix barré ?|C'est le prix du même équipement (centrale, contacteurs, détecteurs, télécommandes, caméras, sirène…) composé sur notre site avec notre configurateur. Le pack vous fait économiser la différence."
++      endif
+       echo "~Que se passe-t-il en cas de coupure de courant ou d'internet ?|En cas de coupure de courant, la centrale bascule sur sa batterie de secours : 4 heures pour la Vigilia, la Vigilia + et la Touch, 20 heures pour la Touch XL. Sans internet, la sirène et la détection continuent de fonctionner. Avec la Vigilia +, la Touch ou la Touch XL et une carte SIM installée (non fournie), vous continuez de recevoir les alertes par SMS et appel. Les caméras, elles, ont besoin du Wi-Fi."
+       echo "~Quelle carte SIM utiliser avec la Vigilia +, la Touch ou la Touch XL ?|Nous recommandons une carte SIM M2M conçue pour les alarmes, comme la carte Afone que nous proposons (au mois ou 1 an prépayé). Pour un autre forfait, vérifiez auprès de votre opérateur qu'il autorise cet usage. La carte SIM n'est pas fournie avec le pack."
+       echo "~Comment se passe l'installation ?|Aucune compétence technique requise : branchez la centrale, fixez les détecteurs et suivez les étapes de l'application Daewoo Home Connect. Pour la sirène et les caméras, quelques vis suffisent. Un guide d'installation interactif, propre à chaque centrale, vous accompagne étape par étape."
