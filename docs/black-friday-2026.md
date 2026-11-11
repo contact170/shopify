@@ -88,9 +88,11 @@ inclus**, **sans minimum d'achat**, utilisable en une seule fois. Elles
 figurent dans le ticket de l'accueil, l'étape 3 de la page Black Friday et les
 mentions en bas de ces deux pages.
 
-Le délai de rétractation n'est pas cité sur l'accueil (choix du dirigeant). Il
-reste mentionné sur la page Black Friday (ticket et étape 2) et dans la FAQ
-habituelle de l'accueil.
+Choix du dirigeant : la communication Black Friday ne parle jamais du délai de
+rétractation (accueil, page Black Friday, bandeau, fiches). La date du
+15 décembre est donnée sans justification. Seule la FAQ habituelle de
+l'accueil (question « Livraison, retour et remboursement ») le cite, comme
+avant l'opération.
 
 ## Lancement, jeudi 12 novembre au matin
 
