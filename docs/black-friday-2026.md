@@ -1,6 +1,6 @@
 # Black Friday 2026 : note de reprise
 
-Opération Black Friday de daewoo-security.fr, du jeudi 12 novembre au matin au
+Opération Black Friday de daewoo-security.fr, du jeudi 12 novembre à 18h au
 lundi 30 novembre 2026 à 23h59. Cette note décrit ce qui est prêt, le
 fonctionnement des bons d'achat et la liste du lancement. État au 11/11/2026.
 
@@ -94,7 +94,25 @@ rétractation (accueil, page Black Friday, bandeau, fiches). La date du
 l'accueil (question « Livraison, retour et remboursement ») le cite, comme
 avant l'opération.
 
-## Lancement, jeudi 12 novembre au matin
+## Offre du configurateur (Lovable), à coordonner
+
+Le configurateur (projet Lovable « Configurateur Site Daewoo Security ») a sa
+propre offre : caméra W503 offerte dès 600 € net, du jeudi 12 novembre 18h au
+lundi 16 novembre 9h30. Elle repose sur 5 codes Shopify : `W503OFFERTE`,
+`W503OFFERTE10`, `W503OFFERTE15`, `W503OFFERTE20`, `W503OFFERTE25`.
+
+Point d'attention relevé le 11/11 : ces codes retirent 89,93 à 119,90 € sur
+toute commande d'au moins 600 €, que la W503 soit dans le panier ou non, et se
+cumulent avec les autres réductions. Un client qui connaît le code peut donc
+l'utiliser sur un pack Black Friday de 600 € ou plus (Panorama Touch XL,
+Vision Duo Solaire, Panorama Duo) sans prendre la caméra, et recevoir en plus
+son bon de 70 €. Limites : une utilisation par client, 4 jours.
+
+Le thème Black Friday garde le même code d'intégration du configurateur que le
+thème en ligne (fichiers `layout/theme.liquid`, `snippets/custom.liquid`
+identiques) : la publication du thème ne coupe rien.
+
+## Lancement, jeudi 12 novembre à 18h
 
 1. Le dirigeant publie le thème « Black Friday 12112026 (Claude) ».
 2. Passer AM3022601-002 et VIG2601-002 en « Actif ». Ils sont déjà publiés
