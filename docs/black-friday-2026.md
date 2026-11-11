@@ -83,17 +83,22 @@ Fonctionnement :
   ou en cours de retour, et celles livrées depuis moins de 14 jours (délai de
   rétractation pas encore écoulé).
 
-Encore à fixer : durée de validité du code et montant minimum de commande
-(proposition : valable jusqu'au 31 janvier 2027, dès 150 € d'achat, une seule
-utilisation, non cumulable). Les conditions affichées sur la page Black Friday
-seront complétées une fois décidé.
+Conditions du bon (décidées le 11/11) : valable jusqu'au **31 mars 2027
+inclus**, **sans minimum d'achat**, utilisable en une seule fois. Elles
+figurent dans le ticket de l'accueil, l'étape 3 de la page Black Friday et les
+mentions en bas de ces deux pages.
+
+Le délai de rétractation n'est pas cité sur l'accueil (choix du dirigeant). Il
+reste mentionné sur la page Black Friday (ticket et étape 2) et dans la FAQ
+habituelle de l'accueil.
 
 ## Lancement, jeudi 12 novembre au matin
 
 1. Le dirigeant publie le thème « Black Friday 12112026 (Claude) ».
 2. Passer AM3022601-002 et VIG2601-002 en « Actif ». Ils sont déjà publiés
-   sur la boutique en ligne depuis le 10/11 (invisibles tant qu'ils sont en
-   brouillon).
+   sur la boutique en ligne depuis le 10/11 et rangés dans la collection Black
+   Friday, mais restent invisibles partout (même dans l'aperçu du thème) tant
+   qu'ils sont en brouillon.
 3. Renommer « Offres du moment » en « Black Friday » et le faire pointer vers
    `/collections/black-friday`, dans les menus `menu-pc-2` et `menu-mobile`
    (les menus ne dépendent pas du thème : changement immédiat).
