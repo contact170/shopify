@@ -5,6 +5,7 @@
     (valeur des mêmes éléments achetés séparément, même règle que les fiches pack-gamme).
   - Un produit en brouillon ou introuvable est ignoré.
   - Option Black Friday : fond noir, avantage sous le prix et pastille sur chaque pack (vides = rien).
+    [bon] est remplacé par le montant du bon saisi sur chaque pack ; sans montant, rien ne s'affiche.
 {%- endcomment -%}
 {%- liquid
   assign packs = section.blocks | where: 'type', 'pack'
@@ -48,6 +49,14 @@
   assign alma_base = vs.price | divided_by: 4
   assign alma_1 = alma_base | times: 3 | minus: vs.price | times: -1
   assign tparts = section.settings.title | split: '[prix]'
+  assign promo_s = section.settings.promo
+  if promo_s contains '[bon]'
+    if sel.settings.bon != blank
+      assign promo_s = promo_s | replace: '[bon]', sel.settings.bon
+    else
+      assign promo_s = ''
+    endif
+  endif
 -%}
 {% render 'dw-home-head' %}
 <div class="dwh gmh{% if section.settings.bf %} gmh--bf{% endif %}" id="GammeHome-{{ section.id }}">
@@ -75,7 +84,7 @@
           <p class="gmh__alma" data-gmh-alma>Disponible en 4× sans frais avec Alma : <b>{{ alma_1 | money }}</b> puis 3 × {{ alma_base | money }}</p>
           <p class="gmh__eco" data-gmh-eco{% if eco_s == 0 %} hidden{% endif %}>Vous économisez <b>{{ eco_s | money }}</b> par rapport à l'achat séparé</p>
           {%- if section.settings.promo != blank -%}
-            <p class="gmh__promo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 21V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"/></svg><span>{{ section.settings.promo }}</span></p>
+            <p class="gmh__promo" data-gmh-promo{% if promo_s == blank %} hidden{% endif %}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 21V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"/></svg><span data-gmh-promo-texte>{{ promo_s }}</span></p>
           {%- endif -%}
         </div>
 
@@ -110,6 +119,22 @@
               assign a_1 = a_base | times: 3 | minus: v.price | times: -1
               assign nom = b.settings.name | default: p.title
               assign photo = p.featured_image
+              assign promo_b = section.settings.promo
+              assign badge_b = section.settings.promo_badge
+              if promo_b contains '[bon]'
+                if b.settings.bon != blank
+                  assign promo_b = promo_b | replace: '[bon]', b.settings.bon
+                else
+                  assign promo_b = ''
+                endif
+              endif
+              if badge_b contains '[bon]'
+                if b.settings.bon != blank
+                  assign badge_b = badge_b | replace: '[bon]', b.settings.bon
+                else
+                  assign badge_b = ''
+                endif
+              endif
             -%}
             {%- if p != blank -%}
             <li {{ b.shopify_attributes }}>
@@ -119,12 +144,12 @@
                 data-prix="{{ v.price | money | strip_html }}"
                 data-barre="{% if ref > v.price %}{{ ref | money | strip_html }}{% endif %}"
                 data-eco="{% if eco > 0 %}{{ eco | money | strip_html }}{% endif %}"
-                data-alma1="{{ a_1 | money | strip_html }}" data-alma="{{ a_base | money | strip_html }}">
+                data-alma1="{{ a_1 | money | strip_html }}" data-alma="{{ a_base | money | strip_html }}" data-promo="{{ promo_b | escape }}">
                 {%- if b.settings.badge != blank -%}<span class="gmh__badge">{{ b.settings.badge }}</span>{%- endif -%}
                 <span class="gmh__nom">{{ nom }}</span>
                 <span class="gmh__sous">{{ b.settings.sub }}</span>
                 <span class="gmh__prix"><small>dès</small> <b>{{ v.price | money }}</b></span>
-                {%- if section.settings.promo_badge != blank -%}<span class="gmh__promo-carte">{{ section.settings.promo_badge }}</span>{%- endif -%}
+                {%- if badge_b != blank -%}<span class="gmh__promo-carte">{{ badge_b }}</span>{%- endif -%}
               </button>
             </li>
             {%- endif -%}
@@ -257,6 +282,13 @@
         var b = document.createElement('b'); b.textContent = c.getAttribute('data-eco'); eco.appendChild(b);
         eco.appendChild(document.createTextNode(" par rapport à l'achat séparé"));
       }
+      var promo = q('[data-gmh-promo]');
+      if (promo) {
+        var ph = c.getAttribute('data-promo') || '';
+        promo.hidden = !ph;
+        var pt = promo.querySelector('[data-gmh-promo-texte]');
+        if (pt) pt.innerHTML = ph;
+      }
       var alma = q('[data-gmh-alma]');
       if (alma) {
         alma.textContent = 'Disponible en 4× sans frais avec Alma : ';
@@ -287,8 +319,8 @@
     { "type": "text", "id": "anchor", "label": "Ancre de la section", "info": "Permet un lien direct vers la section, ex. #packs-2026.", "default": "packs-2026" },
     { "type": "header", "content": "Black Friday" },
     { "type": "checkbox", "id": "bf", "label": "Habillage Black Friday (fond noir)", "default": false },
-    { "type": "text", "id": "promo", "label": "Avantage sous le prix", "info": "Ex. <b>+ 50 € offerts</b> sur votre prochaine commande. Vide : masqué." },
-    { "type": "text", "id": "promo_badge", "label": "Pastille sur chaque pack", "info": "Ex. +50 € offerts. Vide : masquée." }
+    { "type": "text", "id": "promo", "label": "Avantage sous le prix", "info": "Ex. <b>+ [bon] offerts</b> sur votre prochaine commande. [bon] = montant saisi sur le pack. Vide : masqué." },
+    { "type": "text", "id": "promo_badge", "label": "Pastille sur chaque pack", "info": "Ex. +[bon] offerts. Vide : masquée." }
   ],
   "blocks": [
     {
@@ -300,7 +332,8 @@
         { "type": "text", "id": "name", "label": "Nom court", "default": "Essentiel" },
         { "type": "text", "id": "sub", "label": "Sous-titre" },
         { "type": "text", "id": "badge", "label": "Badge (optionnel)" },
-        { "type": "checkbox", "id": "highlight", "label": "Pack mis en avant au chargement", "default": false }
+        { "type": "checkbox", "id": "highlight", "label": "Pack mis en avant au chargement", "default": false },
+        { "type": "text", "id": "bon", "label": "Montant du bon Black Friday (optionnel)", "info": "Ex. 50 €. Remplace [bon] dans l'avantage et la pastille." }
       ]
     }
   ],

@@ -2,14 +2,19 @@
   Page collection Black Friday (modèle collection.black-friday), même décor que la section d'accueil bf-home.
   - En-tête : grand titre (H1 de la page), texte, compte à rebours, ticket du bon de réduction.
   - Grille : tous les produits de la collection, dans l'ordre de la collection.
-    Badge : celui du bon pour les produits listés dans « Produits avec le bon », sinon le badge par défaut.
+    Badge : montant du bon du palier où le produit est listé (3 paliers), sinon le badge par défaut.
+    [bon] dans le badge et la mention est remplacé par le montant du palier.
     Nom et sous-titre : les deux premières parties du titre produit (séparées par « | »).
     Prix barré : prix barré Shopify de la variante la moins chère, sinon son métachamp custom.prix_reference.
   - Étapes du bon et réassurance : masquées si leurs textes sont vides.
 {%- endcomment -%}
 {%- liquid
-  assign bon_handles = section.settings.bon_products | map: 'handle' | join: ','
-  assign bon_handles = ',' | append: bon_handles | append: ','
+  assign bon1 = section.settings.bon1_products | map: 'handle' | join: ','
+  assign bon1 = ',' | append: bon1 | append: ','
+  assign bon2 = section.settings.bon2_products | map: 'handle' | join: ','
+  assign bon2 = ',' | append: bon2 | append: ','
+  assign bon3 = section.settings.bon3_products | map: 'handle' | join: ','
+  assign bon3 = ',' | append: bon3 | append: ','
 -%}
 {% render 'dw-home-head' %}
 <div class="dwh bfc" id="BfCol-{{ section.id }}" data-fin="{{ section.settings.end_date | escape }}">
@@ -86,10 +91,20 @@
                 assign nom = parts[0] | strip
                 assign sous = parts[1] | strip
                 assign cle = ',' | append: p.handle | append: ','
+                assign montant = ''
+                if bon1 contains cle
+                  assign montant = section.settings.bon1_amount
+                elsif bon2 contains cle
+                  assign montant = section.settings.bon2_amount
+                elsif bon3 contains cle
+                  assign montant = section.settings.bon3_amount
+                endif
                 assign avec_bon = false
-                if bon_handles contains cle
+                if montant != blank
                   assign avec_bon = true
                 endif
+                assign badge_bon = section.settings.bon_badge | replace: '[bon]', montant
+                assign mention_bon = section.settings.bon_gift | replace: '[bon]', montant
               -%}
               <li>
                 <a class="bfc__carte" href="{{ p.url }}">
@@ -98,7 +113,7 @@
                       {{ p.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '300,450,600,800', sizes: '(min-width: 1100px) 340px, (min-width: 750px) 45vw, 92vw', alt: '' }}
                     {%- endif -%}
                     {%- if avec_bon and section.settings.bon_badge != blank -%}
-                      <span class="bfc__badge">{{ section.settings.bon_badge }}</span>
+                      <span class="bfc__badge">{{ badge_bon }}</span>
                     {%- elsif avec_bon == false and section.settings.default_badge != blank -%}
                       <span class="bfc__badge bfc__badge--rouge">{{ section.settings.default_badge }}</span>
                     {%- endif -%}
@@ -111,7 +126,7 @@
                       <b>{{ v.price | money }}</b>
                       {%- if barre > v.price -%}<s><span class="bfc__lecteur">au lieu de </span>{{ barre | money }}</s>{%- endif -%}
                     </span>
-                    {%- if avec_bon and section.settings.bon_gift != blank -%}<span class="bfc__cadeau">{{ section.settings.bon_gift }}</span>{%- endif -%}
+                    {%- if avec_bon and section.settings.bon_gift != blank -%}<span class="bfc__cadeau">{{ mention_bon }}</span>{%- endif -%}
                     <span class="bfc__voir">{{ section.settings.card_cta }} <span aria-hidden="true">→</span></span>
                   </span>
                 </a>
@@ -304,9 +319,14 @@
     { "type": "text", "id": "coupon_kicker", "label": "Au-dessus du montant", "default": "Bon de" },
     { "type": "text", "id": "coupon_title", "label": "Titre", "default": "offerts sur votre prochaine commande" },
     { "type": "textarea", "id": "coupon_text", "label": "Conditions" },
-    { "type": "product_list", "id": "bon_products", "label": "Produits avec le bon", "limit": 20 },
-    { "type": "text", "id": "bon_badge", "label": "Badge des produits avec le bon", "default": "+50 € offerts" },
-    { "type": "text", "id": "bon_gift", "label": "Mention des produits avec le bon", "default": "Bon de 50 € pour votre prochaine commande" },
+    { "type": "product_list", "id": "bon1_products", "label": "Palier 1 : produits", "limit": 20 },
+    { "type": "text", "id": "bon1_amount", "label": "Palier 1 : montant du bon", "default": "30 €" },
+    { "type": "product_list", "id": "bon2_products", "label": "Palier 2 : produits", "limit": 20 },
+    { "type": "text", "id": "bon2_amount", "label": "Palier 2 : montant du bon", "default": "50 €" },
+    { "type": "product_list", "id": "bon3_products", "label": "Palier 3 : produits", "limit": 20 },
+    { "type": "text", "id": "bon3_amount", "label": "Palier 3 : montant du bon", "default": "70 €" },
+    { "type": "text", "id": "bon_badge", "label": "Badge des produits avec un bon", "info": "[bon] = montant du palier.", "default": "+[bon] offerts" },
+    { "type": "text", "id": "bon_gift", "label": "Mention des produits avec un bon", "info": "[bon] = montant du palier.", "default": "Bon de [bon] envoyé le 15 décembre" },
     { "type": "text", "id": "default_badge", "label": "Badge des autres produits", "default": "Prix Black Friday" },
     { "type": "header", "content": "Liste" },
     { "type": "text", "id": "list_title", "label": "Titre de la liste", "default": "Toutes nos offres Black Friday" },

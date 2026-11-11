@@ -1,0 +1,73 @@
+{%- comment -%}
+  Bandeau Black Friday en haut des fiches des 6 packs de la gamme 2026 (modèle product.pack-gamme).
+  Montant du bon selon l'étiquette pack-xxx du produit. Disparaît seul après la date de fin.
+{%- endcomment -%}
+{%- liquid
+  assign montant = ''
+  for t in product.tags
+    case t
+      when 'pack-ess'
+        assign montant = section.settings.bon_ess
+      when 'pack-psi', 'pack-vdu', 'pack-pan'
+        assign montant = section.settings.bon_mid
+      when 'pack-vds', 'pack-pdu'
+        assign montant = section.settings.bon_top
+    endcase
+  endfor
+  assign actif = true
+  if section.settings.end_date != blank
+    assign fin = section.settings.end_date | date: '%s' | plus: 0
+    assign maintenant = 'now' | date: '%s' | plus: 0
+    if maintenant > fin
+      assign actif = false
+    endif
+  endif
+  if request.design_mode
+    assign actif = true
+  endif
+  assign texte = section.settings.text | replace: '[bon]', montant
+-%}
+{%- if actif and montant != blank -%}
+  <div class="bfpb" id="BfPackBon-{{ section.id }}" data-fin="{{ section.settings.end_date | escape }}">
+    <p class="bfpb__ligne">
+      <span class="bfpb__pastille">{{ section.settings.label }}</span>
+      <span class="bfpb__texte">{{ texte }}</span>
+      {%- if section.settings.link_label != blank -%}
+        <a class="bfpb__lien" href="{{ section.settings.link }}">{{ section.settings.link_label }} →</a>
+      {%- endif -%}
+    </p>
+  </div>
+  <style>
+    .bfpb{background:#07080c;color:#fff;padding:12px 16px;font-family:var(--font-body-family,'Helvetica Neue',Arial,sans-serif);}
+    .bfpb__ligne{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 12px;font-size:14px;line-height:1.4;text-align:center;}
+    .bfpb__pastille{padding:4px 9px;border-radius:999px;background:#e11d48;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+    .bfpb__texte b,.bfpb__texte strong{color:#ffd500;}
+    .bfpb__lien{color:#ffd500;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;}
+    .bfpb__lien:focus-visible{outline:2px solid #ffd500;outline-offset:3px;border-radius:4px;}
+  </style>
+  <script>
+    (function () {
+      var el = document.getElementById('BfPackBon-{{ section.id }}');
+      var fin = el && Date.parse(el.getAttribute('data-fin') || '');
+      if (el && fin && Date.now() > fin && !{{ request.design_mode | json }}) el.remove();
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Black Friday · fiche",
+  "tag": "div",
+  "class": "bfpb-section",
+  "settings": [
+    { "type": "text", "id": "end_date", "label": "Fin", "default": "2026-11-30T23:59:59+01:00" },
+    { "type": "text", "id": "label", "label": "Pastille", "default": "Black Friday" },
+    { "type": "text", "id": "text", "label": "Texte", "info": "[bon] = montant selon le pack.", "default": "Bon de <b>[bon]</b> offert pour votre prochaine commande, envoyé par e-mail le 15 décembre." },
+    { "type": "text", "id": "bon_ess", "label": "Montant, Pack Essentiel", "default": "30 €" },
+    { "type": "text", "id": "bon_mid", "label": "Montant, Sécurité Intégrale, Vision Duo et Panorama", "default": "50 €" },
+    { "type": "text", "id": "bon_top", "label": "Montant, Vision Duo Solaire et Panorama Duo", "default": "70 €" },
+    { "type": "text", "id": "link_label", "label": "Lien (libellé)", "default": "Toutes les offres" },
+    { "type": "text", "id": "link", "label": "Lien (adresse)", "default": "/collections/black-friday" }
+  ]
+}
+{% endschema %}
