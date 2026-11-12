@@ -191,6 +191,35 @@ copies techniques des vraies fiches. Les liens produits
 sont les `onlineStoreUrl` exacts (`https://daewoo-security.fr/products/<handle>`).
 Les images sont les URL exactes du CDN Shopify renvoyées par l'outil.
 
+## Compatibilités à respecter impérativement
+
+Les règles sur les badges et les claviers ont été confirmées par le
+dirigeant le 12/11/2026 ; le reste vient du catalogue Shopify. Elles
+priment sur toute fiche produit qui dirait autre chose. Si une fiche les
+contredit, ne recopie pas l'erreur : signale-la dans le rapport.
+
+- **Deux familles d'accessoires non interchangeables :** « Compatible
+  Touch/Vigilia » (références en 30x) et « Compatible Key & Élite »
+  (références en 50x ; certaines sont réservées à la Key ou à l'Élite seule,
+  comme WKE501 ou les modèles Zigbee en 502Z). Fie-toi au titre de la fiche.
+- **Badges RFID et lecteurs :**
+  - **Vigilia et Vigilia+** : lecteur RFID intégré à la centrale, les badges
+    WRF301 s'utilisent directement.
+  - **Touch (AM301) et Touch XL (AM302)** : pas de lecteur RFID. Le clavier
+    WKE301 (livré avec 2 badges) est obligatoire pour utiliser des badges.
+  - **Key (SA501)** : lecteur RFID intégré. Le badge WRF501 s'utilise
+    directement ou avec le clavier WKE501. Le WKE501 ne fonctionne qu'avec
+    la gamme Key.
+  - **Élite (PA501Z)** : pas de lecteur RFID. Le clavier Zigbee WKE502Z est
+    obligatoire pour utiliser le badge WRF501. Le WKE502Z ne fonctionne
+    qu'avec l'Élite.
+  - Le WRF301 arme et désarme ; le WRF501 désarme uniquement. Le WRF501 est
+    compatible avec les deux claviers WKE501 et WKE502Z.
+- **Nouvelle gamme de packs (depuis le 9/11/2026) :** 6 packs (Essentiel,
+  Sécurité Intégrale, Panorama, Panorama Duo, Vision Duo, Vision Duo
+  Solaire), chacun avec 4 centrales au choix (Vigilia, Vigilia+, Touch,
+  Touch XL). 2 badges WRF301 inclus seulement avec Vigilia et Vigilia+.
+
 # Étape 6 : rédiger l'article
 
 Reprends le style des articles existants : informatif, prudent, concret, sans
