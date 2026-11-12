@@ -1,6 +1,6 @@
 # Black Friday 2026 : note de reprise
 
-Opération Black Friday de daewoo-security.fr, du jeudi 12 novembre à 18h au
+Opération Black Friday de daewoo-security.fr, du vendredi 13 novembre à 16h au
 lundi 30 novembre 2026 à 23h59. Cette note décrit ce qui est prêt, le
 fonctionnement des bons d'achat et la liste du lancement. État au 11/11/2026.
 
@@ -56,7 +56,7 @@ la somme MD5 change, pas le contenu.
 
 ## Bons d'achat (décidé le 11/11)
 
-Un bon pour la prochaine commande, selon le pack acheté entre le 12 et le
+Un bon pour la prochaine commande, selon le pack acheté entre le 13 et le
 30 novembre 2026 :
 
 | Bon | Packs | Étiquette du pack |
@@ -97,8 +97,8 @@ avant l'opération.
 ## Offre du configurateur (Lovable), à coordonner
 
 Le configurateur (projet Lovable « Configurateur Site Daewoo Security ») a sa
-propre offre : caméra W503 offerte dès 600 € net, du jeudi 12 novembre 18h au
-lundi 16 novembre 9h30. Elle repose sur 5 codes Shopify : `W503OFFERTE`,
+propre offre : caméra W503 offerte dès 600 € net, du vendredi 13 novembre 16h
+au lundi 16 novembre 9h30. Elle repose sur 5 codes Shopify : `W503OFFERTE`,
 `W503OFFERTE10`, `W503OFFERTE15`, `W503OFFERTE20`, `W503OFFERTE25`.
 
 Point d'attention relevé le 11/11 : ces codes retirent 89,93 à 119,90 € sur
@@ -112,7 +112,7 @@ Le thème Black Friday garde le même code d'intégration du configurateur que l
 thème en ligne (fichiers `layout/theme.liquid`, `snippets/custom.liquid`
 identiques) : la publication du thème ne coupe rien.
 
-## Lancement, jeudi 12 novembre à 18h
+## Lancement, vendredi 13 novembre à 16h
 
 1. Le dirigeant publie le thème « Black Friday 12112026 (Claude) ».
 2. Passer AM3022601-002 et VIG2601-002 en « Actif ». Ils sont déjà publiés
@@ -123,7 +123,7 @@ identiques) : la publication du thème ne coupe rien.
    `/collections/black-friday`, dans les menus `menu-pc-2` et `menu-mobile`
    (les menus ne dépendent pas du thème : changement immédiat).
 4. Vérifier l'accueil, la collection, les fiches et le panier sur mobile.
-5. À partir du 13/11 : liste quotidienne des commandes éligibles au bon.
+5. À partir du 14/11 : liste quotidienne des commandes éligibles au bon.
 
 Après le 30/11 : republier le thème habituel, remettre le menu « Offres du
 moment », dépublier la collection et repasser les deux packs en brouillon si
