@@ -1,0 +1,915 @@
+{% capture email_title %}
+  {% if has_pending_payment %}
+    Votre commande est en attente de confirmation
+  {% else %}
+    Merci{% if customer.first_name %} {{ customer.first_name }}{% endif %}, votre commande est confirmée
+  {% endif %}
+{% endcapture %}
+{% capture email_body %}
+  {% if has_pending_payment %}
+    {% if buyer_action_required %}
+      Vous recevrez un e‑mail de confirmation après avoir effectué votre paiement.
+    {% else %}
+      Votre paiement est en cours de traitement. Vous recevrez un e‑mail lorsque votre commande sera confirmée.
+    {% endif %}
+  {% else %}
+    {% if requires_shipping %}
+    {% case delivery_method %}
+        {% when 'pick-up' %}
+          Vous recevrez un e-mail lorsque votre commande sera prête pour le ramassage.
+        {% when 'local' %}
+          Bonjour {{ customer.first_name }}, nous préparons actuellement la livraison de votre commande.
+        {% else %}
+          Nous préparons soigneusement vos produits. Vous recevrez un nouvel e-mail dès l’expédition de votre colis.
+      {% endcase %}
+        {% if delivery_instructions != blank  %}
+          <p><b>Informations sur la livraison :</b> {{ delivery_instructions }}</p>
+        {% endif %}
+       {% if consolidated_estimated_delivery_time %}
+        {% if has_multiple_delivery_methods %}
+          <h3 class="estimated_delivery__title">Date de livraison estimée</h3>
+          <p>{{ consolidated_estimated_delivery_time }}</p>
+        {% else %}
+          <p>
+            Date de livraison estimée <b>{{ consolidated_estimated_delivery_time }}</b>
+          </p>
+        {% endif %}
+       {% endif %}
+    {% endif %}
+  {% endif %}
+  {% assign gift_card_line_items = line_items | where: "gift_card" %}
+  {% assign found_gift_card_with_recipient_email = false %}
+  {% for line_item in gift_card_line_items %}
+    {% if line_item.properties["__shopify_send_gift_card_to_recipient"] and line_item.properties["Recipient email"] %}
+      {% assign found_gift_card_with_recipient_email = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+  {% if found_gift_card_with_recipient_email %}
+    <p>Le/la bénéficiaire de votre carte‑cadeau recevra un e‑mail contenant le code de sa carte‑cadeau.</p>
+  {% elsif gift_card_line_items.first %}
+    <p>Vous recevrez des e-mails distincts pour toutes les cartes-cadeaux.</p>
+  {% endif %}
+{% endcapture %}
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+  <title>{{ email_title }}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="/assets/notifications/styles.css">
+  <style>
+    body, .body { background:#f5f7f9 !important; color:#102a43; }
+    .header { background:#f5f7f9 !important; }
+    .header__cell { padding:30px 0 22px !important; }
+    .content__cell { padding:0 0 32px !important; }
+    .container { max-width:640px !important; }
+    h1, h2, h3, h4, p, td, span { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif !important; }
+    h2 { color:#102a43 !important; font-size:30px !important; line-height:1.22 !important; letter-spacing:-0.5px; }
+    h3 { color:#102a43 !important; font-size:21px !important; }
+    h4 { color:#102a43 !important; }
+    p { color:#52667a; line-height:1.6; }
+    .button__cell { background:#1769e0 !important; border-radius:10px !important; }
+    .button__text { font-size:16px !important; font-weight:700 !important; padding:16px 28px !important; }
+    a, a:hover, a:active, a:visited { color:#1769e0; }
+    .order-number__text { color:#52667a !important; font-size:14px !important; }
+    .premium-card { background:#ffffff; border:1px solid #e2e8ef; border-radius:18px; box-shadow:0 8px 28px rgba(16,42,67,.07); }
+    .premium-hero { padding:40px 38px 30px; text-align:center; }
+    .check-circle { width:58px; height:58px; line-height:58px; margin:0 auto 20px; border:3px solid #18a065; border-radius:50%; color:#18a065; font-size:31px; font-weight:700; }
+    .hero-copy { max-width:500px; margin:0 auto; font-size:16px; }
+    .next-step { margin:26px 0 0; padding:17px 20px; background:#f7f9fc; border-radius:12px; text-align:left; color:#52667a; font-size:14px; line-height:1.55; }
+    .next-step strong { display:block; color:#102a43; font-size:15px; margin-bottom:3px; }
+    .status-table { width:100%; margin-top:24px; border-top:1px solid #e4e9ef; }
+    .status-cell { width:33.33%; padding:24px 5px 2px; text-align:center; color:#8a98a8; font-size:13px; }
+    .status-active { color:#159b61 !important; font-weight:700; }
+    .status-current { color:#102a43 !important; font-weight:700; }
+    .status-dot { display:inline-block; width:30px; height:30px; line-height:30px; margin-bottom:8px; border:2px solid currentColor; border-radius:50%; font-size:15px; }
+    .trust-wrap { padding:18px 0 2px; }
+    .trust-table { width:100%; background:#eef5ff; border:1px solid #dce8f7; border-radius:14px; }
+    .trust-cell { width:33.33%; padding:22px 10px; text-align:center; vertical-align:top; color:#102a43; font-size:13px; }
+    .trust-cell + .trust-cell { border-left:1px solid #dce7f4; }
+    .trust-icon { display:block; color:#1769e0; font-size:23px; margin-bottom:8px; }
+    .trust-title { display:block; font-weight:700; margin-bottom:4px; }
+    .trust-copy { color:#64778a; font-size:12px; line-height:1.4; }
+    .section { background:transparent !important; }
+    .section__cell { padding:22px 0 0 !important; }
+    .section-title { margin:0 0 13px !important; padding-left:2px; }
+    .content-card { background:#ffffff; border:1px solid #e2e8ef; border-radius:14px; }
+    .content-card-inner { padding:8px 24px 18px !important; }
+    .order-list__item { border-color:#e4e9ef !important; }
+    .order-list__product-image { border-radius:10px !important; background:#f7f9fb; }
+    .subtotal-table--total strong { color:#102a43 !important; font-size:20px !important; }
+    .support-card { margin-top:20px; background:#eef5ff; border:1px solid #dce8f7; border-radius:12px; }
+    .support-card td { padding:18px 22px; color:#102a43; font-size:14px; line-height:1.5; }
+    .footer__cell { padding:26px 0 42px !important; }
+    .disclaimer__subtext { text-align:center; color:#718096 !important; }
+    @media only screen and (max-width:620px) {
+      .premium-hero { padding:32px 20px 26px !important; }
+      h2 { font-size:25px !important; }
+      .header__cell { padding:22px 12px 18px !important; }
+      .content-card-inner { padding:5px 16px 14px !important; }
+      .trust-cell { display:block !important; width:auto !important; border-left:0 !important; border-top:1px solid #dce7f4; }
+      .trust-cell:first-child { border-top:0 !important; }
+      .status-cell { font-size:11px !important; }
+    }
+  </style>
+</head>
+
+  <body>
+    <table class="body">
+      <tr>
+        <td>
+          <table class="header row">
+  <tr>
+    <td class="header__cell">
+      <center>
+
+        <table class="container">
+          <tr>
+            <td>
+
+              <table class="row" role="presentation">
+                <tr>
+                  <td class="shop-name__cell" style="vertical-align:middle;">
+                    {%- if shop.email_logo_url %}
+                      <img src="{{ shop.email_logo_url }}" alt="{{ shop.name }}" width="{{ shop.email_logo_width }}" style="display:block;max-width:220px;height:auto;">
+                    {%- else %}
+                      <h1 class="shop-name__text">
+                        <a href="{{shop.url}}">{{ shop.name }}</a>
+                      </h1>
+                    {%- endif %}
+                  </td>
+                  <td class="order-number__cell" style="vertical-align:middle;text-align:right;">
+                    <span class="order-number__text">Commande {{ order_name }}</span>
+                    {%- if po_number %}<br><span class="po-number__text">Bon de commande nº&nbsp;{{ po_number }}</span>{%- endif %}
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+        </table>
+
+      </center>
+    </td>
+  </tr>
+</table>
+
+          <table class="row content">
+  <tr>
+    <td class="content__cell">
+      <center>
+        <table class="container">
+          <tr>
+            <td class="premium-card premium-hero">
+            {% if has_pending_payment %}
+              <div class="check-circle" style="border-color:#d99b1d;color:#d99b1d;">…</div>
+            {% else %}
+              <div class="check-circle">✓</div>
+            {% endif %}
+            <div style="color:#64778a;font-size:14px;margin-bottom:10px;">Commande {{ order_name }}</div>
+            <h2 style="margin:0 0 14px;">{{ email_title }}</h2>
+            <div class="hero-copy">{{ email_body }}</div>
+            {% assign transaction_count = transactions | size %}
+  {% if transaction_count > 0 %}
+    {% for transaction in transactions %}
+      {% if transaction.show_buyer_pending_payment_instructions? %}
+        <p> {{transaction.buyer_pending_payment_notice}} </p>
+        <p>
+        <table class="row">
+          <tr>
+            {% for instruction in transaction.buyer_pending_payment_instructions %}
+              <td>{{ instruction.header }}</td>
+            {% endfor %}
+            <td>Montant</td>
+          </tr>
+          <tr>
+            {% for instruction in transaction.buyer_pending_payment_instructions %}
+              <td>{{ instruction.value }}</td>
+            {% endfor %}
+            <td>{{transaction.amount | money}}</td>
+          </tr>
+        </table>
+        </p>
+      {% endif %}
+    {% endfor%}
+  {% endif %}
+
+            {% unless has_pending_payment %}
+            <div class="next-step">
+              <strong>Et maintenant&nbsp;?</strong>
+              Notre équipe contrôle votre commande, sécurise son emballage et prépare son expédition. Votre lien de suivi vous sera envoyé automatiquement dès le départ du colis.
+            </div>
+            <table class="status-table" role="presentation">
+              <tr>
+                <td class="status-cell status-active"><span class="status-dot">✓</span><br>Commande confirmée</td>
+                <td class="status-cell status-current"><span class="status-dot">□</span><br>Préparation</td>
+                <td class="status-cell"><span class="status-dot">→</span><br>Expédition</td>
+              </tr>
+            </table>
+            {% endunless %}
+
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+
+          <table class="row trust-wrap">
+            <tr>
+              <td>
+                <center>
+                  <table class="container trust-table" role="presentation">
+                    <tr>
+                      <td class="trust-cell">
+                        <span class="trust-icon">◇</span>
+                        <span class="trust-title">Sans abonnement</span>
+                        <span class="trust-copy">Aucun frais récurrent, aucun engagement.</span>
+                      </td>
+                      <td class="trust-cell">
+                        <span class="trust-icon">✓</span>
+                        <span class="trust-title">Préparation soignée</span>
+                        <span class="trust-copy">Contrôle et emballage sécurisé.</span>
+                      </td>
+                      <td class="trust-cell">
+                        <span class="trust-icon">●</span>
+                        <span class="trust-title">Assistance en ligne</span>
+                        <span class="trust-copy">Une équipe spécialisée vous répond rapidement.</span>
+                      </td>
+                    </tr>
+                  </table>
+                </center>
+              </td>
+            </tr>
+          </table>
+
+          <table class="row section">
+  <tr>
+    <td class="section__cell">
+      <center>
+        <table class="container">
+          <tr>
+            <td>
+              <h3 class="section-title">Récapitulatif de votre commande</h3>
+            </td>
+          </tr>
+        </table>
+        <table class="container content-card">
+          <tr>
+            <td class="content-card-inner">
+
+
+<table class="row">
+  {% for line in subtotal_line_items %}
+  <tr class="order-list__item">
+    <td class="order-list__item__cell">
+      <table>
+        <td>
+          {% if line.image %}
+            <img src="{{ line | img_url: 'compact_cropped' }}" align="left" width="60" height="60" class="order-list__product-image"/>
+          {% endif %}
+        </td>
+        <td class="order-list__product-description-cell">
+          {% if line.product.title %}
+            {% assign line_title = line.product.title %}
+          {% else %}
+            {% assign line_title = line.title %}
+          {% endif %}
+
+          {% if line.quantity < line.quantity %}
+            {% capture line_display %}
+              {{ line.quantity }} sur {{ line.quantity }}
+            {% endcapture %}
+          {% else %}
+            {% assign line_display = line.quantity  %}
+          {% endif %}
+
+          <span class="order-list__item-title">{{ line_title }}&nbsp;&times;&nbsp;{{ line_display }}</span><br/>
+
+          {% if line.variant.title != 'Default Title' %}
+            <span class="order-list__item-variant">{{ line.variant.title }}</span><br/>
+          {% endif %}
+{% for p in line.properties %}
+{% unless p.last == blank or p.first == '_' %}
+<div class="bcpo-property">{{ p.first }}:
+{% if p.last contains '/uploads/' %}
+<div><img src="{{ p.last }}" style="max-width: 50px; height: auto;"></div>
+{% else %}
+{{ p.last }}
+{% endif %}
+</div>
+{% endunless %}
+{% endfor %}
+          {% for group in line.groups %}
+            <span class="order-list__item-variant">Partie de : {{ group.display_title }}</span><br/>
+          {% endfor %}
+
+            {% if line.gift_card and line.properties["__shopify_send_gift_card_to_recipient"] %}
+              {% for property in line.properties %}
+  {% assign property_first_char = property.first | slice: 0 %}
+  {% if property.last != blank and property_first_char != '_' %}
+    <div class="order-list__item-property">
+      <dt>{{ property.first }}:</dt>
+      <dd>
+      {% if property.last contains '/uploads/' %}
+        <a href="{{ property.last }}" class="link" target="_blank">
+        {{ property.last | split: '/' | last }}
+        </a>
+      {% else %}
+        {{ property.last }}
+      {% endif %}
+      </dd>
+    </div>
+  {% endif %}
+{% endfor %}
+
+            {% endif %}
+
+          {% if line.selling_plan_allocation %}
+            <span class="order-list__item-variant">{{ line.selling_plan_allocation.selling_plan.name }}</span><br/>
+          {% endif %}
+
+          {% if line.refunded_quantity > 0 %}
+            <span class="order-list__item-refunded">Remboursé</span>
+          {% endif %}
+
+          {% if line.discount_allocations %}
+            {% for discount_allocation in line.discount_allocations %}
+              {% if discount_allocation.discount_application.target_selection != 'all' %}
+              <p>
+                <span class="order-list__item-discount-allocation">
+                  <img src="{{ 'notifications/discounttag.png' | shopify_asset_url }}" width="18" height="18" class="discount-tag-icon" />
+                  <span>
+                    {{ discount_allocation.discount_application.title | upcase }}
+                    (-{{ discount_allocation.amount | money }})
+                  </span>
+                </span>
+              </p>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </td>
+          <td class="order-list__price-cell">
+            {% if line.original_line_price != line.final_line_price %}
+              <del class="order-list__item-original-price">{{ line.original_line_price | money }}</del>
+            {% endif %}
+            <p class="order-list__item-price">
+              {% if line.final_line_price > 0 %}
+                {{ line.final_line_price | money }}
+                  {% if line.unit_price_measurement %}
+                    <div class="order-list__unit-price">
+                      {{ line.unit_price | money }}/
+                      {%- if line.unit_price_measurement.reference_value != 1 -%}
+                        {{- line.unit_price_measurement.reference_value -}}
+                      {%- endif -%}
+                      {{ line.unit_price_measurement.reference_unit }}
+                    </div>
+                  {% endif %}
+              {% else %}
+                Gratuit
+              {% endif %}
+            </p>
+          </td>
+      </table>
+    </td>
+  </tr>{% endfor %}
+</table>
+
+            <table class="row subtotal-lines">
+  <tr>
+    <td class="subtotal-spacer"></td>
+    <td>
+      <table class="row subtotal-table">
+
+
+{% assign order_discount_count = 0 %}
+{% assign total_order_discount_amount = 0 %}
+{% assign has_shipping_discount = false %}
+
+{% for discount_application in discount_applications %}
+  {% if discount_application.target_selection == 'all' and discount_application.target_type == 'line_item' %}
+    {% assign order_discount_count = order_discount_count | plus: 1 %}
+    {% assign total_order_discount_amount = total_order_discount_amount | plus: discount_application.total_allocated_amount  %}
+  {% endif %}
+  {% if discount_application.target_type == 'shipping_line' %}
+    {% assign has_shipping_discount = true %}
+    {% assign shipping_discount = discount_application.title %}
+    {% assign shipping_amount = discount_application.total_allocated_amount %}
+  {% endif %}
+{% endfor %}
+
+
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Sous-total</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ subtotal_price | plus: total_order_discount_amount | money }}</strong>
+  </td>
+</tr>
+
+
+
+{% if order_discount_count > 0 %}
+  {% if order_discount_count == 1 %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Réduction sur la commande</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>-{{ total_order_discount_amount | money }}</strong>
+  </td>
+</tr>
+
+  {% endif %}
+  {% if order_discount_count > 1 %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Réductions sur la commande</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>-{{ total_order_discount_amount | money }}</strong>
+  </td>
+</tr>
+
+  {% endif %}
+  {% for discount_application in discount_applications %}
+    {% if discount_application.target_selection == 'all' and discount_application.target_type != 'shipping_line' %}
+      <tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span class="subtotal-line__discount">
+        <img src="{{ 'notifications/discounttag.png' | shopify_asset_url }}" width="18" height="18" class="discount-tag-icon" />
+        <span class="subtotal-line__discount-title">{{ discount_application.title }} (-{{ discount_application.total_allocated_amount | money }})</span>
+      </span>
+    </p>
+  </td>
+</tr>
+
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+
+        {% if delivery_method == 'pick-up' %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Retrait sur place</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ shipping_price | money }}</strong>
+  </td>
+</tr>
+
+        {% else %}
+          {% if has_shipping_discount %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Expédition</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>Offerte</strong>
+  </td>
+</tr>
+
+  <tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span class="subtotal-line__discount">
+        <img src="{{ 'notifications/discounttag.png' | shopify_asset_url }}" width="18" height="18" class="discount-tag-icon" />
+        <span class="subtotal-line__discount-title">{{ shipping_discount }} (-{{ shipping_amount | money }})</span>
+      </span>
+    </p>
+  </td>
+</tr>
+
+{% else %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Expédition</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ shipping_price | money }}</strong>
+  </td>
+</tr>
+
+{% endif %}
+
+        {% endif %}
+
+        {% if total_duties %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Droits</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ total_duties | money }}</strong>
+  </td>
+</tr>
+
+        {% endif %}
+
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Taxes</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ tax_price | money }}</strong>
+  </td>
+</tr>
+
+
+        {% if total_tip and total_tip > 0 %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Pourboire</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ total_tip | money }}</strong>
+  </td>
+</tr>
+
+        {% endif %}
+      </table>
+
+      {% assign transaction_size = 0 %}
+      {% assign transaction_amount = 0 %}
+      {% assign shopify_pay_captured = false %}
+      {% assign shop_cash_offers_captured = false %}
+      {% for transaction in transactions %}
+        {% if transaction.status == "success" and transaction.kind == "sale" or transaction.kind == "capture" %}
+          {% if transaction.payment_details.credit_card_company %}
+            {% assign shopify_pay_captured = true %}
+          {% endif %}
+          {% if transaction.gateway == "shop_cash" or transaction.gateway == "shop_offer" %}
+            {% assign shop_cash_offers_captured = true %}
+          {% endif %}
+        {% endif %}
+        {% if transaction.status == "success" %}
+          {% if transaction.kind == "sale" or transaction.kind == "capture"  %}
+              {% assign transaction_size = transaction_size | plus: 1 %}
+              {% assign transaction_amount = transaction_amount | plus: transaction.amount %}
+          {% elsif transaction.kind == "refund" or transaction.kind == "change" %}
+            {% assign transaction_size = transaction_size | plus: 1 %}
+            {% assign transaction_amount = transaction_amount | minus: transaction.amount %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      {% # Add shop cash/offer transactions to totals if shopify pay is captured and shop cash/offer is not captured yet %}
+      {% if shopify_pay_captured == true and shop_cash_offers_captured == false %}
+        {% for transaction in transactions %}
+          {% if transaction.status == "success" %}
+            {% if transaction.kind == "authorization" and transaction.gateway == "shop_cash" or transaction.gateway == "shop_offer" %}
+              {% assign transaction_size = transaction_size | plus: 1 %}
+              {% assign transaction_amount = transaction_amount | plus: transaction.amount %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      <table class="row subtotal-table subtotal-table--total">
+      {% if payment_terms and payment_terms.automatic_capture_at_fulfillment == false or b2b?%}
+        {% assign due_at_date = payment_terms.next_payment.due_at | date: "%b %d, %Y" %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Montant total payé aujourd’hui</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ transaction_amount | money_with_currency }}</strong>
+  </td>
+</tr>
+
+        <div class="payment-terms">
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Total dû {{ due_at_date }}</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ payment_terms.next_payment.amount_due | money_with_currency }}</strong>
+  </td>
+</tr>
+
+        </div>
+      {% elsif transaction_amount != total_price %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Total</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ total_price | money_with_currency }}</strong>
+  </td>
+</tr>
+
+        <div class="payment-terms">
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Montant total payé aujourd’hui</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ transaction_amount | money_with_currency }}</strong>
+  </td>
+</tr>
+
+        </div>
+      {% else %}
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Total</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ total_price | money_with_currency }}</strong>
+  </td>
+</tr>
+
+      {% endif %}
+      </table>
+
+      {% if total_discounts > 0 %}
+        <p class="total-discount">
+          Vous avez économisé <span class="total-discount--amount">{{ total_discounts | money }}</span>
+        </p>
+      {% endif %}
+
+      {% unless payment_terms %}
+      {% if transaction_size > 1 or transaction_amount < total_price %}
+        <table class="row subtotal-table">
+          <tr><td colspan="2" class="subtotal-table__line"></td></tr>
+          <tr><td colspan="2" class="subtotal-table__small-space"></td></tr>
+
+          {% for transaction in transactions %}
+            {% if transaction.status == "success" and transaction.kind == "capture" or transaction.kind == "sale" %}
+              {% if transaction.payment_details.gift_card_last_four_digits %}
+                {% capture transaction_name %}Carte-cadeau (se terminant par {{ transaction.payment_details.gift_card_last_four_digits }}){% endcapture %}
+              {% elsif transaction.payment_details.credit_card_company %}
+                {% capture transaction_name %}{{ transaction.payment_details.credit_card_company }} (se terminant par {{ transaction.payment_details.credit_card_last_four_digits }}){% endcapture %}
+              {% else %}
+                {% capture transaction_name %}{{ transaction.gateway_display_name }}{% endcapture %}
+              {% endif %}
+
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>{{transaction_name}}</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ transaction.amount | money }}</strong>
+  </td>
+</tr>
+
+            {% elsif shopify_pay_captured and shop_cash_offers_captured == false and transaction.kind == "authorization" and transaction.gateway == "shop_cash" or transaction.gateway == "shop_offer" %}
+              {% capture transaction_name %}{{ transaction.gateway_display_name }}{% endcapture %}
+
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>{{transaction_name}}</span>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>{{ transaction.amount | money }}</strong>
+  </td>
+</tr>
+
+            {% endif %}
+            {% if transaction.kind == 'refund' %}
+              {% if transaction.payment_details.gift_card_last_four_digits %}
+                {% assign refund_method_title = transaction.payment_details.type %}
+              {% elsif transaction.payment_details.credit_card_company %}
+                {% assign refund_method_title = transaction.payment_details.credit_card_company %}
+              {% else %}
+                {% assign refund_method_title = transaction.gateway %}
+              {% endif %}
+
+
+<tr class="subtotal-line">
+  <td class="subtotal-line__title">
+    <p>
+      <span>Rembourser</span>
+        <br>
+        <small>{{ refund_method_title | replace: '_', ' ' | capitalize }}</small>
+    </p>
+  </td>
+  <td class="subtotal-line__value">
+      <strong>- {{ transaction.amount | money }}</strong>
+  </td>
+</tr>
+
+            {% endif %}
+          {% endfor %}
+        </table>
+      {% endif %}
+
+
+      {% endunless %}
+    </td>
+  </tr>
+</table>
+
+
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+
+          <table class="row">
+            <tr>
+              <td>
+                <center>
+                  <table class="container support-card" role="presentation">
+                    <tr>
+                      <td>
+                        <strong style="color:#102a43;">Besoin d’aide pour l’installation&nbsp;?</strong><br>
+                        Notre équipe vous accompagne en ligne. Répondez simplement à cet e-mail pour nous contacter.
+                      </td>
+                    </tr>
+                  </table>
+                </center>
+              </td>
+            </tr>
+          </table>
+
+          <table class="row section">
+  <tr>
+    <td class="section__cell">
+      <center>
+        <table class="container">
+          <tr>
+            <td>
+              <h3 class="section-title">Informations de la commande</h3>
+            </td>
+          </tr>
+        </table>
+        <table class="container content-card">
+          <tr>
+            <td class="content-card-inner">
+
+            <table class="row">
+              <tr>
+                {% if requires_shipping and shipping_address %}
+                  <td class="customer-info__item">
+                    <h4>Adresse d'expédition</h4>
+                    {{ shipping_address | format_address }}
+                  </td>
+                {% endif %}
+                {% if billing_address %}
+                  <td class="customer-info__item">
+                    <h4>Adresse de facturation</h4>
+                    {{ billing_address | format_address }}
+                  </td>
+                {% endif %}
+              </tr>
+            </table>
+            <table class="row">
+              <tr>
+                {% if company_location %}
+                  <td class="customer-info__item">
+                    <h4>Emplacement</h4>
+                    <p>
+                      {{ company_location.name }}
+                    </p>
+                  </td>
+                {% endif %}
+                {% if transaction_size > 0 or payment_terms and payment_terms.automatic_capture_at_fulfillment == false or b2b? %}
+                  <td class="customer-info__item">
+                    <h4>Paiement</h4>
+                    <p class="customer-info__item-content">
+                      {% if payment_terms %}
+                        {% assign due_date = payment_terms.next_payment.due_at | default: nil %}
+                        {% if payment_terms.type == 'receipt' or payment_terms.type == 'fulfillment' and payment_terms.next_payment.due_at == nil %}
+                          {{ payment_terms.translated_name }}<br>
+                        {% else %}
+                          {{ payment_terms.translated_name }} : Dû le {{ due_date | date: format: 'date' }}<br>
+                        {% endif %}
+                      {% endif %}
+                      {% if transaction_size > 0 %}
+                        {% for transaction in transactions %}
+                          {% if transaction.status == "success" or transaction.status == "pending" %}
+                            {% if transaction.kind == "capture" or transaction.kind == "sale" %}
+                              {% if transaction.payment_details.gift_card_last_four_digits %}
+                                <img src="{{ transaction.payment_details.type | downcase | replace: '_', '-'  | payment_type_img_url }}" class="customer-info__item-credit" height="24">
+                                se terminant par {{ transaction.payment_details.gift_card_last_four_digits }}<br>
+                              {% elsif transaction.payment_details.credit_card_company %}
+                                <img src="{{ transaction.payment_details.credit_card_company | payment_icon_png_url  }}" class="customer-info__item-credit" height="24" alt="{{ transaction.payment_details.credit_card_company }}">
+                                <span>se terminant par {{ transaction.payment_details.credit_card_last_four_digits }}</span><br>
+                              {% elsif transaction.gateway_display_name == "Gift card" %}
+                                <img src="{{ transaction.gateway_display_name | downcase | replace: ' ', '-'  | payment_type_img_url }}" class="customer-info__item-credit" height="24">
+                                se terminant par {{ transaction.payment_details.gift_card.last_four_characters | upcase }}<br>
+                                  &emsp;&emsp;&emsp;&nbsp;Solde de la carte-cadeau - <b>{{ transaction.payment_details.gift_card.balance |  money }}</b>
+                              {% elsif transaction.gateway_display_name != "Shop Cash" and transaction.gateway != "shop_offer" %}
+                                {{ transaction.gateway_display_name }}<br>
+                              {% endif %}
+                            {% elsif transaction.kind == "authorization" and transaction.gateway_display_name == "Shop Cash" %}
+                              <span>Shop Cash - <b>{{ transaction.amount | money }}</b></span>
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    </p>
+                  </td>
+                {% endif %}
+              </tr>
+              <tr>
+                {% if requires_shipping and shipping_address %}
+                  {% if shipping_method %}
+                    <td class="customer-info__item">
+                    <h4>Mode de livraison</h4>
+                        <p>
+                          {% if delivery_promise_branded_shipping_line %}
+                            {{ delivery_promise_branded_shipping_line }}
+                          {% else %}
+                            {{ shipping_method.title }}
+                          {% endif %}
+                        </p>
+                    </td>
+                  {% endif %}
+                {% endif %}
+              </tr>
+            </table>
+
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+
+          <table class="row footer">
+  <tr>
+    <td class="footer__cell">
+      <center>
+        <table class="container">
+          <tr>
+            <td>
+
+              <p class="disclaimer__subtext">
+                <a href="{{ shop.url }}">daewoo-security.fr</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="mailto:{{ shop.email }}">Nous contacter</a><br><br>
+                Merci pour votre confiance.<br>
+                Daewoo Security — SAS Liz Invest
+              </p>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+
+<img src="{{ 'notifications/spacer.png' | shopify_asset_url }}" class="spacer" height="1" />
+
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
