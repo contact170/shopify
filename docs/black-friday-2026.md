@@ -108,6 +108,14 @@ l'utiliser sur un pack Black Friday de 600 € ou plus (Panorama Touch XL,
 Vision Duo Solaire, Panorama Duo) sans prendre la caméra, et recevoir en plus
 son bon de 70 €. Limites : une utilisation par client, 4 jours.
 
+Décision du 12/11 : l'offre W503 est **réservée au configurateur**. Le site
+Black Friday n'en parle pas et n'ajoute pas de caméra au panier. Dans le
+configurateur, la caméra est ajoutée automatiquement dès 600 € net, avec le
+code du palier (`W503OFFERTE` ou `W503OFFERTE` + 10/15/20/25). Correction des
+codes demandée à Lovable : n'avoir d'effet que si la W503 est dans le panier,
+sans changer le palier de remise. Contrôle quotidien : signaler toute commande
+avec un code W503 sans caméra W503.
+
 Le thème Black Friday garde le même code d'intégration du configurateur que le
 thème en ligne (fichiers `layout/theme.liquid`, `snippets/custom.liquid`
 identiques) : la publication du thème ne coupe rien.
