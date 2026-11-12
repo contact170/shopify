@@ -15,7 +15,10 @@ modifier : la mise en place est manuelle.
    un encadré « Action requise » s'affiche sous le titre, avec un bouton vers
    la page de commande. Une note sous l'adresse précise que le colis part au
    point relais. L'e-mail part avant que l'application Chronopost Officiel ne
-   remplace l'adresse, soit environ 2 minutes après la commande.
+   remplace l'adresse, soit environ 2 minutes après la commande. Vérifié le
+   12/11/2026 : le bouton ouvre bien la page de commande, où le module
+   Chronopost s'affiche. Avant la mise en place, environ 2 commandes en point
+   relais sur 55 (sur 8 jours) n'avaient pas de point relais choisi.
 2. **Délais concrets** dans « Et maintenant ? », selon le mode de livraison :
    48 à 72 h (Colissimo, point relais), le jour ouvré suivant (Chronopost 18),
    3 à 5 jours (DPD). Les délais viennent de la politique d'expédition de la
