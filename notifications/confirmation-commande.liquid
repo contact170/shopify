@@ -187,6 +187,7 @@
     .dw-note { margin:12px 0 0; color:#52667a; font-size:13px; line-height:1.5; }
     .address-note { margin:8px 0 0; color:#8a5a00; font-size:12px; line-height:1.45; }
     .tax-note { margin:4px 0 0; text-align:right; color:#64778a; font-size:13px; }
+    .subtotal-line__value strong { white-space:nowrap; }
     a[x-apple-data-detectors] { color:inherit !important; text-decoration:none !important; font-size:inherit !important; font-family:inherit !important; font-weight:inherit !important; line-height:inherit !important; }
     @media only screen and (max-width:620px) {
       .relay-alert { padding:18px 16px !important; }
@@ -631,7 +632,7 @@
 
         {% endif %}
 
-        {% if total_duties %}
+        {% if total_duties and total_duties > 0 %}
 
 <tr class="subtotal-line">
   <td class="subtotal-line__title">
@@ -647,27 +648,13 @@
         {% endif %}
 
         {%- comment -%}
-          Daewoo : si les prix affichés incluent déjà la TVA (sous-total + livraison = total),
-          la TVA est indiquée sous le total (« dont TVA ») au lieu d'une ligne « Taxes »
-          qui laisse croire qu'elle s'ajoute. Sinon, la ligne « Taxes » d'origine est conservée.
+          Daewoo : les prix de la boutique incluent la TVA. La TVA est donc indiquée sous
+          le total (« dont TVA ») au lieu d'une ligne « Taxes » qui laisse croire qu'elle s'ajoute.
+          Si un jour les prix sont affichés hors taxes, remettre ici la ligne « Taxes »
+          (voir confirmation-commande.avant.liquid).
         {%- endcomment -%}
-        {%- assign dw_somme = subtotal_price | plus: shipping_price -%}
-        {%- if total_duties -%}{%- assign dw_somme = dw_somme | plus: total_duties -%}{%- endif -%}
-        {%- if total_tip -%}{%- assign dw_somme = dw_somme | plus: total_tip -%}{%- endif -%}
         {%- assign dw_tva_incluse = false -%}
-        {%- if tax_price > 0 and dw_somme == total_price -%}{%- assign dw_tva_incluse = true -%}{%- endif -%}
-        {% unless dw_tva_incluse %}
-<tr class="subtotal-line">
-  <td class="subtotal-line__title">
-    <p>
-      <span>Taxes</span>
-    </p>
-  </td>
-  <td class="subtotal-line__value">
-      <strong>{{ tax_price | money }}</strong>
-  </td>
-</tr>
-        {% endunless %}
+        {%- if tax_price > 0 -%}{%- assign dw_tva_incluse = true -%}{%- endif -%}
 
 
         {% if total_tip and total_tip > 0 %}
@@ -923,7 +910,7 @@
                         {% else %}
                           Tous nos guides d’installation pas à pas sont en ligne&nbsp;: <a href="{{ shop.url }}/pages/guides-installation">consultez-les ici</a>, avant même de recevoir votre colis.
                         {% endif %}
-                        <p class="dw-note">Une question&nbsp;? Répondez simplement à cet e-mail ou appelez-nous au <a href="tel:+33547742940">05&nbsp;47&nbsp;74&nbsp;29&nbsp;40</a>. Manuels et questions fréquentes&nbsp;: <a href="{{ shop.url }}/pages/assistance-1">aide en ligne</a>.</p>
+                        <p class="dw-note">Une question&nbsp;? Notre équipe vous accompagne&nbsp;: répondez simplement à cet e-mail. Manuels et questions fréquentes&nbsp;: <a href="{{ shop.url }}/pages/assistance-1">aide en ligne</a>.</p>
                       </td>
                     </tr>
                   </table>

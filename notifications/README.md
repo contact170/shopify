@@ -23,9 +23,16 @@ modifier : la mise en place est manuelle.
 3. **Bon guide d'installation** dans « Besoin d'aide ? », reconnu au code
    produit (SKU) des alarmes et packs : Vigilia, Touch (AM301), Touch XL
    (AM302), Élite (PA501Z). Pour les accessoires seuls, le lien mène à la
-   page des guides. Le téléphone du SAV est ajouté.
-4. **Récapitulatif plus clair** : « dont TVA » sous le total quand les prix
-   l'incluent, « Livraison Offerte » à 0 €, « Alma – paiement en 4 fois ».
+   page des guides. Le téléphone n'y figure pas : ce n'est pas le numéro du
+   service technique. Il reste dans l'encadré point relais et en pied de page.
+4. **Récapitulatif plus clair** : « dont TVA » sous le total à la place de
+   la ligne « Taxes », car les prix de la boutique sont TTC (100 commandes sur
+   100 vérifiées). Ligne « Droits » masquée quand elle vaut 0. « Livraison
+   Offerte » à 0 €, « Alma – paiement en 4 fois », total sur une seule ligne.
+
+   L'e-mail de test de Shopify utilise une commande fictive (codes ORDER5 et
+   FREESHIPPING, montant payé différent du total). Ses montants ne tombent pas
+   juste : c'est normal, et cela n'arrive pas sur les vraies commandes.
 5. **Finitions** : bouton « Voir ma commande », icônes de réassurance
    harmonisées, adresses non soulignées en bleu sur iPhone.
 
