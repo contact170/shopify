@@ -39,7 +39,7 @@ la somme MD5 change, pas le contenu.
 | Produit | Réf. | Prix TTC | Prix barré | État |
 |---|---|---|---|---|
 | Pack Alarme Touch XL – Série précédente | AM3022601-002 | 369,90 € | 619,60 € (valeur achat séparé : kit AM302 299,90 + IP506P 69,90 + W503 119,90 + WOS305S 129,90) | Brouillon, fiche refaite (modèle `pack-touch-2`, métachamps) |
-| Pack Alarme Vigilia Sécurité Renforcée | VIG2601-002 / VIG+2601-002 | 399,90 € / 449,90 € | 520,40 € / 525,80 € (métachamp `prix_reference`) | Brouillon, modèle `pack-vigilia-bf`, visuels refaits (textes alternatifs et noms de fichiers optimisés) |
+| Pack Alarme Vigilia Sécurité Renforcée | VIG2601-002 / VIG+2601-002 | 389,90 € / 439,90 € (baissé de 10 € le 13/11, contre 399,90 / 449,90 au lancement) | 520,40 € / 525,80 € (métachamp `prix_reference`) | Brouillon, modèle `pack-vigilia-bf`, visuels refaits (textes alternatifs et noms de fichiers optimisés) |
 
 - Prix barré du Vigilia : estimation prudente du prix configurateur, égale au
   prix de référence du Panorama Vigilia (588,20 / 593,60) moins le prix public
