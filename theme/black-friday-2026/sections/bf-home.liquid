@@ -246,6 +246,13 @@
   .bfh .bfh__mot--contour{color:var(--bf-jaune);}
   .bfh .bfh__texte{margin-top:22px;max-width:32em;font-size:17px;line-height:1.55;color:#c9cfdd;text-wrap:pretty;}
   .bfh .bfh__texte strong,.bfh .bfh__texte b{color:#fff;}
+  /* Mobile : titre sur une ligne et espacements resserrés pour raccourcir le bloc */
+  @media (max-width:749px){
+    .bfh .bfh__haut{gap:24px;}
+    .bfh .bfh__titre{flex-direction:row;flex-wrap:wrap;column-gap:.22em;margin-top:14px;font-size:clamp(44px,16.5vw,80px);line-height:.9;}
+    .bfh .bfh__texte{margin-top:14px;font-size:16px;}
+    .bfh .bfh__compte{margin-top:16px;}
+  }
 
   .bfh .bfh__compte{margin-top:24px;}
   .bfh .bfh__compte-titre{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#c9cfdd;}
