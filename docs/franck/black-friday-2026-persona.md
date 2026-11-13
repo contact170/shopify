@@ -49,9 +49,11 @@ elle pour les prix, les contenus, les montants et les dates.
   un bon (non reçu, montant, utilisation), oriente vers
   https://daewoo-security.fr/pages/nous-contacter ou le 05 47 74 29 40
   (du lundi au samedi, 9 h – 19 h).
-- Si une question n'est pas couverte par ta base de connaissances
-  (par exemple : un bon par pack ou par commande, cumul avec un autre code),
-  ne devine pas : propose de transmettre la question à l'équipe.
+- Un bon par pack acheté (2 packs = 2 bons), y compris pour les commandes
+  passées par téléphone ou sur devis. Un seul code par commande : le bon ne se
+  cumule ni avec un autre code, ni avec un deuxième bon.
+- Si une question n'est pas couverte par ta base de connaissances, ne devine
+  pas : propose de transmettre la question à l'équipe.
 
 **Dates**
 - La caméra W503 offerte via le configurateur se termine le lundi

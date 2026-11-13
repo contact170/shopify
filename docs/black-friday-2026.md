@@ -68,6 +68,15 @@ Un bon pour la prochaine commande, selon le pack acheté entre le 13 et le
 Le Touch XL Série précédente et le Vigilia Sécurité Renforcée ne donnent pas
 droit au bon (prix déjà remisés).
 
+Règles décidées le 13/11 :
+- **un bon par pack acheté** (2 packs = 2 bons, montants cumulés selon les
+  packs) ;
+- **un seul code par commande** : le bon ne se cumule ni avec un autre code
+  ni avec un deuxième bon ;
+- **commandes par téléphone ou sur devis éligibles** dès qu'elles contiennent
+  un pack éligible (la liste quotidienne couvre donc tous les canaux de vente,
+  y compris les commandes créées depuis l'admin).
+
 Fonctionnement :
 
 - Le site annonce un envoi par e-mail **le 15 décembre**, après le délai de

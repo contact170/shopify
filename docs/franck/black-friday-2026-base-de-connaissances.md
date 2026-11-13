@@ -36,14 +36,21 @@ donnent pas droit au bon : ils sont déjà à prix Black Friday.
 
 ### Conditions
 
-- Achat d'un des 6 packs ci-dessus sur daewoo-security.fr entre le
-  13 et le 30 novembre 2026 inclus.
+- Achat d'un des 6 packs ci-dessus entre le 13 et le 30 novembre 2026
+  inclus, sur daewoo-security.fr, par téléphone ou sur devis : toute commande
+  d'un pack éligible donne droit au bon.
+- **Un bon par pack acheté** : par exemple, 2 Packs Essentiel donnent 2 bons
+  de 30 €, et un Pack Essentiel plus un Pack Panorama donnent un bon de 30 €
+  et un bon de 50 €.
 - Le bon est envoyé par e-mail le **15 décembre 2026**, à l'adresse e-mail
   utilisée pour la commande. Tous les bons sont envoyés ce jour-là, en une
   seule fois.
 - Valable sur une prochaine commande jusqu'au **31 mars 2027 inclus**.
 - **Sans minimum d'achat.**
 - Utilisable **en une seule fois**.
+- **Un seul code par commande** : le bon ne se cumule pas avec un autre code
+  de réduction, ni avec un deuxième bon. Un client qui a plusieurs bons les
+  utilise sur des commandes différentes.
 - Les commandes annulées ou retournées ne donnent pas droit au bon.
 - Le client n'a rien à faire : pas de code à saisir lors de l'achat du pack.
 
@@ -58,6 +65,14 @@ donnent pas droit au bon : ils sont déjà à prix Black Friday.
   sans minimum d'achat, en une seule fois.
 - **« Pourquoi le 15 décembre ? »** Les bons sont envoyés à tous les clients
   en une seule fois, le 15 décembre.
+- **« J'achète 2 packs, j'ai droit à combien de bons ? »** Un bon par pack
+  acheté : 2 packs donnent 2 bons.
+- **« Puis-je utiliser 2 bons sur la même commande ? »** Non : un seul code
+  par commande. Chaque bon s'utilise sur une commande différente.
+- **« Puis-je cumuler le bon avec un autre code promo ? »** Non, un seul code
+  par commande.
+- **« J'ai commandé par téléphone (ou sur devis), ai-je droit au bon ? »**
+  Oui, dès lors que la commande contient un des 6 packs éligibles.
 
 ## 3. Les 6 nouveaux packs (gamme 2026)
 
@@ -204,12 +219,9 @@ https://daewoo-security.fr/products/offre-exclusive-pack-vigilia-compatible-anim
 - Rendez-vous téléphonique gratuit : https://calendly.com/contact-daewoo-security/15min
 - Nous contacter : https://daewoo-security.fr/pages/nous-contacter
 
-## 7. Points non tranchés (à transmettre à l'équipe)
+## 7. Questions à transmettre à l'équipe
 
-Pour ces questions, Franck ne doit pas inventer de réponse : il propose de
-transmettre la demande à l'équipe ou renvoie vers la page de contact.
-
-- Achat de plusieurs packs : un bon par pack ou un bon par commande ?
-- Le bon peut-il se cumuler avec un autre code promo lors de son utilisation ?
-- Le bon s'applique-t-il aux commandes passées par téléphone ou sur devis ?
-- Toute question sur une commande précise (statut, bon, facture).
+Franck n'a pas accès aux commandes. Pour toute question sur une commande
+précise (statut, bon, facture) ou non couverte par cette fiche, il ne devine
+pas : il propose de transmettre la demande à l'équipe ou renvoie vers la page
+de contact.
