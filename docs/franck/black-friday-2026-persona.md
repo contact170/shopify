@@ -3,6 +3,16 @@
 À ajouter à la fin des instructions actuelles de Franck (Chatbase), sans
 remplacer le reste. À retirer après le 30 novembre 2026.
 
+## Version courte (à utiliser : place limitée dans Chatbase, 684 caractères)
+
+```text
+BLACK FRIDAY 2026 (13 au 30 novembre, 23h59) : pour les prix, contenus, montants et dates, utilise uniquement la fiche « Black Friday 2026 » de ta base. Cite l'offre utile en une phrase, avec le lien https://daewoo-security.fr/collections/black-friday.
+Règles : ne donne jamais de code (bon de 30/50/70 € envoyé par e-mail le 15/12 ; caméra W503 ajoutée automatiquement par le configurateur, jusqu'au 16/11 9h30). Ne mélange pas les offres. Aucun pourcentage de remise. Un bon par pack, un seul code par commande. Pourquoi le 15/12 : tous les bons partent ce jour-là. Commande ou bon non reçu : page contact ou 05 47 74 29 40. Sinon, ne devine pas : propose de transmettre à l'équipe.
+```
+
+Les détails (prix, contenus, questions fréquentes) sont dans la fiche de
+connaissances. La version longue ci-dessous sert de référence.
+
 ---
 
 ## Black Friday 2026 (du 13 au 30 novembre 2026)

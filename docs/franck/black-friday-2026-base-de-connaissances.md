@@ -65,6 +65,10 @@ donnent pas droit au bon : ils sont déjà à prix Black Friday.
   sans minimum d'achat, en une seule fois.
 - **« Pourquoi le 15 décembre ? »** Les bons sont envoyés à tous les clients
   en une seule fois, le 15 décembre.
+- **« Quel est le code promo du Black Friday ? »** Il n'y a aucun code à
+  saisir. Les prix Black Friday sont déjà appliqués sur le site, le bon est
+  envoyé par e-mail le 15 décembre, et la caméra W503 est ajoutée
+  automatiquement par le configurateur.
 - **« J'achète 2 packs, j'ai droit à combien de bons ? »** Un bon par pack
   acheté : 2 packs donnent 2 bons.
 - **« Puis-je utiliser 2 bons sur la même commande ? »** Non : un seul code
