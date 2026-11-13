@@ -131,7 +131,18 @@ Le thème Black Friday garde le même code d'intégration du configurateur que l
 thème en ligne (fichiers `layout/theme.liquid`, `snippets/custom.liquid`
 identiques) : la publication du thème ne coupe rien.
 
-## Lancement, vendredi 13 novembre à 16h
+## Lancement : fait le vendredi 13 novembre vers 12h45
+
+Thème « Black Friday 12112026 (Claude) » publié par le dirigeant. Ensuite :
+AM3022601-002 et VIG2601-002 passés en « Actif » (publiés sur les 6 canaux,
+Lovable compris) ; « Offres du moment » renommé « Black Friday » vers
+`/collections/black-friday` dans `menu-pc-2` et `menu-mobile` (sous-menus
+conservés). Vérifié en ligne : accueil (mobile et ordinateur), page Black Friday
+(8 packs), fiches des 2 packs Black Friday et du Panorama Duo, sans erreur.
+Thème à republier après l'opération : « Avis Google accueil 09112026 (Claude) »
+(ancien thème en ligne). Codes W503 actifs depuis 12h15, encart W503 aligné.
+
+## Liste de lancement (pour mémoire)
 
 1. Le dirigeant publie le thème « Black Friday 12112026 (Claude) ».
 2. Passer AM3022601-002 et VIG2601-002 en « Actif ». Ils sont déjà publiés
