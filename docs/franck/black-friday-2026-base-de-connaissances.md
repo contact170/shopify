@@ -148,6 +148,19 @@ https://daewoo-security.fr/products/pack-alarme-panorama-duo
 
 Comparer les packs : https://daewoo-security.fr/pages/pack-alarmes
 
+### Repères rapides (6 packs de la gamme)
+
+| Pack | Caméras extérieures | Caméra intérieure | Détecteur de fumée | Contacteurs | Détecteurs de mouvement | Télécommandes |
+|---|---|---|---|---|---|---|
+| Essentiel | 0 | 1 | non | 3 | 1 | 1 |
+| Sécurité Intégrale | 1 rotative solaire | 1 | non | 4 | 1 | 1 |
+| Vision Duo | 2 sur batterie | 1 | non | 5 | 2 | 2 |
+| Panorama | 1 rotative solaire | 1 | 1 | 6 | 2 | 2 |
+| Vision Duo Solaire | 2 avec panneau solaire | 1 | 1 | 6 | 2 | 2 |
+| Panorama Duo | 2 rotatives solaires | 1 | 2 | 8 | 3 | 2 |
+
+Tous les packs ont une sirène extérieure solaire.
+
 ## 4. Les 2 packs à prix Black Friday (dans la limite des stocks)
 
 Ces deux packs ne donnent pas droit au bon d'achat.
