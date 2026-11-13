@@ -116,12 +116,16 @@ codes demandée à Lovable : n'avoir d'effet que si la W503 est dans le panier,
 sans changer le palier de remise. Contrôle quotidien : signaler toute commande
 avec un code W503 sans caméra W503.
 
-Annonce sur l'accueil (13/11) : encart « Exclusivité configurateur » dans le
-bloc Black Friday, sous les 3 offres et avant le bouton. Réglages de la section
-`bf-home` (rubrique « Encart configurateur ») : visible du vendredi 13 novembre
-16h au lundi 16 novembre 9h30, puis disparaît seul. Avant 16h, ajouter
-`&bf_test=1` à l'adresse de l'aperçu pour le voir. Bouton vers
-`/pages/configurateur_2`. Aperçu mobile : `docs/apercus/bf-encart-configurateur-mobile.png`.
+Annonce sur l'accueil (13/11) : section à part « Black Friday · W503 »
+(`sections/bf-w503.liquid`), placée juste au-dessus du configurateur
+(« Aucun pack ne vous correspond ? »), et non plus dans le bloc Black Friday.
+Visible du vendredi 13 novembre 16h au lundi 16 novembre 9h30, puis disparaît
+seule. Avant 16h, ajouter `&bf_test=1` à l'adresse de l'aperçu pour la voir.
+Sur mobile, version compacte (sans le paragraphe d'explication).
+
+Bloc Black Friday de l'accueil sur mobile (13/11) : titre « BLACK FRIDAY » sur
+une ligne, et texte court dans le ticket (réglage « Conditions, version courte
+sur mobile »). Le texte complet reste affiché sur ordinateur.
 
 Le thème Black Friday garde le même code d'intégration du configurateur que le
 thème en ligne (fichiers `layout/theme.liquid`, `snippets/custom.liquid`

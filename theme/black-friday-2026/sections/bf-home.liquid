@@ -7,9 +7,6 @@
     custom.prix_reference (valeur des mêmes éléments achetés séparément).
     Pas de pourcentage automatique : nos prix barrés sont des valeurs d'achat séparé, pas d'anciens prix.
   - La section s'affiche entre la date de début (optionnelle) et la date de fin, puis disparaît seule.
-  - Encart configurateur (réglages « Encart configurateur », optionnel) : offre limitée dans le temps,
-    avec ses propres dates. Avant sa date de début, il est rendu masqué ; ?bf_test=1 dans l'adresse
-    l'affiche pour le tester. Il disparaît seul après sa date de fin.
 {%- endcomment -%}
 {%- liquid
   assign maintenant = 'now' | date: '%s' | plus: 0
@@ -30,28 +27,6 @@
     assign actif = true
   endif
   assign offres = section.blocks | where: 'type', 'offre'
-  # Encart configurateur : affiché jusqu'à sa date de fin, masqué avant sa date de début
-  assign cfg = false
-  assign cfg_masque = false
-  if section.settings.cfg_enable and section.settings.cfg_title != blank
-    assign cfg = true
-    if section.settings.cfg_end_date != blank
-      assign cfg_fin = section.settings.cfg_end_date | date: '%s' | plus: 0
-      if maintenant > cfg_fin
-        assign cfg = false
-      endif
-    endif
-    if section.settings.cfg_start_date != blank
-      assign cfg_debut = section.settings.cfg_start_date | date: '%s' | plus: 0
-      if maintenant < cfg_debut
-        assign cfg_masque = true
-      endif
-    endif
-    if request.design_mode
-      assign cfg = true
-      assign cfg_masque = false
-    endif
-  endif
   assign nb = 0
   for b in offres
     if b.settings.product != blank
@@ -109,7 +84,8 @@
             </div>
             <div class="bfh__bon-corps">
               <p class="bfh__bon-titre">{{ section.settings.coupon_title }}</p>
-              {%- if section.settings.coupon_text != blank -%}<p class="bfh__bon-texte">{{ section.settings.coupon_text }}</p>{%- endif -%}
+              {%- if section.settings.coupon_text != blank -%}<p class="bfh__bon-texte{% if section.settings.coupon_text_mobile != blank %} bfh__bon-texte--long{% endif %}">{{ section.settings.coupon_text }}</p>{%- endif -%}
+              {%- if section.settings.coupon_text_mobile != blank -%}<p class="bfh__bon-texte bfh__bon-texte--court">{{ section.settings.coupon_text_mobile }}</p>{%- endif -%}
               {%- if section.settings.coupon_link_label != blank -%}
                 <a class="bfh__bon-lien" href="{{ section.settings.coupon_link }}">
                   {{ section.settings.coupon_link_label }}
@@ -179,40 +155,6 @@
         </ul>
       {%- endif -%}
 
-      {%- if cfg -%}
-        {%- liquid
-          assign cp = all_products[section.settings.cfg_product]
-          assign cphoto = section.settings.cfg_image | default: cp.featured_image
-        -%}
-        <div class="bfh__config"{% if cfg_masque %} hidden{% endif %} data-bfh-config
-          data-debut="{{ section.settings.cfg_start_date | escape }}" data-fin="{{ section.settings.cfg_end_date | escape }}">
-          <div class="bfh__config-visuel">
-            {%- if cphoto -%}
-              {{ cphoto | image_url: width: 600 | image_tag: loading: 'lazy', widths: '200,300,400,600', sizes: '(min-width: 750px) 200px, 96px', alt: '' }}
-            {%- endif -%}
-            {%- if section.settings.cfg_badge != blank -%}<span class="bfh__config-badge">{{ section.settings.cfg_badge }}</span>{%- endif -%}
-          </div>
-          <div class="bfh__config-tete">
-            {%- if section.settings.cfg_label != blank -%}<p class="bfh__config-pastille">{{ section.settings.cfg_label }}</p>{%- endif -%}
-            <h3 class="bfh__config-titre">{{ section.settings.cfg_title }}</h3>
-          </div>
-          <div class="bfh__config-corps">
-            {%- if section.settings.cfg_text != blank -%}<p class="bfh__config-texte">{{ section.settings.cfg_text }}</p>{%- endif -%}
-            <p class="bfh__config-infos">
-              {%- if cp != blank and section.settings.cfg_value_label != blank -%}<span>{{ section.settings.cfg_value_label }} {{ cp.price | money }}</span>{%- endif -%}
-              {%- if section.settings.cfg_end_text != blank -%}<span class="bfh__config-fin">{{ section.settings.cfg_end_text }}</span>{%- endif -%}
-            </p>
-          </div>
-          {%- if section.settings.cfg_cta_label != blank -%}
-            <a class="dwh-btn bfh__config-btn" href="{{ section.settings.cfg_cta_link }}">
-              <span>{{ section.settings.cfg_cta_label }}</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          {%- endif -%}
-          {%- if section.settings.cfg_conditions != blank -%}<p class="bfh__config-mention">{{ section.settings.cfg_conditions }}</p>{%- endif -%}
-        </div>
-      {%- endif -%}
-
       <div class="bfh__cta">
         {%- if section.settings.cta_label != blank -%}
           <a class="dwh-btn bfh__btn" href="{{ section.settings.cta_link }}">
@@ -272,6 +214,14 @@
   .bfh .bfh__bon-corps{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:20px 20px 20px 18px;}
   .bfh .bfh__bon-titre{font-size:19px;line-height:1.2;font-weight:700;letter-spacing:-.01em;text-wrap:balance;}
   .bfh .bfh__bon-texte{font-size:14px;line-height:1.45;color:rgba(7,8,12,.78);}
+  /* Texte court du ticket sur mobile (si renseigné) */
+  .bfh .bfh__bon-texte--court{display:none;}
+  @media (max-width:749px){
+    .bfh .bfh__bon-texte--long{display:none;}
+    .bfh .bfh__bon-texte--court{display:block;}
+    .bfh .bfh__ticket{min-height:0;}
+    .bfh .bfh__bon-titre{font-size:18px;}
+  }
   .bfh .bfh__bon-lien{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:14px;font-weight:700;color:var(--bf-noir);text-decoration:underline;text-underline-offset:3px;}
   .bfh .bfh__bon-lien svg{width:15px;height:15px;transition:transform 200ms var(--ease-out);}
   @media (hover:hover) and (pointer:fine){.bfh .bfh__bon-lien:hover svg{transform:translateX(3px);}}
@@ -304,32 +254,6 @@
   .bfh .bfh__voir{margin-top:auto;padding-top:14px;font-size:15px;font-weight:700;color:var(--bf-jaune);}
   .bfh .bfh__voir span{display:inline-block;transition:transform 200ms var(--ease-out);}
 
-  /* Encart configurateur : offre limitée dans le temps */
-  .bfh .bfh__config{display:grid;grid-template-columns:96px minmax(0,1fr);grid-template-areas:"v t" "c c" "b b" "m m";gap:14px 16px;align-items:center;max-width:1140px;margin:32px auto 0;padding:18px;border-radius:22px;
-    background:radial-gradient(80% 140% at 100% 0%,rgba(255,213,0,.16),transparent 60%),#12141b;box-shadow:inset 0 0 0 1.5px rgba(255,213,0,.6);}
-  .bfh .bfh__config[hidden]{display:none;}
-  .bfh .bfh__config-visuel{grid-area:v;position:relative;align-self:start;border-radius:16px;overflow:hidden;background:#fff;}
-  .bfh .bfh__config-visuel img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain;}
-  .bfh .bfh__config-badge{position:absolute;left:6px;bottom:6px;padding:4px 8px;border-radius:999px;background:var(--bf-rouge);color:#fff;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;}
-  .bfh .bfh__config-tete{grid-area:t;}
-  .bfh .bfh__config-pastille{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bf-jaune);}
-  .bfh .bfh__config-titre{margin-top:6px;font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.01em;color:#fff;text-wrap:balance;}
-  .bfh .bfh__config-corps{grid-area:c;}
-  .bfh .bfh__config-texte{font-size:15px;line-height:1.5;color:#c9cfdd;text-wrap:pretty;}
-  .bfh .bfh__config-infos{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
-  .bfh .bfh__config-infos span{padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);font-size:13px;font-weight:600;color:#fff;}
-  .bfh .bfh__config-infos .bfh__config-fin{color:var(--bf-jaune);}
-  .bfh .bfh__config-btn{grid-area:b;background:var(--bf-jaune);color:var(--bf-noir);font-weight:700;}
-  @media (hover:hover) and (pointer:fine){.bfh .bfh__config-btn:hover{background:#ffe24d;}}
-  .bfh .bfh__config-mention{grid-area:m;font-size:12px;line-height:1.45;color:#9aa2b5;}
-  /* Mobile : version compacte, le titre porte le message */
-  @media (max-width:749px){
-    .bfh .bfh__config{gap:12px 14px;margin-top:24px;padding:16px;}
-    .bfh .bfh__config-texte{display:none;}
-    .bfh .bfh__config-infos{margin-top:0;}
-    .bfh .bfh__config-mention{font-size:11.5px;}
-  }
-
   .bfh .bfh__cta{margin-top:32px;text-align:center;}
   .bfh .bfh__btn{background:var(--bf-jaune);color:var(--bf-noir);font-weight:700;box-shadow:0 14px 34px -10px rgba(255,213,0,.55);}
   @media (hover:hover) and (pointer:fine){.bfh .bfh__btn:hover{background:#ffe24d;}}
@@ -341,9 +265,6 @@
     .bfh .bfh__offres{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:repeat(var(--col-tab),minmax(0,1fr));max-width:calc(var(--col-tab) * 380px);margin:16px auto 0;padding:14px 0 0;overflow:visible;}
     .bfh .bfh__offres-titre{text-align:center;}
     .bfh .bfh__cta .dwh-btn{width:auto;min-width:360px;}
-    .bfh .bfh__config{grid-template-columns:200px minmax(0,1fr) auto;grid-template-areas:"v t b" "v c b" "v m m";gap:10px 28px;padding:22px 28px 22px 22px;margin-top:40px;}
-    .bfh .bfh__config-titre{font-size:26px;}
-    .bfh .bfh__config-btn{width:auto;white-space:nowrap;align-self:center;}
   }
   @media (min-width:900px){
     .bfh .bfh__haut{grid-template-columns:1.25fr 1fr;gap:56px;}
@@ -364,14 +285,6 @@
     var enEdition = {{ request.design_mode | json }};
     /* Le cache des pages peut servir la section hors période : on vérifie côté navigateur. */
     if (!enEdition && ((debut && Date.now() < debut) || (fin && Date.now() > fin))) { racine.remove(); return; }
-    /* Encart configurateur : visible entre ses propres dates (?bf_test=1 pour le tester avant) */
-    var essai = /[?&]bf_test=1(&|$)/.test(window.location.search);
-    racine.querySelectorAll('[data-bfh-config]').forEach(function (el) {
-      if (enEdition) { el.hidden = false; return; }
-      var d = Date.parse(el.getAttribute('data-debut') || ''), f = Date.parse(el.getAttribute('data-fin') || ''), n = Date.now();
-      if (f && n > f) { el.remove(); return; }
-      el.hidden = !(essai || !d || n >= d);
-    });
     if (!fin) return;
     var cases = {
       j: racine.querySelector('[data-bfh-j]'), h: racine.querySelector('[data-bfh-h]'),
@@ -415,6 +328,7 @@
     { "type": "text", "id": "coupon_kicker", "label": "Au-dessus du montant", "default": "Bon de" },
     { "type": "text", "id": "coupon_title", "label": "Titre", "default": "offerts sur votre prochaine commande" },
     { "type": "textarea", "id": "coupon_text", "label": "Conditions" },
+    { "type": "textarea", "id": "coupon_text_mobile", "label": "Conditions, version courte sur mobile (optionnel)", "default": "30, 50 ou 70 € selon le pack. Bon envoyé par e-mail le 15 décembre.", "info": "Vide : le texte complet s'affiche aussi sur mobile." },
     { "type": "text", "id": "coupon_link_label", "label": "Lien (libellé)", "default": "Voir les packs concernés" },
     { "type": "text", "id": "coupon_link", "label": "Lien (adresse)", "default": "#packs-2026" },
     { "type": "header", "content": "Offres" },
@@ -423,22 +337,7 @@
     { "type": "header", "content": "Bouton et mention" },
     { "type": "text", "id": "cta_label", "label": "Bouton", "default": "Voir toutes les offres Black Friday" },
     { "type": "text", "id": "cta_link", "label": "Lien du bouton", "default": "/collections/black-friday" },
-    { "type": "textarea", "id": "note", "label": "Mention sous le bouton" },
-    { "type": "header", "content": "Encart configurateur" },
-    { "type": "checkbox", "id": "cfg_enable", "label": "Afficher l'encart", "default": true },
-    { "type": "text", "id": "cfg_start_date", "label": "Début", "default": "2026-11-13T16:00:00+01:00", "info": "Avant cette date, l'encart est masqué (ajoutez ?bf_test=1 à l'adresse pour le voir)." },
-    { "type": "text", "id": "cfg_end_date", "label": "Fin", "default": "2026-11-16T09:30:00+01:00", "info": "L'encart disparaît automatiquement après cette date." },
-    { "type": "text", "id": "cfg_label", "label": "Pastille", "default": "Exclusivité configurateur" },
-    { "type": "text", "id": "cfg_title", "label": "Titre", "default": "Votre caméra W503 offerte dès 600 €" },
-    { "type": "textarea", "id": "cfg_text", "label": "Texte", "default": "Composez votre alarme sur mesure avec notre configurateur : dès 600 € d'achat après remise, la caméra extérieure autonome W503 est ajoutée à votre commande et offerte." },
-    { "type": "text", "id": "cfg_product", "label": "Produit offert (identifiant)", "default": "camera-daewoo-w503-autonome-haute-resolution-wifi-1080p-1", "info": "Fin de l'adresse de la fiche produit. Sert pour la photo et la valeur affichée." },
-    { "type": "image_picker", "id": "cfg_image", "label": "Visuel (optionnel)", "info": "Vide : photo principale du produit." },
-    { "type": "text", "id": "cfg_badge", "label": "Badge sur la photo", "default": "Offerte" },
-    { "type": "text", "id": "cfg_value_label", "label": "Devant la valeur du produit", "default": "Valeur", "info": "Vide : valeur masquée." },
-    { "type": "text", "id": "cfg_end_text", "label": "Échéance affichée", "default": "Jusqu'à lundi 9h30" },
-    { "type": "text", "id": "cfg_cta_label", "label": "Bouton", "default": "Composer mon alarme" },
-    { "type": "text", "id": "cfg_cta_link", "label": "Lien du bouton", "default": "/pages/configurateur_2" },
-    { "type": "textarea", "id": "cfg_conditions", "label": "Conditions", "default": "Uniquement via le configurateur, dès 600 € après remise, du 13 novembre 16h au 16 novembre 9h30. Une caméra par client, dans la limite des stocks." }
+    { "type": "textarea", "id": "note", "label": "Mention sous le bouton" }
   ],
   "blocks": [
     {

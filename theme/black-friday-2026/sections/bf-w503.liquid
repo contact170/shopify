@@ -1,0 +1,137 @@
+{%- comment -%}
+  Black Friday : encart de l'offre du configurateur (caméra W503 offerte dès 600 €).
+  - Visible entre la date de début et la date de fin, puis disparaît seul.
+  - Avant la date de début, il est rendu masqué ; ?bf_test=1 dans l'adresse l'affiche pour le tester.
+  - Sur mobile, version compacte : le paragraphe d'explication est masqué, le titre porte le message.
+{%- endcomment -%}
+{%- liquid
+  assign maintenant = 'now' | date: '%s' | plus: 0
+  assign actif = true
+  assign masque = false
+  if section.settings.title == blank
+    assign actif = false
+  endif
+  if section.settings.end_date != blank
+    assign fin = section.settings.end_date | date: '%s' | plus: 0
+    if maintenant > fin
+      assign actif = false
+    endif
+  endif
+  if section.settings.start_date != blank
+    assign debut = section.settings.start_date | date: '%s' | plus: 0
+    if maintenant < debut
+      assign masque = true
+    endif
+  endif
+  if request.design_mode
+    assign actif = true
+    assign masque = false
+  endif
+-%}
+{%- if actif -%}
+{% render 'dw-home-head' %}
+{%- liquid
+  assign cp = all_products[section.settings.product]
+  assign cphoto = section.settings.image | default: cp.featured_image
+-%}
+<div class="dwh bfw" id="BfW503-{{ section.id }}"{% if masque %} hidden{% endif %}
+  data-debut="{{ section.settings.start_date | escape }}" data-fin="{{ section.settings.end_date | escape }}">
+  <div class="dwh-large">
+    <div class="bfw__carte">
+      <div class="bfw__visuel">
+        {%- if cphoto -%}
+          {{ cphoto | image_url: width: 600 | image_tag: loading: 'lazy', widths: '200,300,400,600', sizes: '(min-width: 750px) 200px, 96px', alt: '' }}
+        {%- endif -%}
+        {%- if section.settings.badge != blank -%}<span class="bfw__badge">{{ section.settings.badge }}</span>{%- endif -%}
+      </div>
+      <div class="bfw__tete">
+        {%- if section.settings.label != blank -%}<p class="bfw__pastille">{{ section.settings.label }}</p>{%- endif -%}
+        <h2 class="bfw__titre">{{ section.settings.title }}</h2>
+      </div>
+      <div class="bfw__corps">
+        {%- if section.settings.text != blank -%}<p class="bfw__texte">{{ section.settings.text }}</p>{%- endif -%}
+        <p class="bfw__infos">
+          {%- if cp != blank and section.settings.value_label != blank -%}<span>{{ section.settings.value_label }} {{ cp.price | money }}</span>{%- endif -%}
+          {%- if section.settings.end_text != blank -%}<span class="bfw__fin">{{ section.settings.end_text }}</span>{%- endif -%}
+        </p>
+      </div>
+      {%- if section.settings.cta_label != blank -%}
+        <a class="dwh-btn bfw__btn" href="{{ section.settings.cta_link }}">
+          <span>{{ section.settings.cta_label }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.conditions != blank -%}<p class="bfw__mention">{{ section.settings.conditions }}</p>{%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .bfw{--bf-noir:#07080c;--bf-jaune:#ffd500;--bf-rouge:#e11d48;padding:32px 16px;background:var(--porcelaine,#f5f6fa);}
+  .bfw[hidden]{display:none;}
+  .bfw .bfw__carte{display:grid;grid-template-columns:96px minmax(0,1fr);grid-template-areas:"v t" "c c" "b b" "m m";gap:12px 14px;align-items:center;max-width:1140px;margin:0 auto;padding:16px;border-radius:22px;color:#fff;
+    background:radial-gradient(80% 140% at 100% 0%,rgba(255,213,0,.18),transparent 60%),var(--bf-noir);box-shadow:inset 0 0 0 1.5px rgba(255,213,0,.6),0 24px 48px -28px rgba(7,8,12,.55);}
+  .bfw .bfw__visuel{grid-area:v;position:relative;align-self:start;border-radius:16px;overflow:hidden;background:#fff;}
+  .bfw .bfw__visuel img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain;}
+  .bfw .bfw__badge{position:absolute;left:6px;bottom:6px;padding:4px 8px;border-radius:999px;background:var(--bf-rouge);color:#fff;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;}
+  .bfw .bfw__tete{grid-area:t;}
+  .bfw .bfw__pastille{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bf-jaune);}
+  .bfw .bfw__titre{margin-top:6px;font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.01em;color:#fff;text-wrap:balance;}
+  .bfw .bfw__corps{grid-area:c;}
+  .bfw .bfw__texte{display:none;font-size:15px;line-height:1.5;color:#c9cfdd;text-wrap:pretty;}
+  .bfw .bfw__infos{display:flex;flex-wrap:wrap;gap:8px;}
+  .bfw .bfw__infos span{padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);font-size:13px;font-weight:600;color:#fff;}
+  .bfw .bfw__infos .bfw__fin{color:var(--bf-jaune);}
+  .bfw .bfw__btn{grid-area:b;background:var(--bf-jaune);color:var(--bf-noir);font-weight:700;}
+  @media (hover:hover) and (pointer:fine){.bfw .bfw__btn:hover{background:#ffe24d;}}
+  .bfw .bfw__mention{grid-area:m;font-size:11.5px;line-height:1.45;color:#9aa2b5;}
+  .bfw :focus-visible{outline-color:var(--bf-jaune);}
+  @media (min-width:750px){
+    .bfw{padding:48px 24px;}
+    .bfw .bfw__carte{grid-template-columns:200px minmax(0,1fr) auto;grid-template-areas:"v t b" "v c b" "v m m";gap:10px 28px;padding:22px 28px 22px 22px;}
+    .bfw .bfw__titre{font-size:26px;}
+    .bfw .bfw__texte{display:block;}
+    .bfw .bfw__infos{margin-top:12px;}
+    .bfw .bfw__btn{width:auto;white-space:nowrap;align-self:center;}
+    .bfw .bfw__mention{font-size:12px;}
+  }
+</style>
+
+<script>
+  (function () {
+    var el = document.getElementById('BfW503-{{ section.id }}');
+    if (!el) return;
+    if ({{ request.design_mode | json }}) { el.hidden = false; return; }
+    /* Le cache des pages peut servir l'encart hors période : on vérifie côté navigateur (?bf_test=1 pour le tester avant) */
+    var d = Date.parse(el.getAttribute('data-debut') || ''), f = Date.parse(el.getAttribute('data-fin') || ''), n = Date.now();
+    if (f && n > f) { el.remove(); return; }
+    el.hidden = !(/[?&]bf_test=1(&|$)/.test(window.location.search) || !d || n >= d);
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Black Friday · W503",
+  "tag": "div",
+  "class": "bfw-section",
+  "settings": [
+    { "type": "header", "content": "Période" },
+    { "type": "text", "id": "start_date", "label": "Début", "default": "2026-11-13T16:00:00+01:00", "info": "Avant cette date, l'encart est masqué (ajoutez ?bf_test=1 à l'adresse pour le voir)." },
+    { "type": "text", "id": "end_date", "label": "Fin", "default": "2026-11-16T09:30:00+01:00", "info": "L'encart disparaît automatiquement après cette date." },
+    { "type": "header", "content": "Contenu" },
+    { "type": "text", "id": "label", "label": "Pastille", "default": "Exclusivité configurateur" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Votre caméra W503 offerte dès 600 €" },
+    { "type": "textarea", "id": "text", "label": "Texte (masqué sur mobile)", "default": "Composez votre alarme sur mesure avec notre configurateur : dès 600 € d'achat après remise, la caméra extérieure autonome W503 est ajoutée à votre commande et offerte." },
+    { "type": "text", "id": "product", "label": "Produit offert (identifiant)", "default": "camera-daewoo-w503-autonome-haute-resolution-wifi-1080p-1", "info": "Fin de l'adresse de la fiche produit. Sert pour la photo et la valeur affichée." },
+    { "type": "image_picker", "id": "image", "label": "Visuel (optionnel)", "info": "Vide : photo principale du produit." },
+    { "type": "text", "id": "badge", "label": "Badge sur la photo", "default": "Offerte" },
+    { "type": "text", "id": "value_label", "label": "Devant la valeur du produit", "default": "Valeur", "info": "Vide : valeur masquée." },
+    { "type": "text", "id": "end_text", "label": "Échéance affichée", "default": "Jusqu'à lundi 9h30" },
+    { "type": "text", "id": "cta_label", "label": "Bouton", "default": "Composer mon alarme" },
+    { "type": "text", "id": "cta_link", "label": "Lien du bouton", "default": "/pages/configurateur_2" },
+    { "type": "textarea", "id": "conditions", "label": "Conditions", "default": "Uniquement via le configurateur, dès 600 € après remise, du 13 novembre 16h au 16 novembre 9h30. Une caméra par client, dans la limite des stocks." }
+  ],
+  "presets": [ { "name": "Black Friday · W503" } ]
+}
+{% endschema %}
