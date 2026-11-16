@@ -1,0 +1,202 @@
+{%- comment -%}
+  Bandeau d'annonce défilant, en haut de toutes les pages.
+  - Message principal visible entre sa date de début (optionnelle) et sa date de fin, puis disparaît seul.
+  - Second message optionnel (texte, lien et dates à part) : il défile en alternance avec le premier
+    et disparaît seul à sa propre date de fin.
+  - Tant qu'il est visible, il masque le bandeau défilant habituel (#top-banner),
+    qui revient automatiquement à la fin des offres.
+{%- endcomment -%}
+{%- liquid
+  assign maintenant = 'now' | date: '%s' | plus: 0
+
+  assign actif = true
+  if section.settings.start_date != blank
+    assign debut = section.settings.start_date | date: '%s' | plus: 0
+    if maintenant < debut
+      assign actif = false
+    endif
+  endif
+  if section.settings.end_date != blank
+    assign fin = section.settings.end_date | date: '%s' | plus: 0
+    if maintenant > fin
+      assign actif = false
+    endif
+  endif
+
+  assign actif_2 = true
+  if section.settings.text_2 == blank
+    assign actif_2 = false
+  endif
+  if section.settings.start_date_2 != blank
+    assign debut_2 = section.settings.start_date_2 | date: '%s' | plus: 0
+    if maintenant < debut_2
+      assign actif_2 = false
+    endif
+  endif
+  if section.settings.end_date_2 != blank
+    assign fin_2 = section.settings.end_date_2 | date: '%s' | plus: 0
+    if maintenant > fin_2
+      assign actif_2 = false
+    endif
+  endif
+
+  if request.design_mode
+    assign actif = true
+    if section.settings.text_2 != blank
+      assign actif_2 = true
+    endif
+  endif
+
+  assign lien = section.settings.link | default: '/pages/offre-speciale'
+  assign lien_2 = section.settings.link_2 | default: '/pages/configurateur_2'
+  assign sur_page_offre = false
+  if request.path contains '/pages/offre-speciale'
+    assign sur_page_offre = true
+  endif
+
+  assign nb_tours = 6
+  assign duree = section.settings.speed
+  if actif and actif_2
+    assign nb_tours = 4
+    assign duree = section.settings.speed | times: 4 | divided_by: 3
+  endif
+-%}
+{%- if actif or actif_2 -%}
+  <div class="psi-annonce" id="PsiAnnonce-{{ section.id }}">
+    <div class="psi-annonce__defile">
+      <div class="psi-annonce__piste" style="--psi-duree: {{ duree }}s;">
+        {%- for i in (1..nb_tours) -%}
+          {%- if actif_2 and section.settings.first_2 -%}
+            <a class="psi-annonce__item" href="{{ lien_2 }}" data-psi-msg="2"
+              data-debut="{{ section.settings.start_date_2 | escape }}" data-fin="{{ section.settings.end_date_2 | escape }}"
+              {% if i > 1 %} aria-hidden="true" tabindex="-1"{% endif %}>
+              {%- if section.settings.label_2 != blank -%}<span class="psi-annonce__pastille psi-annonce__pastille--2">{{ section.settings.label_2 }}</span>{%- endif -%}
+              <span class="psi-annonce__texte">{{ section.settings.text_2 }}</span>
+              {%- if section.settings.end_date_2 != blank -%}<span class="psi-annonce__reste" data-psi-reste data-fin="{{ section.settings.end_date_2 | escape }}"></span>{%- endif -%}
+              {%- if section.settings.cta_2 != blank -%}<span class="psi-annonce__cta">{{ section.settings.cta_2 }} <span aria-hidden="true">→</span></span>{%- endif -%}
+              <span class="psi-annonce__sep" aria-hidden="true">·</span>
+            </a>
+          {%- endif -%}
+          {%- if actif -%}
+            <a class="psi-annonce__item" href="{{ lien }}" data-psi-msg="1"
+              data-debut="{{ section.settings.start_date | escape }}" data-fin="{{ section.settings.end_date | escape }}"
+              {% if i > 1 %} aria-hidden="true" tabindex="-1"{% elsif sur_page_offre %} aria-current="page"{% endif %}>
+              <span class="psi-annonce__pastille">{{ section.settings.label }}</span>
+              <span class="psi-annonce__texte">{{ section.settings.text }}</span>
+              {%- if section.settings.end_date != blank -%}<span class="psi-annonce__reste" data-psi-reste data-fin="{{ section.settings.end_date | escape }}"></span>{%- endif -%}
+              {%- unless sur_page_offre -%}<span class="psi-annonce__cta">{{ section.settings.cta }} <span aria-hidden="true">→</span></span>{%- endunless -%}
+              <span class="psi-annonce__sep" aria-hidden="true">·</span>
+            </a>
+          {%- endif -%}
+          {%- if actif_2 and section.settings.first_2 == false -%}
+            <a class="psi-annonce__item" href="{{ lien_2 }}" data-psi-msg="2"
+              data-debut="{{ section.settings.start_date_2 | escape }}" data-fin="{{ section.settings.end_date_2 | escape }}"
+              {% if i > 1 %} aria-hidden="true" tabindex="-1"{% endif %}>
+              {%- if section.settings.label_2 != blank -%}<span class="psi-annonce__pastille psi-annonce__pastille--2">{{ section.settings.label_2 }}</span>{%- endif -%}
+              <span class="psi-annonce__texte">{{ section.settings.text_2 }}</span>
+              {%- if section.settings.end_date_2 != blank -%}<span class="psi-annonce__reste" data-psi-reste data-fin="{{ section.settings.end_date_2 | escape }}"></span>{%- endif -%}
+              {%- if section.settings.cta_2 != blank -%}<span class="psi-annonce__cta">{{ section.settings.cta_2 }} <span aria-hidden="true">→</span></span>{%- endif -%}
+              <span class="psi-annonce__sep" aria-hidden="true">·</span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <style>
+    {%- if section.settings.hide_ticker -%}
+      #top-banner{display:none !important;}
+      body.psi-annonce-finie #top-banner{display:block !important;}
+    {%- endif -%}
+    .psi-annonce{background:{{ section.settings.color_background }};color:{{ section.settings.color_text }};font-family:var(--font-body-family,'Helvetica Neue',Arial,sans-serif);overflow:hidden;}
+    .psi-annonce__defile{display:flex;align-items:center;height:40px;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);}
+    .psi-annonce__piste{display:inline-flex;align-items:center;white-space:nowrap;animation:psi-annonce-defile var(--psi-duree,30s) linear infinite;will-change:transform;}
+    .psi-annonce:hover .psi-annonce__piste,.psi-annonce:focus-within .psi-annonce__piste{animation-play-state:paused;}
+    @keyframes psi-annonce-defile{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+    .psi-annonce__item{display:inline-flex;align-items:center;gap:10px;padding-right:10px;font-size:13.5px;line-height:1;color:inherit;text-decoration:none;}
+    .psi-annonce__item:focus-visible{outline:2px solid {{ section.settings.color_highlight }};outline-offset:-2px;border-radius:4px;}
+    .psi-annonce__pastille{background:{{ section.settings.color_accent }};color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:999px;}
+    .psi-annonce__pastille--2{background:{{ section.settings.color_accent_2 }};color:{{ section.settings.color_accent_2_text }};}
+    .psi-annonce__texte strong{color:{{ section.settings.color_highlight }};font-weight:700;}
+    .psi-annonce__reste{font-weight:700;color:{{ section.settings.color_highlight }};}
+    .psi-annonce__reste:empty{display:none;}
+    .psi-annonce__cta{font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+    .psi-annonce__sep{opacity:.4;padding:0 8px;}
+    @media (max-width:749px){
+      .psi-annonce__defile{height:36px;}
+      .psi-annonce__item{font-size:12.5px;gap:8px;}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .psi-annonce__piste{animation:none;}
+    }
+  </style>
+
+  <script>
+    (function () {
+      var el = document.getElementById('PsiAnnonce-{{ section.id }}');
+      if (!el) return;
+      var now = Date.now();
+      var enEdition = {{ request.design_mode | json }};
+      /* Le cache des pages peut servir un message hors période : on vérifie côté navigateur. */
+      if (!enEdition) {
+        el.querySelectorAll('[data-psi-msg]').forEach(function (m) {
+          var d = Date.parse(m.getAttribute('data-debut') || ''), f = Date.parse(m.getAttribute('data-fin') || '');
+          if ((d && now < d) || (f && now > f)) m.remove();
+        });
+        if (!el.querySelector('[data-psi-msg]')) {
+          el.remove();
+          document.body.classList.add('psi-annonce-finie');
+          return;
+        }
+        /* Le premier exemplaire restant de chaque message reste lisible et accessible au clavier */
+        ['1', '2'].forEach(function (n) {
+          var premier = el.querySelector('[data-psi-msg="' + n + '"]');
+          if (premier) { premier.removeAttribute('aria-hidden'); premier.removeAttribute('tabindex'); }
+        });
+      }
+      /* Jours calendaires restants, puis « demain » / « aujourd'hui » avec l'heure de fin */
+      el.querySelectorAll('[data-psi-reste]').forEach(function (r) {
+        var fin = Date.parse(r.getAttribute('data-fin') || '');
+        if (!fin) return;
+        var dFin = new Date(fin), dNow = new Date(now);
+        var ecart = Math.round((Date.UTC(dFin.getFullYear(), dFin.getMonth(), dFin.getDate()) - Date.UTC(dNow.getFullYear(), dNow.getMonth(), dNow.getDate())) / 86400000);
+        var heure = dFin.getHours() + 'h' + (dFin.getMinutes() < 10 ? '0' : '') + dFin.getMinutes();
+        r.textContent = ecart > 1 ? 'Plus que ' + ecart + ' jours' : (ecart === 1 ? 'Se termine demain à ' : 'Se termine aujourd’hui à ') + heure;
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Offre PSI · bandeau",
+  "class": "psi-annonce-section",
+  "settings": [
+    { "type": "header", "content": "Message principal" },
+    { "type": "text", "id": "label", "label": "Pastille", "default": "Offre spéciale" },
+    { "type": "text", "id": "text", "label": "Texte", "default": "<strong>Pack Sécurité Intégrale</strong> : alarme, 2 caméras et sirène solaire dès <strong>299,90 €</strong>, sans abonnement" },
+    { "type": "text", "id": "cta", "label": "Lien (libellé)", "default": "Voir l'offre" },
+    { "type": "text", "id": "link", "label": "Lien (adresse)", "default": "/pages/offre-speciale" },
+    { "type": "text", "id": "start_date", "label": "Début de l'offre (optionnel)", "info": "Format 2026-10-01T00:00:00+02:00. Vide : affiché tout de suite." },
+    { "type": "text", "id": "end_date", "label": "Fin de l'offre", "default": "2026-10-31T23:59:59+01:00", "info": "Le message disparaît automatiquement après cette date." },
+    { "type": "header", "content": "Second message (optionnel)", "info": "Défile en alternance avec le message principal. Texte vide : pas de second message." },
+    { "type": "text", "id": "label_2", "label": "Pastille", "default": "Configurateur" },
+    { "type": "text", "id": "text_2", "label": "Texte", "default": "<strong>−7 % en plus</strong> de la remise du configurateur, soit jusqu'à <strong>−30 %</strong> sur votre alarme sur mesure" },
+    { "type": "text", "id": "cta_2", "label": "Lien (libellé)", "default": "Composer mon alarme" },
+    { "type": "text", "id": "link_2", "label": "Lien (adresse)", "default": "/pages/configurateur_2" },
+    { "type": "text", "id": "start_date_2", "label": "Début (optionnel)", "default": "2026-11-16T17:00:00+01:00", "info": "Format 2026-11-16T17:00:00+01:00. Vide : affiché tout de suite." },
+    { "type": "text", "id": "end_date_2", "label": "Fin", "default": "2026-11-20T14:00:00+01:00", "info": "Le second message disparaît automatiquement après cette date." },
+    { "type": "checkbox", "id": "first_2", "label": "Afficher le second message en premier", "default": true },
+    { "type": "header", "content": "Affichage" },
+    { "type": "range", "id": "speed", "label": "Durée d'un tour de défilement", "min": 10, "max": 60, "step": 2, "unit": "s", "default": 30 },
+    { "type": "checkbox", "id": "hide_ticker", "label": "Masquer le bandeau défilant habituel pendant l'offre", "default": true },
+    { "type": "color", "id": "color_background", "label": "Fond", "default": "#0a1330" },
+    { "type": "color", "id": "color_text", "label": "Texte", "default": "#ffffff" },
+    { "type": "color", "id": "color_highlight", "label": "Texte mis en valeur", "default": "#ffd500" },
+    { "type": "color", "id": "color_accent", "label": "Pastille", "default": "#e11d48" },
+    { "type": "color", "id": "color_accent_2", "label": "Pastille du second message", "default": "#ffd500" },
+    { "type": "color", "id": "color_accent_2_text", "label": "Texte de la pastille du second message", "default": "#07080c" }
+  ]
+}
+{% endschema %}

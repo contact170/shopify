@@ -1,4 +1,4 @@
-# Franck – 20 questions de test Black Friday 2026
+# Franck – questions de test Black Friday 2026
 
 Réponses attendues d'après la fiche « Black Friday 2026 » et le persona.
 Contrôle fait le 13/11/2026 sur le contenu (sans interroger Chatbase).
@@ -6,8 +6,8 @@ Pour tester en direct : poser chaque question dans Chatbase et comparer.
 
 | # | Question | Réponse attendue | Couvert par la fiche |
 |---|---|---|---|
-| 1 | Quelles sont vos offres Black Friday ? | Bon de 30/50/70 € sur les 6 nouveaux packs ; Touch XL série précédente à 369,90 € et Vigilia Sécurité Renforcée dès 389,90 € ; caméra W503 offerte via le configurateur jusqu'au lundi 16/11 9h30. Lien vers la page Black Friday. | Oui (partie 1) |
-| 2 | Jusqu'à quand dure le Black Friday ? | Jusqu'au lundi 30 novembre 2026 à 23h59 (W503 : lundi 16 novembre 9h30). | Oui |
+| 1 | Quelles sont vos offres Black Friday ? | Bon de 30/50/70 € sur les 6 nouveaux packs ; Touch XL série précédente à 369,90 € et Vigilia Sécurité Renforcée dès 389,90 € ; −7 % en plus dans le configurateur jusqu'au vendredi 20/11 14h. Lien vers la page Black Friday. | Oui (partie 1) |
+| 2 | Jusqu'à quand dure le Black Friday ? | Jusqu'au lundi 30 novembre 2026 à 23h59 (−7 % du configurateur : vendredi 20 novembre 14h). | Oui |
 | 3 | Quel pack pour un appartement ? | Pack Essentiel, dès 249,90 €, bon de 30 €, lien. | Oui |
 | 4 | Quel pack pour une maison avec jardin ? | Pack Sécurité Intégrale, dès 369,90 €, bon de 50 €, lien. | Oui |
 | 5 | Quel pack pour une grande maison à étage ? | Pack Panorama Duo, dès 679,90 €, bon de 70 €, lien. | Oui |
@@ -24,10 +24,12 @@ Pour tester en direct : poser chaque question dans Chatbase et comparer.
 | 16 | Le Pack Touch XL série précédente donne-t-il droit au bon ? | Non, il est déjà à prix Black Friday. | Oui |
 | 17 | Que contient le Pack Touch XL série précédente ? | Centrale Touch XL AM302, caméras W503 et IP506P, sirène solaire WOS305S, détecteur WPS301, 2 contacteurs WDS301, 2 télécommandes WRC301 (série précédente), autocollants. | Oui |
 | 18 | Vigilia Sécurité Renforcée ou Sécurité Intégrale ? | Vigilia SR : 389,90 €, +1 contacteur, +1 détecteur de mouvement, +1 détecteur de fumée, sans bon. Sécurité Intégrale : 369,90 € + bon de 50 €. | Oui |
-| 19 | La caméra W503 est-elle offerte avec le Pack Panorama ? | Non, uniquement via le configurateur, dès 600 € après remise, jusqu'au lundi 16/11 9h30. | Oui |
+| 19 | La caméra W503 est-elle encore offerte ? | Non, cette offre du configurateur s'est terminée le lundi 16/11 à 9h30. Jusqu'au vendredi 20/11 14h : −7 % en plus dans le configurateur. | Oui |
 | 20 | J'ai commandé par téléphone, ai-je droit au bon ? | Oui, si la commande contient un des 6 packs éligibles. | Oui |
 | 21 | Une configuration du configurateur donne-t-elle droit au bon ? | **À trancher** (voir ci-dessous). | Non |
 | 22 | J'ai commandé le 12 novembre, ai-je droit au bon ? | Non, l'offre court du 13 au 30 novembre. | Oui |
+| 23 | Quelle remise dans le configurateur pour 950 € d'achat ? | 25 % du configurateur puis 7 % en plus, soit 30,3 % au total, appliqués automatiquement au paiement, jusqu'au vendredi 20/11 14h. | Oui |
+| 24 | Les 7 % marchent-ils sur un pack de la page Black Friday ? | Non, uniquement pour les commandes passées via le configurateur. | Oui |
 
 ## Points à trancher ou à vérifier
 

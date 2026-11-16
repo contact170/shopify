@@ -140,6 +140,48 @@ Le thème Black Friday garde le même code d'intégration du configurateur que l
 thème en ligne (fichiers `layout/theme.liquid`, `snippets/custom.liquid`
 identiques) : la publication du thème ne coupe rien.
 
+## Offre « −7 % en plus » du configurateur (16 au 20 novembre)
+
+Lancée par le dirigeant le lundi 16 novembre à 17h, jusqu'au vendredi
+20 novembre 2026 à 14h. Dans le configurateur, 7 % de remise s'ajoutent à la
+remise palier : code `BLACKFRIDAY7` (remise de commande de 7 %, une fois par
+client, cumulable), envoyé automatiquement par le configurateur avec les
+remises automatiques `CONFIGURATEUR10/15/20/25` (remises produit cumulables
+avec les remises de commande, vérifié le 16/11). Les 7 % s'appliquent donc sur
+le prix après remise palier. Le code n'est affiché nulle part.
+
+| Montant d'achat | Remise configurateur | Remise totale |
+|---|---|---|
+| dès 300 € | 10 % | 16,3 % |
+| dès 450 € | 15 % | 21 % |
+| dès 700 € | 20 % | 25,6 % |
+| dès 900 € | 25 % | 30,3 % |
+
+Mise en avant sur le site, dans la copie « Configurateur -7% 16112026
+(Claude) » (`gid://shopify/OnlineStoreTheme/209106534740`), faite à partir du
+thème en ligne « Corrections audit S46 14112026 (Claude) » :
+
+- **Bandeau défilant** (`sections/psi-bandeau.liquid`) : nouveau « second
+  message » en alternance avec le message Black Friday, avec sa pastille, son
+  lien (`/pages/configurateur_2`) et ses dates. Il passe en premier et
+  disparaît seul le 20/11 à 14h ; le message Black Friday reste jusqu'au 30/11.
+  Les valeurs du second message sont les valeurs par défaut de la section
+  (pas de modification de `sections/header-group.json`).
+- **Encart de l'accueil** (`sections/bf-w503.liquid`, au-dessus du
+  configurateur « Aucun pack ne vous correspond ? ») : l'encart W503, terminé,
+  devient l'encart « Black Friday · Config » (sceau −7 %, 4 paliers calculés,
+  échéance, temps restant, bouton « Composer mon alarme »). Le nom du fichier
+  est gardé pour ne pas toucher à `templates/index.json`. Disparaît seul le
+  20/11 à 14h. Sur mobile, les 4 paliers tiennent sur une ligne.
+- `sections/bf-config.liquid` : fichier intermédiaire inutilisé, resté dans la
+  copie (suppression bloquée pour Claude) ; à effacer dans « Modifier le code ».
+
+Aperçus : `docs/apercus/bf-configurateur-7-*.png`,
+`docs/apercus/bf-bandeau-defilant-7-ordi.png`.
+
+Le thème à republier après le 30/11 reste « Avis Google accueil 09112026
+(Claude) ».
+
 ## Lancement : fait le vendredi 13 novembre vers 12h45
 
 Thème « Black Friday 12112026 (Claude) » publié par le dirigeant. Ensuite :

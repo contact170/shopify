@@ -1,6 +1,6 @@
 # Black Friday 2026 – Daewoo Security (fiche de connaissances pour Franck)
 
-Mise à jour : vendredi 13 novembre 2026. Tous les prix sont TTC.
+Mise à jour : lundi 16 novembre 2026 (offre −7 % du configurateur). Tous les prix sont TTC.
 
 ## 1. Résumé en 30 secondes
 
@@ -12,9 +12,11 @@ Black Friday sur daewoo-security.fr :
 2. **Deux packs à prix Black Friday**, dans la limite des stocks : le Pack
    Touch XL série précédente (369,90 €) et le Pack Vigilia Sécurité Renforcée
    (dès 389,90 €).
-3. **Dans le configurateur uniquement**, jusqu'au lundi 16 novembre à 9h30 :
-   la caméra extérieure W503 (valeur 119,90 €) offerte dès 600 € d'achat
-   après remise.
+3. **Dans le configurateur uniquement**, du lundi 16 novembre 17h au
+   vendredi 20 novembre 14h : **7 % de remise en plus** de la remise du
+   configurateur, appliqués automatiquement au paiement (voir partie 5).
+   L'offre précédente du configurateur (caméra W503 offerte) est terminée
+   depuis le lundi 16 novembre à 9h30.
 
 Toutes les offres : https://daewoo-security.fr/collections/black-friday
 
@@ -67,8 +69,8 @@ donnent pas droit au bon : ils sont déjà à prix Black Friday.
   en une seule fois, le 15 décembre.
 - **« Quel est le code promo du Black Friday ? »** Il n'y a aucun code à
   saisir. Les prix Black Friday sont déjà appliqués sur le site, le bon est
-  envoyé par e-mail le 15 décembre, et la caméra W503 est ajoutée
-  automatiquement par le configurateur.
+  envoyé par e-mail le 15 décembre, et les 7 % du configurateur sont
+  appliqués automatiquement au paiement.
 - **« J'achète 2 packs, j'ai droit à combien de bons ? »** Un bon par pack
   acheté : 2 packs donnent 2 bons.
 - **« Puis-je utiliser 2 bons sur la même commande ? »** Non : un seul code
@@ -210,18 +212,30 @@ de 50 €) : 1 contacteur, 1 détecteur de mouvement et 1 détecteur de fumée e
 plus, pour 20 € de plus, sans bon d'achat.
 https://daewoo-security.fr/products/offre-exclusive-pack-vigilia-compatible-animaux-wifi-ou-wifi-gsm-4g-1
 
-## 5. Offre du configurateur : caméra W503 offerte (jusqu'au lundi 16 novembre, 9h30)
+## 5. Offre du configurateur : −7 % en plus (jusqu'au vendredi 20 novembre, 14h)
 
 - Réservée aux commandes passées **via le configurateur** :
   https://daewoo-security.fr/pages/configurateur_2
-- Dès **600 € d'achat après remise** (la caméra offerte n'est pas comptée
-  dans les 600 €), la caméra extérieure autonome W503 (valeur 119,90 €) est
-  **ajoutée automatiquement** à la commande et offerte.
-- Le client n'a rien à faire : pas de code à saisir.
-- Une caméra par client, dans la limite des stocks.
-- Valable du vendredi 13 novembre 2026 au lundi 16 novembre 2026 à 9h30.
+- Du **lundi 16 novembre 2026 à 17h au vendredi 20 novembre 2026 à 14h**.
+- **7 % de remise en plus** de la remise habituelle du configurateur, qui
+  dépend du montant d'achat. Les 7 % se calculent sur le prix après cette
+  remise. Remise totale :
+
+| Montant d'achat dans le configurateur | Remise du configurateur | Remise totale avec les 7 % |
+|---|---|---|
+| dès 300 € | 10 % | 16,3 % |
+| dès 450 € | 15 % | 21 % |
+| dès 700 € | 20 % | 25,6 % |
+| dès 900 € | 25 % | 30,3 % |
+
+- Le client n'a rien à faire : pas de code à saisir, les 7 % sont appliqués
+  automatiquement au paiement avec la remise du configurateur.
+- Une fois par client.
 - Cette offre est distincte du bon de 30/50/70 €, qui concerne l'achat d'un
   des 6 packs.
+- L'offre précédente du configurateur (caméra W503 offerte dès 600 €) s'est
+  terminée le lundi 16 novembre à 9h30. Si un client la cite, expliquer
+  qu'elle est terminée et présenter les 7 % en plus.
 
 ## 6. Informations utiles pendant le Black Friday
 
