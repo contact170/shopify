@@ -233,11 +233,19 @@ Correction décidée le 16/11 (accord du dirigeant) :
   la recommandation (`RecoCompactHero.tsx`) et l'avantage estimé pendant le
   questionnaire (`LiveValuePanel.tsx`) calculent encore 7 % sur tout le panier,
   cartes SIM comprises. Message de correction : `docs/lovable-codes-paliers-black-friday.md`.
-- Écart déjà présent avant l'opération, à trancher plus tard : dans Shopify,
-  le canon à fumée et sa recharge (F502WC, F502RC) sont dans la collection
-  remisée, alors que le configurateur les exclut de la remise. Les cartes SIM
-  et les prises connectées envoyées par le configurateur (références sans C)
-  ne sont pas remisées.
+- Canon à fumée et recharge (F502WC, F502RC) : ils étaient dans la
+  collection remisée (étiquette `Configurateur`, et sélection manuelle pour le
+  canon) alors que le configurateur les exclut de la remise. Le 16/11, à la
+  demande du dirigeant, ils ont été ajoutés aux exclusions de la collection
+  `accessoires-configurateurs` (73 → 71 produits ; étiquettes inchangées).
+  Contrôle : panier Vigilia + W512MW + WOS305S + canon + recharge avec
+  `CFG16-ZCR5D3` → remise de 70,03 € sur les 3 articles du configurateur,
+  canon et recharge au prix plein. Ni les paliers ni les codes CFG ne les
+  remisent plus. Les cartes SIM et les prises connectées envoyées par le
+  configurateur (références sans C) n'étaient déjà pas remisées.
+- Le configurateur peut encore proposer le canon à fumée et sa recharge en
+  suggestion (« Souvent achetés ensemble », maison ou villa) et dans sa
+  recherche (`src/lib/recommendation.ts`, `src/routes/recommandation.tsx`).
 
 ## Lancement : fait le vendredi 13 novembre vers 12h45
 
