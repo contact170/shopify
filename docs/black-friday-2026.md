@@ -243,9 +243,19 @@ Correction décidée le 16/11 (accord du dirigeant) :
   canon et recharge au prix plein. Ni les paliers ni les codes CFG ne les
   remisent plus. Les cartes SIM et les prises connectées envoyées par le
   configurateur (références sans C) n'étaient déjà pas remisées.
-- Le configurateur peut encore proposer le canon à fumée et sa recharge en
-  suggestion (« Souvent achetés ensemble », maison ou villa) et dans sa
-  recherche (`src/lib/recommendation.ts`, `src/routes/recommandation.tsx`).
+- Le configurateur continue de proposer le canon à fumée et sa recharge
+  (suggestions et recherche), à la demande du dirigeant, avec une pastille
+  « Hors remise » (texte d'aide : non concerné par la remise du configurateur
+  ni par les −7 %, non compté pour les paliers) sur tous les articles hors
+  remise, dans les suggestions, la recherche et les lignes du devis. Texte du
+  canon et de la recharge complété par « Prix fixe, hors remise du
+  configurateur. » (Lovable, commit `b90889e`, 2,6 crédits).
+- Lovable, commit `876a4de` : le prix du bouton « Commander mon alarme » et
+  l'avantage estimé du questionnaire sont calculés comme les codes CFG
+  (articles remisés uniquement).
+- Les deux commits relus par Claude (affichage seulement, aucun calcul de
+  prix modifié hors ces deux affichages), puis publication lancée le 16/11
+  vers 18h15.
 
 ## Lancement : fait le vendredi 13 novembre vers 12h45
 
