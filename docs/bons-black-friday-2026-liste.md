@@ -23,10 +23,10 @@ Total : 7 bons, 350 € (1 × 30 €, 5 × 50 €, 1 × 70 €).
 
 Écartée : #202221295 (15/11, Vision Duo Solaire, PK-VDS-VIG), remboursée.
 
-Non éligibles sur la période : 2 commandes de packs à prix Black Friday
-(Vigilia Sécurité Renforcée VIG+2601-002 et autres packs Vigilia), 10 commandes
-du configurateur, les commandes Amazon (aucun pack de la gamme) et les achats
-d'accessoires seuls.
+Non éligibles sur la période : 1 commande du Pack Vigilia Sécurité Renforcée
+(VIG+2601-002, prix Black Friday), 3 commandes d'autres packs hors des 6
+(VIG2601-003 ×2, PA5012601-003), 9 commandes du configurateur, les commandes
+Amazon et les achats d'accessoires ou de centrales seuls.
 
 Le 15 décembre, avant l'envoi : écarter les commandes remboursées, annulées ou
 en cours de retour, et celles livrées depuis moins de 14 jours.
