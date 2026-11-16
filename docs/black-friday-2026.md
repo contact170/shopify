@@ -201,6 +201,38 @@ commande) :
   « Configurateur | … » (références en C) : c'est la cible possible pour
   réserver les 7 % au configurateur.
 
+Correction décidée le 16/11 (accord du dirigeant) :
+- Le forfait Shopify ne permet pas de cumuler deux remises produit sur une même
+  ligne (`productDiscountsWithTagsOnSameCartLine` refusé) : un code « 7 % sur
+  les produits du configurateur » ne s'ajouterait pas au palier.
+- Solution retenue : **un code par palier**, qui contient déjà la remise
+  totale, limité à la collection `accessoires-configurateurs`, avec le même
+  seuil que le palier, une fois par client, du 16/11 17h40 au 20/11 14h. Sur
+  chaque ligne, Shopify garde la meilleure remise produit : le code remplace la
+  remise automatique du palier.
+
+| Palier | Code | Taux | Seuil | Remise Shopify |
+|---|---|---|---|---|
+| 10 % | `CFG16-ZCR5D3` | 16,3 % | 300 € | `DiscountCodeNode/2370678391124` |
+| 15 % | `CFG21-FPSTYR` | 20,95 % | 450 € | `DiscountCodeNode/2370678292820` |
+| 20 % | `CFG26-LTMSSF` | 25,6 % | 700 € | `DiscountCodeNode/2370678423892` |
+| 25 % | `CFG30-E7SH8D` | 30,25 % | 900 € | `DiscountCodeNode/2370678456660` |
+
+- Simulations (sans commande) : 339,70 € → 284,34 € ; 469,60 € → 371,25 € ;
+  749,50 € → 557,65 € ; 909,40 € → 634,36 €. Code à 30 % sur un panier de
+  469,60 € : refusé (le palier automatique de 15 % reste). Code sur le Pack
+  Panorama, seul ou avec un article du configurateur : refusé.
+- Shopify arrondit la remise au centime inférieur, article par article. Le
+  configurateur doit faire le même calcul pour afficher le même total.
+- Reste à faire : Lovable envoie le code du palier à la place de
+  `BLACKFRIDAY7` ; ensuite, désactiver `BLACKFRIDAY7`
+  (`DiscountCodeNode/2345005154644`).
+- Écart déjà présent avant l'opération, à trancher plus tard : dans Shopify,
+  le canon à fumée et sa recharge (F502WC, F502RC) sont dans la collection
+  remisée, alors que le configurateur les exclut de la remise. Les cartes SIM
+  et les prises connectées envoyées par le configurateur (références sans C)
+  ne sont pas remisées.
+
 ## Lancement : fait le vendredi 13 novembre vers 12h45
 
 Thème « Black Friday 12112026 (Claude) » publié par le dirigeant. Ensuite :
