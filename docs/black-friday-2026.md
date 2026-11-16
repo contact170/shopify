@@ -66,7 +66,12 @@ Un bon pour la prochaine commande, selon le pack acheté entre le 13 et le
 | 70 € | Vision Duo Solaire, Panorama Duo | `pack-vds`, `pack-pdu` |
 
 Le Touch XL Série précédente et le Vigilia Sécurité Renforcée ne donnent pas
-droit au bon (prix déjà remisés).
+droit au bon (prix déjà remisés). Les commandes passées via le configurateur
+non plus (décision du 16/11 : elles ont déjà la remise du configurateur et les
+7 % Black Friday).
+
+Liste des commandes éligibles : `docs/bons-black-friday-2026-liste.md`
+(7 bons, 350 € au 16/11 19h ; étiquettes posées dans Shopify).
 
 Règles décidées le 13/11 :
 - **un bon par pack acheté** (2 packs = 2 bons, montants cumulés selon les

@@ -43,7 +43,8 @@ elle pour les prix, les contenus, les montants et les dates.
   appliqués automatiquement au paiement.
 - Ne mélange pas les offres : le bon de 30/50/70 € concerne uniquement
   l'achat d'un des 6 nouveaux packs ; les 7 % en plus concernent
-  uniquement les commandes passées via le configurateur ; le Pack Touch XL
+  uniquement les commandes passées via le configurateur, qui ne donnent pas
+  droit au bon ; le Pack Touch XL
   série précédente et le Pack Vigilia Sécurité Renforcée n'ont pas de bon.
 - N'annonce aucun pourcentage de remise, sauf ceux du configurateur (remise
   du configurateur et 7 % en plus, voir la fiche). Si on te demande à quoi correspond

@@ -26,16 +26,15 @@ Pour tester en direct : poser chaque question dans Chatbase et comparer.
 | 18 | Vigilia Sécurité Renforcée ou Sécurité Intégrale ? | Vigilia SR : 389,90 €, +1 contacteur, +1 détecteur de mouvement, +1 détecteur de fumée, sans bon. Sécurité Intégrale : 369,90 € + bon de 50 €. | Oui |
 | 19 | La caméra W503 est-elle encore offerte ? | Non, cette offre du configurateur s'est terminée le lundi 16/11 à 9h30. Jusqu'au vendredi 20/11 14h : −7 % en plus dans le configurateur. | Oui |
 | 20 | J'ai commandé par téléphone, ai-je droit au bon ? | Oui, si la commande contient un des 6 packs éligibles. | Oui |
-| 21 | Une configuration du configurateur donne-t-elle droit au bon ? | **À trancher** (voir ci-dessous). | Non |
+| 21 | Une configuration du configurateur donne-t-elle droit au bon ? | Non : elle a déjà la remise du configurateur et les 7 % Black Friday (jusqu'au 20/11 14h). | Oui |
 | 22 | J'ai commandé le 12 novembre, ai-je droit au bon ? | Non, l'offre court du 13 au 30 novembre. | Oui |
 | 23 | Quelle remise dans le configurateur pour 950 € d'achat ? | 25 % du configurateur puis 7 % en plus, soit 30,3 % au total, appliqués automatiquement au paiement, jusqu'au vendredi 20/11 14h. | Oui |
 | 24 | Les 7 % marchent-ils sur un pack de la page Black Friday ? | Non, uniquement pour les commandes passées via le configurateur. | Oui |
 
 ## Points à trancher ou à vérifier
 
-1. **Configurateur et bon** : une commande passée via le configurateur
-   donne-t-elle droit au bon de 30/50/70 € ? Aujourd'hui, la fiche dit
-   seulement que le bon concerne l'achat d'un des 6 packs.
+1. **Configurateur et bon** : tranché le 16/11 par le dirigeant, les
+   commandes du configurateur ne donnent pas droit au bon.
 2. **Anciennes offres dans la base de Franck** : retirer ou archiver les
    fiches d'offres terminées (par exemple l'offre spéciale Pack Sécurité
    Intégrale d'octobre, l'ancien week-end W503 « dès 500 € », l'offre

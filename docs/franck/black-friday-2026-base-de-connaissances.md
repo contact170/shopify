@@ -1,6 +1,6 @@
 # Black Friday 2026 – Daewoo Security (fiche de connaissances pour Franck)
 
-Mise à jour : lundi 16 novembre 2026 (offre −7 % du configurateur). Tous les prix sont TTC.
+Mise à jour : lundi 16 novembre 2026, 19h (offre −7 % du configurateur, commandes du configurateur sans bon). Tous les prix sont TTC.
 
 ## 1. Résumé en 30 secondes
 
@@ -54,6 +54,9 @@ donnent pas droit au bon : ils sont déjà à prix Black Friday.
   de réduction, ni avec un deuxième bon. Un client qui a plusieurs bons les
   utilise sur des commandes différentes.
 - Les commandes annulées ou retournées ne donnent pas droit au bon.
+- Les commandes passées **via le configurateur** ne donnent pas droit au bon :
+  elles ont déjà la remise du configurateur et, jusqu'au vendredi 20 novembre
+  14h, les 7 % Black Friday en plus.
 - Le client n'a rien à faire : pas de code à saisir lors de l'achat du pack.
 
 ### Questions fréquentes
@@ -79,6 +82,10 @@ donnent pas droit au bon : ils sont déjà à prix Black Friday.
   par commande.
 - **« J'ai commandé par téléphone (ou sur devis), ai-je droit au bon ? »**
   Oui, dès lors que la commande contient un des 6 packs éligibles.
+- **« J'ai composé mon alarme avec le configurateur, ai-je droit au bon ? »**
+  Non. Les commandes du configurateur ont déjà leur propre remise (et les 7 %
+  Black Friday en plus jusqu'au vendredi 20 novembre 14h) ; le bon concerne
+  uniquement l'achat d'un des 6 packs.
 
 ## 3. Les 6 nouveaux packs (gamme 2026)
 
@@ -232,7 +239,10 @@ https://daewoo-security.fr/products/offre-exclusive-pack-vigilia-compatible-anim
   automatiquement au paiement avec la remise du configurateur.
 - Une fois par client.
 - Cette offre est distincte du bon de 30/50/70 €, qui concerne l'achat d'un
-  des 6 packs.
+  des 6 packs : une commande passée via le configurateur ne donne pas droit au
+  bon.
+- Le canon à fumée, sa recharge, les prises connectées et les cartes SIM sont
+  « hors remise » dans le configurateur : ni remise du configurateur, ni 7 %.
 - L'offre précédente du configurateur (caméra W503 offerte dès 600 €) s'est
   terminée le lundi 16 novembre à 9h30. Si un client la cite, expliquer
   qu'elle est terminée et présenter les 7 % en plus.
