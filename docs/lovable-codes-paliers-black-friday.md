@@ -25,3 +25,17 @@ Ne rien changer d'autre (bandeau Black Friday, compte à rebours, textes, autres
 
 Une fois en ligne : prévenir Claude, qui contrôle le code dans Lovable puis
 désactive `BLACKFRIDAY7` dans Shopify.
+
+## Correction n° 2 : aligner les deux autres affichages de prix (16/11)
+
+```text
+Black Friday −7 % : aligner les deux autres affichages de prix sur le calcul des codes CFG.
+
+Problème : dans src/components/v2b/RecoCompactHero.tsx, le prix du bouton « Commander mon alarme — … € » utilise encore computeWeekendBonus(summary.subtotal, summary.discountAmount), donc 7 % sur tout le panier, y compris les articles exclus de la remise (cartes SIM, prises connectées, canon à fumée). Or les codes CFG ne s'appliquent qu'aux articles remisés. Exemple : avec une carte SIM 1 an (72 €) dans le panier, ce bouton affiche environ 5 € de moins que le récapitulatif et que le paiement Shopify.
+
+1. RecoCompactHero.tsx : quand isWeekendPromoActive() est vrai et qu'un palier s'applique, calculer la remise −7 % exactement comme dans src/routes/recommandation.tsx : computeWeekendTierTotalDiscount(lignes remisées, palier) − remise du palier, avec les lignes remisées (discountableLines) et getEffectivePrice. Hors période : 0.
+2. LiveValuePanel.tsx : l'avantage « +X € d'avantage à la fin » utilise computeWeekendBonus(estimate.total, 0). Le calculer avec la même méthode, sur les articles remisés de la recommandation.
+3. Vérifier que le prix du bouton du haut, le total du récapitulatif et le total de la page de paiement Shopify sont identiques, avec et sans carte SIM dans le panier.
+
+Ne rien changer d'autre.
+```

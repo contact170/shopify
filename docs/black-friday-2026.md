@@ -224,9 +224,15 @@ Correction décidée le 16/11 (accord du dirigeant) :
   Panorama, seul ou avec un article du configurateur : refusé.
 - Shopify arrondit la remise au centime inférieur, article par article. Le
   configurateur doit faire le même calcul pour afficher le même total.
-- Reste à faire : Lovable envoie le code du palier à la place de
-  `BLACKFRIDAY7` ; ensuite, désactiver `BLACKFRIDAY7`
-  (`DiscountCodeNode/2345005154644`).
+- Fait le 16/11 vers 18h : Lovable envoie le code du palier (commit
+  `522c70f`, publication relancée par Claude), puis `BLACKFRIDAY7` a été
+  désactivé (`DiscountCodeNode/2345005154644`, fin 17h01 UTC). Contrôle :
+  `BLACKFRIDAY7` ne donne plus rien, ni sur un pack ni dans le configurateur ;
+  `CFG21-FPSTYR` donne 371,25 € sur le panier de contrôle.
+- Reste dans Lovable : le prix du bouton « Commander mon alarme » en haut de
+  la recommandation (`RecoCompactHero.tsx`) et l'avantage estimé pendant le
+  questionnaire (`LiveValuePanel.tsx`) calculent encore 7 % sur tout le panier,
+  cartes SIM comprises. Message de correction : `docs/lovable-codes-paliers-black-friday.md`.
 - Écart déjà présent avant l'opération, à trancher plus tard : dans Shopify,
   le canon à fumée et sa recharge (F502WC, F502RC) sont dans la collection
   remisée, alors que le configurateur les exclut de la remise. Les cartes SIM
