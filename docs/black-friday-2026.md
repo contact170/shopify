@@ -182,6 +182,25 @@ Aperçus : `docs/apercus/bf-configurateur-7-*.png`,
 Le thème à republier après le 30/11 reste « Avis Google accueil 09112026
 (Claude) ».
 
+Publié par le dirigeant le 16/11 vers 17h30 ; contrôle en ligne fait (accueil,
+page Black Friday, fiche Sécurité Intégrale, configurateur, panier, sur
+ordinateur et mobile) : bandeau à 2 messages, encart visible, pas d'erreur.
+
+Point d'attention relevé le 16/11 (simulation de panier dans Shopify, sans
+commande) :
+- panier du configurateur à 469,60 € : remise palier 15 % (70,42 €) puis 7 %
+  (27,94 €), total 371,24 €, soit −21 % : conforme ;
+- Pack Panorama (529,90 €) avec le code `BLACKFRIDAY7` : 492,81 €. Le code
+  marche donc hors configurateur (remise de commande sur tous les articles),
+  et ce pack donne en plus le bon de 50 €. Aucune commande avec ce code au
+  16/11 au soir.
+- La remise `BLACKFRIDAY7` date de juillet (13 utilisations passées) et n'est
+  utilisable qu'une fois par client : les clients de l'offre de juillet ne
+  peuvent pas l'utiliser de nouveau.
+- La collection `accessoires-configurateurs` ne contient que les produits
+  « Configurateur | … » (références en C) : c'est la cible possible pour
+  réserver les 7 % au configurateur.
+
 ## Lancement : fait le vendredi 13 novembre vers 12h45
 
 Thème « Black Friday 12112026 (Claude) » publié par le dirigeant. Ensuite :
