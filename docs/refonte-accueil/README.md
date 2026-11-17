@@ -4,15 +4,69 @@ Mission : refonte premium, mobile d'abord, de la page d'accueil de
 daewoo-security.fr (thème Impact, sections sur mesure `dw-home-*`).
 Cette note permet à une nouvelle session de reprendre sans contexte.
 
-## État au 17/11/2026
+## État au 17/11/2026 (fin de journée)
 
 | Phase | État |
 |---|---|
 | 1. Audit | Fait (ci-dessous) |
-| 2. Architecture | Proposée, accord de principe du dirigeant (« ok vas y ») |
-| 3. Maquette | Première version : `maquette-accueil.html` (à faire valider) |
-| 4. Développement sur copie du thème | **Bloqué** : voir « Blocage » |
-| 5. Contrôles, 6. Présentation | À faire |
+| 2. Architecture | Validée par le dirigeant |
+| 3. Maquette | `maquette-accueil.html` ; jugée « pas très premium », d'où un parti plus éditorial dans le thème |
+| 4. Développement | Fait sur la copie du thème, à faire valider |
+| 5. Contrôles | Partiels (voir « Contrôles ») |
+| 6. Présentation | Aperçu transmis, retours du dirigeant attendus |
+
+### Copie de travail
+
+- Thème : « Refonte accueil 17112026 (Claude) », non publié,
+  `gid://shopify/OnlineStoreTheme/209171415380`, dupliqué du thème publié
+  `209106534740` le 17/11/2026. Le thème publié n'a pas été modifié.
+- Aperçu : https://daewoo-security.fr/?preview_theme_id=209171415380
+- Le connecteur Shopify a été reconnecté : `theme_bash`, `theme_screenshot`
+  et `theme_commit` fonctionnent. Le nom d'une section est limité à
+  25 caractères (refus à l'enregistrement sinon).
+
+### Fichiers ajoutés ou modifiés sur la copie
+
+| Fichier | Rôle |
+|---|---|
+| `assets/dwx-home.css` | Styles des nouvelles sections (préfixe `.dwx`, hérite de `.dwh`) |
+| `snippets/dw-home-head.liquid` | Une ligne ajoutée : chargement de `dwx-home.css` sur l'accueil |
+| `sections/dwx-hero.liquid` | Premier écran, ruban saisonnier daté, suivi des clics `dwx_clic` |
+| `sections/dwx-parcours.liquid` | Les 4 parcours |
+| `sections/dwx-offres.liquid` | Offres du moment, masquées hors période |
+| `sections/dwx-packs.liquid` | Choix du pack puis de la centrale ; prix, prix de référence et Alma lus sur les fiches |
+| `sections/dwx-centrales.liquid` | Vigilia, Touch, Élite |
+| `sections/dwx-config.liquid` | Configurateur, paliers, promotion temporaire datée |
+| `sections/dwx-avis.liquid` | Note boutique (Judge.me) et note Google, 3 avis |
+| `sections/dwx-app.liquid` | Application ; emplacement prévu pour une capture d'écran |
+| `sections/dwx-aide.liquid` | Téléphone, rappel, livraison, garantie, retour |
+| `templates/index.json` | Nouvel ordre des sections |
+| `assets/index-avant-refonte.json` | Copie de l'ancien `index.json` |
+
+Sections conservées telles quelles : quiz (`dw-home-packs`), calcul sans
+abonnement (`dw-home-savings`), canon à fumée (`dw-home-dissuasion`), FAQ
+(`dw-home-faq`), appel final (`dw-home-final-cta`).
+
+Sections retirées de l'accueil (fichiers conservés) : `bf-home`,
+`gamme-home`, `psi-home`, `avis-google`, `dw-home-best`, `bf-w503`,
+`dw-home-config`, `dw-home-why`, carrousel Judge.me, et l'ancien
+`dw-home-hero` avec ses deux boutons flottants. La barre du bas du thème
+(« Mon alarme ») reste la seule barre fixe.
+
+### Contrôles
+
+Faits le 17/11/2026, navigateur mobile (390 px) sur l'aperçu :
+- aucune erreur JavaScript ; pas de débordement horizontal ;
+- un seul H1, 13 H2 ; données structurées Organization, WebSite, FAQPage ;
+- sélecteur de packs : prix, prix de référence, Alma, lien de variante et
+  photo corrects pour Essentiel et Panorama Duo, centrales Vigilia et Touch XL ;
+- événements `dwx_packs_choix` et `dwx_clic` poussés dans le `dataLayer` ;
+- hauteur mobile : 12 489 px avant resserrage des espacements (14 136 px
+  aujourd'hui en ligne). L'objectif de 9 000 px n'est pas atteint.
+
+Non faits : mesure des performances (LCP, INP, CLS), test du quiz et du
+parcours jusqu'au panier, lecteur d'écran, vérification sur un vrai
+téléphone, tablette, branchement des événements dans GA4 (côté GTM).
 
 ## Règles fixées par le dirigeant
 
@@ -26,24 +80,12 @@ Cette note permet à une nouvelle session de reprendre sans contexte.
 - Conserver Alma, le configurateur, les avis, le suivi analytique.
 - Recommandation : ne pas publier avant la fin du Black Friday (30/11).
 
-## Blocage
+## Accès utiles
 
-Le connecteur Shopify lit le catalogue et les statistiques mais refuse
-`theme_bash`, `theme_screenshot` et `theme_commit` (« permissions
-supplémentaires requises »). Le dirigeant doit le déconnecter puis le
-reconnecter sur https://claude.ai/customize/connectors en acceptant les
-permissions sur les thèmes, puis ouvrir une nouvelle session.
-
-En attendant, les fichiers du thème se lisent par GraphQL
-(`theme(id:) { files(filenames:) { nodes { body { ... on
-OnlineStoreThemeFileBodyText { content } } } } }`) et le site en ligne
-se capture avec Playwright sur `https://daewoo-security.fr/` (sans
-`www`, seul domaine autorisé par l'environnement). Les sections sous le
-premier écran n'apparaissent qu'au défilement : capturer écran par
-écran, pas en pleine page.
-
-Thème publié le 17/11/2026 : `gid://shopify/OnlineStoreTheme/209106534740`
-« Configurateur -7% 16112026 (Claude) ».
+Les fichiers du thème se lisent aussi par GraphQL et le site se capture
+avec Playwright sur `https://daewoo-security.fr/` (sans `www`, seul
+domaine autorisé par l'environnement). Les sections sous le premier écran
+n'apparaissent qu'au défilement : capturer écran par écran.
 
 ## Audit : constats mesurés
 
@@ -135,8 +177,8 @@ doublon avec ceux d'Addingwell.
 
 ## Prochaines étapes
 
-1. Validation de la maquette par le dirigeant.
-2. Reconnexion du connecteur Shopify, duplication du thème publié.
-3. Développement en sections OS 2.0 isolées, réutilisant `dw-socle`.
-4. Contrôles (parcours, variantes, performances mesurées, SEO), puis
-   lien de prévisualisation et présentation avant/après.
+1. Retours du dirigeant sur l'aperçu ; captures de l'application à recevoir.
+2. Raccourcir encore la page mobile (calcul, avis, FAQ, appel final).
+3. Mesurer les performances et tester quiz, panier et accessibilité.
+4. Brancher les événements `dwx_*` dans GTM/GA4.
+5. Publication : seulement sur autorisation explicite, après le 30/11.
