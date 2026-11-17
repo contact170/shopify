@@ -1,3 +1,11 @@
+> **Version de référence : la page Notion « Black Friday 2026 — Offres et
+> conditions (13 au 30 novembre) »** du Centre de documents (base lue par
+> Franck), https://app.notion.com/p/41783a31dd67803fb393f28763bfb707 .
+> Mise à jour par Claude le 17/11/2026 : bon d'achat toujours en cours
+> jusqu'au 30/11, 7 % du configurateur jusqu'au vendredi 20/11 à 14h,
+> commandes du configurateur sans bon, articles hors remise du configurateur.
+> Le texte ci-dessous est un brouillon antérieur, gardé pour mémoire.
+
 # Black Friday 2026 – Daewoo Security (fiche de connaissances pour Franck)
 
 Mise à jour : lundi 16 novembre 2026, 19h (offre −7 % du configurateur, commandes du configurateur sans bon). Tous les prix sont TTC.

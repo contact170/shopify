@@ -289,3 +289,12 @@ Thème à republier après l'opération : « Avis Google accueil 09112026 (Claud
 Après le 30/11 : republier le thème habituel, remettre le menu « Offres du
 moment », dépublier la collection et repasser les deux packs en brouillon si
 besoin. Le 15/12 : créer les codes et envoyer les e-mails.
+
+## Point du 17/11 (décisions du dirigeant)
+
+- Le bon de 30/50/70 € continue pour le moment (fin prévue le 30/11) ; décision
+  vendredi 20/11 selon les ventes : il pourrait être remplacé par une réduction.
+- Les 7 % du configurateur s'arrêtent le vendredi 20/11 à 14h ; une autre
+  opération les remplacera (à définir).
+- Fiche Notion de Franck corrigée le 17/11 (elle annonçait par erreur la fin
+  du bon le 16/11 au soir et la fin des 7 % à midi).
