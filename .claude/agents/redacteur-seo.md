@@ -215,6 +215,12 @@ contredit, ne recopie pas l'erreur : signale-la dans le rapport.
     qu'avec l'Élite.
   - Le WRF301 arme et désarme ; le WRF501 désarme uniquement. Le WRF501 est
     compatible avec les deux claviers WKE501 et WKE502Z.
+- **Maison connectée Wi-Fi (IVR501W, SP502F…) :** ce sont des appareils
+  Wi-Fi, donc ils fonctionnent avec toutes les centrales Daewoo (Vigilia,
+  Vigilia+, Touch, Touch XL, Key, Élite). Un scénario « si l'alarme est
+  armée, alors fermer les volets » se crée dans l'application Daewoo Home
+  Connect, quelle que soit la centrale (confirmé par le dirigeant le
+  19/11/2026).
 - **Nouvelle gamme de packs (depuis le 9/11/2026) :** 6 packs (Essentiel,
   Sécurité Intégrale, Panorama, Panorama Duo, Vision Duo, Vision Duo
   Solaire), chacun avec 4 centrales au choix (Vigilia, Vigilia+, Touch,
