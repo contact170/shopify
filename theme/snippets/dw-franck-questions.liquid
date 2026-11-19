@@ -1,0 +1,62 @@
+{%- comment -%}
+  Franck sur la fiche produit — maquette du 19/11/2026.
+  Affiche deux questions sous le bouton « Ajouter au panier ». Un clic ouvre
+  un panneau latéral et envoie la question à Franck (widget Chatbase déjà
+  chargé par le snippet chat-differe).
+
+  Questions : métachamps produit custom.franck_question_1 et
+  custom.franck_question_2 s'ils existent, sinon questions par défaut selon
+  la gamme du produit.
+
+  Le bloc est rendu en fin de page par le snippet dw-dock-offset, puis
+  déplacé sous le bouton d'achat (.pv-hero__bouton). Sans ce bouton sur la
+  page, rien ne s'affiche. Pour annuler : voir dw-dock-offset.
+{%- endcomment -%}
+{%- if request.page_type == 'product' and product -%}
+  {%- liquid
+    assign dwf_q1 = product.metafields.custom.franck_question_1.value
+    assign dwf_q2 = product.metafields.custom.franck_question_2.value
+    assign dwf_type = product.type | downcase
+
+    if product.tags contains 'gamme_vigilia' and product.variants.size > 1
+      assign dwf_d1 = 'Ce pack suffit-il pour mon logement ?'
+      assign dwf_d2 = 'Wi-Fi seul ou Wi-Fi + 4G : que choisir ?'
+    elsif dwf_type contains 'caméra' or dwf_type contains 'camera'
+      assign dwf_d1 = 'Fonctionne-t-elle sans abonnement ?'
+      assign dwf_d2 = 'Où puis-je l’installer ?'
+    elsif product.tags contains 'gamme_vigilia_touch' or product.tags contains 'gamme_key'
+      assign dwf_d1 = 'Est-il compatible avec mon alarme ?'
+      assign dwf_d2 = 'Comment s’installe-t-il ?'
+    else
+      assign dwf_d1 = 'Ce produit convient-il à mon installation ?'
+      assign dwf_d2 = 'Est-ce simple à installer soi-même ?'
+    endif
+
+    assign dwf_q1 = dwf_q1 | default: dwf_d1
+    assign dwf_q2 = dwf_q2 | default: dwf_d2
+    assign dwf_q1_affiche = dwf_q1 | escape | replace: ' ?', '&nbsp;?' | replace: ' :', '&nbsp;:'
+    assign dwf_q2_affiche = dwf_q2 | escape | replace: ' ?', '&nbsp;?' | replace: ' :', '&nbsp;:'
+    assign dwf_prefixe = 'À propos du produit « ' | append: product.title | append: ' » : '
+  -%}
+  <div id="dw-franck" class="dwf" hidden>
+    <div class="dwf__tete">
+      <span class="dwf__avatar" aria-hidden="true">F<span class="dwf__pastille"></span></span>
+      <p class="dwf__titre">
+        <strong>Une question avant de commander&nbsp;?</strong>
+        <span>Franck, notre assistant IA, vous répond tout de suite.</span>
+      </p>
+    </div>
+    <div class="dwf__questions">
+      <button type="button" class="dwf__question" data-dwf-question="{{ dwf_q1_affiche }}" data-dwf-message="{{ dwf_prefixe | append: dwf_q1 | escape }}">
+        <span>{{ dwf_q1_affiche }}</span>
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+      <button type="button" class="dwf__question" data-dwf-question="{{ dwf_q2_affiche }}" data-dwf-message="{{ dwf_prefixe | append: dwf_q2 | escape }}">
+        <span>{{ dwf_q2_affiche }}</span>
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+    <button type="button" class="dwf__libre" data-dwf-question="" data-dwf-message="">Poser une autre question</button>
+  </div>
+  {%- render 'dw-franck-panneau' -%}
+{%- endif -%}
