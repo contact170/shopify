@@ -9,8 +9,9 @@
   la gamme du produit.
 
   Le bloc est rendu en fin de page par le snippet dw-dock-offset, puis
-  déplacé sous le bouton d'achat (.pv-hero__bouton). Sans ce bouton sur la
-  page, rien ne s'affiche. Pour annuler : voir dw-dock-offset.
+  déplacé sous le bouton d'achat du haut de fiche (pack Vigilia et les six
+  packs de la gamme 2026). Sans ce bouton sur la page, rien ne s'affiche.
+  Pour annuler : voir dw-dock-offset.
 {%- endcomment -%}
 {%- if request.page_type == 'product' and product -%}
   {%- liquid
@@ -18,7 +19,10 @@
     assign dwf_q2 = product.metafields.custom.franck_question_2.value
     assign dwf_type = product.type | downcase
 
-    if product.tags contains 'gamme_vigilia' and product.variants.size > 1
+    if product.tags contains 'gamme-packs-2026'
+      assign dwf_d1 = 'Ce pack suffit-il pour mon logement ?'
+      assign dwf_d2 = 'Vigilia ou Touch : quelle centrale choisir ?'
+    elsif product.tags contains 'gamme_vigilia' and product.variants.size > 1
       assign dwf_d1 = 'Ce pack suffit-il pour mon logement ?'
       assign dwf_d2 = 'Wi-Fi seul ou Wi-Fi + 4G : que choisir ?'
     elsif dwf_type contains 'caméra' or dwf_type contains 'camera'
@@ -36,7 +40,8 @@
     assign dwf_q2 = dwf_q2 | default: dwf_d2
     assign dwf_q1_affiche = dwf_q1 | escape | replace: ' ?', '&nbsp;?' | replace: ' :', '&nbsp;:'
     assign dwf_q2_affiche = dwf_q2 | escape | replace: ' ?', '&nbsp;?' | replace: ' :', '&nbsp;:'
-    assign dwf_prefixe = 'À propos du produit « ' | append: product.title | append: ' » : '
+    assign dwf_nom = product.title | split: ' | ' | first
+    assign dwf_prefixe = 'À propos du produit « ' | append: dwf_nom | append: ' » : '
   -%}
   <div id="dw-franck" class="dwf" hidden>
     <div class="dwf__tete">

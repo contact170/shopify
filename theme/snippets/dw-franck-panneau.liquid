@@ -177,7 +177,7 @@
     }
 
     function placer() {
-      ancre = document.querySelector('.pv-hero__bouton');
+      ancre = document.querySelector('[data-dwf-ancre], .pv-hero__bouton, .pv-hero__cta > [id^="PVHeroCta-"]');
       if (!ancre || !ancre.parentNode) return;
       bloc.classList.add('dwf--entree');
       ancre.parentNode.insertBefore(bloc, ancre.nextSibling);
