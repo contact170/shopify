@@ -384,3 +384,42 @@ configurateur sur la page Black Friday.
   sur les packs Élite, dans une copie du thème. Vérifier en même temps les
   vidéos associées à ces produits dans Moast, et en associer à NutriVision,
   canon F502W, centrale Touch XL, sonnette SB501 et panneau SPW502.
+
+## Questions Franck sur les fiches packs (20/11)
+
+Décision du dirigeant le 20/11 : deux questions sous le bouton d'achat des
+8 packs de l'offre, adaptées à chaque pack (différence entre packs,
+installation des caméras, intérêt de la carte SIM). Un clic ouvre Franck dans un
+panneau latéral avec la question déjà envoyée (reprise de la maquette du 19/11,
+thème « Franck fiche produit 19112026 (Claude) », qui ne doit plus être publié
+tel quel).
+
+- **Métachamps produit** créés : « Franck – question 1 » et « Franck – question 2 »
+  (`custom.franck_question_1` et `_2`, texte d'une ligne). Le bloc ne
+  s'affiche que sur les produits qui ont une question 1.
+
+  | Pack | Question 1 | Question 2 |
+  | --- | --- | --- |
+  | Essentiel | Quelle différence avec le Pack Sécurité Intégrale ? | À quoi sert la carte SIM avec ce pack ? |
+  | Sécurité Intégrale | Quelle différence avec le Pack Panorama ? | Comment installer la caméra extérieure solaire ? |
+  | Vision Duo | Quelle différence avec le Pack Vision Duo Solaire ? | Comment installer les 2 caméras extérieures ? |
+  | Panorama | Quelle différence avec le Pack Sécurité Intégrale ? | Où et comment installer la caméra rotative ? |
+  | Vision Duo Solaire | Quelle différence avec le Pack Vision Duo ? | Comment installer les caméras et leurs panneaux solaires ? |
+  | Panorama Duo | Quelle différence avec le Pack Panorama ? | À quoi sert la carte SIM avec ce pack ? |
+  | Vigilia Sécurité Renforcée (BF) | Quelle différence avec le Pack Sécurité Intégrale ? | Wi-Fi ou Wi-Fi + 4G : à quoi sert la carte SIM ? |
+  | Touch XL série précédente (BF) | Quelle différence avec les nouveaux packs ? | Comment installer les caméras de ce pack ? |
+
+  Le message envoyé à Franck est précédé de « À propos du produit « nom du
+  pack » : ».
+- **Thème** : copie « Franck packs BF 20112026 (Claude) »
+  (`gid://shopify/OnlineStoreTheme/209544773972`), faite depuis le thème en
+  ligne « Promos produits BF 20112026 (Claude) ».
+  - `snippets/dw-franck-panneau.liquid` : identique à la maquette du 19/11.
+  - `snippets/dw-franck-questions.liquid` : questions lues dans les métachamps,
+    bloc masqué sans question 1 (plus de questions par défaut par gamme).
+  - `snippets/dw-dock-offset.liquid` : une ligne ajoutée à la fin qui rend le
+    bloc (à retirer pour annuler).
+  - `sections/product-touch-landing.liquid` : `data-dwf-ancre` sur le bouton
+    d'achat du haut (ligne 332), pour placer les questions sur le Touch XL.
+  Copies des 3 snippets dans `theme/franck-packs-2026/snippets/`.
+- À surveiller : crédits Chatbase consommés par les clics.

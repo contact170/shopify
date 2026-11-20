@@ -1,0 +1,53 @@
+{%- comment -%}
+  Franck sur la fiche produit (packs du Black Friday, 20/11/2026 ; maquette du 19/11).
+  Deux questions sous le bouton « Ajouter au panier ». Un clic ouvre un panneau
+  latéral et envoie la question à Franck (widget Chatbase chargé par le snippet
+  chat-differe), précédée du nom du produit pour qu'il sache de quel pack on parle.
+
+  Questions : métachamps produit « Franck – question 1 » et « Franck – question 2 »
+  (custom.franck_question_1 et custom.franck_question_2), modifiables dans l'admin.
+  Le bloc ne s'affiche que sur les produits qui ont une question 1 : pour l'ajouter
+  à un autre produit, remplir ses questions dans l'admin. Il faut aussi un bouton
+  d'achat repérable sur la page (attribut data-dwf-ancre, ou le bouton du haut des
+  fiches packs gamme 2026 et Vigilia), sinon rien ne s'affiche.
+
+  Rendu en fin de page par dw-dock-offset. Pour annuler : retirer la dernière ligne
+  de dw-dock-offset.
+{%- endcomment -%}
+{%- if request.page_type == 'product' and product -%}
+  {%- liquid
+    assign dwf_q1 = product.metafields.custom.franck_question_1.value | strip
+    assign dwf_q2 = product.metafields.custom.franck_question_2.value | strip
+  -%}
+  {%- if dwf_q1 != blank -%}
+    {%- liquid
+      assign dwf_nom = product.title | split: ' | ' | first
+      assign dwf_prefixe = 'À propos du produit « ' | append: dwf_nom | append: ' » : '
+      assign dwf_q1_affiche = dwf_q1 | escape | replace: ' ?', '&nbsp;?' | replace: ' :', '&nbsp;:'
+      assign dwf_q2_affiche = dwf_q2 | escape | replace: ' ?', '&nbsp;?' | replace: ' :', '&nbsp;:'
+    -%}
+    <div id="dw-franck" class="dwf" hidden>
+      <div class="dwf__tete">
+        <span class="dwf__avatar" aria-hidden="true">F<span class="dwf__pastille"></span></span>
+        <p class="dwf__titre">
+          <strong>Une question avant de commander&nbsp;?</strong>
+          <span>Franck, notre assistant IA, vous répond tout de suite.</span>
+        </p>
+      </div>
+      <div class="dwf__questions">
+        <button type="button" class="dwf__question" data-dwf-question="{{ dwf_q1_affiche }}" data-dwf-message="{{ dwf_prefixe | append: dwf_q1 | escape }}">
+          <span>{{ dwf_q1_affiche }}</span>
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </button>
+        {%- if dwf_q2 != blank -%}
+          <button type="button" class="dwf__question" data-dwf-question="{{ dwf_q2_affiche }}" data-dwf-message="{{ dwf_prefixe | append: dwf_q2 | escape }}">
+            <span>{{ dwf_q2_affiche }}</span>
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </button>
+        {%- endif -%}
+      </div>
+      <button type="button" class="dwf__libre" data-dwf-question="" data-dwf-message="">Poser une autre question</button>
+    </div>
+    {%- render 'dw-franck-panneau' -%}
+  {%- endif -%}
+{%- endif -%}
