@@ -28,5 +28,34 @@ Non éligibles sur la période : 1 commande du Pack Vigilia Sécurité Renforcé
 (VIG2601-003 ×2, PA5012601-003), 9 commandes du configurateur, les commandes
 Amazon et les achats d'accessoires ou de centrales seuls.
 
+
+## Point au 20/11/2026, 14h (commandes du 16/11 17h45 au 20/11 13h45)
+
+Les 7 commandes du point précédent restent valables (aucune annulée ni
+remboursée). #202221295 reste écartée (remboursée).
+
+Nouvelles commandes éligibles :
+
+| Commande | Date (Paris) | Pack | Référence | Bon | Étiquette |
+|---|---|---|---|---|---|
+| #202221334 | 17/11 06h10 | Panorama, Vigilia + | PK-PAN-VIGP | 50 € | posée |
+| #202221337 | 17/11 10h55 | Sécurité Intégrale, Vigilia | PK-PSI-VIG | 50 € | posée |
+| #202221340 | 17/11 11h37 | Panorama, Vigilia + | PK-PAN-VIGP | 50 € | posée |
+| #202221347 | 17/11 16h47 | Essentiel, Vigilia × 2 | PK-ESS-VIG | 2 × 30 € | posée (`bon-bf-30` + `bon-bf-x2`) |
+| #202221363 | 18/11 16h29 | Panorama, Vigilia + | PK-PAN-VIGP | 50 € | posée |
+| #202221391 | 20/11 08h34 | Vision Duo, Vigilia + | PK-VDU-VIGP | 50 € | posée |
+| #202221398 | 20/11 11h59 | Panorama Duo, Vigilia + | PK-PDU-VIGP | 70 € | posée |
+
+Nouveaux bons : 8 (dont 2 pour #202221347), 380 €.
+
+**Total au 20/11 : 14 commandes, 15 bons, 730 €** (3 × 30 €, 10 × 50 €,
+2 × 70 €). L'étiquette `bon-bf-x2` signale une commande qui donne 2 bons.
+
+Non éligibles sur la période : 25 commandes du configurateur (codes CFG),
+7 commandes du Pack Vigilia Sécurité Renforcée (VIG2601-002 / VIG+2601-002,
+dont une avec 2 packs), 1 Pack Touch XL série précédente (AM3022601-002),
+2 commandes d'autres packs Vigilia (VIG2601-003, VIG+2601-003), commandes
+Amazon et achats d'accessoires ou de centrales seuls.
+
 Le 15 décembre, avant l'envoi : écarter les commandes remboursées, annulées ou
 en cours de retour, et celles livrées depuis moins de 14 jours.

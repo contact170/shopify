@@ -71,7 +71,7 @@ non plus (décision du 16/11 : elles ont déjà la remise du configurateur et le
 7 % Black Friday).
 
 Liste des commandes éligibles : `docs/bons-black-friday-2026-liste.md`
-(7 bons, 350 € au 16/11 19h ; étiquettes posées dans Shopify).
+(15 bons, 730 € au 20/11 14h ; étiquettes posées dans Shopify).
 
 Règles décidées le 13/11 :
 - **un bon par pack acheté** (2 packs = 2 bons, montants cumulés selon les
