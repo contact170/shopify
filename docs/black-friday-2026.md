@@ -298,3 +298,16 @@ besoin. Le 15/12 : créer les codes et envoyer les e-mails.
   opération les remplacera (à définir).
 - Fiche Notion de Franck corrigée le 17/11 (elle annonçait par erreur la fin
   du bon le 16/11 au soir et la fin des 7 % à midi).
+
+## Prolongation des 7 % (20/11)
+
+- Décision du dirigeant le 20/11 vers 11h30 : les 7 % du configurateur sont
+  prolongés jusqu'au mardi 24/11 10h (« Prolongation exceptionnelle » affichée
+  à partir de 14h). Lovable fait le bandeau du configurateur.
+- Les 4 codes CFG prolongés par Claude jusqu'au 2026-11-24T09:00:00Z (10h
+  Paris), vérifiés actifs. Lovable ne voit pas ces codes dans son accès Shopify.
+- Fiche Notion de Franck passée à mardi 10h. Persona : dans le bloc Black
+  Friday, « jusqu'au 20/11 14h » devient « jusqu'au 24/11 10h » (même longueur).
+- Accueil (bandeau déroulant et encart) : nouvelles valeurs par défaut prêtes
+  (fin mardi 10h, pastille « Prolongation exceptionnelle »). La copie du thème
+  est bloquée : la boutique a atteint la limite de 20 thèmes.

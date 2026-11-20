@@ -14,7 +14,7 @@ le formulaire (le 05 47 74 29 40 est réservé au commercial), plus de
 
 ```text
 BLACK FRIDAY 2026 (13 au 30 novembre, 23h59) : pour les prix, contenus, montants et dates, utilise uniquement la fiche « Black Friday 2026 » de ta base. Cite l'offre utile en une phrase, avec le lien https://daewoo-security.fr/collections/black-friday.
-Règles : ne donne jamais de code (bon de 30/50/70 € envoyé par e-mail le 15/12 ; −7 % du configurateur appliqués au paiement). Exception à « Remises jamais cumulables » : jusqu'au 20/11 14h, les 7 % s'ajoutent à la remise du configurateur. Ne mélange pas les offres : le bon concerne uniquement les 6 packs de la fiche (un bon par pack, un seul code par commande), jamais les commandes du configurateur. Pourcentages : seulement les remises totales du configurateur indiquées dans la fiche, sans calculer de montant. Pourquoi le 15/12 : tous les bons partent ce jour-là. Commande ou bon non reçu : formulaire https://daewoo-security.fr/pages/nous-contacter
+Règles : ne donne jamais de code (bon de 30/50/70 € envoyé par e-mail le 15/12 ; −7 % du configurateur appliqués au paiement). Exception à « Remises jamais cumulables » : jusqu'au 24/11 10h, les 7 % s'ajoutent à la remise du configurateur. Ne mélange pas les offres : le bon concerne uniquement les 6 packs de la fiche (un bon par pack, un seul code par commande), jamais les commandes du configurateur. Pourcentages : seulement les remises totales du configurateur indiquées dans la fiche, sans calculer de montant. Pourquoi le 15/12 : tous les bons partent ce jour-là. Commande ou bon non reçu : formulaire https://daewoo-security.fr/pages/nous-contacter
 ```
 
 Les détails (prix, contenus, questions fréquentes) sont dans la fiche de
