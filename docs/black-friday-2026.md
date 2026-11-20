@@ -323,3 +323,43 @@ besoin. Le 15/12 : créer les codes et envoyer les e-mails.
   dans l'éditeur du thème en ligne, juste après les avis Google (ordre :
   bf_home, dwh_hero, gamme_offre, avis_google, bf_w503, dwh_packs…). Vérifié en
   ligne. La copie de `templates/index.json` du dépôt n'a pas cet ordre.
+
+## Équipements à prix Black Friday et encart configurateur sur la page BF (20/11)
+
+Demande du dirigeant le 20/11 vers 14h20 : DB502W à −35 %, W503 à −30 % (offre
+« 2e à −50 % » retirée provisoirement), NutriVision à −30 %, et un encart
+configurateur sur la page Black Friday.
+
+- **Prix (Shopify, en ligne dès le 20/11 vers 15h)**, prix barré = ancien prix,
+  inchangé sur les 30 derniers jours (contrôlé sur les commandes web et Amazon
+  du 21/10 au 20/11 ; pas de vente NutriVision sur la période) :
+
+  | Produit | Variante | Prix | Barré | Remise |
+  | --- | --- | --- | --- | --- |
+  | Visiophone DB502W | 46917546967380 | 83,90 € | 129,90 € | −35,4 % |
+  | Caméra W503 | 52524198396244 | 83,90 € | 119,90 € | −30,0 % |
+  | NutriVision 501C | 40464497016985 | 111,90 € | 159,90 € | −30,0 % |
+
+  Les produits « Configurateur | … » (W503C, DB502WC) ne changent pas.
+  **À remettre après le 30/11** : 129,90 / 119,90 / 159,90 € et prix barré vide.
+- **Collection `black-friday`** : les 3 produits ajoutés (11 offres) ;
+  description mise à jour.
+- **Thème** : copie « Promos produits BF 20112026 (Claude) »
+  (`gid://shopify/OnlineStoreTheme/209531732308`), faite depuis le thème en
+  ligne « Prolongation -7% 20112026 (Claude) ».
+  - `sections/bf-collection.liquid` : encart configurateur (−7 % en plus,
+    paliers, compte à rebours, bouton) entre l'en-tête et la liste, classes
+    `bfc__cfg-…`, disparaît seul après le 24/11 10h ; badge « −X % » (arrondi à
+    l'inférieur) pour la liste « Produits remisés ».
+  - `templates/collection.black-friday.json` : les 3 produits remisés, texte
+    d'en-tête (« jusqu'à −35 % ») et mention légale (prix barré = prix le plus
+    bas des 30 jours précédents, du 20 au 30/11).
+  - `sections/product-w503-landing.liquid` : réglage « Afficher l'offre -50 %
+    sur la 2e caméra » (décoché par défaut) qui masque le bloc Pack Duo et les
+    sélecteurs 1/2 caméras. À recocher dans l'éditeur quand l'offre reprend.
+  - Aperçu vérifié sur ordinateur et mobile.
+- **Remise automatique « W503 – La 2ème à -50% »** (2340706910548) : à
+  désactiver juste après la publication du thème (le thème en ligne affiche
+  encore le Pack Duo). La réactiver après le Black Friday si l'offre reprend.
+- **Franck** : fiche Notion mise à jour (partie 4 bis : prix, liens, offre
+  « 2e W503 à −50 % » suspendue, W512MW inchangée).

@@ -7,6 +7,12 @@
     Nom et sous-titre : les deux premières parties du titre produit (séparées par « | »).
     Prix barré : prix barré Shopify de la variante la moins chère, sinon son métachamp custom.prix_reference.
   - Étapes du bon et réassurance : masquées si leurs textes sont vides.
+  - Encart du configurateur (entre l'en-tête et la grille) : visible entre sa date de début et sa
+    date de fin, puis disparaît seul. Paliers « seuil|remise du configurateur », la remise totale
+    affichée est calculée avec la remise supplémentaire. Classes en bfc__cfg-… (pas de conflit
+    avec les cartes produits).
+  - Produits en promotion (liste « Produits remisés ») : badge « −X % » calculé avec le prix barré,
+    arrondi à l'inférieur pour ne jamais annoncer plus que la remise réelle.
 {%- endcomment -%}
 {%- liquid
   assign bon1 = section.settings.bon1_products | map: 'handle' | join: ','
@@ -15,6 +21,33 @@
   assign bon2 = ',' | append: bon2 | append: ','
   assign bon3 = section.settings.bon3_products | map: 'handle' | join: ','
   assign bon3 = ',' | append: bon3 | append: ','
+  assign promo = section.settings.promo_products | map: 'handle' | join: ','
+  assign promo = ',' | append: promo | append: ','
+
+  assign maintenant = 'now' | date: '%s' | plus: 0
+  assign cfg_actif = true
+  assign cfg_masque = false
+  if section.settings.cfg_title == blank
+    assign cfg_actif = false
+  endif
+  if section.settings.cfg_end != blank
+    assign cfg_fin = section.settings.cfg_end | date: '%s' | plus: 0
+    if maintenant > cfg_fin
+      assign cfg_actif = false
+    endif
+  endif
+  if section.settings.cfg_start != blank
+    assign cfg_debut = section.settings.cfg_start | date: '%s' | plus: 0
+    if maintenant < cfg_debut
+      assign cfg_masque = true
+    endif
+  endif
+  if request.design_mode and section.settings.cfg_title != blank
+    assign cfg_actif = true
+    assign cfg_masque = false
+  endif
+  assign cfg_bonus = section.settings.cfg_bonus | default: 7 | round
+  assign cfg_reste_bonus = 100 | minus: cfg_bonus
 -%}
 {% render 'dw-home-head' %}
 <div class="dwh bfc" id="BfCol-{{ section.id }}" data-fin="{{ section.settings.end_date | escape }}">
@@ -60,6 +93,63 @@
     </div>
   </section>
 
+  {%- if cfg_actif -%}
+    <section class="bfc__cfg" id="BfColCfg-{{ section.id }}"{% if cfg_masque %} hidden{% endif %}
+      data-debut="{{ section.settings.cfg_start | escape }}" data-fin="{{ section.settings.cfg_end | escape }}"
+      aria-labelledby="BfColCfgTitre-{{ section.id }}">
+      <div class="dwh-large">
+        <div class="bfc__cfg-carte">
+          <div class="bfc__cfg-sceau" aria-hidden="true">
+            <span class="bfc__cfg-sceau-val">−{{ cfg_bonus }}&nbsp;%</span>
+            <span class="bfc__cfg-sceau-txt">{{ section.settings.cfg_seal }}</span>
+          </div>
+          <div class="bfc__cfg-tete">
+            {%- if section.settings.cfg_label != blank -%}<p class="bfc__cfg-pastille">{{ section.settings.cfg_label }}</p>{%- endif -%}
+            <h2 class="bfc__cfg-titre" id="BfColCfgTitre-{{ section.id }}">{{ section.settings.cfg_title }}</h2>
+          </div>
+          <div class="bfc__cfg-corps">
+            {%- if section.settings.cfg_text != blank -%}<p class="bfc__cfg-texte">{{ section.settings.cfg_text }}</p>{%- endif -%}
+            {%- if section.settings.cfg_tiers != blank -%}
+              {%- assign cfg_lignes = section.settings.cfg_tiers | newline_to_br | split: '<br />' -%}
+              <ul class="bfc__cfg-paliers" role="list" aria-label="Remise totale selon le montant d'achat">
+                {%- for ligne in cfg_lignes -%}
+                  {%- assign morceaux = ligne | strip | split: '|' -%}
+                  {%- if morceaux.size == 2 -%}
+                    {%- liquid
+                      assign remise = morceaux[1] | strip | plus: 0 | round
+                      assign reste = 100 | minus: remise | times: cfg_reste_bonus
+                      assign dixiemes = 10000 | minus: reste | plus: 5 | divided_by: 10
+                      assign entier = dixiemes | divided_by: 10
+                      assign decimale = dixiemes | modulo: 10
+                    -%}
+                    <li class="bfc__cfg-palier">
+                      <span class="bfc__cfg-seuil">{{ morceaux[0] | strip }}</span>
+                      <span class="bfc__cfg-total">−{{ entier }}{% if decimale > 0 %},{{ decimale }}{% endif %}&nbsp;%</span>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+              {%- if section.settings.cfg_caption != blank -%}<p class="bfc__cfg-legende">{{ section.settings.cfg_caption }}</p>{%- endif -%}
+            {%- endif -%}
+          </div>
+          <div class="bfc__cfg-action">
+            <p class="bfc__cfg-infos">
+              {%- if section.settings.cfg_end_text != blank -%}<span class="bfc__cfg-echeance">{{ section.settings.cfg_end_text }}</span>{%- endif -%}
+              <span class="bfc__cfg-reste" data-bfc-cfg-reste></span>
+            </p>
+            {%- if section.settings.cfg_cta != blank -%}
+              <a class="dwh-btn bfc__cfg-btn" href="{{ section.settings.cfg_link }}">
+                <span>{{ section.settings.cfg_cta }}</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.cfg_conditions != blank -%}<p class="bfc__cfg-mention">{{ section.settings.cfg_conditions }}</p>{%- endif -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
   <section class="bfc__liste" aria-labelledby="BfColListe-{{ section.id }}">
     <div class="dwh-large">
       <div class="bfc__entete">
@@ -103,6 +193,11 @@
                 if montant != blank
                   assign avec_bon = true
                 endif
+                assign pct = 0
+                if avec_bon == false and promo contains cle and barre > v.price
+                  assign pct = barre | minus: v.price | times: 100 | divided_by: barre
+                endif
+                assign badge_promo = section.settings.promo_badge | replace: '[remise]', pct
                 assign badge_bon = section.settings.bon_badge | replace: '[bon]', montant
                 assign mention_bon = section.settings.bon_gift | replace: '[bon]', montant
               -%}
@@ -114,6 +209,8 @@
                     {%- endif -%}
                     {%- if avec_bon and section.settings.bon_badge != blank -%}
                       <span class="bfc__badge">{{ badge_bon }}</span>
+                    {%- elsif pct > 0 and section.settings.promo_badge != blank -%}
+                      <span class="bfc__badge bfc__badge--rouge">{{ badge_promo }}</span>
                     {%- elsif avec_bon == false and section.settings.default_badge != blank -%}
                       <span class="bfc__badge bfc__badge--rouge">{{ section.settings.default_badge }}</span>
                     {%- endif -%}
@@ -210,6 +307,32 @@
   .bfc .bfc__bon-titre{font-size:19px;line-height:1.2;font-weight:700;letter-spacing:-.01em;text-wrap:balance;}
   .bfc .bfc__bon-texte{font-size:14px;line-height:1.45;color:rgba(7,8,12,.78);}
 
+  .bfc .bfc__cfg{padding:0 16px 8px;background:var(--bf-noir);}
+  .bfc .bfc__cfg[hidden]{display:none;}
+  .bfc .bfc__cfg-carte{display:grid;grid-template-columns:76px minmax(0,1fr);grid-template-areas:"s t" "c c" "a a" "m m";gap:14px;align-items:center;padding:18px 16px;border-radius:22px;color:#fff;
+    background:radial-gradient(80% 140% at 100% 0%,rgba(255,213,0,.2),transparent 60%),#12141b;box-shadow:inset 0 0 0 1.5px rgba(255,213,0,.7),0 24px 48px -28px rgba(0,0,0,.8);}
+  .bfc .bfc__cfg-sceau{grid-area:s;display:flex;flex-direction:column;align-items:center;justify-content:center;width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#ffe24d,var(--bf-jaune) 55%,#e6b800);color:var(--bf-noir);box-shadow:0 0 0 4px rgba(255,213,0,.22);}
+  .bfc .bfc__cfg-sceau-val{font-size:22px;font-weight:900;line-height:1;letter-spacing:-.02em;white-space:nowrap;}
+  .bfc .bfc__cfg-sceau-txt{margin-top:3px;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
+  .bfc .bfc__cfg-tete{grid-area:t;}
+  .bfc .bfc__cfg-pastille{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bf-jaune);}
+  .bfc .bfc__cfg-titre{margin-top:6px;font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.01em;color:#fff;text-wrap:balance;}
+  .bfc .bfc__cfg-corps{grid-area:c;min-width:0;}
+  .bfc .bfc__cfg-texte{display:none;font-size:15px;line-height:1.5;color:var(--bf-gris);text-wrap:pretty;}
+  .bfc .bfc__cfg-paliers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none;}
+  .bfc .bfc__cfg-palier{display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 2px;border-radius:12px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,213,0,.25);text-align:center;}
+  .bfc .bfc__cfg-seuil{font-size:11px;font-weight:600;color:var(--bf-gris);white-space:nowrap;}
+  .bfc .bfc__cfg-total{font-size:clamp(14px,4.3vw,20px);font-weight:800;line-height:1;color:var(--bf-jaune);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .bfc .bfc__cfg-legende{margin-top:8px;font-size:12px;line-height:1.4;color:#9aa2b5;}
+  .bfc .bfc__cfg-action{grid-area:a;display:flex;flex-direction:column;gap:12px;}
+  .bfc .bfc__cfg-infos{display:flex;flex-wrap:wrap;gap:8px;}
+  .bfc .bfc__cfg-infos span{padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);font-size:13px;font-weight:600;color:#fff;}
+  .bfc .bfc__cfg-infos .bfc__cfg-echeance{color:var(--bf-jaune);}
+  .bfc .bfc__cfg-infos .bfc__cfg-reste:empty{display:none;}
+  .bfc .bfc__cfg-btn{background:var(--bf-jaune);color:var(--bf-noir);font-weight:700;}
+  @media (hover:hover) and (pointer:fine){.bfc .bfc__cfg-btn:hover{background:#ffe24d;}}
+  .bfc .bfc__cfg-mention{grid-area:m;font-size:11.5px;line-height:1.45;color:#9aa2b5;}
+
   .bfc .bfc__liste{padding:40px 16px 48px;background:linear-gradient(to bottom,var(--bf-noir),#0d0f16);}
   .bfc .bfc__entete{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
   .bfc .bfc__h2{font-family:var(--f-display);font-stretch:88%;font-variation-settings:'wdth' 88;font-size:clamp(26px,6vw,38px);line-height:1.05;font-weight:600;letter-spacing:-.02em;color:#fff;text-wrap:balance;}
@@ -255,7 +378,23 @@
   .bfc .bfc__note{max-width:52em;margin:20px auto 0;font-size:12.5px;line-height:1.5;color:#9aa2b5;text-align:center;}
   .bfc :focus-visible{outline-color:var(--bf-jaune);}
 
+  @media (min-width:480px){
+    .bfc .bfc__cfg-paliers{gap:8px;}
+    .bfc .bfc__cfg-palier{padding:10px 8px;border-radius:14px;}
+    .bfc .bfc__cfg-seuil{font-size:12.5px;}
+  }
   @media (min-width:750px){
+    .bfc .bfc__cfg{padding:0 24px 8px;}
+    .bfc .bfc__cfg-carte{grid-template-columns:128px minmax(0,1fr) auto;grid-template-areas:"s t a" "s c a" "m m m";gap:12px 28px;padding:24px 28px;}
+    .bfc .bfc__cfg-sceau{width:128px;height:128px;align-self:start;}
+    .bfc .bfc__cfg-sceau-val{font-size:36px;}
+    .bfc .bfc__cfg-sceau-txt{font-size:11px;}
+    .bfc .bfc__cfg-titre{font-size:26px;}
+    .bfc .bfc__cfg-texte{display:block;margin-bottom:14px;}
+    .bfc .bfc__cfg-action{align-self:center;align-items:stretch;min-width:240px;}
+    .bfc .bfc__cfg-infos{justify-content:center;}
+    .bfc .bfc__cfg-btn{width:auto;white-space:nowrap;}
+    .bfc .bfc__cfg-mention{font-size:12px;}
     .bfc .bfc__hero{padding:64px 24px 72px;}
     .bfc .bfc__liste,.bfc .bfc__etapes{padding-inline:24px;}
     .bfc .bfc__fin{padding-inline:24px;}
@@ -274,6 +413,31 @@
   @media (max-width:389px){.bfc .bfc__case{min-width:0;flex:1;}.bfc .bfc__corps{padding:16px 14px;}}
   @media (prefers-reduced-motion:reduce){.bfc .bfc__point{animation:none;}.bfc .bfc__bon{transform:none;}}
 </style>
+
+<script>
+  (function () {
+    /* Encart du configurateur : le cache des pages peut le servir hors période, on vérifie côté navigateur
+       (?bf_test=1 l'affiche avant sa date de début). Temps restant mis à jour chaque minute. */
+    var el = document.getElementById('BfColCfg-{{ section.id }}');
+    if (!el) return;
+    var d = Date.parse(el.getAttribute('data-debut') || ''), f = Date.parse(el.getAttribute('data-fin') || '');
+    if (!{{ request.design_mode | json }}) {
+      var n = Date.now();
+      if (f && n > f) { el.remove(); return; }
+      el.hidden = !(/[?&]bf_test=1(&|$)/.test(window.location.search) || !d || n >= d);
+    }
+    var r = el.querySelector('[data-bfc-cfg-reste]');
+    if (!r || !f) return;
+    function maj() {
+      var s = Math.floor((f - Date.now()) / 1000);
+      if (s <= 0) { r.textContent = ''; return; }
+      var j = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60);
+      r.textContent = 'Fin dans ' + (j > 0 ? j + ' j ' + h + ' h' : (h > 0 ? h + ' h ' + m + ' min' : m + ' min'));
+    }
+    maj();
+    setInterval(maj, 60000);
+  })();
+</script>
 
 <script>
   (function () {
@@ -327,7 +491,24 @@
     { "type": "text", "id": "bon3_amount", "label": "Palier 3 : montant du bon", "default": "70 €" },
     { "type": "text", "id": "bon_badge", "label": "Badge des produits avec un bon", "info": "[bon] = montant du palier.", "default": "+[bon] offerts" },
     { "type": "text", "id": "bon_gift", "label": "Mention des produits avec un bon", "info": "[bon] = montant du palier.", "default": "Bon de [bon] envoyé le 15 décembre" },
+    { "type": "product_list", "id": "promo_products", "label": "Produits remisés", "info": "Badge en pourcentage calculé avec le prix barré Shopify.", "limit": 20 },
+    { "type": "text", "id": "promo_badge", "label": "Badge des produits remisés", "info": "[remise] = pourcentage de remise, arrondi à l'inférieur.", "default": "−[remise] %" },
     { "type": "text", "id": "default_badge", "label": "Badge des autres produits", "default": "Prix Black Friday" },
+    { "type": "header", "content": "Encart configurateur" },
+    { "type": "paragraph", "content": "Entre l'en-tête et la liste. Titre vide : encart masqué. Il disparaît seul après sa date de fin." },
+    { "type": "text", "id": "cfg_start", "label": "Début", "info": "Vide : visible tout de suite. Avant cette date, ajoutez ?bf_test=1 à l'adresse pour le voir." },
+    { "type": "text", "id": "cfg_end", "label": "Fin", "default": "2026-11-24T10:00:00+01:00" },
+    { "type": "number", "id": "cfg_bonus", "label": "Remise supplémentaire (%)", "default": 7 },
+    { "type": "text", "id": "cfg_seal", "label": "Sous le pourcentage", "default": "en plus" },
+    { "type": "text", "id": "cfg_label", "label": "Pastille", "default": "Prolongation exceptionnelle" },
+    { "type": "text", "id": "cfg_title", "label": "Titre", "default": "Votre alarme sur mesure : −7 % en plus de la remise du configurateur" },
+    { "type": "textarea", "id": "cfg_text", "label": "Texte (masqué sur mobile)", "default": "Composez votre alarme avec notre configurateur : les 7 % s'ajoutent à sa remise et sont appliqués automatiquement au paiement, sans code à saisir." },
+    { "type": "textarea", "id": "cfg_tiers", "label": "Paliers", "default": "dès 300 €|10\ndès 450 €|15\ndès 700 €|20\ndès 900 €|25", "info": "Une ligne par palier : seuil|remise du configurateur en %." },
+    { "type": "text", "id": "cfg_caption", "label": "Paliers : légende", "default": "Remise totale : remise du configurateur + 7 %" },
+    { "type": "text", "id": "cfg_end_text", "label": "Échéance affichée", "default": "Jusqu'à mardi 10h" },
+    { "type": "text", "id": "cfg_cta", "label": "Bouton", "default": "Composer mon alarme" },
+    { "type": "text", "id": "cfg_link", "label": "Lien du bouton", "default": "/pages/configurateur_2" },
+    { "type": "textarea", "id": "cfg_conditions", "label": "Conditions", "default": "Offre réservée aux commandes passées via le configurateur, prolongée jusqu'au mardi 24 novembre 2026 10h, une fois par client. Les 7 % s'appliquent automatiquement au paiement, sur le prix après remise du configurateur (10 % dès 300 €, 15 % dès 450 €, 20 % dès 700 €, 25 % dès 900 € d'achat), hors canon à fumée, recharge, prises connectées et cartes SIM. Les commandes du configurateur ne donnent pas droit au bon d'achat Black Friday." },
     { "type": "header", "content": "Liste" },
     { "type": "text", "id": "list_title", "label": "Titre de la liste", "default": "Toutes nos offres Black Friday" },
     { "type": "text", "id": "card_cta", "label": "Lien sur chaque carte", "default": "Voir l'offre" },
