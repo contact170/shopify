@@ -423,3 +423,25 @@ tel quel).
     d'achat du haut (ligne 332), pour placer les questions sur le Touch XL.
   Copies des 3 snippets dans `theme/franck-packs-2026/snippets/`.
 - À surveiller : crédits Chatbase consommés par les clics.
+
+## Contrôle complet avant le week-end (20/11, vers 17h)
+
+- Thème en ligne : « Franck packs BF 20112026 (Claude) ». Le dirigeant a
+  supprimé « Franck fiche produit 19112026 (Claude) » et confirmé que le
+  configurateur fonctionne.
+- 12 pages principales sans erreur Liquid, traduction manquante ni erreur
+  JavaScript ; 126 liens internes en 200.
+- Panier réel avec les 6 packs, les 2 packs BF, W503, DB502W et NutriVision
+  (11 articles, 3 818,90 €) puis page « Paiement - Daewoo Security » ouverte
+  (articles et Alma présents) ; panier vidé ensuite.
+- Clic sur « Ajouter au panier » validé sur les 8 packs (ordinateur). Le
+  navigateur de test a ensuite été bloqué par la protection anti-robots de
+  Shopify (429 « Just a moment… »), pas les visiteurs : W503, DB502W et
+  NutriVision vérifiés sans navigateur (formulaire d'achat et prix présents),
+  clic à faire par le dirigeant.
+- Stocks : packs 80 à 100 par centrale ; configurateur bas sur SIM 1 mois (21),
+  SIM 1 an Vigilia/Touch (34), WIS305 (49), EXT301 (50) ; DB502W 61.
+- Livraison France : Colissimo et point relais gratuits dès 50 €, Chronopost 9,90 €.
+- Codes CFG actifs jusqu'au 24/11 10h (25 utilisations) ; panier configurateur
+  469,60 € → 371,25 € avec CFG21. Lovable : fin 24/11 10h, mêmes codes.
+- Questions Franck présentes en ligne sur les 8 packs, absentes ailleurs.
