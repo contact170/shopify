@@ -319,3 +319,7 @@ besoin. Le 15/12 : créer les codes et envoyer les e-mails.
   sur ordinateur et mobile. À publier par le dirigeant à 14h.
 - Le thème non publié « Franck fiche produit 19112026 (Claude) » garde
   l'ancienne fin (vendredi 14h) : y reporter ces 2 fichiers avant de le publier.
+- 20/11 vers 14h15 : le dirigeant a déplacé l'encart « Black Friday · Config »
+  dans l'éditeur du thème en ligne, juste après les avis Google (ordre :
+  bf_home, dwh_hero, gamme_offre, avis_google, bf_w503, dwh_packs…). Vérifié en
+  ligne. La copie de `templates/index.json` du dépôt n'a pas cet ordre.
