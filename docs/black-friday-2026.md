@@ -378,3 +378,9 @@ configurateur sur la page Black Friday.
   Vigilia, Vigilia BF), starter Vigilia, prise SP502F.
 - **Franck** : fiche Notion mise à jour (partie 4 bis : prix, liens, offre
   « 2e W503 à −50 % » suspendue, W512MW inchangée).
+- **Reporté à la semaine du 23/11 (décision du dirigeant)** : ajouter les
+  vidéos Moast sur les pages Vigilia (vig501 à vig507, offres Vigilia, Vigilia
+  BF, starter Vigilia) et sur la prise SP502F, sous le bouton d'achat comme
+  sur les packs Élite, dans une copie du thème. Vérifier en même temps les
+  vidéos associées à ces produits dans Moast, et en associer à NutriVision,
+  canon F502W, centrale Touch XL, sonnette SB501 et panneau SPW502.
