@@ -1,6 +1,7 @@
 {%- comment -%}
   Black Friday : encart de l'offre du configurateur, au-dessus de la section configurateur de l'accueil.
-  Fichier repris de l'encart « caméra W503 offerte » (terminé le 16/11 9h30) pour l'offre −7 %
+  Fichier repris de l'encart « caméra W503 offerte » (terminé le 16/11 9h30) pour l'offre −7 %,
+  prolongée le 20/11 jusqu'au mardi 24/11 10h (« Prolongation exceptionnelle »)
   (le nom du fichier est gardé pour ne pas modifier templates/index.json).
   - Visible entre la date de début et la date de fin, puis disparaît seul.
   - Avant la date de début, il est rendu masqué ; ?bf_test=1 dans l'adresse l'affiche pour le tester.
@@ -171,20 +172,20 @@
   "settings": [
     { "type": "header", "content": "Période" },
     { "type": "text", "id": "start_date", "label": "Début", "default": "2026-11-16T17:00:00+01:00", "info": "Avant cette date, l'encart est masqué (ajoutez ?bf_test=1 à l'adresse pour le voir)." },
-    { "type": "text", "id": "end_date", "label": "Fin", "default": "2026-11-20T14:00:00+01:00", "info": "L'encart disparaît automatiquement après cette date." },
+    { "type": "text", "id": "end_date", "label": "Fin", "default": "2026-11-24T10:00:00+01:00", "info": "L'encart disparaît automatiquement après cette date." },
     { "type": "header", "content": "Contenu" },
     { "type": "number", "id": "bonus", "label": "Remise supplémentaire (%)", "default": 7 },
     { "type": "text", "id": "seal_text", "label": "Sous le pourcentage", "default": "en plus" },
-    { "type": "text", "id": "label", "label": "Pastille", "default": "Black Friday · Configurateur" },
+    { "type": "text", "id": "label", "label": "Pastille", "default": "Prolongation exceptionnelle" },
     { "type": "text", "id": "title", "label": "Titre", "default": "−7 % en plus de la remise du configurateur" },
-    { "type": "textarea", "id": "text", "label": "Texte (masqué sur mobile)", "default": "Composez votre alarme sur mesure : les 7 % s'ajoutent à la remise du configurateur et sont appliqués automatiquement au paiement, sans code à saisir." },
+    { "type": "textarea", "id": "text", "label": "Texte (masqué sur mobile)", "default": "Prolongation exceptionnelle jusqu'à mardi 10h : composez votre alarme sur mesure, les 7 % s'ajoutent à la remise du configurateur et sont appliqués automatiquement au paiement, sans code à saisir." },
     { "type": "textarea", "id": "tiers", "label": "Paliers", "default": "dès 300 €|10\ndès 450 €|15\ndès 700 €|20\ndès 900 €|25", "info": "Une ligne par palier : seuil|remise du configurateur en %. La remise totale affichée est calculée avec la remise supplémentaire." },
     { "type": "text", "id": "tiers_label", "label": "Paliers : titre pour les lecteurs d'écran", "default": "Remise totale selon le montant d'achat" },
     { "type": "text", "id": "tiers_caption", "label": "Paliers : légende", "default": "Remise totale : remise du configurateur + 7 %" },
-    { "type": "text", "id": "end_text", "label": "Échéance affichée", "default": "Jusqu'à vendredi 14h" },
+    { "type": "text", "id": "end_text", "label": "Échéance affichée", "default": "Jusqu'à mardi 10h" },
     { "type": "text", "id": "cta_label", "label": "Bouton", "default": "Composer mon alarme" },
     { "type": "text", "id": "cta_link", "label": "Lien du bouton", "default": "/pages/configurateur_2" },
-    { "type": "textarea", "id": "conditions", "label": "Conditions", "default": "Offre réservée aux commandes passées via le configurateur, du lundi 16 novembre 17h au vendredi 20 novembre 2026 14h, une fois par client. Les 7 % s'appliquent automatiquement au paiement, sur le prix après remise du configurateur (10 % dès 300 €, 15 % dès 450 €, 20 % dès 700 €, 25 % dès 900 € d'achat)." }
+    { "type": "textarea", "id": "conditions", "label": "Conditions", "default": "Offre réservée aux commandes passées via le configurateur, prolongée jusqu'au mardi 24 novembre 2026 10h, une fois par client. Les 7 % s'appliquent automatiquement au paiement, sur le prix après remise du configurateur (10 % dès 300 €, 15 % dès 450 €, 20 % dès 700 €, 25 % dès 900 € d'achat), hors canon à fumée, recharge, prises connectées et cartes SIM. Les commandes du configurateur ne donnent pas droit au bon d'achat Black Friday." }
   ],
   "presets": [ { "name": "Black Friday · Config" } ]
 }

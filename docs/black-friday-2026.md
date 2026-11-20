@@ -308,6 +308,14 @@ besoin. Le 15/12 : créer les codes et envoyer les e-mails.
   Paris), vérifiés actifs. Lovable ne voit pas ces codes dans son accès Shopify.
 - Fiche Notion de Franck passée à mardi 10h. Persona : dans le bloc Black
   Friday, « jusqu'au 20/11 14h » devient « jusqu'au 24/11 10h » (même longueur).
-- Accueil (bandeau déroulant et encart) : nouvelles valeurs par défaut prêtes
-  (fin mardi 10h, pastille « Prolongation exceptionnelle »). La copie du thème
-  est bloquée : la boutique a atteint la limite de 20 thèmes.
+- Accueil (bandeau déroulant et encart) : copie « Prolongation -7% 20112026
+  (Claude) » (`gid://shopify/OnlineStoreTheme/209515446612`), faite à partir du
+  thème en ligne « Bon produit dans les vidéos 19112026 (Claude) » après
+  suppression d'anciens thèmes par le dirigeant (limite de 20 thèmes). Seules
+  les valeurs par défaut de `sections/bf-w503.liquid` et
+  `sections/psi-bandeau.liquid` changent : fin mardi 24/11 10h, pastille
+  « Prolongation exceptionnelle », échéance « Jusqu'à mardi 10h », conditions
+  mises à jour (hors remise, pas de bon pour le configurateur). Aperçu vérifié
+  sur ordinateur et mobile. À publier par le dirigeant à 14h.
+- Le thème non publié « Franck fiche produit 19112026 (Claude) » garde
+  l'ancienne fin (vendredi 14h) : y reporter ces 2 fichiers avant de le publier.
