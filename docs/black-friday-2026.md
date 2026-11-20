@@ -358,8 +358,23 @@ configurateur sur la page Black Friday.
     sur la 2e caméra » (décoché par défaut) qui masque le bloc Pack Duo et les
     sélecteurs 1/2 caméras. À recocher dans l'éditeur quand l'offre reprend.
   - Aperçu vérifié sur ordinateur et mobile.
-- **Remise automatique « W503 – La 2ème à -50% »** (2340706910548) : à
-  désactiver juste après la publication du thème (le thème en ligne affiche
-  encore le Pack Duo). La réactiver après le Black Friday si l'offre reprend.
+- **Thème publié** par le dirigeant le 20/11 vers 16h30 (Paris).
+- **Remise automatique « W503 – La 2ème à -50% »** (2340706910548) :
+  désactivée par Claude juste après la publication (fin 2026-11-20T15:30:43Z).
+  La réactiver après le Black Friday si l'offre reprend (et recocher la case
+  dans la fiche W503).
+- **Contrôle en ligne (20/11)** : page BF avec encart et 11 offres (badges
+  −35/−30 %), fiche W503 sans Pack Duo, prix barrés DB502W et NutriVision,
+  accueil (encart et bandeau −7 %) ; panier simulé 2 × W503 + DB502W +
+  NutriVision = 363,60 €, aucune remise « 2e à −50 % ».
+- **Vidéos Moast (contrôle du 20/11)** : visibles et lisibles (lecteur avec le
+  nouveau prix) sur W503, W503SP, W512MW, IP506P, EP506, DB502W, sirène WOS305S,
+  SPW503, centrale Touch, packs gamme 2026, packs Touch (dont Touch XL BF),
+  starters Touch et Élite, packs Élite, collections Touch et Vigilia.
+  Bloc présent mais aucune vidéo associée dans Moast : NutriVision, canon
+  F502W, centrale Touch XL, sonnette SB501, panneau SPW502.
+  Aucune vidéo (déjà le cas avant le Black Friday, bloc dans la section
+  « main-product » désactivée) : packs Vigilia (vig501 à vig507, offres
+  Vigilia, Vigilia BF), starter Vigilia, prise SP502F.
 - **Franck** : fiche Notion mise à jour (partie 4 bis : prix, liens, offre
   « 2e W503 à −50 % » suspendue, W512MW inchangée).
