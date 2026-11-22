@@ -1,0 +1,1017 @@
+{%- comment -%}
+===== Daewoo Security : e-mail « Confirmation de commande » =====
+À coller dans Shopify : Paramètres > Notifications > Notifications client > Confirmation de commande.
+Variables ajoutées
+dw_point_relais : true si le client a choisi la livraison en point relais Chronopost.
+dw_delai        : délai de livraison annoncé selon le mode de livraison.
+dw_guides       : gammes achetées (vigilia, touch, xl, elite), séparées par des virgules,
+pour afficher le bon guide d'installation.
+dw_nb_articles  : nombre total d'articles de la commande.
+Le style est entièrement défini dans ce fichier (classes « dw- ») : la feuille de style
+Shopify par défaut (/assets/notifications/styles.css) n'est plus chargée.
+{%- endcomment -%}
+{%- assign dw_mode_livraison = shipping_method.title | default: '' | downcase -%}
+{%- assign dw_point_relais = false -%}
+{%- if dw_mode_livraison contains 'point relai' -%}
+{%- assign dw_point_relais = true -%}
+{%- endif -%}
+{%- if dw_mode_livraison contains 'chronopost 18' -%}
+{%- assign dw_delai = 'livrées le jour ouvré suivant avant 18&nbsp;h' -%}
+{%- elsif dw_mode_livraison contains 'dpd' -%}
+{%- assign dw_delai = 'livrées sous 3 à 5 jours' -%}
+{%- else -%}
+{%- assign dw_delai = 'livrées sous 48 à 72&nbsp;h' -%}
+{%- endif -%}
+{%- assign dw_guides = '' -%}
+{%- assign dw_nb_articles = 0 -%}
+{%- for dw_ligne in line_items -%}
+{%- assign dw_nb_articles = dw_nb_articles | plus: dw_ligne.quantity -%}
+{%- assign dw_sku = dw_ligne.sku | default: '' | upcase -%}
+{%- assign dw_p3 = dw_sku | slice: 0, 3 -%}
+{%- assign dw_p4 = dw_sku | slice: 0, 4 -%}
+{%- assign dw_p5 = dw_sku | slice: 0, 5 -%}
+{%- assign dw_gamme = '' -%}
+{%- if dw_p3 == 'PK-' or dw_p3 == 'PSI' -%}
+{%- if dw_sku contains 'AM302' -%}
+{%- assign dw_gamme = 'xl' -%}
+{%- elsif dw_sku contains 'AM301' -%}
+{%- assign dw_gamme = 'touch' -%}
+{%- elsif dw_sku contains 'VIG' -%}
+{%- assign dw_gamme = 'vigilia' -%}
+{%- endif -%}
+{%- elsif dw_p3 == 'VIG' -%}
+{%- assign dw_gamme = 'vigilia' -%}
+{%- elsif dw_p4 == 'AM35' or dw_p5 == 'AM302' -%}
+{%- assign dw_gamme = 'xl' -%}
+{%- elsif dw_p4 == 'AM34' or dw_p5 == 'AM301' -%}
+{%- assign dw_gamme = 'touch' -%}
+{%- elsif dw_p4 == 'PA57' or dw_p5 == 'PA501' or dw_sku contains 'DAPA501Z' -%}
+{%- assign dw_gamme = 'elite' -%}
+{%- endif -%}
+{%- if dw_gamme == '' -%}
+{%- assign dw_titre = dw_ligne.title | default: '' | downcase -%}
+{%- assign dw_debut = dw_titre | slice: 0, 11 -%}
+{%- if dw_debut == 'pack alarme' -%}
+{%- if dw_titre contains 'touch xl' or dw_titre contains 'am302' -%}
+{%- assign dw_gamme = 'xl' -%}
+{%- elsif dw_titre contains 'touch' or dw_titre contains 'am301' -%}
+{%- assign dw_gamme = 'touch' -%}
+{%- elsif dw_titre contains 'vigilia' -%}
+{%- assign dw_gamme = 'vigilia' -%}
+{%- elsif dw_titre contains 'élite' or dw_titre contains 'elite' or dw_titre contains 'pa501z' -%}
+{%- assign dw_gamme = 'elite' -%}
+{%- endif -%}
+{%- endif -%}
+{%- endif -%}
+{%- if dw_gamme != '' -%}
+{%- unless dw_guides contains dw_gamme -%}
+{%- if dw_guides == '' -%}
+{%- assign dw_guides = dw_gamme -%}
+{%- else -%}
+{%- assign dw_guides = dw_guides | append: ',' | append: dw_gamme -%}
+{%- endif -%}
+{%- endunless -%}
+{%- endif -%}
+{%- endfor -%}
+{%- capture email_title -%}
+{%- if has_pending_payment -%}
+Votre commande est en attente de confirmation
+{%- else -%}
+Merci{% if customer.first_name %} {{ customer.first_name }}{% endif %}, votre commande est confirmée
+{%- endif -%}
+{%- endcapture -%}
+{% capture email_body %}
+{% if has_pending_payment %}
+{% if buyer_action_required %}
+Vous recevrez un e‑mail de confirmation après avoir effectué votre paiement.
+{% else %}
+Votre paiement est en cours de traitement. Vous recevrez un e‑mail lorsque votre commande sera confirmée.
+{% endif %}
+{% else %}
+{% if requires_shipping %}
+{% case delivery_method %}
+{% when 'pick-up' %}
+Vous recevrez un e-mail lorsque votre commande sera prête pour le retrait.
+{% when 'local' %}
+Nous préparons actuellement la livraison de votre commande.
+{% else %}
+Nous préparons soigneusement vos produits. Vous recevrez un nouvel e-mail dès l’expédition de votre colis.
+{% endcase %}
+{% if delivery_instructions != blank  %}
+<p><b>Informations sur la livraison :</b> {{ delivery_instructions }}</p>
+{% endif %}
+{% if consolidated_estimated_delivery_time %}
+{% if has_multiple_delivery_methods %}
+<p><b>Date de livraison estimée</b><br>{{ consolidated_estimated_delivery_time }}</p>
+{% else %}
+<p>
+Date de livraison estimée <b>{{ consolidated_estimated_delivery_time }}</b>
+</p>
+{% endif %}
+{% endif %}
+{% else %}
+Merci pour votre confiance. Vous trouverez le détail de votre commande ci-dessous.
+{% endif %}
+{% endif %}
+{% assign gift_card_line_items = line_items | where: "gift_card" %}
+{% assign found_gift_card_with_recipient_email = false %}
+{% for line_item in gift_card_line_items %}
+{% if line_item.properties["__shopify_send_gift_card_to_recipient"] and line_item.properties["Recipient email"] %}
+{% assign found_gift_card_with_recipient_email = true %}
+{% break %}
+{% endif %}
+{% endfor %}
+{% if found_gift_card_with_recipient_email %}
+<p>Le/la bénéficiaire de votre carte‑cadeau recevra un e‑mail contenant le code de sa carte‑cadeau.</p>
+{% elsif gift_card_line_items.first %}
+<p>Vous recevrez des e-mails distincts pour toutes les cartes-cadeaux.</p>
+{% endif %}
+{% endcapture %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>{{ email_title }}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<style>
+/* ---------- Base ---------- */
+body { margin:0; padding:0; background:#f2f4f9; -webkit-text-size-adjust:100%; }
+table { border-spacing:0; border-collapse:separate; }
+td { padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; }
+img { border:0; outline:none; text-decoration:none; }
+p { margin:0; }
+a { color:#0b61cd; }
+.dw-body { width:100%; background:#f2f4f9; }
+.dw-outer { padding:0 12px; }
+.dw-container { width:100%; max-width:600px; margin:0 auto; }
+.dw-preheader { display:none; max-height:0; max-width:0; overflow:hidden; opacity:0; font-size:1px; line-height:1px; color:#f2f4f9; }
+/* ---------- En-tête ---------- */
+.dw-header { padding:30px 4px 22px; }
+.dw-header-table { width:100%; }
+.dw-logo-cell { vertical-align:middle; text-align:left; }
+.dw-shop-name { color:#0c1e4a; font-size:22px; font-weight:700; text-decoration:none; }
+.dw-order-cell { vertical-align:middle; text-align:right; color:#5b6781; font-size:13px; line-height:1.5; }
+.dw-order-cell strong { color:#0c1e4a; font-size:14px; }
+/* ---------- Bloc principal ---------- */
+.dw-hero-top { padding:44px 40px 40px; background:#0c1e4a; border-radius:18px 18px 0 0; text-align:center; }
+.dw-badge { width:56px; height:56px; margin:0 auto 22px; border-radius:50%; background:#1fae6b; color:#ffffff; font-size:28px; font-weight:700; line-height:56px; text-align:center; }
+.dw-badge-wait { background:#e0a019; }
+.dw-eyebrow { margin:0 0 12px; color:#8fb4f2; font-size:12px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; }
+.dw-h1 { margin:0 0 16px; color:#ffffff; font-size:30px; font-weight:700; line-height:1.22; letter-spacing:-0.4px; }
+.dw-hero-copy { max-width:460px; margin:0 auto; color:#d3dcf0; font-size:16px; line-height:1.6; }
+.dw-hero-copy p { margin:12px 0 0; color:#d3dcf0; font-size:15px; line-height:1.6; }
+.dw-hero-copy b { color:#ffffff; }
+.dw-hero-btn { margin:28px auto 0; }
+.dw-hero-btn td { background:#ffffff; border-radius:10px; }
+.dw-hero-btn a { display:inline-block; padding:14px 30px; color:#0c1e4a; font-size:15px; font-weight:700; text-decoration:none; }
+.dw-hero-bottom { padding:28px 32px 30px; background:#ffffff; border:1px solid #e1e6f0; border-top:0; border-radius:0 0 18px 18px; }
+.dw-hero-bottom-solo { padding:26px 32px 28px; }
+/* Suivi en 4 étapes */
+.dw-steps { width:100%; }
+.dw-step { width:25%; padding:0 3px; vertical-align:top; text-align:center; }
+.dw-bar { height:5px; border-radius:3px; background:#e3e8f2; font-size:0; line-height:0; }
+.dw-bar-done { background:#1fae6b; }
+.dw-bar-current { background:#0b61cd; }
+.dw-step-label { display:block; padding-top:10px; color:#97a1b6; font-size:12px; line-height:1.35; }
+.dw-step-done { color:#16895a; font-weight:700; }
+.dw-step-current { color:#0c1e4a; font-weight:700; }
+.dw-next { margin:24px 0 0; padding:18px 20px; background:#f5f7fc; border-radius:12px; color:#4a5672; font-size:14px; line-height:1.6; }
+.dw-next strong { display:block; margin-bottom:4px; color:#0c1e4a; font-size:15px; }
+/* Instructions de paiement en attente */
+.dw-pending { padding:0 0 4px; color:#4a5672; font-size:14px; line-height:1.6; }
+.dw-pending-table { width:100%; margin:12px 0 0; }
+.dw-pending-table td { padding:8px 10px; border-bottom:1px solid #e9edf5; color:#0c1e4a; font-size:14px; text-align:left; }
+.dw-pending-table .dw-pending-head td { color:#5b6781; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; }
+/* ---------- Rappel point relais ---------- */
+.dw-gap { padding-top:16px; }
+.dw-relay { padding:24px 26px; background:#fff8eb; border:1px solid #f0c674; border-radius:16px; color:#4a3b17; font-size:14px; line-height:1.55; }
+.dw-relay-label { display:inline-block; padding:4px 11px; background:#b45309; border-radius:999px; color:#ffffff; font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; }
+.dw-relay-title { margin:12px 0 6px; color:#0c1e4a; font-size:18px; font-weight:700; line-height:1.35; }
+.dw-relay-text { color:#4a3b17; font-size:14px; line-height:1.55; }
+.dw-relay-steps { width:100%; margin:14px 0 0; }
+.dw-relay-steps td { padding:5px 0; vertical-align:top; color:#4a3b17; font-size:14px; line-height:1.5; }
+.dw-relay-steps .dw-relay-num { width:32px; }
+.dw-relay-num span { display:inline-block; width:22px; height:22px; border-radius:50%; background:#b45309; color:#ffffff; font-size:12px; font-weight:700; line-height:22px; text-align:center; }
+.dw-relay-note { margin:14px 0 0; color:#6b5a2e; font-size:13px; line-height:1.5; }
+.dw-relay-note a { color:#6b5a2e; }
+/* ---------- Boutons ---------- */
+.dw-btn { margin:18px 0 0; }
+.dw-btn td { background:#0b61cd; border-radius:10px; }
+.dw-btn a { display:inline-block; padding:13px 24px; color:#ffffff; font-size:15px; font-weight:700; text-decoration:none; }
+.dw-btn-dark td { background:#0c1e4a; }
+/* ---------- Titres de section ---------- */
+.dw-section-head { padding:34px 4px 14px; }
+.dw-section-table { width:100%; }
+.dw-h2 { margin:0; color:#0c1e4a; font-size:21px; font-weight:700; line-height:1.3; letter-spacing:-0.2px; }
+.dw-section-meta { color:#5b6781; font-size:13px; text-align:right; vertical-align:bottom; white-space:nowrap; }
+.dw-card { background:#ffffff; border:1px solid #e1e6f0; border-radius:16px; }
+/* ---------- Articles ---------- */
+.dw-items { width:100%; }
+.dw-item { padding:20px 24px; border-bottom:1px solid #edf0f6; }
+.dw-item-table { width:100%; }
+.dw-item-img { width:76px; vertical-align:top; }
+.dw-item-img img { display:block; width:76px; height:76px; border:1px solid #e6eaf2; border-radius:12px; background:#ffffff; }
+.dw-item-noimg { width:76px; height:76px; border:1px solid #e6eaf2; border-radius:12px; background:#f5f7fc; }
+.dw-item-desc { padding:1px 14px 0 16px; vertical-align:top; }
+.dw-item-title { margin:0; color:#0c1e4a; font-size:15px; font-weight:700; line-height:1.4; }
+.dw-item-sub { margin:3px 0 0; color:#5b6781; font-size:13px; line-height:1.45; }
+.dw-item-meta { margin:8px 0 0; color:#5b6781; font-size:13px; line-height:1.45; }
+.dw-chip { display:inline-block; padding:3px 10px; background:#eef2f9; border-radius:999px; color:#33415f; font-size:12px; font-weight:700; line-height:1.4; white-space:nowrap; }
+.dw-chip-promo { margin-top:6px; background:#e9f8f0; color:#12714a; }
+.dw-chip-refund { margin-top:6px; background:#fdeef0; color:#b4233c; }
+.dw-item-prop { margin:3px 0 0; color:#5b6781; font-size:13px; line-height:1.45; }
+.dw-item-prop img { max-width:50px; height:auto; }
+.dw-item-price { padding-top:1px; vertical-align:top; text-align:right; white-space:nowrap; }
+.dw-price { margin:0; color:#0c1e4a; font-size:15px; font-weight:700; line-height:1.4; }
+.dw-price-old { display:block; color:#97a1b6; font-size:13px; line-height:1.4; }
+.dw-price-unit { display:block; margin-top:2px; color:#5b6781; font-size:12px; line-height:1.4; }
+/* ---------- Totaux ---------- */
+.dw-totals { padding:18px 24px 22px; background:#f8f9fc; border-radius:0 0 15px 15px; }
+.dw-sum { width:100%; }
+.dw-sum-l { padding:5px 0; color:#4a5672; font-size:14px; line-height:1.45; text-align:left; }
+.dw-sum-l small { color:#5b6781; font-size:12px; }
+.dw-sum-v { padding:5px 0; color:#0c1e4a; font-size:14px; font-weight:600; line-height:1.45; text-align:right; white-space:nowrap; }
+.dw-sum-code { padding:0 0 6px; color:#12714a; font-size:13px; line-height:1.4; text-align:left; }
+.dw-sum-total { margin-top:10px; border-top:1px solid #dfe4ee; }
+.dw-sum-total .dw-sum-l { padding-top:14px; color:#0c1e4a; font-size:16px; font-weight:700; }
+.dw-sum-total .dw-sum-v { padding-top:14px; font-size:22px; font-weight:700; letter-spacing:-0.3px; }
+.dw-sum-total .dw-sum-minor .dw-sum-l { padding-top:5px; color:#4a5672; font-size:14px; font-weight:400; }
+.dw-sum-total .dw-sum-minor .dw-sum-v { padding-top:5px; font-size:14px; font-weight:600; letter-spacing:0; }
+.dw-tax { margin:2px 0 0; color:#5b6781; font-size:13px; text-align:right; }
+.dw-saved { margin:12px 0 0; text-align:right; }
+.dw-sum-line { margin-top:14px; padding-top:8px; border-top:1px solid #dfe4ee; }
+/* ---------- Installation et ressources ---------- */
+.dw-guide { padding:26px 28px 28px; background:#eaf2ff; border:1px solid #d3e2fa; border-radius:16px; }
+.dw-guide-eyebrow { margin:0 0 8px; color:#0b61cd; font-size:12px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; }
+.dw-guide-title { margin:0 0 8px; color:#0c1e4a; font-size:19px; font-weight:700; line-height:1.35; }
+.dw-guide-text { color:#3d4a68; font-size:14px; line-height:1.6; }
+.dw-tiles { width:100%; }
+.dw-tile-cell { width:50%; padding-top:12px; vertical-align:top; }
+.dw-tile-left { padding-right:6px; }
+.dw-tile-right { padding-left:6px; }
+.dw-tile { width:100%; }
+.dw-tile td { padding:18px 20px; background:#ffffff; border:1px solid #e1e6f0; border-radius:14px; }
+.dw-tile-title { display:block; color:#0c1e4a; font-size:15px; font-weight:700; line-height:1.4; text-decoration:none; }
+.dw-tile-text { display:block; margin:3px 0 10px; color:#5b6781; font-size:13px; line-height:1.5; }
+.dw-tile-link { color:#0b61cd; font-size:13px; font-weight:700; text-decoration:none; }
+/* ---------- Engagements ---------- */
+.dw-trust { width:100%; }
+.dw-trust-cell { width:33.33%; padding:20px 12px; border-left:1px solid #edf0f6; vertical-align:top; text-align:center; }
+.dw-trust-first { border-left:0; }
+.dw-trust-title { display:block; color:#0c1e4a; font-size:14px; font-weight:700; line-height:1.4; }
+.dw-trust-text { display:block; margin-top:3px; color:#5b6781; font-size:12px; line-height:1.45; }
+/* ---------- Informations de commande ---------- */
+.dw-info { padding:6px 24px 22px; }
+.dw-info-table { width:100%; }
+.dw-info-cell { width:50%; padding:18px 12px 0 0; vertical-align:top; color:#4a5672; font-size:14px; line-height:1.6; }
+.dw-info-cell p { color:#4a5672; font-size:14px; line-height:1.6; }
+.dw-info-label { margin:0 0 6px; color:#5b6781; font-size:11px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; }
+.dw-info-note { margin:8px 0 0; color:#8a5a00; font-size:12px; line-height:1.45; }
+.dw-pay-icon { height:24px; margin-right:6px; vertical-align:middle; }
+/* ---------- Assistance ---------- */
+.dw-help { padding:32px 32px 34px; background:#0c1e4a; border-radius:16px; text-align:center; }
+.dw-help-title { margin:0 0 8px; color:#ffffff; font-size:20px; font-weight:700; line-height:1.35; }
+.dw-help-text { max-width:440px; margin:0 auto; color:#d3dcf0; font-size:14px; line-height:1.6; }
+.dw-help-btns { margin:22px auto 0; }
+.dw-help-btn-cell { padding:0 5px; }
+.dw-help-btn { width:100%; }
+.dw-help-btn td { background:#ffffff; border-radius:10px; text-align:center; }
+.dw-help-btn a { display:inline-block; padding:12px 22px; color:#0c1e4a; font-size:14px; font-weight:700; text-decoration:none; white-space:nowrap; }
+.dw-help-btn-ghost td { background:#0c1e4a; border:1px solid #5d6f99; }
+.dw-help-btn-ghost a { padding:11px 22px; color:#ffffff; }
+/* ---------- Pied de page ---------- */
+.dw-footer { padding:28px 12px 44px; color:#6b7690; font-size:13px; line-height:1.7; text-align:center; }
+.dw-footer a { color:#33415f; font-weight:600; text-decoration:none; }
+.dw-footer-small { margin:14px 0 0; color:#8a94aa; font-size:12px; line-height:1.6; }
+a[x-apple-data-detectors] { color:inherit !important; text-decoration:none !important; font-size:inherit !important; font-family:inherit !important; font-weight:inherit !important; line-height:inherit !important; }
+@media only screen and (max-width:620px) {
+.dw-outer { padding:0 10px !important; }
+.dw-header { padding:22px 4px 16px !important; }
+.dw-hero-top { padding:34px 22px 32px !important; }
+.dw-h1 { font-size:25px !important; }
+.dw-hero-bottom { padding:22px 18px 24px !important; }
+.dw-step { padding:0 2px !important; }
+.dw-step-label { font-size:11px !important; }
+.dw-relay { padding:20px 18px !important; }
+.dw-section-head { padding:28px 4px 12px !important; }
+.dw-item { padding:16px 16px !important; }
+.dw-item-img { width:64px !important; }
+.dw-item-img img, .dw-item-noimg { width:64px !important; height:64px !important; }
+.dw-item-desc { padding:0 10px 0 12px !important; }
+.dw-totals { padding:16px 16px 20px !important; }
+.dw-guide { padding:22px 20px 24px !important; }
+.dw-tile-cell { display:block !important; width:auto !important; padding-left:0 !important; padding-right:0 !important; }
+.dw-trust-cell { display:block !important; width:auto !important; padding:14px 16px !important; border-left:0 !important; border-top:1px solid #edf0f6; }
+.dw-trust-first { border-top:0 !important; }
+.dw-info { padding:4px 18px 20px !important; }
+.dw-info-cell { display:block !important; width:auto !important; padding-right:0 !important; }
+.dw-help { padding:28px 20px 30px !important; }
+.dw-help-btn-cell { display:block !important; padding:0 0 10px !important; }
+}
+</style>
+</head>
+<body>
+<div class="dw-preheader">
+{%- if has_pending_payment -%}
+Commande {{ order_name }} : en attente de confirmation de votre paiement.
+{%- else -%}
+Commande {{ order_name }} confirmée. Nous préparons votre colis{% if dw_guides != '' %} et votre guide d’installation est déjà disponible{% endif %}.
+{%- endif -%}
+</div>
+<table class="dw-body" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-outer" align="center">
+<!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+<table class="dw-container" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+{%- comment -%} ===== En-tête ===== {%- endcomment -%}
+<tr>
+<td class="dw-header">
+<table class="dw-header-table" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-logo-cell">
+{%- if shop.email_logo_url %}
+<a href="{{ shop.url }}"><img src="{{ shop.email_logo_url }}" alt="{{ shop.name }}" width="{{ shop.email_logo_width }}" style="display:block;max-width:200px;height:auto;"></a>
+{%- else %}
+<a class="dw-shop-name" href="{{ shop.url }}">{{ shop.name }}</a>
+{%- endif %}
+</td>
+<td class="dw-order-cell">
+<strong>Commande {{ order_name }}</strong>
+{%- if created_at %}<br>{{ created_at | date: "%d/%m/%Y" }}{%- endif %}
+{%- if po_number %}<br>Bon de commande nº&nbsp;{{ po_number }}{%- endif %}
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{%- comment -%} ===== Bloc principal ===== {%- endcomment -%}
+<tr>
+<td class="dw-hero-top" bgcolor="#0c1e4a">
+{% if has_pending_payment %}
+<div class="dw-badge dw-badge-wait">…</div>
+<p class="dw-eyebrow">Paiement en attente</p>
+{% else %}
+<div class="dw-badge">✓</div>
+<p class="dw-eyebrow">Commande confirmée</p>
+{% endif %}
+<h1 class="dw-h1">{{ email_title }}</h1>
+<div class="dw-hero-copy">{{ email_body }}</div>
+{% if order_status_url and has_pending_payment != true and dw_point_relais == false %}
+<table class="dw-hero-btn" role="presentation" align="center" cellpadding="0" cellspacing="0">
+<tr><td><a href="{{ order_status_url }}">Suivre ma commande</a></td></tr>
+</table>
+{% endif %}
+</td>
+</tr>
+<tr>
+<td class="dw-hero-bottom" bgcolor="#ffffff">
+{% assign transaction_count = transactions | size %}
+{% if transaction_count > 0 %}
+{% for transaction in transactions %}
+{% if transaction.show_buyer_pending_payment_instructions? %}
+<div class="dw-pending">
+<p>{{ transaction.buyer_pending_payment_notice }}</p>
+<table class="dw-pending-table" role="presentation" cellpadding="0" cellspacing="0">
+<tr class="dw-pending-head">
+{% for instruction in transaction.buyer_pending_payment_instructions %}
+<td>{{ instruction.header }}</td>
+{% endfor %}
+<td>Montant</td>
+</tr>
+<tr>
+{% for instruction in transaction.buyer_pending_payment_instructions %}
+<td>{{ instruction.value }}</td>
+{% endfor %}
+<td>{{ transaction.amount | money }}</td>
+</tr>
+</table>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if has_pending_payment %}
+<div class="dw-next" style="margin-top:0;">
+<strong>Et maintenant&nbsp;?</strong>
+Dès que votre paiement est validé, nous vous confirmons votre commande par e-mail et notre équipe lance sa préparation.
+</div>
+{% else %}
+<table class="dw-steps" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-step"><div class="dw-bar dw-bar-done">&nbsp;</div><span class="dw-step-label dw-step-done">Confirmée</span></td>
+<td class="dw-step"><div class="dw-bar dw-bar-current">&nbsp;</div><span class="dw-step-label dw-step-current">Préparation</span></td>
+<td class="dw-step"><div class="dw-bar">&nbsp;</div><span class="dw-step-label">Expédition</span></td>
+<td class="dw-step"><div class="dw-bar">&nbsp;</div><span class="dw-step-label">{% if delivery_method == 'pick-up' %}Retrait{% else %}Livraison{% endif %}</span></td>
+</tr>
+</table>
+<div class="dw-next">
+<strong>Et maintenant&nbsp;?</strong>
+Notre équipe contrôle votre commande, sécurise son emballage et prépare son expédition.
+{% if requires_shipping and delivery_method != 'pick-up' and delivery_method != 'local' %}
+Les commandes d’articles en stock passées avant midi, du lundi au vendredi, partent le jour même et sont {{ dw_delai }}.
+{% endif %}
+{% if delivery_method == 'pick-up' %}
+Nous vous prévenons par e-mail dès qu’elle est prête à être retirée.
+{% elsif requires_shipping %}
+Votre lien de suivi vous sera envoyé par e-mail dès le départ du colis.
+{% endif %}
+</div>
+{% endif %}
+</td>
+</tr>
+{%- comment -%} ===== Rappel point relais ===== {%- endcomment -%}
+{% if dw_point_relais and requires_shipping %}
+<tr>
+<td class="dw-gap">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-relay">
+<span class="dw-relay-label">Action requise</span>
+<p class="dw-relay-title">Dernière étape&nbsp;: choisissez votre point relais</p>
+<p class="dw-relay-text">Vous avez choisi la livraison en point relais Chronopost. Si ce n’est pas déjà fait, sélectionnez votre point relais dès maintenant pour éviter tout retard d’expédition.</p>
+<table class="dw-relay-steps" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr><td class="dw-relay-num"><span>1</span></td><td>Ouvrez votre page de commande avec le bouton ci-dessous.</td></tr>
+<tr><td class="dw-relay-num"><span>2</span></td><td>Patientez quelques secondes&nbsp;: le module Chronopost peut mettre un peu de temps à s’afficher.</td></tr>
+<tr><td class="dw-relay-num"><span>3</span></td><td>Cliquez sur le point relais de votre choix.</td></tr>
+</table>
+{% if order_status_url %}
+<table class="dw-btn dw-btn-dark" role="presentation" cellpadding="0" cellspacing="0">
+<tr><td><a href="{{ order_status_url }}">Choisir mon point relais</a></td></tr>
+</table>
+{% endif %}
+<p class="dw-relay-note">Déjà fait&nbsp;? Parfait, vous n’avez rien d’autre à faire. Un souci&nbsp;? Répondez à cet e-mail ou appelez-nous au <a href="tel:+33547742940">05&nbsp;47&nbsp;74&nbsp;29&nbsp;40</a>.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{% endif %}
+{%- comment -%} ===== Récapitulatif de la commande ===== {%- endcomment -%}
+<tr>
+<td class="dw-section-head">
+<table class="dw-section-table" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td><h2 class="dw-h2">Votre commande</h2></td>
+<td class="dw-section-meta">{{ dw_nb_articles }} article{% if dw_nb_articles > 1 %}s{% endif %}</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<table class="dw-items" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-card">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+{% for line in subtotal_line_items %}
+{%- comment -%}
+Titre : on retire le préfixe interne « Configurateur | » et on passe le reste
+du titre (après le premier « | ») en sous-titre, pour alléger la lecture.
+{%- endcomment -%}
+{%- if line.product.title -%}
+{%- assign line_title = line.product.title -%}
+{%- else -%}
+{%- assign line_title = line.title -%}
+{%- endif -%}
+{%- assign dw_morceaux = line_title | split: ' | ' -%}
+{%- assign dw_depart = 0 -%}
+{%- assign dw_premier = dw_morceaux.first | downcase | strip -%}
+{%- if dw_premier == 'configurateur' and dw_morceaux.size > 1 -%}
+{%- assign dw_depart = 1 -%}
+{%- endif -%}
+{%- assign dw_titre_court = dw_morceaux[dw_depart] | strip -%}
+{%- assign dw_suite = dw_depart | plus: 1 -%}
+{%- assign dw_sous_titre = '' -%}
+{%- for dw_morceau in dw_morceaux offset: dw_suite -%}
+{%- if dw_sous_titre == '' -%}
+{%- assign dw_sous_titre = dw_morceau | strip -%}
+{%- else -%}
+{%- assign dw_sous_titre = dw_sous_titre | append: ' · ' | append: dw_morceau -%}
+{%- endif -%}
+{%- endfor -%}
+<tr>
+<td class="dw-item">
+<table class="dw-item-table" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-item-img" width="76">
+{% if line.image %}
+<img src="{{ line | img_url: 'compact_cropped' }}" width="76" height="76" alt="">
+{% else %}
+<div class="dw-item-noimg">&nbsp;</div>
+{% endif %}
+</td>
+<td class="dw-item-desc">
+<p class="dw-item-title">{{ dw_titre_court }}</p>
+{% if dw_sous_titre != '' %}
+<p class="dw-item-sub">{{ dw_sous_titre }}</p>
+{% endif %}
+{% if line.variant.title != 'Default Title' and line.variant.title != blank %}
+<p class="dw-item-sub">{{ line.variant.title }}</p>
+{% endif %}
+{% for p in line.properties %}
+{% assign dw_prop_debut = p.first | slice: 0 %}
+{% unless p.last == blank or dw_prop_debut == '_' %}
+<div class="dw-item-prop">{{ p.first }}&nbsp;:
+{% if p.last contains '/uploads/' %}
+{% if line.gift_card %}
+<a href="{{ p.last }}" target="_blank">{{ p.last | split: '/' | last }}</a>
+{% else %}
+<div><img src="{{ p.last }}" alt=""></div>
+{% endif %}
+{% else %}
+{{ p.last }}
+{% endif %}
+</div>
+{% endunless %}
+{% endfor %}
+{% for group in line.groups %}
+<p class="dw-item-sub">Inclus dans&nbsp;: {{ group.display_title }}</p>
+{% endfor %}
+{% if line.selling_plan_allocation %}
+<p class="dw-item-sub">{{ line.selling_plan_allocation.selling_plan.name }}</p>
+{% endif %}
+<p class="dw-item-meta"><span class="dw-chip">Quantité&nbsp;: {{ line.quantity }}</span></p>
+{% if line.refunded_quantity > 0 %}
+<span class="dw-chip dw-chip-refund">Remboursé</span>
+{% endif %}
+{% if line.discount_allocations %}
+{% for discount_allocation in line.discount_allocations %}
+{% if discount_allocation.discount_application.target_selection != 'all' %}
+<span class="dw-chip dw-chip-promo">{{ discount_allocation.discount_application.title | upcase }} (-{{ discount_allocation.amount | money }})</span>
+{% endif %}
+{% endfor %}
+{% endif %}
+</td>
+<td class="dw-item-price">
+{% if line.original_line_price != line.final_line_price %}
+<del class="dw-price-old">{{ line.original_line_price | money }}</del>
+{% endif %}
+<p class="dw-price">
+{% if line.final_line_price > 0 %}
+{{ line.final_line_price | money }}
+{% else %}
+Offert
+{% endif %}
+</p>
+{% if line.quantity > 1 and line.final_line_price > 0 %}
+<span class="dw-price-unit">{{ line.final_price | money }} l’unité</span>
+{% endif %}
+{% if line.unit_price_measurement and line.final_line_price > 0 %}
+<span class="dw-price-unit">
+{{ line.unit_price | money }}/
+{%- if line.unit_price_measurement.reference_value != 1 -%}
+{{- line.unit_price_measurement.reference_value -}}
+{%- endif -%}
+{{ line.unit_price_measurement.reference_unit }}
+</span>
+{% endif %}
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{% endfor %}
+{%- comment -%} ----- Totaux ----- {%- endcomment -%}
+<tr>
+<td class="dw-totals" bgcolor="#f8f9fc">
+{% assign order_discount_count = 0 %}
+{% assign total_order_discount_amount = 0 %}
+{% assign has_shipping_discount = false %}
+{% for discount_application in discount_applications %}
+{% if discount_application.target_selection == 'all' and discount_application.target_type == 'line_item' %}
+{% assign order_discount_count = order_discount_count | plus: 1 %}
+{% assign total_order_discount_amount = total_order_discount_amount | plus: discount_application.total_allocated_amount  %}
+{% endif %}
+{% if discount_application.target_type == 'shipping_line' %}
+{% assign has_shipping_discount = true %}
+{% assign shipping_discount = discount_application.title %}
+{% assign shipping_amount = discount_application.total_allocated_amount %}
+{% endif %}
+{% endfor %}
+<table class="dw-sum" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-sum-l">Sous-total</td>
+<td class="dw-sum-v">{{ subtotal_price | plus: total_order_discount_amount | money }}</td>
+</tr>
+{% if order_discount_count > 0 %}
+<tr>
+<td class="dw-sum-l">{% if order_discount_count == 1 %}Réduction sur la commande{% else %}Réductions sur la commande{% endif %}</td>
+<td class="dw-sum-v">-{{ total_order_discount_amount | money }}</td>
+</tr>
+{% for discount_application in discount_applications %}
+{% if discount_application.target_selection == 'all' and discount_application.target_type != 'shipping_line' %}
+<tr>
+<td class="dw-sum-code" colspan="2">{{ discount_application.title }} (-{{ discount_application.total_allocated_amount | money }})</td>
+</tr>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if delivery_method == 'pick-up' %}
+<tr>
+<td class="dw-sum-l">Retrait sur place</td>
+<td class="dw-sum-v">{% if shipping_price == 0 %}Offert{% else %}{{ shipping_price | money }}{% endif %}</td>
+</tr>
+{% else %}
+{% if has_shipping_discount %}
+<tr>
+<td class="dw-sum-l">Livraison</td>
+<td class="dw-sum-v">Offerte</td>
+</tr>
+<tr>
+<td class="dw-sum-code" colspan="2">{{ shipping_discount }} (-{{ shipping_amount | money }})</td>
+</tr>
+{% else %}
+<tr>
+<td class="dw-sum-l">Livraison</td>
+<td class="dw-sum-v">{% if shipping_price == 0 %}Offerte{% else %}{{ shipping_price | money }}{% endif %}</td>
+</tr>
+{% endif %}
+{% endif %}
+{% if total_duties and total_duties > 0 %}
+<tr>
+<td class="dw-sum-l">Droits</td>
+<td class="dw-sum-v">{{ total_duties | money }}</td>
+</tr>
+{% endif %}
+{%- comment -%}
+Daewoo : les prix de la boutique incluent la TVA. La TVA est donc indiquée sous
+le total (« dont TVA ») au lieu d'une ligne « Taxes » qui laisse croire qu'elle s'ajoute.
+Si un jour les prix sont affichés hors taxes, remettre ici une ligne « Taxes ».
+{%- endcomment -%}
+{%- assign dw_tva_incluse = false -%}
+{%- if tax_price > 0 -%}{%- assign dw_tva_incluse = true -%}{%- endif -%}
+{% if total_tip and total_tip > 0 %}
+<tr>
+<td class="dw-sum-l">Pourboire</td>
+<td class="dw-sum-v">{{ total_tip | money }}</td>
+</tr>
+{% endif %}
+</table>
+{% assign transaction_size = 0 %}
+{% assign transaction_amount = 0 %}
+{% assign shopify_pay_captured = false %}
+{% assign shop_cash_offers_captured = false %}
+{% for transaction in transactions %}
+{% if transaction.status == "success" and transaction.kind == "sale" or transaction.kind == "capture" %}
+{% if transaction.payment_details.credit_card_company %}
+{% assign shopify_pay_captured = true %}
+{% endif %}
+{% if transaction.gateway == "shop_cash" or transaction.gateway == "shop_offer" %}
+{% assign shop_cash_offers_captured = true %}
+{% endif %}
+{% endif %}
+{% if transaction.status == "success" %}
+{% if transaction.kind == "sale" or transaction.kind == "capture"  %}
+{% assign transaction_size = transaction_size | plus: 1 %}
+{% assign transaction_amount = transaction_amount | plus: transaction.amount %}
+{% elsif transaction.kind == "refund" or transaction.kind == "change" %}
+{% assign transaction_size = transaction_size | plus: 1 %}
+{% assign transaction_amount = transaction_amount | minus: transaction.amount %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{%- comment -%} Shop Cash / offres Shop : ajoutés au total payé si la carte est déjà débitée. {%- endcomment -%}
+{% if shopify_pay_captured == true and shop_cash_offers_captured == false %}
+{% for transaction in transactions %}
+{% if transaction.status == "success" %}
+{% if transaction.kind == "authorization" and transaction.gateway == "shop_cash" or transaction.gateway == "shop_offer" %}
+{% assign transaction_size = transaction_size | plus: 1 %}
+{% assign transaction_amount = transaction_amount | plus: transaction.amount %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+<table class="dw-sum dw-sum-total" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+{% if payment_terms and payment_terms.automatic_capture_at_fulfillment == false or b2b? %}
+{% assign due_at_date = payment_terms.next_payment.due_at | date: "%d/%m/%Y" %}
+<tr>
+<td class="dw-sum-l">Montant payé aujourd’hui</td>
+<td class="dw-sum-v">{{ transaction_amount | money_with_currency }}</td>
+</tr>
+<tr class="dw-sum-minor">
+<td class="dw-sum-l">Total dû le {{ due_at_date }}</td>
+<td class="dw-sum-v">{{ payment_terms.next_payment.amount_due | money_with_currency }}</td>
+</tr>
+{% elsif transaction_amount != total_price %}
+<tr>
+<td class="dw-sum-l">Total</td>
+<td class="dw-sum-v">{{ total_price | money_with_currency }}</td>
+</tr>
+<tr class="dw-sum-minor">
+<td class="dw-sum-l">Montant payé aujourd’hui</td>
+<td class="dw-sum-v">{{ transaction_amount | money_with_currency }}</td>
+</tr>
+{% else %}
+<tr>
+<td class="dw-sum-l">Total</td>
+<td class="dw-sum-v">{{ total_price | money_with_currency }}</td>
+</tr>
+{% endif %}
+</table>
+{% if dw_tva_incluse %}
+<p class="dw-tax">dont TVA {{ tax_price | money }}</p>
+{% endif %}
+{% if total_discounts > 0 %}
+<p class="dw-saved"><span class="dw-chip dw-chip-promo">Vous avez économisé {{ total_discounts | money }}</span></p>
+{% endif %}
+{% unless payment_terms %}
+{% if transaction_size > 1 or transaction_amount < total_price %}
+<div class="dw-sum-line">
+<table class="dw-sum" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+{% for transaction in transactions %}
+{% if transaction.status == "success" and transaction.kind == "capture" or transaction.kind == "sale" %}
+{% if transaction.payment_details.gift_card_last_four_digits %}
+{% capture transaction_name %}Carte-cadeau (se terminant par {{ transaction.payment_details.gift_card_last_four_digits }}){% endcapture %}
+{% elsif transaction.payment_details.credit_card_company %}
+{% capture transaction_name %}{{ transaction.payment_details.credit_card_company }} (se terminant par {{ transaction.payment_details.credit_card_last_four_digits }}){% endcapture %}
+{% else %}
+{% capture transaction_name %}{{ transaction.gateway_display_name | replace: 'Pay in ', 'paiement en ' | replace: 'pay in ', 'paiement en ' | replace: ' installments', ' fois' }}{% endcapture %}
+{% endif %}
+<tr>
+<td class="dw-sum-l">{{ transaction_name }}</td>
+<td class="dw-sum-v">{{ transaction.amount | money }}</td>
+</tr>
+{% elsif shopify_pay_captured and shop_cash_offers_captured == false and transaction.kind == "authorization" and transaction.gateway == "shop_cash" or transaction.gateway == "shop_offer" %}
+{% capture transaction_name %}{{ transaction.gateway_display_name }}{% endcapture %}
+<tr>
+<td class="dw-sum-l">{{ transaction_name }}</td>
+<td class="dw-sum-v">{{ transaction.amount | money }}</td>
+</tr>
+{% endif %}
+{% if transaction.kind == 'refund' %}
+{% if transaction.payment_details.gift_card_last_four_digits %}
+{% assign refund_method_title = transaction.payment_details.type %}
+{% elsif transaction.payment_details.credit_card_company %}
+{% assign refund_method_title = transaction.payment_details.credit_card_company %}
+{% else %}
+{% assign refund_method_title = transaction.gateway %}
+{% endif %}
+<tr>
+<td class="dw-sum-l">Remboursement<br><small>{{ refund_method_title | replace: '_', ' ' | capitalize }}</small></td>
+<td class="dw-sum-v">- {{ transaction.amount | money }}</td>
+</tr>
+{% endif %}
+{% endfor %}
+</table>
+</div>
+{% endif %}
+{% endunless %}
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{%- comment -%} ===== Installation et ressources ===== {%- endcomment -%}
+<tr>
+<td class="dw-section-head">
+<h2 class="dw-h2">Préparez votre installation</h2>
+</td>
+</tr>
+<tr>
+<td>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-guide" bgcolor="#eaf2ff">
+{% if dw_guides != '' %}
+{% assign dw_liste_guides = dw_guides | split: ',' %}
+<p class="dw-guide-eyebrow">Votre guide pas à pas</p>
+<p class="dw-guide-title">Installez votre alarme vous-même, étape par étape</p>
+<p class="dw-guide-text">Votre guide d’installation est déjà en ligne&nbsp;: vous pouvez le consulter avant même de recevoir votre colis, pour être prêt le jour de la livraison.</p>
+{% for dw_g in dw_liste_guides %}
+{% case dw_g %}
+{% when 'vigilia' %}
+{% assign dw_url = '/pages/installation-alarme-vigilia' %}
+{% assign dw_nom = 'Vigilia' %}
+{% when 'touch' %}
+{% assign dw_url = '/pages/installation-alarme-am301-touch' %}
+{% assign dw_nom = 'Touch (AM301)' %}
+{% when 'xl' %}
+{% assign dw_url = '/pages/installation-alarme-am302-touch-xl' %}
+{% assign dw_nom = 'Touch XL (AM302)' %}
+{% when 'elite' %}
+{% assign dw_url = '/pages/installation-alarme-elite-pa501z' %}
+{% assign dw_nom = 'Élite (PA501Z)' %}
+{% endcase %}
+<table class="dw-btn" role="presentation" cellpadding="0" cellspacing="0"{% unless forloop.first %} style="margin-top:10px;"{% endunless %}>
+<tr><td><a href="{{ shop.url }}{{ dw_url }}">Guide d’installation {{ dw_nom }}</a></td></tr>
+</table>
+{% endfor %}
+{% else %}
+<p class="dw-guide-eyebrow">Guides pas à pas</p>
+<p class="dw-guide-title">Tout est prêt pour votre installation</p>
+<p class="dw-guide-text">Nos guides d’installation sont en ligne&nbsp;: vous pouvez les consulter avant même de recevoir votre colis, pour être prêt le jour de la livraison.</p>
+<table class="dw-btn" role="presentation" cellpadding="0" cellspacing="0">
+<tr><td><a href="{{ shop.url }}/pages/guides-installation">Voir les guides d’installation</a></td></tr>
+</table>
+{% endif %}
+</td>
+</tr>
+</table>
+<table class="dw-tiles" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-tile-cell dw-tile-left">
+<table class="dw-tile" role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td>
+<a class="dw-tile-title" href="{{ shop.url }}/pages/assistance-1">Aide en ligne</a>
+<span class="dw-tile-text">Manuels, questions fréquentes et réponses à vos questions.</span>
+<a class="dw-tile-link" href="{{ shop.url }}/pages/assistance-1">Ouvrir l’assistance&nbsp;→</a>
+</td></tr></table>
+</td>
+<td class="dw-tile-cell dw-tile-right">
+<table class="dw-tile" role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td>
+<a class="dw-tile-title" href="{{ shop.url }}/pages/guides-installation">Tous les guides</a>
+<span class="dw-tile-text">Les guides d’installation de chaque gamme d’alarme.</span>
+<a class="dw-tile-link" href="{{ shop.url }}/pages/guides-installation">Voir les guides&nbsp;→</a>
+</td></tr></table>
+</td>
+</tr>
+<tr>
+<td class="dw-tile-cell" colspan="2">
+<table class="dw-tile" role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td>
+<a class="dw-tile-title" href="{{ shop.url }}/pages/nous-contacter">Nous contacter</a>
+<span class="dw-tile-text">Une question avant ou après l’installation&nbsp;? Écrivez-nous.</span>
+<a class="dw-tile-link" href="{{ shop.url }}/pages/nous-contacter">Contacter l’équipe&nbsp;→</a>
+</td></tr></table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{%- comment -%} ===== Informations de la commande ===== {%- endcomment -%}
+<tr>
+<td class="dw-section-head">
+<h2 class="dw-h2">Informations de la commande</h2>
+</td>
+</tr>
+<tr>
+<td>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-card dw-info">
+<table class="dw-info-table" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+{% if requires_shipping and shipping_address %}
+<td class="dw-info-cell">
+<p class="dw-info-label">Adresse de livraison</p>
+{{ shipping_address | format_address }}
+{% if dw_point_relais %}
+<p class="dw-info-note">Livraison en point relais&nbsp;: votre colis sera livré au point relais que vous aurez choisi, et non à cette adresse.</p>
+{% endif %}
+</td>
+{% endif %}
+{% if billing_address %}
+<td class="dw-info-cell">
+<p class="dw-info-label">Adresse de facturation</p>
+{{ billing_address | format_address }}
+</td>
+{% endif %}
+</tr>
+</table>
+<table class="dw-info-table" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+{% if requires_shipping and shipping_address %}
+{% if shipping_method %}
+<td class="dw-info-cell">
+<p class="dw-info-label">Mode de livraison</p>
+<p>
+{% if dw_point_relais %}
+Point relais Chronopost
+{% elsif delivery_promise_branded_shipping_line %}
+{{ delivery_promise_branded_shipping_line }}
+{% else %}
+{{ shipping_method.title }}
+{% endif %}
+</p>
+</td>
+{% endif %}
+{% endif %}
+{% if transaction_size > 0 or payment_terms and payment_terms.automatic_capture_at_fulfillment == false or b2b? %}
+<td class="dw-info-cell">
+<p class="dw-info-label">Paiement</p>
+<p>
+{% if payment_terms %}
+{% assign due_date = payment_terms.next_payment.due_at | default: nil %}
+{% if payment_terms.type == 'receipt' or payment_terms.type == 'fulfillment' and payment_terms.next_payment.due_at == nil %}
+{{ payment_terms.translated_name }}<br>
+{% else %}
+{{ payment_terms.translated_name }} : dû le {{ due_date | date: format: 'date' }}<br>
+{% endif %}
+{% endif %}
+{% if transaction_size > 0 %}
+{% for transaction in transactions %}
+{% if transaction.status == "success" or transaction.status == "pending" %}
+{% if transaction.kind == "capture" or transaction.kind == "sale" %}
+{% if transaction.payment_details.gift_card_last_four_digits %}
+<img src="{{ transaction.payment_details.type | downcase | replace: '_', '-'  | payment_type_img_url }}" class="dw-pay-icon" height="24" alt="Carte-cadeau">
+se terminant par {{ transaction.payment_details.gift_card_last_four_digits }}<br>
+{% elsif transaction.payment_details.credit_card_company %}
+<img src="{{ transaction.payment_details.credit_card_company | payment_icon_png_url  }}" class="dw-pay-icon" height="24" alt="{{ transaction.payment_details.credit_card_company }}">
+<span>se terminant par {{ transaction.payment_details.credit_card_last_four_digits }}</span><br>
+{% elsif transaction.gateway_display_name == "Gift card" %}
+<img src="{{ transaction.gateway_display_name | downcase | replace: ' ', '-'  | payment_type_img_url }}" class="dw-pay-icon" height="24" alt="Carte-cadeau">
+se terminant par {{ transaction.payment_details.gift_card.last_four_characters | upcase }}<br>
+Solde de la carte-cadeau&nbsp;: <b>{{ transaction.payment_details.gift_card.balance | money }}</b><br>
+{% elsif transaction.gateway_display_name != "Shop Cash" and transaction.gateway != "shop_offer" %}
+{{ transaction.gateway_display_name | replace: 'Pay in ', 'paiement en ' | replace: 'pay in ', 'paiement en ' | replace: ' installments', ' fois' }}<br>
+{% endif %}
+{% elsif transaction.kind == "authorization" and transaction.gateway_display_name == "Shop Cash" %}
+<span>Shop Cash - <b>{{ transaction.amount | money }}</b></span>
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+</p>
+</td>
+{% endif %}
+</tr>
+</table>
+{% if company_location %}
+<table class="dw-info-table" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-info-cell">
+<p class="dw-info-label">Emplacement</p>
+<p>{{ company_location.name }}</p>
+</td>
+</tr>
+</table>
+{% endif %}
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{%- comment -%} ===== Engagements ===== {%- endcomment -%}
+<tr>
+<td class="dw-gap">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-card">
+<table class="dw-trust" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-trust-cell dw-trust-first">
+<span class="dw-trust-title">Sans abonnement</span>
+<span class="dw-trust-text">Aucun frais récurrent, aucun engagement.</span>
+</td>
+<td class="dw-trust-cell">
+<span class="dw-trust-title">Garantie 2 ans</span>
+<span class="dw-trust-text">Sur l’ensemble de votre matériel.</span>
+</td>
+<td class="dw-trust-cell">
+<span class="dw-trust-title">14 jours pour changer d’avis</span>
+<span class="dw-trust-text">Satisfait ou remboursé.</span>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{%- comment -%} ===== Assistance ===== {%- endcomment -%}
+<tr>
+<td class="dw-gap">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-help" bgcolor="#0c1e4a">
+<p class="dw-help-title">Une question&nbsp;? Notre équipe est là.</p>
+<p class="dw-help-text">Avant, pendant ou après l’installation, nous vous accompagnons. Répondez simplement à cet e-mail&nbsp;: une équipe spécialisée vous répond.</p>
+<table class="dw-help-btns" role="presentation" align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td class="dw-help-btn-cell">
+<table class="dw-help-btn" role="presentation" cellpadding="0" cellspacing="0">
+<tr><td><a href="mailto:{{ shop.email }}?subject=Commande%20{{ order_name | url_encode }}">Nous écrire</a></td></tr>
+</table>
+</td>
+<td class="dw-help-btn-cell">
+<table class="dw-help-btn dw-help-btn-ghost" role="presentation" cellpadding="0" cellspacing="0">
+<tr><td><a href="{{ shop.url }}/pages/assistance-1">Aide en ligne</a></td></tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{%- comment -%} ===== Pied de page ===== {%- endcomment -%}
+<tr>
+<td class="dw-footer">
+<a href="{{ shop.url }}">daewoo-security.fr</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{{ shop.url }}/pages/assistance-1">Aide en ligne</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{{ shop.url }}/pages/nous-contacter">Contact</a>
+<p class="dw-footer-small">
+Service commercial&nbsp;: <a href="tel:+33547742940">05&nbsp;47&nbsp;74&nbsp;29&nbsp;40</a><br>
+Merci pour votre confiance.<br>
+Daewoo Security — SAS Liz Invest
+</p>
+</td>
+</tr>
+</table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
+</table>
+</body>
+</html>
