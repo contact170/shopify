@@ -1,0 +1,559 @@
+{%- comment -%}
+  ===== Daewoo Security : e-mail « Confirmation d'expédition » =====
+  À coller dans Shopify : Paramètres > Notifications > Notifications client > Confirmation d'expédition.
+  Même habillage que confirmation-commande.liquid (classes « dw- », style entièrement défini ici).
+
+  dw_point_relais : true si le client a choisi la livraison en point relais Chronopost.
+  dw_guides       : gammes présentes dans cet envoi (vigilia, touch, xl, elite), pour afficher le bon guide.
+{%- endcomment -%}
+{% if fulfillment.item_count == item_count %}
+  {% capture email_title %}Votre commande est en route{% endcapture %}
+  {% capture email_body %}Bonne nouvelle&nbsp;: votre colis a quitté notre entrepôt et poursuit maintenant son chemin jusqu’à vous.{% endcapture %}
+{% elsif fulfillment.item_count > 1 %}
+  {% if fulfillment_status == 'fulfilled' %}
+    {% capture email_title %}Les derniers articles de votre commande sont en route{% endcapture %}
+    {% capture email_body %}Les derniers articles de votre commande sont en route. Suivez votre envoi pour connaître son statut de livraison.{% endcapture %}
+  {% else %}
+    {% capture email_title %}Certains articles de votre commande sont en route{% endcapture %}
+    {% capture email_body %}Plusieurs articles de votre commande sont en route. Suivez votre envoi pour connaître son statut de livraison.{% endcapture %}
+  {% endif %}
+{% else %}
+  {% if fulfillment_status == 'fulfilled' %}
+    {% capture email_title %}Le dernier article de votre commande est en route{% endcapture %}
+    {% capture email_body %}Le dernier article de votre commande est en route. Suivez votre envoi pour connaître son statut de livraison.{% endcapture %}
+  {% else %}
+    {% capture email_title %}Un article de votre commande est en route{% endcapture %}
+    {% capture email_body %}Un article de votre commande est en route. Suivez votre envoi pour connaître son statut de livraison.{% endcapture %}
+  {% endif %}
+{% endif %}
+{% assign primary_tracking_url = 'https://daewoo-security.fr/a/suivre-ma-commande' %}
+{%- assign dw_mode_livraison = shipping_method.title | default: '' | downcase -%}
+{%- assign dw_point_relais = false -%}
+{%- if dw_mode_livraison contains 'point relai' -%}
+  {%- assign dw_point_relais = true -%}
+{%- endif -%}
+{%- assign dw_guides = '' -%}
+{%- for dw_envoi in fulfillment.fulfillment_line_items -%}
+  {%- assign dw_ligne = dw_envoi.line_item -%}
+  {%- assign dw_sku = dw_ligne.sku | default: '' | upcase -%}
+  {%- assign dw_p3 = dw_sku | slice: 0, 3 -%}
+  {%- assign dw_p4 = dw_sku | slice: 0, 4 -%}
+  {%- assign dw_p5 = dw_sku | slice: 0, 5 -%}
+  {%- assign dw_gamme = '' -%}
+  {%- if dw_p3 == 'PK-' or dw_p3 == 'PSI' -%}
+    {%- if dw_sku contains 'AM302' -%}
+      {%- assign dw_gamme = 'xl' -%}
+    {%- elsif dw_sku contains 'AM301' -%}
+      {%- assign dw_gamme = 'touch' -%}
+    {%- elsif dw_sku contains 'VIG' -%}
+      {%- assign dw_gamme = 'vigilia' -%}
+    {%- endif -%}
+  {%- elsif dw_p3 == 'VIG' -%}
+    {%- assign dw_gamme = 'vigilia' -%}
+  {%- elsif dw_p4 == 'AM35' or dw_p5 == 'AM302' -%}
+    {%- assign dw_gamme = 'xl' -%}
+  {%- elsif dw_p4 == 'AM34' or dw_p5 == 'AM301' -%}
+    {%- assign dw_gamme = 'touch' -%}
+  {%- elsif dw_p4 == 'PA57' or dw_p5 == 'PA501' or dw_sku contains 'DAPA501Z' -%}
+    {%- assign dw_gamme = 'elite' -%}
+  {%- endif -%}
+  {%- if dw_gamme == '' -%}
+    {%- assign dw_titre = dw_ligne.title | default: '' | downcase -%}
+    {%- assign dw_debut = dw_titre | slice: 0, 11 -%}
+    {%- if dw_debut == 'pack alarme' -%}
+      {%- if dw_titre contains 'touch xl' or dw_titre contains 'am302' -%}
+        {%- assign dw_gamme = 'xl' -%}
+      {%- elsif dw_titre contains 'touch' or dw_titre contains 'am301' -%}
+        {%- assign dw_gamme = 'touch' -%}
+      {%- elsif dw_titre contains 'vigilia' -%}
+        {%- assign dw_gamme = 'vigilia' -%}
+      {%- elsif dw_titre contains 'élite' or dw_titre contains 'elite' or dw_titre contains 'pa501z' -%}
+        {%- assign dw_gamme = 'elite' -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if dw_gamme != '' -%}
+    {%- unless dw_guides contains dw_gamme -%}
+      {%- if dw_guides == '' -%}
+        {%- assign dw_guides = dw_gamme -%}
+      {%- else -%}
+        {%- assign dw_guides = dw_guides | append: ',' | append: dw_gamme -%}
+      {%- endif -%}
+    {%- endunless -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>{{ email_title }}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <style>
+    /* ---------- Base ---------- */
+    body { margin:0; padding:0; background:#f2f4f9; -webkit-text-size-adjust:100%; }
+    table { border-spacing:0; border-collapse:separate; }
+    td { padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; }
+    img { border:0; outline:none; text-decoration:none; }
+    p { margin:0; }
+    a { color:#0b61cd; }
+    .dw-body { width:100%; background:#f2f4f9; }
+    .dw-outer { padding:0 12px; }
+    .dw-container { width:100%; max-width:600px; margin:0 auto; }
+    .dw-preheader { display:none; max-height:0; max-width:0; overflow:hidden; opacity:0; font-size:1px; line-height:1px; color:#f2f4f9; }
+
+    /* ---------- En-tête ---------- */
+    .dw-header { padding:30px 4px 22px; }
+    .dw-header-table { width:100%; }
+    .dw-logo-cell { vertical-align:middle; text-align:left; }
+    .dw-shop-name { color:#0c1e4a; font-size:22px; font-weight:700; text-decoration:none; }
+    .dw-order-cell { vertical-align:middle; text-align:right; color:#5b6781; font-size:13px; line-height:1.5; }
+    .dw-order-cell strong { color:#0c1e4a; font-size:14px; }
+
+    /* ---------- Bloc principal ---------- */
+    .dw-hero-top { padding:44px 40px 40px; background:#0c1e4a; border-radius:18px 18px 0 0; text-align:center; }
+    .dw-badge { width:56px; height:56px; margin:0 auto 22px; border-radius:50%; background:#1fae6b; color:#ffffff; font-size:28px; font-weight:700; line-height:56px; text-align:center; }
+    .dw-eyebrow { margin:0 0 12px; color:#8fb4f2; font-size:12px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; }
+    .dw-h1 { margin:0 0 16px; color:#ffffff; font-size:30px; font-weight:700; line-height:1.22; letter-spacing:-0.4px; }
+    .dw-hero-copy { max-width:460px; margin:0 auto; color:#d3dcf0; font-size:16px; line-height:1.6; }
+    .dw-hero-copy p { margin:12px 0 0; color:#d3dcf0; font-size:15px; line-height:1.6; }
+    .dw-hero-copy b { color:#ffffff; }
+    .dw-hero-btn { margin:28px auto 0; }
+    .dw-hero-btn td { background:#ffffff; border-radius:10px; }
+    .dw-hero-btn a { display:inline-block; padding:14px 30px; color:#0c1e4a; font-size:15px; font-weight:700; text-decoration:none; }
+    .dw-hero-bottom { padding:28px 32px 30px; background:#ffffff; border:1px solid #e1e6f0; border-top:0; border-radius:0 0 18px 18px; }
+
+    /* Suivi en 4 étapes */
+    .dw-steps { width:100%; }
+    .dw-step { width:25%; padding:0 3px; vertical-align:top; text-align:center; }
+    .dw-bar { height:5px; border-radius:3px; background:#e3e8f2; font-size:0; line-height:0; }
+    .dw-bar-done { background:#1fae6b; }
+    .dw-bar-current { background:#0b61cd; }
+    .dw-step-label { display:block; padding-top:10px; color:#97a1b6; font-size:12px; line-height:1.35; }
+    .dw-step-done { color:#16895a; font-weight:700; }
+    .dw-step-current { color:#0c1e4a; font-weight:700; }
+    .dw-next { margin:24px 0 0; padding:18px 20px; background:#f5f7fc; border-radius:12px; color:#4a5672; font-size:14px; line-height:1.6; }
+    .dw-next strong { display:block; margin-bottom:4px; color:#0c1e4a; font-size:15px; }
+
+
+    /* ---------- Boutons ---------- */
+    .dw-btn { margin:18px 0 0; }
+    .dw-btn td { background:#0b61cd; border-radius:10px; }
+    .dw-btn a { display:inline-block; padding:13px 24px; color:#ffffff; font-size:15px; font-weight:700; text-decoration:none; }
+    .dw-btn-dark td { background:#0c1e4a; }
+
+    /* ---------- Titres de section ---------- */
+    .dw-section-head { padding:34px 4px 14px; }
+    .dw-section-table { width:100%; }
+    .dw-h2 { margin:0; color:#0c1e4a; font-size:21px; font-weight:700; line-height:1.3; letter-spacing:-0.2px; }
+    .dw-card { background:#ffffff; border:1px solid #e1e6f0; border-radius:16px; }
+
+    /* ---------- Articles ---------- */
+    .dw-items { width:100%; }
+    .dw-item { padding:20px 24px; border-bottom:1px solid #edf0f6; }
+    .dw-item-table { width:100%; }
+    .dw-item-img { width:76px; vertical-align:top; }
+    .dw-item-img img { display:block; width:76px; height:76px; border:1px solid #e6eaf2; border-radius:12px; background:#ffffff; }
+    .dw-item-noimg { width:76px; height:76px; border:1px solid #e6eaf2; border-radius:12px; background:#f5f7fc; }
+    .dw-item-desc { padding:1px 14px 0 16px; vertical-align:top; }
+    .dw-item-title { margin:0; color:#0c1e4a; font-size:15px; font-weight:700; line-height:1.4; }
+    .dw-item-sub { margin:3px 0 0; color:#5b6781; font-size:13px; line-height:1.45; }
+    .dw-item-meta { margin:8px 0 0; color:#5b6781; font-size:13px; line-height:1.45; }
+    .dw-chip { display:inline-block; padding:3px 10px; background:#eef2f9; border-radius:999px; color:#33415f; font-size:12px; font-weight:700; line-height:1.4; white-space:nowrap; }
+    .dw-chip-refund { margin-top:6px; background:#fdeef0; color:#b4233c; }
+
+    /* ---------- Installation et ressources ---------- */
+    .dw-guide { padding:26px 28px 28px; background:#eaf2ff; border:1px solid #d3e2fa; border-radius:16px; }
+    .dw-guide-eyebrow { margin:0 0 8px; color:#0b61cd; font-size:12px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; }
+    .dw-guide-title { margin:0 0 8px; color:#0c1e4a; font-size:19px; font-weight:700; line-height:1.35; }
+    .dw-guide-text { color:#3d4a68; font-size:14px; line-height:1.6; }
+    .dw-tiles { width:100%; }
+    .dw-tile-cell { width:50%; padding-top:12px; vertical-align:top; }
+    .dw-tile-left { padding-right:6px; }
+    .dw-tile-right { padding-left:6px; }
+    .dw-tile { width:100%; }
+    .dw-tile td { padding:18px 20px; background:#ffffff; border:1px solid #e1e6f0; border-radius:14px; }
+    .dw-tile-title { display:block; color:#0c1e4a; font-size:15px; font-weight:700; line-height:1.4; text-decoration:none; }
+    .dw-tile-text { display:block; margin:3px 0 10px; color:#5b6781; font-size:13px; line-height:1.5; }
+    .dw-tile-link { color:#0b61cd; font-size:13px; font-weight:700; text-decoration:none; }
+
+    /* ---------- Assistance ---------- */
+    .dw-help { padding:32px 32px 34px; background:#0c1e4a; border-radius:16px; text-align:center; }
+    .dw-help-title { margin:0 0 8px; color:#ffffff; font-size:20px; font-weight:700; line-height:1.35; }
+    .dw-help-text { max-width:440px; margin:0 auto; color:#d3dcf0; font-size:14px; line-height:1.6; }
+    .dw-help-btns { margin:22px auto 0; }
+    .dw-help-btn-cell { padding:0 5px; }
+    .dw-help-btn { width:100%; }
+    .dw-help-btn td { background:#ffffff; border-radius:10px; text-align:center; }
+    .dw-help-btn a { display:inline-block; padding:12px 22px; color:#0c1e4a; font-size:14px; font-weight:700; text-decoration:none; white-space:nowrap; }
+    .dw-help-btn-ghost td { background:#0c1e4a; border:1px solid #5d6f99; }
+    .dw-help-btn-ghost a { padding:11px 22px; color:#ffffff; }
+
+    /* ---------- Pied de page ---------- */
+    .dw-footer { padding:28px 12px 44px; color:#6b7690; font-size:13px; line-height:1.7; text-align:center; }
+    .dw-footer a { color:#33415f; font-weight:600; text-decoration:none; }
+    .dw-footer-small { margin:14px 0 0; color:#8a94aa; font-size:12px; line-height:1.6; }
+
+    a[x-apple-data-detectors] { color:inherit !important; text-decoration:none !important; font-size:inherit !important; font-family:inherit !important; font-weight:inherit !important; line-height:inherit !important; }
+
+
+    /* ---------- Propre à l'expédition ---------- */
+    .dw-delivery { display:inline-block; margin:20px 0 0; padding:10px 18px; background:#1b3168; border-radius:10px; color:#d3dcf0; font-size:14px; line-height:1.5; }
+    .dw-delivery strong { color:#ffffff; }
+    .dw-hero-btns { margin:26px auto 0; }
+    .dw-shop-btn td { background:#5a31f4; }
+    .dw-shop-btn a { color:#ffffff; }
+    .dw-shop-btn img { vertical-align:middle; margin-left:4px; }
+    .dw-track { margin:24px 0 0; padding:18px 20px; background:#f5f7fc; border-radius:12px; color:#4a5672; font-size:14px; line-height:1.7; }
+    .dw-track-label { margin:0 0 4px; color:#5b6781; font-size:11px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; }
+    .dw-track a { color:#0b61cd; font-weight:700; }
+    .dw-track-note { margin:10px 0 0; color:#5b6781; font-size:13px; line-height:1.55; }
+    .dw-item-last { border-bottom:0; }
+    .dw-gap { padding-top:16px; }
+
+    @media only screen and (max-width:620px) {
+      .dw-outer { padding:0 10px !important; }
+      .dw-header { padding:22px 4px 16px !important; }
+      .dw-hero-top { padding:34px 22px 32px !important; }
+      .dw-h1 { font-size:25px !important; }
+      .dw-hero-bottom { padding:22px 18px 24px !important; }
+      .dw-step { padding:0 2px !important; }
+      .dw-step-label { font-size:11px !important; }
+      .dw-section-head { padding:28px 4px 12px !important; }
+      .dw-item { padding:16px 16px !important; }
+      .dw-item-img { width:64px !important; }
+      .dw-item-img img, .dw-item-noimg { width:64px !important; height:64px !important; }
+      .dw-item-desc { padding:0 10px 0 12px !important; }
+      .dw-guide { padding:22px 20px 24px !important; }
+      .dw-tile-cell { display:block !important; width:auto !important; padding-left:0 !important; padding-right:0 !important; }
+      .dw-help { padding:28px 20px 30px !important; }
+      .dw-help-btn-cell { display:block !important; padding:0 0 10px !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dw-preheader">Commande {{ order_name }} : votre colis est en route. Suivez sa livraison en un clic.</div>
+
+  <table class="dw-body" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="dw-outer" align="center">
+        <!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+        <table class="dw-container" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+
+          {%- comment -%} ===== En-tête ===== {%- endcomment -%}
+          <tr>
+            <td class="dw-header">
+              <table class="dw-header-table" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="dw-logo-cell">
+                    {%- if shop.email_logo_url %}
+                      <a href="{{ shop.url }}"><img src="{{ shop.email_logo_url }}" alt="{{ shop.name }}" width="{{ shop.email_logo_width }}" style="display:block;max-width:200px;height:auto;"></a>
+                    {%- else %}
+                      <a class="dw-shop-name" href="{{ shop.url }}">{{ shop.name }}</a>
+                    {%- endif %}
+                  </td>
+                  <td class="dw-order-cell">
+                    <strong>Commande {{ order_name }}</strong>
+                    {%- if po_number %}<br>Bon de commande nº&nbsp;{{ po_number }}{%- endif %}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          {%- comment -%} ===== Bloc principal ===== {%- endcomment -%}
+          <tr>
+            <td class="dw-hero-top" bgcolor="#0c1e4a">
+              <div class="dw-badge">→</div>
+              <p class="dw-eyebrow">Colis expédié</p>
+              <h1 class="dw-h1">{{ email_title }}</h1>
+              <div class="dw-hero-copy">{{ email_body }}</div>
+              {% if fulfillment.estimated_delivery_at %}
+                <div class="dw-delivery">Date de livraison estimée&nbsp;: <strong>{{ fulfillment.estimated_delivery_at | date: format: 'date' }}</strong></div>
+              {% endif %}
+              <table class="dw-hero-btns" role="presentation" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="dw-help-btn-cell">
+                    <table class="dw-help-btn" role="presentation" cellpadding="0" cellspacing="0">
+                      <tr><td><a href="{{ primary_tracking_url }}">Suivre mon colis</a></td></tr>
+                    </table>
+                  </td>
+                  {% if shop_app_tracking_url and shop_app_tracking_button_variant_key %}
+                  <td class="dw-help-btn-cell">
+                    <table class="dw-help-btn dw-shop-btn" role="presentation" cellpadding="0" cellspacing="0">
+                      <tr><td><a href="{{ shop_app_tracking_url }}">{% if shop_app_tracking_button_variant_key == "track_with_shop" %}Suivre avec{% else %}Télécharger{% endif %} <img src="{{ 'mailer/shop_logo.png' | cdn_asset_url }}" alt="Shop" width="42" height="17"></a></td></tr>
+                    </table>
+                  </td>
+                  {% endif %}
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="dw-hero-bottom" bgcolor="#ffffff">
+              <table class="dw-steps" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="dw-step"><div class="dw-bar dw-bar-done">&nbsp;</div><span class="dw-step-label dw-step-done">Confirmée</span></td>
+                  <td class="dw-step"><div class="dw-bar dw-bar-done">&nbsp;</div><span class="dw-step-label dw-step-done">Préparée</span></td>
+                  <td class="dw-step"><div class="dw-bar dw-bar-current">&nbsp;</div><span class="dw-step-label dw-step-current">En route</span></td>
+                  <td class="dw-step"><div class="dw-bar">&nbsp;</div><span class="dw-step-label">Livraison</span></td>
+                </tr>
+              </table>
+
+              {% if fulfillment.tracking_numbers.size > 0 %}
+              <div class="dw-track">
+                <p class="dw-track-label">Informations de suivi</p>
+                {% if fulfillment.tracking_numbers.size == 1 and fulfillment.tracking_company and fulfillment.tracking_url %}
+                  {{ fulfillment.tracking_company }} — Numéro de suivi&nbsp;: <a href="{{ fulfillment.tracking_url }}">{{ fulfillment.tracking_numbers.first }}</a>
+                {% elsif fulfillment.tracking_numbers.size == 1 %}
+                  Numéro de suivi&nbsp;: <strong>{{ fulfillment.tracking_numbers.first }}</strong>
+                {% else %}
+                  {{ fulfillment.tracking_company }} — Numéros de suivi&nbsp;:<br>
+                  {% for tracking_number in fulfillment.tracking_numbers %}
+                    {% if fulfillment.tracking_urls[forloop.index0] %}
+                      <a href="{{ fulfillment.tracking_urls[forloop.index0] }}">{{ tracking_number }}</a>
+                    {% else %}
+                      <strong>{{ tracking_number }}</strong>
+                    {% endif %}
+                    <br>
+                  {% endfor %}
+                {% endif %}
+                {% if dw_point_relais %}
+                  <p class="dw-track-note">Livraison en point relais Chronopost&nbsp;: votre colis sera livré au point relais que vous avez choisi.</p>
+                {% endif %}
+              </div>
+              {% endif %}
+            </td>
+          </tr>
+
+          {%- comment -%} ===== Articles dans cet envoi ===== {%- endcomment -%}
+          <tr>
+            <td class="dw-section-head">
+              <h2 class="dw-h2">Articles dans cet envoi</h2>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table class="dw-items" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="dw-card">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                      {% for line in fulfillment.fulfillment_line_items %}
+                      {%- comment -%} Les sous-articles sont affichés sous leur article parent. {%- endcomment -%}
+                      {% unless line.line_item.nested_line_child? %}
+                      {%- if line.line_item.presentment_title -%}
+                        {%- assign line_title = line.line_item.presentment_title -%}
+                      {%- elsif line.line_item.title -%}
+                        {%- assign line_title = line.line_item.title -%}
+                      {%- else -%}
+                        {%- assign line_title = line.line_item.product.title -%}
+                      {%- endif -%}
+                      {%- comment -%}
+                        Titre : on retire le préfixe interne « Configurateur | » et on passe le reste
+                        du titre (après le premier « | ») en sous-titre, pour alléger la lecture.
+                      {%- endcomment -%}
+                      {%- assign dw_morceaux = line_title | split: ' | ' -%}
+                      {%- assign dw_depart = 0 -%}
+                      {%- assign dw_premier = dw_morceaux.first | downcase | strip -%}
+                      {%- if dw_premier == 'configurateur' and dw_morceaux.size > 1 -%}
+                        {%- assign dw_depart = 1 -%}
+                      {%- endif -%}
+                      {%- assign dw_titre_court = dw_morceaux[dw_depart] | strip -%}
+                      {%- assign dw_suite = dw_depart | plus: 1 -%}
+                      {%- assign dw_sous_titre = '' -%}
+                      {%- for dw_morceau in dw_morceaux offset: dw_suite -%}
+                        {%- if dw_sous_titre == '' -%}
+                          {%- assign dw_sous_titre = dw_morceau | strip -%}
+                        {%- else -%}
+                          {%- assign dw_sous_titre = dw_sous_titre | append: ' · ' | append: dw_morceau -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                      <tr>
+                        <td class="dw-item{% if forloop.last %} dw-item-last{% endif %}">
+                          <table class="dw-item-table" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td class="dw-item-img" width="76">
+                                {% if line.line_item.image %}
+                                  <img src="{{ line.line_item | img_url: 'compact_cropped' }}" width="76" height="76" alt="">
+                                {% else %}
+                                  <div class="dw-item-noimg">&nbsp;</div>
+                                {% endif %}
+                              </td>
+                              <td class="dw-item-desc">
+                                <p class="dw-item-title">{{ dw_titre_court }}</p>
+                                {% if dw_sous_titre != '' %}
+                                  <p class="dw-item-sub">{{ dw_sous_titre }}</p>
+                                {% endif %}
+                                {% if line.line_item.variant.title != 'Default Title' and line.line_item.variant.title != blank %}
+                                  <p class="dw-item-sub">{{ line.line_item.variant.title }}</p>
+                                {% endif %}
+
+                                {% for group in line.line_item.groups %}
+                                  {% if group.deliverable? %}
+                                    <p class="dw-item-sub">Pour&nbsp;: {{ group.display_title }}</p>
+                                  {% else %}
+                                    <p class="dw-item-sub">Inclus dans&nbsp;: {{ group.display_title }}</p>
+                                  {% endif %}
+                                {% endfor %}
+
+                                {% if line.line_item.nested_line_parent? %}
+                                  {% for child_line in line.line_item.nested_lines %}
+                                    {% if child_line.product.title %}
+                                      {% assign item_title = child_line.product.title %}
+                                    {% else %}
+                                      {% assign item_title = child_line.title %}
+                                    {% endif %}
+                                    <p class="dw-item-sub">+ {{ item_title }}{% if child_line.variant.title != 'Default Title' and child_line.variant.title != blank %} ({{ child_line.variant.title }}){% endif %}&nbsp;&times;&nbsp;{{ child_line.quantity }}</p>
+                                  {% endfor %}
+                                {% endif %}
+
+                                {% if line.line_item.selling_plan_allocation %}
+                                  <p class="dw-item-sub">{{ line.line_item.selling_plan_allocation.selling_plan.name }}</p>
+                                {% endif %}
+
+                                <p class="dw-item-meta"><span class="dw-chip">Quantité&nbsp;: {% if line.quantity < line.line_item.quantity %}{{ line.quantity }} sur {{ line.line_item.quantity }}{% else %}{{ line.line_item.quantity }}{% endif %}</span></p>
+
+                                {% if line.line_item.refunded_quantity > 0 %}
+                                  <span class="dw-chip dw-chip-refund">Remboursé</span>
+                                {% endif %}
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      {% endunless %}
+                      {% endfor %}
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          {%- comment -%} ===== Installation et ressources ===== {%- endcomment -%}
+          <tr>
+            <td class="dw-section-head">
+              <h2 class="dw-h2">Préparez votre installation</h2>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="dw-guide" bgcolor="#eaf2ff">
+                    {% if dw_guides != '' %}
+                      {% assign dw_liste_guides = dw_guides | split: ',' %}
+                      <p class="dw-guide-eyebrow">Votre guide pas à pas</p>
+                      <p class="dw-guide-title">Installez votre alarme vous-même, étape par étape</p>
+                      <p class="dw-guide-text">Votre guide d’installation est déjà en ligne&nbsp;: consultez-le dès maintenant pour être prêt le jour de la livraison.</p>
+                      {% for dw_g in dw_liste_guides %}
+                        {% case dw_g %}
+                          {% when 'vigilia' %}
+                            {% assign dw_url = '/pages/installation-alarme-vigilia' %}
+                            {% assign dw_nom = 'Vigilia' %}
+                          {% when 'touch' %}
+                            {% assign dw_url = '/pages/installation-alarme-am301-touch' %}
+                            {% assign dw_nom = 'Touch (AM301)' %}
+                          {% when 'xl' %}
+                            {% assign dw_url = '/pages/installation-alarme-am302-touch-xl' %}
+                            {% assign dw_nom = 'Touch XL (AM302)' %}
+                          {% when 'elite' %}
+                            {% assign dw_url = '/pages/installation-alarme-elite-pa501z' %}
+                            {% assign dw_nom = 'Élite (PA501Z)' %}
+                        {% endcase %}
+                        <table class="dw-btn" role="presentation" cellpadding="0" cellspacing="0"{% unless forloop.first %} style="margin-top:10px;"{% endunless %}>
+                          <tr><td><a href="{{ shop.url }}{{ dw_url }}">Guide d’installation {{ dw_nom }}</a></td></tr>
+                        </table>
+                      {% endfor %}
+                    {% else %}
+                      <p class="dw-guide-eyebrow">Guides pas à pas</p>
+                      <p class="dw-guide-title">Tout est prêt pour votre installation</p>
+                      <p class="dw-guide-text">Nos guides d’installation sont en ligne&nbsp;: consultez-les dès maintenant pour être prêt le jour de la livraison.</p>
+                      <table class="dw-btn" role="presentation" cellpadding="0" cellspacing="0">
+                        <tr><td><a href="{{ shop.url }}/pages/guides-installation">Voir les guides d’installation</a></td></tr>
+                      </table>
+                    {% endif %}
+                  </td>
+                </tr>
+              </table>
+
+              <table class="dw-tiles" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="dw-tile-cell dw-tile-left">
+                    <table class="dw-tile" role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td>
+                      <a class="dw-tile-title" href="{{ shop.url }}/pages/assistance-1">Aide en ligne</a>
+                      <span class="dw-tile-text">Manuels, questions fréquentes et réponses à vos questions.</span>
+                      <a class="dw-tile-link" href="{{ shop.url }}/pages/assistance-1">Ouvrir l’assistance&nbsp;→</a>
+                    </td></tr></table>
+                  </td>
+                  <td class="dw-tile-cell dw-tile-right">
+                    <table class="dw-tile" role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td>
+                      <a class="dw-tile-title" href="{{ shop.url }}/pages/guides-installation">Tous les guides</a>
+                      <span class="dw-tile-text">Les guides d’installation de chaque gamme d’alarme.</span>
+                      <a class="dw-tile-link" href="{{ shop.url }}/pages/guides-installation">Voir les guides&nbsp;→</a>
+                    </td></tr></table>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="dw-tile-cell" colspan="2">
+                    <table class="dw-tile" role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td>
+                      <a class="dw-tile-title" href="{{ shop.url }}/pages/nous-contacter">Nous contacter</a>
+                      <span class="dw-tile-text">Une question avant ou après l’installation&nbsp;? Écrivez-nous.</span>
+                      <a class="dw-tile-link" href="{{ shop.url }}/pages/nous-contacter">Contacter l’équipe&nbsp;→</a>
+                    </td></tr></table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          {%- comment -%} ===== Assistance livraison ===== {%- endcomment -%}
+          <tr>
+            <td class="dw-gap">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="dw-help" bgcolor="#0c1e4a">
+                    <p class="dw-help-title">Une question concernant la livraison&nbsp;?</p>
+                    <p class="dw-help-text">Consultez d’abord le suivi du transporteur. Si nécessaire, utilisez notre formulaire de contact et notre équipe vous accompagnera.</p>
+                    <table class="dw-help-btns" role="presentation" align="center" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td class="dw-help-btn-cell">
+                          <table class="dw-help-btn" role="presentation" cellpadding="0" cellspacing="0">
+                            <tr><td><a href="{{ primary_tracking_url }}">Suivre mon colis</a></td></tr>
+                          </table>
+                        </td>
+                        <td class="dw-help-btn-cell">
+                          <table class="dw-help-btn dw-help-btn-ghost" role="presentation" cellpadding="0" cellspacing="0">
+                            <tr><td><a href="{{ shop.url }}/pages/nous-contacter">Formulaire de contact</a></td></tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          {%- comment -%} ===== Pied de page ===== {%- endcomment -%}
+          <tr>
+            <td class="dw-footer">
+              <a href="{{ shop.url }}">daewoo-security.fr</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{{ shop.url }}/pages/assistance-1">Aide en ligne</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{{ shop.url }}/pages/nous-contacter">Contact</a>
+              <p class="dw-footer-small">
+                Merci pour votre confiance.<br>
+                Daewoo Security — SAS Liz Invest
+                <!-- shopify-shop-marketplace-footer -->
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!--[if mso]></td></tr></table><![endif]-->
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
