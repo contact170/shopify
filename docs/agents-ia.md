@@ -13,6 +13,7 @@ respecter. Dernières évolutions dans « Historique ».
 | Analyste ventes | `analyste-ventes.md` | Actif, testé, fusionné dans `main` |
 | Rédacteur SEO (blog) | `redacteur-seo.md` | Actif, testé sur données réelles le 29/10/2026 (GSC Wizard) |
 | Optimisation du site | `optimisation-site.md` + `scripts/audit-site.js` | Actif, testé sur données réelles le 29/10/2026 |
+| Community manager Instagram | `community-manager-instagram.md` + `scripts/instagram-reel.py` | En test depuis le 23/11/2026 (branche `claude/jolly-keller-dcap4c`, pas encore dans `main`) |
 
 L'agent « Optimisation du site » remplace l'agent proposé « Audit fiches
 produits / SEO » (fusion décidée par le dirigeant le 29/10/2026).
@@ -26,7 +27,8 @@ produits / SEO » (fusion décidée par le dirigeant le 29/10/2026).
 - Base « 🔒 Résultats des agents » : data source
   `collection://7911a038-548e-452c-ad97-e12aa51b0349`.
   Propriétés : `Rapport` (titre), `Agent` (Analyste ventes, Veille stock,
-  Optimisation du site, Veille concurrence, Rédacteur SEO), `Date`,
+  Optimisation du site, Veille concurrence, Rédacteur SEO, Community
+  manager Instagram), `Date`,
   `Priorité` (Haute, Normale, Basse), `Statut` (À lire, À traiter, Fait),
   `Résumé`.
 - Base « Agents » : data source
@@ -62,6 +64,50 @@ produits / SEO » (fusion décidée par le dirigeant le 29/10/2026).
   retard), et les adresses `/fr-ch/`, `/fr-com/`… sont des variantes de
   pays d'une même page.
 
+### Instagram (compte `@daewoosecurity`)
+
+- **Connecteur Windsor.ai** (`mcp__Windsor_ai__*`), connecteur `instagram`,
+  compte `17841433847232059`, formule gratuite. La lecture et la
+  publication fonctionnent ; `force_refresh` est refusé (les données ont
+  plusieurs heures de retard). Les actions d'écriture ont été activées par
+  le dirigeant le 23/11/2026 (Windsor › Settings › API Access).
+- **Supermetrics** voit aussi le compte, mais son essai a expiré le
+  10/07/2026 : la publication y est refusée. Ne pas l'utiliser pour écrire.
+- **Qui publie.** L'agent `community-manager-instagram` ne fait que lire et
+  proposer dans Notion. La publication est faite par Claude dans la
+  conversation Instagram, avec `execute_action`, uniquement quand le
+  dirigeant l'écrit lui-même (« publie le post 1 »), en reprenant le bloc
+  « Paramètres de publication » de la page Notion. Même règle pour répondre
+  à un commentaire, le masquer ou le supprimer.
+- **Si `execute_action` ne répond pas dans le délai**, ne pas relancer
+  aussitôt : lire d'abord `media_count` (sans `force_refresh`) pour vérifier
+  que rien n'a été publié, sinon le post part en double.
+- **Images.** Instagram n'accepte que le JPEG. Les visuels du CDN Shopify
+  (souvent en WebP) se convertissent en ajoutant `&width=1080&format=pjpg`
+  à l'URL. Rapport largeur/hauteur entre 0,8 et 1,91.
+- **Vidéos (reels).** `scripts/instagram-reel.py` monte un reel vertical à
+  partir d'un plan JSON et de visuels produits. Deux leçons du premier reel
+  (W512MW, publié le 23/11/2026) y sont intégrées :
+  - *zone sûre* : Instagram affiche le nom du compte et la ligne audio en
+    haut, la légende et les boutons en bas ; tout texte reste entre 270 px
+    et 1 500 px de hauteur (sur 1 920). Un bandeau placé à 130 px s'est
+    retrouvé sous le nom du compte ;
+  - *piste son* : une piste AAC quasi vide (2 kbit/s) a fait échouer le
+    traitement côté Instagram (`container status: ERROR`) ; la sortie porte
+    désormais une piste AAC 48 kHz à 128 kbit/s.
+  Une publication par l'API ne peut pas utiliser la bibliothèque musicale
+  d'Instagram.
+- **Hébergement des vidéos.** Instagram va chercher la vidéo à une adresse
+  publique. L'envoi d'un fichier vers Shopify depuis une session Claude est
+  bloqué par le contrôle de sécurité : c'est le dirigeant qui dépose le
+  fichier dans Shopify › Contenu › Fichiers et donne le lien. Les images
+  n'ont pas ce problème (elles sont déjà sur le CDN).
+- **Constats sur le compte au 23/11/2026** : 497 abonnés, 22 publications,
+  aucune entre le 24/06 et le 23/11/2026. Les reels touchent bien plus de
+  comptes que les carrousels et images (60 à 180), surtout les vidéos
+  filmées (déballage Touch XL : 2 190 comptes). À faire trancher par le
+  dirigeant : « 60 000 foyers » en Europe (bio) ou en France (un post).
+
 ### Notifications
 
 À la fin de chaque exécution planifiée, la session envoie une notification
@@ -82,6 +128,7 @@ Wizard) ») n'a plus de tâche.
 | Rapport ventes hebdo | `trig_0135d9x7u61HvZ5HS9uD9fyU` | lundi 6h41 | actif |
 | Article SEO hebdo | `trig_01SwJUzM3793Tso6WRRn6Wbv` | mercredi 6h44 | actif |
 | Audit du site hebdo | `trig_01Qs6W29kZhAavyhtwjPZxdG` | vendredi 6h47 | actif à partir du 6/11/2026 (mis en pause pour sauter le 30/10, réactivation automatique le 30/10 à 7h30) |
+| Posts Instagram hebdo | `trig_01THxGEY9FyymZkavU7NhQ5E` | lundi 6h52 | actif, **rattachée à la conversation Instagram** `session_01LiMrJH5CsBEPZPJ4EaHaPc` (c'est là que le dirigeant valide et que Claude publie) |
 
 Le paramètre `connectors` de `create_trigger` n'est pas disponible pour
 cette organisation. Une tâche lancée dans une nouvelle session à chaque fois
