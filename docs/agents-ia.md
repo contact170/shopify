@@ -13,7 +13,7 @@ respecter. Dernières évolutions dans « Historique ».
 | Analyste ventes | `analyste-ventes.md` | Actif, testé, fusionné dans `main` |
 | Rédacteur SEO (blog) | `redacteur-seo.md` | Actif, testé sur données réelles le 29/10/2026 (GSC Wizard) |
 | Optimisation du site | `optimisation-site.md` + `scripts/audit-site.js` | Actif, testé sur données réelles le 29/10/2026 |
-| Community manager Instagram | `community-manager-instagram.md` + `scripts/instagram-reel.py` | En test depuis le 23/11/2026 (branche `claude/jolly-keller-dcap4c`, pas encore dans `main`) |
+| Community manager Instagram | `community-manager-instagram.md` + `scripts/instagram-reel.py` | Testé sur données réelles le 23/11/2026 (page « Posts Instagram – semaine 48 »), tâche active ; fiche sur la branche `claude/jolly-keller-dcap4c`, pas encore dans `main` |
 
 L'agent « Optimisation du site » remplace l'agent proposé « Audit fiches
 produits / SEO » (fusion décidée par le dirigeant le 29/10/2026).

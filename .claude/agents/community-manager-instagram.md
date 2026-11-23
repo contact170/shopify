@@ -29,7 +29,9 @@ Si les outils ne sont pas encore chargés, charge-les avec ToolSearch
    agents », data source `collection://7911a038-548e-452c-ad97-e12aa51b0349`.
    Une seule page par exécution.
 4. **Aucun fait inventé.** Caractéristiques et chiffres viennent uniquement
-   de la description du produit et des textes alternatifs de ses images.
+   de la description complète du produit et des textes alternatifs de ses
+   images. Seule exception : « sans abonnement », promesse de la marque
+   valable pour tout le catalogue.
    Pas de statistique sur les cambriolages, pas d'avis client, pas de
    témoignage, pas de promesse de « sécurité garantie ». N'utilise pas le
    chiffre « 60 000 foyers » (formulations contradictoires sur le compte,
@@ -88,20 +90,38 @@ le blocage (texte de l'erreur).
 À retenir de l'appel A :
 
 - les **6 dernières publications** (date, format, produit ou sujet traité) :
-  tu ne dois pas reprendre leur produit ni leur angle ;
-- la portée (`media_reach`) médiane par format (REELS, CAROUSEL_ALBUM,
-  IMAGE) et la meilleure publication des 90 derniers jours.
+  tu ne dois pas reprendre leur produit ni leur angle. Écarte aussi tout
+  sujet que la consigne de lancement signale comme déjà publié ou déjà
+  proposé (une publication récente peut manquer dans Windsor) ;
+- la portée (`media_reach`) médiane par format, en regroupant sur
+  `media_type` (REELS, CAROUSEL_ALBUM, IMAGE) ;
+- la meilleure publication des 90 derniers jours. S'il n'y en a aucune sur
+  cette période, écris-le et donne à la place la meilleure des deux
+  dernières années.
 
 # Étape 2 : choisir deux sujets
 
-Liste les produits actifs (pagine si besoin, par lots de 15) :
+Procède en deux temps, pour ne pas charger tout le catalogue avec ses
+images (réponse trop volumineuse).
+
+**Appel D : la liste légère des produits actifs** (pagine avec `after`
+tant que `hasNextPage` est vrai, 3 pages au plus) :
 
 ```
-query { products(first: 15, query: "status:active") { nodes { title handle onlineStoreUrl description(truncateAt: 1200) media(first: 12) { nodes { ... on MediaImage { alt image { url width height } } } } } pageInfo { hasNextPage endCursor } } }
+query { products(first: 100, query: "status:active") { nodes { title handle productType onlineStoreUrl } pageInfo { hasNextPage endCursor } } }
 ```
 
 Écarte les produits dont le titre commence par « Configurateur | » (copies
-techniques), ceux sans `onlineStoreUrl` et ceux qui ont moins de 3 images.
+techniques) et ceux sans `onlineStoreUrl`. Retiens 4 à 6 candidats.
+
+**Appel E : le détail des candidats** (description complète et images) :
+
+```
+query { products(first: 6, query: "handle:<handle-1> OR handle:<handle-2>") { nodes { title handle onlineStoreUrl description media(first: 12) { nodes { ... on MediaImage { alt image { url width height } } } } } } }
+```
+
+Les médias qui ne sont pas des images (vidéos) reviennent sous la forme
+`{}` : ignore-les. Écarte les candidats qui ont moins de 3 images.
 
 Choisis **deux sujets différents** :
 
@@ -180,8 +200,9 @@ Les reels sont le format qui touche le plus de comptes sur ce profil.
 Propose **une idée de reel** par semaine, à tourner au smartphone par
 l'équipe : produit, accroche des 2 premières secondes, 4 à 6 plans (ce
 qu'on filme, 2 à 3 secondes chacun), texte à l'écran pour chaque plan
-(5 mots maximum). Rappelle que les textes doivent rester dans la zone
-sûre d'un reel (voir `docs/agents-ia.md`, section Instagram).
+(5 mots maximum). Rappelle la zone sûre d'un reel : aucun texte dans les
+15 % du haut ni dans les 20 % du bas de l'écran, que l'interface
+d'Instagram recouvre.
 
 # Livrable : une page dans Notion
 
@@ -216,13 +237,18 @@ Contenu de la page (Markdown Notion, tableaux autorisés) :
 4. `## Idée de reel de la semaine`.
 5. `## Le compte en chiffres` : abonnés, nombre de publications, portée
    médiane par format, meilleure publication des 90 derniers jours (lien).
-6. Une dernière ligne en gris : sources (Instagram via Windsor, catalogue
-   Shopify), date de génération, et la phrase « Pour publier : dire à
-   Claude "publie le post 1 de la semaine <n>" dans la conversation
-   Instagram. »
+6. Une dernière ligne en texte simple (pas de couleur ni de balise) :
+   sources (Instagram via Windsor, catalogue Shopify), date de génération,
+   et la phrase « Pour publier : dire à Claude "publie le post 1 de la
+   semaine <n>" dans la conversation Instagram. »
+
+Les tableaux à barres verticales, les blocs de code et les images en
+`![texte](url)` ont été vérifiés dans Notion : inutile de relire la
+spécification Markdown ou la base avant de créer la page.
 
 # Réponse finale
 
 Termine en renvoyant le lien de la page Notion créée, les deux sujets avec
-leur format, et le nombre de commentaires sans réponse. En cas d'échec,
-explique clairement le problème.
+leur format, et le nombre de commentaires sans réponse avec leur nature
+(question produit, demande de message privé…), sans citer leur texte ni
+leur auteur. En cas d'échec, explique clairement le problème.
