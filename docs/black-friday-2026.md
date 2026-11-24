@@ -500,3 +500,20 @@ par le dirigeant.
 - Pastille rouge de l'accueil et de la page Black Friday : « Dernière ligne
   droite · fin le 30/11 » ; titre du compte à rebours : « Plus que ».
 - Aperçu vérifié sur ordinateur et mobile, sans erreur.
+
+### Page Black Friday plus claire et bon thème de départ (24/11)
+
+- **Ne pas publier « Finale BF 24112026 (Claude) »** (`209848402260`) : elle
+  vient de « Franck packs BF 20112026 », alors que le thème en ligne depuis le
+  22/11 est « Fiche Vigilia mobile 22112026 (Claude) » (`209676763476`, fait
+  dans une autre session). La publier retirerait les changements de la fiche
+  Vigilia.
+- Nouvelle copie faite depuis le thème en ligne : « Finale BF clair 24112026
+  (Claude) » (`gid://shopify/OnlineStoreTheme/209851777364`), avec la Finale
+  (encarts, bandeau défilant, pastilles) et la page Black Friday éclaircie.
+- Page Black Friday : seul l'en-tête reste noir. L'encart du configurateur
+  devient une carte crème bordée d'or (texte foncé, paliers sur fond blanc,
+  bouton noir, échéance en pastille jaune, surtitre en rouge). Grille sur fond
+  gris très clair `#f5f6fa` avec cartes blanches ombrées, liens « Voir l'offre »
+  bleu marine, mention du bon en pastille jaune pâle. Étapes du bon et
+  réassurance sur fond blanc, coches bleu marine.
