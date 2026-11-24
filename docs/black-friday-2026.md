@@ -478,3 +478,25 @@ sont pas recopiés ici (voir Shopify, Réductions, titres « BF finale … »).
   (ex. 469,60 € + 2 WDV301 → 399,18 € ; 909,10 € + W512MW → 681,87 €).
 - Fiche Notion de Franck mise à jour (résumé, partie 5, bon, ancienne offre
   W503). Resynchroniser la source dans Chatbase.
+
+### Bandeaux « dernière ligne droite » (24/11)
+
+Copie « Finale BF 24112026 (Claude) » (`gid://shopify/OnlineStoreTheme/209848402260`),
+faite depuis le thème en ligne « Franck packs BF 20112026 (Claude) ». À publier
+par le dirigeant.
+
+- Accueil : encart « Black Friday · Config » (`sections/bf-w503.liquid`) repris pour
+  la Finale : pastille ronde « jusqu'à −8 % ou cadeau », titre « Jusqu'à −8 % en
+  plus ou un cadeau sur votre alarme sur mesure », 4 paliers avec remise totale
+  et cadeau (−14,5 % / −20,1 % ou 2 contacteurs / −25,6 % ou W503 / −31 % ou
+  W512MW), compte à rebours, du 24/11 11h30 au 30/11 23h59. Paliers au format
+  « seuil|remise|remise en plus|cadeau », 2 colonnes sur mobile.
+- Page Black Friday : même encart (`sections/bf-collection.liquid`, réglages
+  `cfg_*` par défaut).
+- Bandeau défilant : second message « Dernière ligne droite · Finale Black
+  Friday : jusqu'à −8 % en plus ou un cadeau offert » vers le configurateur,
+  du 24/11 11h30 au 30/11 23h59, en premier ; pastille du premier message
+  « Derniers jours ».
+- Pastille rouge de l'accueil et de la page Black Friday : « Dernière ligne
+  droite · fin le 30/11 » ; titre du compte à rebours : « Plus que ».
+- Aperçu vérifié sur ordinateur et mobile, sans erreur.
