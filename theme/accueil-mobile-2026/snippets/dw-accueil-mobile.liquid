@@ -1,0 +1,151 @@
+{%- comment -%}
+  Accueil plus compact sur mobile (24/11/2026) : marges, tailles de texte et
+  hauteurs d'images réduites sous 750 px de large, sur la page d'accueil seulement.
+  Rien ne change sur ordinateur. Rendu en fin de page par layout/theme.liquid.
+  Pour annuler : retirer la ligne « render 'dw-accueil-mobile' » de layout/theme.liquid.
+{%- endcomment -%}
+<style>
+@media (max-width:749px){
+  /* Commun aux blocs de l'accueil */
+  body .dwh-bloc{padding-top:40px;padding-bottom:40px;}
+  body .dwh-titre{font-size:clamp(26px,7.2vw,30px);}
+  body .dwh-chapo{margin-top:10px;font-size:15.5px;line-height:1.5;}
+  body .dwh-entete{margin-bottom:20px;}
+  body .dwh .dwh-btn{min-height:50px;padding-top:12px;padding-bottom:12px;font-size:16px;}
+
+  /* En-tête Black Friday */
+  body .bfh .bfh__bloc{padding:28px 16px 32px;}
+  body .bfh .bfh__haut{gap:18px;}
+  body .bfh .bfh__titre{margin-top:12px;font-size:clamp(40px,14vw,60px);}
+  body .bfh .bfh__texte{margin-top:10px;font-size:15px;line-height:1.5;}
+  body .bfh .bfh__compte{margin-top:12px;}
+  body .bfh .bfh__cases{margin-top:6px;}
+  body .bfh .bfh__case{padding:7px 6px 6px;border-radius:12px;}
+  body .bfh .bfh__case b{font-size:23px;}
+  body .bfh .bfh__case small{margin-top:3px;font-size:10px;}
+  body .bfh .bfh__bon-talon{padding:12px 8px;}
+  body .bfh .bfh__bon-talon b{font-size:clamp(38px,11vw,48px);}
+  body .bfh .bfh__bon-corps{gap:4px;padding:14px 14px 14px 14px;}
+  body .bfh .bfh__bon-titre{font-size:16px;}
+  body .bfh .bfh__bon-texte{font-size:13px;line-height:1.4;}
+  body .bfh .bfh__offres-titre{margin-top:26px;}
+  body .bfh .bfh__offres{grid-auto-columns:64%;gap:10px;padding-top:10px;}
+  body .bfh .bfh__photo img{aspect-ratio:16/11;}
+  body .bfh .bfh__infos{padding:12px 14px 14px;}
+  body .bfh .bfh__nom{font-size:16px;line-height:1.25;}
+  body .bfh .bfh__sous{font-size:13px;line-height:1.35;}
+  body .bfh .bfh__prix b{font-size:21px;}
+  body .bfh .bfh__voir{padding-top:10px;font-size:14px;}
+  body .bfh .bfh__cta{margin-top:20px;}
+  body .bfh .bfh__note{margin-top:10px;font-size:11px;line-height:1.4;}
+
+  /* Bloc d'accueil (téléphone) */
+  body .dwh-hero{padding-top:22px;}
+  body .dwh-hero__grille{gap:14px;}
+  body .dwh-hero__note{margin-bottom:10px;}
+  body .dwh-hero .dwh-titre{font-size:clamp(30px,8.6vw,36px);}
+  body .dwh-hero__prix{margin-top:12px;}
+  body .dwh-hero__actions{margin-top:16px;}
+  body .dwh-scene--centrale{height:450px;}
+  body .dwh-scene--centrale .dwh-tel{transform:translate(-50%) scale(.78);transform-origin:50% 0;}
+  body .dwh-centrale{bottom:14px;}
+  body .dwh-rassure{padding-top:14px;padding-bottom:14px;}
+
+  /* Gamme de packs 2026 */
+  body .gmh .gmh__bloc{padding:36px 16px;}
+  body .gmh .gmh__grille{gap:16px;}
+  body .gmh .gmh__titre{margin-top:12px;font-size:clamp(26px,7vw,30px);}
+  body .gmh .gmh__visuel img{aspect-ratio:16/10;}
+  body .gmh .gmh__grand{font-size:clamp(40px,11vw,52px);}
+  body .gmh .gmh__barre{font-size:18px;}
+  body .gmh .gmh__eco{margin-top:10px;padding:7px 12px;font-size:14.5px;}
+  body .gmh .gmh__alma{margin-top:6px;font-size:14px;}
+  body .gmh .gmh__promo{margin-top:10px;padding:8px 12px;font-size:14px;}
+  body .gmh .gmh__texte{display:none;}
+  body .gmh .gmh__puces{margin-top:14px;gap:6px;}
+  body .gmh .gmh__puces li{font-size:14px;}
+  body .gmh .gmh__choix-titre{margin-top:18px;margin-bottom:12px;}
+  body .gmh .gmh__choix{gap:8px;}
+  body .gmh .gmh__carte{padding:11px 11px 10px;border-radius:14px;}
+  body .gmh .gmh__nom{font-size:15px;}
+  body .gmh .gmh__sous{font-size:12px;line-height:1.3;}
+  body .gmh .gmh__prix{margin-top:4px;}
+  body .gmh .gmh__prix b{font-size:16px;}
+  body .gmh .gmh__cta{margin-top:16px;}
+  body .gmh .gmh__tous{margin-top:10px;}
+  body .gmh .gmh__note{font-size:11px;}
+
+  /* Avis Google */
+  body .agl .agl__bloc{padding-top:26px;padding-bottom:28px;}
+
+  /* Encart Finale du configurateur */
+  body .bfc{padding:20px 16px;}
+  body .bfc .bfc__carte{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:16px 14px;}
+  body .bfc .bfc__sceau{width:64px;height:64px;}
+  body .bfc .bfc__sceau-val{font-size:19px;}
+  body .bfc .bfc__sceau-txt,body .bfc .bfc__sceau-haut{font-size:8.5px;}
+  body .bfc .bfc__titre{font-size:18px;}
+  body .bfc .bfc__mention{font-size:10.5px;line-height:1.4;}
+
+  /* Quiz « Quelle alarme est faite pour vous ? » */
+  body .dwh-quiz{padding:14px 14px 16px;border-radius:24px;}
+  body .dwh-quiz__progres{margin:8px 4px 14px;}
+  body .dwh-quiz__question{margin-bottom:12px;font-size:21px;}
+  body .dwh-quiz__choix{gap:8px;}
+  body .dwh-choix{min-height:64px;padding:10px 14px 10px 10px;gap:12px;grid-template-columns:42px 1fr 18px;}
+  body .dwh-choix__ico{width:42px;height:42px;border-radius:12px;}
+  body .dwh-choix__txt small{font-size:13px;}
+  body .dwh-quiz__rassure{margin-top:14px;font-size:13px;}
+  body .dwh-quiz__direct{margin-top:12px;padding-top:12px;}
+
+  /* Packs prêts à poser */
+  body .dwh-vedettes{gap:14px;}
+  body .dwh-vedette__visuel{aspect-ratio:auto;height:190px;}
+  body .dwh-vedette__visuel img,body .dwh-vedette__visuel svg{padding:10px;}
+  body .dwh-vedette__corps{gap:9px;padding:16px 16px 18px;}
+  body .dwh-vedette__nom{font-size:23px;}
+  body .dwh-vedette__pitch{font-size:14px;line-height:1.45;}
+  body .dwh-vedette__liste{gap:5px;}
+  body .dwh-vedette__liste li{font-size:13.5px;line-height:1.35;}
+  body .dwh-vedette .dwh-pack__prix{padding-top:12px;}
+  body .dwh-vedette .dwh-pack__montant{font-size:27px;}
+
+  /* Configurateur */
+  body .dwh-config{gap:16px;padding:22px 18px 20px;border-radius:24px;}
+  body .dwh-config .dwh-titre{margin-top:10px;}
+  body .dwh-config__etapes{gap:10px;}
+  body .dwh-config__etape b{font-size:15px;padding-top:6px;}
+  body .dwh-config__etape small{font-size:13px;line-height:1.35;}
+
+  /* Calcul abonnement */
+  body .dwh-duel__carte{padding:18px 18px;}
+  body .dwh-duel__prix{font-size:38px;}
+  body .dwh-duel__carte--nous .dwh-duel__prix{font-size:46px;}
+  body .dwh-duel__detail{margin-top:8px;font-size:14px;}
+  body .dwh-duel__puces{margin-top:12px;padding-top:12px;gap:6px;}
+  body .dwh-duel__puces li{font-size:14px;}
+  body .dwh-duel__bilan{margin-top:12px;padding:12px 14px;font-size:15.5px;}
+
+  /* Atouts */
+  body .dwh-atout{padding:14px 0;}
+  body .dwh-atout h3{font-size:16px;}
+  body .dwh-atout p{font-size:14px;line-height:1.45;}
+
+  /* Dissuasion */
+  body .dwhd .dwhd__visuel{height:170px;}
+  body .dwhd .dwhd__texte{padding:24px 20px 28px;}
+  body .dwhd .dwhd__titre{font-size:clamp(26px,7.2vw,30px);}
+  body .dwhd .dwhd__chapo{font-size:15px;}
+  body .dwhd .dwhd__actions{margin-top:16px;}
+
+  /* FAQ */
+  body .dwh-faq summary{min-height:52px;padding:14px 0;font-size:15.5px;}
+
+  /* Fin de page */
+  body .dwh-final__notif{margin-bottom:22px;}
+  body .dwh-final__actions{margin-top:22px;}
+
+  /* Carrousel d'avis Judge.me vide : pas d'espace blanc */
+  body .shopify-section:has(.jdgm-cards-carousel.jdgm-hidden):not(:has(.jdgm-cards-carousel:not(.jdgm-hidden))){display:none;}
+}
+</style>

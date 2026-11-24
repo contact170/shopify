@@ -525,3 +525,27 @@ par le dirigeant.
   jours », questions Franck toujours présentes sur les packs, aucune erreur
   JavaScript, pas de débordement mobile. Paniers simulés inchangés (palier 450 €
   avec contacteurs : 399,18 € ; palier 900 € à −31 % : 627,36 €).
+
+### Accueil plus compact sur mobile (24/11)
+
+- Copie « Accueil mobile compact 24112026 (Claude) »
+  (`gid://shopify/OnlineStoreTheme/209883136340`), faite depuis le thème en
+  ligne « Finale BF clair 24112026 (Claude) ». À publier par le dirigeant.
+- Nouveau snippet `dw-accueil-mobile` (copie dans
+  `theme/accueil-mobile-2026/snippets/`), rendu juste avant `</body>` dans
+  `layout/theme.liquid`, sur la page d'accueil seulement :
+  `{%- if template.name == 'index' -%}{%- render 'dw-accueil-mobile' -%}{%- endif -%}`.
+  Tout est sous `@media (max-width:749px)` : rien ne change sur ordinateur.
+- Réductions : marges des blocs (64 → 40 px), titres (33 → 28 px), en-tête
+  Black Friday (titre, compte à rebours, ticket, cartes du carrousel plus
+  étroites), téléphone du bloc d'accueil réduit à 78 %, image de la gamme en
+  16/10, images des 2 packs « prêts à poser » ramenées à 190 px (elles étaient
+  forcées à 348 px), quiz, configurateur, comparatif d'abonnement, atouts,
+  FAQ. Mentions légales en 10,5–11 px.
+- Masqués sur mobile : le paragraphe d'introduction de la gamme 2026 (les 4
+  puces restent) et la section vide du carrousel d'avis Judge.me (84 px blancs,
+  le widget est masqué par Judge.me ; elle réapparaît si le widget s'affiche).
+- Mesure (390 px) : page de 14 369 px (17 écrans) → 11 664 px (13,8 écrans),
+  encart Finale du configurateur du 5,9e au 4,8e écran. Ordinateur identique
+  (10 983 px avant et après). Aucune erreur Liquid, pas de débordement.
+- Pour annuler : retirer la ligne de rendu de `layout/theme.liquid`.
