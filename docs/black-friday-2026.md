@@ -517,3 +517,11 @@ par le dirigeant.
   gris très clair `#f5f6fa` avec cartes blanches ombrées, liens « Voir l'offre »
   bleu marine, mention du bon en pastille jaune pâle. Étapes du bon et
   réassurance sur fond blanc, coches bleu marine.
+- 24/11 vers 15h : « Finale BF clair 24112026 (Claude) » publiée par le
+  dirigeant. Contrôle en ligne : 7 pages clés sans erreur Liquid (accueil, page
+  BF, 2 packs, W503, configurateur, panier), encarts Finale visibles sur
+  l'accueil et la page BF (paliers −14,5 / −20,1 / −25,6 / −31 %, « Fin dans
+  6 j 8 h »), bandeau défilant « Dernière ligne droite » puis « Derniers
+  jours », questions Franck toujours présentes sur les packs, aucune erreur
+  JavaScript, pas de débordement mobile. Paniers simulés inchangés (palier 450 €
+  avec contacteurs : 399,18 € ; palier 900 € à −31 % : 627,36 €).
