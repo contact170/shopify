@@ -445,3 +445,36 @@ tel quel).
 - Codes CFG actifs jusqu'au 24/11 10h (25 utilisations) ; panier configurateur
   469,60 € → 371,25 € avec CFG21. Lovable : fin 24/11 10h, mêmes codes.
 - Questions Franck présentes en ligne sur les 8 packs, absentes ailleurs.
+
+## Finale Black Friday du configurateur (24 au 30 novembre)
+
+Offre du dirigeant, mise en ligne par Lovable le 24/11 à 11h30 : à chaque
+palier, une remise en plus ou, dès 450 €, un cadeau au choix. Les codes ne
+sont pas recopiés ici (voir Shopify, Réductions, titres « BF finale … »).
+
+| Palier | Remise en plus | Ou cadeau (minimum du code après remise) |
+| --- | --- | --- |
+| dès 300 € | +5 %, total 14,5 % (code créé le 24/11) | — |
+| dès 450 € | +6 %, total 20,1 % (code créé le 24/11) | 2 WDV301, ou 2 WDS502Z pour Élite (440 €) |
+| dès 700 € | +7 %, total 25,6 % (code du palier 700 € prolongé) | W503 (650 €) |
+| dès 900 € | +8 %, total 31 % (code créé le 24/11) | W512MW (790 €) |
+
+- 11 codes actifs du 24/11 11h30 au 30/11 23h59. Codes de palier limités à
+  la collection `accessoires-configurateurs`, minimum sur le montant avant
+  remise. Codes cadeaux : remise de commande égale au prix du cadeau après la
+  remise du palier.
+- **Minimum des codes cadeaux** : Shopify le vérifie **après** la remise
+  automatique du configurateur (testé : refusé sur 709,20 € soit 567,36 € après
+  −20 %, accepté sur 789 € soit 631,20 €). Les 450/700/900 € demandés par
+  Lovable auraient bloqué des paniers légitimes ; réglés à 440/650/790 €, soit
+  les plus petits paniers réels (441,83 / 655,92 / 794,93 € après remise,
+  cadeau compris).
+- « 1 utilisation par client » retirée sur les 11 codes (des clients du
+  week-end avaient déjà utilisé les codes repris).
+- Les 2 codes cadeaux du palier 25 % rendus cumulables avec les remises
+  automatiques (ils ne l'étaient pas : le client aurait perdu le palier ou le
+  cadeau).
+- 9 paniers simulés : chaque palier, remise et cadeau, au centime près
+  (ex. 469,60 € + 2 WDV301 → 399,18 € ; 909,10 € + W512MW → 681,87 €).
+- Fiche Notion de Franck mise à jour (résumé, partie 5, bon, ancienne offre
+  W503). Resynchroniser la source dans Chatbase.
