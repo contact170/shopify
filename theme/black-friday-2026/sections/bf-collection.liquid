@@ -8,9 +8,9 @@
     Prix barré : prix barré Shopify de la variante la moins chère, sinon son métachamp custom.prix_reference.
   - Étapes du bon et réassurance : masquées si leurs textes sont vides.
   - Encart du configurateur (entre l'en-tête et la grille) : visible entre sa date de début et sa
-    date de fin, puis disparaît seul. Paliers « seuil|remise du configurateur », la remise totale
-    affichée est calculée avec la remise supplémentaire. Classes en bfc__cfg-… (pas de conflit
-    avec les cartes produits).
+    date de fin, puis disparaît seul. Paliers « seuil|remise du configurateur|remise en plus|cadeau »
+    (deux derniers champs facultatifs), la remise totale affichée est calculée avec la remise en plus
+    du palier. Classes en bfc__cfg-… (pas de conflit avec les cartes produits).
   - Produits en promotion (liste « Produits remisés ») : badge « −X % » calculé avec le prix barré,
     arrondi à l'inférieur pour ne jamais annoncer plus que la remise réelle.
 {%- endcomment -%}
@@ -100,6 +100,7 @@
       <div class="dwh-large">
         <div class="bfc__cfg-carte">
           <div class="bfc__cfg-sceau" aria-hidden="true">
+            {%- if section.settings.cfg_seal_top != blank -%}<span class="bfc__cfg-sceau-haut">{{ section.settings.cfg_seal_top }}</span>{%- endif -%}
             <span class="bfc__cfg-sceau-val">−{{ cfg_bonus }}&nbsp;%</span>
             <span class="bfc__cfg-sceau-txt">{{ section.settings.cfg_seal }}</span>
           </div>
@@ -111,13 +112,25 @@
             {%- if section.settings.cfg_text != blank -%}<p class="bfc__cfg-texte">{{ section.settings.cfg_text }}</p>{%- endif -%}
             {%- if section.settings.cfg_tiers != blank -%}
               {%- assign cfg_lignes = section.settings.cfg_tiers | newline_to_br | split: '<br />' -%}
-              <ul class="bfc__cfg-paliers" role="list" aria-label="Remise totale selon le montant d'achat">
+              <ul class="bfc__cfg-paliers" role="list" aria-label="Remise totale ou cadeau selon le montant d'achat">
                 {%- for ligne in cfg_lignes -%}
                   {%- assign morceaux = ligne | strip | split: '|' -%}
-                  {%- if morceaux.size == 2 -%}
+                  {%- if morceaux.size >= 2 -%}
                     {%- liquid
                       assign remise = morceaux[1] | strip | plus: 0 | round
-                      assign reste = 100 | minus: remise | times: cfg_reste_bonus
+                      assign bonus_palier = cfg_bonus
+                      if morceaux.size >= 3
+                        assign bonus_texte = morceaux[2] | strip
+                        if bonus_texte != blank
+                          assign bonus_palier = bonus_texte | plus: 0 | round
+                        endif
+                      endif
+                      assign cadeau = ''
+                      if morceaux.size >= 4
+                        assign cadeau = morceaux[3] | strip
+                      endif
+                      assign reste_palier = 100 | minus: bonus_palier
+                      assign reste = 100 | minus: remise | times: reste_palier
                       assign dixiemes = 10000 | minus: reste | plus: 5 | divided_by: 10
                       assign entier = dixiemes | divided_by: 10
                       assign decimale = dixiemes | modulo: 10
@@ -125,6 +138,11 @@
                     <li class="bfc__cfg-palier">
                       <span class="bfc__cfg-seuil">{{ morceaux[0] | strip }}</span>
                       <span class="bfc__cfg-total">−{{ entier }}{% if decimale > 0 %},{{ decimale }}{% endif %}&nbsp;%</span>
+                      {%- if cadeau != blank -%}
+                        <span class="bfc__cfg-cadeau">ou {{ cadeau }}</span>
+                      {%- elsif morceaux.size >= 3 -%}
+                        <span class="bfc__cfg-cadeau bfc__cfg-cadeau--remise">+{{ bonus_palier }}&nbsp;% en plus</span>
+                      {%- endif -%}
                     </li>
                   {%- endif -%}
                 {%- endfor -%}
@@ -314,15 +332,18 @@
   .bfc .bfc__cfg-sceau{grid-area:s;display:flex;flex-direction:column;align-items:center;justify-content:center;width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#ffe24d,var(--bf-jaune) 55%,#e6b800);color:var(--bf-noir);box-shadow:0 0 0 4px rgba(255,213,0,.22);}
   .bfc .bfc__cfg-sceau-val{font-size:22px;font-weight:900;line-height:1;letter-spacing:-.02em;white-space:nowrap;}
   .bfc .bfc__cfg-sceau-txt{margin-top:3px;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
+  .bfc .bfc__cfg-sceau-haut{margin-bottom:2px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
   .bfc .bfc__cfg-tete{grid-area:t;}
   .bfc .bfc__cfg-pastille{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bf-jaune);}
   .bfc .bfc__cfg-titre{margin-top:6px;font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.01em;color:#fff;text-wrap:balance;}
   .bfc .bfc__cfg-corps{grid-area:c;min-width:0;}
   .bfc .bfc__cfg-texte{display:none;font-size:15px;line-height:1.5;color:var(--bf-gris);text-wrap:pretty;}
-  .bfc .bfc__cfg-paliers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none;}
+  .bfc .bfc__cfg-paliers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none;}
   .bfc .bfc__cfg-palier{display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 2px;border-radius:12px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,213,0,.25);text-align:center;}
   .bfc .bfc__cfg-seuil{font-size:11px;font-weight:600;color:var(--bf-gris);white-space:nowrap;}
   .bfc .bfc__cfg-total{font-size:clamp(14px,4.3vw,20px);font-weight:800;line-height:1;color:var(--bf-jaune);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .bfc .bfc__cfg-cadeau{font-size:11.5px;font-weight:600;line-height:1.25;color:#fff;text-wrap:balance;}
+  .bfc .bfc__cfg-cadeau--remise{font-weight:500;color:var(--bf-gris);}
   .bfc .bfc__cfg-legende{margin-top:8px;font-size:12px;line-height:1.4;color:#9aa2b5;}
   .bfc .bfc__cfg-action{grid-area:a;display:flex;flex-direction:column;gap:12px;}
   .bfc .bfc__cfg-infos{display:flex;flex-wrap:wrap;gap:8px;}
@@ -379,7 +400,7 @@
   .bfc :focus-visible{outline-color:var(--bf-jaune);}
 
   @media (min-width:480px){
-    .bfc .bfc__cfg-paliers{gap:8px;}
+    .bfc .bfc__cfg-paliers{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
     .bfc .bfc__cfg-palier{padding:10px 8px;border-radius:14px;}
     .bfc .bfc__cfg-seuil{font-size:12.5px;}
   }
@@ -389,6 +410,7 @@
     .bfc .bfc__cfg-sceau{width:128px;height:128px;align-self:start;}
     .bfc .bfc__cfg-sceau-val{font-size:36px;}
     .bfc .bfc__cfg-sceau-txt{font-size:11px;}
+    .bfc .bfc__cfg-sceau-haut{font-size:11px;}
     .bfc .bfc__cfg-titre{font-size:26px;}
     .bfc .bfc__cfg-texte{display:block;margin-bottom:14px;}
     .bfc .bfc__cfg-action{align-self:center;align-items:stretch;min-width:240px;}
@@ -483,32 +505,33 @@
     { "type": "text", "id": "coupon_kicker", "label": "Au-dessus du montant", "default": "Bon de" },
     { "type": "text", "id": "coupon_title", "label": "Titre", "default": "offerts sur votre prochaine commande" },
     { "type": "textarea", "id": "coupon_text", "label": "Conditions" },
-    { "type": "product_list", "id": "bon1_products", "label": "Palier 1 : produits", "limit": 20 },
+    { "type": "product_list", "id": "bon1_products", "label": "Palier 1 : produits", "limit": 20},
     { "type": "text", "id": "bon1_amount", "label": "Palier 1 : montant du bon", "default": "30 €" },
-    { "type": "product_list", "id": "bon2_products", "label": "Palier 2 : produits", "limit": 20 },
+    { "type": "product_list", "id": "bon2_products", "label": "Palier 2 : produits", "limit": 20},
     { "type": "text", "id": "bon2_amount", "label": "Palier 2 : montant du bon", "default": "50 €" },
-    { "type": "product_list", "id": "bon3_products", "label": "Palier 3 : produits", "limit": 20 },
+    { "type": "product_list", "id": "bon3_products", "label": "Palier 3 : produits", "limit": 20},
     { "type": "text", "id": "bon3_amount", "label": "Palier 3 : montant du bon", "default": "70 €" },
     { "type": "text", "id": "bon_badge", "label": "Badge des produits avec un bon", "info": "[bon] = montant du palier.", "default": "+[bon] offerts" },
     { "type": "text", "id": "bon_gift", "label": "Mention des produits avec un bon", "info": "[bon] = montant du palier.", "default": "Bon de [bon] envoyé le 15 décembre" },
-    { "type": "product_list", "id": "promo_products", "label": "Produits remisés", "info": "Badge en pourcentage calculé avec le prix barré Shopify.", "limit": 20 },
+    { "type": "product_list", "id": "promo_products", "label": "Produits remisés", "info": "Badge en pourcentage calculé avec le prix barré Shopify.", "limit": 20},
     { "type": "text", "id": "promo_badge", "label": "Badge des produits remisés", "info": "[remise] = pourcentage de remise, arrondi à l'inférieur.", "default": "−[remise] %" },
     { "type": "text", "id": "default_badge", "label": "Badge des autres produits", "default": "Prix Black Friday" },
     { "type": "header", "content": "Encart configurateur" },
     { "type": "paragraph", "content": "Entre l'en-tête et la liste. Titre vide : encart masqué. Il disparaît seul après sa date de fin." },
-    { "type": "text", "id": "cfg_start", "label": "Début", "info": "Vide : visible tout de suite. Avant cette date, ajoutez ?bf_test=1 à l'adresse pour le voir." },
-    { "type": "text", "id": "cfg_end", "label": "Fin", "default": "2026-11-24T10:00:00+01:00" },
-    { "type": "number", "id": "cfg_bonus", "label": "Remise supplémentaire (%)", "default": 7 },
-    { "type": "text", "id": "cfg_seal", "label": "Sous le pourcentage", "default": "en plus" },
-    { "type": "text", "id": "cfg_label", "label": "Pastille", "default": "Prolongation exceptionnelle" },
-    { "type": "text", "id": "cfg_title", "label": "Titre", "default": "Votre alarme sur mesure : −7 % en plus de la remise du configurateur" },
-    { "type": "textarea", "id": "cfg_text", "label": "Texte (masqué sur mobile)", "default": "Composez votre alarme avec notre configurateur : les 7 % s'ajoutent à sa remise et sont appliqués automatiquement au paiement, sans code à saisir." },
-    { "type": "textarea", "id": "cfg_tiers", "label": "Paliers", "default": "dès 300 €|10\ndès 450 €|15\ndès 700 €|20\ndès 900 €|25", "info": "Une ligne par palier : seuil|remise du configurateur en %." },
-    { "type": "text", "id": "cfg_caption", "label": "Paliers : légende", "default": "Remise totale : remise du configurateur + 7 %" },
-    { "type": "text", "id": "cfg_end_text", "label": "Échéance affichée", "default": "Jusqu'à mardi 10h" },
+    { "type": "text", "id": "cfg_start", "label": "Début", "info": "Vide : visible tout de suite. Avant cette date, ajoutez ?bf_test=1 à l'adresse pour le voir.", "default": "2026-11-24T11:30:00+01:00" },
+    { "type": "text", "id": "cfg_end", "label": "Fin", "default": "2026-11-30T23:59:59+01:00" },
+    { "type": "number", "id": "cfg_bonus", "label": "Remise en plus la plus forte (%)", "default": 8},
+    { "type": "text", "id": "cfg_seal_top", "label": "Au-dessus du pourcentage", "default": "jusqu'à" },
+    { "type": "text", "id": "cfg_seal", "label": "Sous le pourcentage", "default": "ou cadeau" },
+    { "type": "text", "id": "cfg_label", "label": "Pastille", "default": "Finale Black Friday · dernière ligne droite" },
+    { "type": "text", "id": "cfg_title", "label": "Titre", "default": "Jusqu'à −8 % en plus ou un cadeau sur votre alarme sur mesure" },
+    { "type": "textarea", "id": "cfg_text", "label": "Texte (masqué sur mobile)", "default": "Dernière ligne droite du Black Friday : composez votre alarme avec le configurateur. À chaque palier, une remise s'ajoute à celle du configurateur, et dès 450 € vous pouvez choisir un cadeau à la place. Tout s'applique automatiquement au paiement, sans code à saisir." },
+    { "type": "textarea", "id": "cfg_tiers", "label": "Paliers", "default": "dès 300 €|10|5\ndès 450 €|15|6|2 contacteurs offerts\ndès 700 €|20|7|caméra W503 offerte\ndès 900 €|25|8|caméra W512MW offerte", "info": "Une ligne par palier : seuil|remise du configurateur|remise en plus|cadeau (les deux derniers facultatifs)." },
+    { "type": "text", "id": "cfg_caption", "label": "Paliers : légende", "default": "Remise totale : remise du configurateur + remise Finale. Ou le cadeau, au choix dans votre devis." },
+    { "type": "text", "id": "cfg_end_text", "label": "Échéance affichée", "default": "Jusqu'au lundi 30 novembre" },
     { "type": "text", "id": "cfg_cta", "label": "Bouton", "default": "Composer mon alarme" },
     { "type": "text", "id": "cfg_link", "label": "Lien du bouton", "default": "/pages/configurateur_2" },
-    { "type": "textarea", "id": "cfg_conditions", "label": "Conditions", "default": "Offre réservée aux commandes passées via le configurateur, prolongée jusqu'au mardi 24 novembre 2026 10h, une fois par client. Les 7 % s'appliquent automatiquement au paiement, sur le prix après remise du configurateur (10 % dès 300 €, 15 % dès 450 €, 20 % dès 700 €, 25 % dès 900 € d'achat), hors canon à fumée, recharge, prises connectées et cartes SIM. Les commandes du configurateur ne donnent pas droit au bon d'achat Black Friday." },
+    { "type": "textarea", "id": "cfg_conditions", "label": "Conditions", "default": "Offre réservée aux commandes passées via le configurateur, du mardi 24 novembre 2026 11h30 au lundi 30 novembre 2026 23h59. Au choix selon le montant d'achat, en plus de la remise du configurateur (10, 15, 20 ou 25 %) : 5 % de remise en plus dès 300 €, 6 % ou 2 contacteurs offerts dès 450 €, 7 % ou la caméra W503 offerte dès 700 €, 8 % ou la caméra W512MW offerte dès 900 €. Remise calculée sur le prix après remise du configurateur, hors canon à fumée, recharge, prises connectées et cartes SIM. Contacteurs WDS502Z pour l'alarme Élite, WDV301 pour les autres. Les commandes du configurateur ne donnent pas droit au bon d'achat Black Friday." },
     { "type": "header", "content": "Liste" },
     { "type": "text", "id": "list_title", "label": "Titre de la liste", "default": "Toutes nos offres Black Friday" },
     { "type": "text", "id": "card_cta", "label": "Lien sur chaque carte", "default": "Voir l'offre" },

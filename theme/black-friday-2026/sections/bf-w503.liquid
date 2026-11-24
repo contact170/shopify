@@ -1,12 +1,16 @@
 {%- comment -%}
   Black Friday : encart de l'offre du configurateur, au-dessus de la section configurateur de l'accueil.
-  Fichier repris de l'encart « caméra W503 offerte » (terminé le 16/11 9h30) pour l'offre −7 %,
-  prolongée le 20/11 jusqu'au mardi 24/11 10h (« Prolongation exceptionnelle »)
-  (le nom du fichier est gardé pour ne pas modifier templates/index.json).
+  Fichier repris de l'encart « caméra W503 offerte » (terminé le 16/11 9h30), puis de l'offre −7 %
+  (jusqu'au 24/11 10h), pour la « Finale Black Friday » du 24/11 11h30 au 30/11 23h59 : une remise
+  en plus par palier, ou un cadeau au choix (le nom du fichier est gardé pour ne pas modifier
+  templates/index.json).
   - Visible entre la date de début et la date de fin, puis disparaît seul.
   - Avant la date de début, il est rendu masqué ; ?bf_test=1 dans l'adresse l'affiche pour le tester.
-  - Paliers : une ligne par palier « seuil|remise du configurateur » ; la remise totale affichée
-    est calculée à partir de cette remise et de la remise supplémentaire.
+  - Paliers : une ligne par palier « seuil|remise du configurateur|remise en plus|cadeau ». Les deux
+    derniers champs sont facultatifs : sans remise en plus, celle du réglage « Remise supplémentaire »
+    s'applique ; sans cadeau, le palier affiche « +X % en plus ». La remise totale affichée est
+    calculée à partir de la remise du configurateur et de la remise en plus du palier.
+  - Sur mobile, les paliers passent sur 2 colonnes.
   - Sur mobile, version compacte : le paragraphe d'explication est masqué.
 {%- endcomment -%}
 {%- liquid
@@ -42,6 +46,7 @@
   <div class="dwh-large">
     <div class="bfc__carte">
       <div class="bfc__sceau" aria-hidden="true">
+        {%- if section.settings.seal_top != blank -%}<span class="bfc__sceau-haut">{{ section.settings.seal_top }}</span>{%- endif -%}
         <span class="bfc__sceau-val">−{{ bonus }}&nbsp;%</span>
         <span class="bfc__sceau-txt">{{ section.settings.seal_text }}</span>
       </div>
@@ -56,10 +61,22 @@
           <ul class="bfc__paliers" role="list"{% if section.settings.tiers_label != blank %} aria-label="{{ section.settings.tiers_label | escape }}"{% endif %}>
             {%- for ligne in lignes -%}
               {%- assign morceaux = ligne | strip | split: '|' -%}
-              {%- if morceaux.size == 2 -%}
+              {%- if morceaux.size >= 2 -%}
                 {%- liquid
                   assign remise = morceaux[1] | strip | plus: 0 | round
-                  assign reste = 100 | minus: remise | times: reste_bonus
+                  assign bonus_palier = bonus
+                  if morceaux.size >= 3
+                    assign bonus_texte = morceaux[2] | strip
+                    if bonus_texte != blank
+                      assign bonus_palier = bonus_texte | plus: 0 | round
+                    endif
+                  endif
+                  assign cadeau = ''
+                  if morceaux.size >= 4
+                    assign cadeau = morceaux[3] | strip
+                  endif
+                  assign reste_palier = 100 | minus: bonus_palier
+                  assign reste = 100 | minus: remise | times: reste_palier
                   assign dixiemes = 10000 | minus: reste | plus: 5 | divided_by: 10
                   assign entier = dixiemes | divided_by: 10
                   assign decimale = dixiemes | modulo: 10
@@ -67,6 +84,11 @@
                 <li class="bfc__palier">
                   <span class="bfc__seuil">{{ morceaux[0] | strip }}</span>
                   <span class="bfc__total">−{{ entier }}{% if decimale > 0 %},{{ decimale }}{% endif %}&nbsp;%</span>
+                  {%- if cadeau != blank -%}
+                    <span class="bfc__cadeau">ou {{ cadeau }}</span>
+                  {%- elsif morceaux.size >= 3 -%}
+                    <span class="bfc__cadeau bfc__cadeau--remise">+{{ bonus_palier }}&nbsp;% en plus</span>
+                  {%- endif -%}
                 </li>
               {%- endif -%}
             {%- endfor -%}
@@ -99,15 +121,18 @@
   .bfc .bfc__sceau{grid-area:s;display:flex;flex-direction:column;align-items:center;justify-content:center;width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#ffe24d,var(--bf-jaune) 55%,#e6b800);color:var(--bf-noir);box-shadow:0 0 0 4px rgba(255,213,0,.22);}
   .bfc .bfc__sceau-val{font-size:22px;font-weight:900;line-height:1;letter-spacing:-.02em;white-space:nowrap;}
   .bfc .bfc__sceau-txt{margin-top:3px;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
+  .bfc .bfc__sceau-haut{margin-bottom:2px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
   .bfc .bfc__tete{grid-area:t;}
   .bfc .bfc__pastille{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bf-jaune);}
   .bfc .bfc__titre{margin-top:6px;font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.01em;color:#fff;text-wrap:balance;}
   .bfc .bfc__corps{grid-area:c;min-width:0;}
   .bfc .bfc__texte{display:none;font-size:15px;line-height:1.5;color:#c9cfdd;text-wrap:pretty;}
-  .bfc .bfc__paliers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none;}
+  .bfc .bfc__paliers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none;}
   .bfc .bfc__palier{display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 2px;border-radius:12px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,213,0,.25);text-align:center;}
   .bfc .bfc__seuil{font-size:11px;font-weight:600;color:#c9cfdd;white-space:nowrap;}
   .bfc .bfc__total{font-size:clamp(14px,4.3vw,20px);font-weight:800;line-height:1;color:var(--bf-jaune);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .bfc .bfc__cadeau{font-size:11.5px;font-weight:600;line-height:1.25;color:#fff;text-wrap:balance;}
+  .bfc .bfc__cadeau--remise{font-weight:500;color:#c9cfdd;}
   .bfc .bfc__legende{margin-top:8px;font-size:12px;line-height:1.4;color:#9aa2b5;}
   .bfc .bfc__action{grid-area:a;display:flex;flex-direction:column;gap:12px;}
   .bfc .bfc__infos{display:flex;flex-wrap:wrap;gap:8px;}
@@ -119,7 +144,7 @@
   .bfc .bfc__mention{grid-area:m;font-size:11.5px;line-height:1.45;color:#9aa2b5;}
   .bfc :focus-visible{outline-color:var(--bf-jaune);}
   @media (min-width:480px){
-    .bfc .bfc__paliers{gap:8px;}
+    .bfc .bfc__paliers{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
     .bfc .bfc__palier{padding:10px 8px;border-radius:14px;}
     .bfc .bfc__seuil{font-size:12.5px;}
   }
@@ -129,6 +154,7 @@
     .bfc .bfc__sceau{width:128px;height:128px;align-self:start;}
     .bfc .bfc__sceau-val{font-size:36px;}
     .bfc .bfc__sceau-txt{font-size:11px;}
+    .bfc .bfc__sceau-haut{font-size:11px;}
     .bfc .bfc__titre{font-size:26px;}
     .bfc .bfc__texte{display:block;margin-bottom:14px;}
     .bfc .bfc__action{align-self:center;align-items:stretch;min-width:240px;}
@@ -170,23 +196,113 @@
   "tag": "div",
   "class": "bfc-section",
   "settings": [
-    { "type": "header", "content": "Période" },
-    { "type": "text", "id": "start_date", "label": "Début", "default": "2026-11-16T17:00:00+01:00", "info": "Avant cette date, l'encart est masqué (ajoutez ?bf_test=1 à l'adresse pour le voir)." },
-    { "type": "text", "id": "end_date", "label": "Fin", "default": "2026-11-24T10:00:00+01:00", "info": "L'encart disparaît automatiquement après cette date." },
-    { "type": "header", "content": "Contenu" },
-    { "type": "number", "id": "bonus", "label": "Remise supplémentaire (%)", "default": 7 },
-    { "type": "text", "id": "seal_text", "label": "Sous le pourcentage", "default": "en plus" },
-    { "type": "text", "id": "label", "label": "Pastille", "default": "Prolongation exceptionnelle" },
-    { "type": "text", "id": "title", "label": "Titre", "default": "−7 % en plus de la remise du configurateur" },
-    { "type": "textarea", "id": "text", "label": "Texte (masqué sur mobile)", "default": "Prolongation exceptionnelle jusqu'à mardi 10h : composez votre alarme sur mesure, les 7 % s'ajoutent à la remise du configurateur et sont appliqués automatiquement au paiement, sans code à saisir." },
-    { "type": "textarea", "id": "tiers", "label": "Paliers", "default": "dès 300 €|10\ndès 450 €|15\ndès 700 €|20\ndès 900 €|25", "info": "Une ligne par palier : seuil|remise du configurateur en %. La remise totale affichée est calculée avec la remise supplémentaire." },
-    { "type": "text", "id": "tiers_label", "label": "Paliers : titre pour les lecteurs d'écran", "default": "Remise totale selon le montant d'achat" },
-    { "type": "text", "id": "tiers_caption", "label": "Paliers : légende", "default": "Remise totale : remise du configurateur + 7 %" },
-    { "type": "text", "id": "end_text", "label": "Échéance affichée", "default": "Jusqu'à mardi 10h" },
-    { "type": "text", "id": "cta_label", "label": "Bouton", "default": "Composer mon alarme" },
-    { "type": "text", "id": "cta_link", "label": "Lien du bouton", "default": "/pages/configurateur_2" },
-    { "type": "textarea", "id": "conditions", "label": "Conditions", "default": "Offre réservée aux commandes passées via le configurateur, prolongée jusqu'au mardi 24 novembre 2026 10h, une fois par client. Les 7 % s'appliquent automatiquement au paiement, sur le prix après remise du configurateur (10 % dès 300 €, 15 % dès 450 €, 20 % dès 700 €, 25 % dès 900 € d'achat), hors canon à fumée, recharge, prises connectées et cartes SIM. Les commandes du configurateur ne donnent pas droit au bon d'achat Black Friday." }
+    {
+      "type": "header",
+      "content": "Période"
+    },
+    {
+      "type": "text",
+      "id": "start_date",
+      "label": "Début",
+      "default": "2026-11-24T11:30:00+01:00",
+      "info": "Avant cette date, l'encart est masqué (ajoutez ?bf_test=1 à l'adresse pour le voir)."
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "Fin",
+      "default": "2026-11-30T23:59:59+01:00",
+      "info": "L'encart disparaît automatiquement après cette date."
+    },
+    {
+      "type": "header",
+      "content": "Contenu"
+    },
+    {
+      "type": "number",
+      "id": "bonus",
+      "label": "Remise en plus la plus forte (%)",
+      "default": 8,
+      "info": "Affichée dans la pastille ronde, et utilisée pour les paliers sans remise propre."
+    },
+    {
+      "type": "text",
+      "id": "seal_top",
+      "label": "Au-dessus du pourcentage",
+      "default": "jusqu'à"
+    },
+    {
+      "type": "text",
+      "id": "seal_text",
+      "label": "Sous le pourcentage",
+      "default": "ou cadeau"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Pastille",
+      "default": "Finale Black Friday · dernière ligne droite"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Jusqu'à −8 % en plus ou un cadeau sur votre alarme sur mesure"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texte (masqué sur mobile)",
+      "default": "Dernière ligne droite du Black Friday : composez votre alarme avec le configurateur. À chaque palier, une remise s'ajoute à celle du configurateur, et dès 450 € vous pouvez choisir un cadeau à la place. Tout s'applique automatiquement au paiement, sans code à saisir."
+    },
+    {
+      "type": "textarea",
+      "id": "tiers",
+      "label": "Paliers",
+      "default": "dès 300 €|10|5\ndès 450 €|15|6|2 contacteurs offerts\ndès 700 €|20|7|caméra W503 offerte\ndès 900 €|25|8|caméra W512MW offerte",
+      "info": "Une ligne par palier : seuil|remise du configurateur|remise en plus|cadeau (les deux derniers facultatifs)."
+    },
+    {
+      "type": "text",
+      "id": "tiers_label",
+      "label": "Paliers : titre pour les lecteurs d'écran",
+      "default": "Remise totale ou cadeau selon le montant d'achat"
+    },
+    {
+      "type": "text",
+      "id": "tiers_caption",
+      "label": "Paliers : légende",
+      "default": "Remise totale : remise du configurateur + remise Finale. Ou le cadeau, au choix dans votre devis."
+    },
+    {
+      "type": "text",
+      "id": "end_text",
+      "label": "Échéance affichée",
+      "default": "Jusqu'au lundi 30 novembre"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Bouton",
+      "default": "Composer mon alarme"
+    },
+    {
+      "type": "text",
+      "id": "cta_link",
+      "label": "Lien du bouton",
+      "default": "/pages/configurateur_2"
+    },
+    {
+      "type": "textarea",
+      "id": "conditions",
+      "label": "Conditions",
+      "default": "Offre réservée aux commandes passées via le configurateur, du mardi 24 novembre 2026 11h30 au lundi 30 novembre 2026 23h59. Au choix selon le montant d'achat, en plus de la remise du configurateur (10, 15, 20 ou 25 %) : 5 % de remise en plus dès 300 €, 6 % ou 2 contacteurs offerts dès 450 €, 7 % ou la caméra W503 offerte dès 700 €, 8 % ou la caméra W512MW offerte dès 900 €. Remise calculée sur le prix après remise du configurateur, hors canon à fumée, recharge, prises connectées et cartes SIM. Contacteurs WDS502Z pour l'alarme Élite, WDV301 pour les autres. Les commandes du configurateur ne donnent pas droit au bon d'achat Black Friday."
+    }
   ],
-  "presets": [ { "name": "Black Friday · Config" } ]
+  "presets": [
+    {
+      "name": "Black Friday · Config"
+    }
+  ]
 }
 {% endschema %}
