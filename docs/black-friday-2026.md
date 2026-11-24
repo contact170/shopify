@@ -549,3 +549,12 @@ par le dirigeant.
   encart Finale du configurateur du 5,9e au 4,8e écran. Ordinateur identique
   (10 983 px avant et après). Aucune erreur Liquid, pas de débordement.
 - Pour annuler : retirer la ligne de rendu de `layout/theme.liquid`.
+- 24/11 en fin d'après-midi : « Accueil mobile compact 24112026 (Claude) »
+  publiée par le dirigeant. Contrôle en ligne : accueil mobile 11 681 px
+  (13,8 écrans), ordinateur 10 984 px (inchangé), aucune erreur Liquid, pas de
+  débordement. Compte à rebours, encart Finale (paliers −14,5 / −20,1 / −25,6 /
+  −31 %), bandeau « Dernière ligne droite », quiz (question 1 → 2), barre
+  collante et carrousel Black Friday fonctionnent. Page BF, pack Sécurité
+  Intégrale (questions Franck présentes), pack Vigilia, W503 (83,90 € au lieu
+  de 119,90 €), configurateur et panier : sans erreur, sans le CSS de
+  l'accueil. Codes de la Finale actifs jusqu'au 30/11 23h59.
