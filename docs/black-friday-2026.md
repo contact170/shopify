@@ -558,3 +558,34 @@ par le dirigeant.
   Intégrale (questions Franck présentes), pack Vigilia, W503 (83,90 € au lieu
   de 119,90 €), configurateur et panier : sans erreur, sans le CSS de
   l'accueil. Codes de la Finale actifs jusqu'au 30/11 23h59.
+
+### Rupture de la caméra W512MW (25/11)
+
+- La W512MW est en rupture ; réapprovisionnement entre le 5 et le 10 décembre.
+  Tout reste commandable (stock Shopify inchangé, 673 unités affichées) : les
+  packs partent tout de suite, les caméras W512MW suivent séparément.
+- Thème en ligne le 25/11 au matin : « Panier et fiches BF 25112026 (Claude) »
+  (`209894015316`, fait dans une autre session). Copie à publier : « Rupture
+  W512MW v2 25112026 (Claude) » (`gid://shopify/OnlineStoreTheme/209947361620`).
+  Une première copie faite par erreur depuis l'ancien thème a été renommée
+  « NE PAS PUBLIER - Rupture W512MW ancienne base » (`209945067860`).
+- Nouveaux métachamps produit : « Disponibilité – titre » (`custom.dispo_titre`)
+  et « Disponibilité – message » (`custom.dispo_texte`), renseignés sur 13
+  produits : Sécurité Intégrale, Panorama, Panorama Duo (2 caméras), Vigilia
+  Sécurité Renforcée, offre Élite double W512MW (2), PA573 Harmonie+, PA574
+  Tranquillité+ (2), VIG506, VIG507, AM343, AM353, la caméra W512MW et sa
+  version configurateur (W512MWC). Pour retirer le message : vider ces champs.
+- Thème : snippet `dw-dispo-message` (encadré jaune placé par script juste
+  au-dessus du premier bouton d'achat, rendu avant `</body>` sur les fiches) ;
+  snippet `dw-dispo-panier` (ligne sous l'article dans `main-cart` et
+  `cart-drawer`) ; pastille sur les cartes de l'accueil (`bf-home`) et de la
+  page Black Friday (`bf-collection`) ; phrase ajoutée à la légende des paliers
+  de l'encart Finale (accueil et page BF). Copies des snippets dans
+  `theme/rupture-w512mw-2026/snippets/`.
+- Fiche Notion de Franck : partie « 1 bis » ajoutée (packs concernés,
+  expédition séparée, configurateur, packs non concernés). À resynchroniser
+  dans Chatbase.
+- Aperçu vérifié : message sur les fiches (mobile et ordinateur), absent des
+  packs non concernés, pastilles (2 sur l'accueil, 4 sur la page BF), légende,
+  panier et tiroir (ligne sous le pack et sous la caméra), aucune erreur Liquid.
+- À faire au réapprovisionnement : vider les métachamps des 13 produits.
