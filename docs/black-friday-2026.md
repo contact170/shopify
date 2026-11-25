@@ -589,3 +589,11 @@ par le dirigeant.
   packs non concernés, pastilles (2 sur l'accueil, 4 sur la page BF), légende,
   panier et tiroir (ligne sous le pack et sous la caméra), aucune erreur Liquid.
 - À faire au réapprovisionnement : vider les métachamps des 13 produits.
+- 25/11 : « Rupture W512MW v2 25112026 (Claude) » publiée par le dirigeant
+  (avertissement côté configurateur Lovable fait par lui). Contrôle en ligne :
+  message visible au-dessus du bouton d'achat sur les 11 packs et la caméra
+  (texte « 2 caméras » sur Panorama Duo, Élite double et PA574), absent des
+  packs non concernés ; pastilles (2 accueil, 4 page BF) ; légende des paliers
+  sur l'accueil et la page BF ; panier et tiroir : ligne sous le pack, la
+  caméra et la caméra du configurateur ; accueil compact conservé (11 800 px) ;
+  aucune erreur Liquid, pas de débordement mobile.
