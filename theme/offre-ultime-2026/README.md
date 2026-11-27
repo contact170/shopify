@@ -51,3 +51,13 @@ Pack Ultime = contenu du Pack Vision Duo + sirène intérieure WIS305, prix net
   Renforcée retirés le 27/11 (fiches toujours en vente). L'Ultime sera ajouté
   en tête à la publication du thème.
 - Fiche Franck : option panneaux solaires ajoutée.
+
+## Référencement Lalog (27/11)
+
+- `Referencement_Lalog_Pack_Ultime_2711.csv` : 4 références PK-ULT-*, même
+  format que le fichier Lalog des 6 packs (point-virgule, sans en-tête, CRLF).
+  Contenu = celui du Vision Duo (PK-VDU-*) + sirène intérieure WIS305
+  (3760285866322). Sirène solaire = WOS305 (3760285864328) + SPWOS305
+  (3760285864335).
+- EAN 3760285864717 (panneau solaire SPW503 de la caméra W503, confirmé par le
+  dirigeant) ajouté dans Shopify sur SPW503 et SPW503C.
