@@ -199,7 +199,7 @@ H.append(box('LID', 11, 57.6, t('Caméra PoE Full HD à structure métallique', 
 H.append(box('LID', 11, 66.2, '', 16, 0.6, f'background:{RED}'))
 
 tiles = [
-    ('PoE', 'Alimentation PoE', 'Énergie + vidéo, 1 seul câble'),
+    ('PoE', 'Alimentation PoE', 'ou adaptateur secteur inclus'),
     ('1080p', 'Résolution Full HD', '1920 × 1080 · 2 MP'),
     ('Métal', 'Structure métallique', 'Robuste, faite pour durer'),
 ]
@@ -217,7 +217,7 @@ H.append(box('LID', 11, 103.2,
 H.append(box('LID', 50.5, 103.9, t('Enregistrement local sur carte microSD<br>Application mobile gratuite', 2.15, 300, GRAY1, 0, 1.3), 62))
 
 H.append(box('LID', 11, 118.2, '', 104, 0.2, f'background:{LINE}'))
-feats = [('moon-star', 'Vision nocturne', 'jusqu’à 30&nbsp;m'),
+feats = [('moon-star', 'Vision nocturne', 'IR ou couleur'),
          ('human-scan', 'Détection', 'humaine'),
          ('audio-lines', 'Audio', 'bidirectionnel'),
          ('smartphone', 'Accès', 'à distance')]
@@ -245,9 +245,12 @@ H.append(box('P1', 78, 12, '', 0.2, 69, f'background:{LINE}'))
 
 H.append(box('P1', 90, 11.6, t('POWER OVER ETHERNET', 2.1, 600, RED, 0.24)))
 H.append(box('P1', 89.6, 15.4, t('Un seul câble.', 7.2, 600, WHITE, -0.01, 1.08) + t('Image et alimentation.', 7.2, 300, GRAY2, -0.01, 1.08)))
-H.append(box('P1', 90, 33.8, t('Le câble réseau RJ45 transporte à la fois l’électricité et la vidéo : '
-                                 'pas besoin de prise électrique près de la caméra, une connexion filaire '
-                                 'stable et une installation nette.', 2.4, 300, GRAY1, 0, 1.45), 118))
+H.append(box('P1', 90, 33.8, t('Avec un switch ou un injecteur PoE, le câble réseau RJ45 transporte à la fois '
+                                 'l’électricité et la vidéo : pas besoin de prise près de la caméra, une connexion '
+                                 'filaire stable et une installation nette.', 2.4, 300, GRAY1, 0, 1.45), 118))
+H.append(box('P1', 90, 45.6, f'<div style="display:flex;align-items:center;gap:1.6mm">{icon("plug", 3.8, RED, 0.3)}'
+             + t('<b style="font-weight:600;color:#fff">Pas d’équipement PoE&nbsp;?</b> L’adaptateur secteur fourni '
+                 '(câble de 3&nbsp;m) se branche sur une prise.', 2.4, 300, GRAY1, 0, 1.3) + '</div>', 124))
 
 # schéma PoE
 def node(cx, cy, ic, label):
@@ -256,7 +259,7 @@ def node(cx, cy, ic, label):
     s += local(cx - 20, cy + r + 1.6, t(label, 2.05, 500, GRAY1, 0.02, 1.2, 'text-align:center'), 40)
     return s
 p1 = ''
-y0 = 61
+y0 = 63.5
 p1 += node(98, y0, 'switch', 'Switch / injecteur PoE')
 p1 += node(208, y0, 'cctv', 'Caméra EF503')
 p1 += local(105.6, y0 - 0.35, '', 95.2, 0.7, f'background:{RED}')
@@ -281,7 +284,7 @@ H.append(box('P2', 108.4, 42.4, t('Scannez pour télécharger<br>l’application
 
 H.append(box('P2', 10, 62.6, '', 128.9, 0.2, f'background:{LINE}'))
 proms = [('cloud-off', 'Sans abonnement', 'Aucun frais mensuel requis'),
-         ('microsd', 'Stockage local', 'microSD jusqu’à 256&nbsp;Go'),
+         ('microsd', 'Stockage local', 'microSD jusqu’à 128&nbsp;Go'),
          ('shield-check', 'Garantie 2 ans', 'Support en France')]
 for k, (ic, a, b) in enumerate(proms):
     x = 10 + k * 44
@@ -310,27 +313,27 @@ for name, hgt in [('ce', 6.2), ('pointvert', 7.2), ('weee', 7.6), ('rohs', 5.6)]
     cx += w + 3.4
 
 langs = [
- ('FR / CARACTÉRISTIQUES TECHNIQUES', ['Caméra extérieure EF503', 'Alimentation PoE (Power over Ethernet)', 'Structure métallique',
-   'Résolution Full HD 1080p', 'Objectif 4 mm F2.0 · angle 82°', 'Vision nocturne infrarouge jusqu’à 30&nbsp;m',
+ ('FR / CARACTÉRISTIQUES TECHNIQUES', ['Caméra extérieure EF503', 'Alimentation PoE (Power over Ethernet)', 'Adaptateur secteur inclus, câble 3&nbsp;m', 'Structure métallique',
+   'Résolution Full HD 1080p', 'Objectif 4 mm F2.0 · angle 82°', 'Vision nocturne infrarouge ou couleur',
    'Détection humaine et alertes en temps réel', 'Audio bidirectionnel', 'Wi-Fi 2,4 GHz et port RJ45',
-   'Carte microSD jusqu’à 256&nbsp;Go', 'Application Daewoo Home Connect']),
- ('EN / TECHNICAL CHARACTERISTICS', ['EF503 outdoor camera', 'PoE power supply (Power over Ethernet)', 'Metal housing',
-   'Full HD 1080p resolution', '4 mm F2.0 lens · 82° field of view', 'Infrared night vision up to 30 m',
+   'Carte microSD jusqu’à 128&nbsp;Go', 'Application Daewoo Home Connect']),
+ ('EN / TECHNICAL CHARACTERISTICS', ['EF503 outdoor camera', 'PoE power supply (Power over Ethernet)', 'Mains adapter included, 3&nbsp;m cable', 'Metal housing',
+   'Full HD 1080p resolution', '4 mm F2.0 lens · 82° field of view', 'Infrared or color night vision',
    'Human detection with real-time alerts', 'Two-way audio', '2.4 GHz Wi-Fi and RJ45 port',
-   'microSD card up to 256 GB', 'Daewoo Home Connect app']),
- ('ES / CARACTERÍSTICAS TÉCNICAS', ['Cámara exterior EF503', 'Alimentación PoE (Power over Ethernet)', 'Estructura metálica',
-   'Resolución Full HD 1080p', 'Lente 4 mm F2.0 · ángulo de 82°', 'Visión nocturna infrarroja hasta 30 m',
+   'microSD card up to 128 GB', 'Daewoo Home Connect app']),
+ ('ES / CARACTERÍSTICAS TÉCNICAS', ['Cámara exterior EF503', 'Alimentación PoE (Power over Ethernet)', 'Adaptador incluido, cable de 3&nbsp;m', 'Estructura metálica',
+   'Resolución Full HD 1080p', 'Lente 4 mm F2.0 · ángulo de 82°', 'Visión nocturna infrarroja o en color',
    'Detección humana con alertas en tiempo real', 'Audio bidireccional', 'Wi-Fi 2,4 GHz y puerto RJ45',
-   'Tarjeta microSD de hasta 256 GB', 'Aplicación Daewoo Home Connect']),
- ('DE / TECHNISCHE EIGENSCHAFTEN', ['EF503 Außenkamera', 'PoE-Stromversorgung (Power over Ethernet)', 'Metallgehäuse',
-   'Full-HD-Auflösung 1080p', '4-mm-Objektiv F2.0 · 82° Blickwinkel', 'Infrarot-Nachtsicht bis 30 m',
+   'Tarjeta microSD de hasta 128 GB', 'Aplicación Daewoo Home Connect']),
+ ('DE / TECHNISCHE EIGENSCHAFTEN', ['EF503 Außenkamera', 'PoE-Stromversorgung (Power over Ethernet)', 'Inklusive Netzteil, 3-m-Kabel', 'Metallgehäuse',
+   'Full-HD-Auflösung 1080p', '4-mm-Objektiv F2.0 · 82° Blickwinkel', 'Infrarot- oder Farb-Nachtsicht',
    'Personenerkennung mit Echtzeit-Alarm', 'Zwei-Wege-Audio', '2,4-GHz-WLAN und RJ45-Anschluss',
-   'microSD-Karte bis 256 GB', 'App Daewoo Home Connect']),
+   'microSD-Karte bis 128 GB', 'App Daewoo Home Connect']),
 ]
 for k, (title, items) in enumerate(langs):
     col, rowi = k % 2, k // 2
     x = 61 + col * 44
-    y = 22.4 + rowi * 31.4
+    y = 22.0 + rowi * 32.4
     body = t(title, 1.8, 600, WHITE, 0.03, 1.3, 'margin-bottom:0.7mm') + \
         ''.join(t(it, 1.72, 300, GRAY1, 0, 1.28) for it in items)
     H.append(box('P3', x, y, body, 41.5))
@@ -361,18 +364,18 @@ specs = [
  ('Résolution · Resolution', '1080p Full HD (1920 × 1080)'),
  ('Objectif · Lens', '4 mm · ouverture F2.0'),
  ('Angle de vue · Field of view', '82° (diagonale)'),
- ('Vision nocturne · Night vision', 'Infrarouge, jusqu’à 30&nbsp;m'),
+ ('Vision nocturne · Night vision', 'Infrarouge ou couleur'),
  ('Compression', 'H.264 · MJPEG'),
  ('Audio', 'Micro et haut-parleur intégrés'),
- ('Détection · Detection', 'Mouvement, humaine, zones'),
- ('Alimentation · Power', 'PoE ou DC 12 V'),
+ ('Détection · Detection', 'Mouvement, humaine'),
+ ('Alimentation · Power', 'PoE ou adaptateur secteur 12&nbsp;V (inclus)'),
+ ('Câble d’alimentation · Power cable', '3&nbsp;m'),
  ('Réseau · Network', 'RJ45 10/100 Mbps · Wi-Fi 2,4 GHz'),
  ('Protocoles · Protocols', 'TCP/IP, RTSP, P2P, DHCP, NTP'),
- ('Stockage · Storage', 'microSD jusqu’à 256&nbsp;Go'),
+ ('Stockage · Storage', 'microSD jusqu’à 128&nbsp;Go'),
  ('Boîtier · Housing', 'Structure métallique'),
  ('Température · Temperature', '−10 °C à +55 °C'),
- ('Dimensions', '183 × 71 × 73 mm'),
- ('Poids · Weight', '300 g'),
+ ('Dimensions · Poids · Weight', '183 × 71 × 73 mm · 300 g'),
 ]
 for k, (lab, val) in enumerate(specs):
     col, r = k // 8, k % 8
@@ -390,7 +393,7 @@ inner += local(0, 42.5, t('Merci d’avoir choisi Daewoo Security.', 5.0, 500, W
 inner += local(0, 50.4, t('Votre sécurité, sans abonnement.', 3.3, 300, GRAY2, 0, 1.2, 'text-align:center'), W_)
 inner += local((W_ - 16) / 2, 57.6, '', 16, 0.6, f'background:{RED}')
 steps = [('01', 'Téléchargez', 'l’application Daewoo Home Connect sur Google Play ou l’App Store.'),
-         ('02', 'Raccordez', 'la caméra en PoE, ou sur une alimentation 12&nbsp;V.'),
+         ('02', 'Raccordez', 'la caméra en PoE, ou sur une prise avec l’adaptateur secteur fourni.'),
          ('03', 'Ajoutez', 'la caméra dans l’application et laissez-vous guider.')]
 for k, (n, a, b) in enumerate(steps):
     x = 26 + k * 61
@@ -399,33 +402,55 @@ for k, (n, a, b) in enumerate(steps):
 inner += local(0, 112, t('Besoin d’aide&nbsp;? contact@daewoo-security.fr · daewoo-security.fr', 2.3, 400, GRAY2, 0.02, 1.2, 'text-align:center'), W_)
 H.append(f'<div class="abs" style="left:{P["INNER"][0]}mm;top:{P["INNER"][1]}mm;width:{W_}mm;height:{H_}mm;transform:rotate(180deg)">{inner}</div>')
 
-# ================================================================ DIELINE / PROOF OVERLAY
+# ================================================================ DIELINE / PROOF OVERLAY (BAT fournisseur, EN + 中文)
+ANNO = "Poppins, 'Noto Sans SC', sans-serif"
+MAG = '#EC008C'
 ov = []
 if MODE == 'proof':
     for it in diel:
-        col = {'cut': '#EC008C', 'special': '#00AEEF', 'mark': '#EC008C'}[it['kind']]
+        col = {'cut': MAG, 'special': '#00AEEF', 'mark': MAG}[it['kind']]
         dash = ' stroke-dasharray="1.2 0.8"' if it['kind'] == 'special' else ''
         ov.append(f'<path d="{it["d"]}" fill="none" stroke="{col}" stroke-width="0.18"{dash}/>')
-    labels = [('LID', 'COUVERCLE · FACE PRINCIPALE (lecture depuis la face avant)'),
-              ('P1', 'FACE AVANT'), ('P2', 'CÔTÉ DROIT'), ('P3', 'DOS'), ('P4', 'CÔTÉ GAUCHE'),
-              ('INNER', 'RABAT INTÉRIEUR (imprimé tête-bêche, lu à l’ouverture)')]
+    labels = [('LID', 'LID · MAIN FACE   盖面（主展示面）'),
+              ('P1', 'FRONT   正面'), ('P2', 'RIGHT SIDE   右侧面'), ('P3', 'BACK   背面'), ('P4', 'LEFT SIDE   左侧面'),
+              ('INNER', 'INNER FLAP · PRINTED UPSIDE DOWN   内折页（倒印）')]
     for k, lab in labels:
         x, y, w, h = P[k]
-        yy = 630 if k in ('P1','P2','P3','P4') else (249 if k=='LID' else y - 4.2)
-        ov.append(f'<text x="{x + w/2}" y="{yy}" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="3.2" fill="#EC008C" letter-spacing="0.3">{lab}</text>')
-    tb = ['DAEWOO EF503 — Boîte 228 × 149 × 93 mm (gabarit fabricant TS58)',
-          'Carton 300 g blanc + W9 renforcé, pelliculage mat · Impression quadri',
-          'Magenta : découpe / plis · Cyan pointillé : languette de suspension · Fond perdu 3 mm',
-          'Patte de collage laissée sans encre · EAN 3760285866513 (85 %)',
-          'BAT v1 — 27/11/2026']
-    for i, line in enumerate(tb):
-        ov.append(f'<text x="742" y="{262 + i*5.2}" font-family="Poppins" font-weight="{600 if i==0 else 400}" font-size="{3.4 if i==0 else 2.7}" fill="#1A1A1A">{line}</text>')
-    ov.append(f'<rect x="738" y="252" width="150" height="{10 + len(tb)*5.2}" fill="none" stroke="#1A1A1A" stroke-width="0.2"/>')
+        yy = 630 if k in ('P1', 'P2', 'P3', 'P4') else (249 if k == 'LID' else y - 4.2)
+        ov.append(f'<text x="{x + w/2}" y="{yy}" text-anchor="middle" font-family="{ANNO}" font-weight="600" font-size="3.2" fill="{MAG}" letter-spacing="0.25">{lab}</text>')
+    ov.append(f'<text transform="translate(117.6 469.8) rotate(-90)" text-anchor="middle" font-family="{ANNO}" font-weight="600" font-size="2.4" fill="{MAG}">GLUE · NO INK   糊口位不印刷</text>')
+    tb = [('DAEWOO EF503 — PACKAGING ARTWORK · 包装设计稿', 600, 3.4, '#111'),
+          ('Version 2 — 27 Nov 2026 · 第2版', 400, 2.6, '#555'),
+          ('', 400, 1.2, '#111'),
+          ('Box size · 尺寸：228 × 149 × 93 mm (supplier dieline TS58)', 400, 2.6, '#111'),
+          ('Material · 材质：300克白卡+阳光白W9加强+哑膜', 400, 2.6, '#111'),
+          ('Printing · 要求：四色印刷 CMYK, matte lamination', 400, 2.6, '#111'),
+          ('', 400, 1.2, '#111'),
+          ('Page 1: layout check with dieline · 第1页：刀模线对位稿', 600, 2.6, '#111'),
+          ('Page 2: print-ready artwork, 3 mm bleed · 第2页：印刷文件（出血3mm）', 600, 2.6, '#111'),
+          ('Page 3: 3D reference · 第3页：效果图', 600, 2.6, '#111'),
+          ('', 400, 1.2, '#111'),
+          ('Magenta line = die-cut / crease, do not print · 品红线 = 刀模线（不印刷）', 400, 2.6, MAG),
+          ('Cyan dashed line = hang tab · 青色虚线 = 挂钩位', 400, 2.6, '#0090C8'),
+          ('Glue flap: no ink · 糊口位不印刷', 400, 2.6, '#111'),
+          ('Lid artwork reads from the FRONT panel · 盖面文字朝正面方向', 400, 2.6, '#111'),
+          ('Inner flap printed upside down · 内折页倒印', 400, 2.6, '#111'),
+          ('Factory label: white box next to barcode (back) · 贴纸位置：背面条码旁白框', 400, 2.6, '#111'),
+          ('Barcode EAN-13: 3760285866513 (85 %) · 条码', 400, 2.6, '#111'),
+          ('All text converted to outlines · 文字已转曲', 400, 2.6, '#111')]
+    yy = 262
+    for line, wgt, fs, col in tb:
+        if line:
+            ov.append(f'<text x="742" y="{yy:.2f}" font-family="{ANNO}" font-weight="{wgt}" font-size="{fs}" fill="{col}">{line}</text>')
+        yy += fs * 1.75
+    ov.append(f'<rect x="737" y="253" width="152" height="{yy - 253 + 1:.2f}" fill="none" stroke="#111" stroke-width="0.2"/>')
 
 # ================================================================ PAGE
 font_faces = ''.join(
     f"@font-face{{font-family:'Poppins';font-weight:{w};font-style:normal;src:url('../assets/poppins-latin-{w}-normal.woff2') format('woff2');}}"
     for w in (300, 400, 500, 600, 700))
+if MODE == 'proof':
+    font_faces += open(os.path.join(A, 'notosc', 'notosc.css'), encoding='utf-8').read()
 html = f'''<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>DAEWOO EF503 — boîte</title>
 <style>
 {font_faces}
@@ -442,5 +467,5 @@ svg.layer {{ position:absolute; left:0; top:0 }}
 <div id="content">{''.join(H)}</div>
 <svg class="layer" viewBox="{AB[0]} {AB[1]} {AB[2]} {AB[3]}" style="width:{AB[2]}mm;height:{AB[3]}mm">{''.join(ov)}</svg>
 </div></body></html>'''
-open(OUT, 'w').write(html)
+open(OUT, 'w', encoding='utf-8').write(html)
 print('written', OUT, len(html))

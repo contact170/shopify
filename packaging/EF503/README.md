@@ -1,46 +1,47 @@
 # Boîte DAEWOO EF503 — caméra extérieure PoE
 
-Habillage Daewoo posé sur le gabarit du fabricant (boîte TS58, **228 × 149 × 93 mm**, carton 300 g blanc + W9 renforcé, pelliculage mat, quadri).
+Habillage Daewoo sur le gabarit du fabricant : boîte TS58 de **228 × 149 × 93 mm**, carton 300 g blanc renforcé W9, pelliculage mat, impression en quadrichromie. Version actuelle : **v2 (27/11/2026)**.
 
 ## Fichiers
 
 | Fichier | Usage |
 |---|---|
-| `EF503_BAT_avec_gabarit.pdf` | BAT à envoyer à l'usine : visuel + tracé de découpe (magenta), languette de suspension (cyan pointillé), légendes des faces |
-| `EF503_impression_RVB.pdf` | Fichier d'impression vectoriel, fond perdu 3 mm, sans tracé de découpe |
-| `EF503_impression_CMJN.pdf` | Même fichier converti automatiquement en CMJN (noir riche ≈ C72 M68 Y67 K88) — à faire valider par l'imprimeur |
+| **`EF503_DAEWOO_dossier_fournisseur.pdf`** | **Fichier à envoyer au fournisseur.** 3 pages en CMJN, textes vectorisés, annotations en anglais et en chinois. Page 1 : contrôle de calage sur le tracé de découpe. Page 2 : fichier d'impression avec fond perdu de 3 mm. Page 3 : rendus 3D de référence. |
+| `EF503_impression_CMJN.pdf` | Page 2 seule : fichier d'impression en CMJN, textes vectorisés |
+| `EF503_impression_RVB.pdf` | Même fichier d'impression en RVB, polices intégrées |
 | `EF503_maquette_3D_avant.jpg` / `_arriere.jpg` | Rendus 3D de la boîte fermée |
-| `EF503_a_plat_avec_gabarit.png` | Aperçu à plat |
-| `EF503_face_principale.png` | Face principale seule (visuel pour la fiche produit ou les réseaux sociaux) |
+| `EF503_a_plat_avec_gabarit.png` | Aperçu à plat avec le tracé de découpe |
+| `EF503_face_principale.png` | Face principale seule, pour la fiche produit ou les réseaux sociaux |
 
 ## Répartition des faces
 
-- **Couvercle (face principale)** : logo, EF503, visuel produit, arguments PoE / 1080p / Métal, « Sans abonnement », pictos.
-- **Face avant** : explication du PoE (un seul câble pour l'image et l'alimentation) avec un schéma.
-- **Côté droit** : application Daewoo Home Connect (QR code, badges stores) et engagements de la marque.
-- **Dos** : caractéristiques en 4 langues, mentions légales, importateur (nouvelle adresse), EAN 3760285866513, logos réglementaires, encart blanc pour l'étiquette usine.
-- **Côté gauche** : fiche technique détaillée FR/EN.
-- **Rabat intérieur** (visible à l'ouverture, imprimé tête-bêche) : message de bienvenue et 3 étapes d'installation.
+- **Couvercle (face principale)** : logo, EF503, visuel produit, arguments PoE (avec adaptateur secteur inclus), 1080p et Métal, « Sans abonnement », pictos.
+- **Face avant** : explication du PoE (un seul câble pour l'image et l'alimentation), alternative avec l'adaptateur secteur fourni (câble de 3 m), schéma de raccordement.
+- **Côté droit** : application Daewoo Home Connect (QR code, badges des stores) et engagements de la marque.
+- **Dos** : caractéristiques en 4 langues, mentions légales, importateur, EAN 3760285866513, logos réglementaires, encart blanc pour l'étiquette usine.
+- **Côté gauche** : fiche technique FR/EN.
+- **Rabat intérieur** (imprimé tête-bêche, visible à l'ouverture) : message de bienvenue et 3 étapes d'installation.
 
-## Points à valider avant impression
+## Modifications v2
 
-1. **PoE et structure métallique** n'apparaissent pas dans la fiche CS58-Y, qui n'indique qu'une alimentation DC 12 V et ne précise pas la matière du boîtier : à confirmer avec le fournisseur.
-2. **Résolution** : la fiche donne 2 MP natifs (le 3 MP est interpolé). La boîte indique donc « Full HD 1080p · 2 MP ».
-3. **QR code** : c'est le même lien que sur la boîte IP506P (`a.smart321.com/kodaksmartlife`). Vérifier qu'il ouvre bien Daewoo Home Connect, et que l'EF503 est compatible avec cette application.
-4. **Adresse** : 15 Allée James Watt, Immeuble 2000 Watt, 33700 Mérignac (adresse tirée de la page retours du site). L'adresse de la boutique dans l'admin Shopify est encore l'ancienne.
-5. **Étiquette usine** : le gabarit prévoit des repères d'étiquette sur le côté gauche. Une zone blanche a été prévue au dos, à côté de l'EAN, comme sur l'IP506P.
-6. **Sens du couvercle** : il se lit depuis la face avant, alors que le fabricant l'avait imprimé dans l'autre sens. À vérifier sur une maquette blanche à cause de la languette de suspension.
-7. Mentions légales reprises de l'IP506P, avec seulement les fautes de frappe corrigées et le © passé à 2026. Le logo Triman et l'Info-tri, obligatoires en France, sont à vérifier avec votre éco-organisme.
+- Adaptateur secteur inclus, avec un câble d'alimentation de 3 m : mentionné sur le couvercle, la face avant, le dos (4 langues), la fiche technique et le rabat intérieur.
+- Carte microSD : jusqu'à 128 Go (au lieu de 256 Go).
+- Vision nocturne : « infrarouge ou couleur », sans distance.
+- Fiche technique : « Zones » retiré de la ligne Détection. Le poids est regroupé avec les dimensions pour libérer une ligne au câble d'alimentation.
+
+## Points restant à vérifier
+
+1. **QR code** : c'est le même lien que sur l'IP506P (`a.smart321.com/kodaksmartlife`). Vérifier qu'il ouvre bien Daewoo Home Connect.
+2. **Adresse de l'importateur** : 15 Allée James Watt, Immeuble 2000 Watt, 33700 Mérignac. L'adresse de la boutique dans l'admin Shopify est encore l'ancienne.
+3. **Sens du couvercle** : il se lit depuis la face avant. À vérifier sur une maquette blanche à cause de la languette de suspension.
+4. **Logo Triman et Info-tri** : obligatoires en France, ils ne figuraient pas sur l'IP506P. À vérifier avec votre éco-organisme.
 
 ## Régénérer les fichiers
 
-Depuis `source/build/` (Python 3 avec Pillow, Node avec Playwright, Ghostscript pour le CMJN) :
+Prérequis : Python 3 avec Pillow, Node avec Playwright, Ghostscript.
 
 ```bash
-python3 make.py print box_print.html && python3 make.py proof box_proof.html
-node render.js box_print.html EF503_print pdf 3
-node render.js box_proof.html EF503_proof pdf 1
-gs -q -dSAFER -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sColorConversionStrategy=CMYK -sProcessColorModel=DeviceCMYK -dCompatibilityLevel=1.6 -sOutputFile=EF503_print_CMYK.pdf EF503_print.pdf
+packaging/EF503/source/build/build_all.sh
 ```
 
-Tous les textes et toutes les positions (en mm) se trouvent dans `make.py`. Les éclairages de fond sont générés par `bg_raster.py`, qui nécessite numpy.
+Le script réécrit tous les livrables dans `packaging/EF503/`. Tous les textes et toutes les positions (en mm) se trouvent dans `make.py`. Les éclairages de fond sont générés une seule fois par `bg_raster.py`, qui nécessite numpy.
