@@ -606,3 +606,12 @@ par le dirigeant.
 - Copie à publier : « Offre Ultime 27112026 (Claude) » (210124734804).
 - Fiche Notion de Franck : partie 4 « L'Offre Ultime », anciens packs
   marqués « retirés de la sélection Black Friday ». À resynchroniser.
+- 27/11 : « Offre Ultime 27112026 (Claude) » publiée par le dirigeant. Pack
+  Ultime ajouté en tête de la collection Black Friday. Contrôle en ligne :
+  encart Ultime visible sur la page BF (dès 399,90 € au lieu de 601,60 €,
+  −33 %, « Fin dans 3 j 21 h »), carte Ultime en premier, anciens packs
+  absents ; fiche Ultime (mobile et ordinateur) avec l'option panneau solaire
+  au-dessus du bouton, 2 panneaux → 499,70 €, panier pack + 2 SPW503 ; aucun
+  bon sur l'Ultime, bon et message W512MW toujours sur Sécurité Intégrale ;
+  accueil : carrousel Ultime / Sécurité Intégrale / Vision Duo Solaire,
+  mise en page compacte conservée ; aucune erreur Liquid.
