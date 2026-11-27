@@ -18,6 +18,20 @@ respecter. Dernières évolutions dans « Historique ».
 L'agent « Optimisation du site » remplace l'agent proposé « Audit fiches
 produits / SEO » (fusion décidée par le dirigeant le 29/10/2026).
 
+Le designer packaging se lance d'un clic depuis le cockpit (artifact « Cockpit
+Daewoo Security », bouton « Nouvelle boîte produit » ou carte « Designer
+packaging » dans « Mes agents ») :
+- le bouton tente d'abord de créer une session Claude Code neuve (outil
+  `create_session`, dépôt `contact170/shopify`, environnement « shopify ») ;
+- si la page n'a pas droit à cet outil, il déclenche la tâche sans horaire
+  `trig_01J3LXEJ8xao9LJyfdgPtq9x`, qui réveille la session « Atelier packaging
+  Daewoo » ;
+- dans les deux cas, la session s'ouvre dans un nouvel onglet.
+
+Le bouton utilise la branche `claude/sleepy-newton-c5pdfc` tant que l'agent n'est
+pas fusionné dans `main`. Après la fusion, il faut remplacer `branch` par `main`
+dans la constante `LAUNCH` du cockpit.
+
 Le designer packaging n'est pas un sous-agent : c'est une commande
 interactive (`/boite-produit`), parce qu'il doit poser des questions au
 dirigeant (nom, SKU, EAN, caractéristiques, fichiers) avant de travailler. Il
@@ -89,6 +103,7 @@ Wizard) ») n'a plus de tâche.
 | Rapport ventes hebdo | `trig_0135d9x7u61HvZ5HS9uD9fyU` | lundi 6h41 | actif |
 | Article SEO hebdo | `trig_01SwJUzM3793Tso6WRRn6Wbv` | mercredi 6h44 | actif |
 | Audit du site hebdo | `trig_01Qs6W29kZhAavyhtwjPZxdG` | vendredi 6h47 | actif à partir du 6/11/2026 (mis en pause pour sauter le 30/10, réactivation automatique le 30/10 à 7h30) |
+| Lancer le designer packaging (bouton du cockpit) | `trig_01J3LXEJ8xao9LJyfdgPtq9x` | aucun : déclenchée à la demande par le cockpit | actif, rattachée à la session « Atelier packaging Daewoo » (`session_01LiMrJJcvsmojbtPnegq8MZ`) |
 
 Le paramètre `connectors` de `create_trigger` n'est pas disponible pour
 cette organisation. Une tâche lancée dans une nouvelle session à chaque fois
