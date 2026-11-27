@@ -13,9 +13,16 @@ respecter. Dernières évolutions dans « Historique ».
 | Analyste ventes | `analyste-ventes.md` | Actif, testé, fusionné dans `main` |
 | Rédacteur SEO (blog) | `redacteur-seo.md` | Actif, testé sur données réelles le 29/10/2026 (GSC Wizard) |
 | Optimisation du site | `optimisation-site.md` + `scripts/audit-site.js` | Actif, testé sur données réelles le 29/10/2026 |
+| Designer packaging (boîtes produits) | commande `/boite-produit` : `.claude/skills/boite-produit/SKILL.md` + moteur `packaging/_moteur/` | Créé le 27/11/2026, testé sur l'EF503 (boîte réelle) et une boîte haute fictive |
 
 L'agent « Optimisation du site » remplace l'agent proposé « Audit fiches
 produits / SEO » (fusion décidée par le dirigeant le 29/10/2026).
+
+Le designer packaging n'est pas un sous-agent : c'est une commande
+interactive (`/boite-produit`), parce qu'il doit poser des questions au
+dirigeant (nom, SKU, EAN, caractéristiques, fichiers) avant de travailler. Il
+n'a pas de tâche planifiée et n'écrit pas dans Notion. Ses livrables vont
+dans `packaging/<MODELE>/`.
 
 ### Tableau de bord Notion (privé)
 
@@ -130,6 +137,29 @@ disparaît :
    section « Tâches planifiées » de cette note.
 
 ## Historique
+
+### Création du designer packaging `/boite-produit` (27/11/2026)
+
+- Point de départ : la boîte de la caméra EF503, conçue avec le dirigeant
+  (v1 puis v2 : adaptateur secteur inclus, microSD 128 Go, vision nocturne IR
+  ou couleur). Charte : noir mat, rouge Daewoo, Poppins, halo derrière le
+  produit, 3 arguments, « Sans abonnement ». Livrables dans `packaging/EF503/`.
+- Moteur générique `packaging/_moteur/` :
+  - `gabarit.py` lit le gabarit PDF du fabricant et détecte faces, patte de
+    collage, languette et zones réservées ;
+  - `construire.py` met en page à partir de `produit.json` et contrôle
+    automatiquement débordements, chevauchements et zones réservées ;
+  - sortie : dossier fournisseur de 3 pages (CMJN, textes vectorisés, annotations
+    anglais/chinois), PDF d'impression, rendus 3D.
+- Constantes communes dans `packaging/_moteur/marque.json` : importateur
+  (15 Allée James Watt, Immeuble 2000 Watt, 33700 Mérignac), mentions légales,
+  application. Un changement d'adresse se fait là, une seule fois.
+- Tests :
+  - l'EF503 est reproduite sans alerte ;
+  - une boîte haute fictive de 110 × 70 × 190 mm passe en mise en page
+    portrait, schéma vertical, dos empilé.
+- À vérifier : le QR code de l'application pointe vers
+  `a.smart321.com/kodaksmartlife` (lien repris de la boîte IP506P, non vérifié).
 
 ### Bascule du rédacteur SEO vers GSC Wizard (29/10/2026)
 

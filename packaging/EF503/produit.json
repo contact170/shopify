@@ -1,0 +1,76 @@
+{
+ "_note": "Fiche produit de la boîte EF503 (exemple de référence pour /boite-produit). Textes en HTML simple (<br>, <b>). Les constantes de marque (importateur, mentions légales, application…) viennent de packaging/_moteur/marque.json.",
+ "modele": "EF503",
+ "sku": "EF503",
+ "ean": "3760285866513",
+ "version": "2",
+ "image": "images/EF503.png",
+ "categorie": "Caméra de surveillance extérieure",
+ "sous_titre": "Caméra PoE Full HD à structure métallique",
+ "titre_dos": "Caméra extérieure EF503",
+ "sous_titre_dos": "DAEWOO – Caméra PoE Full HD<br>à structure métallique",
+ "arguments": [
+  {"valeur": "PoE", "titre": "Alimentation PoE", "detail": "ou adaptateur secteur inclus"},
+  {"valeur": "1080p", "titre": "Résolution Full HD", "detail": "1920 × 1080 · 2 MP"},
+  {"valeur": "Métal", "titre": "Structure métallique", "detail": "Robuste, faite pour durer"}
+ ],
+ "pictos": [
+  {"icone": "moon-star", "titre": "Vision nocturne", "detail": "IR ou couleur"},
+  {"icone": "human-scan", "titre": "Détection", "detail": "humaine"},
+  {"icone": "audio-lines", "titre": "Audio", "detail": "bidirectionnel"},
+  {"icone": "smartphone", "titre": "Accès", "detail": "à distance"}
+ ],
+ "face_argument": {
+  "identite": {"ligne1": "Caméra extérieure PoE", "ligne2": "Full HD 1080p · Structure métallique"},
+  "surtitre": "POWER OVER ETHERNET",
+  "titre": "Un seul câble.",
+  "titre_2": "Image et alimentation.",
+  "texte": "Avec un switch ou un injecteur PoE, le câble réseau RJ45 transporte à la fois l'électricité et la vidéo : pas besoin de prise près de la caméra, une connexion filaire stable et une installation nette.",
+  "note": {"icone": "plug", "gras": "Pas d'équipement PoE ?", "texte": "L'adaptateur secteur fourni (câble de 3 m) se branche sur une prise."},
+  "schema": {
+   "gauche": {"icone": "switch", "label": "Switch / injecteur PoE"},
+   "droite": {"icone": "cctv", "label": "Caméra EF503"},
+   "pastilles": [{"icone": "zap", "label": "ÉNERGIE"}, {"icone": "video", "label": "VIDÉO"}],
+   "legende": "1 câble RJ45"
+  }
+ },
+ "application": {
+  "texte_fr": "Contrôlez votre caméra à distance et sans contrainte grâce à notre application dédiée.",
+  "engagements": [
+   {"icone": "cloud-off", "titre": "Sans abonnement", "detail": "Aucun frais mensuel requis"},
+   {"icone": "microsd", "titre": "Stockage local", "detail": "microSD jusqu'à 128 Go"},
+   {"icone": "shield-check", "titre": "Garantie 2 ans", "detail": "Support en France"}
+  ]
+ },
+ "caracteristiques": {
+  "fr": ["Caméra extérieure EF503", "Alimentation PoE (Power over Ethernet)", "Adaptateur secteur inclus, câble 3 m", "Structure métallique", "Résolution Full HD 1080p", "Objectif 4 mm F2.0 · angle 82°", "Vision nocturne infrarouge ou couleur", "Détection humaine et alertes en temps réel", "Audio bidirectionnel", "Wi-Fi 2,4 GHz et port RJ45", "Carte microSD jusqu'à 128 Go", "Application Daewoo Home Connect"],
+  "en": ["EF503 outdoor camera", "PoE power supply (Power over Ethernet)", "Mains adapter included, 3 m cable", "Metal housing", "Full HD 1080p resolution", "4 mm F2.0 lens · 82° field of view", "Infrared or color night vision", "Human detection with real-time alerts", "Two-way audio", "2.4 GHz Wi-Fi and RJ45 port", "microSD card up to 128 GB", "Daewoo Home Connect app"],
+  "es": ["Cámara exterior EF503", "Alimentación PoE (Power over Ethernet)", "Adaptador incluido, cable de 3 m", "Estructura metálica", "Resolución Full HD 1080p", "Lente 4 mm F2.0 · ángulo de 82°", "Visión nocturna infrarroja o en color", "Detección humana con alertas en tiempo real", "Audio bidireccional", "Wi-Fi 2,4 GHz y puerto RJ45", "Tarjeta microSD de hasta 128 GB", "Aplicación Daewoo Home Connect"],
+  "de": ["EF503 Außenkamera", "PoE-Stromversorgung (Power over Ethernet)", "Inklusive Netzteil, 3-m-Kabel", "Metallgehäuse", "Full-HD-Auflösung 1080p", "4-mm-Objektiv F2.0 · 82° Blickwinkel", "Infrarot- oder Farb-Nachtsicht", "Personenerkennung mit Echtzeit-Alarm", "Zwei-Wege-Audio", "2,4-GHz-WLAN und RJ45-Anschluss", "microSD-Karte bis 128 GB", "App Daewoo Home Connect"]
+ },
+ "fiche_technique": [
+  ["Capteur · Sensor", "CMOS 1/3,27\" · 2 MP"],
+  ["Résolution · Resolution", "1080p Full HD (1920 × 1080)"],
+  ["Objectif · Lens", "4 mm · ouverture F2.0"],
+  ["Angle de vue · Field of view", "82° (diagonale)"],
+  ["Vision nocturne · Night vision", "Infrarouge ou couleur"],
+  ["Compression", "H.264 · MJPEG"],
+  ["Audio", "Micro et haut-parleur intégrés"],
+  ["Détection · Detection", "Mouvement, humaine"],
+  ["Alimentation · Power", "PoE ou adaptateur secteur 12 V (inclus)"],
+  ["Câble d'alimentation · Power cable", "3 m"],
+  ["Réseau · Network", "RJ45 10/100 Mbps · Wi-Fi 2,4 GHz"],
+  ["Protocoles · Protocols", "TCP/IP, RTSP, P2P, DHCP, NTP"],
+  ["Stockage · Storage", "microSD jusqu'à 128 Go"],
+  ["Boîtier · Housing", "Structure métallique"],
+  ["Température · Temperature", "−10 °C à +55 °C"],
+  ["Dimensions · Poids · Weight", "183 × 71 × 73 mm · 300 g"]
+ ],
+ "rabat": {
+  "etapes": [
+   ["Téléchargez", "l'application Daewoo Home Connect sur Google Play ou l'App Store."],
+   ["Raccordez", "la caméra en PoE, ou sur une prise avec l'adaptateur secteur fourni."],
+   ["Ajoutez", "la caméra dans l'application et laissez-vous guider."]
+  ]
+ }
+}

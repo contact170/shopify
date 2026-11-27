@@ -38,10 +38,11 @@ Habillage Daewoo sur le gabarit du fabricant : boîte TS58 de **228 × 149 × 93
 
 ## Régénérer les fichiers
 
-Prérequis : Python 3 avec Pillow, Node avec Playwright, Ghostscript.
+La boîte est décrite par `produit.json`, `gabarit.json` et `images/EF503.png`. Elle se reconstruit avec le moteur commun `packaging/_moteur/` (c'est aussi l'exemple de référence de l'agent `/boite-produit`) :
 
 ```bash
-packaging/EF503/source/build/build_all.sh
+python3 packaging/_moteur/construire.py packaging/EF503 --brouillon   # contrôle rapide
+python3 packaging/_moteur/construire.py packaging/EF503               # tous les livrables
 ```
 
-Le script réécrit tous les livrables dans `packaging/EF503/`. Tous les textes et toutes les positions (en mm) se trouvent dans `make.py`. Les éclairages de fond sont générés une seule fois par `bg_raster.py`, qui nécessite numpy.
+Le build complet réécrit les fichiers de ce dossier. Les fichiers v2 livrés le 27/11/2026 ont été produits par le premier script, propre à l'EF503 (historique git, commit a83b7e5). Le moteur reproduit le même design ; seuls quelques blocs (badges des stores, note PoE) sont décalés de 1 à 3 mm.
