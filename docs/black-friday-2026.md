@@ -597,3 +597,12 @@ par le dirigeant.
   sur l'accueil et la page BF ; panier et tiroir : ligne sous le pack, la
   caméra et la caméra du configurateur ; accueil compact conservé (11 800 px) ;
   aucune erreur Liquid, pas de débordement mobile.
+
+### Offre Ultime (27/11)
+
+- Pack Ultime créé (Vision Duo + sirène intérieure WIS305), prix net
+  399,90 / 449,90 / 499,90 / 549,90 € jusqu'au mardi 1er décembre 9h, sans
+  bon d'achat. Détails : `theme/offre-ultime-2026/README.md`.
+- Copie à publier : « Offre Ultime 27112026 (Claude) » (210124734804).
+- Fiche Notion de Franck : partie 4 « L'Offre Ultime », anciens packs
+  marqués « retirés de la sélection Black Friday ». À resynchroniser.
