@@ -31,3 +31,23 @@ Pack Ultime = contenu du Pack Vision Duo + sirène intérieure WIS305, prix net
   (Vigilia Sécurité Renforcée), ajouter l'Ultime en position 0.
 - Fin de l'offre (mardi 1er décembre 9h) : passer le produit en brouillon
   ou le retirer de la collection et du carrousel.
+
+## Ajouts du 27/11 (suite)
+
+- Phrase « pk_plus » de l'Ultime retirée. À la place : option « panneau
+  solaire SPW503, 49,90 € pièce » avec compteur (`snippets/pk-option-solaire.liquid`),
+  déplacée par script juste au-dessus du bouton d'achat du haut. Elle pilote
+  le compteur SPW503 du bloc « Complétez votre pack » (pv-accessoires), qui
+  gère le total et la mise au panier (pack + panneaux en un clic).
+- `snippets/pv-accessoires.liquid` : pour l'étiquette `pack-ult`, liste
+  dédiée SPW503, WDV301, WPS305, WRC305 (le contacteur de garage est retiré :
+  la page dépassait la limite de consultations `all_products` de Shopify et
+  affichait un doublon).
+- Page Black Friday : encart « Offre Ultime » sous l'en-tête
+  (`snippets/bf-ultime-encart.liquid`, rendu dans `bf-collection`), prix et
+  prix barré lus sur le produit, compte à rebours, disparaît mardi 1er
+  décembre à 9h.
+- Collection Black Friday : Touch XL série précédente et Vigilia Sécurité
+  Renforcée retirés le 27/11 (fiches toujours en vente). L'Ultime sera ajouté
+  en tête à la publication du thème.
+- Fiche Franck : option panneaux solaires ajoutée.
